@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CptMarkets Sign In</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="login-container">
+        <!-- লোগো সেকশন -->
+        <div class="logo-area">
+            <div class="logo-circle">CPT</div>
+            <h1>CptMarkets</h1>
+            <p class="subtitle">GIFTP</p>
+        </div>
+
+        <!-- ফর্ম সেকশন -->
+        <form id="authForm">
+            <div class="input-group">
+                <label for="username">Username</label>
+                <div class="input-wrapper">
+                    <span class="icon">👤</span>
+                    <input type="text" id="username" placeholder="Username" required>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+                <div class="input-wrapper">
+                    <span class="icon">🔒</span>
+                    <input type="password" id="password" placeholder="Password" required>
+                </div>
+            </div>
+
+            <button type="submit" id="submitBtn" class="btn-yellow">Go to Sign In</button>
+        </form>
+
+        <!-- নিচের লিংকসমূহ -->
+        <div class="footer-links">
+            <a href="#" id="toggleMode" onclick="toggleAuthMode(event)">Create Account</a>
+            <a href="#">Forgot Password?</a>
+        </div>
+    </div>
+
+    <!-- অ্যাকাউন্ট ক্রিয়েট করার জাভাস্ক্রিপ্ট লজিক -->
+    <script>
+        let isSignUpMode = false;
+
+        function toggleAuthMode(event) {
+            event.preventDefault();
+            const submitBtn = document.getElementById('submitBtn');
+            const toggleLink = document.getElementById('toggleMode');
+            const title = document.querySelector('.logo-area h1');
+
+            if (!isSignUpMode) {
+                // সাইন-আপ বা অ্যাকাউন্ট ক্রিয়েট মোড
+                submitBtn.innerText = "Create Account";
+                toggleLink.innerText = "Already have an account? Sign In";
+                isSignUpMode = true;
+            } else {
+                // লগইন মোড
+                submitBtn.innerText = "Go to Sign In";
+                toggleLink.innerText = "Create Account";
+                isSignUpMode = false;
+            }
+        }
+
+        // ফর্ম সাবমিট হ্যান্ডলার (অ্যাকাউন্ট ক্রিয়েট বা লগইন টেস্ট করার জন্য)
+        document.getElementById('authForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            
+            if (isSignUpMode) {
+                alert(`সফলভাবে "${username}" নামে অ্যাকাউন্ট তৈরি করা হয়েছে! (এটি একটি ডেমো অ্যালার্ট)`);
+            } else {
+                alert(`"${username}" অ্যাকাউন্টটিতে লগইন করা হচ্ছে...`);
+            }
+        });
+    </script>
+</body>
+</html>
