@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CptMarkets - অনলাইন ট্রেডিং প্ল্যাটফর্ম</title>
+    <title>CptMarkets - GIFTP</title>
     <style>
-        /* গ্লোবাল রিসেট এবং ফন্ট */
+        /* Global Styles */
         * {
             margin: 0;
             padding: 0;
@@ -14,201 +14,327 @@
         }
 
         body {
-            background-color: #0b0e14;
+            background: radial-gradient(circle at center, #0e1e38, #050a14);
             color: #ffffff;
-            line-height: 1.6;
-        }
-
-        /* নেভিগেশন বার */
-        header {
-            background-color: #121620;
-            padding: 20px 8%;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            border-bottom: 1px solid #1f2635;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            min-height: 100vh;
+            padding: 20px;
         }
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #00e676;
-            text-decoration: none;
+        /* Main Container */
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            background: rgba(18, 26, 43, 0.8);
+            padding: 40px 30px;
+            border-radius: 15px;
+            border: 1px solid #1a2a47;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
         }
 
-        nav ul {
-            display: flex;
-            list-style: none;
+        /* Flag / Language Icon */
+        .lang-flag {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 20px;
+            cursor: pointer;
         }
 
-        nav ul li {
-            margin-left: 30px;
-        }
-
-        nav ul li a {
-            color: #b0b8c4;
-            text-decoration: none;
-            font-size: 16px;
-            transition: color 0.3s;
-        }
-
-        nav ul li a:hover {
-            color: #00e676;
-        }
-
-        .auth-buttons .btn-login {
-            color: #ffffff;
-            text-decoration: none;
-            margin-right: 20px;
-        }
-
-        .btn-register {
-            background-color: #00e676;
-            color: #0b0e14;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background 0.3s;
-        }
-
-        .btn-register:hover {
-            background-color: #00c853;
-        }
-
-        /* হিরো সেকশন */
-        .hero {
-            padding: 100px 8%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: radial-gradient(circle at top right, #1f2d3d, #0b0e14);
-        }
-
-        .hero-content {
-            max-width: 550px;
-        }
-
-        .hero-content h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-
-        .hero-content h1 span {
-            color: #00e676;
-        }
-
-        .hero-content p {
-            color: #b0b8c4;
-            font-size: 18px;
+        /* Logo Area */
+        .logo-box {
             margin-bottom: 30px;
         }
 
-        /* বৈশিষ্ট্য বা ফিচার সেকশন */
-        .features {
-            padding: 80px 8%;
-            text-align: center;
-            background-color: #121620;
+        .logo-circle {
+            width: 70px;
+            height: 70px;
+            border: 2px solid #e0a92d;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 10px;
+            color: #e0a92d;
+            font-weight: bold;
+            font-size: 20px;
         }
 
-        .features h2 {
-            font-size: 36px;
-            margin-bottom: 40px;
+        .brand-name {
+            font-size: 28px;
+            font-weight: bold;
+            color: #f7ca44;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 10px rgba(247, 202, 68, 0.3);
         }
 
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-
-        .feature-card {
-            background-color: #1f2635;
-            padding: 40px 30px;
-            border-radius: 10px;
-            transition: transform 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .feature-card h3 {
-            margin-bottom: 15px;
-            color: #00e676;
-        }
-
-        .feature-card p {
-            color: #b0b8c4;
-        }
-
-        /* ফুটার */
-        footer {
-            background-color: #07090d;
-            padding: 40px 8%;
-            text-align: center;
-            color: #667280;
+        .sub-brand {
             font-size: 14px;
-            border-top: 1px solid #1f2635;
+            color: #8fa0bc;
+            margin-top: 5px;
+            letter-spacing: 2px;
+        }
+
+        /* Form Controls */
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #8fa0bc;
+            font-weight: 500;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 14px 15px 14px 45px;
+            background: #0e1626;
+            border: 1px solid #233554;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .input-wrapper input:focus {
+            border-color: #f7ca44;
+        }
+
+        /* Icons inside Inputs */
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            color: #5a6e85;
+            font-size: 18px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            color: #5a6e85;
+            cursor: pointer;
+        }
+
+        /* Action Button */
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(90deg, #f0be35, #cfa01f);
+            color: #050a14;
+            border: none;
+            padding: 15px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(240, 190, 53, 0.3);
+            margin-top: 10px;
+            transition: opacity 0.3s;
+        }
+
+        .btn-submit:hover {
+            opacity: 0.9;
+        }
+
+        /* Links Area */
+        .links-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            font-size: 14px;
+        }
+
+        .link-item {
+            color: #e0a92d;
+            text-decoration: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .link-item:hover {
+            text-decoration: underline;
+        }
+
+        /* Pop-up Modal (Create Account) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: #121a2b;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #233554;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            color: #8fa0bc;
+            cursor: pointer;
+        }
+
+        .modal-title {
+            color: #f7ca44;
+            font-size: 22px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
 
-    <!-- হেডার বা মেনু বার -->
-    <header>
-        <a href="#" class="logo">CptMarkets</a>
-        <nav>
-            <ul>
-                <li><a href="#">হোম</a></li>
-                <li><a href="#">ট্রেডিং</a></li>
-                <li><a href="#">প্ল্যাটফর্ম</a></li>
-                <li><a href="#">বাজার বিশ্লেষণ</a></li>
-                <li><a href="#">যোগাযোগ</a></li>
-            </ul>
-        </nav>
-        <div class="auth-buttons">
-            <a href="#" class="btn-login">লগইন</a>
-            <a href="#" class="btn-register">অ্যাকাউন্ট খুলুন</a>
-        </div>
-    </header>
+    <!-- Main Login Card -->
+    <div class="login-container">
+        <!-- Top Right Flag -->
+        <span class="lang-flag">🇬🇧</span>
 
-    <!-- হিরো ব্যানার সেকশন -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>স্মার্ট ট্রেডিংয়ের মাধ্যমে আপনার <span>ভবিষ্যত</span> গড়ুন</h1>
-            <p>বিশ্বস্ত প্ল্যাটফর্মে ফরেক্স, স্টক এবং ক্রিপ্টোকারেন্সি ট্রেড করুন একদম সর্বনিম্ন স্প্রেড এবং দ্রুততম এক্সিকিউশনের সাথে।</p>
-            <a href="#" class="btn-register" style="padding: 15px 30px; font-size: 18px;">ট্রেডিং শুরু করুন</a>
+        <!-- Logo -->
+        <div class="logo-box">
+            <div class="logo-circle">CPT</div>
+            <div class="brand-name">CptMarkets</div>
+            <div class="sub-brand">GIFTP</div>
         </div>
-    </section>
 
-    <!-- প্ল্যাটফর্মের সুবিধাসমূহ -->
-    <section class="features">
-        <h2>কেন আমাদের বেছে নেবেন?</h2>
-        <div class="feature-grid">
-            <div class="feature-card">
-                <h3>তাত্ক্ষণিক এক্সিকিউশন</h3>
-                <p>কোনো রকম বিলম্ব ছাড়াই মিলিসেকেন্ডের মধ্যে আপনার ট্রেড সম্পন্ন করুন।</p>
+        <!-- Login Form -->
+        <form onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label>Username</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">👤</span>
+                    <input type="text" id="loginUser" placeholder="Username" required>
+                </div>
             </div>
-            <div class="feature-card">
-                <h3>সুরক্ষিত তহবিল</h3>
-                <p>শীর্ষস্থানীয় ব্যাংকে আপনার ফান্ড সম্পূর্ণ আলাদা এবং নিরাপদভাবে রাখা হয়।</p>
+
+            <div class="form-group">
+                <label>Password</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">🔒</span>
+                    <input type="password" id="loginPass" placeholder="Password" required>
+                    <span class="toggle-password" onclick="togglePass('loginPass')">👁️</span>
+                </div>
             </div>
-            <div class="feature-card">
-                <h3>২৪/৭ কাস্টমার সাপোর্ট</h3>
-                <p>যেকোনো সমস্যায় আমাদের ডেডিকেটেড সাপোর্ট টিম সবসময় আপনার পাশে আছে।</p>
-            </div>
+
+            <button type="submit" class="btn-submit">Go to Sign In</button>
+        </form>
+
+        <!-- Bottom Links -->
+        <div class="links-container">
+            <span class="link-item" onclick="openRegisterModal()">👤 Create Account</span>
+            <span class="link-item" onclick="alert('Reset option coming soon!')">🔒 Forgot Password?</span>
         </div>
-    </section>
+    </div>
 
-    <!-- ফুটার সেকশন -->
-    <footer>
-        <p>&copy; 2026 CptMarkets. সর্বস্বত্ব সংরক্ষিত। ট্রেডিংয়ে আর্থিক ঝুঁকি রয়েছে।</p>
-    </footer>
+    <!-- Create Account Modal (Pop-up) -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeRegisterModal()">&times;</span>
+            <div class="modal-title">Create Account</div>
+            
+            <form onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label>New Username</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">👤</span>
+                        <input type="text" id="regUser" placeholder="Choose a username" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">✉️</span>
+                        <input type="email" id="regEmail" placeholder="yourname@example.com" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">🔒</span>
+                        <input type="password" id="regPass" placeholder="Create strong password" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">Register Now</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript Interactions -->
+    <script>
+        // Modal controls
+        function openRegisterModal() {
+            document.getElementById("registerModal").style.display = "flex";
+        }
+
+        function closeRegisterModal() {
+            document.getElementById("registerModal").style.display = "none";
+        }
+
+        // Toggle Password Visibility
+        function togglePass(inputId) {
+            const input = document.getElementById(inputId);
+            if (input.type === "password") {
+                input.type = "text";
+            } else {
+                input.type = "password";
+            }
+        }
+
+        // Form Submit Actions
+        function handleLogin(event) {
+            event.preventDefault();
+            const user = document.getElementById("loginUser").value;
+            alert("Logging in as: " + user);
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            const user = document.getElementById("regUser").value;
+            alert("Account successfully created for: " + user);
+            closeRegisterModal();
+        }
+
+        // Close modal if user clicks outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById("registerModal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 
 </body>
 </html>
