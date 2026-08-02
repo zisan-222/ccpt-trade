@@ -1,182 +1,83 @@
-
-      <!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CptMarkets - Complete Live Functional Platform</title>
-    <!-- Chart.js for Live Graph -->
-    <script src="https://jsdelivr.net"></script>
-    <!-- FontAwesome for Icons -->
-    <link rel="stylesheet" href="https://cloudflare.com">
-    
-    <style>
-        :root {
-            --bg-dark: #070e1b;
-            --card-bg: #0f1c30;
-            --btn-gold: linear-gradient(135deg, #f3b137, #f7d070);
-            --text-white: #ffffff;
-            --text-gray: #8292ab;
-            --green: #00ca84;
-            --red: #ff4a5a;
-        }
-
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            background-color: #0b0e11;
-            color: var(--text-white);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .app-container {
-            width: 100%;
-            max-width: 450px;
-            background-color: var(--bg-dark);
-            min-height: 100vh;
-            box-sizing: border-box;
-            position: relative;
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
-        }
-
-        /* ================= AUTH STYLES ================= */
-        .auth-screen { padding: 30px; display: flex; flex-direction: column; justify-content: center; min-height: 100vh; box-sizing: border-box; }
-        .auth-card { background: var(--card-bg); padding: 25px; border-radius: 12px; text-align: center; }
-        .auth-card h2 { color: #f7d070; margin-bottom: 20px; }
-        .auth-card input {
-            width: 100%; padding: 12px; margin: 10px 0; border-radius: 6px;
-            border: 1px solid #192a45; background: #070e1b; color: white; box-sizing: border-box;
-        }
-        .auth-card button {
-            width: 100%; padding: 12px; background: var(--btn-gold); border: none;
-            color: black; font-weight: bold; border-radius: 6px; cursor: pointer; margin-top: 15px;
-        }
-        .auth-links { margin-top: 15px; font-size: 13px; color: var(--text-gray); }
-        .auth-links a { color: #f7d070; text-decoration: none; cursor: pointer; }
-
-        /* ================= DASHBOARD STYLES ================= */
-        .dashboard-screen { display: none; padding-bottom: 80px; }
-        
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; }
-        .brand { display: flex; align-items: center; gap: 8px; font-size: 20px; font-weight: bold; color: #f7d070; }
-        .lang-select-box { background: #192a45; color: white; border: 1px solid #f7d070; padding: 5px 8px; border-radius: 4px; font-size: 12px; outline: none; }
-
-        .banner-card { background: linear-gradient(135deg, #0e306c, #061229); margin: 0 15px 15px 15px; padding: 20px; border-radius: 12px; }
-        .banner-title { font-size: 22px; font-weight: bold; color: #f7d070; }
-        .banner-subtitle { font-size: 12px; color: var(--text-gray); }
-
-        /* Secret Admin Panel */
-        .admin-panel {
-            background-color: #2c1a04; border: 1px dashed #f3b137; margin: 15px; padding: 15px; border-radius: 12px; display: none;
-        }
-        .admin-panel h4 { margin: 0 0 10px 0; color: #f7d070; display: flex; justify-content: space-between; }
-        .btn-admin-add { background: var(--green); color: white; border: none; padding: 8px 12px; border-radius: 4px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 5px; }
-
-        .assets-card { background-color: var(--card-bg); margin: 0 15px 20px 15px; padding: 20px; border-radius: 16px; }
-        .asset-label { font-size: 13px; color: var(--text-gray); display: flex; justify-content: space-between; }
-        .asset-amount { font-size: 32px; font-weight: bold; margin: 10px 0; }
-        .asset-stats { font-size: 13px; color: var(--text-gray); margin-bottom: 20px; }
-        .asset-stats span { color: var(--green); font-weight: bold; }
-
-        .action-buttons { display: flex; gap: 10px; }
-        .btn-action { flex: 1; padding: 12px; border-radius: 25px; border: none; font-weight: bold; cursor: pointer; font-size: 13px; }
-        .btn-gold { background: var(--btn-gold); color: #222; }
-        .btn-dark { background-color: #192a45; color: var(--text-white); }
-
-        /* Market Section */
-        .market-section { background-color: var(--card-bg); margin: 0 15px 20px 15px; padding: 15px; border-radius: 12px; }
-        .trade-actions { display: flex; gap: 10px; margin-top: 15px; }
-        .btn-buy { background: var(--green); color: white; flex: 1; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
-        .btn-sell { background: var(--red); color: white; flex: 1; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
-
-        /* Features Grid */
-        .features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 0 15px; }
-        .feature-item { display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; }
-        .feature-icon {
-            width: 50px; height: 50px; background-color: var(--card-bg); border-radius: 50%;
-            display: flex; justify-content: center; align-items: center; font-size: 18px; color: #f3b137; margin-bottom: 6px;
-        }
-        .feature-label { font-size: 11px; color: #b0c4de; }
-
-        /* Bottom Nav */
-        .bottom-nav {
-            position: fixed; bottom: 0; width: 100%; max-width: 450px; background-color: #091324;
-            display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.05); z-index: 100;
-        }
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-gray); font-size: 11px; cursor: pointer; }
-        .nav-item.active { color: #f7d070; }
-        .nav-item i { font-size: 18px; margin-bottom: 4px; }
-        .nav-trade-btn { position: relative; top: -18px; width: 50px; height: 50px; background: var(--btn-gold); border-radius: 50%; display: flex; justify-content: center; align-items: center; }
-        .nav-trade-btn i { color: #000; font-size: 20px; }
-
-        .support-widget {
-            position: fixed; bottom: 85px; right: 20px; background: var(--btn-gold); color: black;
-            width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            font-size: 20px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 99; display: none;
-        }
-    </style>
+    <title>CptMarkets Sign In</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="app-container">
-        
-        <!-- ================= 1. AUTH SCREEN ================= -->
-        <div class="auth-screen" id="authSection">
-            <!-- Login Card -->
-            <div class="auth-card" id="loginCard">
-                <h2>CptMarkets Login</h2>
-                <input type="email" id="loginEmail" placeholder="Email Address" value="user@trade.com">
-                <input type="password" id="loginPassword" placeholder="Password" value="123456">
-                <button onclick="loginUser()">Sign In</button>
-                <div class="auth-links">
-                    <a onclick="goToSupport('Forget Password Help')">Forgot Password?</a> | 
-                    <a onclick="toggleAuth(false)">Create Account</a>
-                </div>
-            </div>
-            
-            <!-- Register Card -->
-            <div class="auth-card" id="registerCard" style="display: none;">
-                <h2>Create Account</h2>
-                <input type="text" id="regName" placeholder="Full Name">
-                <input type="email" id="regEmail" placeholder="Email Address">
-                <input type="password" id="regPassword" placeholder="Password">
-                <button onclick="registerUser()">Register</button>
-                <div class="auth-links">
-                    <a onclick="toggleAuth(true)">Already have an account? Login</a>
-                </div>
-            </div>
+    <div class="login-container">
+        <!-- লোগো সেকশন -->
+        <div class="logo-area">
+            <div class="logo-circle">CPT</div>
+            <h1>CptMarkets</h1>
+            <p class="subtitle">GIFTP</p>
         </div>
 
-        <!-- ================= 2. DASHBOARD SCREEN ================= -->
-        <div class="dashboard-screen" id="dashboardSection">
-            
-            <div class="header">
-                <div class="brand"><i class="fa-solid fa-circle-nodes"></i> CptMarkets</div>
-                <div>
-                    <i class="fa-solid fa-globe" style="color: #f7d070; margin-right: 3px;"></i>
-                    <select class="lang-select-box" id="langSelector" onchange="changeLanguage()">
-                        <option value="en">English</option>
-                        <option value="bn">বাংলা</option>
-                        <option value="ar">العربية</option>
-                        <option value="hi">हिन्दी</option>
-                    </select>
+        <!-- ফর্ম সেকশন -->
+        <form id="authForm">
+            <div class="input-group">
+                <label for="username">Username</label>
+                <div class="input-wrapper">
+                    <span class="icon">👤</span>
+                    <input type="text" id="username" placeholder="Username" required>
                 </div>
             </div>
 
-            <div class="banner-card">
-                <div class="banner-title">CptMarkets</div>
-                <div class="banner-subtitle" id="lang-banner-sub">Global integrated financial trading platform</div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <div class="input-wrapper">
+                    <span class="icon">🔒</span>
+                    <input type="password" id="password" placeholder="Password" required>
+                </div>
             </div>
 
-            <!-- SECRET ADMIN CONTROL PANEL -->
-            <div class="admin-panel" id="adminControlPanel">
-                <h4><span><i class="fa-solid fa-user-shield"></i> Admin Control Panel</span> <span style="font-size:11px; color:var(--green);">Active</span></h4>
-                <p style="font-size: 12px; margin: 5px 0; color: #eaecef;">ইউজারের অ্যাকাউন্টে ডেমো ফান্ড যোগ করুন:</p>
-                <button class="btn-admin-add" onclick="adminAddDemoFunds()">Add $10,000 Demo Dollars</button>
-            </div>
+            <button type="submit" id="submitBtn" class="btn-yellow">Go to Sign In</button>
+        </form>
 
-            <div class="assets-card">
-                <div class="asset-label"><span id="lang-total-assets">Total Assets (USD)</span> <i class="fa-regular fa-eye"></i></div>
+        <!-- নিচের লিংকসমূহ -->
+        <div class="footer-links">
+            <a href="#" id="toggleMode" onclick="toggleAuthMode(event)">Create Account</a>
+            <a href="#">Forgot Password?</a>
+        </div>
+    </div>
+
+    <!-- অ্যাকাউন্ট ক্রিয়েট করার জাভাস্ক্রিপ্ট লজিক -->
+    <script>
+        let isSignUpMode = false;
+
+        function toggleAuthMode(event) {
+            event.preventDefault();
+            const submitBtn = document.getElementById('submitBtn');
+            const toggleLink = document.getElementById('toggleMode');
+            const title = document.querySelector('.logo-area h1');
+
+            if (!isSignUpMode) {
+                // সাইন-আপ বা অ্যাকাউন্ট ক্রিয়েট মোড
+                submitBtn.innerText = "Create Account";
+                toggleLink.innerText = "Already have an account? Sign In";
+                isSignUpMode = true;
+            } else {
+                // লগইন মোড
+                submitBtn.innerText = "Go to Sign In";
+                toggleLink.innerText = "Create Account";
+                isSignUpMode = false;
+            }
+        }
+
+        // ফর্ম সাবমিট হ্যান্ডলার (অ্যাকাউন্ট ক্রিয়েট বা লগইন টেস্ট করার জন্য)
+        document.getElementById('authForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            
+            if (isSignUpMode) {
+                alert(`সফলভাবে "${username}" নামে অ্যাকাউন্ট তৈরি করা হয়েছে! (এটি একটি ডেমো অ্যালার্ট)`);
+            } else {
+                alert(`"${username}" অ্যাকাউন্টটিতে লগইন করা হচ্ছে...`);
+            }
+        });
+    </script>
+</body>
+</html>
