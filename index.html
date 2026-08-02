@@ -1,9 +1,10 @@
-<!DOCTYPE html>
+
+      <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CptMarkets - Premium Secure Trading Platform</title>
+    <title>CptMarkets - Complete Live Functional Platform</title>
     <!-- Chart.js for Live Graph -->
     <script src="https://jsdelivr.net"></script>
     <!-- FontAwesome for Icons -->
@@ -67,6 +68,13 @@
         .banner-title { font-size: 22px; font-weight: bold; color: #f7d070; }
         .banner-subtitle { font-size: 12px; color: var(--text-gray); }
 
+        /* Secret Admin Panel */
+        .admin-panel {
+            background-color: #2c1a04; border: 1px dashed #f3b137; margin: 15px; padding: 15px; border-radius: 12px; display: none;
+        }
+        .admin-panel h4 { margin: 0 0 10px 0; color: #f7d070; display: flex; justify-content: space-between; }
+        .btn-admin-add { background: var(--green); color: white; border: none; padding: 8px 12px; border-radius: 4px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 5px; }
+
         .assets-card { background-color: var(--card-bg); margin: 0 15px 20px 15px; padding: 20px; border-radius: 16px; }
         .asset-label { font-size: 13px; color: var(--text-gray); display: flex; justify-content: space-between; }
         .asset-amount { font-size: 32px; font-weight: bold; margin: 10px 0; }
@@ -77,13 +85,6 @@
         .btn-action { flex: 1; padding: 12px; border-radius: 25px; border: none; font-weight: bold; cursor: pointer; font-size: 13px; }
         .btn-gold { background: var(--btn-gold); color: #222; }
         .btn-dark { background-color: #192a45; color: var(--text-white); }
-
-        /* Secret Admin Panel */
-        .admin-panel {
-            background-color: #2c1a04; border: 1px dashed #f3b137; margin: 15px; padding: 15px; border-radius: 12px; display: none;
-        }
-        .admin-panel h4 { margin: 0 0 10px 0; color: #f7d070; display: flex; justify-content: space-between; }
-        .btn-admin-add { background: var(--green); color: white; border: none; padding: 8px 12px; border-radius: 4px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 5px; }
 
         /* Market Section */
         .market-section { background-color: var(--card-bg); margin: 0 15px 20px 15px; padding: 15px; border-radius: 12px; }
@@ -124,9 +125,9 @@
         
         <!-- ================= 1. AUTH SCREEN ================= -->
         <div class="auth-screen" id="authSection">
+            <!-- Login Card -->
             <div class="auth-card" id="loginCard">
                 <h2>CptMarkets Login</h2>
-                <p style="font-size: 11px; color: var(--text-gray); margin-top: -10px;">অ্যাডমিন প্যানেল দেখতে <b>admin@trade.com</b> লিখুন</p>
                 <input type="email" id="loginEmail" placeholder="Email Address" value="user@trade.com">
                 <input type="password" id="loginPassword" placeholder="Password" value="123456">
                 <button onclick="loginUser()">Sign In</button>
@@ -136,11 +137,12 @@
                 </div>
             </div>
             
+            <!-- Register Card -->
             <div class="auth-card" id="registerCard" style="display: none;">
                 <h2>Create Account</h2>
-                <input type="text" placeholder="Full Name">
-                <input type="email" placeholder="Email Address">
-                <input type="password" placeholder="Password">
+                <input type="text" id="regName" placeholder="Full Name">
+                <input type="email" id="regEmail" placeholder="Email Address">
+                <input type="password" id="regPassword" placeholder="Password">
                 <button onclick="registerUser()">Register</button>
                 <div class="auth-links">
                     <a onclick="toggleAuth(true)">Already have an account? Login</a>
@@ -169,7 +171,7 @@
                 <div class="banner-subtitle" id="lang-banner-sub">Global integrated financial trading platform</div>
             </div>
 
-            <!-- ADMIN PANEL -->
+            <!-- SECRET ADMIN CONTROL PANEL -->
             <div class="admin-panel" id="adminControlPanel">
                 <h4><span><i class="fa-solid fa-user-shield"></i> Admin Control Panel</span> <span style="font-size:11px; color:var(--green);">Active</span></h4>
                 <p style="font-size: 12px; margin: 5px 0; color: #eaecef;">ইউজারের অ্যাকাউন্টে ডেমো ফান্ড যোগ করুন:</p>
