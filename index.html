@@ -1,147 +1,214 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CCPT Trade</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CptMarkets - অনলাইন ট্রেডিং প্ল্যাটফর্ম</title>
+    <style>
+        /* গ্লোবাল রিসেট এবং ফন্ট */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial, sans-serif;
-}
+        body {
+            background-color: #0b0e14;
+            color: #ffffff;
+            line-height: 1.6;
+        }
 
-body{
-background:#0f172a;
-color:white;
-}
+        /* নেভিগেশন বার */
+        header {
+            background-color: #121620;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #1f2635;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-header{
-background:#111827;
-padding:20px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00e676;
+            text-decoration: none;
+        }
 
-header h1{
-color:#22c55e;
-}
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
 
-nav a{
-color:white;
-text-decoration:none;
-margin-left:20px;
-}
+        nav ul li {
+            margin-left: 30px;
+        }
 
-.hero{
-text-align:center;
-padding:100px 20px;
-}
+        nav ul li a {
+            color: #b0b8c4;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
 
-.hero h2{
-font-size:45px;
-margin-bottom:20px;
-}
+        nav ul li a:hover {
+            color: #00e676;
+        }
 
-.hero p{
-font-size:20px;
-color:#cbd5e1;
-margin-bottom:30px;
-}
+        .auth-buttons .btn-login {
+            color: #ffffff;
+            text-decoration: none;
+            margin-right: 20px;
+        }
 
-.btn{
-display:inline-block;
-padding:15px 35px;
-background:#22c55e;
-color:white;
-text-decoration:none;
-border-radius:8px;
-font-size:18px;
-}
+        .btn-register {
+            background-color: #00e676;
+            color: #0b0e14;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
 
-.features{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:20px;
-padding:50px 20px;
-}
+        .btn-register:hover {
+            background-color: #00c853;
+        }
 
-.card{
-background:#1e293b;
-padding:25px;
-border-radius:12px;
-width:280px;
-text-align:center;
-}
+        /* হিরো সেকশন */
+        .hero {
+            padding: 100px 8%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: radial-gradient(circle at top right, #1f2d3d, #0b0e14);
+        }
 
-.card h3{
-color:#22c55e;
-margin-bottom:10px;
-}
+        .hero-content {
+            max-width: 550px;
+        }
 
-footer{
-text-align:center;
-padding:20px;
-background:#111827;
-margin-top:40px;
-}
-</style>
+        .hero-content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
 
+        .hero-content h1 span {
+            color: #00e676;
+        }
+
+        .hero-content p {
+            color: #b0b8c4;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        /* বৈশিষ্ট্য বা ফিচার সেকশন */
+        .features {
+            padding: 80px 8%;
+            text-align: center;
+            background-color: #121620;
+        }
+
+        .features h2 {
+            font-size: 36px;
+            margin-bottom: 40px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: #1f2635;
+            padding: 40px 30px;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 15px;
+            color: #00e676;
+        }
+
+        .feature-card p {
+            color: #b0b8c4;
+        }
+
+        /* ফুটার */
+        footer {
+            background-color: #07090d;
+            padding: 40px 8%;
+            text-align: center;
+            color: #667280;
+            font-size: 14px;
+            border-top: 1px solid #1f2635;
+        }
+    </style>
 </head>
-
 <body>
 
-<header>
-<h1>CCPT Trade</h1>
+    <!-- হেডার বা মেনু বার -->
+    <header>
+        <a href="#" class="logo">CptMarkets</a>
+        <nav>
+            <ul>
+                <li><a href="#">হোম</a></li>
+                <li><a href="#">ট্রেডিং</a></li>
+                <li><a href="#">প্ল্যাটফর্ম</a></li>
+                <li><a href="#">বাজার বিশ্লেষণ</a></li>
+                <li><a href="#">যোগাযোগ</a></li>
+            </ul>
+        </nav>
+        <div class="auth-buttons">
+            <a href="#" class="btn-login">লগইন</a>
+            <a href="#" class="btn-register">অ্যাকাউন্ট খুলুন</a>
+        </div>
+    </header>
 
-<nav>
-<a href="#">Home</a>
-<a href="#">Markets</a>
-<a href="#">About</a>
-<a href="#">Contact</a>
-</nav>
+    <!-- হিরো ব্যানার সেকশন -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>স্মার্ট ট্রেডিংয়ের মাধ্যমে আপনার <span>ভবিষ্যত</span> গড়ুন</h1>
+            <p>বিশ্বস্ত প্ল্যাটফর্মে ফরেক্স, স্টক এবং ক্রিপ্টোকারেন্সি ট্রেড করুন একদম সর্বনিম্ন স্প্রেড এবং দ্রুততম এক্সিকিউশনের সাথে।</p>
+            <a href="#" class="btn-register" style="padding: 15px 30px; font-size: 18px;">ট্রেডিং শুরু করুন</a>
+        </div>
+    </section>
 
-</header>
+    <!-- প্ল্যাটফর্মের সুবিধাসমূহ -->
+    <section class="features">
+        <h2>কেন আমাদের বেছে নেবেন?</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>তাত্ক্ষণিক এক্সিকিউশন</h3>
+                <p>কোনো রকম বিলম্ব ছাড়াই মিলিসেকেন্ডের মধ্যে আপনার ট্রেড সম্পন্ন করুন।</p>
+            </div>
+            <div class="feature-card">
+                <h3>সুরক্ষিত তহবিল</h3>
+                <p>শীর্ষস্থানীয় ব্যাংকে আপনার ফান্ড সম্পূর্ণ আলাদা এবং নিরাপদভাবে রাখা হয়।</p>
+            </div>
+            <div class="feature-card">
+                <h3>২৪/৭ কাস্টমার সাপোর্ট</h3>
+                <p>যেকোনো সমস্যায় আমাদের ডেডিকেটেড সাপোর্ট টিম সবসময় আপনার পাশে আছে।</p>
+            </div>
+        </div>
+    </section>
 
-<section class="hero">
-
-<h2>Welcome to CCPT Trade</h2>
-
-<p>Your Trusted Trading Platform</p>
-
-<a href="#" class="btn">Start Trading</a>
-
-</section>
-
-<section class="features">
-
-<div class="card">
-<h3>Secure Trading</h3>
-<p>Fast and secure online trading platform.</p>
-</div>
-
-<div class="card">
-<h3>Live Market</h3>
-<p>Real-time market prices and charts.</p>
-</div>
-
-<div class="card">
-<h3>24/7 Support</h3>
-<p>Our support team is always ready to help.</p>
-</div>
-
-</section>
-
-<footer>
-
-<p>© 2026 CCPT Trade. All Rights Reserved.</p>
-
-</footer>
+    <!-- ফুটার সেকশন -->
+    <footer>
+        <p>&copy; 2026 CptMarkets. সর্বস্বত্ব সংরক্ষিত। ট্রেডিংয়ে আর্থিক ঝুঁকি রয়েছে।</p>
+    </footer>
 
 </body>
 </html>
