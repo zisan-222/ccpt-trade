@@ -105,3 +105,30 @@ body{
     color:#111 !important;
     font-weight:bold;
 }
+.quick-menu{
+    width:92%;
+    margin:20px auto;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+}
+
+.item{
+    background:#10264a;
+    border-radius:20px;
+    padding:20px 10px;
+    text-align:center;
+    border:1px solid rgba(255,255,255,0.08);
+}
+
+.item i{
+    font-size:28px;
+    color:#ffbf00;
+    margin-bottom:12px;
+}
+
+.item p{
+    color:#ffffff;
+    font-size:15px;
+    margin-top:8px;
+}
