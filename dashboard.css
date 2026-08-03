@@ -132,3 +132,69 @@ body{
     font-size:15px;
     margin-top:8px;
 }
+.hot-market{
+    width:92%;
+    margin:20px auto 100px;
+}
+
+.hot-market h2{
+    color:#fff;
+    margin-bottom:15px;
+}
+
+.market-card{
+    background:#10264a;
+    border-radius:18px;
+    padding:18px;
+    margin-bottom:15px;
+}
+
+.market-card h3{
+    color:#fff;
+}
+
+.market-card p{
+    color:#bfc8d8;
+    margin:8px 0;
+}
+
+.up{
+    color:#00ff99;
+    font-weight:bold;
+}
+
+.bottom-nav{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    background:#081a33;
+    display:flex;
+    justify-content:space-around;
+    padding:12px 0;
+}
+
+.nav-item{
+    text-align:center;
+    color:#ccc;
+    font-size:14px;
+}
+
+.nav-item i{
+    display:block;
+    font-size:22px;
+    margin-bottom:5px;
+}
+
+.nav-item.active{
+    color:#ffbf00;
+}
+
+.trade i{
+    background:#ffbf00;
+    color:#111;
+    width:55px;
+    height:55px;
+    line-height:55px;
+    border-radius:50%;
+}
