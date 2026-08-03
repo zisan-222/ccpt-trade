@@ -4,15 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CptMarkets - Dashboard</title>
-    <!-- আইকন সাপোর্ট করার জন্য বিশ্বস্ত CDN লিংক -->
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
         body {
             margin: 0; padding: 0; box-sizing: border-box; background-color: #020b18;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            color: #ffffff; padding-bottom: 110px; overflow-x: hidden;
+            color: #ffffff; padding-bottom: 120px; overflow-x: hidden;
         }
-        /* টপ বার */
         .top-bar {
             padding: 14px 16px; display: flex; justify-content: space-between; align-items: center;
             background: #031129; border-b: 1px solid rgba(30, 58, 138, 0.2);
@@ -24,18 +22,17 @@
         }
         .top-title { color: #fbbf24; font-weight: 700; font-size: 15px; margin: 0; }
 
-        /* ২য় ছবির হুবহু ম্যাপ ব্যানার */
         .banner-box { padding: 16px; }
         .main-banner {
             background: linear-gradient(135deg, #051c44 0%, #0c234a 100%);
             background-image: url('https://postimg.co');
             background-size: cover; background-position: center;
             padding: 24px 20px; border-radius: 16px; border: 1px solid rgba(30, 58, 138, 0.4);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.4);
         }
         .banner-title { color: #fbbf24; font-size: 24px; font-weight: 800; margin: 0; }
         .banner-subtitle { color: #9ca3af; font-size: 12px; margin: 6px 0 0 0; font-weight: 400; }
 
-        /* অ্যাসেট কন্টেইনার */
         .asset-card {
             margin: 0 16px; padding: 20px; background: rgba(5, 25, 62, 0.5);
             border-radius: 16px; border: 1px solid rgba(30, 58, 138, 0.3);
@@ -45,60 +42,60 @@
         .floating-info { display: flex; gap: 16px; font-size: 11px; color: #9ca3af; margin-bottom: 20px; }
         .pl-green { color: #10b981; font-weight: 700; }
 
-        /* ৩টি মেইন বাটন টেবিল লেআউট (যাতে ভাঙচুর না হয়) */
-        .action-table { width: 100%; border-collapse: separate; border-spacing: 10px 0; margin-left: -10px; margin-right: -10px; }
+        .action-table { width: 100%; border-collapse: separate; border-spacing: 10px 0; margin: 0; }
+        .action-table td { width: 33.33%; padding: 0; }
         .btn-deposit {
             display: block; width: 100%; padding: 12px 0; text-align: center;
             background: linear-gradient(to right, #f59e0b, #d97706); border: none;
-            border-radius: 12px; color: #031129; font-weight: 700; font-size: 13px; cursor: pointer;
+            border-radius: 12px; color: #031129; font-weight: 700; font-size: 13px; cursor: pointer; box-shadow: 0 4px 10px rgba(245,158,11,0.2);
         }
         .btn-secondary {
             display: block; width: 100%; padding: 12px 0; text-align: center;
             background: #0d2754; border: 1px solid rgba(30, 58, 138, 0.5);
-            border-radius: 12px; color: #ffffff; font-weight: 600; font-size: 13px; text-decoration: none;
+            border-radius: 12px; color: #ffffff; font-weight: 600; font-size: 13px; text-decoration: none; box-sizing: border-box;
         }
 
-        /* ৮টি গ্রিড সার্ভিস আইকন (লম্বালম্বি হওয়া বন্ধ করতে ক্লাসিক টেবিল স্ট্রাকচার) */
-        .service-table { width: 100%; margin: 24px 0; border-collapse: separate; border-spacing: 0 16px; }
-        .service-item { text-align: center; width: 25%; vertical-align: top; cursor: pointer; }
+        .service-container { margin: 24px 16px; display: block; }
+        .service-row { display: flex; justify-content: space-between; margin-bottom: 20px; width: 100%; }
+        .service-item { text-align: center; width: 23%; cursor: pointer; text-decoration: none; color: inherit; }
         .icon-box {
-            width: 46px; height: 46px; background: #05193e; border: 1px solid rgba(30, 58, 138, 0.4);
+            width: 48px; height: 48px; background: rgba(5, 25, 62, 0.7); border: 1px solid rgba(30, 58, 138, 0.4);
             border-radius: 14px; display: flex; align-items: center; justify-content: center; margin: 0 auto;
-            color: #fbbf24; font-size: 18px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
+        .icon-box svg { width: 20px; height: 20px; fill: #fbbf24; }
         .icon-label { font-size: 11px; color: #9ca3af; display: block; margin-top: 8px; font-weight: 500; }
 
-        /* Hot Markets */
-        .hot-markets { margin: 16px; }
-        .hot-header { display: flex; justify-content: space-between; font-size: 12px; color: #9ca3af; margin-bottom: 10px; font-weight: 700; }
+        .hot-markets { margin: 24px 16px; display: block; }
+        .hot-header { display: flex; justify-content: space-between; font-size: 12px; color: #9ca3af; margin-bottom: 12px; font-weight: 700; }
         .hot-row {
-            padding: 12px 16px; background: rgba(5, 25, 62, 0.3); border: 1px solid rgba(30, 58, 138, 0.2);
+            padding: 14px 16px; background: rgba(5, 25, 62, 0.3); border: 1px solid rgba(30, 58, 138, 0.2);
             border-radius: 12px; display: flex; justify-content: space-between; align-items: center;
         }
         .crypto-name { font-size: 14px; font-weight: 700; }
         .crypto-sub { font-size: 10px; color: #6b7280; margin-top: 2px; }
+        .live-price-box { display: flex; align-items: center; gap: 12px; }
         .price-text { font-size: 14px; font-weight: 700; font-family: monospace; color: #ffffff; }
-        .change-badge { background: rgba(239, 68, 68, 0.2); color: #ef4444; font-size: 11px; font-weight: 700; padding: 3px 6px; border-radius: 4px; font-family: monospace; margin-left: 10px; }
+        .change-badge { background: rgba(239, 68, 68, 0.2); color: #ef4444; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 6px; font-family: monospace; }
 
-        /* বটম নেভিগেশন বার */
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; right: 0; background: #031129;
             border-top: 1px solid rgba(30, 58, 138, 0.3); padding: 10px 0; display: flex; justify-content: space-around; align-items: center; z-index: 1000;
         }
         .nav-item { background: none; border: none; color: #6b7280; font-size: 10px; font-weight: 600; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; text-decoration: none; width: 20%; }
-        .nav-item i { font-size: 18px; margin-bottom: 4px; }
+        .nav-item svg { width: 18px; height: 18px; fill: #6b7280; margin-bottom: 4px; }
         .nav-item.active { color: #fbbf24; }
+        .nav-item.active svg { fill: #fbbf24; }
         
-        /* মাঝখানের বৃত্তাকার ট্রেড বাটন */
-        .trade-btn-container { margin-top: -24px; text-align: center; width: 20%; }
+        .trade-btn-container { margin-top: -26px; text-align: center; width: 20%; position: relative; }
         .circle-trade-btn {
-            width: 44px; height: 44px; background: linear-gradient(to bottom, #fbbf24, #f59e0b);
+            width: 46px; height: 46px; background: linear-gradient(to bottom, #fbbf24, #f59e0b);
             border-radius: 50%; border: 4px solid #020b18; display: flex; align-items: center; justify-content: center;
-            color: #031129; font-size: 18px; margin: 0 auto; box-shadow: 0 4px 10px rgba(245, 158, 11, 0.2);
+            margin: 0 auto; box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3); cursor: pointer;
         }
+        .circle-trade-btn svg { width: 18px; height: 18px; fill: #031129; }
         .trade-label { font-size: 10px; color: #fbbf24; font-weight: 600; margin-top: 4px; display: block; }
 
-        /* 🔒 এডমিন কন্ট্রোল */
         .admin-panel { margin: 20px 16px; padding: 16px; background: #170505; border-radius: 12px; border: 1px solid #7f1d1d; display: none; }
         .admin-title { font-size: 13px; font-weight: 700; color: #ef4444; margin: 0 0 12px 0; }
         .admin-input { width: 100%; padding: 10px; background: #020b18; border: 1px solid #7f1d1d; border-radius: 8px; color: #ffffff; font-size: 12px; margin-bottom: 10px; outline: none; box-sizing: border-box; }
@@ -107,7 +104,6 @@
 </head>
 <body>
 
-    <!-- টপ নেভিগেশন বার -->
     <div class="top-bar">
         <div class="top-brand">
             <div class="top-logo-circle">CPT</div>
@@ -116,7 +112,6 @@
         <img src="https://flagcdn.com" width="20" style="border-radius: 2px;">
     </div>
 
-    <!-- ব্যানার সেকশন -->
     <div class="banner-box">
         <div class="main-banner">
             <h2 class="banner-title">CptMarkets</h2>
@@ -124,10 +119,10 @@
         </div>
     </div>
 
-    <!-- টোটাল অ্যাসেট বক্স -->
     <div class="asset-card">
         <div class="asset-header">
             <span>Total Assets (USD)</span>
+            <!-- 🌟 এখানে অ্যাকাউন্টের আসল ইউনিক UID নাম্বার শো করবে -->
             <span id="displayUid" style="color: #fbbf24; font-family: monospace; font-weight: 700;">UID: Loading...</span>
         </div>
         <div class="total-balance" id="totalBalance">$0.00</div>
@@ -136,7 +131,6 @@
             <div>Equity <span class="equity-white" id="equityAmount">$0.00</span></div>
         </div>
 
-        <!-- ৩টি প্রধান বাটন লেআউট -->
         <table class="action-table">
             <tr>
                 <td><button onclick="alert('Please contact customer care.')" class="btn-deposit">Deposit</button></td>
@@ -146,17 +140,25 @@
         </table>
     </div>
 
-    <!-- ৮টি গ্রিড বাটন প্যানেল (হুবহু ২য় ছবির মতো টেবিল স্ট্রাকচার) -->
-    <table class="service-table">
-        <tr>
-            <td class="service-item" onclick="alert('Please contact customer care.')"><div class="icon-box"><i class="fa-solid fa-headset"></i></div><span class="icon-label">Support</span></td>
-            <td class="service-item" onclick="window.location.href='withdraw.html'"><div class="icon-box"><i class="fa-solid fa-wallet"></i></div><span class="icon-label">Withdraw</span></td>
-            <td class="service-item" onclick="alert('Coming soon')"><div class="icon-box"><i class="fa-solid fa-money-bill-transfer"></i></div><span class="icon-label">Transfer</span></td>
-            <td class="service-item" onclick="alert('Coming soon')"><div class="icon-box"><i class="fa-solid fa-users-viewfinder"></i></div><span class="icon-label">Copy Trade</span></td>
-        </tr>
-        <tr>
-            <td class="service-item" onclick="alert('Coming soon')"><div class="icon-box"><i class="fa-solid fa-credit-card"></i></div><span class="icon-label">Loan</span></td>
-            <td class="service-item" onclick="alert('Coming soon')"><div class="icon-box"><i class="fa-solid fa-chart-pie"></i></div><span class="icon-label">Wealth</span></td>
-            <td class="service-item" onclick="alert('Coming soon')"><div class="icon-box"><i class="fa-solid fa-pickaxe"></i></div><span class="icon-label">Mining</span></td>
-            <td class="service-item" onclick="alert('Coming soon')"><div class="icon-box"><i class="fa-solid fa-gift"></i></div><span class="icon-label">Invite</span></td>
-        </tr>
+    <div class="service-container">
+        <div class="service-row">
+            <div onclick="alert('Please contact customer care.')" class="service-item">
+                <div class="icon-box">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12v5c0 1.1.9 2 2 2h3v-8H4v-1c0-4.41 3.59-8 8-8s8 3.59 8 8v1h-3v8h3c1.1 0 2-.9 2-2v-5c0-5.52-4.48-10-10-10z"/></svg>
+                </div>
+                <span class="icon-label">Support</span>
+            </div>
+            <a href="withdraw.html" class="service-item">
+                <div class="icon-box">
+                    <svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+                </div>
+                <span class="icon-label">Withdraw</span>
+            </a>
+            <div onclick="alert('Coming soon')" class="service-item">
+                <div class="icon-box">
+                    <svg viewBox="0 0 24 24"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg>
+                </div>
+                <span class="icon-label">Transfer</span>
+            </div>
+            <div onclick="alert('Coming soon')" class="service-item">
+                <div class="icon-box">
