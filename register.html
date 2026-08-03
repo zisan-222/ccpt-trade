@@ -5,20 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CptMarkets - Create Account</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: sans-serif; background: #050b14; color: #fff; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; position: relative; }
-        body::before { content: ''; position: absolute; width: 300px; height: 300px; background: radial-gradient(circle, rgba(0,153,255,0.1), transparent 70%); top: 5%; left: 50%; transform: translateX(-50%); z-index: 0; pointer-events: none; }
-        .container { width: 100%; max-width: 400px; padding: 20px; text-align: center; z-index: 1; }
-        h1 { color: #ff9900; font-size: 32px; font-weight: bold; margin-bottom: 5px; }
-        .subtitle { color: #869bb5; font-size: 13px; margin-bottom: 35px; }
-        form { text-align: left; }
-        .input-label { display: block; color: #869bb5; font-size: 14px; margin-bottom: 8px; }
-        .input-wrapper { position: relative; margin-bottom: 20px; }
-        input { width: 100%; padding: 15px; background: rgba(16, 29, 49, 0.5); border: 1px solid #1a2f4c; border-radius: 10px; color: #fff; font-size: 15px; outline: none; }
-        input:focus { border-color: #ff9900; }
-        .register-btn { width: 100%; padding: 16px; background: linear-gradient(to bottom, #ffe054, #cca200); border: none; border-radius: 30px; color: #000; font-weight: bold; font-size: 18px; margin-top: 15px; cursor: pointer; }
-        .footer-links { display: flex; justify-content: space-between; margin-top: 25px; font-size: 13px; color: #869bb5; }
-        .footer-links a { color: #ffcc00; text-decoration: none; font-weight: bold; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #050b14; color: #fff; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .container { width: 100%; max-width: 420px; padding: 20px; box-sizing: border-box; }
+        h1 { font-size: 32px; text-align: center; color: #f1b82d; margin-bottom: 5px; font-weight: bold; }
+        .subtitle { text-align: center; color: #788b9e; font-size: 14px; margin-bottom: 35px; }
+        .input-group { margin-bottom: 20px; }
+        label { display: block; font-size: 14px; color: #788b9e; margin-bottom: 8px; }
+        input { width: 100%; padding: 16px; background: #0c1524; color: white; border: 1px solid #1c2d42; border-radius: 8px; font-size: 15px; box-sizing: border-box; transition: 0.3s; }
+        input:focus { border-color: #f1b82d; outline: none; background: #0f1c30; }
+        .register-btn { width: 100%; padding: 16px; background: linear-gradient(90deg, #f1b82d, #b8860b); border: none; border-radius: 30px; color: #000; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; transition: 0.3s; }
+        .register-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+        .footer-links { display: flex; justify-content: space-between; margin-top: 20px; font-size: 14px; }
+        .footer-links span { color: #788b9e; }
+        .footer-links a { color: #f1b82d; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -26,86 +25,95 @@
     <div class="container">
         <h1>Create Account</h1>
         <p class="subtitle">Join CptMarkets for global trading</p>
-
+        
         <form id="registerForm">
-            <label class="input-label">Username</label>
-            <div class="input-wrapper"><input type="text" id="reg-user" placeholder="Username" required></div>
+            <div class="input-group">
+                <label>Username</label>
+                <input type="text" id="reg-user" placeholder="Username" required>
+            </div>
 
-            <label class="input-label">Password</label>
-            <div class="input-wrapper"><input type="password" id="reg-pass" placeholder="••••••••" required></div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="reg-pass" placeholder="Password (min. 6 chars)" required>
+            </div>
 
-            <label class="input-label">Confirm Password</label>
-            <div class="input-wrapper"><input type="password" id="reg-confirm" placeholder="••••••••" required></div>
+            <div class="input-group">
+                <label>Confirm Password</label>
+                <input type="password" id="reg-confirm" placeholder="Confirm Password" required>
+            </div>
 
-            <label class="input-label">Invite Code</label>
-            <div class="input-wrapper"><input type="text" placeholder="Invite Code (optional)"></div>
-
+            <div class="input-group">
+                <label>Invite Code</label>
+                <input type="text" id="reg-invite" placeholder="Invite Code (optional)">
+            </div>
+            
             <button type="submit" class="register-btn">Register</button>
         </form>
 
         <div class="footer-links">
             <span>Already have an account?</span>
-            <a href="index.html">Go to Sign In</a>
+            <a href="index.html#/login">Go to Sign In</a>
         </div>
     </div>
-</div>
 
-<script type="module">
-  import { initializeApp } from "https://gstatic.com";
-  import { getAuth, createUserWithEmailAndPassword } from "https://gstatic.com";
-  import { getFirestore, doc, setDoc } from "https://gstatic.com";
+    <!-- ফায়ারবেস ব্যাকএন্ড ইন্টিগ্রেশন কোড -->
+    <script type="module">
+      import { initializeApp } from "https://gstatic.com";
+      import { getAuth, createUserWithEmailAndPassword } from "https://gstatic.com";
+      import { getFirestore, doc, setDoc } from "https://gstatic.com";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyApKKni5cB26UoJVod6pGhrzLYYv",
-    authDomain: "://firebaseapp.com",
-    projectId: "ccpt-trade",
-    storageBucket: "ccpt-trade.firebasestorage.app",
-    messagingSenderId: "461751033270",
-    appId: "1:461751033270:web:7fdc3f9a206cbf2",
-    measurementId: "G-V1RSJDECT"
-  };
+      // আপনার ফায়ারবেস ড্যাশবোর্ডের আসল কনফিগ
+      const firebaseConfig = {
+        apiKey: "AIzaSyApKKni5cB26UoJVod6pGhrzLYYv",
+        authDomain: "://firebaseapp.com",
+        projectId: "ccpt-trade",
+        storageBucket: "ccpt-trade.firebasestorage.app",
+        messagingSenderId: "461751033270",
+        appId: "1:461751033270:web:7fdc3f9a206cbf2",
+        measurementId: "G-V1RSJDECT"
+      };
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
 
-  document.getElementById("registerForm").addEventListener("submit", (e) => {
-    e.preventDefault();
-    
-    const username = document.getElementById("reg-user").value.trim();
-    const password = document.getElementById("reg-pass").value;
-    const confirmPassword = document.getElementById("reg-confirm").value;
+      document.getElementById("registerForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        
+        const username = document.getElementById("reg-user").value.trim();
+        const password = document.getElementById("reg-pass").value;
+        const confirmPassword = document.getElementById("reg-confirm").value;
 
-    if (!username || !password) {
-        alert("অনুগ্রহ করে ইউজারনেম এবং পাসওয়ার্ড সঠিকভাবে দিন।");
-        return;
-    }
+        if (!username || password.length < 6) {
+            alert("ইউজারনেম সঠিক দিন এবং পাসওয়ার্ড ন্যূনতম ৬ অক্ষরের দিন।");
+            return;
+        }
 
-    if (password !== confirmPassword) {
-        alert("পাসওয়ার্ড দুটি মেলেনি!");
-        return;
-    }
+        if (password !== confirmPassword) {
+            alert("পাসওয়ার্ড দুটি মেলেনি!");
+            return;
+        }
 
-    const fakeEmail = `${username.toLowerCase()}@trade.com`;
+        // ইউজারনেমকে ফায়ারবেসের জন্য ডেমো ইমেইলে রূপান্তর
+        const fakeEmail = `${username.toLowerCase()}@trade.com`;
 
-    createUserWithEmailAndPassword(auth, fakeEmail, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        return setDoc(doc(db, "users", user.uid), {
-          uid: user.uid,
-          name: username,
-          email: fakeEmail,
-          balance: 0.00 
-        });
-      })
-      .then(() => {
-        alert("অ্যাকাউন্ট তৈরি সফল হয়েছে!");
-        window.location.href = "dashboard.html";
-      })
-      .catch((error) => alert("ত্রুটি: " + error.message));
-  });
-</script>
-
-    
+        createUserWithEmailAndPassword(auth, fakeEmail, password)
+          .then((userCredential) => {
+            const user = userCredential.user;
+            // ডাটাবেজে ব্যালেন্স শুরুতে ০ ডলার সেট করা হচ্ছে
+            return setDoc(doc(db, "users", user.uid), {
+              uid: user.uid,
+              name: username,
+              email: fakeEmail,
+              balance: 0.00 
+            });
+          })
+          .then(() => {
+            alert("অ্যাকাউন্ট তৈরি সফল হয়েছে!");
+            window.location.href = "dashboard.html"; // ড্যাশবোর্ড পেজে রিডাইরেক্ট
+          })
+          .catch((error) => alert("রেজিস্ট্রেশন ত্রুটি: " + error.message));
+      });
+    </script>
 </body>
 </html>
