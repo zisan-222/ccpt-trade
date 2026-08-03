@@ -6,29 +6,17 @@
     <title>CptMarkets - Create Account</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: sans-serif; background: #050b14; color: #fff; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; position: relative; overflow-x: hidden; }
-        
-        /* ১ম ছবির মতো ব্যাকগ্রাউন্ড গ্লো ইফেক্ট */
+        body { font-family: sans-serif; background: #050b14; color: #fff; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; position: relative; }
         body::before { content: ''; position: absolute; width: 300px; height: 300px; background: radial-gradient(circle, rgba(0,153,255,0.1), transparent 70%); top: 5%; left: 50%; transform: translateX(-50%); z-index: 0; pointer-events: none; }
-
         .container { width: 100%; max-width: 400px; padding: 20px; text-align: center; z-index: 1; }
-        
         h1 { color: #ff9900; font-size: 32px; font-weight: bold; margin-bottom: 5px; }
         .subtitle { color: #869bb5; font-size: 13px; margin-bottom: 35px; }
-        
-        /* ফর্ম ও ইনপুট ফিল্ড ডিজাইন */
         form { text-align: left; }
         .input-label { display: block; color: #869bb5; font-size: 14px; margin-bottom: 8px; }
         .input-wrapper { position: relative; margin-bottom: 20px; }
-        
         input { width: 100%; padding: 15px; background: rgba(16, 29, 49, 0.5); border: 1px solid #1a2f4c; border-radius: 10px; color: #fff; font-size: 15px; outline: none; }
-        input:focus { border-color: #ff9900; background: rgba(16, 29, 49, 0.8); }
-        input::placeholder { color: #35475e; }
-
-        /* রেজিস্টার বাটন */
-        .register-btn { width: 100%; padding: 16px; background: linear-gradient(to bottom, #ffe054, #cca200); border: none; border-radius: 30px; color: #000; font-weight: bold; font-size: 18px; margin-top: 15px; cursor: pointer; box-shadow: 0 4px 15px rgba(204,162,0,0.2); }
-        
-        /* ফুটার লিংক */
+        input:focus { border-color: #ff9900; }
+        .register-btn { width: 100%; padding: 16px; background: linear-gradient(to bottom, #ffe054, #cca200); border: none; border-radius: 30px; color: #000; font-weight: bold; font-size: 18px; margin-top: 15px; cursor: pointer; }
         .footer-links { display: flex; justify-content: space-between; margin-top: 25px; font-size: 13px; color: #869bb5; }
         .footer-links a { color: #ffcc00; text-decoration: none; font-weight: bold; }
     </style>
@@ -39,38 +27,47 @@
         <h1>Create Account</h1>
         <p class="subtitle">Join CptMarkets for global trading</p>
 
-        <!-- ফর্ম সাবমিট হলে সরাসরি ড্যাশবোর্ডে রিডাইরেক্ট হবে -->
-        <form onsubmit="event.preventDefault(); window.location.href='dashboard.html';">
-            
+        <form id="registerForm">
             <label class="input-label">Username</label>
-            <div class="input-wrapper">
-                <input type="text" placeholder="Username" required>
-            </div>
+            <div class="input-wrapper"><input type="text" id="reg-user" placeholder="Username" required></div>
 
             <label class="input-label">Password</label>
-            <div class="input-wrapper">
-                <input type="password" placeholder="••••••••" required>
-            </div>
+            <div class="input-wrapper"><input type="password" id="reg-pass" placeholder="••••••••" required></div>
 
             <label class="input-label">Confirm Password</label>
-            <div class="input-wrapper">
-                <input type="password" placeholder="••••••••" required>
-            </div>
+            <div class="input-wrapper"><input type="password" id="reg-confirm" placeholder="••••••••" required></div>
 
             <label class="input-label">Invite Code</label>
-            <div class="input-wrapper">
-                <input type="text" placeholder="Invite Code (optional)">
-            </div>
+            <div class="input-wrapper"><input type="text" placeholder="Invite Code (optional)"></div>
 
             <button type="submit" class="register-btn">Register</button>
         </form>
 
-        <!-- Go to Sign In এ ক্লিক করলে লগইন পেজে ব্যাক করবে -->
         <div class="footer-links">
             <span>Already have an account?</span>
             <a href="index.html">Go to Sign In</a>
         </div>
     </div>
 
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let user = document.getElementById('reg-user').value;
+            let pass = document.getElementById('reg-pass').value;
+            let confirmPass = document.getElementById('reg-confirm').value;
+
+            if(pass !== confirmPass) {
+                alert("পাসওয়ার্ড দুটি মেলেনি!");
+                return;
+            }
+
+            // ব্রাউজারের মেমোরিতে নাম ও পাসওয়ার্ড সেভ করা হচ্ছে
+            localStorage.setItem('savedUser', user);
+            localStorage.setItem('savedPass', pass);
+
+            alert("রেজিস্ট্রেশন সফল হয়েছে! এখন লগইন করুন।");
+            window.location.href = 'index.html'; // সরাসরি লগইন পেজে নিয়ে যাবে
+        });
+    </script>
 </body>
 </html>
