@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CptMarkets - Login & Register</title>
+    <title>CptMarkets - Login</title>
     <!-- Icons and Fonts Library -->
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
@@ -60,54 +60,44 @@
         </div>
     </div>
     
-    <button class="btn-gold" onclick="loginUser()">Go to Sign In</button>
+    <button class="btn-gold" onclick="handleLogin()">Go to Sign In</button>
     
     <div class="action-links">
-        <a href="#" onclick="registerUser()"><i class="fa-solid fa-user-plus"></i> Create Account</a>
+        <!-- এটি আপনাকে সরাসরি কোনো এরর ছাড়াই register.html পেজে নিয়ে যাবে -->
+        <a href="register.html"><i class="fa-solid fa-user-plus"></i> Create Account</a>
         <a href="#"><i class="fa-solid fa-key"></i> Forgot Password?</a>
     </div>
 </div>
 
-<!-- Browser Logic & Authentication Script -->
 <script>
-    function registerUser() {
-        const user = document.getElementById("username").value.trim();
+    // ⚠️ নিচে আপনার কপি করা Firebase Realtime Database লিঙ্কটি অবশ্যই বসাবেন ⚠️
+    const FIREBASE_URL = "http://ccpt-trade.vercel.app;
+
+    function handleLogin() {
+        const user = document.getElementById("username").value.trim().toLowerCase();
         const pass = document.getElementById("password").value;
-        
-        if(user === "" || pass === "") { 
-            alert("Please enter both Username and Password!"); 
-            return; 
-        }
-        if(user.length < 4 || pass.length < 6) {
-            alert("Username must be at least 4 characters and Password at least 6 characters long!");
+
+        if(user === "" || pass === "") {
+            alert("Please enter both Username and Password!");
             return;
         }
         
-        localStorage.setItem("trader_user", user);
-        localStorage.setItem("trader_pass", btoa(pass)); 
-        localStorage.setItem("trader_balance", "0.00");  
-        
-        alert("Account created successfully! Now click 'Go to Sign In' to log in.");
-    }
-
-    function loginUser() {
-        const user = document.getElementById("username").value.trim();
-        const pass = document.getElementById("password").value;
-        
-        const storedUser = localStorage.getItem("trader_user");
-        const storedPass = localStorage.getItem("trader_pass");
-        
-        if(!storedUser) {
-            alert("No account found! Please click 'Create Account' first.");
-            return;
-        }
-
-        if(user === storedUser && btoa(pass) === storedPass) {
-            localStorage.setItem("is_logged", "true");
-            window.location.href = "dashboard.html"; 
-        } else {
-            alert("Invalid Username or Password!");
-        }
+        // ক্লাউড ডাটাবেজ থেকে তথ্য ভ্যালিডেশন
+        fetch(`${FIREBASE_URL}/users/${user}.json`)
+        .then(response => response.json())
+        .then(data => {
+            if(data !== null && data.password === btoa(pass)) {
+                localStorage.setItem("current_logged_user", user);
+                localStorage.setItem("is_logged", "true");
+                window.location.href = "dashboard.html";
+            } else {
+                alert("Invalid Username or Password!");
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert("Database connection error! Check your Firebase Link.");
+        });
     }
 </script>
 
