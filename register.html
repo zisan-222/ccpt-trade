@@ -49,25 +49,47 @@
         </div>
     </div>
 
-    <script>
-        document.getElementById('registerForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            let user = document.getElementById('reg-user').value;
-            let pass = document.getElementById('reg-pass').value;
-            let confirmPass = document.getElementById('reg-confirm').value;
+    <script type="module">
+  import { initializeApp } from "https://gstatic.com";
+  import { getAuth, createUserWithEmailAndPassword } from "https://gstatic.com";
+  import { getFirestore, doc, setDoc } from "https://gstatic.com";
 
-            if(pass !== confirmPass) {
-                alert("পাসওয়ার্ড দুটি মেলেনি!");
-                return;
-            }
+  const firebaseConfig = {
+    apiKey: "AIzaSyApKKni5cB26UoJVod6pGhrzLYYv",
+    authDomain: "://firebaseapp.com",
+    projectId: "ccpt-trade",
+    storageBucket: "ccpt-trade.firebasestorage.app",
+    messagingSenderId: "461751033270",
+    appId: "1:461751033270:web:7fdc3f9a206cbf2",
+    measurementId: "G-V1RSJDECT"
+  };
 
-            // ব্রাউজারের মেমোরিতে নাম ও পাসওয়ার্ড সেভ করা হচ্ছে
-            localStorage.setItem('savedUser', user);
-            localStorage.setItem('savedPass', pass);
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
 
-            alert("রেজিস্ট্রেশন সফল হয়েছে! এখন লগইন করুন।");
-            window.location.href = 'index.html'; // সরাসরি লগইন পেজে নিয়ে যাবে
+  document.getElementById("registerForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const name = document.getElementById("name").value;
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        return setDoc(doc(db, "users", user.uid), {
+          uid: user.uid,
+          name: name,
+          email: email,
+          balance: 0.00 
         });
+      })
+      .then(() => {
+        alert("অ্যাকাউন্ট তৈরি সফল হয়েছে!");
+        window.location.href = "dashboard.html";
+      })
+      .catch((error) => alert("ত্রুটি: " + error.message));
+  });
     </script>
 </body>
 </html>
