@@ -198,3 +198,72 @@ body{
     line-height:55px;
     border-radius:50%;
 }
+/* ===== Mine Page ===== */
+
+.profile-card{
+    width:90%;
+    margin:20px auto;
+    background:#122b55;
+    border-radius:18px;
+    padding:20px;
+    color:#fff;
+    box-sizing:border-box;
+}
+
+.profile-card h2{
+    font-size:24px;
+    margin-bottom:8px;
+}
+
+.profile-card p{
+    color:#cfcfcf;
+    font-size:14px;
+}
+
+.profit-box{
+    display:flex;
+    justify-content:space-between;
+    margin-top:20px;
+    text-align:center;
+}
+
+.profit-box h3{
+    color:#00ff99;
+    margin:0;
+    font-size:22px;
+}
+
+.profit-box p{
+    margin-top:5px;
+    color:#bdbdbd;
+    font-size:13px;
+}
+
+.menu-list{
+    width:90%;
+    margin:20px auto;
+    background:#122b55;
+    border-radius:18px;
+    overflow:hidden;
+}
+
+.menu-list a{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    color:#fff;
+    text-decoration:none;
+    padding:18px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    font-size:16px;
+}
+
+.menu-list a:last-child{
+    border-bottom:none;
+}
+
+.menu-list i{
+    color:#ffc107;
+    font-size:22px;
+    width:30px;
+}
