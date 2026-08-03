@@ -1,83 +1,84 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CptMarkets - Create Account</title>
-    <!-- Tailwind CSS -->
-    <script src="https://jsdelivr.net"></script>
+    <style>
+        body {
+            margin: 0; padding: 0; box-sizing: border-box; background-color: #020b18;
+            background-image: radial-gradient(circle at center, rgba(13, 148, 136, 0.06) 0%, transparent 65%), url('https://transparenttextures.com');
+            background-size: cover; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #ffffff; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow-x: hidden;
+        }
+        .register-card { width: 100%; max-width: 360px; margin: 20px; padding: 32px 24px; background: rgba(5, 25, 62, 0.5); backdrop-filter: blur(12px); border-radius: 24px; border: 1px solid rgba(30, 58, 138, 0.3); text-align: center; }
+        .title { color: #fbbf24; font-size: 32px; font-weight: 800; margin: 0 0 8px 0; letter-spacing: -0.5px; }
+        .subtitle { color: #9ca3af; font-size: 13px; margin: 0 0 28px 0; font-weight: 400; }
+        .form-group { text-align: left; margin-bottom: 18px; }
+        .form-label { font-size: 12px; color: #9ca3af; font-weight: 500; margin-bottom: 8px; display: block; padding-left: 4px; }
+        .form-input { width: 100%; padding: 14px 16px; background: rgba(3, 17, 41, 0.8); border: 1px solid rgba(30, 58, 138, 0.6); border-radius: 14px; color: #ffffff; font-size: 14px; outline: none; box-sizing: border-box; transition: all 0.2s ease; }
+        .form-input:focus { border-color: #fbbf24; box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1); }
+        .submit-btn { width: 100%; padding: 14px; background: linear-gradient(to right, #f59e0b, #d97706); border: none; border-radius: 14px; color: #031129; font-weight: 700; font-size: 15px; cursor: pointer; box-shadow: 0 8px 20px rgba(245, 158, 11, 0.15); transition: all 0.2s ease; margin-top: 12px; }
+        .form-footer { display: flex; justify-content: space-between; margin-top: 20px; font-size: 12px; padding: 0 4px; }
+        .footer-text { color: #9ca3af; }
+        .footer-link { color: #fbbf24; text-decoration: none; font-weight: 600; }
+    </style>
 </head>
-<body class="bg-[#031129] text-white flex justify-center items-center min-h-screen font-sans">
+<body>
 
-    <div class="w-full max-w-md p-6 bg-[#05193e] rounded-2xl shadow-xl border border-blue-900 mx-4">
-        <!-- ২য় ছবির মতো হেডার ডিজাইন -->
-        <div class="text-center mb-6">
-            <h1 class="text-3xl font-bold text-amber-400">Create Account</h1>
-            <p class="text-xs text-gray-400 mt-1">Join CptMarkets for global trading</p>
+    <div class="register-card">
+        <h1 class="title">Create Account</h1>
+        <p class="subtitle">Join CptMarkets for global trading</p>
+
+        <div class="form-group">
+            <span class="form-label">Username</span>
+            <input type="text" id="regUser" placeholder="Username" class="form-input">
         </div>
 
-        <!-- ইনপুট ফিল্ডসমূহ -->
-        <div class="space-y-4">
-            <div>
-                <label class="block text-xs font-semibold text-gray-400 mb-1 ml-1">Username</label>
-                <input type="text" id="regUser" placeholder="Username" class="w-full px-4 py-3 bg-[#031129] border border-blue-900 rounded-xl focus:outline-none focus:border-amber-400 text-sm">
-            </div>
-
-            <div>
-                <label class="block text-xs font-semibold text-gray-400 mb-1 ml-1">Password</label>
-                <input type="password" id="regPass" placeholder="Password (min. 6 chars)" class="w-full px-4 py-3 bg-[#031129] border border-blue-900 rounded-xl focus:outline-none focus:border-amber-400 text-sm">
-            </div>
-
-            <div>
-                <label class="block text-xs font-semibold text-gray-400 mb-1 ml-1">Confirm Password</label>
-                <input type="password" id="regConfirm" placeholder="Confirm Password" class="w-full px-4 py-3 bg-[#031129] border border-blue-900 rounded-xl focus:outline-none focus:border-amber-400 text-sm">
-            </div>
-
-            <div>
-                <label class="block text-xs font-semibold text-gray-400 mb-1 ml-1">Invite Code</label>
-                <input type="text" id="inviteCode" placeholder="Invite Code (optional)" class="w-full px-4 py-3 bg-[#031129] border border-blue-900 rounded-xl focus:outline-none focus:border-amber-400 text-sm">
-            </div>
-
-            <!-- গোল্ডেন উজ্জ্বল রেজিস্টার বাটন -->
-            <button onclick="handleRegister()" class="w-full py-3.5 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-[#031129] font-bold text-sm rounded-xl shadow-lg hover:brightness-110 active:scale-[0.99] transition duration-200">
-                Register
-            </button>
+        <div class="form-group">
+            <span class="form-label">Password</span>
+            <input type="password" id="regPass" placeholder="Password (min. 6 chars)" class="form-input">
         </div>
 
-        <!-- নিচে লগইন পেজে ফিরে যাওয়ার লিংক -->
-        <div class="mt-6 text-center text-xs font-medium">
-            <span class="text-gray-400">Already have an account?</span>
-            <a href="index.html" class="text-amber-400 ml-1 hover:underline">Go to Sign In</a>
+        <div class="form-group">
+            <span class="form-label">Confirm Password</span>
+            <input type="password" id="regConfirm" placeholder="Confirm Password" class="form-input">
+        </div>
+
+        <div class="form-group">
+            <span class="form-label">Invite Code</span>
+            <input type="text" id="inviteCode" placeholder="Invite Code (optional)" class="form-input">
+        </div>
+
+        <button onclick="handleRegister()" class="submit-btn">Register</button>
+
+        <div class="form-footer">
+            <span class="footer-text">Already have an account?</span>
+            <a href="index.html" class="footer-link">Go to Sign In</a>
         </div>
     </div>
 
-    <!-- অ্যাকাউন্ট জেনারেশন ও ইউনিক UID তৈরি করার লজিক -->
     <script>
         function handleRegister() {
             var u = document.getElementById('regUser').value.trim();
             var p = document.getElementById('regPass').value.trim();
             var c = document.getElementById('regConfirm').value.trim();
 
-            if(!u || !p || !c) { alert("সবগুলো তথ্য সঠিকভাবে পূরণ করুন!"); return; }
-            if(p.length < 6) { alert("পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে!"); return; }
-            if(p !== c) { alert("পাসওয়ার্ড দুটি মেলেনি!"); return; }
+            if(!u || !p || !c) { alert("Please fill in all the fields correctly!"); return; }
+            if(p.length < 6) { alert("Password must be at least 6 characters long!"); return; }
+            if(p !== c) { alert("Passwords do not match!"); return; }
 
             var users = JSON.parse(localStorage.getItem('users')) || [];
-            
-            // ইউজারনেম আগে থেকে আছে কিনা চেক করা
             var exists = users.some(function(user) { return user.username === u; });
-            if(exists) { alert("এই ইউজারনেমটি ইতিমধ্যে ব্যবহার করা হয়েছে!"); return; }
+            if(exists) { alert("This username is already taken!"); return; }
 
-            // অটোমেটিক ৬ ডিজিটের ইউনিক ইউজার আইডি (UID) তৈরি করার লজিক
             var uid = Math.floor(100000 + Math.random() * 900000).toString();
 
-            // নতুন ইউজারের প্রোফাইল ডাটাবেজ (লোকাল স্টোরেজ)-এ সেভ করা
             var newUser = { uid: uid, username: u, password: p, balance: 0.00 };
             users.push(newUser);
             localStorage.setItem('users', JSON.stringify(users));
 
-            alert("রেজিস্ট্রেশন সফল হয়েছে!\nআপনার ইউনিক UID হলো: " + uid);
+            alert("Registration successful!\nYour unique UID is: " + uid);
             window.location.href = 'index.html';
         }
     </script>
