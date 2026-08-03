@@ -12,14 +12,14 @@
         .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #071120; }
         .logo-area { display: flex; align-items: center; gap: 10px; }
         
-        /* ১ম ছবির মতো হুবহু গোল্ডেন সার্কেল লোগো */
+        /* গোল্ডেন সার্কেল লোগো */
         .logo-circle { width: 44px; height: 44px; background: radial-gradient(circle, #ffe875, #a37f00); border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #000; font-weight: bold; border: 2px solid #ffd700; box-shadow: 0 0 8px rgba(255, 215, 0, 0.5); }
         .logo-text-top { font-size: 9px; line-height: 9px; font-weight: 900; font-family: 'Arial Black', sans-serif; letter-spacing: 0.3px; }
-        .logo-text-mid { font-size: 6px; line-height: 7px; border-top: 1px solid #000; border-bottom: 1px solid #000; margin: 1px 0; padding: 0 2px; font-weight: 800; font-size: 5px; }
+        .logo-text-mid { font-size: 5px; line-height: 7px; border-top: 1px solid #000; border-bottom: 1px solid #000; margin: 1px 0; padding: 0 2px; font-weight: 800; }
         .logo-text-bot { font-size: 6px; line-height: 6px; font-weight: 900; }
         
         .brand-name { color: #ffd700; font-size: 22px; font-weight: bold; letter-spacing: 0.5px; }
-        .lang-flag { width: 25px; height: 18px; border-radius: 2px; }
+        .flag-svg { width: 25px; height: 18px; border-radius: 2px; }
 
         .container { padding: 15px; }
 
@@ -32,7 +32,7 @@
         .balance-card { background: #0b192c; border-radius: 15px; padding: 20px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05); position: relative; }
         .asset-label { color: #6d7f95; font-size: 13px; margin-bottom: 8px; }
         .asset-amount { font-size: 36px; font-weight: bold; margin-bottom: 10px; text-align: left; color: #fff; }
-        .eye-icon { position: absolute; right: 20px; top: 20px; width: 20px; opacity: 0.6; }
+        .eye-svg { position: absolute; right: 20px; top: 25px; width: 20px; height: 20px; fill: #6d7f95; }
         .status-row { font-size: 13px; margin-bottom: 20px; text-align: left; }
         .green-text { color: #00ffcc; margin-right: 15px; }
         .gray-text { color: #6d7f95; }
@@ -46,19 +46,19 @@
         .menu-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; background: #0b192c; padding: 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); }
         .grid-item { display: flex; flex-direction: column; align-items: center; text-align: center; text-decoration: none; color: #fff; font-size: 12px; cursor: pointer; }
         .icon-box { width: 50px; height: 50px; background: #12253f; border-radius: 15px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; border: 1px solid rgba(255,255,255,0.03); }
-        .icon-box img { width: 24px; height: 24px; filter: invert(84%) sepia(58%) saturate(541%) hue-rotate(359deg) brightness(105%) contrast(104%); }
+        .icon-box svg { width: 22px; height: 22px; fill: #ffcc00; }
         .grid-item span { color: #869bb5; }
 
         /* বটম নেভিগেশন বার */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #071120; display: flex; justify-content: space-around; align-items: center; padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.05); z-index: 1000; }
         .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #536479; font-size: 11px; width: 20%; }
         .nav-item.active { color: #ffcc00; }
-        .nav-item img { width: 20px; height: 20px; margin-bottom: 4px; opacity: 0.6; }
-        .nav-item.active img { opacity: 1; filter: invert(84%) sepia(58%) saturate(541%) hue-rotate(359deg) brightness(105%) contrast(104%); }
+        .nav-item svg { width: 20px; height: 20px; margin-bottom: 4px; fill: #536479; }
+        .nav-item.active svg { fill: #ffcc00; }
         
         /* মাঝখানের গোল ট্রেড বাটন */
         .trade-btn-center { width: 55px; height: 55px; background: linear-gradient(135deg, #ffcc00, #ff9900); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-top: -30px; box-shadow: 0 4px 15px rgba(255,153,0,0.3); }
-        .trade-btn-center img { width: 26px; height: 26px; filter: none; opacity: 1; }
+        .trade-btn-center svg { width: 24px; height: 24px; fill: #000; }
     </style>
 </head>
 <body>
@@ -66,7 +66,6 @@
     <!-- হেডার এরিয়া -->
     <div class="header">
         <div class="logo-area">
-            <!-- নতুন গোল্ডেন লোগো স্ট্রাকচার -->
             <div class="logo-circle">
                 <span class="logo-text-top">CPT</span>
                 <span class="logo-text-mid">MARKETS</span>
@@ -74,7 +73,15 @@
             </div>
             <div class="brand-name">CptMarkets</div>
         </div>
-        <img class="lang-flag" src="https://icons8.com" alt="Flag">
+        <!-- ইউকে ফ্ল্যাগ SVG কোড -->
+        <svg class="flag-svg" viewBox="0 0 60 30">
+            <clipPath id="t"><path d="M0,0 v30 h60 v-30 z"/></clipPath>
+            <path d="M0,0 v30 h60 v-30 z" fill="#012169"/>
+            <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6" clip-path="url(#t)"/>
+            <path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" stroke-width="4" clip-path="url(#t)"/>
+            <path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/>
+            <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/>
+        </svg>
     </div>
 
     <div class="container">
@@ -84,9 +91,10 @@
             <div class="banner-sub">Global integrated financial trading platform</div>
         </div>
 
-        <!-- ব্যালেন্স কার্ড -->
+        <!-- ব্যালেন্সカード -->
         <div class="balance-card">
-            <img class="eye-icon" src="https://icons8.com" alt="eye">
+            <!-- আই আইকন SVG -->
+            <svg class="eye-svg" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 16.5c-2.48 0-4.5-2.02-4.5-4.5s2.02-4.5 4.5-4.5 4.5 2.02 4.5 4.5-2.02 4.5-4.5 4.5zm0-7c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5z"/></svg>
             <div class="asset-label">Total Assets (USD)</div>
             <div class="asset-amount" id="total-assets">$0.00</div>
             <div class="status-row">
@@ -104,74 +112,48 @@
 
         <!-- ৮টি আইকন গ্রিড মেনু -->
         <div class="menu-grid">
-            <!-- এখানে আপনার টেলিগ্রাম চ্যাট লিংকটি বসাবেন -->
+            <!-- কাস্টমার কেয়ার টেলিগ্রাম লিংক এখানে দিন -->
             <a href="https://t.me" target="_blank" class="grid-item">
-                <div class="icon-box"><img src="https://icons8.com"></div>
+                <div class="icon-box">
+                    <svg viewBox="0 0 24 24"><path d="M12 1c-4.97 0-9 4.03-9 9v7c0 1.66 1.34 3 3 3h3v-8H5v-2c0-3.87 3.13-7 7-7s7 3.13 7 7v2h-4v8h3c1.66 0 3-1.34 3-3v-7c0-4.97-4.03-9-9-9z"/></svg>
+                </div>
                 <span>Support</span>
             </a>
             <a href="#" class="grid-item">
-                <div class="icon-box"><img src="https://icons8.com"></div>
+                <div class="icon-box">
+                    <svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+                </div>
                 <span>Withdraw</span>
             </a>
             <a href="#" class="grid-item">
-                <div class="icon-box"><img src="https://icons8.com"></div>
+                <div class="icon-box">
+                    <svg viewBox="0 0 24 24"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg>
+                </div>
                 <span>Transfer</span>
             </a>
             <a href="#" class="grid-item">
-                <div class="icon-box"><img src="https://icons8.com"></div>
+                <div class="icon-box">
+                    <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 1.34 5 3s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                </div>
                 <span>Copy Trade</span>
             </a>
             <a href="#" class="grid-item">
-                <div class="icon-box"><img src="https://icons8.com"></div>
+                <div class="icon-box">
+                    <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.1.89 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V12h16v6zm0-10H4V6h16v2z"/></svg>
+                </div>
                 <span>Loan</span>
             </a>
             <a href="#" class="grid-item">
-                <div class="icon-box"><img src="https://icons8.com"></div>
+                <div class="icon-box">
+                    <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+                </div>
                 <span>Wealth</span>
             </a>
             <a href="#" class="grid-item">
-                <div class="icon-box"><img src="https://icons8.com"></div>
+                <div class="icon-box">
+                    <svg viewBox="0 0 24 24"><path d="M22 10.91c0-.49-.32-.93-.8-.98 L12 9 L2.8 9.93c-.48.05-.8.49-.8.98v3.18c0 .44.31.82.74.9l9.26 1.85l9.26-1.85c.43-.08.74-.46.74-.9v-3.18z M12 2L2 6l10 4l10-4l-10-4z"/></svg>
+                </div>
                 <span>Mining</span>
             </a>
             <a href="#" class="grid-item">
-                <div class="icon-box"><img src="https://icons8.com"></div>
-                <span>Invite</span>
-            </a>
-        </div>
-    </div>
-
-    <!-- নিচের ফিক্সড মেনুবার -->
-    <div class="bottom-nav">
-        <a href="#" class="nav-item active">
-            <img src="https://icons8.com">
-            <span>Home</span>
-        </a>
-        <a href="#" class="nav-item">
-            <img src="https://icons8.com">
-            <span>Markets</span>
-        </a>
-        <a href="#" class="nav-item">
-            <div class="trade-btn-center">
-                <img src="https://icons8.com">
-            </div>
-            <span style="color: #ffcc00; margin-top: 4px;">Trade</span>
-        </a>
-        <a href="#" class="nav-item">
-            <img src="https://icons8.com">
-            <span>Assets</span>
-        </a>
-        <a href="#" class="nav-item">
-            <i class="fa-solid fa-user"></i>
-            <img src="https://icons8.com">
-            <span>Mine</span>
-        </a>
-    </div>
-
-    <script>
-        window.onload = function() {
-            let currentBalance = localStorage.getItem('userBalance') || '0.00';
-            document.getElementById('total-assets').innerText = '$' + parseFloat(currentBalance).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-        }
-    </script>
-</body>
-</html>
+                <div class="icon-box">
