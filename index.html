@@ -77,10 +77,12 @@
             var u = document.getElementById('username').value.trim();
             var p = document.getElementById('password').value.trim();
 
-            if(!u || !p) { alert("Please enter both username and password!"); return; }
+            if (!u || !p) { 
+                alert("Please enter both username and password!"); 
+                return; 
+            }
 
-            // Admin Logic Check
-            if(u === "admin" && p === "admin123") {
+            if (u === "admin" && p === "admin123") {
                 localStorage.setItem('currentUserUid', '000000');
                 localStorage.setItem('role', 'admin');
                 window.location.href = 'dashboard.html';
@@ -88,14 +90,15 @@
             }
 
             var users = JSON.parse(localStorage.getItem('users')) || [];
-            var found = users.find(function(user) { return user.username === u && user.password === p; });
+            var found = users.find(function(user) { 
+                return user.username === u && user.password === p; 
+            });
 
-            if(found) {
+            if (found) {
                 localStorage.setItem('currentUserUid', found.uid);
                 localStorage.setItem('role', 'user');
                 window.location.href = 'dashboard.html';
             } else {
-                // পাসওয়ার্ড ভুল হলে এখন সম্পূর্ণ ইংরেজি মেসেজ আসবে
                 alert("Incorrect username or password! Please try again.");
             }
         }
