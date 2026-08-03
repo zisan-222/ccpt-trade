@@ -1,1 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CptMarkets - Trading Dashboard</title>
+    <!-- Icons Library -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <style>
+        body { background-color: #060d1a; color: white; font-family: sans-serif; margin: 0; padding: 15px; padding-bottom: 80px;}
+        .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 10px 5px; }
+        .brand { color: #f39c12; font-size: 22px; font-weight: bold; text-shadow: 0 0 5px rgba(243,156,18,0.2); }
+        .main-card { background: linear-gradient(135deg, #0e1e36, #071224); border-radius: 15px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); margin-top: 15px; position: relative;}
+        .balance-title { color: #8a99ad; font-size: 14px; }
+        .balance-amount { font-size: 38px; font-weight: bold; margin: 10px 0; color: #ffffff; }
+        .action-btns { display: flex; justify-content: space-between; margin-top: 25px; }
+        .action-btns button { width: 30%; padding: 12px; border: none; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 14px; transition: 0.2s;}
+        .btn-dep { background: linear-gradient(90deg, #f1c40f, #e67e22); color: black; box-shadow: 0 4px 10px rgba(243,156,18,0.2); }
+        .btn-dep:hover { transform: translateY(-1px); }
+        .btn-other { background: #14243b; color: white; border: 1px solid #203552; }
+        
+        .grid-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 30px; }
+        .grid-item { background: #0e1e36; padding: 15px 5px; border-radius: 12px; text-align: center; font-size: 13px; color: #a0aec0; cursor: pointer; transition: 0.2s;}
+        .grid-item:hover { background: #142847; }
+        .grid-item i { font-size: 22px; color: #f39c12; margin-bottom: 8px; display: block;}
+        
+        /* Bottom Navbar */
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #0a1424; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #16263d; box-sizing: border-box; z-index: 999;}
+        .nav-item { text-align: center; color: #52647c; font-size: 12px; cursor: pointer;}
+        .nav-item.active { color: #f39c12; }
+        .nav-item i { font-size: 20px; display: block; margin-bottom: 3px; }
+        .center-btn { background: linear-gradient(135deg, #f1c40f, #d35400); width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: black; font-size: 22px; margin-top: -25px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        
+        /* Google Translate Element Styling */
+        .lang-bar { text-align: right; }
+        .goog-te-gadget-simple { background-color: rgba(13, 27, 50, 0.5) !important; border: 1px solid #1d2d44 !important; border-radius: 4px !important; padding: 3px 6px !important; }
+        .goog-te-gadget-simple span { color: #f1c40f !important; }
+    </style>
+</head>
+<body>
+
+    <div class="top-nav">
+        <div class="brand">CptMarkets</div>
+        <!-- Multi-language Dropdown -->
+        <div class="lang-bar" id="google_translate_element"></div>
+    </div>
+    
+    <div class="main-card">
+        <div class="balance-title">Total Assets (USD)</div>
+        <div class="balance-amount" id="display-balance">$0.00</div>
+        <div style="font-size:13px; color:#2ecc71;">Floating P/L +0.00 &nbsp; <span style="color:#8a99ad">Equity $0.00</span></div>
+        
+        <div class="action-btns">
+            <!-- Demo Funds Deposit Button -->
+            <button class="btn-dep" onclick="addDemoFunds()">Deposit</button>
+            <button class="btn-other">Withdraw</button>
+            <button class="btn-other">Transfer</button>
+        </div>
+    </div>
+
+    <!-- Features Grid Menu -->
+    <div class="grid-container">
+        <div class="grid-item" onclick="openChat()"><i class="fa-solid fa-headset"></i>Support</div>
+        <div class="grid-item"><i class="fa-solid fa-wallet"></i>Withdraw</div>
+        <div class="grid-item"><i class="fa-solid fa-money-bill-transfer"></i>Transfer</div>
+        <div class="grid-item"><i class="fa-solid fa-users-rectangle"></i>Copy Trade</div>
+        <div class="grid-item"><i class="fa-solid fa-hand-holding-dollar"></i>Loan</div>
+        <div class="grid-item"><i class="fa-solid fa-chart-pie"></i>Wealth</div>
+        <div class="grid-item"><i class="fa-solid fa-screwdriver-wrench"></i>Mining</div>
+        <div class="grid-item"><i class="fa-solid fa-gift"></i>Invite</div>
+    </div>
+
+    <!-- Footer Bottom Menu -->
+    <div class="bottom-nav">
+        <div class="nav-item active"><i class="fa-solid fa-house"></i>Home</div>
+        <div class="nav-item"><i class="fa-solid fa-globe"></i>Markets</div>
+        <div class="center-btn"><i class="fa-solid fa-arrow-up-down"></i></div>
+        <div class="nav-item"><i class="fa-solid fa-briefcase"></i>Assets</div>
+        <div class="nav-item"><i class="fa-solid fa-user"></i>Mine</div>
+    </div>
+
+    <script>
+        // Security Gate: Redirect to login if user session is not found
+        if (localStorage.getItem("is_logged") !== "true") { window.location.href = "index.html"; }
+
+        // Fetch and display balance from browser memory
+        document.getElementById("display-balance").innerText = "$" + (parseFloat(localStorage.getItem("trader_balance")) || 0).toFixed(2);
+
+        // Function to add demo funds
+        function addDemoFunds() {
+            let amount = prompt("Enter the amount of demo USD you want to deposit:", "1000");
+            if(amount != null && !isNaN(amount) && amount > 0) {
+                let currentBal = parseFloat(localStorage.getItem("trader_balance")) || 0;
+                let newBal = currentBal + parseFloat(amount);
+                localStorage.setItem("trader_balance", newBal);
+                document.getElementById("display-balance").innerText = "$" + newBal.toFixed(2);
+                alert("$" + amount + " Demo funds added successfully!");
+            } else if (amount != null) {
+                alert("Please enter a valid amount!");
+            }
+        }
+
+        // Support button action trigger
+        function openChat() {
+            if(typeof Tawk_API !== 'undefined') {
+                Tawk_API.toggle();
+            } else {
+                alert("Live Support is loading. Please wait a second and try again!");
+            }
+        }
+    </script>
+
+    <!-- Google Translator Script -->
+    <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,bn,ar,hi,es,zh-CN'}, 'google_translate_element');
+    }
+    </script>
+    <script type="text/javascript" src="//://google.com"></script>
+
+    <!-- 💬 YOUR TAWK.TO LIVE CHAT WIDGET CODE WILL GO HERE IN THE NEXT STEP 💬 -->
+
+</body>
+</html>
 
