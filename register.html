@@ -1,119 +1,85 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CptMarkets - Create Account</title>
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #050b14; color: #fff; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .container { width: 100%; max-width: 420px; padding: 20px; box-sizing: border-box; }
-        h1 { font-size: 32px; text-align: center; color: #f1b82d; margin-bottom: 5px; font-weight: bold; }
-        .subtitle { text-align: center; color: #788b9e; font-size: 14px; margin-bottom: 35px; }
-        .input-group { margin-bottom: 20px; }
-        label { display: block; font-size: 14px; color: #788b9e; margin-bottom: 8px; }
-        input { width: 100%; padding: 16px; background: #0c1524; color: white; border: 1px solid #1c2d42; border-radius: 8px; font-size: 15px; box-sizing: border-box; transition: 0.3s; }
-        input:focus { border-color: #f1b82d; outline: none; background: #0f1c30; }
-        .register-btn { width: 100%; padding: 16px; background: linear-gradient(90deg, #f1b82d, #b8860b); border: none; border-radius: 30px; color: #000; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; transition: 0.3s; }
-        .register-btn:hover { opacity: 0.9; transform: translateY(-1px); }
-        .footer-links { display: flex; justify-content: space-between; margin-top: 20px; font-size: 14px; }
-        .footer-links span { color: #788b9e; }
-        .footer-links a { color: #f1b82d; text-decoration: none; font-weight: bold; }
-    </style>
+    <!-- Tailwind CSS -->
+    <script src="https://jsdelivr.net"></script>
 </head>
-<body>
+<body class="bg-[#031129] text-white flex justify-center items-center min-h-screen font-sans">
 
-    <div class="container">
-        <h1>Create Account</h1>
-        <p class="subtitle">Join CptMarkets for global trading</p>
-        
-        <form id="registerForm">
-            <div class="input-group">
-                <label>Username</label>
-                <input type="text" id="reg-user" placeholder="Username" required>
+    <div class="w-full max-w-md p-6 bg-[#05193e] rounded-2xl shadow-xl border border-blue-900 mx-4">
+        <!-- ২য় ছবির মতো হেডার ডিজাইন -->
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-bold text-amber-400">Create Account</h1>
+            <p class="text-xs text-gray-400 mt-1">Join CptMarkets for global trading</p>
+        </div>
+
+        <!-- ইনপুট ফিল্ডসমূহ -->
+        <div class="space-y-4">
+            <div>
+                <label class="block text-xs font-semibold text-gray-400 mb-1 ml-1">Username</label>
+                <input type="text" id="regUser" placeholder="Username" class="w-full px-4 py-3 bg-[#031129] border border-blue-900 rounded-xl focus:outline-none focus:border-amber-400 text-sm">
             </div>
 
-            <div class="input-group">
-                <label>Password</label>
-                <input type="password" id="reg-pass" placeholder="Password (min. 6 chars)" required>
+            <div>
+                <label class="block text-xs font-semibold text-gray-400 mb-1 ml-1">Password</label>
+                <input type="password" id="regPass" placeholder="Password (min. 6 chars)" class="w-full px-4 py-3 bg-[#031129] border border-blue-900 rounded-xl focus:outline-none focus:border-amber-400 text-sm">
             </div>
 
-            <div class="input-group">
-                <label>Confirm Password</label>
-                <input type="password" id="reg-confirm" placeholder="Confirm Password" required>
+            <div>
+                <label class="block text-xs font-semibold text-gray-400 mb-1 ml-1">Confirm Password</label>
+                <input type="password" id="regConfirm" placeholder="Confirm Password" class="w-full px-4 py-3 bg-[#031129] border border-blue-900 rounded-xl focus:outline-none focus:border-amber-400 text-sm">
             </div>
 
-            <div class="input-group">
-                <label>Invite Code</label>
-                <input type="text" id="reg-invite" placeholder="Invite Code (optional)">
+            <div>
+                <label class="block text-xs font-semibold text-gray-400 mb-1 ml-1">Invite Code</label>
+                <input type="text" id="inviteCode" placeholder="Invite Code (optional)" class="w-full px-4 py-3 bg-[#031129] border border-blue-900 rounded-xl focus:outline-none focus:border-amber-400 text-sm">
             </div>
-            
-            <button type="submit" class="register-btn">Register</button>
-        </form>
 
-        <div class="footer-links">
-            <span>Already have an account?</span>
-            <a href="index.html#/login">Go to Sign In</a>
+            <!-- গোল্ডেন উজ্জ্বল রেজিস্টার বাটন -->
+            <button onclick="handleRegister()" class="w-full py-3.5 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-[#031129] font-bold text-sm rounded-xl shadow-lg hover:brightness-110 active:scale-[0.99] transition duration-200">
+                Register
+            </button>
+        </div>
+
+        <!-- নিচে লগইন পেজে ফিরে যাওয়ার লিংক -->
+        <div class="mt-6 text-center text-xs font-medium">
+            <span class="text-gray-400">Already have an account?</span>
+            <a href="index.html" class="text-amber-400 ml-1 hover:underline">Go to Sign In</a>
         </div>
     </div>
 
-    <!-- ফায়ারবেস ব্যাকএন্ড ইন্টিগ্রেশন কোড -->
-    <script type="module">
-      import { initializeApp } from "https://gstatic.com";
-      import { getAuth, createUserWithEmailAndPassword } from "https://gstatic.com";
-      import { getFirestore, doc, setDoc } from "https://gstatic.com";
+    <!-- অ্যাকাউন্ট জেনারেশন ও ইউনিক UID তৈরি করার লজিক -->
+    <script>
+        function handleRegister() {
+            var u = document.getElementById('regUser').value.trim();
+            var p = document.getElementById('regPass').value.trim();
+            var c = document.getElementById('regConfirm').value.trim();
 
-      // আপনার ফায়ারবেস ড্যাশবোর্ডের আসল কনফিগ
-      const firebaseConfig = {
-        apiKey: "AIzaSyApKKni5cB26UoJVod6pGhrzLYYv",
-        authDomain: "://firebaseapp.com",
-        projectId: "ccpt-trade",
-        storageBucket: "ccpt-trade.firebasestorage.app",
-        messagingSenderId: "461751033270",
-        appId: "1:461751033270:web:7fdc3f9a206cbf2",
-        measurementId: "G-V1RSJDECT"
-      };
+            if(!u || !p || !c) { alert("সবগুলো তথ্য সঠিকভাবে পূরণ করুন!"); return; }
+            if(p.length < 6) { alert("পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে!"); return; }
+            if(p !== c) { alert("পাসওয়ার্ড দুটি মেলেনি!"); return; }
 
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const db = getFirestore(app);
+            var users = JSON.parse(localStorage.getItem('users')) || [];
+            
+            // ইউজারনেম আগে থেকে আছে কিনা চেক করা
+            var exists = users.some(function(user) { return user.username === u; });
+            if(exists) { alert("এই ইউজারনেমটি ইতিমধ্যে ব্যবহার করা হয়েছে!"); return; }
 
-      document.getElementById("registerForm").addEventListener("submit", (e) => {
-        e.preventDefault();
-        
-        const username = document.getElementById("reg-user").value.trim();
-        const password = document.getElementById("reg-pass").value;
-        const confirmPassword = document.getElementById("reg-confirm").value;
+            // অটোমেটিক ৬ ডিজিটের ইউনিক ইউজার আইডি (UID) তৈরি করার লজিক
+            var uid = Math.floor(100000 + Math.random() * 900000).toString();
 
-        if (!username || password.length < 6) {
-            alert("ইউজারনেম সঠিক দিন এবং পাসওয়ার্ড ন্যূনতম ৬ অক্ষরের দিন।");
-            return;
+            // নতুন ইউজারের প্রোফাইল ডাটাবেজ (লোকাল স্টোরেজ)-এ সেভ করা
+            var newUser = { uid: uid, username: u, password: p, balance: 0.00 };
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+
+            alert("রেজিস্ট্রেশন সফল হয়েছে!\nআপনার ইউনিক UID হলো: " + uid);
+            window.location.href = 'index.html';
         }
-
-        if (password !== confirmPassword) {
-            alert("পাসওয়ার্ড দুটি মেলেনি!");
-            return;
-        }
-
-        // ইউজারনেমকে ফায়ারবেসের জন্য ডেমো ইমেইলে রূপান্তর
-        const fakeEmail = `${username.toLowerCase()}@trade.com`;
-
-        createUserWithEmailAndPassword(auth, fakeEmail, password)
-          .then((userCredential) => {
-            const user = userCredential.user;
-            // ডাটাবেজে ব্যালেন্স শুরুতে ০ ডলার সেট করা হচ্ছে
-            return setDoc(doc(db, "users", user.uid), {
-              uid: user.uid,
-              name: username,
-              email: fakeEmail,
-              balance: 0.00 
-            });
-          })
-          .then(() => {
-            alert("অ্যাকাউন্ট তৈরি সফল হয়েছে!");
-            window.location.href = "dashboard.html"; // ড্যাশবোর্ড পেজে রিডাইরেক্ট
-          })
-          .catch((error) => alert("রেজিস্ট্রেশন ত্রুটি: " + error.message));
-      });
     </script>
 </body>
 </html>
