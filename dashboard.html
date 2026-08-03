@@ -11,14 +11,11 @@
         
         /* Top Header Bar */
         .top-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 5px; }
-        .logo-section { display: flex; align-items: center; gap: 8px; }
-        .logo-section img { height: 28px; border-radius: 4px; }
         .logo-title { font-size: 24px; font-weight: bold; color: #f39c12; }
-        .lang-flag { font-size: 24px; cursor: pointer; }
+        .lang-bar { text-align: right; }
 
         /* Main Promo Banner */
-        .promo-banner { background: linear-gradient(135deg, #092c6c, #071530); border-radius: 16px; padding: 25px 20px; margin-top: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); position: relative; overflow: hidden; border: 1px solid #10264c; }
-        .promo-banner::after { content: ''; position: absolute; right: -20px; bottom: -20px; width: 120px; height: 120px; background: url('https://imgur.com') no-repeat; opacity: 0.15; background-size: contain; }
+        .promo-banner { background: linear-gradient(135deg, #092c6c, #071530); border-radius: 16px; padding: 25px 20px; margin-top: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); border: 1px solid #10264c; }
         .banner-title { font-size: 26px; font-weight: bold; color: #f39c12; margin-bottom: 5px; }
         .banner-desc { font-size: 13px; color: #a2b4d0; line-height: 1.4; max-width: 80%; }
 
@@ -33,60 +30,53 @@
         .action-row { display: flex; justify-content: space-between; margin-top: 22px; gap: 10px; }
         .action-row button { width: 33.33%; padding: 13px 0; border: none; border-radius: 25px; font-weight: bold; font-size: 14px; cursor: pointer; transition: 0.2s; box-sizing: border-box; }
         .btn-deposit { background: linear-gradient(90deg, #ffd54f, #f39c12); color: #000; box-shadow: 0 4px 12px rgba(243,156,18,0.25); }
-        .btn-deposit:hover { transform: translateY(-1px); }
         .btn-secondary { background: #172744; color: white; border: 1px solid #23375c; }
-        .btn-secondary:hover { background: #1c3054; }
 
         /* Feature Icons Grid Menu */
         .menu-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 25px; background: linear-gradient(180deg, #101c33, #0a1324); padding: 20px 10px; border-radius: 16px; border: 1px solid #172744; }
         .grid-box { display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; transition: 0.2s; }
-        .grid-box:hover { transform: scale(1.05); }
-        .icon-circle { width: 50px; height: 50px; background: rgba(23, 39, 68, 0.6); border-radius: 14px; display: flex; justify-content: center; align-items: center; margin-bottom: 8px; border: 1px solid #1f3358; transition: 0.2s; }
-        .grid-box:hover .icon-circle { background: #1f3358; }
+        .icon-circle { width: 50px; height: 50px; background: rgba(23, 39, 68, 0.6); border-radius: 14px; display: flex; justify-content: center; align-items: center; margin-bottom: 8px; border: 1px solid #1f3358; }
         .icon-circle i { font-size: 20px; color: #f39c12; }
         .box-label { font-size: 12px; color: #a2b4d0; font-weight: 500; }
 
         /* Navigation Bar (Footer Menu) */
         .footer-navigation { position: fixed; bottom: 0; left: 0; width: 100%; background: #070e1a; display: flex; justify-content: space-around; align-items: center; padding: 10px 0; border-top: 1px solid #14233c; box-sizing: border-box; z-index: 999; }
-        .nav-tab { text-align: center; color: #596e8d; font-size: 11px; cursor: pointer; flex: 1; transition: 0.2s; }
+        .nav-tab { text-align: center; color: #596e8d; font-size: 11px; cursor: pointer; flex: 1; }
         .nav-tab.active { color: #f39c12; }
         .nav-tab i { font-size: 20px; display: block; margin-bottom: 4px; }
         
         /* Central Floating Trade Button */
         .center-trade-wrap { flex: 1; display: flex; justify-content: center; align-items: center; position: relative; margin-top: -30px; }
-        .center-trade-btn { background: linear-gradient(135deg, #ffd54f, #d35400); width: 54px; height: 54px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: black; font-size: 22px; box-shadow: 0 4px 15px rgba(243,156,18,0.4); cursor: pointer; transition: 0.2s; border: 3px solid #070e1a; }
-        .center-trade-btn:hover { transform: rotate(180deg); }
+        .center-trade-btn { background: linear-gradient(135deg, #ffd54f, #d35400); width: 54px; height: 54px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: black; font-size: 22px; box-shadow: 0 4px 15px rgba(243,156,18,0.4); border: 3px solid #070e1a; }
+        
+        .goog-te-gadget-simple { background-color: rgba(13, 27, 50, 0.5) !important; border: 1px solid #1d2d44 !important; border-radius: 4px !important; padding: 3px 6px !important; }
+        .goog-te-gadget-simple span { color: #f1c40f !important; }
     </style>
 </head>
 <body>
 
-    <!-- Top Header section -->
     <div class="top-header">
         <div class="logo-section">
             <div class="logo-title">CptMarkets</div>
         </div>
-        <!-- Right side Country Flag Icon Placeholder -->
-        <div class="lang-flag" id="google_translate_element">🇬🇧</div>
+        <div class="lang-bar" id="google_translate_element"></div>
     </div>
     
-    <!-- Main Trading Promo Banner -->
     <div class="promo-banner">
         <div class="banner-title">CptMarkets</div>
         <div class="banner-desc">Global integrated financial trading platform</div>
     </div>
     
-    <!-- Assets Overview Section -->
     <div class="assets-card">
         <div class="card-header-row">
             <span>Total Assets (USD)</span>
-            <i class="fa-regular fa-eye" style="cursor:pointer;"></i>
+            <i class="fa-regular fa-eye"></i>
         </div>
         <div class="balance-val" id="display-balance">$0.00</div>
         <div class="pl-row">
             Floating P/L <span class="pl-green">+0.00</span> &nbsp;&nbsp; Equity $0.00
         </div>
         
-        <!-- Quick Action Buttons -->
         <div class="action-row">
             <button class="btn-deposit" onclick="alert('Contact your customer service')">Deposit</button>
             <button class="btn-secondary">Withdraw</button>
@@ -94,7 +84,6 @@
         </div>
     </div>
 
-    <!-- Main Grid Dashboard Features -->
     <div class="menu-grid">
         <div class="grid-box" onclick="openChat()">
             <div class="icon-circle"><i class="fa-solid fa-headset"></i></div>
@@ -130,55 +119,40 @@
         </div>
     </div>
 
-    <!-- Bottom Footer Navigation Bar -->
     <div class="footer-navigation">
-        <div class="nav-tab active">
-            <i class="fa-solid fa-house"></i>
-            Home
-        </div>
-        <div class="nav-tab">
-            <i class="fa-solid fa-chart-simple"></i>
-            Markets
-        </div>
-        <div class="center-trade-wrap">
-            <div class="center-trade-btn">
-                <i class="fa-solid fa-arrow-up-down"></i>
-            </div>
-        </div>
-        <div class="nav-tab">
-            <i class="fa-solid fa-briefcase"></i>
-            Assets
-        </div>
-        <div class="nav-tab">
-            <i class="fa-solid fa-user"></i>
-            Mine
-        </div>
+        <div class="nav-tab active"><i class="fa-solid fa-house"></i>Home</div>
+        <div class="nav-tab"><i class="fa-solid fa-chart-simple"></i>Markets</div>
+        <div class="center-trade-wrap"><div class="center-trade-btn"><i class="fa-solid fa-arrow-up-down"></i></div></div>
+        <div class="nav-tab"><i class="fa-solid fa-briefcase"></i>Assets</div>
+        <div class="nav-tab"><i class="fa-solid fa-user"></i>Mine</div>
     </div>
 
-    <!-- Core Security & Memory System Script -->
     <script>
-        // Check session validation
         if (localStorage.getItem("is_logged") !== "true") { window.location.href = "index.html"; }
 
-        // Load balance dynamically
+        // ⚠️ নিচে আপনার কপি করা Firebase Realtime Database লিঙ্কটি অবশ্যই বসাবেন ⚠️
+        const FIREBASE_URL = "http://ccpt-trade.vercel.app;
         let currentUser = localStorage.getItem("current_logged_user");
-        let allUsers = JSON.parse(localStorage.getItem("trading_database")) || {};
-        
-        if(allUsers[currentUser]) {
-            document.getElementById("display-balance").innerText = "$" + parseFloat(allUsers[currentUser].balance).toFixed(2);
+
+        function fetchLiveBalance() {
+            if(FIREBASE_URL.includes("এখানে_আপনার_ফায়ারবেস")) return;
+            fetch(`${FIREBASE_URL}/users/${currentUser}/balance.json`)
+            .then(res => res.json())
+            .then(balance => {
+                if(balance !== null) {
+                    document.getElementById("display-balance").innerText = "$" + parseFloat(balance).toFixed(2);
+                }
+            }).catch(err => console.error(err));
         }
 
-        // Live Chat Support API trigger
+        fetchLiveBalance();
+        setInterval(fetchLiveBalance, 4000); // প্রতি ৪ সেকেন্ড পরপর লাইভ ব্যালেন্স চেক করবে
+
         function openChat() {
-            if(typeof Tawk_API !== 'undefined') {
-                Tawk_API.toggle();
-            } else {
-                alert("Live Support is loading. Please wait a second and try again!");
-            }
+            if(typeof Tawk_API !== 'undefined') { Tawk_API.toggle(); } else { alert("Live Support is loading..."); }
         }
     </script>
 
-    <!-- Google Translator Script for 5+ Languages -->
     <script type="text/javascript">
     function googleTranslateElementInit() {
       new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,bn,ar,hi,es,zh-CN'}, 'google_translate_element');
