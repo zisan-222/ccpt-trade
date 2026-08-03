@@ -61,47 +61,54 @@
 </div>
 
 <script>
+    // ⚠️ নিচে আপনার কপি করা Firebase Realtime Database লিঙ্কটি বসান ⚠️
+    const FIREBASE_URL = "এখানে_আপনার_ফায়ারবেস_ডাটাবেজ_লিঙ্কটি_পেস্ট_করুন";
+
     function handleRegister() {
-        const user = document.getElementById("reg-username").value.trim();
+        const user = document.getElementById("reg-username").value.trim().toLowerCase();
         const pass = document.getElementById("reg-password").value;
         const confirmPass = document.getElementById("reg-confirm-password").value;
         const invite = document.getElementById("reg-invite").value.trim();
 
-        // ইনপুট ভ্যালিডেশন ও নিরাপত্তা চেক
         if(user === "" || pass === "" || confirmPass === "") { 
-            alert("Please fill in Username, Password, and Confirm Password fields!"); 
+            alert("Please fill in Username, Password, and Confirm Password!"); 
             return; 
         }
-        if(user.length < 4) {
-            alert("Username must be at least 4 characters long!");
-            return;
-        }
-        if(pass.length < 6) {
-            alert("Password must be at least 6 characters long!");
-            return;
-        }
         if(pass !== confirmPass) {
-            alert("Passwords do not match! Please check again.");
+            alert("Passwords do not match!");
             return;
         }
 
-        // ডাটাবেজ প্রসেস (পরবর্তী ধাপে ক্লাউড ডাটাবেজ Firebase এর সাথে কানেক্ট হবে)
-        let allUsers = JSON.parse(localStorage.getItem("trading_database")) || {};
-        if(allUsers[user]) {
-            alert("This Username is already taken! Please choose another one.");
-            return;
-        }
+        // প্রথমে চেক করা হচ্ছে এই নামে আগে কেউ অ্যাকাউন্ট খুলেছে কি না
+        fetch(`${FIREBASE_URL}/users/${user}.json`)
+        .then(response => response.json())
+        .then(data => {
+            if(data !== null) {
+                alert("This Username already exists! Please try another.");
+            } else {
+                // নতুন ইউজারের ডাটা ক্লাউড ডাটাবেজে পাঠানো হচ্ছে (ব্যালেন্স থাকবে $0.00)
+                const userData = {
+                    password: btoa(pass), // পাসওয়ার্ড হাইড করা
+                    balance: 0.00,        // অটো কোনো ডলার যোগ হবে না
+                    inviteCode: invite || "None"
+                };
 
-        // নতুন ইউজার রেজিস্টার করা হচ্ছে (শুরুতে ডেমো ব্যালেন্স ০.০০ থাকবে)
-        allUsers[user] = { 
-            password: btoa(pass), 
-            balance: "0.00",
-            inviteCode: invite || "None"
-        };
-        localStorage.setItem("trading_database", JSON.stringify(allUsers));
-
-        alert("Account Created Successfully! Redirecting to login page...");
-        window.location.href = "index.html";
+                return fetch(`${FIREBASE_URL}/users/${user}.json`, {
+                    method: "PUT",
+                    body: JSON.stringify(userData)
+                });
+            }
+        })
+        .then(res => {
+            if(res) {
+                alert("Account Created Successfully! Redirecting to login...");
+                window.location.href = "index.html";
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert("Something went wrong with the database connection!");
+        });
     }
 </script>
 </body>
