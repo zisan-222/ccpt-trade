@@ -4,112 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CptMarkets - Create Account</title>
-    <link rel="stylesheet" href="https://cloudflare.com">
     <style>
-        body { background: radial-gradient(circle, #0c1a30, #050b14); color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
-        .register-box { width: 100%; max-width: 360px; background: transparent; padding: 10px; text-align: center; }
-        .title { font-size: 32px; font-weight: bold; color: #f39c12; margin-bottom: 5px; }
-        .subtitle { font-size: 14px; color: #8a99ad; margin-bottom: 35px; }
-        
-        .input-group { text-align: left; margin-top: 20px; }
-        label { display: block; font-size: 14px; color: #a0aec0; margin-bottom: 8px; font-weight: 500; }
-        input { width: 100%; padding: 14px 16px; background: rgba(9, 19, 36, 0.6); border: 1px solid #1d2d44; border-radius: 10px; color: white; box-sizing: border-box; font-size: 15px; transition: 0.3s; }
-        input:focus { border-color: #f39c12; outline: none; box-shadow: 0 0 5px rgba(243,156,18,0.2); }
-        input::placeholder { color: #52647c; }
-        
-        .btn-gold { width: 100%; padding: 15px; background: linear-gradient(90deg, #f1c40f, #f39c12); border: none; border-radius: 25px; color: #000; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 35px; box-shadow: 0 4px 15px rgba(243,156,18,0.3); transition: 0.2s; }
-        .btn-gold:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(243,156,18,0.4); }
-        
-        .footer-links { display: flex; justify-content: space-between; margin-top: 20px; font-size: 14px; padding: 0 5px; }
-        .footer-links .text { color: #a0aec0; }
-        .footer-links a { color: #f1c40f; text-decoration: none; font-weight: 500; }
-        .footer-links a:hover { text-decoration: underline; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: sans-serif; background: radial-gradient(circle at top, #0f1c2e, #050b14); color: #fff; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .container { width: 100%; max-width: 400px; padding: 20px; text-align: center; }
+        h1 { color: #ff9900; font-size: 32px; margin-bottom: 5px; }
+        p { color: #6d7f95; font-size: 14px; margin-bottom: 30px; }
+        .input-group { text-align: left; margin-bottom: 20px; }
+        label { display: block; color: #869bb5; font-size: 14px; margin-bottom: 8px; }
+        input { width: 100%; padding: 14px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: #fff; font-size: 16px; outline: none; }
+        input:focus { border-color: #ff9900; }
+        .register-btn { width: 100%; padding: 15px; background: #ff9900; border: none; border-radius: 30px; color: #000; font-weight: bold; font-size: 18px; margin-top: 15px; cursor: pointer; transition: 0.2s; }
+        .register-btn:hover { background: #e08800; }
+        .footer-links { display: flex; justify-content: space-between; margin-top: 25px; font-size: 14px; }
+        .footer-links span { color: #869bb5; }
+        .footer-links a { color: #ff9900; text-decoration: none; }
     </style>
 </head>
 <body>
 
-<div class="register-box">
-    <div class="title">Create Account</div>
-    <div class="subtitle">Join CptMarkets for global trading</div>
-    
-    <div class="input-group">
-        <label>Username</label>
-        <input type="text" id="reg-username" placeholder="Username" autocomplete="off">
-    </div>
-    
-    <div class="input-group">
-        <label>Password</label>
-        <input type="password" id="reg-password" placeholder="Password (min. 6 chars)">
-    </div>
+<div class="container">
+    <h1>Create Account</h1>
+    <p>Join CptMarkets for global trading</p>
 
-    <div class="input-group">
-        <label>Confirm Password</label>
-        <input type="password" id="reg-confirm-password" placeholder="Confirm Password">
-    </div>
+    <form onsubmit="event.preventDefault(); window.location.href='dashboard.html';">
+        <div class="input-group">
+            <label>Username</label>
+            <input type="text" placeholder="Username" required>
+        </div>
 
-    <div class="input-group">
-        <label>Invite Code</label>
-        <input type="text" id="reg-invite" placeholder="Invite Code (optional)" autocomplete="off">
-    </div>
-    
-    <button class="btn-gold" onclick="handleRegister()">Register</button>
-    
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" placeholder="••••••••" required>
+        </div>
+
+        <div class="input-group">
+            <label>Confirm Password</label>
+            <input type="password" placeholder="••••••••" required>
+        </div>
+
+        <div class="input-group">
+            <label>Invite Code</label>
+            <input type="text" placeholder="Invite Code (optional)">
+        </div>
+
+        <button type="submit" class="register-btn">Register</button>
+    </form>
+
     <div class="footer-links">
-        <span class="text">Already have an account?</span>
-        <a href="index.html">Go to Sign In</a>
+        <span>Already have an account?</span>
+        <a href="#">Go to Sign In</a>
     </div>
 </div>
 
-<script>
-    // ⚠️ নিচে আপনার কপি করা Firebase Realtime Database লিঙ্কটি বসান ⚠️
-    const FIREBASE_URL = "http://ccpt-trade.vercel.app;
-
-    function handleRegister() {
-        const user = document.getElementById("reg-username").value.trim().toLowerCase();
-        const pass = document.getElementById("reg-password").value;
-        const confirmPass = document.getElementById("reg-confirm-password").value;
-        const invite = document.getElementById("reg-invite").value.trim();
-
-        if(user === "" || pass === "" || confirmPass === "") { 
-            alert("Please fill in Username, Password, and Confirm Password!"); 
-            return; 
-        }
-        if(pass !== confirmPass) {
-            alert("Passwords do not match!");
-            return;
-        }
-
-        // প্রথমে চেক করা হচ্ছে এই নামে আগে কেউ অ্যাকাউন্ট খুলেছে কি না
-        fetch(`${FIREBASE_URL}/users/${user}.json`)
-        .then(response => response.json())
-        .then(data => {
-            if(data !== null) {
-                alert("This Username already exists! Please try another.");
-            } else {
-                // নতুন ইউজারের ডাটা ক্লাউড ডাটাবেজে পাঠানো হচ্ছে (ব্যালেন্স থাকবে $0.00)
-                const userData = {
-                    password: btoa(pass), // পাসওয়ার্ড হাইড করা
-                    balance: 0.00,        // অটো কোনো ডলার যোগ হবে না
-                    inviteCode: invite || "None"
-                };
-
-                return fetch(`${FIREBASE_URL}/users/${user}.json`, {
-                    method: "PUT",
-                    body: JSON.stringify(userData)
-                });
-            }
-        })
-        .then(res => {
-            if(res) {
-                alert("Account Created Successfully! Redirecting to login...");
-                window.location.href = "index.html";
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            alert("Something went wrong with the database connection!");
-        });
-    }
-</script>
 </body>
 </html>
