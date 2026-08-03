@@ -4,64 +4,229 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CptMarkets - Login</title>
-    <!-- Vercel এবং মোবাইল ব্রাউজার ফ্রেন্ডলি ক্লাসিক Tailwind CSS CDN -->
-    <script src="https://jsdelivr.net"></script>
+    <!-- আইকন লোড করার জন্য FontAwesome লিংক -->
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
-        .bg-custom {
-            background-color: #031129;
-            background-image: radial-gradient(circle at center, rgba(13, 148, 136, 0.05) 0%, transparent 70%), url('https://transparenttextures.com');
-            background-size: cover; position: relative;
+        /* ২য় ছবির মতো ডার্ক গ্লোবাল ব্যাকগ্রাউন্ড এবং বৃত্তাকার গ্লো ইফেক্ট */
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #020b18;
+            background-image: radial-gradient(circle at center, rgba(13, 148, 136, 0.08) 0%, transparent 65%), 
+                              url('https://transparenttextures.com');
+            background-size: cover;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            items-center: center;
+            min-height: screen;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
         }
-        .bg-custom::after {
-            content: ""; position: absolute; bottom: 0; left: 0; right: 0; height: 120px;
+
+        /* ছবির নিচের আবছা সিটি টাওয়ার লাইন্স */
+        body::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 110px;
             background: url('https://ibb.co') no-repeat bottom center;
-            background-size: contain; opacity: 0.12; pointer-events: none;
+            background-size: contain;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        /* ডানদিকের ইউকে ফ্ল্যাগ */
+        .flag-box {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #05193e;
+            border: 1px solid #1e3a8a;
+            padding: 4px 6px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* মেইন কন্টেইনার */
+        .login-card {
+            width: 100%;
+            max-width: 360px;
+            margin: auto 20px;
+            padding: 30px 24px;
+            background: rgba(5, 25, 62, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            border: 1px solid rgba(30, 58, 138, 0.5);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        /* ২য় ছবির মতো গোল্ডেন লোগো ও হেডার প্যানেল */
+        .logo-header {
+            margin-bottom: 30px;
+        }
+        .logo-circle {
+            width: 54px;
+            height: 54px;
+            border: 2px solid #fbbf24;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            color: #fbbf24;
+            font-weight: 900;
+            font-size: 13px;
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.2);
+        }
+        .brand-title {
+            color: #fbbf24;
+            font-size: 28px;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
+        .brand-subtitle {
+            color: #93c5fd;
+            font-size: 11px;
+            margin: 4px 0 0;
+            letter-spacing: 4px;
+            font-weight: 600;
+        }
+
+        /* ইনপুট ফিল্ড ও আইকন স্টাইল */
+        .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .form-label {
+            font-size: 12px;
+            color: #9ca3af;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+            padding-left: 4px;
+        }
+        .input-wrapper {
+            position: relative;
+        }
+        .input-wrapper i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+            font-size: 15px;
+        }
+        .form-input {
+            width: 100%;
+            padding: 14px 16px 14px 46px;
+            background: #031129;
+            border: 1px solid rgba(30, 58, 138, 0.7);
+            border-radius: 14px;
+            color: #ffffff;
+            font-size: 14px;
+            outline: none;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+        .form-input:focus {
+            border-color: #fbbf24;
+            box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.15);
+        }
+        .eye-icon {
+            position: absolute;
+            right: 16px;
+            left: auto !important;
+            cursor: pointer;
+            color: #4b5563 !important;
+        }
+
+        /* হুবহু ২য় ছবির মতো উজ্জ্বল গোল্ডেন গ্রেডিয়েন্ট বাটন */
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(to right, #f59e0b, #d97706);
+            border: none;
+            border-radius: 14px;
+            color: #031129;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(245, 158, 11, 0.15);
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+        .submit-btn:active {
+            transform: scale(0.98);
+            opacity: 0.95;
+        }
+
+        /* ফুটার লিঙ্কসমূহ */
+        .form-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 24px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .footer-link {
+            color: #fbbf24;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: opacity 0.2s;
+        }
+        .footer-link:hover {
+            opacity: 0.8;
         }
     </style>
 </head>
-<body class="bg-custom text-white flex justify-center items-center min-h-screen font-sans relative overflow-hidden">
+<body>
 
-    <div class="absolute top-4 right-4 z-10 bg-[#05193e] border border-blue-900 rounded-md p-1 flex items-center justify-center">
-        <img src="https://flagcdn.com" alt="UK Flag" class="w-5 h-auto rounded-sm">
+    <div class="flag-box">
+        <img src="https://flagcdn.com" width="20" alt="UK Flag">
     </div>
 
-    <div class="w-full max-w-md p-6 bg-[#05193e] rounded-2xl shadow-2xl border border-blue-900 mx-4 relative z-10">
-        
-        <div class="text-center mb-8 relative">
-            <div class="text-[10px] uppercase text-amber-500 font-bold tracking-widest flex items-center justify-center gap-1">
-                <i class="fa-solid fa-chart-line text-[9px]"></i> CPT MARKETS UK
-            </div>
-            <h1 class="text-3xl font-extrabold text-amber-400 mt-1 tracking-tight">CptMarkets</h1>
-            <p class="text-xs text-blue-300 font-medium mt-0.5 tracking-[0.25em]">GIFTP</p>
+    <div class="login-card">
+        <!-- ২য় ছবির লোগো প্যানেল -->
+        <div class="logo-header">
+            <div class="logo-circle">CPT</div>
+            <h1 class="brand-title">CptMarkets</h1>
+            <div class="brand-subtitle">GIFTP</div>
         </div>
 
-        <div class="space-y-5">
-            <div>
-                <label class="block text-xs font-semibold text-gray-400 mb-1.5 ml-1">Username</label>
-                <div class="relative">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400"><i class="fa-regular fa-user text-sm"></i></span>
-                    <input type="text" id="username" placeholder="Username" class="w-full pl-11 pr-4 py-3 bg-[#031129] border border-blue-900 rounded-xl focus:outline-none focus:border-amber-400 text-sm placeholder-gray-500">
-                </div>
+        <!-- ইনপুট ফর্ম গ্রুপ -->
+        <div class="form-group">
+            <span class="form-label">Username</span>
+            <div class="input-wrapper">
+                <i class="fa-regular fa-user"></i>
+                <input type="text" id="username" placeholder="Username" class="form-input">
             </div>
-
-            <div>
-                <label class="block text-xs font-semibold text-gray-400 mb-1.5 ml-1">Password</label>
-                <div class="relative">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400"><i class="fa-solid fa-lock text-sm"></i></span>
-                    <input type="password" id="password" placeholder="Password" class="w-full pl-11 pr-11 py-3 bg-[#031129] border border-blue-900 rounded-xl focus:outline-none focus:border-amber-400 text-sm placeholder-gray-500">
-                    <span class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-gray-500 cursor-pointer hover:text-gray-400"><i class="fa-regular fa-eye-slash text-sm"></i></span>
-                </div>
-            </div>
-
-            <button onclick="handleLogin()" class="w-full py-3.5 mt-4 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-[#031129] font-bold text-sm rounded-xl shadow-lg hover:brightness-110 active:scale-[0.99] transition duration-200">
-                Go to Sign In
-            </button>
         </div>
 
-        <div class="flex justify-between items-center mt-6 px-1 text-xs font-medium text-amber-400/90">
-            <a href="register.html" class="hover:text-amber-300 transition flex items-center gap-1.5"><i class="fa-solid fa-user-plus text-[11px]"></i> Create Account</a>
-            <a href="#" class="hover:text-amber-300 transition flex items-center gap-1.5"><i class="fa-solid fa-unlock-keyhole text-[11px]"></i> Forgot Password?</a>
+        <div class="form-group">
+            <span class="form-label">Password</span>
+            <div class="input-wrapper">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="password" placeholder="Password" class="form-input">
+                <i class="fa-regular fa-eye-slash eye-icon"></i>
+            </div>
+        </div>
+
+        <button onclick="handleLogin()" class="submit-btn">Go to Sign In</button>
+
+        <div class="form-footer">
+            <a href="register.html" class="footer-link"><i class="fa-solid fa-user-plus"></i> Create Account</a>
+            <a href="#" class="footer-link"><i class="fa-solid fa-unlock-keyhole"></i> Forgot Password?</a>
         </div>
     </div>
 
@@ -72,7 +237,7 @@
 
             if(!u || !p) { alert("ইউজারনেম ও পাসওয়ার্ড লিখুন!"); return; }
 
-            // 🔒 আপনার কাস্টম এডমিন লগইন ডিটেইলস এখানে চেক হবে
+            // আপনার সেট করা কাস্টম এডমিন লগইন ডিটেইলস এখানে ম্যাচ হবে
             if(u === "admin" && p === "admin123") {
                 localStorage.setItem('currentUserUid', '000000');
                 localStorage.setItem('role', 'admin');
