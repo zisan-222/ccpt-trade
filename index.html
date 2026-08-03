@@ -4,190 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CptMarkets - Login</title>
-    <!-- আইকন লোড করার জন্য FontAwesome লিংক -->
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
-        /* ২য় ছবির মতো ডার্ক গ্লোবাল ব্যাকগ্রাউন্ড এবং বৃত্তাকার গ্লো ইফেক্ট */
         body {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            background-color: #020b18;
-            background-image: radial-gradient(circle at center, rgba(13, 148, 136, 0.08) 0%, transparent 65%), 
-                              url('https://transparenttextures.com');
-            background-size: cover;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            color: #ffffff;
-            display: flex;
-            justify-content: center;
-            items-center: center;
-            min-height: screen;
-            height: 100vh;
-            overflow: hidden;
-            position: relative;
+            margin: 0; padding: 0; box-sizing: border-box; background-color: #020b18;
+            background-image: radial-gradient(circle at center, rgba(13, 148, 136, 0.08) 0%, transparent 65%), url('https://transparenttextures.com');
+            background-size: cover; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #ffffff; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; position: relative;
         }
-
-        /* ছবির নিচের আবছা সিটি টাওয়ার লাইন্স */
         body::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 110px;
-            background: url('https://ibb.co') no-repeat bottom center;
-            background-size: contain;
-            opacity: 0.15;
-            pointer-events: none;
+            content: ""; position: absolute; bottom: 0; left: 0; right: 0; height: 110px;
+            background: url('https://ibb.co') no-repeat bottom center; background-size: contain; opacity: 0.15; pointer-events: none;
         }
-
-        /* ডানদিকের ইউকে ফ্ল্যাগ */
-        .flag-box {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: #05193e;
-            border: 1px solid #1e3a8a;
-            padding: 4px 6px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-        }
-
-        /* মেইন কন্টেইনার */
-        .login-card {
-            width: 100%;
-            max-width: 360px;
-            margin: auto 20px;
-            padding: 30px 24px;
-            background: rgba(5, 25, 62, 0.85);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
-            border: 1px solid rgba(30, 58, 138, 0.5);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-            text-align: center;
-        }
-
-        /* ২য় ছবির মতো গোল্ডেন লোগো ও হেডার প্যানেল */
-        .logo-header {
-            margin-bottom: 30px;
-        }
-        .logo-circle {
-            width: 54px;
-            height: 54px;
-            border: 2px solid #fbbf24;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 10px;
-            color: #fbbf24;
-            font-weight: 900;
-            font-size: 13px;
-            box-shadow: 0 0 15px rgba(251, 191, 36, 0.2);
-        }
-        .brand-title {
-            color: #fbbf24;
-            font-size: 28px;
-            font-weight: 800;
-            margin: 0;
-            letter-spacing: -0.5px;
-        }
-        .brand-subtitle {
-            color: #93c5fd;
-            font-size: 11px;
-            margin: 4px 0 0;
-            letter-spacing: 4px;
-            font-weight: 600;
-        }
-
-        /* ইনপুট ফিল্ড ও আইকন স্টাইল */
-        .form-group {
-            text-align: left;
-            margin-bottom: 20px;
-        }
-        .form-label {
-            font-size: 12px;
-            color: #9ca3af;
-            font-weight: 600;
-            margin-bottom: 8px;
-            display: block;
-            padding-left: 4px;
-        }
-        .input-wrapper {
-            position: relative;
-        }
-        .input-wrapper i {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #6b7280;
-            font-size: 15px;
-        }
-        .form-input {
-            width: 100%;
-            padding: 14px 16px 14px 46px;
-            background: #031129;
-            border: 1px solid rgba(30, 58, 138, 0.7);
-            border-radius: 14px;
-            color: #ffffff;
-            font-size: 14px;
-            outline: none;
-            box-sizing: border-box;
-            transition: all 0.2s ease;
-        }
-        .form-input:focus {
-            border-color: #fbbf24;
-            box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.15);
-        }
-        .eye-icon {
-            position: absolute;
-            right: 16px;
-            left: auto !important;
-            cursor: pointer;
-            color: #4b5563 !important;
-        }
-
-        /* হুবহু ২য় ছবির মতো উজ্জ্বল গোল্ডেন গ্রেডিয়েন্ট বাটন */
-        .submit-btn {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(to right, #f59e0b, #d97706);
-            border: none;
-            border-radius: 14px;
-            color: #031129;
-            font-weight: 700;
-            font-size: 15px;
-            cursor: pointer;
-            box-shadow: 0 10px 20px rgba(245, 158, 11, 0.15);
-            transition: all 0.2s ease;
-            margin-top: 10px;
-        }
-        .submit-btn:active {
-            transform: scale(0.98);
-            opacity: 0.95;
-        }
-
-        /* ফুটার লিঙ্কসমূহ */
-        .form-footer {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 24px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        .footer-link {
-            color: #fbbf24;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: opacity 0.2s;
-        }
-        .footer-link:hover {
-            opacity: 0.8;
-        }
+        .flag-box { position: absolute; top: 20px; right: 20px; background: #05193e; border: 1px solid #1e3a8a; padding: 4px 6px; border-radius: 6px; display: flex; align-items: center; }
+        .login-card { width: 100%; max-width: 360px; margin: auto 20px; padding: 30px 24px; background: rgba(5, 25, 62, 0.85); backdrop-filter: blur(10px); border-radius: 24px; border: 1px solid rgba(30, 58, 138, 0.5); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); text-align: center; }
+        .logo-header { margin-bottom: 30px; }
+        .logo-circle { width: 54px; height: 54px; border: 2px solid #fbbf24; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; color: #fbbf24; font-weight: 900; font-size: 13px; box-shadow: 0 0 15px rgba(251, 191, 36, 0.2); }
+        .brand-title { color: #fbbf24; font-size: 28px; font-weight: 800; margin: 0; letter-spacing: -0.5px; }
+        .brand-subtitle { color: #93c5fd; font-size: 11px; margin: 4px 0 0; letter-spacing: 4px; font-weight: 600; }
+        .form-group { text-align: left; margin-bottom: 20px; }
+        .form-label { font-size: 12px; color: #9ca3af; font-weight: 600; margin-bottom: 8px; display: block; padding-left: 4px; }
+        .input-wrapper { position: relative; }
+        .input-wrapper i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #6b7280; font-size: 15px; }
+        .form-input { width: 100%; padding: 14px 16px 14px 46px; background: #031129; border: 1px solid rgba(30, 58, 138, 0.7); border-radius: 14px; color: #ffffff; font-size: 14px; outline: none; box-sizing: border-box; transition: all 0.2s ease; }
+        .form-input:focus { border-color: #fbbf24; box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.15); }
+        .eye-icon { position: absolute; right: 16px; left: auto !important; cursor: pointer; color: #4b5563 !important; }
+        .submit-btn { width: 100%; padding: 14px; background: linear-gradient(to right, #f59e0b, #d97706); border: none; border-radius: 14px; color: #031129; font-weight: 700; font-size: 15px; cursor: pointer; box-shadow: 0 10px 20px rgba(245, 158, 11, 0.15); transition: all 0.2s ease; margin-top: 10px; }
+        .form-footer { display: flex; justify-content: space-between; margin-top: 24px; font-size: 12px; font-weight: 600; }
+        .footer-link { color: #fbbf24; text-decoration: none; display: flex; align-items: center; gap: 6px; }
     </style>
 </head>
 <body>
@@ -197,14 +41,12 @@
     </div>
 
     <div class="login-card">
-        <!-- ২য় ছবির লোগো প্যানেল -->
         <div class="logo-header">
             <div class="logo-circle">CPT</div>
             <h1 class="brand-title">CptMarkets</h1>
             <div class="brand-subtitle">GIFTP</div>
         </div>
 
-        <!-- ইনপুট ফর্ম গ্রুপ -->
         <div class="form-group">
             <span class="form-label">Username</span>
             <div class="input-wrapper">
@@ -235,9 +77,9 @@
             var u = document.getElementById('username').value.trim();
             var p = document.getElementById('password').value.trim();
 
-            if(!u || !p) { alert("ইউজারনেম ও পাসওয়ার্ড লিখুন!"); return; }
+            if(!u || !p) { alert("Please enter both username and password!"); return; }
 
-            // আপনার সেট করা কাস্টম এডমিন লগইন ডিটেইলস এখানে ম্যাচ হবে
+            // Admin Logic Check
             if(u === "admin" && p === "admin123") {
                 localStorage.setItem('currentUserUid', '000000');
                 localStorage.setItem('role', 'admin');
@@ -253,7 +95,8 @@
                 localStorage.setItem('role', 'user');
                 window.location.href = 'dashboard.html';
             } else {
-                alert("ভুল ইউজারনেম বা পাসওয়ার্ড!");
+                // পাসওয়ার্ড ভুল হলে এখন সম্পূর্ণ ইংরেজি মেসেজ আসবে
+                alert("Incorrect username or password! Please try again.");
             }
         }
     </script>
