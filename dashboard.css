@@ -1,0 +1,107 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#071325;
+    color:#fff;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px;
+    background:#081a33;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:#ffc107;
+    font-size:24px;
+    font-weight:bold;
+}
+
+.menu{
+    font-size:26px;
+    color:white;
+}
+
+.banner{
+    width:92%;
+    margin:20px auto;
+    border-radius:20px;
+    overflow:hidden;
+    background:#10264a;
+    position:relative;
+}
+
+.banner img{
+    width:100%;
+    display:block;
+}
+
+.banner-text{
+    position:absolute;
+    left:20px;
+    bottom:25px;
+}
+
+.banner-text h1{
+    color:#ffc107;
+    font-size:42px;
+}
+
+.banner-text p{
+    font-size:18px;
+    color:#ddd;
+}
+
+.asset-card{
+    width:92%;
+    margin:20px auto;
+    background:#10264a;
+    border-radius:25px;
+    padding:25px;
+}
+
+.asset-card h3{
+    color:#bfc8d8;
+    margin-bottom:10px;
+}
+
+.asset-card h1{
+    font-size:60px;
+    margin-bottom:10px;
+}
+
+.asset-card span{
+    color:#00ff99;
+}
+
+.buttons{
+    display:flex;
+    gap:15px;
+    margin-top:25px;
+}
+
+.buttons button{
+    flex:1;
+    height:55px;
+    border:none;
+    border-radius:18px;
+    background:#18386c;
+    color:#fff;
+    font-size:18px;
+}
+
+.deposit{
+    background:#ffbf00 !important;
+    color:#111 !important;
+    font-weight:bold;
+}
