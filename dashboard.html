@@ -4,32 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CptMarkets - Dashboard</title>
-    <!-- আইকনগুলোর জন্য ফন্ট-অসাম লাইব্রেরি যুক্ত করা হয়েছে -->
-    <link rel="stylesheet" href="https://cloudflare.com">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: sans-serif; background: #050b14; color: #fff; padding-bottom: 80px; }
+        body { font-family: sans-serif; background: #050b14; color: #fff; padding-bottom: 90px; }
         
-        /* টপ হেডার ও লোগো */
+        /* টপ হেডার ও নতুন লোগো এরিয়া */
         .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #071120; }
         .logo-area { display: flex; align-items: center; gap: 10px; }
-        .logo-circle { width: 35px; height: 35px; background: #ffd700; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000; font-weight: bold; font-size: 10px; border: 2px solid #fff; }
-        .brand-name { color: #ffd700; font-size: 20px; font-weight: bold; }
-        .lang-flag { width: 25px; height: 18px; background: linear-gradient(to right, red, white, blue); border-radius: 2px; }
+        
+        /* ১ম ছবির মতো হুবহু গোল্ডেন সার্কেল লোগো */
+        .logo-circle { width: 44px; height: 44px; background: radial-gradient(circle, #ffe875, #a37f00); border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #000; font-weight: bold; border: 2px solid #ffd700; box-shadow: 0 0 8px rgba(255, 215, 0, 0.5); }
+        .logo-text-top { font-size: 9px; line-height: 9px; font-weight: 900; font-family: 'Arial Black', sans-serif; letter-spacing: 0.3px; }
+        .logo-text-mid { font-size: 6px; line-height: 7px; border-top: 1px solid #000; border-bottom: 1px solid #000; margin: 1px 0; padding: 0 2px; font-weight: 800; font-size: 5px; }
+        .logo-text-bot { font-size: 6px; line-height: 6px; font-weight: 900; }
+        
+        .brand-name { color: #ffd700; font-size: 22px; font-weight: bold; letter-spacing: 0.5px; }
+        .lang-flag { width: 25px; height: 18px; border-radius: 2px; }
 
         .container { padding: 15px; }
 
         /* ব্যানার কার্ড */
-        .banner-card { background: linear-gradient(135deg, #0d2547, #071224); padding: 20px; border-radius: 15px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05); background-image: radial-gradient(circle at top right, rgba(255,215,0,0.1), transparent); }
+        .banner-card { background: linear-gradient(135deg, #0d2547, #071224); padding: 20px; border-radius: 15px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05); text-align: left; }
         .banner-title { color: #ffd700; font-size: 22px; font-weight: bold; margin-bottom: 5px; }
         .banner-sub { color: #869bb5; font-size: 13px; }
 
         /* ব্যালেন্স কার্ড */
         .balance-card { background: #0b192c; border-radius: 15px; padding: 20px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05); position: relative; }
         .asset-label { color: #6d7f95; font-size: 13px; margin-bottom: 8px; }
-        .asset-amount { font-size: 36px; font-weight: bold; margin-bottom: 10px; }
-        .eye-icon { position: absolute; right: 20px; top: 20px; color: #6d7f95; }
-        .status-row { font-size: 13px; margin-bottom: 20px; }
+        .asset-amount { font-size: 36px; font-weight: bold; margin-bottom: 10px; text-align: left; color: #fff; }
+        .eye-icon { position: absolute; right: 20px; top: 20px; width: 20px; opacity: 0.6; }
+        .status-row { font-size: 13px; margin-bottom: 20px; text-align: left; }
         .green-text { color: #00ffcc; margin-right: 15px; }
         .gray-text { color: #6d7f95; }
 
@@ -40,20 +44,21 @@
 
         /* গ্রিড মেনু আইকন */
         .menu-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; background: #0b192c; padding: 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); }
-        .grid-item { display: flex; flex-direction: column; align-items: center; text-align: center; text-decoration: none; color: #fff; font-size: 12px; }
+        .grid-item { display: flex; flex-direction: column; align-items: center; text-align: center; text-decoration: none; color: #fff; font-size: 12px; cursor: pointer; }
         .icon-box { width: 50px; height: 50px; background: #12253f; border-radius: 15px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; border: 1px solid rgba(255,255,255,0.03); }
-        .icon-box i { color: #ffcc00; font-size: 20px; }
+        .icon-box img { width: 24px; height: 24px; filter: invert(84%) sepia(58%) saturate(541%) hue-rotate(359deg) brightness(105%) contrast(104%); }
         .grid-item span { color: #869bb5; }
 
         /* বটম নেভিগেশন বার */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #071120; display: flex; justify-content: space-around; align-items: center; padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.05); }
-        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #536479; font-size: 11px; }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #071120; display: flex; justify-content: space-around; align-items: center; padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.05); z-index: 1000; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #536479; font-size: 11px; width: 20%; }
         .nav-item.active { color: #ffcc00; }
-        .nav-item i { font-size: 18px; margin-bottom: 4px; }
+        .nav-item img { width: 20px; height: 20px; margin-bottom: 4px; opacity: 0.6; }
+        .nav-item.active img { opacity: 1; filter: invert(84%) sepia(58%) saturate(541%) hue-rotate(359deg) brightness(105%) contrast(104%); }
         
         /* মাঝখানের গোল ট্রেড বাটন */
-        .trade-btn-center { width: 55px; height: 55px; background: linear-gradient(135deg, #ffcc00, #ff9900); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-top: -25px; box-shadow: 0 4px 15px rgba(255,153,0,0.3); }
-        .trade-btn-center i { color: #000; font-size: 22px; }
+        .trade-btn-center { width: 55px; height: 55px; background: linear-gradient(135deg, #ffcc00, #ff9900); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-top: -30px; box-shadow: 0 4px 15px rgba(255,153,0,0.3); }
+        .trade-btn-center img { width: 26px; height: 26px; filter: none; opacity: 1; }
     </style>
 </head>
 <body>
@@ -61,10 +66,15 @@
     <!-- হেডার এরিয়া -->
     <div class="header">
         <div class="logo-area">
-            <div class="logo-circle">CPT</div>
+            <!-- নতুন গোল্ডেন লোগো স্ট্রাকচার -->
+            <div class="logo-circle">
+                <span class="logo-text-top">CPT</span>
+                <span class="logo-text-mid">MARKETS</span>
+                <span class="logo-text-bot">UK</span>
+            </div>
             <div class="brand-name">CptMarkets</div>
         </div>
-        <div class="lang-flag"></div>
+        <img class="lang-flag" src="https://icons8.com" alt="Flag">
     </div>
 
     <div class="container">
@@ -76,7 +86,7 @@
 
         <!-- ব্যালেন্স কার্ড -->
         <div class="balance-card">
-            <i class="fa-regular fa-eye eye-icon"></i>
+            <img class="eye-icon" src="https://icons8.com" alt="eye">
             <div class="asset-label">Total Assets (USD)</div>
             <div class="asset-amount" id="total-assets">$0.00</div>
             <div class="status-row">
@@ -94,36 +104,37 @@
 
         <!-- ৮টি আইকন গ্রিড মেনু -->
         <div class="menu-grid">
-            <a href="#" class="grid-item">
-                <div class="icon-box"><i class="fa-solid fa-headset"></i></div>
+            <!-- এখানে আপনার টেলিগ্রাম চ্যাট লিংকটি বসাবেন -->
+            <a href="https://t.me" target="_blank" class="grid-item">
+                <div class="icon-box"><img src="https://icons8.com"></div>
                 <span>Support</span>
             </a>
             <a href="#" class="grid-item">
-                <div class="icon-box"><i class="fa-solid fa-wallet"></i></div>
+                <div class="icon-box"><img src="https://icons8.com"></div>
                 <span>Withdraw</span>
             </a>
             <a href="#" class="grid-item">
-                <div class="icon-box"><i class="fa-solid fa-right-left"></i></div>
+                <div class="icon-box"><img src="https://icons8.com"></div>
                 <span>Transfer</span>
             </a>
             <a href="#" class="grid-item">
-                <div class="icon-box"><i class="fa-solid fa-users-viewfinder"></i></div>
+                <div class="icon-box"><img src="https://icons8.com"></div>
                 <span>Copy Trade</span>
             </a>
             <a href="#" class="grid-item">
-                <div class="icon-box"><i class="fa-solid fa-credit-card"></i></div>
+                <div class="icon-box"><img src="https://icons8.com"></div>
                 <span>Loan</span>
             </a>
             <a href="#" class="grid-item">
-                <div class="icon-box"><i class="fa-solid fa-chart-pie"></i></div>
+                <div class="icon-box"><img src="https://icons8.com"></div>
                 <span>Wealth</span>
             </a>
             <a href="#" class="grid-item">
-                <div class="icon-box"><i class="fa-solid fa-pickaxe"></i></div>
+                <div class="icon-box"><img src="https://icons8.com"></div>
                 <span>Mining</span>
             </a>
             <a href="#" class="grid-item">
-                <div class="icon-box"><i class="fa-solid fa-gift"></i></div>
+                <div class="icon-box"><img src="https://icons8.com"></div>
                 <span>Invite</span>
             </a>
         </div>
@@ -132,34 +143,34 @@
     <!-- নিচের ফিক্সড মেনুবার -->
     <div class="bottom-nav">
         <a href="#" class="nav-item active">
-            <i class="fa-solid fa-house"></i>
+            <img src="https://icons8.com">
             <span>Home</span>
         </a>
         <a href="#" class="nav-item">
-            <i class="fa-solid fa-chart-line"></i>
+            <img src="https://icons8.com">
             <span>Markets</span>
         </a>
         <a href="#" class="nav-item">
             <div class="trade-btn-center">
-                <i class="fa-solid fa-arrow-up-down"></i>
+                <img src="https://icons8.com">
             </div>
             <span style="color: #ffcc00; margin-top: 4px;">Trade</span>
         </a>
         <a href="#" class="nav-item">
-            <i class="fa-solid fa-vault"></i>
+            <img src="https://icons8.com">
             <span>Assets</span>
         </a>
         <a href="#" class="nav-item">
             <i class="fa-solid fa-user"></i>
+            <img src="https://icons8.com">
             <span>Mine</span>
         </a>
     </div>
 
     <script>
-        // এডমিন প্যানেল বা লোকাল স্টোরেজ থেকে ব্যালেন্স নেওয়ার স্ক্রিপ্ট
         window.onload = function() {
             let currentBalance = localStorage.getItem('userBalance') || '0.00';
-            document.getElementById('total-assets').innerText = '$' + parseFloat(currentBalance).toFixed(2);
+            document.getElementById('total-assets').innerText = '$' + parseFloat(currentBalance).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
         }
     </script>
 </body>
