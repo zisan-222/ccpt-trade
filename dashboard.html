@@ -3,104 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CptMarkets - Trading Dashboard</title>
-    <!-- Icons Library -->
+    <title>CptMarkets - Home</title>
+    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
-        body { background-color: #060d1a; color: white; font-family: sans-serif; margin: 0; padding: 15px; padding-bottom: 80px;}
-        .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 10px 5px; }
-        .brand { color: #f39c12; font-size: 22px; font-weight: bold; text-shadow: 0 0 5px rgba(243,156,18,0.2); }
-        .main-card { background: linear-gradient(135deg, #0e1e36, #071224); border-radius: 15px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); margin-top: 15px; position: relative;}
-        .balance-title { color: #8a99ad; font-size: 14px; }
-        .balance-amount { font-size: 38px; font-weight: bold; margin: 10px 0; color: #ffffff; }
-        .action-btns { display: flex; justify-content: space-between; margin-top: 25px; }
-        .action-btns button { width: 30%; padding: 12px; border: none; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 14px; transition: 0.2s;}
-        .btn-dep { background: linear-gradient(90deg, #f1c40f, #e67e22); color: black; box-shadow: 0 4px 10px rgba(243,156,18,0.2); }
-        .btn-dep:hover { transform: translateY(-1px); }
-        .btn-other { background: #14243b; color: white; border: 1px solid #203552; }
+        body { background-color: #050b14; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 15px; padding-bottom: 90px; box-sizing: border-box; }
         
-        .grid-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 30px; }
-        .grid-item { background: #0e1e36; padding: 15px 5px; border-radius: 12px; text-align: center; font-size: 13px; color: #a0aec0; cursor: pointer; transition: 0.2s;}
-        .grid-item:hover { background: #142847; }
-        .grid-item i { font-size: 22px; color: #f39c12; margin-bottom: 8px; display: block;}
+        /* Top Header Bar */
+        .top-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 5px; }
+        .logo-section { display: flex; align-items: center; gap: 8px; }
+        .logo-section img { height: 28px; border-radius: 4px; }
+        .logo-title { font-size: 24px; font-weight: bold; color: #f39c12; }
+        .lang-flag { font-size: 24px; cursor: pointer; }
+
+        /* Main Promo Banner */
+        .promo-banner { background: linear-gradient(135deg, #092c6c, #071530); border-radius: 16px; padding: 25px 20px; margin-top: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); position: relative; overflow: hidden; border: 1px solid #10264c; }
+        .promo-banner::after { content: ''; position: absolute; right: -20px; bottom: -20px; width: 120px; height: 120px; background: url('https://imgur.com') no-repeat; opacity: 0.15; background-size: contain; }
+        .banner-title { font-size: 26px; font-weight: bold; color: #f39c12; margin-bottom: 5px; }
+        .banner-desc { font-size: 13px; color: #a2b4d0; line-height: 1.4; max-width: 80%; }
+
+        /* Assets Dashboard Card */
+        .assets-card { background: linear-gradient(180deg, #101c33, #0a1324); border-radius: 16px; padding: 20px; margin-top: 20px; box-shadow: 0 4px 25px rgba(0,0,0,0.5); border: 1px solid #172744; position: relative;}
+        .card-header-row { display: flex; justify-content: space-between; align-items: center; color: #7f92b0; font-size: 13px; }
+        .balance-val { font-size: 42px; font-weight: bold; margin: 12px 0 8px 0; color: #ffffff; letter-spacing: 0.5px; }
+        .pl-row { font-size: 13px; color: #7f92b0; }
+        .pl-green { color: #00e676; font-weight: 500; }
+
+        /* Core Action Buttons */
+        .action-row { display: flex; justify-content: space-between; margin-top: 22px; gap: 10px; }
+        .action-row button { width: 33.33%; padding: 13px 0; border: none; border-radius: 25px; font-weight: bold; font-size: 14px; cursor: pointer; transition: 0.2s; box-sizing: border-box; }
+        .btn-deposit { background: linear-gradient(90deg, #ffd54f, #f39c12); color: #000; box-shadow: 0 4px 12px rgba(243,156,18,0.25); }
+        .btn-deposit:hover { transform: translateY(-1px); }
+        .btn-secondary { background: #172744; color: white; border: 1px solid #23375c; }
+        .btn-secondary:hover { background: #1c3054; }
+
+        /* Feature Icons Grid Menu */
+        .menu-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 25px; background: linear-gradient(180deg, #101c33, #0a1324); padding: 20px 10px; border-radius: 16px; border: 1px solid #172744; }
+        .grid-box { display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; transition: 0.2s; }
+        .grid-box:hover { transform: scale(1.05); }
+        .icon-circle { width: 50px; height: 50px; background: rgba(23, 39, 68, 0.6); border-radius: 14px; display: flex; justify-content: center; align-items: center; margin-bottom: 8px; border: 1px solid #1f3358; transition: 0.2s; }
+        .grid-box:hover .icon-circle { background: #1f3358; }
+        .icon-circle i { font-size: 20px; color: #f39c12; }
+        .box-label { font-size: 12px; color: #a2b4d0; font-weight: 500; }
+
+        /* Navigation Bar (Footer Menu) */
+        .footer-navigation { position: fixed; bottom: 0; left: 0; width: 100%; background: #070e1a; display: flex; justify-content: space-around; align-items: center; padding: 10px 0; border-top: 1px solid #14233c; box-sizing: border-box; z-index: 999; }
+        .nav-tab { text-align: center; color: #596e8d; font-size: 11px; cursor: pointer; flex: 1; transition: 0.2s; }
+        .nav-tab.active { color: #f39c12; }
+        .nav-tab i { font-size: 20px; display: block; margin-bottom: 4px; }
         
-        /* Bottom Navbar */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #0a1424; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #16263d; box-sizing: border-box; z-index: 999;}
-        .nav-item { text-align: center; color: #52647c; font-size: 12px; cursor: pointer;}
-        .nav-item.active { color: #f39c12; }
-        .nav-item i { font-size: 20px; display: block; margin-bottom: 3px; }
-        .center-btn { background: linear-gradient(135deg, #f1c40f, #d35400); width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: black; font-size: 22px; margin-top: -25px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-        
-        /* Google Translate Element Styling */
-        .lang-bar { text-align: right; }
-        .goog-te-gadget-simple { background-color: rgba(13, 27, 50, 0.5) !important; border: 1px solid #1d2d44 !important; border-radius: 4px !important; padding: 3px 6px !important; }
-        .goog-te-gadget-simple span { color: #f1c40f !important; }
+        /* Central Floating Trade Button */
+        .center-trade-wrap { flex: 1; display: flex; justify-content: center; align-items: center; position: relative; margin-top: -30px; }
+        .center-trade-btn { background: linear-gradient(135deg, #ffd54f, #d35400); width: 54px; height: 54px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: black; font-size: 22px; box-shadow: 0 4px 15px rgba(243,156,18,0.4); cursor: pointer; transition: 0.2s; border: 3px solid #070e1a; }
+        .center-trade-btn:hover { transform: rotate(180deg); }
     </style>
 </head>
 <body>
 
-    <div class="top-nav">
-        <div class="brand">CptMarkets</div>
-        <!-- Multi-language Dropdown -->
-        <div class="lang-bar" id="google_translate_element"></div>
+    <!-- Top Header section -->
+    <div class="top-header">
+        <div class="logo-section">
+            <div class="logo-title">CptMarkets</div>
+        </div>
+        <!-- Right side Country Flag Icon Placeholder -->
+        <div class="lang-flag" id="google_translate_element">🇬🇧</div>
     </div>
     
-    <div class="main-card">
-        <div class="balance-title">Total Assets (USD)</div>
-        <div class="balance-amount" id="display-balance">$0.00</div>
-        <div style="font-size:13px; color:#2ecc71;">Floating P/L +0.00 &nbsp; <span style="color:#8a99ad">Equity $0.00</span></div>
+    <!-- Main Trading Promo Banner -->
+    <div class="promo-banner">
+        <div class="banner-title">CptMarkets</div>
+        <div class="banner-desc">Global integrated financial trading platform</div>
+    </div>
+    
+    <!-- Assets Overview Section -->
+    <div class="assets-card">
+        <div class="card-header-row">
+            <span>Total Assets (USD)</span>
+            <i class="fa-regular fa-eye" style="cursor:pointer;"></i>
+        </div>
+        <div class="balance-val" id="display-balance">$0.00</div>
+        <div class="pl-row">
+            Floating P/L <span class="pl-green">+0.00</span> &nbsp;&nbsp; Equity $0.00
+        </div>
         
-        <div class="action-btns">
-            <!-- Demo Funds Deposit Button -->
-            <button class="btn-dep" onclick="addDemoFunds()">Deposit</button>
-            <button class="btn-other">Withdraw</button>
-            <button class="btn-other">Transfer</button>
+        <!-- Quick Action Buttons -->
+        <div class="action-row">
+            <button class="btn-deposit" onclick="alert('Contact your customer service')">Deposit</button>
+            <button class="btn-secondary">Withdraw</button>
+            <button class="btn-secondary">Transfer</button>
         </div>
     </div>
 
-    <!-- Features Grid Menu -->
-    <div class="grid-container">
-        <div class="grid-item" onclick="openChat()"><i class="fa-solid fa-headset"></i>Support</div>
-        <div class="grid-item"><i class="fa-solid fa-wallet"></i>Withdraw</div>
-        <div class="grid-item"><i class="fa-solid fa-money-bill-transfer"></i>Transfer</div>
-        <div class="grid-item"><i class="fa-solid fa-users-rectangle"></i>Copy Trade</div>
-        <div class="grid-item"><i class="fa-solid fa-hand-holding-dollar"></i>Loan</div>
-        <div class="grid-item"><i class="fa-solid fa-chart-pie"></i>Wealth</div>
-        <div class="grid-item"><i class="fa-solid fa-screwdriver-wrench"></i>Mining</div>
-        <div class="grid-item"><i class="fa-solid fa-gift"></i>Invite</div>
+    <!-- Main Grid Dashboard Features -->
+    <div class="menu-grid">
+        <div class="grid-box" onclick="openChat()">
+            <div class="icon-circle"><i class="fa-solid fa-headset"></i></div>
+            <div class="box-label">Support</div>
+        </div>
+        <div class="grid-box">
+            <div class="icon-circle"><i class="fa-solid fa-wallet"></i></div>
+            <div class="box-label">Withdraw</div>
+        </div>
+        <div class="grid-box">
+            <div class="icon-circle"><i class="fa-solid fa-money-bill-transfer"></i></div>
+            <div class="box-label">Transfer</div>
+        </div>
+        <div class="grid-box">
+            <div class="icon-circle"><i class="fa-solid fa-users-viewfinder"></i></div>
+            <div class="box-label">Copy Trade</div>
+        </div>
+        <div class="grid-box">
+            <div class="icon-circle"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+            <div class="box-label">Loan</div>
+        </div>
+        <div class="grid-box">
+            <div class="icon-circle"><i class="fa-solid fa-chart-line"></i></div>
+            <div class="box-label">Wealth</div>
+        </div>
+        <div class="grid-box">
+            <div class="icon-circle"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+            <div class="box-label">Mining</div>
+        </div>
+        <div class="grid-box">
+            <div class="icon-circle"><i class="fa-solid fa-gift"></i></div>
+            <div class="box-label">Invite</div>
+        </div>
     </div>
 
-    <!-- Footer Bottom Menu -->
-    <div class="bottom-nav">
-        <div class="nav-item active"><i class="fa-solid fa-house"></i>Home</div>
-        <div class="nav-item"><i class="fa-solid fa-globe"></i>Markets</div>
-        <div class="center-btn"><i class="fa-solid fa-arrow-up-down"></i></div>
-        <div class="nav-item"><i class="fa-solid fa-briefcase"></i>Assets</div>
-        <div class="nav-item"><i class="fa-solid fa-user"></i>Mine</div>
+    <!-- Bottom Footer Navigation Bar -->
+    <div class="footer-navigation">
+        <div class="nav-tab active">
+            <i class="fa-solid fa-house"></i>
+            Home
+        </div>
+        <div class="nav-tab">
+            <i class="fa-solid fa-chart-simple"></i>
+            Markets
+        </div>
+        <div class="center-trade-wrap">
+            <div class="center-trade-btn">
+                <i class="fa-solid fa-arrow-up-down"></i>
+            </div>
+        </div>
+        <div class="nav-tab">
+            <i class="fa-solid fa-briefcase"></i>
+            Assets
+        </div>
+        <div class="nav-tab">
+            <i class="fa-solid fa-user"></i>
+            Mine
+        </div>
     </div>
 
+    <!-- Core Security & Memory System Script -->
     <script>
-        // Security Gate: Redirect to login if user session is not found
+        // Check session validation
         if (localStorage.getItem("is_logged") !== "true") { window.location.href = "index.html"; }
 
-        // Fetch and display balance from browser memory
-        document.getElementById("display-balance").innerText = "$" + (parseFloat(localStorage.getItem("trader_balance")) || 0).toFixed(2);
-
-        // Function to add demo funds
-        function addDemoFunds() {
-            let amount = prompt("Enter the amount of demo USD you want to deposit:", "1000");
-            if(amount != null && !isNaN(amount) && amount > 0) {
-                let currentBal = parseFloat(localStorage.getItem("trader_balance")) || 0;
-                let newBal = currentBal + parseFloat(amount);
-                localStorage.setItem("trader_balance", newBal);
-                document.getElementById("display-balance").innerText = "$" + newBal.toFixed(2);
-                alert("$" + amount + " Demo funds added successfully!");
-            } else if (amount != null) {
-                alert("Please enter a valid amount!");
-            }
+        // Load balance dynamically
+        let currentUser = localStorage.getItem("current_logged_user");
+        let allUsers = JSON.parse(localStorage.getItem("trading_database")) || {};
+        
+        if(allUsers[currentUser]) {
+            document.getElementById("display-balance").innerText = "$" + parseFloat(allUsers[currentUser].balance).toFixed(2);
         }
 
-        // Support button action trigger
+        // Live Chat Support API trigger
         function openChat() {
             if(typeof Tawk_API !== 'undefined') {
                 Tawk_API.toggle();
@@ -110,7 +178,7 @@
         }
     </script>
 
-    <!-- Google Translator Script -->
+    <!-- Google Translator Script for 5+ Languages -->
     <script type="text/javascript">
     function googleTranslateElementInit() {
       new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,bn,ar,hi,es,zh-CN'}, 'google_translate_element');
@@ -118,8 +186,7 @@
     </script>
     <script type="text/javascript" src="//://google.com"></script>
 
-    <!-- 💬 YOUR TAWK.TO LIVE CHAT WIDGET CODE WILL GO HERE IN THE NEXT STEP 💬 -->
+    <!-- 💬 YOUR TAWK.TO LIVE CHAT WIDGET CODE GOES HERE 💬 -->
 
 </body>
 </html>
-
