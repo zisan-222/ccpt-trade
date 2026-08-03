@@ -3,164 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CptMarkets - Home</title>
-    <!-- FontAwesome for Icons -->
+    <title>CptMarkets - Dashboard</title>
+    <!-- আইকনগুলোর জন্য ফন্ট-অসাম লাইব্রেরি যুক্ত করা হয়েছে -->
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
-        body { background-color: #050b14; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 15px; padding-bottom: 90px; box-sizing: border-box; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: sans-serif; background: #050b14; color: #fff; padding-bottom: 80px; }
         
-        /* Top Header Bar */
-        .top-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 5px; }
-        .logo-title { font-size: 24px; font-weight: bold; color: #f39c12; }
-        .lang-bar { text-align: right; }
+        /* টপ হেডার ও লোগো */
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #071120; }
+        .logo-area { display: flex; align-items: center; gap: 10px; }
+        .logo-circle { width: 35px; height: 35px; background: #ffd700; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000; font-weight: bold; font-size: 10px; border: 2px solid #fff; }
+        .brand-name { color: #ffd700; font-size: 20px; font-weight: bold; }
+        .lang-flag { width: 25px; height: 18px; background: linear-gradient(to right, red, white, blue); border-radius: 2px; }
 
-        /* Main Promo Banner */
-        .promo-banner { background: linear-gradient(135deg, #092c6c, #071530); border-radius: 16px; padding: 25px 20px; margin-top: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); border: 1px solid #10264c; }
-        .banner-title { font-size: 26px; font-weight: bold; color: #f39c12; margin-bottom: 5px; }
-        .banner-desc { font-size: 13px; color: #a2b4d0; line-height: 1.4; max-width: 80%; }
+        .container { padding: 15px; }
 
-        /* Assets Dashboard Card */
-        .assets-card { background: linear-gradient(180deg, #101c33, #0a1324); border-radius: 16px; padding: 20px; margin-top: 20px; box-shadow: 0 4px 25px rgba(0,0,0,0.5); border: 1px solid #172744; position: relative;}
-        .card-header-row { display: flex; justify-content: space-between; align-items: center; color: #7f92b0; font-size: 13px; }
-        .balance-val { font-size: 42px; font-weight: bold; margin: 12px 0 8px 0; color: #ffffff; letter-spacing: 0.5px; }
-        .pl-row { font-size: 13px; color: #7f92b0; }
-        .pl-green { color: #00e676; font-weight: 500; }
+        /* ব্যানার কার্ড */
+        .banner-card { background: linear-gradient(135deg, #0d2547, #071224); padding: 20px; border-radius: 15px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05); background-image: radial-gradient(circle at top right, rgba(255,215,0,0.1), transparent); }
+        .banner-title { color: #ffd700; font-size: 22px; font-weight: bold; margin-bottom: 5px; }
+        .banner-sub { color: #869bb5; font-size: 13px; }
 
-        /* Core Action Buttons */
-        .action-row { display: flex; justify-content: space-between; margin-top: 22px; gap: 10px; }
-        .action-row button { width: 33.33%; padding: 13px 0; border: none; border-radius: 25px; font-weight: bold; font-size: 14px; cursor: pointer; transition: 0.2s; box-sizing: border-box; }
-        .btn-deposit { background: linear-gradient(90deg, #ffd54f, #f39c12); color: #000; box-shadow: 0 4px 12px rgba(243,156,18,0.25); }
-        .btn-secondary { background: #172744; color: white; border: 1px solid #23375c; }
+        /* ব্যালেন্স কার্ড */
+        .balance-card { background: #0b192c; border-radius: 15px; padding: 20px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05); position: relative; }
+        .asset-label { color: #6d7f95; font-size: 13px; margin-bottom: 8px; }
+        .asset-amount { font-size: 36px; font-weight: bold; margin-bottom: 10px; }
+        .eye-icon { position: absolute; right: 20px; top: 20px; color: #6d7f95; }
+        .status-row { font-size: 13px; margin-bottom: 20px; }
+        .green-text { color: #00ffcc; margin-right: 15px; }
+        .gray-text { color: #6d7f95; }
 
-        /* Feature Icons Grid Menu */
-        .menu-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 25px; background: linear-gradient(180deg, #101c33, #0a1324); padding: 20px 10px; border-radius: 16px; border: 1px solid #172744; }
-        .grid-box { display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; transition: 0.2s; }
-        .icon-circle { width: 50px; height: 50px; background: rgba(23, 39, 68, 0.6); border-radius: 14px; display: flex; justify-content: center; align-items: center; margin-bottom: 8px; border: 1px solid #1f3358; }
-        .icon-circle i { font-size: 20px; color: #f39c12; }
-        .box-label { font-size: 12px; color: #a2b4d0; font-weight: 500; }
+        /* অ্যাকশন বাটনসমূহ */
+        .action-buttons { display: flex; gap: 10px; margin-bottom: 10px; }
+        .btn { flex: 1; padding: 12px; border-radius: 25px; border: none; font-weight: bold; font-size: 14px; cursor: pointer; color: #fff; background: #162a45; }
+        .btn-deposit { background: linear-gradient(to right, #ffcc00, #ff9900); color: #000; }
 
-        /* Navigation Bar (Footer Menu) */
-        .footer-navigation { position: fixed; bottom: 0; left: 0; width: 100%; background: #070e1a; display: flex; justify-content: space-around; align-items: center; padding: 10px 0; border-top: 1px solid #14233c; box-sizing: border-box; z-index: 999; }
-        .nav-tab { text-align: center; color: #596e8d; font-size: 11px; cursor: pointer; flex: 1; }
-        .nav-tab.active { color: #f39c12; }
-        .nav-tab i { font-size: 20px; display: block; margin-bottom: 4px; }
+        /* গ্রিড মেনু আইকন */
+        .menu-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; background: #0b192c; padding: 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); }
+        .grid-item { display: flex; flex-direction: column; align-items: center; text-align: center; text-decoration: none; color: #fff; font-size: 12px; }
+        .icon-box { width: 50px; height: 50px; background: #12253f; border-radius: 15px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; border: 1px solid rgba(255,255,255,0.03); }
+        .icon-box i { color: #ffcc00; font-size: 20px; }
+        .grid-item span { color: #869bb5; }
+
+        /* বটম নেভিগেশন বার */
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #071120; display: flex; justify-content: space-around; align-items: center; padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.05); }
+        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #536479; font-size: 11px; }
+        .nav-item.active { color: #ffcc00; }
+        .nav-item i { font-size: 18px; margin-bottom: 4px; }
         
-        /* Central Floating Trade Button */
-        .center-trade-wrap { flex: 1; display: flex; justify-content: center; align-items: center; position: relative; margin-top: -30px; }
-        .center-trade-btn { background: linear-gradient(135deg, #ffd54f, #d35400); width: 54px; height: 54px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: black; font-size: 22px; box-shadow: 0 4px 15px rgba(243,156,18,0.4); border: 3px solid #070e1a; }
-        
-        .goog-te-gadget-simple { background-color: rgba(13, 27, 50, 0.5) !important; border: 1px solid #1d2d44 !important; border-radius: 4px !important; padding: 3px 6px !important; }
-        .goog-te-gadget-simple span { color: #f1c40f !important; }
+        /* মাঝখানের গোল ট্রেড বাটন */
+        .trade-btn-center { width: 55px; height: 55px; background: linear-gradient(135deg, #ffcc00, #ff9900); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-top: -25px; box-shadow: 0 4px 15px rgba(255,153,0,0.3); }
+        .trade-btn-center i { color: #000; font-size: 22px; }
     </style>
 </head>
 <body>
 
-    <div class="top-header">
-        <div class="logo-section">
-            <div class="logo-title">CptMarkets</div>
+    <!-- হেডার এরিয়া -->
+    <div class="header">
+        <div class="logo-area">
+            <div class="logo-circle">CPT</div>
+            <div class="brand-name">CptMarkets</div>
         </div>
-        <div class="lang-bar" id="google_translate_element"></div>
+        <div class="lang-flag"></div>
     </div>
-    
-    <div class="promo-banner">
-        <div class="banner-title">CptMarkets</div>
-        <div class="banner-desc">Global integrated financial trading platform</div>
-    </div>
-    
-    <div class="assets-card">
-        <div class="card-header-row">
-            <span>Total Assets (USD)</span>
-            <i class="fa-regular fa-eye"></i>
+
+    <div class="container">
+        <!-- টপ ব্যানার -->
+        <div class="banner-card">
+            <div class="banner-title">CptMarkets</div>
+            <div class="banner-sub">Global integrated financial trading platform</div>
         </div>
-        <div class="balance-val" id="display-balance">$0.00</div>
-        <div class="pl-row">
-            Floating P/L <span class="pl-green">+0.00</span> &nbsp;&nbsp; Equity $0.00
+
+        <!-- ব্যালেন্স কার্ড -->
+        <div class="balance-card">
+            <i class="fa-regular fa-eye eye-icon"></i>
+            <div class="asset-label">Total Assets (USD)</div>
+            <div class="asset-amount" id="total-assets">$0.00</div>
+            <div class="status-row">
+                <span class="green-text">Floating P/L +0.00</span>
+                <span class="gray-text">Equity $0.00</span>
+            </div>
+
+            <!-- অ্যাকশন বাটনসমূহ -->
+            <div class="action-buttons">
+                <button class="btn btn-deposit">Deposit</button>
+                <button class="btn">Withdraw</button>
+                <button class="btn">Transfer</button>
+            </div>
         </div>
-        
-        <div class="action-row">
-            <button class="btn-deposit" onclick="alert('Contact your customer service')">Deposit</button>
-            <button class="btn-secondary">Withdraw</button>
-            <button class="btn-secondary">Transfer</button>
+
+        <!-- ৮টি আইকন গ্রিড মেনু -->
+        <div class="menu-grid">
+            <a href="#" class="grid-item">
+                <div class="icon-box"><i class="fa-solid fa-headset"></i></div>
+                <span>Support</span>
+            </a>
+            <a href="#" class="grid-item">
+                <div class="icon-box"><i class="fa-solid fa-wallet"></i></div>
+                <span>Withdraw</span>
+            </a>
+            <a href="#" class="grid-item">
+                <div class="icon-box"><i class="fa-solid fa-right-left"></i></div>
+                <span>Transfer</span>
+            </a>
+            <a href="#" class="grid-item">
+                <div class="icon-box"><i class="fa-solid fa-users-viewfinder"></i></div>
+                <span>Copy Trade</span>
+            </a>
+            <a href="#" class="grid-item">
+                <div class="icon-box"><i class="fa-solid fa-credit-card"></i></div>
+                <span>Loan</span>
+            </a>
+            <a href="#" class="grid-item">
+                <div class="icon-box"><i class="fa-solid fa-chart-pie"></i></div>
+                <span>Wealth</span>
+            </a>
+            <a href="#" class="grid-item">
+                <div class="icon-box"><i class="fa-solid fa-pickaxe"></i></div>
+                <span>Mining</span>
+            </a>
+            <a href="#" class="grid-item">
+                <div class="icon-box"><i class="fa-solid fa-gift"></i></div>
+                <span>Invite</span>
+            </a>
         </div>
     </div>
 
-    <div class="menu-grid">
-        <div class="grid-box" onclick="openChat()">
-            <div class="icon-circle"><i class="fa-solid fa-headset"></i></div>
-            <div class="box-label">Support</div>
-        </div>
-        <div class="grid-box">
-            <div class="icon-circle"><i class="fa-solid fa-wallet"></i></div>
-            <div class="box-label">Withdraw</div>
-        </div>
-        <div class="grid-box">
-            <div class="icon-circle"><i class="fa-solid fa-money-bill-transfer"></i></div>
-            <div class="box-label">Transfer</div>
-        </div>
-        <div class="grid-box">
-            <div class="icon-circle"><i class="fa-solid fa-users-viewfinder"></i></div>
-            <div class="box-label">Copy Trade</div>
-        </div>
-        <div class="grid-box">
-            <div class="icon-circle"><i class="fa-solid fa-hand-holding-dollar"></i></div>
-            <div class="box-label">Loan</div>
-        </div>
-        <div class="grid-box">
-            <div class="icon-circle"><i class="fa-solid fa-chart-line"></i></div>
-            <div class="box-label">Wealth</div>
-        </div>
-        <div class="grid-box">
-            <div class="icon-circle"><i class="fa-solid fa-screwdriver-wrench"></i></div>
-            <div class="box-label">Mining</div>
-        </div>
-        <div class="grid-box">
-            <div class="icon-circle"><i class="fa-solid fa-gift"></i></div>
-            <div class="box-label">Invite</div>
-        </div>
-    </div>
-
-    <div class="footer-navigation">
-        <div class="nav-tab active"><i class="fa-solid fa-house"></i>Home</div>
-        <div class="nav-tab"><i class="fa-solid fa-chart-simple"></i>Markets</div>
-        <div class="center-trade-wrap"><div class="center-trade-btn"><i class="fa-solid fa-arrow-up-down"></i></div></div>
-        <div class="nav-tab"><i class="fa-solid fa-briefcase"></i>Assets</div>
-        <div class="nav-tab"><i class="fa-solid fa-user"></i>Mine</div>
+    <!-- নিচের ফিক্সড মেনুবার -->
+    <div class="bottom-nav">
+        <a href="#" class="nav-item active">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Markets</span>
+        </a>
+        <a href="#" class="nav-item">
+            <div class="trade-btn-center">
+                <i class="fa-solid fa-arrow-up-down"></i>
+            </div>
+            <span style="color: #ffcc00; margin-top: 4px;">Trade</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fa-solid fa-vault"></i>
+            <span>Assets</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fa-solid fa-user"></i>
+            <span>Mine</span>
+        </a>
     </div>
 
     <script>
-        if (localStorage.getItem("is_logged") !== "true") { window.location.href = "index.html"; }
-
-        // ⚠️ নিচে আপনার কপি করা Firebase Realtime Database লিঙ্কটি অবশ্যই বসাবেন ⚠️
-        const FIREBASE_URL = "http://ccpt-trade.vercel.app;
-        let currentUser = localStorage.getItem("current_logged_user");
-
-        function fetchLiveBalance() {
-            if(FIREBASE_URL.includes("এখানে_আপনার_ফায়ারবেস")) return;
-            fetch(`${FIREBASE_URL}/users/${currentUser}/balance.json`)
-            .then(res => res.json())
-            .then(balance => {
-                if(balance !== null) {
-                    document.getElementById("display-balance").innerText = "$" + parseFloat(balance).toFixed(2);
-                }
-            }).catch(err => console.error(err));
-        }
-
-        fetchLiveBalance();
-        setInterval(fetchLiveBalance, 4000); // প্রতি ৪ সেকেন্ড পরপর লাইভ ব্যালেন্স চেক করবে
-
-        function openChat() {
-            if(typeof Tawk_API !== 'undefined') { Tawk_API.toggle(); } else { alert("Live Support is loading..."); }
+        // এডমিন প্যানেল বা লোকাল স্টোরেজ থেকে ব্যালেন্স নেওয়ার স্ক্রিপ্ট
+        window.onload = function() {
+            let currentBalance = localStorage.getItem('userBalance') || '0.00';
+            document.getElementById('total-assets').innerText = '$' + parseFloat(currentBalance).toFixed(2);
         }
     </script>
-
-    <script type="text/javascript">
-    function googleTranslateElementInit() {
-      new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,bn,ar,hi,es,zh-CN'}, 'google_translate_element');
-    }
-    </script>
-    <script type="text/javascript" src="//://google.com"></script>
-
-    <!-- 💬 YOUR TAWK.TO LIVE CHAT WIDGET CODE GOES HERE 💬 -->
-
 </body>
 </html>
