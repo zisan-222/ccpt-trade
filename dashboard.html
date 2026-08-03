@@ -3,196 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CptMarkets - Dashboard</title>
+    <title>CptMarkets - Platform</title>
+    <!-- Tailwind CSS -->
+    <script src="https://jsdelivr.net"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cloudflare.com">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: sans-serif; background: #050b14; color: #fff; padding-bottom: 90px; }
-        
-        /* টপ হেডার ও নতুন লোগো এরিয়া */
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #071120; }
-        .logo-area { display: flex; align-items: center; gap: 10px; }
-        
-        /* গোল্ডেন সার্কেল লোগো */
-        .logo-circle { width: 44px; height: 44px; background: radial-gradient(circle, #ffe875, #a37f00); border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #000; font-weight: bold; border: 2px solid #ffd700; box-shadow: 0 0 8px rgba(255, 215, 0, 0.5); }
-        .logo-text-top { font-size: 9px; line-height: 9px; font-weight: 900; font-family: 'Arial Black', sans-serif; letter-spacing: 0.3px; }
-        .logo-text-mid { font-size: 5px; line-height: 7px; border-top: 1px solid #000; border-bottom: 1px solid #000; margin: 1px 0; padding: 0 2px; font-weight: 800; }
-        .logo-text-bot { font-size: 6px; line-height: 6px; font-weight: 900; }
-        
-        .brand-name { color: #ffd700; font-size: 22px; font-weight: bold; letter-spacing: 0.5px; }
-        .flag-svg { width: 25px; height: 18px; border-radius: 2px; }
-
-        .container { padding: 15px; }
-
-        /* ব্যানার কার্ড */
-        .banner-card { background: linear-gradient(135deg, #0d2547, #071224); padding: 20px; border-radius: 15px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05); text-align: left; }
-        .banner-title { color: #ffd700; font-size: 22px; font-weight: bold; margin-bottom: 5px; }
-        .banner-sub { color: #869bb5; font-size: 13px; }
-
-        /* ব্যালেন্স কার্ড */
-        .balance-card { background: #0b192c; border-radius: 15px; padding: 20px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05); position: relative; }
-        .asset-label { color: #6d7f95; font-size: 13px; margin-bottom: 8px; }
-        .asset-amount { font-size: 36px; font-weight: bold; margin-bottom: 10px; text-align: left; color: #fff; }
-        .eye-svg { position: absolute; right: 20px; top: 25px; width: 20px; height: 20px; fill: #6d7f95; }
-        .status-row { font-size: 13px; margin-bottom: 20px; text-align: left; }
-        .green-text { color: #00ffcc; margin-right: 15px; }
-        .gray-text { color: #6d7f95; }
-
-        /* অ্যাকশন বাটনসমূহ */
-        .action-buttons { display: flex; gap: 10px; margin-bottom: 10px; }
-        .btn { flex: 1; padding: 12px; border-radius: 25px; border: none; font-weight: bold; font-size: 14px; cursor: pointer; color: #fff; background: #162a45; }
-        .btn-deposit { background: linear-gradient(to right, #ffcc00, #ff9900); color: #000; }
-
-        /* গ্রিড মেনু আইকন */
-        .menu-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; background: #0b192c; padding: 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); }
-        .grid-item { display: flex; flex-direction: column; align-items: center; text-align: center; text-decoration: none; color: #fff; font-size: 12px; cursor: pointer; }
-        .icon-box { width: 50px; height: 50px; background: #12253f; border-radius: 15px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; border: 1px solid rgba(255,255,255,0.03); }
-        .icon-box svg { width: 22px; height: 22px; fill: #ffcc00; }
-        .grid-item span { color: #869bb5; }
-
-        /* বটম নেভিগেশন বার */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #071120; display: flex; justify-content: space-around; align-items: center; padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.05); z-index: 1000; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #536479; font-size: 11px; width: 20%; }
-        .nav-item.active { color: #ffcc00; }
-        .nav-item svg { width: 20px; height: 20px; margin-bottom: 4px; fill: #536479; }
-        .nav-item.active svg { fill: #ffcc00; }
-        
-        /* মাঝখানের গোল ট্রেড বাটন */
-        .trade-btn-center { width: 55px; height: 55px; background: linear-gradient(135deg, #ffcc00, #ff9900); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-top: -30px; box-shadow: 0 4px 15px rgba(255,153,0,0.3); }
-        .trade-btn-center svg { width: 24px; height: 24px; fill: #000; }
+        .custom-scrollbar::-webkit-scrollbar { display: none; }
+        .custom-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body>
+<body class="bg-[#020b18] text-white font-sans pb-32 selection:bg-amber-500/30">
 
-    <!-- হেডার এরিয়া -->
-    <div class="header">
-        <div class="logo-area">
-            <div class="logo-circle">
-                <span class="logo-text-top">CPT</span>
-                <span class="logo-text-mid">MARKETS</span>
-                <span class="logo-text-bot">UK</span>
-            </div>
-            <div class="brand-name">CptMarkets</div>
+    <!-- 🌐 গ্লোবাল টপ হেডার বার -->
+    <div class="p-4 flex justify-between items-center bg-[#031129] border-b border-blue-950/50 sticky top-0 z-50">
+        <div class="flex items-center space-x-2">
+            <div class="w-6 h-6 bg-amber-500 rounded-full flex items-center justify-center text-[#031129] font-bold text-[10px]">CPT</div>
+            <span class="text-amber-400 font-bold text-base tracking-tight">CptMarkets</span>
         </div>
-        <!-- ইউকে ফ্ল্যাগ SVG কোড -->
-        <svg class="flag-svg" viewBox="0 0 60 30">
-            <clipPath id="t"><path d="M0,0 v30 h60 v-30 z"/></clipPath>
-            <path d="M0,0 v30 h60 v-30 z" fill="#012169"/>
-            <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6" clip-path="url(#t)"/>
-            <path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" stroke-width="4" clip-path="url(#t)"/>
-            <path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/>
-            <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/>
-        </svg>
+        <div class="flex items-center space-x-3">
+            <select id="langSelect" onchange="changeLanguage()" class="bg-[#05193e] text-xs text-amber-400 border border-blue-900 rounded-md p-1 outline-none font-medium">
+                <option value="en">English</option><option value="bn">বাংলা</option><option value="es">Español</option><option value="ar">العربية</option><option value="zh">中文</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="hi">हिन्दी</option><option value="ru">Русский</option>
+            </select>
+            <img src="https://flagcdn.com" class="w-5 h-auto rounded-sm shadow-sm">
+        </div>
     </div>
 
-    <div class="container">
-        <!-- টপ ব্যানার -->
-        <div class="banner-card">
-            <div class="banner-title">CptMarkets</div>
-            <div class="banner-sub">Global integrated financial trading platform</div>
-        </div>
 
-        <!-- ব্যালেন্সカード -->
-        <div class="balance-card">
-            <!-- আই আইকন SVG -->
-            <svg class="eye-svg" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 16.5c-2.48 0-4.5-2.02-4.5-4.5s2.02-4.5 4.5-4.5 4.5 2.02 4.5 4.5-2.02 4.5-4.5 4.5zm0-7c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5z"/></svg>
-            <div class="asset-label">Total Assets (USD)</div>
-            <div class="asset-amount" id="total-assets">$0.00</div>
-            <div class="status-row">
-                <span class="green-text">Floating P/L +0.00</span>
-                <span class="gray-text">Equity $0.00</span>
-            </div>
-
-            <!-- অ্যাকশন বাটনসমূহ -->
-            <div class="action-buttons">
-                <button class="btn btn-deposit">Deposit</button>
-                <button class="btn">Withdraw</button>
-                <button class="btn">Transfer</button>
+    <!-- ================= 🏠 ১. HOME SCREEN (৩য় ছবির মতো) ================= -->
+    <div id="homeScreen" class="tab-content">
+        <!-- গ্লোবাল ফাইন্যান্সিয়াল ব্যানার -->
+        <div class="p-4">
+            <div class="bg-gradient-to-r from-blue-950 via-indigo-950 to-blue-950 p-6 rounded-2xl border border-blue-900/50 relative overflow-hidden">
+                <div class="absolute right-4 top-4 text-gray-500/20 text-7xl"><i class="fa-solid fa-earth-americas"></i></div>
+                <h2 class="text-2xl font-black text-amber-400 tracking-tight">CptMarkets</h2>
+                <p id="lang-sub" class="text-xs text-gray-300 mt-1 font-light tracking-wide">Global integrated financial trading platform</p>
             </div>
         </div>
 
-        <!-- ৮টি আইকন গ্রিড মেনু -->
-        <div class="menu-grid">
-            <!-- কাস্টমার কেয়ার টেলিগ্রাম লিংক এখানে দিন -->
-            <a href="https://t.me" target="_blank" class="grid-item">
-                <div class="icon-box">
-                    <svg viewBox="0 0 24 24"><path d="M12 1c-4.97 0-9 4.03-9 9v7c0 1.66 1.34 3 3 3h3v-8H5v-2c0-3.87 3.13-7 7-7s7 3.13 7 7v2h-4v8h3c1.66 0 3-1.34 3-3v-7c0-4.97-4.03-9-9-9z"/></svg>
-                </div>
-                <span>Support</span>
-            </a>
-            <a href="#" class="grid-item">
-                <div class="icon-box">
-                    <svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
-                </div>
-                <span>Withdraw</span>
-            </a>
-            <a href="#" class="grid-item">
-                <div class="icon-box">
-                    <svg viewBox="0 0 24 24"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg>
-                </div>
-                <span>Transfer</span>
-            </a>
-            <a href="#" class="grid-item">
-                <div class="icon-box">
-                    <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 1.34 5 3s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-                </div>
-                <span>Copy Trade</span>
-            </a>
-            <a href="#" class="grid-item">
-                <div class="icon-box">
-                    <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.1.89 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V12h16v6zm0-10H4V6h16v2z"/></svg>
-                </div>
-                <span>Loan</span>
-            </a>
-            <a href="#" class="grid-item">
-                <div class="icon-box">
-                    <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
-                </div>
-                <span>Wealth</span>
-            </a>
-            <a href="#" class="grid-item">
-                <div class="icon-box">
-                    <svg viewBox="0 0 24 24"><path d="M22 10.91c0-.49-.32-.93-.8-.98 L12 9 L2.8 9.93c-.48.05-.8.49-.8.98v3.18c0 .44.31.82.74.9l9.26 1.85l9.26-1.85c.43-.08.74-.46.74-.9v-3.18z M12 2L2 6l10 4l10-4l-10-4z"/></svg>
-                </div>
-                <span>Mining</span>
-            </a>
-            <a href="#" class="grid-item">
-                <div class="icon-box">
-<script type="module">
-  import { initializeApp } from "https://gstatic.com";
-  import { getAuth, onAuthStateChanged } from "https://gstatic.com";
-  import { getFirestore, doc, onSnapshot } from "https://gstatic.com";
+        <!-- নোটিশ অ্যানিমেশন বার -->
+        <div class="mx-4 mb-4 bg-[#031129] border border-blue-950/40 rounded-xl px-3 py-2 flex items-center space-x-2 text-xs text-gray-400">
+            <i class="fa-solid fa-bullhorn text-amber-400"></i>
+            <marquee class="w-full text-[11px]" scrollamount="3">Welcome to CptMarkets. Enjoy secure trading with maximum leverage up to 2000x.</marquee>
+        </div>
 
-  // আপনার ফায়ারবেসের কানেকশন চাবি
-  const firebaseConfig = {
-    apiKey: "AIzaSyApKKni5cB26UoJVod6pGhrzLYYv",
-    authDomain: "://firebaseapp.com",
-    projectId: "ccpt-trade",
-    storageBucket: "ccpt-trade.firebasestorage.app",
-    messagingSenderId: "461751033270",
-    appId: "1:461751033270:web:7fdc3f9a206cbf2",
-    measurementId: "G-V1RSJDECT"
-  };
+        <!-- অ্যাপ সার্ভিস গ্রিড আইকনসমূহ -->
+        <div class="mx-4 p-4 bg-[#05193e]/30 border border-blue-900/40 rounded-2xl grid grid-cols-4 gap-y-6 gap-x-2 text-center text-[11px] font-medium text-gray-300">
+            <div onclick="alert('Please contact customer care.')" class="flex flex-col items-center active:scale-95 transition cursor-pointer"><div class="w-12 h-12 bg-[#05193e] border border-blue-900/50 rounded-2xl flex justify-center items-center text-amber-400 text-lg shadow"><i class="fa-solid fa-headset"></i></div><span class="mt-2">Support</span></div>
+            <a href="withdraw.html" class="flex flex-col items-center active:scale-95 transition"><div class="w-12 h-12 bg-[#05193e] border border-blue-900/50 rounded-2xl flex justify-center items-center text-amber-400 text-lg shadow"><i class="fa-solid fa-wallet"></i></div><span class="mt-2">Withdraw</span></a>
+            <div class="flex flex-col items-center active:scale-95 transition cursor-pointer"><div class="w-12 h-12 bg-[#05193e] border border-blue-900/50 rounded-2xl flex justify-center items-center text-amber-400 text-lg shadow"><i class="fa-solid fa-money-bill-transfer"></i></div><span class="mt-2">Transfer</span></div>
+            <div class="flex flex-col items-center active:scale-95 transition cursor-pointer"><div class="w-12 h-12 bg-[#05193e] border border-blue-900/50 rounded-2xl flex justify-center items-center text-amber-400 text-lg shadow"><i class="fa-solid fa-users-viewfinder"></i></div><span class="mt-2">Copy Trade</span></div>
+            <div class="flex flex-col items-center active:scale-95 transition cursor-pointer"><div class="w-12 h-12 bg-[#05193e] border border-blue-900/50 rounded-2xl flex justify-center items-center text-amber-400 text-lg shadow"><i class="fa-solid fa-credit-card"></i></div><span class="mt-2">Loan</span></div>
+            <div class="flex flex-col items-center active:scale-95 transition cursor-pointer"><div class="w-12 h-12 bg-[#05193e] border border-blue-900/50 rounded-2xl flex justify-center items-center text-amber-400 text-lg shadow"><i class="fa-solid fa-chart-pie"></i></div><span class="mt-2">Wealth</span></div>
+            <div class="flex flex-col items-center active:scale-95 transition cursor-pointer"><div class="w-12 h-12 bg-[#05193e] border border-blue-900/50 rounded-2xl flex justify-center items-center text-amber-400 text-lg shadow"><i class="fa-solid fa-pickaxe"></i></div><span class="mt-2">Mining</span></div>
+            <div class="flex flex-col items-center active:scale-95 transition cursor-pointer"><div class="w-12 h-12 bg-[#05193e] border border-blue-900/50 rounded-2xl flex justify-center items-center text-amber-400 text-lg shadow"><i class="fa-solid fa-gift"></i></div><span class="mt-2">Invite</span></div>
+        </div>
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+        <!-- Hot Markets সেকশন -->
+        <div class="mx-4 mt-6">
+            <div class="flex justify-between items-center text-xs font-bold text-gray-400 mb-3 px-1">
+                <span>Hot Markets</span>
+                <span class="text-amber-500 cursor-pointer" onclick="switchTab('markets')">View All ></span>
+            </div>
+            <div onclick="switchTab('trade')" class="p-4 bg-[#05193e]/40 border border-blue-900/40 rounded-xl flex justify-between items-center cursor-pointer active:bg-[#05193e]/60 transition">
+                <div>
+                    <div class="text-sm font-bold">XAUUSD</div>
+                    <div class="text-[10px] text-gray-500 mt-0.5">Gold/USD</div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span id="homeGoldPrice" class="text-sm font-mono font-bold text-white">4,038.85</span>
+                    <span class="bg-red-500/20 text-red-500 font-bold font-mono text-[11px] px-2 py-1 rounded-md">-0.10%</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // রিয়েল-টাইমে ডেটাবেজ থেকে ইউজারের ব্যালেন্স টেনে আনা হচ্ছে
-      onSnapshot(doc(db, "users", user.uid), (docSnapshot) => {
-        if (docSnapshot.exists()) {
-          const currentBalance = docSnapshot.data().balance || 0;
-          
-          // আপনার ফাইলের ১০০ নম্বর লাইনের ব্যালেন্স আইডি 'total-assets' এর সাথে এটি মেলানো হয়েছে
-          const balanceElement = document.getElementById("total-assets");
-          if (balanceElement) {
-              balanceElement.innerText = `$${currentBalance.toFixed(2)}`;
-          }
-        }
-      });
-    } else {
-      window.location.href = "index.html"; 
-    }
-  });
-</script>
+
+    <!-- ================= 📊 ২. MARKETS SCREEN (২য় ছবির মতো) ================= -->
+    <div id="marketsScreen" class="tab-content hidden">
+        <!-- মার্কেট ক্যাটাগরি ট্যাব ফিল্টার -->
+        <div class="px-4 py-3 flex space-x-2 overflow-x-auto custom-scrollbar border-b border-blue-950/30">
+            <button class="bg-amber-500 text-[#031129] font-bold text-xs px-4 py-2 rounded-xl whitespace-nowrap shadow-sm">Watchlist</button>
+            <button class="bg-[#05193e] text-gray-400 text-xs px-4 py-2 rounded-xl whitespace-nowrap border border-blue-900/50">Commodities</button>
+            <button class="bg-[#05193e] text-gray-400 text-xs px-4 py-2 rounded-xl whitespace-nowrap border border-blue-900/50">Crypto</button>
+            <button class="bg-[#05193e] text-gray-400 text-xs px-4 py-2 rounded-xl whitespace-nowrap border border-blue-900/50">Forex</button>
+        </div>
+
+        <!-- সম্পদ তালিকা (হুবহু স্ক্রিনশটের ২য় ছবির ডাটা ও স্প্রেড সম্বলিত) -->
+        <div class="p-4 space-y-3.5" id="marketList">
+            <!-- XAUUSD -->
+            <div onclick="switchTab('trade')" class="flex justify-between items-center p-3.5 bg-[#05193e]/20 border border-blue-900/20 rounded-xl cursor-pointer">
+                <div><div class="text-sm font-bold tracking-tight">XAUUSD</div><div class="text-[10px] text-gray-500 mt-0.5">Gold/USD</div></div>
+                <div class="text-center"><div id="mGoldPrice" class="text-sm font-mono font-bold text-red-500">4,038.85</div><div class="text-[9px] text-gray-500 mt-0.5">Spread 0.35</div></div>
+                <span class="w-16 text-center bg-red-500 text-white font-bold font-mono text-[11px] py-1.5 rounded-lg">-0.10%</span>
+            </div>
+            <!-- XAGUSD -->
+            <div class="flex justify-between items-center p-3.5 bg-[#05193e]/20 border border-blue-900/20 rounded-xl">
+                <div><div class="text-sm font-bold tracking-tight">XAGUSD</div><div class="text-[10px] text-gray-500 mt-0.5">Silver/USD</div></div>
+                <div class="text-center"><div class="text-sm font-mono font-bold text-red-500">28.651</div><div class="text-[9px] text-gray-500 mt-0.5">Spread 0.02</div></div>
+                <span class="w-16 text-center bg-red-500 text-white font-bold font-mono text-[11px] py-1.5 rounded-lg">-2.22%</span>
+            </div>
+            <!-- BTCUSD -->
+            <div class="flex justify-between items-center p-3.5 bg-[#05193e]/20 border border-blue-900/20 rounded-xl">
+                <div><div class="text-sm font-bold tracking-tight">BTCUSD</div><div class="text-[10px] text-gray-500 mt-0.5">Bitcoin/USD</div></div>
+                <div class="text-center"><div class="text-sm font-mono font-bold text-red-500">63,070.00</div><div class="text-[9px] text-gray-500 mt-0.5">Spread 15</div></div>
+                <span class="w-16 text-center bg-red-500 text-white font-bold font-mono text-[11px] py-1.5 rounded-lg">-0.02%</span>
+            </div>
+            <!-- ETHUSD -->
