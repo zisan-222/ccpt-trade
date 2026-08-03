@@ -267,3 +267,41 @@ body{
     font-size:22px;
     width:30px;
 }
+<section class="menu-list">
+
+    <a href="#">
+        <i class="fa-solid fa-wallet"></i>
+        <span>Wallet Management</span>
+        <i class="fa-solid fa-angle-right"></i>
+    </a>
+
+    <a href="#">
+        <i class="fa-solid fa-shield-halved"></i>
+        <span>Security</span>
+        <i class="fa-solid fa-angle-right"></i>
+    </a>
+
+    <a href="#">
+        <i class="fa-solid fa-bullhorn"></i>
+        <span>Announcements</span>
+        <i class="fa-solid fa-angle-right"></i>
+    </a>
+
+    <a href="https://t.me/YOUR_SUPPORT">
+        <i class="fa-solid fa-headset"></i>
+        <span>Support</span>
+        <i class="fa-solid fa-angle-right"></i>
+    </a>
+
+</section>
+
+<div class="logout">
+    <button id="logoutBtn">Sign Out</button>
+</div>
+
+<script>
+document.getElementById("logoutBtn").onclick = function () {
+    localStorage.removeItem("login");
+    window.location.href = "index.html";
+};
+</script>
