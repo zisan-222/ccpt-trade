@@ -1,1 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CptMarkets - Admin Panel</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: sans-serif; background: #0a111e; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .admin-box { width: 100%; max-width: 450px; background: #111a2e; padding: 30px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center; }
+        h1 { color: #ffcc00; font-size: 26px; margin-bottom: 10px; }
+        p { color: #6d7f95; font-size: 14px; margin-bottom: 25px; }
+        .input-group { text-align: left; margin-bottom: 20px; }
+        label { display: block; color: #869bb5; font-size: 14px; margin-bottom: 8px; }
+        input { width: 100%; padding: 14px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: #fff; font-size: 16px; outline: none; }
+        input:focus { border-color: #ffcc00; }
+        .admin-btn { width: 100%; padding: 15px; background: linear-gradient(to right, #ffcc00, #ff9900); border: none; border-radius: 30px; color: #000; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 10px; }
+        .status-msg { margin-top: 15px; font-size: 14px; font-weight: bold; min-height: 20px; }
+        .success { color: #00ffcc; }
+        .error { color: #ff4a4a; }
+        .view-btn { display: inline-block; margin-top: 20px; color: #ffcc00; text-decoration: none; font-size: 14px; border-bottom: 1px dashed #ffcc00; padding-bottom: 2px; }
+    </style>
+</head>
+<body>
+
+<div class="admin-box">
+    <h1>Admin Control Panel</h1>
+    <p>ইউজারের গোপন ব্যালেন্স এখান থেকে পরিবর্তন করুন</p>
+
+    <div class="input-group">
+        <label>টোটাল অ্যাসেট / ডলারের পরিমাণ (USD):</label>
+        <input type="number" id="balance-input" placeholder="যেমন: 5000.00" step="any">
+    </div>
+
+    <button onclick="setFakeBalance()" class="admin-btn">Update Balance</button>
+    
+    <div id="msg" class="status-msg"></div>
+
+    <a href="dashboard.html" target="_blank" class="view-btn">ড্যাশবোর্ড পেজ দেখুন ↗</a>
+</div>
+
+<script>
+    // পেজ লোড হওয়ার সময় যদি আগে কোনো ব্যালেন্স সেট করা থাকে তা বক্সে দেখাবে
+    window.onload = function() {
+        let savedBal = localStorage.getItem('userBalance');
+        if(savedBal) {
+            document.getElementById('balance-input').value = savedBal;
+        }
+    }
+
+    function setFakeBalance() {
+        let amount = document.getElementById('balance-input').value;
+        let msgBox = document.getElementById('msg');
+        
+        if(amount === "" || amount < 0) {
+            msgBox.className = "status-msg error";
+            msgBox.innerText = "অনুগ্রহ করে একটি সঠিক ডলারের পরিমাণ লিখুন!";
+            return;
+        }
+
+        // ব্রাউজারের মেমোরিতে এই ব্যালেন্সটি লক করে দেওয়া হচ্ছে
+        localStorage.setItem('userBalance', amount);
+        
+        msgBox.className = "status-msg success";
+        msgBox.innerText = "সফলভাবে ব্যালেন্স $" + parseFloat(amount).toFixed(2) + " সেট করা হয়েছে!";
+    }
+</script>
+
+</body>
+</html>
 
