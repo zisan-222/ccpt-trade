@@ -48,8 +48,9 @@
             <a href="index.html">Go to Sign In</a>
         </div>
     </div>
+</div>
 
-    <script type="module">
+<script type="module">
   import { initializeApp } from "https://gstatic.com";
   import { getAuth, createUserWithEmailAndPassword } from "https://gstatic.com";
   import { getFirestore, doc, setDoc } from "https://gstatic.com";
@@ -70,17 +71,30 @@
 
   document.getElementById("registerForm").addEventListener("submit", (e) => {
     e.preventDefault();
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    const name = document.getElementById("name").value;
+    
+    const username = document.getElementById("reg-user").value.trim();
+    const password = document.getElementById("reg-pass").value;
+    const confirmPassword = document.getElementById("reg-confirm").value;
 
-    createUserWithEmailAndPassword(auth, email, password)
+    if (!username || !password) {
+        alert("অনুগ্রহ করে ইউজারনেম এবং পাসওয়ার্ড সঠিকভাবে দিন।");
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        alert("পাসওয়ার্ড দুটি মেলেনি!");
+        return;
+    }
+
+    const fakeEmail = `${username.toLowerCase()}@trade.com`;
+
+    createUserWithEmailAndPassword(auth, fakeEmail, password)
       .then((userCredential) => {
         const user = userCredential.user;
         return setDoc(doc(db, "users", user.uid), {
           uid: user.uid,
-          name: name,
-          email: email,
+          name: username,
+          email: fakeEmail,
           balance: 0.00 
         });
       })
@@ -90,6 +104,8 @@
       })
       .catch((error) => alert("ত্রুটি: " + error.message));
   });
-    </script>
+</script>
+
+    
 </body>
 </html>
