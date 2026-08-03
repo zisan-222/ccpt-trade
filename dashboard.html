@@ -1,115 +1,159 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CptMarkets - Platform</title>
-    <script src="https://jsdelivr.net"></script>
+    <title>CptMarkets - Dashboard</title>
+    <!-- আইকন লোড করার জন্য FontAwesome লিংক -->
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
-        .custom-scrollbar::-webkit-scrollbar { display: none; }
-        .custom-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        /* ২য় ছবির মতো হুবহু ব্যাকগ্রাউন্ড ও ডার্ক ব্লু থিম */
+        body {
+            margin: 0; padding: 0; box-sizing: border-box; background-color: #020b18;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #ffffff; padding-bottom: 120px; overflow-x: hidden;
+        }
+
+        /* গ্লোবাল টপ বার */
+        .top-bar {
+            padding: 16px; display: flex; justify-content: space-between; align-items: center;
+            background: #031129; border-b: 1px solid rgba(30, 58, 138, 0.3); position: sticky; top: 0; z-index: 100;
+        }
+        .top-brand { display: flex; align-items: center; gap: 8px; }
+        .top-logo-circle {
+            width: 24px; height: 24px; background: #fbbf24; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: #031129; font-weight: 900; font-size: 10px;
+        }
+        .top-title { color: #fbbf24; font-weight: 700; font-size: 16px; }
+
+        /* ২য় ছবির মেইন ব্যানার এবং ম্যাপ গ্রাফ লোগো ব্যাকগ্রাউন্ড */
+        .banner-container { padding: 16px; }
+        .main-banner {
+            background: linear-gradient(135deg, #051c44 0%, #0c234a 100%);
+            background-image: url('https://postimg.co'), linear-gradient(135deg, #051c44 0%, #0c234a 100%);
+            background-size: cover; background-position: center;
+            padding: 24px; border-radius: 20px; border: 1px solid rgba(30, 58, 138, 0.5); position: relative;
+        }
+        .banner-title { color: #fbbf24; font-size: 24px; font-weight: 800; margin: 0 0 6px 0; }
+        .banner-subtitle { color: #9ca3af; font-size: 12px; margin: 0; font-weight: 400; }
+
+        /* টোটাল অ্যাসেট কার্ড */
+        .asset-card {
+            margin: 0 16px; padding: 20px; background: rgba(5, 25, 62, 0.6);
+            border-radius: 20px; border: 1px solid rgba(30, 58, 138, 0.4);
+        }
+        .asset-header { display: flex; justify-content: space-between; align-items: center; color: #9ca3af; font-size: 12px; }
+        .total-balance { font-size: 32px; font-weight: 700; margin: 6px 0; color: #ffffff; font-family: monospace; }
+        .floating-info { display: flex; gap: 16px; font-size: 12px; color: #9ca3af; margin-bottom: 20px; }
+        .pl-green { color: #10b981; font-weight: 700; }
+        .equity-white { color: #ffffff; }
+
+        /* ৩টি মেইন বাটন লেআউট (ডিপোজিট, উইথড্র, ট্রান্সফার) */
+        .action-grid { display: grid; grid-template-cols: repeat(3, 1fr); gap: 12px; }
+        .btn-deposit {
+            padding: 12px; background: linear-gradient(to right, #f59e0b, #d97706);
+            border: none; border-radius: 14px; color: #031129; font-weight: 700; font-size: 13px; cursor: pointer; text-align: center;
+        }
+        .btn-secondary {
+            padding: 12px; background: #0d2754; border: 1px solid rgba(30, 58, 138, 0.6);
+            border-radius: 14px; color: #ffffff; font-weight: 500; font-size: 13px; cursor: pointer; text-align: center; text-decoration: none;
+        }
+
+        /* অ্যাপ সার্ভিস ৮টি গ্রিড আইকন (২য় ছবির মতো হুবহু আইকন ব্যাকগ্রাউন্ড বক্স) */
+        .service-grid {
+            margin: 24px 16px; display: grid; grid-template-cols: repeat(4, 1fr); gap: 20px 10px; text-align: center;
+        }
+        .service-item { display: flex; flex-col: column; flex-direction: column; align-items: center; cursor: pointer; }
+        .icon-box {
+            width: 48px; height: 48px; background: rgba(5, 25, 62, 0.8); border: 1px solid rgba(30, 58, 138, 0.4);
+            border-radius: 16px; display: flex; align-items: center; justify-content: center; color: #fbbf24; font-size: 18px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .icon-label { font-size: 11px; color: #9ca3af; margin-top: 8px; font-weight: 500; }
+
+        /* Hot Markets প্যানেল */
+        .hot-markets { margin: 24px 16px 0 16px; }
+        .hot-header { display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 700; color: #9ca3af; margin-bottom: 12px; padding: 0 4px; }
+        .hot-row {
+            padding: 14px 16px; background: rgba(5, 25, 62, 0.4); border: 1px solid rgba(30, 58, 138, 0.3);
+            border-radius: 14px; display: flex; justify-content: space-between; align-items: center;
+        }
+        .crypto-name { font-size: 14px; font-weight: 700; color: #ffffff; }
+        .crypto-sub { font-size: 10px; color: #6b7280; margin-top: 2px; }
+        .live-price-box { display: flex; align-items: center; gap: 16px; }
+        .price-text { font-size: 14px; font-weight: 700; font-family: monospace; }
+        .change-badge { background: rgba(239, 68, 68, 0.2); color: #ef4444; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 6px; font-family: monospace; }
+
+        /* বটম নেভিগেশন বার (২য় ছবির মতো হুবহু গোল্ডেন ট্রেড বাটন সহ) */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; right: 0; background: #031129;
+            border-t: 1px solid rgba(30, 58, 138, 0.4); padding: 8px 0; display: flex; justify-content: space-around; align-items: center; z-index: 1000;
+        }
+        .nav-item { background: none; border: none; color: #6b7280; font-size: 10px; font-weight: 600; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; text-decoration: none; }
+        .nav-item i { font-size: 18px; margin-bottom: 4px; }
+        .nav-item.active { color: #fbbf24; }
+        
+        /* মাঝখানের গোল্ডেন ট্রেড সার্কেল বাটন */
+        .trade-btn-container { margin-top: -28px; position: relative; text-align: center; }
+        .circle-trade-btn {
+            width: 48px; height: 48px; background: linear-gradient(to bottom, #fbbf24, #f59e0b);
+            border-radius: 50%; border: 4px solid #020b18; display: flex; align-items: center; justify-content: center;
+            color: #031129; font-size: 20px; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); cursor: pointer;
+        }
+        .trade-label { font-size: 10px; color: #fbbf24; font-weight: 600; margin-top: 4px; display: block; }
+
+        /* 🔒 গোপন এডমিন প্যানেল */
+        .admin-panel { margin: 20px 16px; padding: 16px; background: #170505; border-radius: 16px; border: 1px solid #7f1d1d; display: none; }
+        .admin-title { font-size: 13px; font-weight: 700; color: #ef4444; margin: 0 0 12px 0; }
+        .admin-input { width: 100%; padding: 10px 12px; background: #020b18; border: 1px solid #7f1d1d; border-radius: 8px; color: #ffffff; font-size: 12px; margin-bottom: 10px; outline: none; box-sizing: border-box; }
+        .admin-btn { width: 100%; padding: 10px; background: #b91c1c; color: white; border: none; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; }
     </style>
 </head>
-<body class="bg-[#020b18] text-white font-sans pb-32">
+<body>
 
-    <!-- 🌐 গ্লোবাল টপ হেডার বার -->
-    <div class="p-4 flex justify-between items-center bg-[#031129] border-b border-blue-950/50 sticky top-0 z-50">
-        <div class="flex items-center space-x-2">
-            <div class="w-6 h-6 bg-amber-500 rounded-full flex items-center justify-center text-[#031129] font-bold text-[10px]">CPT</div>
-            <span class="text-amber-400 font-bold text-base tracking-tight">CptMarkets</span>
+    <!-- টপ বার -->
+    <div class="top-bar">
+        <div class="top-brand">
+            <div class="top-logo-circle">CPT</div>
+            <span class="top-title">CptMarkets</span>
         </div>
-        <div class="flex items-center space-x-3">
-            <select id="langSelect" onchange="changeLanguage()" class="bg-[#05193e] text-xs text-amber-400 border border-blue-900 rounded-md p-1 outline-none font-medium">
-                <option value="en">English</option><option value="bn">বাংলা</option><option value="es">Español</option><option value="ar">العربية</option><option value="zh">中文</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="hi">हिन्दी</option><option value="ru">Русский</option>
-            </select>
-            <img src="https://flagcdn.com" class="w-5 h-auto rounded-sm shadow-sm">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <img src="https://flagcdn.com" width="20" style="border-radius: 2px;">
         </div>
     </div>
 
-    <!-- ================= 🏠 ১. HOME SCREEN ================= -->
-    <div id="homeScreen" class="tab-content">
-        <div class="p-4">
-            <div class="bg-gradient-to-r from-blue-950 via-indigo-950 to-blue-950 p-6 rounded-2xl border border-blue-900/50 relative overflow-hidden">
-                <div class="absolute right-4 top-4 text-gray-500/20 text-7xl"><i class="fa-solid fa-earth-americas"></i></div>
-                <h2 class="text-2xl font-black text-amber-400 tracking-tight">CptMarkets</h2>
-                <p id="lang-sub" class="text-xs text-gray-300 mt-1 font-light tracking-wide">Global integrated financial trading platform</p>
-            </div>
-        </div>
-
-        <div class="mx-4 mb-4 bg-[#031129] border border-blue-950/40 rounded-xl px-3 py-2 flex items-center space-x-2 text-xs text-gray-400">
-            <i class="fa-solid fa-bullhorn text-amber-400"></i>
-            <marquee class="w-full text-[11px]" scrollamount="3">Welcome to CptMarkets. Enjoy secure trading with maximum leverage up to 2000x.</marquee>
-        </div>
-
-        <div class="mx-4 p-4 bg-[#05193e]/30 border border-blue-900/40 rounded-2xl grid grid-cols-4 gap-y-6 gap-x-2 text-center text-[11px] font-medium text-gray-300">
-            <div onclick="alert('Please contact customer care.')" class="flex flex-col items-center cursor-pointer"><div class="w-12 h-12 bg-[#05193e] border border-blue-900/50 rounded-2xl flex justify-center items-center text-amber-400 text-lg shadow"><i class="fa-solid fa-headset"></i></div><span class="mt-2">Support</span></div>
-            <a href="withdraw.html" class="flex flex-col items-center"><div class="w-12 h-12 bg-[#05193e] border border-blue-900/50 rounded-2xl flex justify-center items-center text-amber-400 text-lg shadow"><i class="fa-solid fa-wallet"></i></div><span class="mt-2">Withdraw</span></a>
-            <div onclick="alert('Feature coming soon')" class="flex flex-col items-center cursor-pointer"><div class="w-12 h-12 bg-[#05193e] border border-blue-900/50 rounded-2xl flex justify-center items-center text-amber-400 text-lg shadow"><i class="fa-solid fa-money-bill-transfer"></i></div><span class="mt-2">Transfer</span></div>
-            <div onclick="alert('Feature coming soon')" class="flex flex-col items-center cursor-pointer"><div class="w-12 h-12 bg-[#05193e] border border-blue-900/50 rounded-2xl flex justify-center items-center text-amber-400 text-lg shadow"><i class="fa-solid fa-users-viewfinder"></i></div><span class="mt-2">Copy Trade</span></div>
-            <div onclick="alert('Feature coming soon')" class="flex flex-col items-center cursor-pointer"><div class="w-12 h-12 bg-[#05193e] border border-blue-900/50 rounded-2xl flex justify-center items-center text-amber-400 text-lg shadow"><i class="fa-solid fa-credit-card"></i></div><span class="mt-2">Loan</span></div>
-            <div onclick="alert('Feature coming soon')" class="flex flex-col items-center cursor-pointer"><div class="w-12 h-12 bg-[#05193e] border border-blue-900/50 rounded-2xl flex justify-center items-center text-amber-400 text-lg shadow"><i class="fa-solid fa-chart-pie"></i></div><span class="mt-2">Wealth</span></div>
-            <div onclick="alert('Feature coming soon')" class="flex flex-col items-center cursor-pointer"><div class="w-12 h-12 bg-[#05193e] border border-blue-900/50 rounded-2xl flex justify-center items-center text-amber-400 text-lg shadow"><i class="fa-solid fa-pickaxe"></i></div><span class="mt-2">Mining</span></div>
-            <div onclick="alert('Feature coming soon')" class="flex flex-col items-center cursor-pointer"><div class="w-12 h-12 bg-[#05193e] border border-blue-900/50 rounded-2xl flex justify-center items-center text-amber-400 text-lg shadow"><i class="fa-solid fa-gift"></i></div><span class="mt-2">Invite</span></div>
-        </div>
-
-        <div class="mx-4 mt-6">
-            <div class="flex justify-between items-center text-xs font-bold text-gray-400 mb-3 px-1">
-                <span>Hot Markets</span>
-                <span class="text-amber-500 cursor-pointer" onclick="switchTab('markets')">View All &gt;</span>
-            </div>
-            <div onclick="switchTab('trade')" class="p-4 bg-[#05193e]/40 border border-blue-900/40 rounded-xl flex justify-between items-center cursor-pointer">
-                <div>
-                    <div class="text-sm font-bold">XAUUSD</div>
-                    <div class="text-[10px] text-gray-500 mt-0.5">Gold/USD</div>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <span id="homeGoldPrice" class="text-sm font-mono font-bold text-white">4,038.85</span>
-                    <span class="bg-red-500/20 text-red-500 font-bold font-mono text-[11px] px-2 py-1 rounded-md">-0.10%</span>
-                </div>
-            </div>
+    <!-- ব্যানার সেকশন (২য় ছবির ম্যাপ ব্যাকগ্রাউন্ড ইফেক্ট সহ) -->
+    <div class="banner-container">
+        <div class="main-banner">
+            <h2 class="banner-title">CptMarkets</h2>
+            <p class="banner-subtitle">Global integrated financial trading platform</p>
         </div>
     </div>
 
-    <!-- ================= 📊 ২. MARKETS SCREEN ================= -->
-    <div id="marketsScreen" class="tab-content hidden">
-        <div class="px-4 py-3 flex space-x-2 overflow-x-auto custom-scrollbar border-b border-blue-950/30">
-            <button class="bg-amber-500 text-[#031129] font-bold text-xs px-4 py-2 rounded-xl whitespace-nowrap">Watchlist</button>
-            <button class="bg-[#05193e] text-gray-400 text-xs px-4 py-2 rounded-xl whitespace-nowrap">Commodities</button>
-            <button class="bg-[#05193e] text-gray-400 text-xs px-4 py-2 rounded-xl whitespace-nowrap">Crypto</button>
-            <button class="bg-[#05193e] text-gray-400 text-xs px-4 py-2 rounded-xl whitespace-nowrap">Forex</button>
+    <!-- অ্যাসেট কার্ড (২য় ছবির মতো ব্যালেন্স ইন্টারফেস) -->
+    <div class="asset-card">
+        <div class="asset-header">
+            <span>Total Assets (USD)</span>
+            <span id="displayUid" style="color: #fbbf24; font-family: monospace; font-weight: 700;">UID: ------</span>
+        </div>
+        <div class="total-balance" id="totalBalance">$0.00</div>
+        <div class="floating-info">
+            <div>Floating P/L <span class="pl-green">+0.00</span></div>
+            <div>Equity <span class="equity-white" id="equityAmount">$0.00</span></div>
         </div>
 
-        <div class="p-4 space-y-3.5">
-            <div onclick="switchTab('trade')" class="flex justify-between items-center p-3.5 bg-[#05193e]/20 border border-blue-900/20 rounded-xl cursor-pointer">
-                <div><div class="text-sm font-bold">XAUUSD</div><div class="text-[10px] text-gray-500">Gold/USD</div></div>
-                <div class="text-center"><div id="mGoldPrice" class="text-sm font-mono font-bold text-red-500">4,038.85</div><div class="text-[9px] text-gray-500">Spread 0.35</div></div>
-                <span class="w-16 text-center bg-red-500 text-white font-bold font-mono text-[11px] py-1.5 rounded-lg">-0.10%</span>
-            </div>
-            <div class="flex justify-between items-center p-3.5 bg-[#05193e]/20 border border-blue-900/20 rounded-xl">
-                <div><div class="text-sm font-bold">XAGUSD</div><div class="text-[10px] text-gray-500">Silver/USD</div></div>
-                <div class="text-center"><div class="text-sm font-mono font-bold text-red-500">28.651</div><div class="text-[9px] text-gray-500">Spread 0.02</div></div>
-                <span class="w-16 text-center bg-red-500 text-white font-bold font-mono text-[11px] py-1.5 rounded-lg">-2.22%</span>
-            </div>
-            <div class="flex justify-between items-center p-3.5 bg-[#05193e]/20 border border-blue-900/20 rounded-xl">
-                <div><div class="text-sm font-bold">BTCUSD</div><div class="text-[10px] text-gray-500">Bitcoin/USD</div></div>
-                <div class="text-center"><div class="text-sm font-mono font-bold text-red-500">63,070.00</div><div class="text-[9px] text-gray-500">Spread 15</div></div>
-                <span class="w-16 text-center bg-red-500 text-white font-bold font-mono text-[11px] py-1.5 rounded-lg">-0.02%</span>
-            </div>
+        <!-- অ্যাকশন বাটন প্যানেল -->
+        <div class="action-grid">
+            <button onclick="alert('Please contact customer care.')" class="btn-deposit">Deposit</button>
+            <a href="withdraw.html" class="btn-secondary">Withdraw</a>
+            <button onclick="alert('Feature coming soon')" class="btn-secondary">Transfer</button>
         </div>
     </div>
 
-    <!-- ================= 📈 ৩. TRADE SCREEN ================= -->
-    <div id="tradeScreen" class="tab-content hidden">
-        <div class="p-4 flex justify-between items-center border-b border-blue-950/20">
-            <span class="text-sm font-black text-gray-200">XAUUSD</span>
-            <div class="flex items-center space-x-4 text-gray-400 text-sm">
-                <i class="fa-regular fa-file-lines"></i><i class="fa-solid fa-magnifying-glass"></i>
-            </div>
-        </div>
-
-        <div class="px-4 py-2 flex items-center space-x-3">
-            <span id="tradeGoldPrice" class="text-3xl font-black font-mono text-red-500">4,036.51</span>
-            <span class="bg-red-500 text-white font-bold font-mono text-[10px] px-2 py-0.5 rounded-md">-0.15%</span>
-        </div>
+    <!-- অ্যাপ সার্ভিস গ্রিড আইকনসমূহ (২য় ছবির আইকন ও কালার সহ) -->
+    <div class="service-grid">
+        <div onclick="alert('Please contact customer care.')" class="service-item"><div class="icon-box"><i class="fa-solid fa-headset"></i></div><span class="icon-label">Support</span></div>
+        <a href="withdraw.html" class="service-item" style="text-decoration: none;"><div class="icon-box"><i class="fa-solid fa-wallet"></i></div><span class="icon-label">Withdraw</span></a>
+        <div onclick="alert('Coming soon')" class="service-item"><div class="icon-box"><i class="fa-solid fa-money-bill-transfer"></i></div><span class="icon-label">Transfer</span></div>
+        <div onclick="alert('Coming soon')" class="service-item"><div class="icon-box"><i class="fa-solid fa-users-viewfinder"></i></div><span class="icon-label">Copy Trade</span></div>
+        <div onclick="alert('Coming soon')" class="service-item"><div class="icon-box"><i class="fa-solid fa-credit-card"></i></div><span class="icon-label">Loan</span></div>
