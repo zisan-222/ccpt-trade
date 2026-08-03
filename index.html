@@ -4,127 +4,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CptMarkets - Login</title>
-    <!-- Tailwind CSS (ইউজার ইন্টারফেস ও ডার্ক থিমের জন্য) -->
+    <!-- Vercel এবং মোবাইল ব্রাউজার ফ্রেন্ডলি ক্লাসিক Tailwind CSS CDN -->
     <script src="https://jsdelivr.net"></script>
-    <!-- FontAwesome (আইকনগুলোর জন্য) -->
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
-        /* ছবির মতো ব্যাকগ্রাউন্ডের ম্যাপ ও নিচের সিটি স্কাইলাইনের কাস্টম সিএসএস */
         .bg-custom {
             background-color: #031129;
-            /* একটি লাইট গ্লোবাল নেটওয়ার্ক গ্রাফ ব্যাকগ্রাউন্ড ইমেজের ডেমো */
-            background-image: radial-gradient(circle at center, rgba(13, 148, 136, 0.05) 0%, transparent 70%), 
-                              url('https://transparenttextures.com');
-            background-size: cover;
-            position: relative;
+            background-image: radial-gradient(circle at center, rgba(13, 148, 136, 0.05) 0%, transparent 70%), url('https://transparenttextures.com');
+            background-size: cover; position: relative;
         }
-        /* ছবির একদম নিচের হালকা টাওয়ার/বিল্ডিংয়ের অবয়ব */
         .bg-custom::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 120px;
+            content: ""; position: absolute; bottom: 0; left: 0; right: 0; height: 120px;
             background: url('https://ibb.co') no-repeat bottom center;
-            background-size: contain;
-            opacity: 0.12; /* হালকা আবছা দেখানোর জন্য */
-            pointer-events: none;
+            background-size: contain; opacity: 0.12; pointer-events: none;
         }
     </style>
 </head>
 <body class="bg-custom text-white flex justify-center items-center min-h-screen font-sans relative overflow-hidden">
 
-    <!-- ডানদিকের উপরে থাকা ছোট ইউকে (UK) ফ্ল্যাগ আইকন -->
     <div class="absolute top-4 right-4 z-10 bg-[#05193e] border border-blue-900 rounded-md p-1 flex items-center justify-center">
         <img src="https://flagcdn.com" alt="UK Flag" class="w-5 h-auto rounded-sm">
     </div>
 
-    <div class="w-full max-w-md p-6 bg-[#05193e]/90 backdrop-blur-md rounded-2xl shadow-2xl border border-blue-900/60 mx-4 relative z-10">
+    <div class="w-full max-w-md p-6 bg-[#05193e] rounded-2xl shadow-2xl border border-blue-900 mx-4 relative z-10">
         
-        <!-- লোগো এবং হেডার (৩টি টেক্সট লেয়ার সম্বলিত বৃত্তাকার গ্লো ডিজাইন) -->
         <div class="text-center mb-8 relative">
-            <!-- পিছনের বৃত্তাকার নীল গ্লো ইফেক্ট -->
-            <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-32 h-32 bg-blue-500/10 rounded-full blur-xl"></div>
-            
             <div class="text-[10px] uppercase text-amber-500 font-bold tracking-widest flex items-center justify-center gap-1">
                 <i class="fa-solid fa-chart-line text-[9px]"></i> CPT MARKETS UK
             </div>
-            <h1 class="text-3xl font-extrabold text-amber-400 mt-1 tracking-tight drop-shadow">CptMarkets</h1>
+            <h1 class="text-3xl font-extrabold text-amber-400 mt-1 tracking-tight">CptMarkets</h1>
             <p class="text-xs text-blue-300 font-medium mt-0.5 tracking-[0.25em]">GIFTP</p>
         </div>
 
-        <!-- ইনপুট ফিল্ডসমূহ -->
         <div class="space-y-5">
-            <!-- ইউজারনেম ইনপুট -->
             <div>
                 <label class="block text-xs font-semibold text-gray-400 mb-1.5 ml-1">Username</label>
                 <div class="relative">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400">
-                        <i class="fa-regular fa-user text-sm"></i>
-                    </span>
-                    <input type="text" id="username" placeholder="Username" class="w-full pl-11 pr-4 py-3 bg-[#031129] border border-blue-900/80 rounded-xl focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/30 text-sm placeholder-gray-500 transition-all">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400"><i class="fa-regular fa-user text-sm"></i></span>
+                    <input type="text" id="username" placeholder="Username" class="w-full pl-11 pr-4 py-3 bg-[#031129] border border-blue-900 rounded-xl focus:outline-none focus:border-amber-400 text-sm placeholder-gray-500">
                 </div>
             </div>
 
-            <!-- পাসওয়ার্ড ইনপুট -->
             <div>
                 <label class="block text-xs font-semibold text-gray-400 mb-1.5 ml-1">Password</label>
                 <div class="relative">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400">
-                        <i class="fa-solid fa-lock text-sm"></i>
-                    </span>
-                    <input type="password" id="password" placeholder="Password" class="w-full pl-11 pr-11 py-3 bg-[#031129] border border-blue-900/80 rounded-xl focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/30 text-sm placeholder-gray-500 transition-all">
-                    <!-- পাসওয়ার্ড হাইড/শো করার আইকন (১ম ছবির মতো ক্রসহিয়ার আইকন) -->
-                    <span class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-gray-500 cursor-pointer hover:text-gray-400">
-                        <i class="fa-regular fa-eye-slash text-sm"></i>
-                    </span>
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400"><i class="fa-solid fa-lock text-sm"></i></span>
+                    <input type="password" id="password" placeholder="Password" class="w-full pl-11 pr-11 py-3 bg-[#031129] border border-blue-900 rounded-xl focus:outline-none focus:border-amber-400 text-sm placeholder-gray-500">
+                    <span class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-gray-500 cursor-pointer hover:text-gray-400"><i class="fa-regular fa-eye-slash text-sm"></i></span>
                 </div>
             </div>
 
-            <!-- গোল্ডেন উজ্জ্বল সাইন-ইন বাটন -->
-            <button onclick="handleLogin()" class="w-full py-3.5 mt-4 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-[#031129] font-bold text-sm rounded-xl shadow-lg shadow-amber-500/10 hover:brightness-110 active:scale-[0.99] transition duration-200 text-center block">
+            <button onclick="handleLogin()" class="w-full py-3.5 mt-4 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-[#031129] font-bold text-sm rounded-xl shadow-lg hover:brightness-110 active:scale-[0.99] transition duration-200">
                 Go to Sign In
             </button>
         </div>
 
-        <!-- ক্রিয়েট অ্যাকাউন্ট এবং ফরগট পাসওয়ার্ড লিংকসমূহ -->
         <div class="flex justify-between items-center mt-6 px-1 text-xs font-medium text-amber-400/90">
-            <a href="register.html" class="hover:text-amber-300 transition flex items-center gap-1.5">
-                <i class="fa-solid fa-user-plus text-[11px]"></i> Create Account
-            </a>
-            <a href="#" class="hover:text-amber-300 transition flex items-center gap-1.5">
-                <i class="fa-solid fa-unlock-keyhole text-[11px]"></i> Forgot Password?
-            </a>
+            <a href="register.html" class="hover:text-amber-300 transition flex items-center gap-1.5"><i class="fa-solid fa-user-plus text-[11px]"></i> Create Account</a>
+            <a href="#" class="hover:text-amber-300 transition flex items-center gap-1.5"><i class="fa-solid fa-unlock-keyhole text-[11px]"></i> Forgot Password?</a>
         </div>
     </div>
 
-    <!-- লগইন ভ্যালিডেশন এবং সিকিউর এডমিন আইডেন্টিফিকেশন স্ক্রিপ্ট -->
     <script>
         function handleLogin() {
-            const user = document.getElementById('username').value.trim();
-            const pass = document.getElementById('password').value.trim();
+            var u = document.getElementById('username').value.trim();
+            var p = document.getElementById('password').value.trim();
 
-            if(!user || !pass) return alert("দয়া করে ইউজারনেম এবং পাসওয়ার্ড সঠিকভাবে লিখুন!");
+            if(!u || !p) { alert("ইউজারনেম ও পাসওয়ার্ড লিখুন!"); return; }
 
-            // 🔒 এডমিন সিকিউরিটি গেট: এই ইউজারনেম ও পাসওয়ার্ড দিয়ে লগইন করলেই এডমিন প্যানেল সক্রিয় হবে
-            if(user === "zisan" && pass === "12@#12@#") {
+            // 🔒 আপনার কাস্টম এডমিন লগইন ডিটেইলস এখানে চেক হবে
+            if(u === "admin" && p === "admin123") {
                 localStorage.setItem('currentUserUid', '000000');
                 localStorage.setItem('role', 'admin');
                 window.location.href = 'dashboard.html';
                 return;
             }
 
-            // সাধারণ ইউজারদের লোকাল স্টোরেজ ডাটাবেজ থেকে ম্যাচ করা
-            let users = JSON.parse(localStorage.getItem('users')) || [];
-            let foundUser = users.find(u => u.username === user && u.password === pass);
+            var users = JSON.parse(localStorage.getItem('users')) || [];
+            var found = users.find(function(user) { return user.username === u && user.password === p; });
 
-            if(foundUser) {
-                localStorage.setItem('currentUserUid', foundUser.uid);
+            if(found) {
+                localStorage.setItem('currentUserUid', found.uid);
                 localStorage.setItem('role', 'user');
                 window.location.href = 'dashboard.html';
             } else {
-                alert("ভুল ইউজারনেম অথবা পাসওয়ার্ড! আবার চেষ্টা করুন।");
+                alert("ভুল ইউজারনেম বা পাসওয়ার্ড!");
             }
         }
     </script>
