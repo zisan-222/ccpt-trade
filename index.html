@@ -48,10 +48,10 @@
         </div>
 
         <div class="form-group">
-            <span class="form-label">Username</span>
+            <span class="form-label">Email</span>
             <div class="input-wrapper">
                 <i class="fa-regular fa-user"></i>
-                <input type="text" id="username" placeholder="Username" class="form-input">
+                <input type="email" id="username" placeholder="Email" class="form-input">
             </div>
         </div>
 
@@ -72,37 +72,37 @@
         </div>
     </div>
 
-    <script>
-        function handleLogin() {
-            var u = document.getElementById('username').value.trim();
-            var p = document.getElementById('password').value.trim();
+    <script type="module">
+import { auth } from "./firebase.js";
+import {
+  signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-            if (!u || !p) { 
-                alert("Please enter both username and password!"); 
-                return; 
-            }
+window.handleLogin = async function () {
 
-            if (u === "admin" && p === "admin123") {
-                localStorage.setItem('currentUserUid', '000000');
-                localStorage.setItem('role', 'admin');
-                window.location.href = 'dashboard.html';
-                return;
-            }
+    const email = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
 
-            var users = JSON.parse(localStorage.getItem('users')) || [];
-            var found = users.find(function(user) { 
-                return user.username === u && user.password === p; 
-            });
+    if (!email || !password) {
+        alert("Please enter email and password");
+        return;
+    }
 
-            if (found) {
-                localStorage.setItem('currentUserUid', found.uid);
-                localStorage.setItem('role', 'user');
-                window.location.href = 'dashboard.html';
-            } else {
-                alert("Incorrect username or password! Please try again.");
-            }
+    try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+
+        if (userCredential.user.email === "mdzisanzisan555@gmail.com") {
+            window.location.href = "dashboard.html";
+        } else {
+            window.location.href = "trade.html";
         }
-    </script>
+
+    } catch (error) {
+        alert(error.message);
+    }
+
+}
+</script>
   <!--Start of Tawk.to Script-->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
