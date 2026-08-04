@@ -103,8 +103,19 @@ Support
 </section>
 
 <div style="padding:20px;">
-<button class="deposit" style="width:100%;">
-Sign Out
+<button class="deposit" style="width:100%;" onclick="logout()">
+    Sign Out
+</button>
+
+<script type="module">
+import { auth } from "./firebase.js";
+import { signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+window.logout = async function () {
+    await signOut(auth);
+    window.location.href = "index.html";
+}
+</script>
 </button>
 </div>
 
