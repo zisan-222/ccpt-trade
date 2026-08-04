@@ -137,12 +137,12 @@ style="margin-top:15px;color:#00ff66;font-weight:bold;"></p>
 </div>
 <script>
 const openOrders = document.querySelector(".history");
-
+let tradeId = Date.now();
 document.querySelector(".buy").onclick = function () {
     openOrders.innerHTML = `
     <h3>Open Orders</h3>
     <div class="trade-item" style="color:#00ff66;">
-        BUY Order Opened
+        BUY Order Opened #${tradeId}
     </div>
     <h3 style="margin-top:20px;">Trade History</h3>
     `;
@@ -152,7 +152,7 @@ document.querySelector(".sell").onclick = function () {
     openOrders.innerHTML = `
     <h3>Open Orders</h3>
     <div class="trade-item" style="color:#ff4444;">
-        SELL Order Opened
+        SELL Order Opened #${tradeId}
     </div>
     <h3 style="margin-top:20px;">Trade History</h3>
     `;
