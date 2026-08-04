@@ -31,8 +31,8 @@
         <p class="subtitle">Join CptMarkets for global trading</p>
 
         <div class="form-group">
-            <span class="form-label">Username</span>
-            <input type="text" id="regUser" placeholder="Username" class="form-input">
+            <span class="form-label">Email</span>
+            <input type="email" id="regUser" placeholder="Email" class="form-input">
         </div>
 
         <div class="form-group">
@@ -58,29 +58,37 @@
         </div>
     </div>
 
-    <script>
-        function handleRegister() {
-            var u = document.getElementById('regUser').value.trim();
-            var p = document.getElementById('regPass').value.trim();
-            var c = document.getElementById('regConfirm').value.trim();
+    <script type="module">
+import { auth } from "./firebase.js";
+import { createUserWithEmailAndPassword }
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-            if(!u || !p || !c) { alert("Please fill in all the fields correctly!"); return; }
-            if(p.length < 6) { alert("Password must be at least 6 characters long!"); return; }
-            if(p !== c) { alert("Passwords do not match!"); return; }
+window.handleRegister = async function () {
 
-            var users = JSON.parse(localStorage.getItem('users')) || [];
-            var exists = users.some(function(user) { return user.username === u; });
-            if(exists) { alert("This username is already taken!"); return; }
+    const email = document.getElementById("regUser").value.trim();
+    const password = document.getElementById("regPass").value.trim();
+    const confirm = document.getElementById("regConfirm").value.trim();
 
-            var uid = Math.floor(100000 + Math.random() * 900000).toString();
+    if (!email || !password || !confirm) {
+        alert("Please fill all fields");
+        return;
+    }
 
-            var newUser = { uid: uid, username: u, password: p, balance: 0.00 };
-            users.push(newUser);
-            localStorage.setItem('users', JSON.stringify(users));
+    if (password !== confirm) {
+        alert("Passwords do not match");
+        return;
+    }
 
-            alert("Registration successful!\nYour unique UID is: " + uid);
-            window.location.href = 'index.html';
-        }
-    </script>
+    try {
+        await createUserWithEmailAndPassword(auth, email, password);
+
+        alert("Registration Successful!");
+        window.location.href = "index.html";
+
+    } catch (error) {
+        alert(error.message);
+    }
+}
+</script>
 </body>
 </html>
