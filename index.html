@@ -101,7 +101,6 @@ const email = "mdzisanzisan555@gmail.com";
 
 if (
     adminDoc.exists() &&
-    username === adminDoc.data().name &&
     userCredential.user.email === adminDoc.data().email
 ) {
     window.location.href = "dashboard.html";
