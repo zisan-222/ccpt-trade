@@ -90,7 +90,6 @@ border-bottom:1px solid #2b4d7a;
 
 <body>
 
-<body>
 
 <div class="header">
     <h2>BTC/USDT</h2>
@@ -107,15 +106,21 @@ border-bottom:1px solid #2b4d7a;
 </div>
 
 <div style="padding:15px;">
-    <label>Lot Size</label>
-    <input type="number" value="0.01"
-        style="width:100%;padding:12px;margin-top:8px;border-radius:8px;border:none;">
 
-    <br><br>
+<label>Lot Size</label>
+<input id="lot" type="number" value="0.01"
+style="width:100%;padding:12px;margin-top:8px;border-radius:8px;border:none;">
 
-    <button class="buy">BUY</button>
-    <button class="sell">SELL</button>
+<br><br>
+
+<div style="display:flex;gap:10px;">
+<button class="buy" style="flex:1;">BUY</button>
+<button class="sell" style="flex:1;">SELL</button>
 </div>
+
+<p id="status"
+style="margin-top:15px;color:#00ff66;font-weight:bold;"></p>
+
 
 <div class="history">
     <h3>Open Orders</h3>
