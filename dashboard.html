@@ -159,10 +159,31 @@ Equity $0.00
    
 
 </nav>
+
+<!--Start of Tawk.to Script-->
+<script type="module">
+import { auth } from "./firebase.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+onAuthStateChanged(auth, (user) => {
+
+    if (!user) {
+        window.location.href = "index.html";
+        return;
+    }
+
+    document.getElementById("uid").innerText = user.uid;
+
+    if (user.email === "mdzisanzisan555@gmail.com") {
+        console.log("Admin Login");
+    }
+
+});
+</script>
 <script src="dashboard.js"></script>
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+var Tawk_API=Tawk_API||{},Tawk_LoadStart=new Date();
 (function(){
 var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
 s1.async=true;
@@ -173,9 +194,9 @@ s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
 <!--End of Tawk.to Script-->
-    <script type="text/javascript">
-Tawk_API = Tawk_API || {};
 
+<script>
+Tawk_API = Tawk_API || {};
 Tawk_API.onLoad = function () {
     Tawk_API.hideWidget();
 };
