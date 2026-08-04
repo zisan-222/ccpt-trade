@@ -1,1 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CPT Markets - Demo Trade</title>
 
+<style>
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#071a36;
+color:white;
+}
+
+.header{
+background:#0b2c59;
+padding:15px;
+text-align:center;
+font-size:22px;
+font-weight:bold;
+}
+
+.balance{
+margin:15px;
+background:#123b73;
+padding:15px;
+border-radius:12px;
+text-align:center;
+}
+
+.balance h1{
+margin:0;
+color:#ffcc00;
+font-size:40px;
+}
+
+.chart{
+margin:15px;
+height:250px;
+background:#102b55;
+border-radius:12px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:24px;
+color:#999;
+}
+
+.buttons{
+display:flex;
+gap:15px;
+padding:15px;
+}
+
+.buy{
+flex:1;
+background:#00c853;
+padding:15px;
+border:none;
+color:white;
+font-size:20px;
+border-radius:10px;
+}
+
+.sell{
+flex:1;
+background:#ff1744;
+padding:15px;
+border:none;
+color:white;
+font-size:20px;
+border-radius:10px;
+}
+
+.history{
+margin:15px;
+background:#123b73;
+padding:15px;
+border-radius:12px;
+}
+
+.trade-item{
+padding:10px;
+border-bottom:1px solid #2b4d7a;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+Demo Trading
+</div>
+
+<div class="balance">
+<p>Demo Balance</p>
+<h1>$10000</h1>
+</div>
+
+<div class="chart">
+📈 Trading Chart
+</div>
+
+<div class="buttons">
+<button class="buy">BUY</button>
+<button class="sell">SELL</button>
+</div>
+
+<div class="history">
+<h3>Trade History</h3>
+
+<div class="trade-item">
+No trades yet.
+</div>
+
+</div>
+
+</body>
+</html>
