@@ -114,8 +114,8 @@ style="width:100%;padding:12px;margin-top:8px;border-radius:8px;border:none;">
 <br><br>
 
 <div style="display:flex;gap:10px;">
-<button class="buy" style="flex:1;">BUY</button>
-<button class="sell" style="flex:1;">SELL</button>
+<button class="buy" style="flex:1;">Long</button>
+<button class="sell" style="flex:1;"Short</button>
 </div>
 <h3>Leverage</h3>
 
@@ -180,7 +180,7 @@ document.querySelector(".buy").onclick = function () {
     openOrders.innerHTML = `
     <h3>Open Orders</h3>
     <div class="trade-item" style="color:#00ff66;">
-        BUY Order Opened #${tradeId}
+        Long Position Opened #${tradeId}
     </div>
     <h3 style="margin-top:20px;">Trade History</h3>
     `;
@@ -190,7 +190,7 @@ document.querySelector(".sell").onclick = function () {
     openOrders.innerHTML = `
     <h3>Open Orders</h3>
     <div class="trade-item" style="color:#ff4444;">
-        SELL Order Opened #${tradeId}
+        Short Position Opened #${tradeId}
     </div>
     <h3 style="margin-top:20px;">Trade History</h3>
     `;
