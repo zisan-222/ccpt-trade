@@ -130,7 +130,29 @@ border-bottom:1px solid #2b4d7a;
         No trade history
     </div>
 </div>
+<script>
+const openOrders = document.querySelector(".history");
 
+document.querySelector(".buy").onclick = function () {
+    openOrders.innerHTML = `
+    <h3>Open Orders</h3>
+    <div class="trade-item" style="color:#00ff66;">
+        BUY Order Opened
+    </div>
+    <h3 style="margin-top:20px;">Trade History</h3>
+    `;
+};
+
+document.querySelector(".sell").onclick = function () {
+    openOrders.innerHTML = `
+    <h3>Open Orders</h3>
+    <div class="trade-item" style="color:#ff4444;">
+        SELL Order Opened
+    </div>
+    <h3 style="margin-top:20px;">Trade History</h3>
+    `;
+};
+</script>
 
 </body>
 </html>
