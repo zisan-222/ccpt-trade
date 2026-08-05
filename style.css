@@ -50,18 +50,20 @@ height:42px;
 border-radius:50%;
 border:2px solid #fff;
 }
-
 .logo{
-position:relative;
-z-index:2;
-text-align:center;
-margin-top:60px;
-margin-bottom:40px;
+    position:relative;
+    z-index:2;
+    width:100%;
+    text-align:center;
+    margin-top:60px;
+    margin-bottom:40px;
 }
 
 .logo h1{
-font-size:58px;
-font-weight:700;
+    font-size:58px;
+    font-weight:700;
+    text-align:center;
+    margin:0 auto;
 }
 
 .logo span{
