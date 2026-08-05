@@ -27,3 +27,28 @@ togglePassword.addEventListener("click", function () {
     }
 
 });
+// ==========================
+// CPTMarkets Login Script
+// Part 2
+// ==========================
+
+const loginForm = document.getElementById("loginForm");
+
+loginForm.addEventListener("submit", function (e) {
+
+    e.preventDefault();
+
+    const username = document.getElementById("username").value.trim();
+    const password = passwordInput.value.trim();
+
+    if (username === "" || password === "") {
+        alert("Please enter Username and Password.");
+        return;
+    }
+
+    // এখানে পরে Backend/API যুক্ত করা হবে
+    // আপাতত Home Page-এ পাঠাবে
+
+    window.location.href = "home.html";
+
+});
