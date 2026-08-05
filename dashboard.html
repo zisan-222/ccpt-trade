@@ -22,17 +22,12 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 <header class="topbar">
 
 <div class="logo">
-
 <i class="fas fa-coins"></i>
-
 <span>CptMarkets</span>
-
 </div>
 
 <div class="menu-btn">
-
 <i class="fas fa-bars"></i>
-
 </div>
 
 </header>
@@ -41,13 +36,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
 <div class="banner">
 
-<div class="banner-text">
-
-<h2>CptMarkets</h2>
-
-<p>Global integrated financial trading platform</p>
-
-</div>
+<img
+src="https://images.unsplash.com/photo-1642104704074-907c0698cbd9?w=1200"
+alt="Banner">
 
 </div>
 
@@ -79,157 +70,169 @@ Equity
 
 </div>
 
+<!-- ACTION BUTTONS -->
+
 <div class="action-buttons">
 
 <button class="deposit">
-
 Deposit
-
 </button>
 
 <button>
-
 Withdraw
-
 </button>
 
 <button>
-
 Transfer
-
 </button>
 
 </div>
 
 </div>
+    <!-- Asset Card -->
+    <section class="asset-card">
 
-<!-- QUICK MENU -->
+      <div class="asset-top">
+        <div>
+          <h2>Total Assets (USD)</h2>
+        </div>
 
-<div class="quick-menu">
+        <button class="eye-btn" id="toggleBalance">
+          <i class="fa-regular fa-eye"></i>
+        </button>
+      </div>
 
-<div class="item">
+      <h1 id="balance">$0.00</h1>
 
-<i class="fas fa-headset"></i>
+      <div class="asset-info">
+        <span>
+          Floating P/L
+          <strong class="profit">+0.00</strong>
+        </span>
 
-<p>Support</p>
+        <span>
+          Equity
+          <strong>$0.00</strong>
+        </span>
+      </div>
 
-</div>
+      <div class="action-buttons">
+        <button class="deposit">Deposit</button>
+        <button>Withdraw</button>
+        <button>Transfer</button>
+      </div>
 
-<div class="item">
+    </section>
 
-<i class="fas fa-wallet"></i>
+    <!-- Menu Grid -->
 
-<p>Withdraw</p>
+    <section class="menu-grid">
 
-</div>
+      <div class="menu-card">
+        <i class="fa-solid fa-headset"></i>
+        <span>Support</span>
+      </div>
 
-<div class="item">
+      <div class="menu-card">
+        <i class="fa-solid fa-wallet"></i>
+        <span>Withdraw</span>
+      </div>
 
-<i class="fas fa-right-left"></i>
+      <div class="menu-card">
+        <i class="fa-solid fa-right-left"></i>
+        <span>Transfer</span>
+      </div>
 
-<p>Transfer</p>
+      <div class="menu-card">
+        <i class="fa-solid fa-users"></i>
+        <span>Copy Trade</span>
+      </div>
 
-</div>
-    <div class="item">
-        <i class="fas fa-users"></i>
-        <p>Copy Trade</p>
+      <div class="menu-card">
+        <i class="fa-solid fa-hand-holding-dollar"></i>
+        <span>Loan</span>
+      </div>
+
+      <div class="menu-card">
+        <i class="fa-solid fa-chart-column"></i>
+        <span>Wealth</span>
+      </div>
+
+      <div class="menu-card">
+        <i class="fa-solid fa-hammer"></i>
+        <span>Mining</span>
+      </div>
+
+         <!-- Hot Markets -->
+
+    <section class="markets">
+
+      <h2>Hot Markets</h2>
+
+      <div class="market-card">
+
+        <div class="market-left">
+          <h3>BTC / USDT</h3>
+          <span>Bitcoin</span>
+        </div>
+
+        <div class="market-right">
+          <strong>$63,250</strong>
+          <span class="up">+2.45%</span>
+        </div>
+
+      </div>
+
+      <div class="market-card">
+
+        <div class="market-left">
+          <h3>ETH / USDT</h3>
+          <span>Ethereum</span>
+        </div>
+
+        <div class="market-right">
+          <strong>$3,420</strong>
+          <span class="up">+1.72%</span>
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+  <!-- Bottom Navigation -->
+
+  <nav class="bottom-nav">
+
+    <div class="nav-item active">
+      <i class="fa-solid fa-house"></i>
+      <span>Home</span>
     </div>
 
-    <div class="item">
-        <i class="fas fa-hand-holding-dollar"></i>
-        <p>Loan</p>
+    <div class="nav-item">
+      <i class="fa-solid fa-chart-line"></i>
+      <span>Markets</span>
     </div>
 
-    <div class="item">
-        <i class="fas fa-chart-column"></i>
-        <p>Wealth</p>
+    <div class="nav-item trade">
+      <i class="fa-solid fa-right-left"></i>
+      <span>Trade</span>
     </div>
 
-    <div class="item">
-        <i class="fas fa-hammer"></i>
-        <p>Mining</p>
+    <div class="nav-item">
+      <i class="fa-solid fa-wallet"></i>
+      <span>Assets</span>
     </div>
 
-    <div class="item">
-        <i class="fas fa-gift"></i>
-        <p>Invite</p>
+    <div class="nav-item">
+      <i class="fa-solid fa-user"></i>
+      <span>Mine</span>
     </div>
 
-</div>
+  </nav>
 
-<!-- HOT MARKETS -->
+  <script src="dashboard.js"></script>
 
-<section class="markets">
-
-<div class="section-title">
-
-<h2>Hot Markets</h2>
-
-<a href="#">View All ></a>
-
-</div>
-
-<div class="market-card">
-
-<div class="coin">
-BTC / USDT
-</div>
-
-<div class="price">
-$118,250.45
-</div>
-
-</div>
-
-<div class="market-card">
-
-<div class="coin">
-ETH / USDT
-</div>
-
-<div class="price">
-$4,215.18
-</div>
-
-</div>
-
-<div class="market-card">
-
-<div class="coin">
-XAU / USD
-</div>
-
-<div class="price">
-$3,412.80
-</div>
-
-</div>
-
-</section>
-
-<!-- BOTTOM NAVIGATION -->
-
-<nav class="bottom-nav">
-
-<a href="#" class="active">
-<i class="fas fa-house"></i>
-<span>Home</span>
-</a>
-
-<a href="#">
-<i class="fas fa-chart-line"></i>
-<span>Markets</span>
-</a>
-
-<a href="#" class="trade">
-<i class="fas fa-right-left"></i>
-</a>
-
-<a href="#">
-<i class="fas fa-wallet"></i>
-<span>Assets</span>
-</a>
-
-<a href="#">
-<i class="fas fa-user"></i>
-<span>Mine</span>
+</body>
+</html>
