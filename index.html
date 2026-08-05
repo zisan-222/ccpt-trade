@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CPTMarkets</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="page-bg"></div>
+
+  <main class="auth-wrap">
+    <section class="hero-card">
+      <div class="hero-top">
+        <div class="flag">🇬🇧</div>
+      </div>
+
+      <div class="brand">
+        <h1><span>CPT</span>Markets</h1>
+        <p>G I F T P</p>
+      </div>
+
+      <form class="auth-form">
+        <label>Username</label>
+        <div class="input-box">
+          <span class="icon">👤</span>
+          <input type="text" placeholder="Username" />
+        </div>
+
+        <label>Password</label>
+        <div class="input-box">
+          <span class="icon">🔒</span>
+          <input type="password" id="loginPassword" placeholder="Password" />
+          <button type="button" class="eye-btn" onclick="togglePassword('loginPassword', this)">👁</button>
+        </div>
+
+        <button type="submit" class="gold-btn">Go to Sign In</button>
+
+        <div class="bottom-links">
+          <a href="create-account.html">👤+ Create Account</a>
+          <a href="#">🔐 Forgot Password?</a>
+        </div>
+      </form>
+    </section>
+  </main>
+</body>
+</html>
