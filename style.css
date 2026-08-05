@@ -1,156 +1,169 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
+/* ===========================
+   CPTMarkets Login UI
+   Part 1
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
-body {
-    background: linear-gradient(180deg, #021024 0%, #05162e 100%);
-    color: #ffffff;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+body{
+    background:#020d20;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow-x:hidden;
+    color:#fff;
 }
 
-.container {
-    width: 100%;
-    max-width: 400px;
-    background: rgba(5, 22, 46, 0.6);
-    border-radius: 16px;
-    padding: 40px 30px;
-    text-align: center;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+.background{
+    position:fixed;
+    inset:0;
+    background:linear-gradient(180deg,#031c3f 0%,#020d20 100%);
+    z-index:-2;
 }
 
-/* ইউকে ফ্ল্যাগ */
-.header-action {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 20px;
+.background::before{
+    content:"";
+    position:absolute;
+    width:500px;
+    height:500px;
+    border-radius:50%;
+    background:rgba(0,120,255,.12);
+    top:-180px;
+    left:50%;
+    transform:translateX(-50%);
+    filter:blur(20px);
 }
 
-.flag-icon {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-image: url('https://wikimedia.org');
-    background-size: cover;
-    background-position: center;
+.login-container{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    padding:40px 20px;
 }
 
-/* লোগো ও টাইটেল */
-.logo-title {
-    font-size: 32px;
-    font-weight: bold;
-    color: #ffffff;
-    margin-bottom: 2px;
+.login-card{
+    width:100%;
+    max-width:420px;
+    background:#06162f;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:30px;
+    padding:35px 25px;
+    position:relative;
+    box-shadow:0 0 40px rgba(0,120,255,.15);
 }
 
-.logo-title span {
-    color: #ffc800;
+.language{
+    position:absolute;
+    right:20px;
+    top:20px;
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
 }
 
-.subtitle {
-    font-size: 14px;
-    color: #8fa0b5;
-    letter-spacing: 4px;
-    margin-bottom: 40px;
-    text-transform: uppercase;
+.logo-area{
+    text-align:center;
+    margin:50px 0 40px;
 }
 
-.page-title {
-    font-size: 28px;
-    color: #ff9900;
-    font-weight: 600;
-    margin-bottom: 8px;
+.logo-area h1{
+    font-size:54px;
+    font-weight:800;
 }
 
-.page-subtitle {
-    font-size: 13px;
-    color: #7b8fa3;
-    margin-bottom: 35px;
+.logo-area .gold{
+    color:#ffc400;
+    text-shadow:0 0 12px rgba(255,196,0,.5);
 }
 
-/* ফর্ম ও ইনপুট বক্স */
-.form-group {
-    text-align: left;
-    margin-bottom: 22px;
+.logo-area .white{
+    color:#fff;
 }
 
-.form-group label {
-    display: block;
-    font-size: 14px;
-    color: #a4b4c7;
-    margin-bottom: 8px;
+.logo-area p{
+    margin-top:12px;
+    letter-spacing:8px;
+    color:#aeb8d0;
+    font-size:18px;
 }
 
-.input-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
+.form-group{
+    margin-bottom:22px;
 }
 
-.input-wrapper i {
-    position: absolute;
-    left: 15px;
-    color: #566981;
-    font-size: 16px;
+.form-group label{
+    display:block;
+    margin-bottom:10px;
+    font-size:18px;
+    font-weight:600;
+}
+.input-box{
+    width:100%;
+    height:56px;
+    background:#0b2448;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    padding:0 16px;
 }
 
-.input-wrapper .toggle-password {
-    left: auto;
-    right: 15px;
-    cursor: pointer;
+.input-box i{
+    color:#ffc400;
+    font-size:18px;
 }
 
-.input-wrapper input {
-    width: 100%;
-    padding: 14px 15px 14px 45px;
-    background: #091d36;
-    border: 1px solid #142d4c;
-    border-radius: 10px;
-    color: #ffffff;
-    font-size: 15px;
-    outline: none;
+.input-box input{
+    flex:1;
+    background:transparent;
+    border:none;
+    outline:none;
+    color:#fff;
+    font-size:16px;
+    padding:0 12px;
 }
 
-/* বাটন স্টাইল */
-.btn-submit {
-    width: 100%;
-    padding: 15px;
-    background: #ffc800;
-    border: none;
-    border-radius: 25px;
-    color: #000000;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 20px;
-    margin-bottom: 25px;
+.input-box input::placeholder{
+    color:#95a6c7;
 }
 
-/* ফুটার লিঙ্ক */
-.form-footer {
-    display: flex;
-    justify-content: space-between;
-    font-size: 13px;
+#togglePassword{
+    cursor:pointer;
 }
 
-.form-footer a {
-    color: #ffc800;
-    text-decoration: none;
+.login-btn{
+    width:100%;
+    height:56px;
+    border:none;
+    border-radius:14px;
+    margin-top:18px;
+    background:linear-gradient(90deg,#f8c400,#ffdb4d);
+    color:#111;
+    font-size:18px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.3s;
 }
 
-.center-footer {
-    justify-content: center;
-    gap: 5px;
-    color: #7b8fa3;
+.login-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 20px rgba(255,196,0,.35);
 }
 
-/* পেজ হাইড করার ক্লাস */
-.hidden {
-    display: none !important;
-}
+.bottom-links{
+    margin-top:25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap
