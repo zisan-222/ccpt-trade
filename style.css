@@ -28,11 +28,17 @@ body{
 .login-box::before{
     content:"";
     position:absolute;
-    width:430px;
-    height:450px;
+    .login-box::before{
+    content:"";
+    position:absolute;
+    width:520px;
+    height:520px;
     border-radius:50%;
-    top:-260px;
-    left:-20px;
+    top:-170px;
+    left:-70px;
+    background:radial-gradient(circle,#173d78,#081529);
+    opacity:.9;
+}
     background:radial-gradient(circle,#173d78,#081529);
     opacity:.9;
 }
