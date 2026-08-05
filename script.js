@@ -49,6 +49,6 @@ loginForm.addEventListener("submit", function (e) {
     // এখানে পরে Backend/API যুক্ত করা হবে
     // আপাতত Home Page-এ পাঠাবে
 
-    window.location.href = "home.html";
+    window.location.href = "dashboard.html";
 
 });
