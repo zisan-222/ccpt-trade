@@ -67,3 +67,93 @@ h1{
     margin-bottom:30px;
     letter-spacing:3px;
 }
+/* Language Button */
+
+.language{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    background:#0c2347;
+    border:1px solid rgba(255,255,255,.2);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    margin-left:auto;
+    margin-bottom:20px;
+}
+
+/* Label */
+
+label{
+    display:block;
+    margin:18px 0 10px;
+    font-size:22px;
+    font-weight:600;
+}
+
+/* Input Box */
+
+.input-box{
+    display:flex;
+    align-items:center;
+    background:#081227;
+    border:2px solid #22385f;
+    border-radius:20px;
+    padding:18px;
+    margin-bottom:20px;
+}
+
+.input-box i{
+    color:#8b96b7;
+    font-size:24px;
+}
+
+.input-box input{
+    flex:1;
+    background:transparent;
+    border:none;
+    outline:none;
+    color:#fff;
+    font-size:22px;
+    margin-left:15px;
+}
+
+.input-box input::placeholder{
+    color:#7e87a6;
+}
+
+/* Login Button */
+
+.login-btn{
+    width:100%;
+    padding:20px;
+    border:none;
+    border-radius:20px;
+    margin-top:15px;
+    cursor:pointer;
+    font-size:22px;
+    font-weight:700;
+    color:#222;
+    background:linear-gradient(90deg,#FFEFA6,#E7A600);
+    box-shadow:0 0 25px rgba(255,196,0,.45);
+}
+
+/* Bottom Links */
+
+.bottom-link{
+    display:flex;
+    justify-content:space-between;
+    margin-top:25px;
+}
+
+.bottom-link a{
+    text-decoration:none;
+    color:#E5B642;
+    font-size:18px;
+    font-weight:600;
+}
+
+.bottom-link i{
+    margin-right:6px;
+}
