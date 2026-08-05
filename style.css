@@ -157,3 +157,77 @@ label{
 .bottom-link i{
     margin-right:6px;
 }
+/* ===== Premium Background Effect ===== */
+
+.login-card::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:70px;
+    transform:translateX(-50%);
+    width:380px;
+    height:380px;
+    border-radius:50%;
+    border:2px solid rgba(255,255,255,.18);
+    opacity:.6;
+    pointer-events:none;
+}
+
+/* Golden Title */
+
+h1{
+    background:linear-gradient(#fff7c8,#ffd44d,#ffb300);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    text-shadow:0 0 18px rgba(255,200,0,.35);
+}
+
+/* Hover Effects */
+
+.input-box:focus-within{
+    border-color:#f7c948;
+    box-shadow:0 0 18px rgba(255,196,0,.25);
+}
+
+.login-btn:hover{
+    transform:translateY(-2px);
+    transition:.3s;
+    box-shadow:0 0 35px rgba(255,196,0,.7);
+}
+
+/* Mobile */
+
+@media(max-width:480px){
+
+.login-page{
+    padding:12px;
+}
+
+.login-card{
+    padding:20px;
+    border-radius:25px;
+}
+
+h1{
+    font-size:42px;
+}
+
+.input-box{
+    padding:16px;
+}
+
+.input-box input{
+    font-size:20px;
+}
+
+.login-btn{
+    font-size:20px;
+}
+
+.bottom-link{
+    font-size:15px;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+}
