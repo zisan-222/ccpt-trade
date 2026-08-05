@@ -2,426 +2,72 @@
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>CptMarkets | Secure Login</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
-
-body{
-
-background:#021226;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-height:100vh;
-
-overflow:hidden;
-
-color:white;
-
-position:relative;
-
-}
-
-body::before{
-
-content:"";
-
-position:absolute;
-
-width:500px;
-
-height:500px;
-
-background:#0d5cff20;
-
-border-radius:50%;
-
-filter:blur(120px);
-
-top:-150px;
-
-left:-150px;
-
-}
-
-body::after{
-
-content:"";
-
-position:absolute;
-
-width:500px;
-
-height:500px;
-
-background:#ff980020;
-
-border-radius:50%;
-
-filter:blur(120px);
-
-bottom:-150px;
-
-right:-150px;
-
-}
-
-.login-box{
-
-width:370px;
-
-background:#081b36;
-
-border:1px solid #123d74;
-
-border-radius:22px;
-
-padding:35px;
-
-box-shadow:0 20px 50px rgba(0,0,0,.5);
-
-position:relative;
-
-z-index:10;
-
-}
-
-.logo{
-
-text-align:center;
-
-margin-bottom:30px;
-
-}
-
-.logo-circle{
-
-width:70px;
-
-height:70px;
-
-border-radius:50%;
-
-border:2px solid orange;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-margin:auto;
-
-font-size:24px;
-
-font-weight:bold;
-
-color:orange;
-
-margin-bottom:15px;
-
-}
-
-.logo h1{
-
-font-size:38px;
-
-color:#ffb400;
-
-font-weight:800;
-
-}
-
-.logo p{
-
-letter-spacing:8px;
-
-color:#8db9ff;
-
-font-size:12px;
-
-margin-top:5px;
-
-}
-
-.input-group{
-
-margin-bottom:20px;
-
-}
-
-.input-group label{
-
-display:block;
-
-font-size:13px;
-
-margin-bottom:8px;
-
-color:#b8c7db;
-
-}
-
-.input-group input{
-
-width:100%;
-
-padding:15px;
-
-background:#041327;
-
-border:1px solid #163d70;
-
-border-radius:12px;
-
-outline:none;
-
-color:white;
-
-font-size:15px;
-
-}
-
-.input-group input:focus{
-
-border-color:orange;
-
-}
-
-.login-btn{
-
-width:100%;
-
-padding:15px;
-
-border:none;
-
-border-radius:12px;
-
-background:linear-gradient(90deg,#ff9800,#ffb300);
-
-font-size:17px;
-
-font-weight:bold;
-
-cursor:pointer;
-
-margin-top:10px;
-
-transition:.3s;
-
-}
-
-.login-btn:hover{
-
-transform:translateY(-2px);
-
-}
-
-.bottom-links{
-
-margin-top:25px;
-
-display:flex;
-
-justify-content:space-between;
-
-font-size:13px;
-
-}
-
-.bottom-links a{
-
-text-decoration:none;
-
-color:#ffb400;
-
-}
-
-#loginMessage{
-
-margin-top:15px;
-
-text-align:center;
-
-font-size:14px;
-
-color:white;
-
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CptMarkets Login</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 
 <body>
 
-<div class="login-box">
+<div class="login-page">
 
-<div class="logo">
+    <div class="language">
+        🇬🇧
+    </div>
 
-<div class="logo-circle">
+    <div class="login-card">
 
-CPT
+        <img src="images/logo.png" class="logo">
 
-</div>
+        <h1>CptMarkets</h1>
 
-<h1>CptMarkets</h1>
+        <p class="sub">GIFTP</p>
 
-<p>GIFTP</p>
+        <label>Username</label>
 
-</div>
+        <div class="input-box">
+            <i class="fa-regular fa-user"></i>
+            <input type="text" placeholder="Username">
+        </div>
 
-<form id="loginForm">
+        <label>Password</label>
 
-<div class="input-group">
+        <div class="input-box">
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" placeholder="Password">
+            <i class="fa-regular fa-eye-slash"></i>
+        </div>
 
-<label>Email</label>
+        <button class="login-btn">
+            Go to Sign In
+        </button>
 
-<input
-type="email"
-id="email"
-placeholder="Enter Email"
-required>
+        <div class="bottom-link">
 
-</div>
+            <a href="register.html">
+                <i class="fa-regular fa-user"></i>
+                Create Account
+            </a>
 
-<div class="input-group">
+            <a href="#">
+                <i class="fa-solid fa-lock"></i>
+                Forgot Password?
+            </a>
 
-<label>Password</label>
+        </div>
 
-<input
-type="password"
-id="password"
-placeholder="Enter Password"
-required>
-
-</div>
-
-<button
-type="submit"
-class="login-btn">
-
-SIGN IN
-
-</button>
-
-<div id="loginMessage"></div>
-
-<div class="bottom-links">
-
-<a href="register.html">
-
-Create Account
-
-</a>
-
-<a href="#">
-
-Forgot Password?
-
-</a>
+    </div>
 
 </div>
 
-</form>
-<script type="module">
-
-import { auth, db } from "./firebase.js";
-
-import {
-signInWithEmailAndPassword
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import {
-doc,
-getDoc
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const form =
-document.getElementById("loginForm");
-
-form.addEventListener("submit", async (e)=>{
-
-e.preventDefault();
-
-const email =
-document.getElementById("email").value.trim();
-
-const password =
-document.getElementById("password").value;
-
-const message =
-document.getElementById("loginMessage");
-
-message.style.color="white";
-message.innerHTML="Signing in...";
-
-try{
-
-const userCredential =
-await signInWithEmailAndPassword(
-auth,
-email,
-password
-);
-
-const uid =
-userCredential.user.uid;
-
-const adminRef =
-doc(db,"admin",uid);
-
-const adminSnap =
-await getDoc(adminRef);
-
-if(adminSnap.exists()){
-
-window.location.href="admin/dashboard.html";
-
-}else{
-
-window.location.href="trade.html";
-
-}
-
-}catch(error){
-
-message.style.color="red";
-
-message.innerHTML="Invalid Email or Password";
-
-}
-
-});
-
-</script>
+<script src="script.js"></script>
 
 </body>
 
 </html>
-</div>
