@@ -1,191 +1,101 @@
-/* ===================================
-   CPT MARKETS LOGIN DESIGN
-   Part 1
-=================================== */
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
-
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
 }
 
 body{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    overflow:hidden;
-    background:#081A3A;
-    position:relative;
+background:#071a3d;
+background-image:radial-gradient(circle,#123b7a,#071a3d);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+padding:20px;
 }
 
-/* Background */
-
-.background{
-    position:fixed;
-    inset:0;
-    background:
-    radial-gradient(circle at top,#1b57b8 0%,#0d2d66 30%,#081A3A 75%);
-    z-index:-2;
+.login-box{
+width:380px;
+background:#081b44;
+border:1px solid rgba(255,255,255,.15);
+border-radius:25px;
+padding:30px;
+box-shadow:0 0 30px rgba(0,0,0,.5);
 }
-
-.background::before{
-    content:"";
-    position:absolute;
-    width:700px;
-    height:700px;
-    border-radius:50%;
-    left:50%;
-    top:-350px;
-    transform:translateX(-50%);
-    background:rgba(58,135,255,.18);
-    filter:blur(90px);
-}
-
-/* Main Container */
-
-.login-container{
-    width:100%;
-    max-width:430px;
-    padding:18px;
-}
-
-/* Language */
-
-.language-btn{
-    width:55px;
-    height:55px;
-    border-radius:50%;
-    background:#132d5d;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin-left:auto;
-    margin-bottom:18px;
-    border:1px solid rgba(255,255,255,.1);
-}
-
-.language-btn img{
-    width:34px;
-}
-
-/* Card */
-
-.login-card{
-    position:relative;
-    padding:28px;
-    border-radius:30px;
-    background:rgba(6,20,52,.72);
-    backdrop-filter:blur(18px);
-    border:1px solid rgba(255,255,255,.08);
-    box-shadow:0 0 35px rgba(0,0,0,.45);
-    overflow:hidden;
-}
-
-.circle{
-    position:absolute;
-    width:420px;
-    height:420px;
-    border-radius:50%;
-    top:-240px;
-    left:50%;
-    transform:translateX(-50%);
-    border:2px solid rgba(255,255,255,.08);
-}
-
-/* Logo */
 
 .logo{
-    width:95px;
-    display:block;
-    margin:5px auto 15px;
+display:block;
+width:110px;
+margin:0 auto 15px;
 }
-
-/* Title */
 
 h1{
-    text-align:center;
-    font-size:52px;
-    font-weight:800;
-    background:linear-gradient(#FFF6C8,#FFD452,#F5A400);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
+text-align:center;
+color:#f6c43d;
+font-size:42px;
+margin-bottom:5px;
 }
 
-.gift{
-    text-align:center;
-    color:#d5d5d5;
-    letter-spacing:4px;
-    margin-bottom:28px;
-}
-/* ===================================
-   CPT MARKETS LOGIN DESIGN
-   Part 2
-=================================== */
-
-/* Form */
-
-.form{
-    position:relative;
-    z-index:5;
+p{
+text-align:center;
+color:#fff;
+margin-bottom:30px;
+letter-spacing:4px;
 }
 
 label{
-    display:block;
-    margin-bottom:10px;
-    color:#ffffff;
-    font-size:18px;
-    font-weight:600;
+display:block;
+color:#fff;
+margin-bottom:8px;
+margin-top:18px;
+font-weight:bold;
 }
-
-/* Input */
 
 .input-box{
-    display:flex;
-    align-items:center;
-    background:#0B1F45;
-    border:2px solid rgba(255,255,255,.08);
-    border-radius:18px;
-    padding:16px 18px;
-    margin-bottom:22px;
-    transition:.3s;
-}
-
-.input-box:hover,
-.input-box:focus-within{
-    border-color:#F6C343;
-    box-shadow:0 0 18px rgba(246,195,67,.25);
+display:flex;
+align-items:center;
+background:#0d2559;
+border:1px solid rgba(255,255,255,.12);
+border-radius:15px;
+padding:0 15px;
 }
 
 .input-box i{
-    color:#9db0d5;
-    font-size:20px;
+color:#8da3d1;
+font-size:18px;
 }
 
 .input-box input{
-    flex:1;
-    border:none;
-    outline:none;
-    background:transparent;
-    color:#fff;
-    font-size:18px;
-    margin-left:12px;
+width:100%;
+padding:16px;
+background:none;
+border:none;
+outline:none;
+color:#fff;
+font-size:18px;
 }
 
-.input-box input::placeholder{
-    color:#8ea3c7;
+button{
+width:100%;
+margin-top:30px;
+padding:16px;
+border:none;
+border-radius:16px;
+background:linear-gradient(90deg,#ffe88a,#d89600);
+font-size:28px;
+font-weight:bold;
+cursor:pointer;
 }
 
-.eye{
-    cursor:pointer;
+.links{
+margin-top:25px;
+display:flex;
+justify-content:space-between;
 }
 
-/* Login Button */
-
-.login-btn{
-    width:100%;
-    padding:18px;
-    border
+.links a{
+color:#f4c547;
+text-decoration:none;
+font-size:17px;
+}
