@@ -231,3 +231,12 @@ h1{
 }
 
 }
+body{
+    background:url("images/bg.jpg") no-repeat center center;
+    background-size:cover;
+    background-attachment:fixed;
+}
+
+.login-card{
+    background:rgba(5,15,40,.82);
+}
