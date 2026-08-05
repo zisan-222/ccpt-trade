@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPTMarkets - Trading</title>
+    
+    <!-- FontAwesome আইকন লিঙ্ক -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+    
+    <!-- সিএসএস ফাইল লিঙ্ক (স্টাইল লোড করার জন্য) -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- ================= SIGN IN INTERFACE ================= -->
+        <div id="signin-view">
+            <div class="header-action">
+                <div class="flag-icon"></div>
+            </div>
+            
+            <h1 class="logo-title"><span>CPT</span>Markets</h1>
+            <p class="subtitle">giftp</p>
+
+            <form onsubmit="event.preventDefault();">
+                <div class="form-group">
+                    <label>Username</label>
+                    <div class="input-wrapper">
+                        <i class="fa-regular fa-user"></i>
+                        <input type="text" placeholder="Username" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="login-pass" placeholder="Password" required>
+                        <i class="fa-regular fa-eye toggle-password" onclick="togglePass()"></i>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">Go to Sign In</button>
+            </form>
+
+            <div class="form-footer">
+                <a href="#" id="go-to-register"><i class="fa-solid fa-user-plus"></i> Create Account</a>
+                <a href="#"><i class="fa-solid fa-lock"></i> Forgot Password?</a>
+            </div>
+        </div>
+
+        <!-- ================= REGISTER INTERFACE ================= -->
+        <div id="register-view" class="hidden">
+            <h2 class="page-title">Create Account</h2>
+            <p class="page-subtitle">Join CptMarkets for global trading</p>
+
+            <form onsubmit="event.preventDefault();">
+                <div class="form-group">
+                    <label>Username</label>
+                    <div class="input-wrapper">
+                        <input type="text" placeholder="Username" style="padding-left: 15px;" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" placeholder="********" style="padding-left: 15px;" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" placeholder="********" style="padding-left: 15px;" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Invite Code</label>
+                    <div class="input-wrapper">
+                        <input type="text" placeholder="Invite Code (optional)" style="padding-left: 15px;">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">Register</button>
+            </form>
+
+            <div class="form-footer center-footer">
+                <span>Already have an account?</span>
+                <a href="#" id="go-to-signin">Go to Sign In</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- জাভাস্ক্রিপ্ট ফাইল লিঙ্ক (বাটন ক্লিকের কাজের জন্য) -->
+    <script src="script.js"></script>
+</body>
+</html>
