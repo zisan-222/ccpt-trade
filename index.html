@@ -3,100 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CPTMarkets - Trading</title>
-    
-    <!-- FontAwesome আইকন লিঙ্ক -->
-    <link rel="stylesheet" href="https://cloudflare.com">
-    
-    <!-- সিএসএস ফাইল লিঙ্ক (স্টাইল লোড করার জন্য) -->
+    <title>CPTMarkets - Login</title>
+
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
 
-    <div class="container">
-        
-        <!-- ================= SIGN IN INTERFACE ================= -->
-        <div id="signin-view">
-            <div class="header-action">
-                <div class="flag-icon"></div>
-            </div>
-            
-            <h1 class="logo-title"><span>CPT</span>Markets</h1>
-            <p class="subtitle">giftp</p>
+<div class="background"></div>
 
-            <form onsubmit="event.preventDefault();">
-                <div class="form-group">
-                    <label>Username</label>
-                    <div class="input-wrapper">
-                        <i class="fa-regular fa-user"></i>
-                        <input type="text" placeholder="Username" required>
-                    </div>
-                </div>
+<div class="login-box">
 
-                <div class="form-group">
-                    <label>Password</label>
-                    <div class="input-wrapper">
-                        <i class="fa-solid fa-lock"></i>
-                        <input type="password" id="login-pass" placeholder="Password" required>
-                        <i class="fa-regular fa-eye toggle-password" onclick="togglePass()"></i>
-                    </div>
-                </div>
+    <!-- Language -->
+    <div class="language">
+        🇬🇧
+    </div>
 
-                <button type="submit" class="btn-submit">Go to Sign In</button>
-            </form>
+    <!-- Logo -->
+    <div class="logo-area">
+        <h1>
+            <span class="gold">CPT</span><span class="white">Markets</span>
+        </h1>
 
-            <div class="form-footer">
-                <a href="#" id="go-to-register"><i class="fa-solid fa-user-plus"></i> Create Account</a>
-                <a href="#"><i class="fa-solid fa-lock"></i> Forgot Password?</a>
-            </div>
+        <p>G I F T P</p>
+    </div>
+
+    <!-- Login Form -->
+    <form id="loginForm">
+
+        <label>Username</label>
+
+        <div class="input-box">
+            <i class="fa-regular fa-user"></i>
+
+            <input
+            type="text"
+            id="username"
+            placeholder="Username"
+            required>
         </div>
 
-        <!-- ================= REGISTER INTERFACE ================= -->
-        <div id="register-view" class="hidden">
-            <h2 class="page-title">Create Account</h2>
-            <p class="page-subtitle">Join CptMarkets for global trading</p>
+        <label>Password</label>
 
-            <form onsubmit="event.preventDefault();">
-                <div class="form-group">
-                    <label>Username</label>
-                    <div class="input-wrapper">
-                        <input type="text" placeholder="Username" style="padding-left: 15px;" required>
-                    </div>
-                </div>
+        <div class="input-box">
 
-                <div class="form-group">
-                    <label>Password</label>
-                    <div class="input-wrapper">
-                        <input type="password" placeholder="********" style="padding-left: 15px;" required>
-                    </div>
-                </div>
+            <i class="fa-solid fa-lock"></i>
 
-                <div class="form-group">
-                    <label>Confirm Password</label>
-                    <div class="input-wrapper">
-                        <input type="password" placeholder="********" style="padding-left: 15px;" required>
-                    </div>
-                </div>
+            <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            required>
 
-                <div class="form-group">
-                    <label>Invite Code</label>
-                    <div class="input-wrapper">
-                        <input type="text" placeholder="Invite Code (optional)" style="padding-left: 15px;">
-                    </div>
-                </div>
+            <i
+            class="fa-regular fa-eye"
+            id="togglePassword"></i>
 
-                <button type="submit" class="btn-submit">Register</button>
-            </form>
-
-            <div class="form-footer center-footer">
-                <span>Already have an account?</span>
-                <a href="#" id="go-to-signin">Go to Sign In</a>
-            </div>
         </div>
+
+        <button
+        type="submit"
+        class="login-btn">
+            Go to Sign In
+        </button>
+
+    </form>
+
+    <div class="bottom-links">
+
+        <a href="register.html">
+            <i class="fa-solid fa-user-plus"></i>
+            Create Account
+        </a>
+
+        <a href="#">
+            <i class="fa-solid fa-lock"></i>
+            Forgot Password?
+        </a>
 
     </div>
 
-    <!-- জাভাস্ক্রিপ্ট ফাইল লিঙ্ক (বাটন ক্লিকের কাজের জন্য) -->
-    <script src="script.js"></script>
+</div>
+
+<script src="script.js"></script>
+
 </body>
 </html>
