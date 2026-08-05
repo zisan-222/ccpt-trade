@@ -1,176 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CptMarkets Dashboard</title>
+  <title>CptMarkets Dashboard</title>
 
-<link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="dashboard.css">
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
+  <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
 <body>
 
 <div class="container">
 
-<!-- HEADER -->
+  <!-- Header -->
+  <header class="topbar">
 
-<header class="topbar">
+    <div class="logo">
+      <i class="fas fa-coins"></i>
+      <span>CptMarkets</span>
+    </div>
 
-<div class="logo">
-<i class="fas fa-coins"></i>
-<span>CptMarkets</span>
-</div>
+    <div class="menu-btn">
+      <i class="fas fa-bars"></i>
+    </div>
 
-<div class="menu-btn">
-<i class="fas fa-bars"></i>
-</div>
+  </header>
 
-</header>
-
-<!-- BANNER -->
-
-<div class="banner">
-
-<img
-src="https://images.unsplash.com/photo-1642104704074-907c0698cbd9?w=1200"
-alt="Banner">
-
-</div>
-
-<!-- ASSET CARD -->
-
-<div class="asset-card">
-
-<div class="asset-top">
-
-<h3>Total Assets (USD)</h3>
-
-<button class="eye-btn" id="toggleBalance">
-    <i class="fa-regular fa-eye"></i>
-</button>
-
-</div>
-
-<h1 id="balance">$0.00</h1>
-
-<div class="asset-info">
-
-<span>
-Floating P/L
-<strong class="green">+0.00</strong>
-</span>
-
-<span>
-Equity
-<strong>$0.00</strong>
-</span>
-
-</div>
-
-<!-- ACTION BUTTONS -->
-
-<div class="action-buttons">
-
-<button class="deposit">
-Deposit
-</button>
-
-<button>
-Withdraw
-</button>
-
-<button>
-Transfer
-</button>
-
-</div>
-
-</div>
-
-    <!-- Menu Grid -->
-
-    <section class="menu-grid">
-
-      <div class="menu-card">
-        <i class="fa-solid fa-headset"></i>
-        <span>Support</span>
-      </div>
-
-      <div class="menu-card">
-        <i class="fa-solid fa-wallet"></i>
-        <span>Withdraw</span>
-      </div>
-
-      <div class="menu-card">
-        <i class="fa-solid fa-right-left"></i>
-        <span>Transfer</span>
-      </div>
-
-      <div class="menu-card">
-        <i class="fa-solid fa-users"></i>
-        <span>Copy Trade</span>
-      </div>
-
-      <div class="menu-card">
-        <i class="fa-solid fa-hand-holding-dollar"></i>
-        <span>Loan</span>
-      </div>
-
-      <div class="menu-card">
-        <i class="fa-solid fa-chart-column"></i>
-        <span>Wealth</span>
-      </div>
-
-      <div class="menu-card">
-        <i class="fa-solid fa-hammer"></i>
-        <span>Mining</span>
-      </div>
-      </section>
-         <!-- Hot Markets -->
-
-    <section class="markets">
-
-      <h2>Hot Markets</h2>
-
-      <div class="market-card">
-
-        <div class="market-left">
-          <h3>BTC / USDT</h3>
-          <span>Bitcoin</span>
-        </div>
-
-        <div class="market-right">
-          <strong>$63,250</strong>
-          <span class="up">+2.45%</span>
-        </div>
-
-      </div>
-
-      <div class="market-card">
-
-        <div class="market-left">
-          <h3>ETH / USDT</h3>
-          <span>Ethereum</span>
-        </div>
-
-        <div class="market-right">
-          <strong>$3,420</strong>
-          <span class="up">+1.72%</span>
-        </div>
-
-      </div>
-
-    </section>
-
+  <!-- Banner -->
+  <div class="banner">
+    <img
+      src="https://images.unsplash.com/photo-1642104704074-907c0698cbd9?w=1200"
+      alt="Banner">
   </div>
 
-  <!-- Bottom Navigation -->
+  <!-- Asset Card -->
+  <section class="asset-card">
 
+    <div class="asset-top">
+
+      <h2>Total Assets (USD)</h2>
+
+      <button class="eye-btn" id="toggleBalance">
+        <i class="fa-regular fa-eye"></i>
+      </button>
+
+    </div>
+
+    <h1 id="balance">$0.00</h1>
+
+    <div class="asset-info">
+
+      <span>
+        Floating P/L
+        <strong class="profit">+0.00</strong>
+      </span>
+
+      <span>
+        Equity
+        <strong>$0.00</strong>
+      </span>
+
+    </div>
+
+    <div class="action-buttons">
+
+      <button class="deposit">
+        Deposit
+      </button>
+
+      <button>
+        Withdraw
+      </button>
+
+      <button>
+        Transfer
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- Menu Grid -->
+  <section class="menu-grid">
+
+    <div class="menu-card">
+      <i class="fa-solid fa-headset"></i>
+      <span>Support</span>
+    </div>
+
+    <div class="menu-card">
+      <i class="fa-solid fa-wallet"></i>
+      <span>Withdraw</span>
+    </div>
+
+    <div class="menu-card">
+      <i class="fa-solid fa-right-left"></i>
+      <span>Transfer</span>
+    </div>
+
+    <div class="menu-card">
+      <i class="fa-solid fa-users"></i>
+      <span>Copy Trade</span>
+    </div>
+
+    <div class="menu-card">
+      <i class="fa-solid fa-hand-holding-dollar"></i>
+      <span>Loan</span>
+    </div>
+
+    <div class="menu-card">
+      <i class="fa-solid fa-chart-column"></i>
+      <span>Wealth</span>
+    </div>
+
+          <div class="menu-card">
+      <i class="fa-solid fa-hammer"></i>
+      <span>Mining</span>
+    </div>
+
+    <div class="menu-card">
+      <i class="fa-solid fa-gift"></i>
+      <span>Invite</span>
+    </div>
+
+  </section>
+
+  <!-- Hot Markets -->
+  <section class="markets">
+
+    <h2>Hot Markets</h2>
+
+    <div class="market-card">
+
+      <div class="market-left">
+        <h3>BTC / USDT</h3>
+        <span>Bitcoin</span>
+      </div>
+
+      <div class="market-right">
+        <strong>$63,250</strong>
+        <span class="up">+2.45%</span>
+      </div>
+
+    </div>
+
+    <div class="market-card">
+
+      <div class="market-left">
+        <h3>ETH / USDT</h3>
+        <span>Ethereum</span>
+      </div>
+
+      <div class="market-right">
+        <strong>$3,420</strong>
+        <span class="up">+1.72%</span>
+      </div>
+
+    </div>
+
+    <div class="market-card">
+
+      <div class="market-left">
+        <h3>BNB / USDT</h3>
+        <span>Binance Coin</span>
+      </div>
+
+      <div class="market-right">
+        <strong>$585</strong>
+        <span class="up">+0.94%</span>
+      </div>
+
+    </div>
+
+  </section
+  <!-- Bottom Navigation -->
   <nav class="bottom-nav">
 
     <div class="nav-item active">
@@ -200,7 +207,10 @@ Transfer
 
   </nav>
 
-  <script src="dashboard.js"></script>
+</div>
+
+<script src="dashboard.js"></script>
 
 </body>
 </html>
+    
