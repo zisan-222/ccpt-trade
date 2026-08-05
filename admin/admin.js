@@ -1,7 +1,15 @@
 
-document
-.getElementById("adminLoginForm")
-.addEventListener("submit", function (e) {
+import { auth } from "../firebase.js";
+
+import {
+signInWithEmailAndPassword
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const form =
+document.getElementById("adminLoginForm");
+
+form.addEventListener("submit", async (e)=>{
 
 e.preventDefault();
 
@@ -11,21 +19,27 @@ document.getElementById("adminEmail").value;
 const password =
 document.getElementById("adminPassword").value;
 
-const message =
+const msg =
 document.getElementById("loginMessage");
 
-message.innerHTML = "";
+msg.innerHTML="Logging in...";
 
-if(email === "" || password === ""){
+try{
 
-message.innerHTML = "Please fill all fields.";
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
 
-return;
+window.location.href="dashboard.html";
+
+}catch(error){
+
+msg.style.color="red";
+
+msg.innerHTML=error.message;
 
 }
-
-message.style.color="#00ff99";
-
-message.innerHTML="Checking Admin Login...";
 
 });
