@@ -28,10 +28,10 @@ body{
 .login-box::before{
     content:"";
     position:absolute;
-    width:420px;
-    height:420px;
+    width:430px;
+    height:450px;
     border-radius:50%;
-    top:-180px;
+    top:-260px;
     left:-20px;
     background:radial-gradient(circle,#173d78,#081529);
     opacity:.9;
