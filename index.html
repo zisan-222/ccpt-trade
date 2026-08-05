@@ -4,61 +4,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CptMarkets Login</title>
+    <title>CptMarkets</title>
 
     <link rel="stylesheet" href="style.css">
 
-    <!-- Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 
 <body>
 
-<div class="login-page">
+<div class="background"></div>
 
-    <div class="language">
-        🇬🇧
+<div class="login-container">
+
+    <!-- Language -->
+    <div class="language-btn">
+        <img src="images/uk.png" alt="">
     </div>
 
+    <!-- Card -->
     <div class="login-card">
-        <div class="glow-circle"></div>
+
+        <div class="circle"></div>
+
         <img src="images/logo.png" class="logo">
 
         <h1>CptMarkets</h1>
 
-        <p class="sub">GIFTP</p>
+        <p class="gift">GIFTP</p>
 
-        <label>Username</label>
+        <div class="form">
 
-        <div class="input-box">
-            <i class="fa-regular fa-user"></i>
-            <input type="text" placeholder="Username">
-        </div>
+            <label>Username</label>
 
-        <label>Password</label>
+            <div class="input-box">
 
-        <div class="input-box">
-            <i class="fa-solid fa-lock"></i>
-            <input type="password" placeholder="Password">
-            <i class="fa-regular fa-eye-slash"></i>
-        </div>
-
-        <button class="login-btn">
-            Go to Sign In
-        </button>
-
-        <div class="bottom-link">
-
-            <a href="register.html">
                 <i class="fa-regular fa-user"></i>
-                Create Account
-            </a>
 
-            <a href="#">
+                <input
+                    type="text"
+                    placeholder="Username"
+                >
+
+            </div>
+
+            <label>Password</label>
+
+            <div class="input-box">
+
                 <i class="fa-solid fa-lock"></i>
-                Forgot Password?
-            </a>
+
+                <input
+                    id="password"
+                    type="password"
+                    placeholder="Password"
+                >
+
+                <i
+                    id="togglePassword"
+                    class="fa-regular fa-eye-slash eye">
+                </i>
+
+            </div>
+
+            <button class="login-btn">
+
+                Go to Sign In
+
+            </button>
+
+            <div class="bottom-links">
+
+                <a href="register.html">
+
+                    <i class="fa-regular fa-user"></i>
+
+                    Create Account
+
+                </a>
+                                </a>
+
+                <a href="#">
+
+                    <i class="fa-solid fa-key"></i>
+
+                    Forgot Password?
+
+                </a>
+
+            </div>
 
         </div>
 
