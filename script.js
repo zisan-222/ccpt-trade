@@ -1,47 +1,51 @@
 // Password Show / Hide
+const password = document.getElementById("password");
+const togglePassword = document.getElementById("togglePassword");
 
-const eye = document.querySelector(".eye");
-const password = document.querySelector('input[type="password"]');
-
-eye.addEventListener("click", function () {
+togglePassword.addEventListener("click", function () {
 
     if (password.type === "password") {
         password.type = "text";
-        eye.classList.remove("fa-eye");
-        eye.classList.add("fa-eye-slash");
+        this.classList.remove("fa-eye");
+        this.classList.add("fa-eye-slash");
     } else {
         password.type = "password";
-        eye.classList.remove("fa-eye-slash");
-        eye.classList.add("fa-eye");
+        this.classList.remove("fa-eye-slash");
+        this.classList.add("fa-eye");
     }
 
 });
 
-// Login Button
 
-const loginBtn = document.querySelector(".login-btn");
+// Login Form
+const form = document.querySelector("form");
 
-loginBtn.addEventListener("click", function(e){
+form.addEventListener("submit", function (e) {
 
     e.preventDefault();
 
-    const username = document.querySelector('input[type="text"]').value;
-    const pass = password.value;
+    const username = document.querySelector("input[type='text']").value.trim();
+    const pass = password.value.trim();
 
-    if(username === "" || pass === ""){
-        alert("Please enter Username and Password");
+    if (username === "") {
+        alert("Please enter your Username");
         return;
     }
 
-    loginBtn.innerHTML = "Signing In...";
+    if (pass === "") {
+        alert("Please enter your Password");
+        return;
+    }
 
-    setTimeout(function(){
+    const btn = document.querySelector(".login-btn");
 
-        loginBtn.innerHTML = "Go to Sign In";
+    btn.innerHTML = "Signing In...";
+    btn.disabled = true;
 
-        // এখানে পরে Dashboard এ পাঠানো হবে
-        alert("Login Successful");
+    setTimeout(() => {
 
-    },1500);
+        window.location.href = "dashboard.html";
+
+    }, 1200);
 
 });
