@@ -1,4 +1,8 @@
-/* Google Font */
+/* ===================================
+   CPT MARKETS LOGIN DESIGN
+   Part 1
+=================================== */
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
 *{
@@ -9,234 +13,179 @@
 }
 
 body{
-    background:#07162f;
-    background-image:radial-gradient(circle at top,#123f78,#07162f 65%);
     min-height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    color:#fff;
+    overflow:hidden;
+    background:#081A3A;
+    position:relative;
 }
 
-.login-page{
+/* Background */
+
+.background{
+    position:fixed;
+    inset:0;
+    background:
+    radial-gradient(circle at top,#1b57b8 0%,#0d2d66 30%,#081A3A 75%);
+    z-index:-2;
+}
+
+.background::before{
+    content:"";
+    position:absolute;
+    width:700px;
+    height:700px;
+    border-radius:50%;
+    left:50%;
+    top:-350px;
+    transform:translateX(-50%);
+    background:rgba(58,135,255,.18);
+    filter:blur(90px);
+}
+
+/* Main Container */
+
+.login-container{
     width:100%;
     max-width:430px;
-    min-height:100vh;
-    padding:20px;
+    padding:18px;
 }
+
+/* Language */
+
+.language-btn{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    background:#132d5d;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-left:auto;
+    margin-bottom:18px;
+    border:1px solid rgba(255,255,255,.1);
+}
+
+.language-btn img{
+    width:34px;
+}
+
+/* Card */
 
 .login-card{
     position:relative;
-    background:rgba(8,18,45,.75);
-    border:1px solid rgba(255,255,255,.08);
+    padding:28px;
     border-radius:30px;
-    padding:25px;
+    background:rgba(6,20,52,.72);
+    backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,.08);
     box-shadow:0 0 35px rgba(0,0,0,.45);
     overflow:hidden;
 }
 
-.login-card::before{
-    content:"";
+.circle{
     position:absolute;
-    width:520px;
-    height:520px;
+    width:420px;
+    height:420px;
     border-radius:50%;
-    top:-260px;
+    top:-240px;
     left:50%;
     transform:translateX(-50%);
-    background:radial-gradient(circle,rgba(40,120,255,.35),transparent 70%);
+    border:2px solid rgba(255,255,255,.08);
 }
 
+/* Logo */
+
 .logo{
+    width:95px;
     display:block;
-    width:90px;
-    margin:0 auto 10px;
+    margin:5px auto 15px;
 }
+
+/* Title */
 
 h1{
     text-align:center;
-    color:#FFD75E;
-    font-size:54px;
+    font-size:52px;
     font-weight:800;
-    text-shadow:0 0 15px rgba(255,208,0,.5);
+    background:linear-gradient(#FFF6C8,#FFD452,#F5A400);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
 }
 
-.sub{
+.gift{
     text-align:center;
-    color:#d7d7d7;
-    margin-bottom:30px;
-    letter-spacing:3px;
+    color:#d5d5d5;
+    letter-spacing:4px;
+    margin-bottom:28px;
 }
-/* Language Button */
+/* ===================================
+   CPT MARKETS LOGIN DESIGN
+   Part 2
+=================================== */
 
-.language{
-    width:55px;
-    height:55px;
-    border-radius:50%;
-    background:#0c2347;
-    border:1px solid rgba(255,255,255,.2);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:28px;
-    margin-left:auto;
-    margin-bottom:20px;
+/* Form */
+
+.form{
+    position:relative;
+    z-index:5;
 }
-
-/* Label */
 
 label{
     display:block;
-    margin:18px 0 10px;
-    font-size:22px;
+    margin-bottom:10px;
+    color:#ffffff;
+    font-size:18px;
     font-weight:600;
 }
 
-/* Input Box */
+/* Input */
 
 .input-box{
     display:flex;
     align-items:center;
-    background:#081227;
-    border:2px solid #22385f;
-    border-radius:20px;
-    padding:18px;
-    margin-bottom:20px;
+    background:#0B1F45;
+    border:2px solid rgba(255,255,255,.08);
+    border-radius:18px;
+    padding:16px 18px;
+    margin-bottom:22px;
+    transition:.3s;
+}
+
+.input-box:hover,
+.input-box:focus-within{
+    border-color:#F6C343;
+    box-shadow:0 0 18px rgba(246,195,67,.25);
 }
 
 .input-box i{
-    color:#8b96b7;
-    font-size:24px;
+    color:#9db0d5;
+    font-size:20px;
 }
 
 .input-box input{
     flex:1;
-    background:transparent;
     border:none;
     outline:none;
+    background:transparent;
     color:#fff;
-    font-size:22px;
-    margin-left:15px;
+    font-size:18px;
+    margin-left:12px;
 }
 
 .input-box input::placeholder{
-    color:#7e87a6;
+    color:#8ea3c7;
+}
+
+.eye{
+    cursor:pointer;
 }
 
 /* Login Button */
 
 .login-btn{
     width:100%;
-    padding:20px;
-    border:none;
-    border-radius:20px;
-    margin-top:15px;
-    cursor:pointer;
-    font-size:22px;
-    font-weight:700;
-    color:#222;
-    background:linear-gradient(90deg,#FFEFA6,#E7A600);
-    box-shadow:0 0 25px rgba(255,196,0,.45);
-}
-
-/* Bottom Links */
-
-.bottom-link{
-    display:flex;
-    justify-content:space-between;
-    margin-top:25px;
-}
-
-.bottom-link a{
-    text-decoration:none;
-    color:#E5B642;
-    font-size:18px;
-    font-weight:600;
-}
-
-.bottom-link i{
-    margin-right:6px;
-}
-/* ===== Premium Background Effect ===== */
-
-.login-card::after{
-    content:"";
-    position:absolute;
-    left:50%;
-    top:70px;
-    transform:translateX(-50%);
-    width:380px;
-    height:380px;
-    border-radius:50%;
-    border:2px solid rgba(255,255,255,.18);
-    opacity:.6;
-    pointer-events:none;
-}
-
-/* Golden Title */
-
-h1{
-    background:linear-gradient(#fff7c8,#ffd44d,#ffb300);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    text-shadow:0 0 18px rgba(255,200,0,.35);
-}
-
-/* Hover Effects */
-
-.input-box:focus-within{
-    border-color:#f7c948;
-    box-shadow:0 0 18px rgba(255,196,0,.25);
-}
-
-.login-btn:hover{
-    transform:translateY(-2px);
-    transition:.3s;
-    box-shadow:0 0 35px rgba(255,196,0,.7);
-}
-
-/* Mobile */
-
-@media(max-width:480px){
-
-.login-page{
-    padding:12px;
-}
-
-.login-card{
-    padding:20px;
-    border-radius:25px;
-}
-
-h1{
-    font-size:42px;
-}
-
-.input-box{
-    padding:16px;
-}
-
-.input-box input{
-    font-size:20px;
-}
-
-.login-btn{
-    font-size:20px;
-}
-
-.bottom-link{
-    font-size:15px;
-    flex-wrap:wrap;
-    gap:10px;
-}
-
-}
-body{
-    background:url("images/bg.jpg") no-repeat center center;
-    background-size:cover;
-    background-attachment:fixed;
-}
-
-.login-card{
-    background:rgba(5,15,40,.82);
-}
+    padding:18px;
+    border
