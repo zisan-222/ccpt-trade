@@ -2,7 +2,9 @@
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>CptMarkets Trade</title>
@@ -20,74 +22,91 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
 <div class="trade-page">
 
-    <!-- HEADER -->
+    <!-- Header -->
 
     <header class="trade-header">
 
-        <a href="dashboard.html" class="back-btn">
-            <i class="fa-solid fa-chevron-left"></i>
-        </a>
+        <div class="left-header">
 
-        <div class="pair-box">
+            <a href="dashboard.html" class="back-btn">
 
-            <h2>XAU/USD</h2>
+                <i class="fa-solid fa-chevron-left"></i>
 
-            <span>Gold / USD</span>
+            </a>
+
+            <div class="pair-box">
+
+                <h2>XAU/USD</h2>
+
+                <span>Gold / USD</span>
+
+            </div>
 
         </div>
 
-        <div class="price-box">
+        <div class="right-header">
 
-            <h3 id="livePrice">3253.89</h3>
+            <h2 id="livePrice">4269.29</h2>
 
-            <small id="priceChange">+0.80%</small>
+            <span id="priceChange">+0.52%</span>
 
         </div>
 
     </header>
 
-    <!-- CHART -->
+    <!-- Indicator Buttons -->
 
-    <section class="chart-card">
+    <section class="indicator-section">
 
-        <div class="indicator-bar">
+        <button class="indicator active">MA</button>
 
-            <button class="indicator active">MA</button>
+        <button class="indicator">EMA</button>
 
-            <button class="indicator">EMA</button>
+        <button class="indicator">BOLL</button>
 
-            <button class="indicator">BOLL</button>
+        <button class="indicator">RSI</button>
 
-            <button class="indicator">RSI</button>
+        <button class="indicator">MACD</button>
 
-            <button class="indicator">MACD</button>
+    </section>
 
-        </div>
+    <!-- Chart -->
+
+    <section class="chart-section">
 
         <div id="tvChart"></div>
 
-        <div class="timeframe">
+    </section>
 
-            <button class="tf active">1m</button>
+    <!-- Time Frame -->
 
-            <button class="tf">5m</button>
+    <section class="timeframe-section">
 
-            <button class="tf">15m</button>
+        <button class="time-btn active">1m</button>
 
-            <button class="tf">30m</button>
+        <button class="time-btn">5m</button>
 
-            <button class="tf">1h</button>
+        <button class="time-btn">15m</button>
 
-            <button class="tf">1d</button>
+        <button class="time-btn">30m</button>
 
-        </div>
+        <button class="time-btn">1h</button>
+
+        <button class="time-btn">1d</button>
 
     </section>
-        <!-- LEVERAGE -->
+
+        <!-- Trading Panel -->
 
     <section class="trade-panel">
 
-        <h3 class="panel-title">Leverage</h3>
+        <h3 class="panel-title">
+            Open Position
+        </h3>
+
+        <!-- Leverage -->
+
+        <label>Leverage</label>
 
         <div class="leverage-grid">
 
@@ -95,40 +114,297 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <button class="lev-btn">20x</button>
             <button class="lev-btn">50x</button>
             <button class="lev-btn active">100x</button>
-
-            <button class="lev-btn">150x</button>
             <button class="lev-btn">200x</button>
+
             <button class="lev-btn">300x</button>
             <button class="lev-btn">500x</button>
-
             <button class="lev-btn">1000x</button>
             <button class="lev-btn">2000x</button>
 
         </div>
 
+        <!-- Mode -->
+
         <div class="mode-switch">
 
-            <button class="mode-btn active">By Amount</button>
+            <button class="mode-btn active">
+                By Amount
+            </button>
 
-            <button class="mode-btn">By Lots</button>
+            <button class="mode-btn">
+                By Lots
+            </button>
 
         </div>
 
-        <label>Amount / Margin (USD)</label>
+        <!-- Amount -->
+
+        <label>Amount (USD)</label>
 
         <input
             type="number"
-            id="amount"
-            value="100">
+            id="tradeAmount"
+            value="100"
+            min="10">
 
-        <div class="price-inputs">
+        <!-- Take Profit -->
 
-            <div>
+        <label>Take Profit (TP)</label>
 
-                <label>TP Price</label>
+        <input
+            type="number"
+            id="tpPrice"
+            placeholder="Optional">
 
-                <input
-                    type="number"
-                    placeholder="Optional">
+        <!-- Stop Loss -->
 
-           
+        <label>Stop Loss (SL)</label>
+
+        <input
+            type="number"
+            id="slPrice"
+            placeholder="Optional">
+
+        <!-- Trade Info -->
+
+        <div class="trade-info">
+
+            <div class="info-row">
+
+                <span>Leverage</span>
+
+                <strong id="levValue">
+                    100x
+                </strong>
+
+            </div>
+
+            <div class="info-row">
+
+                <span>Converted Lots</span>
+
+                <strong>
+                    0.02 Lot
+                </strong>
+
+            </div>
+
+            <div class="info-row">
+
+                <span>Contract Value</span>
+
+                <strong>
+                    $10,000.00
+                </strong>
+
+            </div>
+
+            <div class="info-row">
+
+                <span>Estimated Margin</span>
+
+                <strong id="marginValue">
+                    $100.00
+                </strong>
+
+            </div>
+
+        </div>
+
+              <!-- LONG / SHORT BUTTON -->
+
+        <div class="trade-buttons">
+
+            <button
+                id="longBtn"
+                class="long-btn">
+
+                <i class="fa-solid fa-arrow-trend-up"></i>
+
+                LONG
+
+            </button>
+
+            <button
+                id="shortBtn"
+                class="short-btn">
+
+                <i class="fa-solid fa-arrow-trend-down"></i>
+
+                SHORT
+
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- ACTIVE POSITION -->
+
+    <section class="active-position">
+
+        <h3>
+
+            Active Position
+
+        </h3>
+
+        <div class="position-row">
+
+            <span>Pair</span>
+
+            <strong>
+
+                XAU/USD
+
+            </strong>
+
+        </div>
+
+        <div class="position-row">
+
+            <span>Direction</span>
+
+            <strong id="direction">
+
+                Waiting...
+
+            </strong>
+
+        </div>
+
+        <div class="position-row">
+
+            <span>Entry Price</span>
+
+            <strong id="entryPrice">
+
+                --
+
+            </strong>
+
+        </div>
+
+        <div class="position-row">
+
+            <span>Current Price</span>
+
+            <strong id="currentPrice">
+
+                --
+
+            </strong>
+
+        </div>
+
+        <div class="position-row">
+
+            <span>Profit / Loss</span>
+
+            <strong id="profitLoss">
+
+                $0.00
+
+            </strong>
+
+        </div>
+
+        <div class="position-row">
+
+            <span>Time Left</span>
+
+            <strong id="countdown">
+
+                00:00
+
+            </strong>
+
+        </div>
+
+        <div class="position-row">
+
+            <span>Status</span>
+
+            <strong id="tradeStatus">
+
+                Waiting...
+
+            </strong>
+
+        </div>
+
+    </section>
+    <!-- TRADE HISTORY -->
+
+    <section class="history-card">
+
+        <h3>Trade History</h3>
+
+        <div id="historyList">
+
+            <p class="empty-history">
+
+                No trade history yet.
+
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- BOTTOM NAVIGATION -->
+
+    <nav class="bottom-nav">
+
+        <a href="home.html">
+
+            <i class="fa-solid fa-house"></i>
+
+            <span>Home</span>
+
+        </a>
+
+        <a href="#">
+
+            <i class="fa-solid fa-chart-line"></i>
+
+            <span>Markets</span>
+
+        </a>
+
+        <a href="trade.html" class="active">
+
+            <i class="fa-solid fa-arrow-right-arrow-left"></i>
+
+            <span>Trade</span>
+
+        </a>
+
+        <a href="#">
+
+            <i class="fa-solid fa-wallet"></i>
+
+            <span>Assets</span>
+
+        </a>
+
+        <a href="mine.html">
+
+            <i class="fa-solid fa-user"></i>
+
+            <span>Mine</span>
+
+        </a>
+
+    </nav>
+
+</div>
+
+<!-- JavaScript -->
+
+<script src="trade.js"></script>
+
+</body>
+
+</html>
+    
