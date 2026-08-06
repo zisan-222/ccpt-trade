@@ -1,95 +1,139 @@
-// ======================================
-// CPTMARKETS DEMO TRADE
+// ==========================================
+// CPTMARKETS TRADE
 // trade.js (Part 1)
-// ======================================
+// ==========================================
 
 // Demo Balance
 let balance = 10000;
 
+// Live Price
+let currentPrice = 3253.20;
+
+// Elements
+const priceText = document.getElementById("livePrice");
+const priceChange = document.getElementById("priceChange");
+
 // Chart
 const ctx = document.getElementById("tradeChart").getContext("2d");
 
-// Random Chart Data
+// Chart Data
 let chartData = [
-    100, 102, 101, 103, 104,
-    102, 105, 107, 106, 108
+3250,
+3251,
+3252,
+3253,
+3252,
+3254,
+3255,
+3254,
+3256,
+3255
 ];
 
+// Create Chart
+
 const tradeChart = new Chart(ctx, {
-    type: "line",
-    data: {
-        labels: [
-            "", "", "", "", "",
-            "", "", "", "", ""
-        ],
-        datasets: [{
-            label: "XAU/USD",
-            data: chartData,
-            borderWidth: 3,
-            tension: 0.4,
-            fill: false
-        }]
-    },
 
-    options: {
+type: "line",
 
-        responsive: true,
+data: {
 
-        plugins: {
-            legend: {
-                display: false
-            }
-        },
+labels: ["","","","","","","","","",""],
 
-        scales: {
+datasets: [{
 
-            x: {
-                display: false
-            },
+data: chartData,
 
-            y: {
-                display: false
-            }
+borderColor: "#f5c84c",
 
-        }
+borderWidth: 3,
 
-    }
+pointRadius: 0,
 
-});
+fill: false,
 
-// Update Chart Every Second
+tension: 0.35
 
-setInterval(() => {
+}]
 
-    chartData.shift();
+},
 
-    let last = chartData[chartData.length - 1];
+options: {
 
-    let next = last + (Math.random() * 4 - 2);
+responsive: true,
 
-    chartData.push(next);
+maintainAspectRatio: false,
 
-    tradeChart.update();
+plugins: {
 
-}, 1000);
+legend: {
 
-// Update Balance Text
-
-function updateBalance() {
-
-    document.getElementById("demoBalance").innerText =
-        "$" + balance.toFixed(2);
+display: false
 
 }
 
-updateBalance();
-// ======================================
-// BUY / SELL TRADE SYSTEM
+},
+
+scales: {
+
+x: {
+
+display: false
+
+},
+
+y: {
+
+display: false
+
+}
+
+}
+
+}
+
+});
+
+// Update Price
+
+setInterval(() => {
+
+let change = (Math.random() - 0.5) * 3;
+
+currentPrice += change;
+
+priceText.innerText = currentPrice.toFixed(2);
+
+if(change >= 0){
+
+priceChange.innerText = "+" + change.toFixed(2);
+
+priceChange.className = "up";
+
+}else{
+
+priceChange.innerText = change.toFixed(2);
+
+priceChange.className = "down";
+
+}
+
+chartData.shift();
+
+chartData.push(currentPrice);
+
+tradeChart.update();
+
+},1000);
+
+// ==========================================
+// CPTMARKETS TRADE
 // trade.js (Part 2)
-// ======================================
+// ==========================================
 
 let trading = false;
-let historyList = document.getElementById("historyList");
+
+const historyList = document.getElementById("historyList");
 
 function startTrade(direction){
 
@@ -101,27 +145,22 @@ function startTrade(direction){
     const amount = Number(document.getElementById("tradeAmount").value);
     const duration = Number(document.getElementById("tradeTime").value);
 
-    if(amount <= 0){
-        alert("Enter a valid amount.");
-        return;
-    }
-
-    if(amount > balance){
-        alert("Insufficient demo balance.");
+    if(amount < 10){
+        alert("Minimum trade amount is $10");
         return;
     }
 
     trading = true;
 
     document.getElementById("direction").innerText = direction;
-    document.getElementById("amount").innerText = "$" + amount;
+    document.getElementById("amount").innerText = "$" + amount.toFixed(2);
 
     let timeLeft = duration;
 
-    const timer = setInterval(() => {
+    const timer = setInterval(function(){
 
-        let min = Math.floor(timeLeft / 60);
-        let sec = timeLeft % 60;
+        const min = Math.floor(timeLeft / 60);
+        const sec = timeLeft % 60;
 
         document.getElementById("countdown").innerText =
             String(min).padStart(2,"0") + ":" +
@@ -145,53 +184,60 @@ function finishTrade(direction, amount){
 
     const win = Math.random() > 0.5;
 
-    let text = "";
-    let cls = "";
+    let resultText = "";
+    let resultClass = "";
 
     if(win){
 
-        let profit = amount * 0.8;
+        const profit = amount * 0.80;
 
         balance += profit;
 
-        text = "WIN +$" + profit.toFixed(2);
+        resultText = "WIN +$" + profit.toFixed(2);
 
-        cls = "win";
+        resultClass = "win";
 
     }else{
 
         balance -= amount;
 
-        text = "LOSE -$" + amount.toFixed(2);
+        resultText = "LOSE -$" + amount.toFixed(2);
 
-        cls = "lose";
+        resultClass = "lose";
 
     }
 
-    updateBalance();
+    document.getElementById("result").innerText = resultText;
 
-    document.getElementById("result").innerText = text;
+    const item = document.createElement("div");
 
-    historyList.innerHTML =
-        `<div class="history-item">
-            <span>${direction}</span>
-            <span>$${amount}</span>
-            <span class="${cls}">${text}</span>
-        </div>` + historyList.innerHTML;
+    item.className = "history-item";
+
+    item.innerHTML = `
+        <span>${direction}</span>
+        <span>$${amount.toFixed(2)}</span>
+        <span class="${resultClass}">
+            ${resultText}
+        </span>
+    `;
+
+    if(document.querySelector(".empty-history")){
+        document.querySelector(".empty-history").remove();
+    }
+
+    historyList.prepend(item);
 
     trading = false;
 
 }
 
-document.getElementById("buyBtn")
-.addEventListener("click",function(){
+document.getElementById("buyBtn").addEventListener("click",function(){
 
     startTrade("BUY");
 
 });
 
-document.getElementById("sellBtn")
-.addEventListener("click",function(){
+document.getElementById("sellBtn").addEventListener("click",function(){
 
     startTrade("SELL");
 
