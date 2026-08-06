@@ -49,7 +49,17 @@ if (refreshBtn) {
 // Open Tawk Live Chat
 function openSupportChat() {
     if (typeof Tawk_API !== "undefined") {
-        Tawk_API.maximize();
+
+        if (Tawk_API.maximize) {
+            Tawk_API.maximize();
+        }
+
+        if (Tawk_API.popup) {
+            Tawk_API.popup();
+        }
+
+    } else {
+        window.open("https://tawk.to/chat/687003c2d507b1da9fad4c71/1jv4mrhbb", "_blank");
     }
 }
 
