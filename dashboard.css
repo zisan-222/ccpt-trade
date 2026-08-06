@@ -1,7 +1,7 @@
-/* =========================
+/* ===================================
    CPTMARKETS DASHBOARD
-   dashboard.css
-========================= */
+   dashboard.css - Part 1
+=================================== */
 
 *{
     margin:0;
@@ -10,35 +10,33 @@
 }
 
 body{
+    background:#111111;
+    color:#ffffff;
     font-family:Arial,Helvetica,sans-serif;
-    background:#0d1117;
-    color:#fff;
+    padding-bottom:90px;
 }
 
 .container{
     width:100%;
     max-width:480px;
-    margin:auto;
-    min-height:100vh;
-    background:#111827;
-    padding-bottom:95px;
+    margin:0 auto;
 }
 
-/* Header */
+/* ======================
+   HEADER
+====================== */
 
 .header{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:16px;
+    padding:18px 16px;
 }
 
 .logo{
     display:flex;
     align-items:center;
     gap:10px;
-    font-size:22px;
-    font-weight:700;
 }
 
 .logo-icon{
@@ -48,65 +46,101 @@ body{
     background:#f5c84c;
     color:#111;
     display:flex;
-    justify-content:center;
     align-items:center;
+    justify-content:center;
     font-size:20px;
+}
+
+.logo span{
+    font-size:24px;
+    font-weight:700;
+    color:#f5c84c;
 }
 
 .header-actions{
     display:flex;
     gap:18px;
-    font-size:20px;
+}
+
+.header-actions i{
+    font-size:22px;
+    color:#ffffff;
     cursor:pointer;
 }
 
-/* Banner */
+/* ======================
+   BANNER
+====================== */
 
 .banner{
-    margin:15px;
-    border-radius:16px;
+    margin:0 15px;
+    height:150px;
+    border-radius:18px;
     overflow:hidden;
-    background:linear-gradient(135deg,#1b2537,#0b4b87);
+    background:linear-gradient(135deg,#2b2b2b,#1a1a1a);
+    position:relative;
+}
+
+.banner::after{
+    content:"";
+    position:absolute;
+    right:-50px;
+    top:-50px;
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    background:rgba(245,200,76,.15);
 }
 
 .banner-overlay{
-    padding:30px 20px;
+    position:relative;
+    z-index:2;
+    padding:24px;
 }
 
-.banner h1{
-    font-size:26px;
-    margin-bottom:8px;
+.banner-overlay h1{
+    color:#f5c84c;
+    font-size:28px;
+    margin-bottom:10px;
 }
 
-.banner p{
-    color:#ddd;
-    font-size:14px;
+.banner-overlay p{
+    color:#dddddd;
+    font-size:15px;
 }
 
-/* Asset Card */
+/* ======================
+   ASSET CARD
+====================== */
 
 .asset-card{
-    margin:15px;
-    padding:18px;
-    background:#1a2233;
-    border-radius:16px;
+    margin:18px 15px;
+    background:#1c1c1c;
+    border-radius:20px;
+    padding:20px;
 }
 
 .asset-header{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-bottom:10px;
+    margin-bottom:15px;
+}
+
+.asset-header span{
+    color:#cfcfcf;
+    font-size:15px;
 }
 
 .asset-header i{
+    font-size:22px;
+    color:#f5c84c;
     cursor:pointer;
 }
 
-#balance{
-    font-size:32px;
-    font-weight:bold;
-    margin-bottom:15px;
+.asset-card h2{
+    font-size:56px;
+    margin-bottom:18px;
 }
 
 .asset-info{
@@ -126,10 +160,11 @@ body{
 
 .action-buttons button{
     flex:1;
-    padding:12px;
     border:none;
-    border-radius:10px;
-    font-weight:bold;
+    border-radius:14px;
+    padding:15px;
+    font-size:17px;
+    font-weight:700;
     cursor:pointer;
 }
 
@@ -138,78 +173,137 @@ body{
     color:#111;
 }
 
-.withdraw-btn{
-    background:#2d3748;
-    color:#fff;
-}
-
+.withdraw-btn,
 .transfer-btn{
-    background:#2563eb;
+    background:#2d2d2d;
     color:#fff;
 }
-/* =========================
-   Menu Grid
-========================= */
+/* ======================
+   MENU GRID
+====================== */
 
 .menu-grid{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:18px;
-    padding:20px 15px;
-    text-align:center;
+    gap:16px;
+    padding:0 15px;
+    margin-top:10px;
 }
 
 .menu-item{
+    background:#1c1c1c;
+    border:1px solid #2c2c2c;
+    border-radius:18px;
+    padding:18px 10px;
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
     cursor:pointer;
+    transition:.25s;
+}
+
+.menu-item:hover{
+    transform:translateY(-3px);
+    border-color:#f5c84c;
 }
 
 .menu-icon{
-    width:52px;
-    height:52px;
-    border-radius:14px;
-    background:#1a2233;
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    background:#f5c84c;
+    color:#111;
     display:flex;
-    align-items:center;
     justify-content:center;
-    font-size:22px;
-    color:#f5c84c;
-    margin-bottom:8px;
+    align-items:center;
+    font-size:24px;
+    margin-bottom:12px;
 }
 
 .menu-item span{
-    font-size:13px;
+    color:#ffffff;
+    font-size:14px;
+    text-align:center;
 }
+/* ======================
+   BOTTOM NAVIGATION
+====================== */
 
-/* =========================
-   Hot Markets
-========================= */
-
-.market-card{
-    margin:15px;
-    background:#1a2233;
-    border-radius:16px;
-    padding:15px;
-}
-
-.market-title{
+.bottom-nav{
+    position:fixed;
+    left:50%;
+    transform:translateX(-50%);
+    bottom:0;
+    width:100%;
+    max-width:480px;
+    height:72px;
+    background:#161616;
+    border-top:1px solid #2d2d2d;
     display:flex;
-    justify-content:space-between;
+    justify-content:space-around;
     align-items:center;
-    margin-bottom:15px;
+    z-index:999;
+    overflow:visible;
 }
 
-.market-title a{
-    color:#f5c84c;
+.bottom-nav a{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
     text-decoration:none;
+    color:#9c9c9c;
+    font-size:12px;
+    transition:.3s;
 }
 
-.market-item{
+.bottom-nav a i{
+    font-size:22px;
+    margin-bottom:4px;
+}
+
+.bottom-nav a.active{
+    color:#f5c84c;
+}
+
+.bottom-nav a:hover{
+    color:#f5c84c;
+}
+
+/* Floating Trade Button */
+
+.bottom-nav .trade-btn{
+    position:absolute;
+    left:50%;
+    top:-28px;
+    transform:translateX(-50%);
+    width:68px;
+    height:68px;
+    border-radius:50%;
+    background:#f5c84c;
+    color:#111;
     display:flex;
-    justify-content:space-between;
     align-items:center;
-    padding:14px 0;
-    border-bottom:
+    justify-content:center;
+    text-decoration:none;
+    box-shadow:0 0 25px rgba(245,200,76,.45);
+    z-index:1001;
+}
+
+.bottom-nav .trade-btn i{
+    font-size:28px;
+    margin:0;
+}
+
+.bottom-nav .trade-btn span{
+    display:none;
+}
+
+/* Bottom spacing */
+
+body{
+    padding-bottom:95px;
+}
+
