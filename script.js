@@ -47,8 +47,27 @@ loginForm.addEventListener("submit", function (e) {
     }
 
     // এখানে পরে Backend/API যুক্ত করা হবে
-    // আপাতত Home Page-এ পাঠাবে
+   const savedUser = JSON.parse(localStorage.getItem("user"));
 
-    window.location.href = "dashboard.html";
+if (!savedUser) {
+    alert("No account found! Please register first.");
+    return;
+}
+
+if (username !== savedUser.username) {
+    alert("Wrong Username!");
+    return;
+}
+
+if (password !== savedUser.password) {
+    alert("Wrong Password!");
+    return;
+}
+
+// Login সফল
+localStorage.setItem("currentUser", JSON.stringify(savedUser))
+   
+
+    window.location.href = "dashboard.html
 
 });
