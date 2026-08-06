@@ -2,7 +2,32 @@
 // CPTMARKETS - MINE PAGE
 // mine.js
 // ===============================
+// Load User Data
+const currentUser = JSON.parse(localStorage.getItem("user"));
 
+window.addEventListener("DOMContentLoaded", () => {
+
+    if (currentUser) {
+
+        const name = document.querySelector(".profile-info h3");
+        const uid = document.querySelector(".profile-info p");
+        const avatar = document.querySelector(".avatar");
+
+        if (name) {
+            name.innerText = currentUser.username;
+        }
+
+        if (uid) {
+            uid.innerText = "UID: " + currentUser.userId;
+        }
+
+        if (avatar) {
+            avatar.innerText = currentUser.username.charAt(0).toUpperCase();
+        }
+
+    }
+
+});
 // Open Tawk.to Live Chat
 function openSupportChat() {
     if (typeof Tawk_API !== "undefined") {
