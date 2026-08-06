@@ -65,9 +65,10 @@ if (password !== savedUser.password) {
 }
 
 // Login সফল
-localStorage.setItem("currentUser", JSON.stringify(savedUser))
-   
+// Login সফল
+alert("Login Success");
 
-    window.location.href = "dashboard.html
+localStorage.setItem("currentUser", JSON.stringify(savedUser));
 
+window.location.href = "dashboard.html";
 });
