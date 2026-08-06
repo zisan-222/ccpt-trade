@@ -1,168 +1,136 @@
 /* =========================
-   CPTMARKETS DASHBOARD CSS
-   PART 1
+   CPTMARKETS DASHBOARD
+   dashboard.css
 ========================= */
 
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
 }
 
 body{
-    background:#0b0b0d;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#0d1117;
     color:#fff;
 }
 
 .container{
+    width:100%;
     max-width:480px;
     margin:auto;
     min-height:100vh;
-    background:#121212;
-    padding-bottom:100px;
+    background:#111827;
+    padding-bottom:95px;
 }
 
 /* Header */
 
 .header{
-    height:70px;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:0 18px;
-    background:#171717;
-    border-bottom:1px solid #2d2d2d;
+    padding:16px;
 }
 
 .logo{
     display:flex;
     align-items:center;
-    gap:12px;
+    gap:10px;
+    font-size:22px;
+    font-weight:700;
 }
 
 .logo-icon{
     width:42px;
     height:42px;
     border-radius:50%;
-    background:linear-gradient(135deg,#f5c84c,#c99200);
+    background:#f5c84c;
+    color:#111;
     display:flex;
     justify-content:center;
     align-items:center;
-    color:#111;
     font-size:20px;
-}
-
-.logo span{
-    font-size:22px;
-    font-weight:700;
-    color:#f5c84c;
 }
 
 .header-actions{
     display:flex;
-    gap:16px;
-}
-
-.header-actions i{
+    gap:18px;
     font-size:20px;
-    color:#fff;
     cursor:pointer;
 }
 
 /* Banner */
 
 .banner{
-    margin:18px;
-    border-radius:18px;
+    margin:15px;
+    border-radius:16px;
     overflow:hidden;
-    background:linear-gradient(135deg,#1f1f1f,#2e2e2e,#151515);
-    height:180px;
-    position:relative;
-}
-
-.banner::before{
-    content:"";
-    position:absolute;
-    width:220px;
-    height:220px;
-    background:rgba(245,200,76,.15);
-    border-radius:50%;
-    top:-70px;
-    right:-70px;
+    background:linear-gradient(135deg,#1b2537,#0b4b87);
 }
 
 .banner-overlay{
-    position:relative;
-    z-index:2;
-    padding:28px;
+    padding:30px 20px;
 }
 
-.banner-overlay h1{
-    color:#f5c84c;
-    font-size:34px;
-    margin-bottom:10px;
+.banner h1{
+    font-size:26px;
+    margin-bottom:8px;
 }
 
-.banner-overlay p{
+.banner p{
     color:#ddd;
-    font-size:15px;
-    line-height:1.6;
+    font-size:14px;
 }
 
 /* Asset Card */
 
 .asset-card{
-    margin:18px;
-    background:#1a1a1a;
-    border-radius:18px;
-    padding:20px;
-    box-shadow:0 0 18px rgba(0,0,0,.35);
+    margin:15px;
+    padding:18px;
+    background:#1a2233;
+    border-radius:16px;
 }
 
 .asset-header{
     display:flex;
     justify-content:space-between;
-    color:#bbbbbb;
-    margin-bottom:15px;
+    align-items:center;
+    margin-bottom:10px;
 }
 
 .asset-header i{
-    color:#f5c84c;
+    cursor:pointer;
 }
 
 #balance{
-    font-size:36px;
-    color:#fff;
+    font-size:32px;
+    font-weight:bold;
     margin-bottom:15px;
 }
 
 .asset-info{
     display:flex;
     justify-content:space-between;
-    margin-bottom:22px;
-    color:#cfcfcf;
-    font-size:14px;
+    margin-bottom:20px;
 }
 
 .profit{
-    color:#28d17c;
+    color:#00d26a;
 }
 
 .action-buttons{
     display:flex;
-    gap:12px;
+    gap:10px;
 }
 
 .action-buttons button{
     flex:1;
-    height:46px;
+    padding:12px;
     border:none;
-    border-radius:12px;
-    font-size:15px;
-    font-weight:700;
+    border-radius:10px;
+    font-weight:bold;
     cursor:pointer;
-    transition:.3s;
 }
 
 .deposit-btn{
@@ -171,281 +139,77 @@ body{
 }
 
 .withdraw-btn{
-    background:#2b2b2b;
+    background:#2d3748;
     color:#fff;
 }
 
 .transfer-btn{
-    background:#2b2b2b;
+    background:#2563eb;
     color:#fff;
 }
-
-.action-buttons button:hover{
-    transform:translateY(-2px);
-}
 /* =========================
-   MENU GRID
+   Menu Grid
 ========================= */
 
 .menu-grid{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:16px;
-    padding:0 18px 20px;
+    gap:18px;
+    padding:20px 15px;
+    text-align:center;
 }
 
 .menu-item{
-    background:#1b1b1b;
-    border:1px solid #2d2d2d;
-    border-radius:16px;
-    padding:18px 10px;
-    text-align:center;
-    transition:.3s;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
     cursor:pointer;
-}
-
-.menu-item:hover{
-    transform:translateY(-5px);
-    border-color:#f5c84c;
-    box-shadow:0 0 18px rgba(245,200,76,.18);
 }
 
 .menu-icon{
     width:52px;
     height:52px;
-    margin:0 auto 10px;
-    border-radius:50%;
-    background:linear-gradient(135deg,#f5c84c,#b8860b);
+    border-radius:14px;
+    background:#1a2233;
     display:flex;
-    justify-content:center;
     align-items:center;
-}
-
-.menu-icon i{
+    justify-content:center;
     font-size:22px;
-    color:#111;
+    color:#f5c84c;
+    margin-bottom:8px;
 }
 
 .menu-item span{
-    display:block;
-    color:#fff;
     font-size:13px;
-    font-weight:600;
 }
 
 /* =========================
-   HOT MARKETS
+   Hot Markets
 ========================= */
 
 .market-card{
-    margin:0 18px 20px;
-    background:#1a1a1a;
-    border-radius:18px;
-    padding:18px;
+    margin:15px;
+    background:#1a2233;
+    border-radius:16px;
+    padding:15px;
 }
 
 .market-title{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-bottom:16px;
-}
-
-.market-title h2{
-    font-size:20px;
-    color:#fff;
+    margin-bottom:15px;
 }
 
 .market-title a{
     color:#f5c84c;
     text-decoration:none;
-    font-size:14px;
 }
 
 .market-item{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:16px 0;
-    border-bottom:1px solid #2c2c2c;
-}
-
-.market-item:last-child{
-    border-bottom:none;
-}
-
-.market-item h3{
-    font-size:16px;
-    margin-bottom:4px;
-}
-
-.market-item small{
-    color:#9d9d9d;
-}
-
-.price{
-    font-weight:700;
-    color:#fff;
-}
-
-.up{
-    color:#20d67b;
-    font-weight:700;
-}
-
-.down{
-    color:#ff4b4b;
-    font-weight:700;
-}
-
-/* =========================
-   BOTTOM NAVIGATION
-========================= */
-
-.bottom-nav{
-    position:fixed;
-    overflow: visible;
-    left:50%;
-    transform:translateX(-50%);
-    bottom:0;
-    width:100%;
-    max-width:480px;
-    height:72px;
-    background:#161616;
-    border-top:1px solid #2d2d2d;
-    display:flex;
-    justify-content:space-around;
-    align-items:center;
-    z-index:999;
-}
-
-.bottom-nav a{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    text-decoration:none;
-    color:#9c9c9c;
-    font-size:12px;
-    transition:.3s;
-}
-
-.bottom-nav a i{
-    font-size:20px;
-    margin-bottom:4px;
-}
-
-.bottom-nav a:hover,
-.bottom-nav a.active{
-    color:#f5c84c;
-}
-
-.trade-btn{
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: -22px;
-
-    width: 62px;
-    height: 62px;
-    border-radius: 50%;
-
-    background: linear-gradient(135deg,#f5c84c,#c58d00);
-    color: #111 !important;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    box-shadow: 0 8px 25px rgba(245,200,76,.35);
-    z-index: 1000;
-}
-
-.trade-btn i{
-    margin:0;
-    font-size:24px;
-}
-
-.trade-btn span{
-    display:none;
-}
-
-/* =========================
-   SCROLLBAR
-========================= */
-
-::-webkit-scrollbar{
-    width:5px;
-}
-
-::-webkit-scrollbar-thumb{
-    background:#f5c84c;
-    border-radius:20px;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media (max-width:420px){
-
-    .menu-grid{
-        gap:12px;
-    }
-
-    .menu-item{
-        padding:14px 6px;
-    }
-
-    .menu-icon{
-        width:46px;
-        height:46px;
-    }
-
-    .menu-icon i{
-        font-size:20px;
-    }
-
-    .logo span{
-        font-size:20px;
-    }
-
-    #balance{
-        font-size:30px;
-    }
-
-    .banner{
-        height:160px;
-    }
-
-    .banner-overlay h1{
-        font-size:28px;
-    }
-
-    .banner-overlay p{
-        font-size:13px;
-    }
-}
-
-/* =========================
-   ANIMATION
-========================= */
-
-.banner,
-.asset-card,
-.menu-item,
-.market-card{
-    animation:fadeUp .6s ease;
-}
-
-@keyframes fadeUp{
-
-    from{
-        opacity:0;
-        transform:translateY(20px);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
+    padding:14px 0;
+    border-bottom:
