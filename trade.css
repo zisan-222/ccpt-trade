@@ -1,264 +1,569 @@
-// ==========================================
-// CPTMARKETS TRADE V2
-// trade.js (Part 1)
-// ==========================================
+/* ==========================================
+   CPTMARKETS TRADE V2
+========================================== */
 
-// Create Trading Chart
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
 
-const chart = LightweightCharts.createChart(
-    document.getElementById("tvChart"),
-    {
-        width: document.getElementById("tvChart").clientWidth,
-        height: 340,
+body{
+    background:#0a0f1c;
+    color:#fff;
+    overflow-x:hidden;
+}
 
-        layout: {
-            background: {
-                color: "#0d1525"
-            },
-            textColor: "#ffffff"
-        },
+.trade-page{
+    width:100%;
+    max-width:500px;
+    margin:auto;
+    min-height:100vh;
+    background:#101827;
+}
 
-        grid: {
-            vertLines: {
-                color: "#1d2b3d"
-            },
-            horzLines: {
-                color: "#1d2b3d"
-            }
-        },
+/* =========================
+   HEADER
+========================= */
 
-        rightPriceScale: {
-            borderColor: "#3a465c"
-        },
+.trade-header{
+    height:70px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px;
+    background:#131d2f;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
 
-        timeScale: {
-            borderColor: "#3a465c",
-            timeVisible: true
-        }
+.left-header{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
 
-    }
-);
+.back-btn{
+    color:#fff;
+    font-size:22px;
+    text-decoration:none;
+}
 
-// Candlestick Series
+.pair-box h2{
+    font-size:20px;
+    color:#ffd54f;
+}
 
-const candleSeries = chart.addCandlestickSeries({
+.pair-box span{
+    font-size:12px;
+    color:#9fa8b8;
+}
 
-    upColor: "#00c853",
-    downColor: "#e53935",
+.right-header{
+    text-align:right;
+}
 
-    borderUpColor: "#00c853",
-    borderDownColor: "#e53935",
+.right-header h2{
+    color:#00e676;
+    font-size:20px;
+}
 
-    wickUpColor: "#00e676",
-    wickDownColor: "#ff5252"
+.right-header span{
+    color:#00e676;
+    font-size:13px;
+}
 
-});
+/* =========================
+   INDICATORS
+========================= */
 
-// Demo Candle Data
+.indicator-section{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    padding:12px;
+    background:#101827;
+}
 
-let candles = [
+.indicator-section::-webkit-scrollbar{
+    display:none;
+}
 
-{ time: 1, open: 3250, high: 3256, low: 3248, close: 3253 },
+.indicator{
+    min-width:70px;
+    padding:8px 12px;
+    border:none;
+    border-radius:18px;
+    background:#1c2840;
+    color:#fff;
+    cursor:pointer;
+    font-size:13px;
+}
 
-{ time: 2, open: 3253, high: 3258, low: 3251, close: 3256 },
+.indicator.active{
+    background:#f5c84c;
+    color:#000;
+}
 
-{ time: 3, open: 3256, high: 3262, low: 3254, close: 3258 },
+/* =========================
+   CHART
+========================= */
 
-{ time: 4, open: 3258, high: 3260, low: 3253, close: 3255 },
+.chart-section{
+    padding:12px;
+}
 
-{ time: 5, open: 3255, high: 3263, low: 3254, close: 3261 }
+#tvChart{
+    width:100%;
+    height:360px;
+    border-radius:15px;
+    background:#0d1525;
+}
+/* =========================
+   TIMEFRAME
+========================= */
 
-];
+.timeframe-section{
+    display:flex;
+    justify-content:space-between;
+    gap:8px;
+    padding:12px;
+}
 
-candleSeries.setData(candles);
+.time-btn{
+    flex:1;
+    padding:10px 0;
+    border:none;
+    border-radius:8px;
+    background:#1b2740;
+    color:#cfd8dc;
+    font-size:13px;
+    cursor:pointer;
+    transition:.3s;
+}
 
-// Auto Update Demo Candle
+.time-btn.active{
+    background:#f5c84c;
+    color:#000;
+    font-weight:bold;
+}
 
-let currentTime = 6;
+/* =========================
+   TRADE PANEL
+========================= */
 
-setInterval(function(){
+.trade-panel{
+    padding:16px;
+}
 
-    let last = candles[candles.length - 1];
+.panel-title{
+    color:#f5c84c;
+    font-size:18px;
+    margin-bottom:15px;
+}
 
-    let open = last.close;
+.trade-panel label{
+    display:block;
+    margin:12px 0 8px;
+    color:#b8c2d3;
+    font-size:14px;
+}
 
-    let close = open + (Math.random() * 8 - 4);
+.leverage-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:10px;
+    margin-bottom:15px;
+}
 
-    let high = Math.max(open, close) + Math.random() * 3;
+.lev
+/* =========================
+   TRADE INFO
+========================= */
 
-    let low = Math.min(open, close) - Math.random() * 3;
+.trade-info{
 
-    const newBar = {
+    margin-top:18px;
 
-        time: currentTime,
+    background:#182338;
 
-        open: Number(open.toFixed(2)),
-        high: Number(high.toFixed(2)),
-        low: Number(low.toFixed(2)),
-        close: Number(close.toFixed(2))
+    border-radius:12px;
 
-    };
-
-    candles.push(newBar);
-
-    if(candles.length > 60){
-
-        candles.shift();
-
-    }
-
-    candleSeries.setData(candles);
-
-    document.getElementById("livePrice").innerText =
-        close.toFixed(2);
-
-    document.getElementById("priceChange").innerText =
-        ((close - open).toFixed(2));
-
-    currentTime++;
-
-},2000);
-
-       // ==========================================
-// CPTMARKETS TRADE V2
-// trade.js (Part 2)
-// ==========================================
-
-let trading = false;
-
-const historyList = document.getElementById("historyList");
-
-function startTrade(direction){
-
-    if(trading){
-        alert("A trade is already running.");
-        return;
-    }
-
-    const amount = parseFloat(
-        document.getElementById("tradeAmount").value
-    );
-
-    const duration = parseInt(
-        document.getElementById("tradeTime").value
-    );
-
-    if(amount < 10){
-        alert("Minimum trade amount is $10");
-        return;
-    }
-
-    trading = true;
-
-    document.getElementById("direction").innerText = direction;
-    document.getElementById("amount").innerText =
-        "$" + amount.toFixed(2);
-
-    let timeLeft = duration;
-
-    const timer = setInterval(function(){
-
-        let min = Math.floor(timeLeft / 60);
-        let sec = timeLeft % 60;
-
-        document.getElementById("countdown").innerText =
-            String(min).padStart(2,"0") + ":" +
-            String(sec).padStart(2,"0");
-
-        timeLeft--;
-
-        if(timeLeft < 0){
-
-            clearInterval(timer);
-
-            finishTrade(direction, amount);
-
-        }
-
-    },1000);
+    padding:15px;
 
 }
 
-function finishTrade(direction, amount){
+.info-row{
 
-    const win = Math.random() > 0.5;
+    display:flex;
 
-    let resultText = "";
-    let resultClass = "";
+    justify-content:space-between;
 
-    if(win){
+    align-items:center;
 
-        const profit = amount * 0.80;
+    padding:10px 0;
 
-        resultText =
-            "WIN +$" + profit.toFixed(2);
-
-        resultClass = "win";
-
-    }else{
-
-        resultText =
-            "LOSE -$" + amount.toFixed(2);
-
-        resultClass = "lose";
-
-    }
-
-    document.getElementById("result").innerText =
-        resultText;
-
-    const item = document.createElement("div");
-
-    item.className = "history-item";
-
-    item.innerHTML = `
-        <span>${direction}</span>
-        <span>$${amount.toFixed(2)}</span>
-        <span class="${resultClass}">
-            ${resultText}
-        </span>
-    `;
-
-    const empty =
-        document.querySelector(".empty-history");
-
-    if(empty){
-
-        empty.remove();
-
-    }
-
-    historyList.prepend(item);
-
-    trading = false;
+    border-bottom:1px solid rgba(255,255,255,.08);
 
 }
 
-document
-.getElementById("buyBtn")
-.addEventListener("click",function(){
+.info-row:last-child{
 
-    startTrade("BUY");
+    border-bottom:none;
 
-});
+}
 
-document
-.getElementById("sellBtn")
-.addEventListener("click",function(){
+.info-row span{
 
-    startTrade("SELL");
+    color:#9fa8b8;
 
-});
+    font-size:14px;
 
-// Responsive Chart
+}
 
-window.addEventListener("resize",function(){
+.info-row strong{
 
-    chart.applyOptions({
+    color:#ffffff;
 
-        width:
-        document.getElementById("tvChart").clientWidth
+    font-size:15px;
 
-    });
+}
 
-});
+/* =========================
+   LONG / SHORT BUTTON
+========================= */
+
+.trade-buttons{
+
+    display:flex;
+
+    gap:15px;
+
+    margin-top:20px;
+
+}
+
+.long-btn,
+.short-btn{
+
+    flex:1;
+
+    border:none;
+
+    border-radius:12px;
+
+    padding:16px;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.long-btn{
+
+    background:#00c853;
+
+    color:#fff;
+
+}
+
+.long-btn:hover{
+
+    background:#00e676;
+
+}
+
+.short-btn{
+
+    background:#e53935;
+
+    color:#fff;
+
+}
+
+.short-btn:hover{
+
+    background:#ff5252;
+
+}
+
+/* =========================
+   ACTIVE POSITION
+========================= */
+
+.active-position{
+
+    margin:16px;
+
+    padding:16px;
+
+    background:#182338;
+
+    border-radius:14px;
+
+}
+
+.active-position h3{
+
+    color:#f5c84c;
+
+    margin-bottom:15px;
+
+}
+
+.position-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:12px 0;
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+}
+
+.position-row:last-child{
+
+    border-bottom:none;
+
+}
+
+.position-row span{
+
+    color:#9fa8b8;
+
+}
+
+.position-row strong{
+
+    color:#ffffff;
+
+}
+
+#profitLoss{
+
+    color:#00e676;
+
+    font-weight:bold;
+
+}
+
+#tradeStatus{
+
+    color:#f5c84c;
+
+    font-weight:bold;
+
+}
+/* =========================
+   TRADE HISTORY
+========================= */
+
+.history-card{
+
+    margin:16px;
+
+    padding:16px;
+
+    background:#182338;
+
+    border-radius:14px;
+
+    margin-bottom:90px;
+
+}
+
+.history-card h3{
+
+    color:#f5c84c;
+
+    margin-bottom:15px;
+
+}
+
+.empty-history{
+
+    text-align:center;
+
+    color:#8e98aa;
+
+    padding:25px 0;
+
+}
+
+.history-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:12px 0;
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+}
+
+.history-item:last-child{
+
+    border-bottom:none;
+
+}
+
+.win{
+
+    color:#00e676;
+
+    font-weight:bold;
+
+}
+
+.lose{
+
+    color:#ff5252;
+
+    font-weight:bold;
+
+}
+
+/* =========================
+   BOTTOM NAVIGATION
+========================= */
+
+.bottom-nav{
+
+    position:fixed;
+
+    bottom:0;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:100%;
+
+    max-width:500px;
+
+    height:65px;
+
+    background:#111827;
+
+    border-top:1px solid rgba(255,255,255,.08);
+
+    display:flex;
+
+    justify-content:space-around;
+
+    align-items:center;
+
+    z-index:999;
+
+}
+
+.bottom-nav a{
+
+    text-decoration:none;
+
+    color:#8e98aa;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:4px;
+
+    font-size:12px;
+
+}
+
+.bottom-nav a i{
+
+    font-size:20px;
+
+}
+
+.bottom-nav a.active{
+
+    color:#f5c84c;
+
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:480px){
+
+    .trade-header{
+
+        padding:12px;
+
+    }
+
+    .pair-box h2{
+
+        font-size:18px;
+
+    }
+
+    .right-header h2{
+
+        font-size:18px;
+
+    }
+
+    #tvChart{
+
+        height:300px;
+
+    }
+
+    .trade-buttons{
+
+        flex-direction:column;
+
+    }
+
+    .long-btn,
+    .short-btn{
+
+        width:100%;
+
+    }
+
+    .leverage-grid{
+
+        grid-template-columns:repeat(3,1fr);
+
+    }
+
+}
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+::-webkit-scrollbar{
+
+    width:6px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#39465f;
+
+    border-radius:20px;
+
+}
