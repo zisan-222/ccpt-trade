@@ -2,17 +2,17 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>CptMarkets Trade</title>
+<title>CptMarkets Trade</title>
 
-    <link rel="stylesheet" href="trade.css">
+<link rel="stylesheet" href="trade.css">
 
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+<script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
 
 </head>
 
@@ -20,141 +20,115 @@
 
 <div class="trade-page">
 
-    <!-- Header -->
+    <!-- HEADER -->
 
     <header class="trade-header">
 
         <a href="dashboard.html" class="back-btn">
-            <i class="fa-solid fa-arrow-left"></i>
+            <i class="fa-solid fa-chevron-left"></i>
         </a>
 
         <div class="pair-box">
 
             <h2>XAU/USD</h2>
 
-            <span>Gold Spot</span>
+            <span>Gold / USD</span>
 
         </div>
 
         <div class="price-box">
 
-            <h2 id="livePrice">3253.89</h2>
+            <h3 id="livePrice">3253.89</h3>
 
-            <span id="priceChange">+0.80%</span>
+            <small id="priceChange">+0.80%</small>
 
         </div>
 
     </header>
 
-    <!-- TradingView Style Chart -->
+    <!-- CHART -->
 
     <section class="chart-card">
 
+        <div class="indicator-bar">
+
+            <button class="indicator active">MA</button>
+
+            <button class="indicator">EMA</button>
+
+            <button class="indicator">BOLL</button>
+
+            <button class="indicator">RSI</button>
+
+            <button class="indicator">MACD</button>
+
+        </div>
+
         <div id="tvChart"></div>
 
-    </section>
+        <div class="timeframe">
 
-    <!-- Trade Panel -->
+            <button class="tf active">1m</button>
 
-    <section class="trade-card">
+            <button class="tf">5m</button>
 
-        <div class="input-group">
+            <button class="tf">15m</button>
 
-            <label>Amount (USD)</label>
+            <button class="tf">30m</button>
 
-            <input
-                type="number"
-                id="tradeAmount"
-                value="100"
-                min="10">
+            <button class="tf">1h</button>
 
-        </div>
-
-        <div class="input-group">
-
-            <label>Duration</label>
-
-            <select id="tradeTime">
-
-                <option value="30">30 Seconds</option>
-
-                <option value="60">1 Minute</option>
-
-                <option value="300">5 Minutes</option>
-
-            </select>
-
-        </div>
-
-                <div class="trade-buttons">
-
-            <button id="buyBtn" class="buy-btn">
-                <i class="fa-solid fa-arrow-trend-up"></i>
-                BUY
-            </button>
-
-            <button id="sellBtn" class="sell-btn">
-                <i class="fa-solid fa-arrow-trend-down"></i>
-                SELL
-            </button>
+            <button class="tf">1d</button>
 
         </div>
 
     </section>
+        <!-- LEVERAGE -->
 
-    <!-- Active Trade -->
+    <section class="trade-panel">
 
-    <section class="active-card">
+        <h3 class="panel-title">Leverage</h3>
 
-        <h3>Active Trade</h3>
+        <div class="leverage-grid">
 
-        <div class="trade-row">
-            <span>Pair</span>
-            <strong>XAU/USD</strong>
-        </div>
+            <button class="lev-btn">10x</button>
+            <button class="lev-btn">20x</button>
+            <button class="lev-btn">50x</button>
+            <button class="lev-btn active">100x</button>
 
-        <div class="trade-row">
-            <span>Direction</span>
-            <strong id="direction">Waiting...</strong>
-        </div>
+            <button class="lev-btn">150x</button>
+            <button class="lev-btn">200x</button>
+            <button class="lev-btn">300x</button>
+            <button class="lev-btn">500x</button>
 
-        <div class="trade-row">
-            <span>Amount</span>
-            <strong id="amount">$0.00</strong>
-        </div>
-
-        <div class="trade-row">
-            <span>Time Left</span>
-            <strong id="countdown">00:00</strong>
-        </div>
-
-        <div class="trade-row">
-            <span>Result</span>
-            <strong id="result">-</strong>
-        </div>
-
-    </section>
-
-    <!-- Trade History -->
-
-    <section class="history-card">
-
-        <h3>Trade History</h3>
-
-        <div id="historyList">
-
-            <p class="empty-history">
-                No trades yet.
-            </p>
+            <button class="lev-btn">1000x</button>
+            <button class="lev-btn">2000x</button>
 
         </div>
 
-    </section>
+        <div class="mode-switch">
 
-</div>
+            <button class="mode-btn active">By Amount</button>
 
-<script src="trade.js"></script>
+            <button class="mode-btn">By Lots</button>
 
-</body>
-</html>
-        
+        </div>
+
+        <label>Amount / Margin (USD)</label>
+
+        <input
+            type="number"
+            id="amount"
+            value="100">
+
+        <div class="price-inputs">
+
+            <div>
+
+                <label>TP Price</label>
+
+                <input
+                    type="number"
+                    placeholder="Optional">
+
+           
