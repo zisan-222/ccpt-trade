@@ -217,8 +217,11 @@ window.addEventListener("load", function () {
 
     console.log("Welcome to CptMarkets Dashboard");
 
-    if (window.Tawk_API && typeof window.Tawk_API.hideWidget === "function") {
+   if (window.Tawk_API) {
+    window.Tawk_API.onLoad = function () {
         window.Tawk_API.hideWidget();
+    };
+} 
     }
 
 });
