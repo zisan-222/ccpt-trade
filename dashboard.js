@@ -93,16 +93,11 @@ if (loanBtn) {
     loanBtn.addEventListener("click", openSupportChat);
 }
 /// Trade Button
+<a href="trade.html" class="trade-btn">
+    <i class="fa-solid fa-arrow-right-arrow-left"></i>
+    <span>Trade</span>
+</a>
 
-const tradeBtn = document.querySelector(".trade-btn");
-
-if (tradeBtn) {
-
-    tradeBtn.addEventListener("click", () => {
-
-        window.location.href = "trade.html";
-
-    });
 
 }/ Menu Click Effect
 
