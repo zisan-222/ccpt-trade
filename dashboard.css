@@ -92,19 +92,19 @@ body{
     background:rgba(245,200,76,.15);
 }
 
-.banner-overlay{
+.banner-content{
     position:relative;
     z-index:2;
     padding:24px;
 }
 
-.banner-overlay h1{
+.banner-content h1{
     color:#f5c84c;
     font-size:28px;
     margin-bottom:10px;
 }
 
-.banner-overlay p{
+.banner-content p{
     color:#dddddd;
     font-size:15px;
 }
@@ -306,4 +306,65 @@ body{
 body{
     padding-bottom:95px;
 }
+/* ======================
+   HOT MARKETS
+====================== */
 
+.market-card{
+    margin:20px 15px;
+    padding:20px;
+    background:#1c1c1c;
+    border-radius:20px;
+}
+
+.market-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.market-title h2{
+    color:#fff;
+    font-size:22px;
+}
+
+.market-title a{
+    color:#f5c84c;
+    text-decoration:none;
+}
+
+.market-item{
+    display:grid;
+    grid-template-columns:1.5fr 1fr .8fr;
+    align-items:center;
+    padding:18px 0;
+    border-bottom:1px solid #333;
+}
+
+.market-item:last-child{
+    border-bottom:none;
+}
+
+.market-item h3{
+    color:#fff;
+}
+
+.market-item small{
+    color:#999;
+}
+
+.price{
+    text-align:center;
+    color:#fff;
+}
+
+.up{
+    text-align:right;
+    color:#00d26a;
+}
+
+.down{
+    text-align:right;
+    color:#ff4d4f;
+}
