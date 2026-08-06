@@ -1,35 +1,75 @@
-// ===============================
-// CPTMARKETS DASHBOARD
+// ====================================
+// CptMarkets Dashboard
 // dashboard.js - Part 1
-// ===============================
+// ====================================
 
-// ===============================
+// -------------------------
+// Tawk API
+// -------------------------
+window.Tawk_API = window.Tawk_API || {};
+
+let tawkLoaded = false;
+
+Tawk_API.onLoad = function () {
+
+    tawkLoaded = true;
+
+    if (typeof Tawk_API.hideWidget === "function") {
+        Tawk_API.hideWidget();
+    }
+
+};
+
+// -------------------------
+// Open Customer Service
+// -------------------------
+function openSupportChat() {
+
+    if (!tawkLoaded) {
+
+        alert("Customer Service is loading...");
+
+        return;
+
+    }
+
+    if (typeof Tawk_API.showWidget === "function") {
+        Tawk_API.showWidget();
+    }
+
+    if (typeof Tawk_API.maximize === "function") {
+        Tawk_API.maximize();
+    }
+
+}
+
+// -------------------------
 // Balance Show / Hide
-// ===============================
-
-const eyeIcon = document.querySelector(".asset-header i");
+// -------------------------
+const eyeBtn = document.querySelector(".asset-header i");
 const balance = document.getElementById("balance");
 
+const balanceText = "$0.00";
+
 let balanceVisible = true;
-let currentBalance = "$0.00";
 
-if (eyeIcon && balance) {
+if (eyeBtn && balance) {
 
-    eyeIcon.addEventListener("click", function () {
+    eyeBtn.addEventListener("click", function () {
 
         if (balanceVisible) {
 
-            balance.textContent = "********";
+            balance.innerHTML = "********";
 
-            eyeIcon.classList.remove("fa-eye");
-            eyeIcon.classList.add("fa-eye-slash");
+            eyeBtn.classList.remove("fa-eye");
+            eyeBtn.classList.add("fa-eye-slash");
 
         } else {
 
-            balance.textContent = currentBalance;
+            balance.innerHTML = balanceText;
 
-            eyeIcon.classList.remove("fa-eye-slash");
-            eyeIcon.classList.add("fa-eye");
+            eyeBtn.classList.remove("fa-eye-slash");
+            eyeBtn.classList.add("fa-eye");
 
         }
 
@@ -39,17 +79,17 @@ if (eyeIcon && balance) {
 
 }
 
-// ===============================
-// Refresh Animation
-// ===============================
-
+// -------------------------
+// Refresh Button
+// -------------------------
 const refreshBtn = document.querySelector(".fa-rotate-right");
 
 if (refreshBtn) {
 
     refreshBtn.addEventListener("click", function () {
 
-        refreshBtn.style.transition = "0.6s";
+        refreshBtn.style.transition = ".6s";
+
         refreshBtn.style.transform = "rotate(360deg)";
 
         setTimeout(function () {
@@ -61,130 +101,131 @@ if (refreshBtn) {
     });
 
 }
+// ====================================
+// dashboard.js - Part 2
+// ====================================
 
-// ===============================
-// Open Tawk Live Chat
-// ===============================
-
-function openSupportChat() {
-
-    if (
-        window.Tawk_API &&
-        typeof window.Tawk_API.maximize === "function"
-    ) {
-
-        window.Tawk_API.maximize();
-
-    } else {
-
-        console.log("Tawk.to is not loaded yet.");
-
-    }
-
-}
-
-// ===============================
-// Buttons
-// ===============================
-
+// -------------------------
 // Deposit Button
+// -------------------------
 const depositBtn = document.querySelector(".deposit-btn");
 
 if (depositBtn) {
-    depositBtn.addEventListener("click", function () {
+
+    depositBtn.addEventListener("click", function (e) {
+
+        e.preventDefault();
+
         openSupportChat();
+
     });
+
 }
 
-// Withdraw Button
-const withdrawBtn = document.querySelector(".withdraw-btn");
-
-if (withdrawBtn) {
-    withdrawBtn.addEventListener("click", function () {
-        alert("Withdraw page coming soon.");
-    });
-}
-
-// Transfer Button
-const transferBtn = document.querySelector(".transfer-btn");
-
-if (transferBtn) {
-    transferBtn.addEventListener("click", function () {
-        alert("Transfer page coming soon.");
-    });
-}
-
+// -------------------------
 // Support Button
+// -------------------------
 const supportBtn = document.querySelector(".support-btn");
 
 if (supportBtn) {
-    supportBtn.addEventListener("click", function () {
+
+    supportBtn.addEventListener("click", function (e) {
+
+        e.preventDefault();
+
         openSupportChat();
+
     });
+
 }
 
+// -------------------------
 // Loan Button
+// -------------------------
 const loanBtn = document.querySelector(".loan-btn");
 
 if (loanBtn) {
-    loanBtn.addEventListener("click", function () {
+
+    loanBtn.addEventListener("click", function (e) {
+
+        e.preventDefault();
+
         openSupportChat();
+
     });
+
 }
 
+// -------------------------
+// Withdraw Button
+// -------------------------
+const withdrawBtn = document.querySelector(".withdraw-btn");
+
+if (withdrawBtn) {
+
+    withdrawBtn.addEventListener("click", function () {
+
+        alert("Withdraw page coming soon.");
+
+    });
+
+}
+
+// -------------------------
+// Transfer Button
+// -------------------------
+const transferBtn = document.querySelector(".transfer-btn");
+
+if (transferBtn) {
+
+    transferBtn.addEventListener("click", function () {
+
+        alert("Transfer page coming soon.");
+
+    });
+
+}
+
+// -------------------------
 // Trade Button
+// -------------------------
 const tradeBtn = document.querySelector(".trade-btn");
 
 if (tradeBtn) {
+
     tradeBtn.addEventListener("click", function () {
+
         window.location.href = "trade.html";
+
     });
+
 }
 
-// ===============================
-// Menu Click Effect
-// ===============================
-
-const menuItems = document.querySelectorAll(".menu-item");
-
-menuItems.forEach(function (item) {
+// -------------------------
+// Menu Animation
+// -------------------------
+document.querySelectorAll(".menu-item").forEach(function (item) {
 
     item.addEventListener("click", function () {
 
         item.style.transform = "scale(0.95)";
 
         setTimeout(function () {
+
             item.style.transform = "scale(1)";
+
         }, 120);
 
     });
 
 });
+// ====================================
+// dashboard.js - Part 3
+// ====================================
 
-// ===============================
-// Bottom Navigation Active
-// ===============================
-
-const navItems = document.querySelectorAll(".bottom-nav a");
-
-navItems.forEach(function (item) {
-
-    item.addEventListener("click", function () {
-
-        navItems.forEach(function (nav) {
-            nav.classList.remove("active");
-        });
-
-        item.classList.add("active");
-
-    });
-
-});
-
-// ===============================
+// -------------------------
 // Market Flash Animation
-// ===============================
-
+// -------------------------
 const marketPrices = document.querySelectorAll(".price");
 
 if (marketPrices.length > 0) {
@@ -193,13 +234,11 @@ if (marketPrices.length > 0) {
 
         marketPrices.forEach(function (price) {
 
-            const oldColor = price.style.color;
-
             price.style.color = "#f5c84c";
 
             setTimeout(function () {
 
-                price.style.color = oldColor || "#ffffff";
+                price.style.color = "";
 
             }, 500);
 
@@ -209,19 +248,48 @@ if (marketPrices.length > 0) {
 
 }
 
-// ===============================
-// Welcome
-// ===============================
+// -------------------------
+// Bottom Navigation Active
+// -------------------------
+const navItems = document.querySelectorAll(".bottom-nav a");
 
+navItems.forEach(function (item) {
+
+    item.addEventListener("click", function () {
+
+        navItems.forEach(function (nav) {
+
+            nav.classList.remove("active");
+
+        });
+
+        item.classList.add("active");
+
+    });
+
+});
+
+// -------------------------
+// Dashboard Loaded
+// -------------------------
 window.addEventListener("load", function () {
 
-    console.log("Welcome to CptMarkets Dashboard");
+    console.log("CptMarkets Dashboard Loaded");
 
-   if (window.Tawk_API) {
-    window.Tawk_API.onLoad = function () {
-        window.Tawk_API.hideWidget();
-    };
-} 
-    }
+    // Tawk Widget Hide
+    const checkTawk = setInterval(function () {
+
+        if (
+            window.Tawk_API &&
+            typeof window.Tawk_API.hideWidget === "function"
+        ) {
+
+            window.Tawk_API.hideWidget();
+
+            clearInterval(checkTawk);
+
+        }
+
+    }, 500);
 
 });
