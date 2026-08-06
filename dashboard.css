@@ -304,6 +304,7 @@ body{
 
 .bottom-nav{
     position:fixed;
+    overflow: visible;
     left:50%;
     transform:translateX(-50%);
     bottom:0;
@@ -339,21 +340,29 @@ body{
 }
 
 .trade-btn{
-    width:58px;
-    height:58px;
-    border-radius:50%;
-    background:linear-gradient(135deg,#f5c84c,#c58d00);
-    color:#111 !important;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    margin-top:-30px;
-    box-shadow:0 8px 25px rgba(245,200,76,.35);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: -22px;
+
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+
+    background: linear-gradient(135deg,#f5c84c,#c58d00);
+    color: #111 !important;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    box-shadow: 0 8px 25px rgba(245,200,76,.35);
+    z-index: 1000;
 }
 
 .trade-btn i{
     margin:0;
-    font-size:22px;
+    font-size:24px;
 }
 
 .trade-btn span{
