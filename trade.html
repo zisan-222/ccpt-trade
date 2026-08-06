@@ -2,175 +2,178 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>CptMarkets - Demo Trade</title>
+<meta charset="UTF-8">
 
-    <link rel="stylesheet" href="trade.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<title>CptMarkets Trade</title>
+
+<link rel="stylesheet" href="trade.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
 </head>
 
 <body>
 
 <div class="trade-container">
 
-    <!-- Header -->
-    <header class="trade-header">
+<!-- Header -->
 
-        <a href="dashboard.html" class="back-btn">
-            <i class="fa-solid fa-arrow-left"></i>
-        </a>
+<header class="trade-header">
 
-        <div class="pair-info">
-            <h2>XAU/USD</h2>
-            <span>Gold Spot</span>
-        </div>
+<a href="dashboard.html" class="back-btn">
 
-        <div class="balance-box">
-            <small>Demo Balance</small>
-            <strong id="demoBalance">$10,000.00</strong>
-        </div>
+<i class="fa-solid fa-arrow-left"></i>
 
-    </header>
+</a>
 
-    <!-- Chart Area -->
-    <section class="chart-section">
+<div class="market-info">
 
-        <div class="chart-header">
+<h2>XAU/USD</h2>
 
-            <span>Live Demo Chart</span>
-
-            <div class="time-list">
-                <button class="time-btn active">1M</button>
-                <button class="time-btn">5M</button>
-                <button class="time-btn">15M</button>
-            </div>
-
-        </div>
-
-        <canvas id="tradeChart"></canvas>
-
-    </section>
-
-    <!-- Trade Panel -->
-    <section class="trade-panel">
-
-        <div class="amount-box">
-
-            <label>Trade Amount</label>
-
-            <input
-                type="number"
-                id="tradeAmount"
-                value="100"
-                min="10">
-
-        </div>
-
-        <div class="duration-box">
-
-            <label>Duration</label>
-
-            <select id="tradeTime">
-                <option value="30">30 Seconds</option>
-                <option value="60">1 Minute</option>
-                <option value="300">5 Minutes</option>
-            </select>
-
-        </div>
-                <div class="profit-box">
-
-            <label>Expected Profit</label>
-
-            <h2 id="expectedProfit">$180.00</h2>
-
-        </div>
-
-        <div class="trade-buttons">
-
-            <button class="buy-btn" id="buyBtn">
-                <i class="fa-solid fa-arrow-trend-up"></i>
-                BUY
-            </button>
-
-            <button class="sell-btn" id="sellBtn">
-                <i class="fa-solid fa-arrow-trend-down"></i>
-                SELL
-            </button>
-
-        </div>
-
-    </section>
-
-    <!-- Active Trade -->
-
-    <section class="active-trade">
-
-        <h3>Active Trade</h3>
-
-        <div class="trade-status">
-
-            <span>Pair</span>
-            <strong id="pairName">XAU/USD</strong>
-
-        </div>
-
-        <div class="trade-status">
-
-            <span>Direction</span>
-            <strong id="direction">--</strong>
-
-        </div>
-
-        <div class="trade-status">
-
-            <span>Amount</span>
-            <strong id="amount">$0</strong>
-
-        </div>
-
-        <div class="trade-status">
-
-            <span>Time Left</span>
-            <strong id="countdown">00:00</strong>
-
-        </div>
-
-        <div class="trade-status">
-
-            <span>Status</span>
-            <strong id="result">Waiting...</strong>
-
-        </div>
-
-    </section>
-
-    <!-- Trade History -->
-
-    <section class="history-card">
-
-        <div class="history-title">
-
-            <h3>Trade History</h3>
-
-        </div>
-
-        <div id="historyList">
-
-            <p class="empty-history">
-                No trades yet.
-            </p>
-
-        </div>
-
-    </section>
+<p>Gold Spot</p>
 
 </div>
 
+<div class="live-price">
+
+<h3 id="livePrice">3253.20</h3>
+
+<span id="priceChange" class="up">
+
++0.18%
+
+</span>
+
+</div>
+
+</header>
+
+<!-- Chart -->
+
+<section class="chart-section">
+
+<canvas id="tradeChart"></canvas>
+
+</section>
+
+<!-- Trade Control -->
+
+<section class="trade-control">
+
+<div class="input-group">
+
+<label>Amount (USD)</label>
+
+<input
+type="number"
+id="tradeAmount"
+value="100"
+min="10">
+
+</div>
+
+<div class="input-group">
+
+<label>Duration</label>
+
+<select id="tradeTime">
+
+<option value="30">30 Seconds</option>
+
+<option value="60">1 Minute</option>
+
+<option value="300">5 Minutes</option>
+
+</select>
+
+</div>
+
+<div class="trade-buttons">
+
+<button
+class="buy-btn"
+id="buyBtn">
+
+<i class="fa-solid fa-arrow-trend-up"></i>
+
+BUY
+
+</button>
+
+<button
+class="sell-btn"
+id="sellBtn">
+
+<i class="fa-solid fa-arrow-trend-down"></i>
+
+SELL
+
+</button>
+
+</div>
+
+</section>
+<!-- Active Trade -->
+
+<section class="active-trade">
+
+    <h3>Active Trade</h3>
+
+    <div class="trade-row">
+        <span>Pair</span>
+        <strong id="pairName">XAU/USD</strong>
+    </div>
+
+    <div class="trade-row">
+        <span>Direction</span>
+        <strong id="direction">Waiting...</strong>
+    </div>
+
+    <div class="trade-row">
+        <span>Amount</span>
+        <strong id="amount">$0.00</strong>
+    </div>
+
+    <div class="trade-row">
+        <span>Time Left</span>
+        <strong id="countdown">00:00</strong>
+    </div>
+
+    <div class="trade-row">
+        <span>Result</span>
+        <strong id="result">No Trade</strong>
+    </div>
+
+</section>
+
+<!-- Trade History -->
+
+<section class="history-section">
+
+    <div class="history-header">
+        <h3>Trade History</h3>
+    </div>
+
+    <div id="historyList">
+
+        <div class="empty-history">
+            No trade history available.
+        </div>
+
+    </div>
+
+</section>
+
+</div>
+
+<!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Trade Script -->
 <script src="trade.js"></script>
 
 </body>
