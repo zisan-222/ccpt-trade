@@ -46,14 +46,18 @@ if (refreshBtn) {
 
 }
 
-// Deposit Button
+// Open Tawk Live Chat
+function openSupportChat() {
+    if (typeof Tawk_API !== "undefined") {
+        Tawk_API.maximize();
+    }
+}
 
+// Deposit Button
 const depositBtn = document.querySelector(".deposit-btn");
 
 if (depositBtn) {
-    depositBtn.addEventListener("click", () => {
-        alert("Deposit page coming soon.");
-    });
+    depositBtn.addEventListener("click", openSupportChat);
 }
 
 // Withdraw Button
@@ -75,7 +79,19 @@ if (transferBtn) {
         alert("Transfer page coming soon.");
     });
 }
+// Support Button
+const supportBtn = document.querySelector(".support-btn");
 
+if (supportBtn) {
+    supportBtn.addEventListener("click", openSupportChat);
+}
+
+// Loan Button
+const loanBtn = document.querySelector(".loan-btn");
+
+if (loanBtn) {
+    loanBtn.addEventListener("click", openSupportChat);
+}
 // Menu Click Effect
 
 const menuItems = document.querySelectorAll(".menu-item");
