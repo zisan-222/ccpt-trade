@@ -92,7 +92,19 @@ const loanBtn = document.querySelector(".loan-btn");
 if (loanBtn) {
     loanBtn.addEventListener("click", openSupportChat);
 }
-// Menu Click Effect
+/// Trade Button
+
+const tradeBtn = document.querySelector(".trade-btn");
+
+if (tradeBtn) {
+
+    tradeBtn.addEventListener("click", () => {
+
+        window.location.href = "trade.html";
+
+    });
+
+}/ Menu Click Effect
 
 const menuItems = document.querySelectorAll(".menu-item");
 
