@@ -131,31 +131,36 @@ Go to Sign In
 </div>
 
 <script>
-
 const registerForm = document.getElementById("registerForm");
 
 registerForm.addEventListener("submit", function(e){
+    e.preventDefault();
 
-e.preventDefault();
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
 
-const password = document.getElementById("password").value;
+    if(password !== confirmPassword){
+        alert("Passwords do not match!");
+        return;
+    }
 
-const confirmPassword = document.getElementById("confirmPassword").value;
+    // নতুন User ID তৈরি
+    const userId = "UID" + Date.now();
 
-if(password !== confirmPassword){
+    // User Save
+    const user = {
+        username: username,
+        password: password,
+        userId: userId
+    };
 
-alert("Passwords do not match!");
+    localStorage.setItem("user", JSON.stringify(user));
 
-return;
+    alert("Registration Successful!");
 
-}
-
-alert("Registration Successful!");
-
-window.location.href = "index.html";
-
+    window.location.href = "index.html";
 });
-
 </script>
 
 </body>
