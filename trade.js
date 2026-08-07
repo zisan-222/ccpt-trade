@@ -4,137 +4,133 @@
 =================================== */
 
 // Demo Live Price
-let currentPrice = 4269.29;
+let price = 4269.29;
 
-const priceElement = document.getElementById("livePrice");
-const changeElement = document.getElementById("priceChange");
+const livePrice = document.getElementById("livePrice");
+const changeBox = document.getElementById("changeBox");
 
-// Demo price update
+// Live Price Update
 setInterval(() => {
 
-    let change = (Math.random() * 2 - 1) * 0.80;
+    let change = (Math.random() - 0.5) * 3;
 
-    currentPrice += change;
+    price += change;
 
-    priceElement.textContent = currentPrice.toFixed(2);
+    livePrice.innerHTML = price.toFixed(2);
 
-    let percent = ((change / currentPrice) * 100).toFixed(2);
+    let percent = ((change / price) * 100).toFixed(2);
 
-    if (change >= 0) {
+    if(change >= 0){
 
-        changeElement.textContent = "+" + percent + "%";
-        changeElement.classList.remove("down");
-        changeElement.classList.add("up");
+        changeBox.className = "change green";
+        changeBox.innerHTML = "+" + percent + "%";
 
-    } else {
+    }else{
 
-        changeElement.textContent = percent + "%";
-        changeElement.classList.remove("up");
-        changeElement.classList.add("down");
+        changeBox.className = "change red";
+        changeBox.innerHTML = percent + "%";
 
     }
 
-}, 1000);
+},1000);
 
 
 // Timeframe Button
-document.querySelectorAll(".timeframe button").forEach(btn => {
 
-    btn.addEventListener("click", () => {
+document.querySelectorAll(".timeframe button").forEach(btn=>{
+
+    btn.onclick=()=>{
 
         document
-            .querySelectorAll(".timeframe button")
-            .forEach(b => b.classList.remove("active"));
+        .querySelectorAll(".timeframe button")
+        .forEach(b=>b.classList.remove("active"));
 
         btn.classList.add("active");
 
-    });
+    }
 
 });
 
 
-// Leverage Button
-document.querySelectorAll(".leverage-grid button").forEach(btn => {
+// Indicator Button
 
-    btn.addEventListener("click", () => {
+document.querySelectorAll(".indicator-bar button").forEach(btn=>{
+
+    btn.onclick=()=>{
 
         document
-            .querySelectorAll(".leverage-grid button")
-            .forEach(b => b.classList.remove("active"));
+        .querySelectorAll(".indicator-bar button")
+        .forEach(b=>b.classList.remove("active"));
 
         btn.classList.add("active");
 
-        document.getElementById("showLeverage").textContent =
-            btn.textContent;
-
-    });
+    }
 
 });
 
-/* ===================================
-   CANDLE CHART
-=================================== */
 
-const chartContainer = document.getElementById("tradeChart");
+// Leverage
 
-if (chartContainer && window.LightweightCharts) {
+document.querySelectorAll(".leverage-grid button").forEach(btn=>{
 
-    const chart = LightweightCharts.createChart(chartContainer, {
+    btn.onclick=()=>{
 
-        width: chartContainer.clientWidth,
-        height: 340,
+        document
+        .querySelectorAll(".leverage-grid button")
+        .forEach(b=>b.classList.remove("active"));
 
-        layout: {
-            background: { color: "#08111f" },
-            textColor: "#cfcfcf"
-        },
+        btn.classList.add("active");
 
-        grid: {
-            vertLines: { color: "#1f2d4d" },
-            horzLines: { color: "#1f2d4d" }
-        },
+        document.getElementById("levValue").innerHTML =
+        btn.innerHTML;
 
-        rightPriceScale: {
-            borderColor: "#334155"
-        },
+    }
 
-        timeScale: {
-            borderColor: "#334155",
-            timeVisible: true
-        }
+});
 
-    });
 
-    const candleSeries = chart.addCandlestickSeries({
+// Amount
 
-        upColor: "#00d26a",
-        downColor: "#ff4d4f",
+const amount=document.getElementById("amount");
 
-        borderUpColor: "#00d26a",
-        borderDownColor: "#ff4d4f",
+amount.oninput=function(){
 
-        wickUpColor: "#00d26a",
-        wickDownColor: "#ff4d4f"
+    let margin=parseFloat(amount.value)||0;
 
-    });
-
-    candleSeries.setData([
-
-        { time: 1, open: 4252, high: 4260, low: 4248, close: 4258 },
-        { time: 2, open: 4258, high: 4268, low: 4255, close: 4265 },
-        { time: 3, open: 4265, high: 4272, low: 4261, close: 4268 },
-        { time: 4, open: 4268, high: 4276, low: 4264, close: 4271 },
-        { time: 5, open: 4271, high: 4278, low: 4267, close: 4269 },
-        { time: 6, open: 4269, high: 4275, low: 4262, close: 4264 }
-
-    ]);
-
-    window.addEventListener("resize", () => {
-
-        chart.applyOptions({
-            width: chartContainer.clientWidth
-        });
-
-    });
+    document.getElementById("marginValue").innerHTML=
+    "$"+margin.toFixed(2);
 
 }
+/* ==========================
+   TradingView Chart
+========================== */
+
+new TradingView.widget({
+
+    "autosize": true,
+
+    "symbol": "OANDA:XAUUSD",
+
+    "interval": "1",
+
+    "timezone": "Etc/UTC",
+
+    "theme": "dark",
+
+    "style": "1",
+
+    "locale": "en",
+
+    "toolbar_bg": "#08162f",
+
+    "enable_publishing": false,
+
+    "hide_top_toolbar": true,
+
+    "hide_legend": true,
+
+    "save_image": false,
+
+    "container_id": "tvchart"
+
+});
