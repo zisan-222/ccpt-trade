@@ -2,22 +2,22 @@
 import { initializeApp } from "https://gstatic.com";
 import { getDatabase, ref, get, update } from "https://gstatic.com";
 
-// ⚠️ আপনার স্ক্রিনশট থেকে নেওয়া ১-১ মিল থাকা অরিজিনাল ফায়ারবেস কনফিগ
+// ⚠️ আপনার স্ক্রিনশট থেকে নেওয়া অরিজিনাল ফায়ারবেস কনফিগ
 const firebaseConfig = {
   apiKey: "AIzaSyAbSup8aEQ7bgSyLeqx6RMpnjoFxYu204M",
-  authDomain: "cptmarket-5b843.firebaseapp.com",
+  authDomain: "://firebaseapp.com",
   projectId: "cptmarket-5b843",
   storageBucket: "cptmarket-5b843.firebasestorage.app",
   messagingSenderId: "270504953481",
   appId: "1:270504953481:web:a108213c2161fcffa16858"
 };
 
-// ফায়ারবেস সাকসেসফুলি স্টার্ট করা
+// ফায়ারবেস স্টার্ট করা
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// 🔑 আপনার অ্যাডমিন পেজে ঢোকার একমাত্র সিক্রেট পাসওয়ার্ড (আপনার সুবিধা অনুযায়ী এটি পরিবর্তন করে নিতে পারবেন)
-const SECRET_ADMIN_PASSWORD = "admin_cpt_market_786"; 
+// 🔑 আপনার দেওয়া নতুন সিক্রেট পাসওয়ার্ড
+const SECRET_ADMIN_PASSWORD = "12@#12@#"; 
 
 // HTML ইন্টারফেসের বাটন ও ইনপুট এলিমেন্টসমূহ
 const loginContainer = document.getElementById('login-container');
@@ -40,7 +40,7 @@ const statusMessage = document.getElementById('status-message');
 let currentActiveUID = ""; // সার্চ করা ইউজারের আইডি স্টোর রাখার জন্য গ্লোবাল ভেরিয়েবল
 
 // ==========================================
-// লজিক ১: শুধুমাত্র পাসওয়ার্ড চেক করে প্যানেলে ঢোকা
+// লজিক ১: নতুন পাসওয়ার্ড চেক করে প্যানেলে ঢোকা
 // ==========================================
 loginBtn.addEventListener('click', () => {
     const inputPass = adminPasswordInput.value.trim();
@@ -60,7 +60,6 @@ searchBtn.addEventListener('click', () => {
     if(!uid) return alert("Please type a valid User UID");
 
     statusMessage.innerText = "Searching database...";
-    // ডাটাবেজের 'users/UID' পাথ থেকে তথ্য খোঁজা হচ্ছে
     const userRef = ref(db, 'users/' + uid);
 
     get(userRef).then((snapshot) => {
@@ -70,7 +69,7 @@ searchBtn.addEventListener('click', () => {
             
             // স্ক্রিনে ইউজারের নাম, ইমেইল এবং রিয়েল ব্যালেন্স পুশ করা হচ্ছে
             userNameText.innerText = data.name || "Unknown User";
-            userEmailText.innerText = data.email || "No Email Email";
+            userEmailText.innerText = data.email || "No Email";
             
             // যদি ডাটাবেজে ব্যালেন্স ডাটা না থাকে (অথবা ০ থাকে) তবে স্ক্রিনে ০ দেখাবে
             currentBalanceText.innerText = data.balance !== undefined ? data.balance : 0; 
