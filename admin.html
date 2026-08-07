@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPT Market - Secure Admin Controller</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+    <!-- ধাপ ১: শুধুমাত্র সিক্রেট পাসওয়ার্ড লগইন ইন্টারফেস -->
+    <div id="login-container" class="box">
+        <h2>Admin Portal</h2>
+        <p style="color: #8b949e; font-size: 13px; margin-bottom: 20px;">Authorize to access balance controls</p>
+        <input type="password" id="admin-password" placeholder="Enter Admin Secret Password">
+        <button id="login-btn">Access Dashboard</button>
+        <p id="login-error" class="error"></p>
+    </div>
+
+    <!-- 🔐 ধাপ ২: মূল ব্যালেন্স কন্ট্রোল ড্যাশবোর্ড (লগইনের আগে হাইড থাকবে) -->
+    <div id="admin-dashboard" class="box" style="display: none;">
+        <h2>Balance Controller</h2>
+        
+        <!-- UID দিয়ে কাস্টমার সার্চ বক্স -->
+        <div class="search-section">
+            <input type="text" id="search-uid" placeholder="Enter Customer UID (e.g. U12345)">
+            <button id="search-btn">Search User</button>
+        </div>
+
+        <!-- কাস্টমার পাওয়া গেলে তার তথ্য ও ব্যালেন্স পরিবর্তনের ফর্ম -->
+        <div id="user-info-card" style="display: none;">
+            <div class="info-group">
+                <p><strong>Name:</strong> <span id="user-name">---</span></p>
+                <p><strong>Email:</strong> <span id="user-email">---</span></p>
+                <p><strong>Current Balance:</strong> $<span id="current-balance">0</span></p>
+            </div>
+
+            <!-- ব্যালেন্স সেট করার ইনপুট বক্স (০ বা যেকোনো সংখ্যা নেওয়া যাবে) -->
+            <div class="update-section">
+                <label for="new-balance" style="font-size: 12px; color: #8b949e; display: block; text-align: left; margin-bottom: 5px;">Set New Total Balance:</label>
+                <input type="number" id="new-balance" placeholder="Enter amount (e.g. 0, 500, 1000)">
+                <button id="update-btn">Update Balance Now</button>
+            </div>
+        </div>
+        
+        <p id="status-message"></p>
+    </div>
+
+    <!-- Firebase SDK মডিউল স্ক্রিপ্ট লিংক -->
+    <script type="module" src="admin.js"></script>
+</body>
+</html>
