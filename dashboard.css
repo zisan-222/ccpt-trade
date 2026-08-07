@@ -13,13 +13,14 @@ body{
     background:#111111;
     color:#ffffff;
     font-family:Arial,Helvetica,sans-serif;
-    padding-bottom:90px;
+    padding-bottom:120px;
 }
 
 .container{
     width:100%;
     max-width:480px;
     margin:0 auto;
+    position:relative;
 }
 
 /* ======================
@@ -108,7 +109,6 @@ body{
     color:#dddddd;
     font-size:15px;
 }
-
 /* ======================
    ASSET CARD
 ====================== */
@@ -141,12 +141,15 @@ body{
 .asset-card h2{
     font-size:56px;
     margin-bottom:18px;
+    font-weight:700;
 }
 
 .asset-info{
     display:flex;
     justify-content:space-between;
+    align-items:center;
     margin-bottom:20px;
+    font-size:15px;
 }
 
 .profit{
@@ -155,17 +158,18 @@ body{
 
 .action-buttons{
     display:flex;
-    gap:10px;
+    gap:12px;
 }
 
 .action-buttons button{
     flex:1;
     border:none;
     border-radius:14px;
-    padding:15px;
+    padding:15px 0;
     font-size:17px;
     font-weight:700;
     cursor:pointer;
+    transition:.3s;
 }
 
 .deposit-btn{
@@ -176,8 +180,13 @@ body{
 .withdraw-btn,
 .transfer-btn{
     background:#2d2d2d;
-    color:#fff;
+    color:#ffffff;
 }
+
+.action-buttons button:hover{
+    opacity:.9;
+}
+
 /* ======================
    MENU GRID
 ====================== */
@@ -187,44 +196,116 @@ body{
     grid-template-columns:repeat(4,1fr);
     gap:16px;
     padding:0 15px;
-    margin-top:10px;
+    margin:12px 0 20px;
 }
 
 .menu-item{
     background:#1c1c1c;
     border:1px solid #2c2c2c;
-    border-radius:18px;
-    padding:18px 10px;
+    border-radius:20px;
+    min-height:170px;
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    cursor:pointer;
     transition:.25s;
 }
 
 .menu-item:hover{
-    transform:translateY(-3px);
     border-color:#f5c84c;
+    transform:translateY(-3px);
 }
 
 .menu-icon{
-    width:58px;
-    height:58px;
+    width:62px;
+    height:62px;
     border-radius:50%;
     background:#f5c84c;
     color:#111;
     display:flex;
-    justify-content:center;
     align-items:center;
-    font-size:24px;
-    margin-bottom:12px;
+    justify-content:center;
+    font-size:26px;
+    margin-bottom:14px;
 }
 
 .menu-item span{
     color:#ffffff;
     font-size:14px;
     text-align:center;
+    line-height:20px;
+}
+/* ======================
+   HOT MARKETS
+====================== */
+
+.market-card{
+    margin:20px 15px 25px;
+    background:#1c1c1c;
+    border-radius:20px;
+    padding:20px;
+    border:1px solid #2c2c2c;
+}
+
+.market-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.market-title h2{
+    font-size:22px;
+    color:#ffffff;
+    font-weight:700;
+}
+
+.market-title a{
+    color:#f5c84c;
+    text-decoration:none;
+    font-size:14px;
+}
+
+.market-item{
+    display:grid;
+    grid-template-columns:1.5fr 1fr .8fr;
+    align-items:center;
+    padding:16px 0;
+    border-bottom:1px solid #2d2d2d;
+}
+
+.market-item:last-child{
+    border-bottom:none;
+}
+
+.market-item h3{
+    font-size:18px;
+    color:#ffffff;
+    margin-bottom:4px;
+}
+
+.market-item small{
+    color:#8f8f8f;
+    font-size:13px;
+}
+
+.price{
+    text-align:center;
+    color:#ffffff;
+    font-size:18px;
+    font-weight:600;
+}
+
+.up{
+    text-align:right;
+    color:#00d26a;
+    font-weight:700;
+}
+
+.down{
+    text-align:right;
+    color:#ff4d4f;
+    font-weight:700;
 }
 /* ======================
    BOTTOM NAVIGATION
@@ -237,18 +318,20 @@ body{
     bottom:0;
     width:100%;
     max-width:480px;
-    height:72px;
+    height:80px;
     background:#161616;
     border-top:1px solid #2d2d2d;
-    display:flex;
-    justify-content:space-around;
+
+    display:grid;
+    grid-template-columns:1fr 1fr 80px 1fr 1fr;
+
     align-items:center;
-    z-index:999;
-    overflow:visible;
+    justify-items:center;
+
+    z-index:9999;
 }
 
 .bottom-nav a{
-    flex:1;
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -256,12 +339,11 @@ body{
     text-decoration:none;
     color:#9c9c9c;
     font-size:12px;
-    transition:.3s;
+    gap:4px;
 }
 
 .bottom-nav a i{
     font-size:22px;
-    margin-bottom:4px;
 }
 
 .bottom-nav a.active{
@@ -274,97 +356,97 @@ body{
 
 /* Floating Trade Button */
 
-.bottom-nav .trade-btn{
-    position:absolute;
-    left:50%;
-    top:-28px;
-    transform:translateX(-50%);
-    width:68px;
-    height:68px;
+.trade-btn{
+    width:70px;
+    height:70px;
     border-radius:50%;
     background:#f5c84c;
-    color:#111;
+    color:#111 !important;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    text-decoration:none;
+
+    margin-top:-40px;
+
     box-shadow:0 0 25px rgba(245,200,76,.45);
-    z-index:1001;
+
+    z-index:10000;
 }
 
-.bottom-nav .trade-btn i{
+.trade-btn i{
     font-size:28px;
-    margin:0;
 }
 
-.bottom-nav .trade-btn span{
+.trade-btn span{
     display:none;
-}
-
-/* Bottom spacing */
-
-body{
-    padding-bottom:95px;
-}
-/* ======================
-   HOT MARKETS
+}/* ======================
+   FINAL FIXES
 ====================== */
 
+/* Bottom space so content doesn't hide behind navigation */
 .market-card{
-    margin:20px 15px;
-    padding:20px;
-    background:#1c1c1c;
-    border-radius:20px;
+    margin-bottom:120px;
 }
 
-.market-title{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
+/* Button hover */
+.action-buttons button:hover{
+    opacity:.9;
 }
 
-.market-title h2{
-    color:#fff;
-    font-size:22px;
+/* Menu animation */
+.menu-item{
+    transition:all .25s ease;
 }
 
-.market-title a{
-    color:#f5c84c;
-    text-decoration:none;
+.menu-item:hover{
+    transform:translateY(-3px);
 }
 
-.market-item{
-    display:grid;
-    grid-template-columns:1.5fr 1fr .8fr;
-    align-items:center;
-    padding:18px 0;
-    border-bottom:1px solid #333;
-}
+/* Mobile */
+@media (max-width:480px){
 
-.market-item:last-child{
-    border-bottom:none;
-}
+    .asset-card h2{
+        font-size:42px;
+    }
 
-.market-item h3{
-    color:#fff;
-}
+    .menu-grid{
+        gap:12px;
+    }
 
-.market-item small{
-    color:#999;
-}
+    .menu-item{
+        min-height:95px;
+    }
 
-.price{
-    text-align:center;
-    color:#fff;
-}
+    .menu-icon{
+        width:54px;
+        height:54px;
+        font-size:22px;
+    }
 
-.up{
-    text-align:right;
-    color:#00d26a;
-}
+    .market-item{
+        grid-template-columns:1.4fr 1fr .8fr;
+    }
 
-.down{
-    text-align:right;
-    color:#ff4d4f;
+    .market-item h3{
+        font-size:16px;
+    }
+
+    .price{
+        font-size:16px;
+    }
+
+    .up,
+    .down{
+        font-size:15px;
+    }
+
+    .bottom-nav{
+        height:80px;
+    }
+
+    .trade-btn{
+        width:68px;
+        height:68px;
+    }
 }
