@@ -10,184 +10,372 @@
 }
 
 body{
-    background:#08111f;
-    color:#ffffff;
+    background:#08162f;
+    color:#fff;
     font-family:Arial,Helvetica,sans-serif;
-    padding-bottom:110px;
+    padding-bottom:120px;
 }
 
-.container{
+.trade-page{
     width:100%;
     max-width:480px;
     margin:auto;
 }
 
-/* ======================
+/* =========================
    HEADER
-====================== */
+========================= */
 
 .trade-header{
+    height:82px;
+    background:#0d1c39;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:18px 16px;
-    background:#0c1730;
-    border-bottom:1px solid rgba(255,255,255,.08);
+    padding:18px;
+    border-bottom:1px solid rgba(255,255,255,.06);
 }
 
-.trade-header .left{
-    display:flex;
-    align-items:center;
-    gap:12px;
+.back-btn{
+    color:#fff;
+    text-decoration:none;
+    font-size:24px;
 }
 
-.trade-header .left i{
-    font-size:20px;
-    cursor:pointer;
+.pair-box{
+    text-align:center;
 }
 
-.trade-header h2{
-    font-size:26px;
+.pair-box h1{
+    font-size:24px;
     font-weight:700;
 }
 
-.trade-header .right{
-    display:flex;
-    gap:12px;
+.pair-box p{
+    color:#b8bfd2;
+    margin-top:4px;
+    font-size:16px;
 }
 
-.trade-header .right i{
-    width:42px;
-    height:42px;
+.header-icons{
+    display:flex;
+    gap:10px;
+}
+
+.header-icons button{
+    width:46px;
+    height:46px;
     border-radius:50%;
-    background:#1b2745;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    color:#ffffff;
-    font-size:18px;
-    cursor:pointer;
+    border:1px solid rgba(255,255,255,.15);
+    background:#1a2949;
+    color:#fff;
+    font-size:20px;
 }
 
-/* ======================
-   PRICE CARD
-====================== */
+/* =========================
+   PRICE
+========================= */
 
-.price-card{
-    padding:20px 16px;
-    background:linear-gradient(180deg,#0f2346,#0a1831);
+.price-box{
+    background:linear-gradient(180deg,#102248,#0b1730);
+    padding:20px;
 }
 
-.price{
+.price-box h2{
     font-size:56px;
-    font-weight:700;
-    color:#00d96c;
+    font-weight:bold;
+    color:#00e4ff;
 }
 
-.symbol{
-    margin-top:6px;
-    color:#bfc7d5;
-    font-size:18px;
+.price-box p{
+    margin-top:10px;
+    color:#bfc6d7;
+    font-size:20px;
 }
 
 .change{
+    margin-top:15px;
     display:inline-block;
-    margin-top:14px;
-    padding:8px 16px;
-    background:#12d978;
-    border-radius:12px;
+    padding:10px 24px;
+    border-radius:14px;
     font-weight:bold;
-    color:#ffffff;
-}
-/* ======================
-   CHART SECTION
-====================== */
-
-.chart-section{
-    background:#0c1730;
-    padding:16px;
+    font-size:24px;
 }
 
-.chart-tabs{
+.change.green{
+    background:#11cf6d;
+}
+
+.change.red{
+    background:#ff4565;
+}
+
+/* =========================
+   INDICATORS
+========================= */
+
+.indicator-bar{
     display:flex;
     gap:10px;
-    overflow-x:auto;
-    margin-bottom:14px;
+    padding:16px;
+    overflow:auto;
 }
 
-.chart-tabs button{
+.indicator-bar button{
+    min-width:72px;
+    height:42px;
     border:none;
-    background:#1a2747;
-    color:#bfc7d5;
-    padding:8px 16px;
-    border-radius:20px;
-    font-size:13px;
-    cursor:pointer;
-    white-space:nowrap;
+    border-radius:25px;
+    background:#1d2e54;
+    color:#dbe4ff;
+    font-size:18px;
 }
 
-.chart-tabs button.active{
-    background:#f5c84c;
-    color:#111111;
-    font-weight:700;
+.indicator-bar button.active{
+    background:#ffc928;
+    color:#111;
 }
 
-.chart-box{
-    position:relative;
-    width:100%;
-    height:340px;
-    background:#08111f;
-    border:1px solid #223456;
-    border-radius:18px;
+/* =========================
+   CHART
+========================= */
+
+.chart-card{
+    margin:0 16px;
+    height:420px;
+    border-radius:22px;
     overflow:hidden;
+    background:#08121f;
+    border:1px solid #23375d;
 }
 
-#tradeChart,
-#chartCanvas{
+#tvchart{
     width:100%;
     height:100%;
-    display:block;
 }
 
-.chart-price{
-    position:absolute;
-    right:10px;
-    top:12px;
-    display:flex;
-    flex-direction:column;
-    gap:26px;
-    color:#8da0bf;
-    font-size:12px;
-    text-align:right;
-    pointer-events:none;
-}
-
-/* ======================
-   TIME FRAME
-====================== */
+/* =========================
+   TIMEFRAME
+========================= */
 
 .timeframe{
     display:flex;
     justify-content:space-between;
     gap:8px;
-    padding:14px 16px;
-    background:#0c1730;
-    border-top:1px solid rgba(255,255,255,.06);
+    padding:16px;
 }
 
 .timeframe button{
     flex:1;
+    height:42px;
     border:none;
-    background:#1a2747;
-    color:#d7dce7;
-    padding:10px 0;
-    border-radius:10px;
-    font-size:13px;
+    border-radius:12px;
+    background:#1d2e54;
+    color:#ffffff;
+    font-size:15px;
     cursor:pointer;
 }
 
 .timeframe button.active{
-    background:#f5c84c;
+    background:#ffc928;
     color:#111111;
-    font-weight:700;
+    font-weight:bold;
+}
+
+/* =========================
+   TRADE PANEL
+========================= */
+
+.trade-panel{
+    margin:16px;
+    padding:20px;
+    background:#101d39;
+    border-radius:20px;
+}
+
+.trade-panel h3{
+    margin-bottom:18px;
+    font-size:22px;
+}
+
+/* =========================
+   LEVERAGE
+========================= */
+
+.leverage-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.leverage-grid button{
+    height:42px;
+    border:none;
+    border-radius:10px;
+    background:#1d2e54;
+    color:#ffffff;
+    font-size:14px;
+    cursor:pointer;
+}
+
+.leverage-grid button.active{
+    background:#ffc928;
+    color:#111111;
+    font-weight:bold;
+}
+
+/* =========================
+   MODE
+========================= */
+
+.mode-switch{
+    display:flex;
+    gap:10px;
+    margin-bottom:18px;
+}
+
+.mode-switch button{
+    flex:1;
+    height:45px;
+    border:none;
+    border-radius:12px;
+    background:#1d2e54;
+    color:#ffffff;
+    font-size:15px;
+}
+
+.mode-switch button.active{
+    background:#ffc928;
+    color:#111111;
+}
+
+/* =========================
+   INPUT
+========================= */
+
+.trade-panel label{
+    display:block;
+    margin-bottom:8px;
+    color:#cfd6e7;
+}
+
+.trade-panel input{
+    width:100%;
+    height:48px;
+    border:none;
+    border-radius:12px;
+    background:#1d2e54;
+    color:#ffffff;
+    padding:0 15px;
+    margin-bottom:18px;
+    font-size:16px;
+}
+
+.tp-sl{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+/* =========================
+   SUMMARY
+========================= */
+
+.summary{
+    margin-top:20px;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+}
+
+.summary div{
+    background:#18294a;
+    padding:14px;
+    border-radius:12px;
+}
+
+.summary span{
+    display:block;
+    color:#9faecc;
+    font-size:13px;
+}
+
+.summary strong{
+    display:block;
+    margin-top:6px;
+    font-size:16px;
+    color:#ffffff;
+}
+
+/* =========================
+   LONG / SHORT
+========================= */
+
+.trade-buttons{
+    display:flex;
+    gap:14px;
+    margin-top:22px;
+}
+
+.long-btn,
+.short-btn{
+    flex:1;
+    height:54px;
+    border:none;
+    border-radius:14px;
+    color:#ffffff;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.long-btn{
+    background:#14c96f;
+}
+
+.short-btn{
+    background:#ff4d5a;
+}
+
+/* =========================
+   BOTTOM NAVIGATION
+========================= */
+
+.bottom-nav{
+    position:fixed;
+    left:50%;
+    transform:translateX(-50%);
+    bottom:0;
+    width:100%;
+    max-width:480px;
+    height:74px;
+    background:#0d1c39;
+    border-top:1px solid #243b67;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    z-index:999;
+}
+
+.bottom-nav a{
+    flex:1;
+    text-align:center;
+    color:#bfc6d7;
+    text-decoration:none;
+    font-size:12px;
+}
+
+.bottom-nav a i{
+    display:block;
+    font-size:22px;
+    margin-bottom:4px;
+}
+
+.bottom-nav .trade-btn{
+    color:#ffc928;
+}
+
+.bottom-nav .trade-btn i{
+    font-size:28px;
 }
