@@ -3,275 +3,251 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>CptMarkets - Trade</title>
 
 <link rel="stylesheet" href="trade.css">
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<script src="https://s3.tradingview.com/tv.js"></script>
+
 </head>
 
 <body>
 
-<div class="container">
+<div class="trade-page">
 
-    <!-- Header -->
+<!-- HEADER -->
 
-    <header class="trade-header">
+<header class="trade-header">
 
-        <a href="dashboard.html" class="back-btn">
-            <i class="fa-solid fa-chevron-left"></i>
-        </a>
+<a href="dashboard.html" class="back-btn">
+<i class="fa-solid fa-chevron-left"></i>
+</a>
 
-        <div class="pair-info">
+<div class="pair-box">
+<h1>XAUUSD</h1>
+<p>Gold / USD</p>
+</div>
 
-            <h2 id="pairName">
-                XAUUSD
-            </h2>
+<div class="header-icons">
 
-            <span>
-                Gold / USD
-            </span>
+<button>
+<i class="fa-regular fa-clipboard"></i>
+</button>
 
-        </div>
+<button>
+<i class="fa-solid fa-magnifying-glass"></i>
+</button>
 
-        <div class="header-icons">
+</div>
 
-            <button>
-                <i class="fa-regular fa-clipboard"></i>
-            </button>
+</header>
 
-            <button>
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
+<!-- PRICE -->
 
-        </div>
+<section class="price-box">
 
-    </header>
+<h2 id="livePrice">
+4269.29
+</h2>
 
+<div class="change green" id="changeBox">
++0.52%
+</div>
 
-    <!-- Price -->
+<p>
+Gold/USD
+</p>
 
-    <section class="price-area">
+</section>
+
+<!-- INDICATORS -->
+
+<div class="indicator-bar">
+
+<button class="active">
+MA
+</button>
+
+<button>
+EMA
+</button>
+
+<button>
+BOLL
+</button>
+
+<button>
+RSI
+</button>
+
+<button>
+MACD
+</button>
+
+</div>
+
+<!-- TRADINGVIEW CHART -->
+
+<div class="chart-card">
+
+<div id="tvchart"></div>
+
+</div>
+
+<!-- TIMEFRAME -->
+
+<div class="timeframe">
+
+<button class="active">1m</button>
+<button>5m</button>
+<button>15m</button>
+<button>30m</button>
+<button>1h</button>
+<button>1d</button>
+
+</div>
+
+<!-- এখানেই Part-1 শেষ -->
+    <!-- LEVERAGE CARD -->
+
+<section class="trade-panel">
+
+    <h3>Leverage</h3>
+
+    <div class="leverage-grid">
+
+        <button>10x</button>
+        <button>20x</button>
+        <button>50x</button>
+        <button class="active">100x</button>
+
+        <button>150x</button>
+        <button>200x</button>
+        <button>300x</button>
+        <button>500x</button>
+
+        <button>1000x</button>
+        <button>2000x</button>
+
+    </div>
+
+    <div class="mode-switch">
+
+        <button class="active">
+            By Amount
+        </button>
+
+        <button>
+            By Lots
+        </button>
+
+    </div>
+
+    <label>Amount / Margin (USD)</label>
+
+    <input
+        type="number"
+        id="amount"
+        value="100"
+        placeholder="100">
+
+    <div class="tp-sl">
 
         <div>
 
-            <h1 id="livePrice">
-                4269.29
-            </h1>
-
-            <p>
-                Gold/USD
-            </p>
-
-        </div>
-
-        <div class="change up" id="priceChange">
-            +0.52%
-        </div>
-
-    </section>
-
-
-    <!-- Indicator Tabs -->
-
-    <div class="indicator-tabs">
-
-        <button class="active">
-            MA
-        </button>
-
-        <button>
-            EMA
-        </button>
-
-        <button>
-            BOLL
-        </button>
-
-        <button>
-            RSI
-        </button>
-
-        <button>
-            MACD
-        </button>
-
-    </div>
-
-
-    <!-- Chart -->
-
-    <section class="chart-box">
-
-        <canvas id="tradeChart"></canvas>
-
-    </section>
-           <!-- ===== CHART SECTION ===== -->
-        <section class="chart-section">
-
-            <div class="chart-tabs">
-                <button class="active">MA</button>
-                <button>EMA</button>
-                <button>BOLL</button>
-                <button>RSI</button>
-                <button>MACD</button>
-            </div>
-
-            <div class="chart-box">
-
-                <canvas id="chartCanvas"></canvas>
-
-                <div class="chart-price">
-                    <span>4281.64</span>
-                    <span>4269.29</span>
-                    <span>4254.22</span>
-                    <span>4240.51</span>
-                    <span>4226.80</span>
-                </div>
-
-            </div>
-
-        </section>
-
-        <!-- ===== TIMEFRAME ===== -->
-
-        <section class="timeframe">
-
-            <button class="active">1m</button>
-            <button>5m</button>
-            <button>15m</button>
-            <button>30m</button>
-            <button>1h</button>
-            <button>1d</button>
-
-        </section>
-
-        <!-- ===== LEVERAGE ===== -->
-
-        <section class="trade-panel">
-
-            <h3>Leverage</h3>
-
-            <div class="leverage-grid">
-
-                <button>10x</button>
-                <button>20x</button>
-                <button>50x</button>
-                <button class="active">100x</button>
-
-                <button>150x</button>
-                <button>200x</button>
-                <button>300x</button>
-                <button>500x</button>
-
-                <button>1000x</button>
-                <button>2000x</button>
-
-            </div>
-
-            <div class="order-type">
-
-                <button class="active">By Amount</button>
-                <button>By Lots</button>
-
-            </div>
-
-            <label>Amount / Margin (USD)</label>
+            <label>TP Price</label>
 
             <input
                 type="number"
-                value="100"
-                id="amount">
+                placeholder="Optional">
 
-            <div class="tp-sl">
+        </div>
 
-                <div>
-                    <label>TP Price</label>
-                    <input
-                        type="text"
-                        placeholder="Optional">
-                </div>
+        <div>
 
-                <
-            <!-- SUMMARY -->
+            <label>SL Price</label>
 
-            <div class="summary">
+            <input
+                type="number"
+                placeholder="Optional">
 
-                <div>
-                    <span>Leverage</span>
-                    <strong id="showLeverage">100x</strong>
-                </div>
-
-                <div>
-                    <span>Converted Lots</span>
-                    <strong id="showLots">0.02 Lot</strong>
-                </div>
-
-                <div>
-                    <span>Contract Value</span>
-                    <strong id="showValue">$10,000.00</strong>
-                </div>
-
-                <div>
-                    <span>Est. Margin</span>
-                    <strong id="showMargin">$100.00</strong>
-                </div>
-
-            </div>
-
-            <!-- BUY / SELL -->
-
-            <div class="trade-buttons">
-
-                <button id="buyBtn" class="buy-btn">
-                    Long
-                </button>
-
-                <button id="sellBtn" class="sell-btn">
-                    Short
-                </button>
-
-            </div>
-
-        </section>
+        </div>
 
     </div>
 
-    <!-- Bottom Navigation -->
+    <div class="summary">
 
-    <nav class="bottom-nav">
+        <div>
+            <span>Leverage</span>
+            <strong id="levValue">100x</strong>
+        </div>
 
-        <a href="dashboard.html">
-            <i class="fa-solid fa-house"></i>
-            <span>Home</span>
-        </a>
+        <div>
+            <span>Converted Lots</span>
+            <strong id="lotsValue">0.02 Lot</strong>
+        </div>
 
-        <a href="market.html">
-            <i class="fa-solid fa-chart-line"></i>
-            <span>Markets</span>
-        </a>
+        <div>
+            <span>Contract Value</span>
+            <strong>$10,000.00</strong>
+        </div>
 
-        <a href="trade.html" class="trade-btn active">
-            <i class="fa-solid fa-arrow-up-arrow-down"></i>
-        </a>
+        <div>
+            <span>Est. Margin</span>
+            <strong id="marginValue">$100.00</strong>
+        </div>
 
-        <a href="assets.html">
-            <i class="fa-solid fa-wallet"></i>
-            <span>Assets</span>
-        </a>
+    </div>
 
-        <a href="mine.html">
-            <i class="fa-solid fa-user"></i>
-            <span>Mine</span>
-        </a>
+    <div class="trade-buttons">
 
-    </nav>
+        <button class="long-btn">
+            Long
+        </button>
 
-    <script src="trade.js"></script>
-<script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+        <button class="short-btn">
+            Short
+        </button>
+
+    </div>
+
+</section>
+
+<!-- BOTTOM NAVIGATION -->
+
+<nav class="bottom-nav">
+
+    <a href="dashboard.html">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+    </a>
+
+    <a href="market.html">
+        <i class="fa-solid fa-chart-line"></i>
+        <span>Markets</span>
+    </a>
+
+    <a href="trade.html" class="trade-btn">
+        <i class="fa-solid fa-arrow-up-arrow-down"></i>
+    </a>
+
+    <a href="assets.html">
+        <i class="fa-solid fa-wallet"></i>
+        <span>Assets</span>
+    </a>
+
+    <a href="mine.html">
+        <i class="fa-solid fa-user"></i>
+        <span>Mine</span>
+    </a>
+
+</nav>
+
 <script src="trade.js"></script>
+
 </body>
 </html>
-
-
