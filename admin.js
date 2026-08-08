@@ -74,7 +74,7 @@ searchBtn.addEventListener('click', () => {
             // যদি ডাটাবেজে ব্যালেন্স ডাটা না থাকে (অথবা ০ থাকে) তবে স্ক্রিনে ০ দেখাবে
             currentBalanceText.innerText = data.balance !== undefined ? data.balance : 0; 
             
-            userInfoCard.style.display = 'block'; // ইনফো কার্ড ওপেন
+            userInfoCard.style.display = 'block'; // ইনফো কার্ড ওপেন (ভুল সংশোধন করা হয়েছে)
             statusMessage.innerText = "User account found!";
         } else {
             userInfoCard.style.display = 'none';
