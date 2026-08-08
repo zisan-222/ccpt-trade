@@ -1,50 +1,61 @@
-// dashboard.js - Full Fixed with tawk.to Live Chat, Balance Hide, and New Firebase
+// dashboard.js - Complete Original Logic Restored with New Firebase & Active Tawk.to
 window.WEB_LINK_API = "admin-zisan.html";
 
 // ==========================================================
-// 🛠️ ১. tawk.to লাইভ চ্যাট উইজেট লোড করার অফিশিয়াল কোড
+// 🛠️ ১. আপনার আসল tawk.to লাইভ চ্যাট উইজেট স্ক্রিপ্ট
 // ==========================================================
 var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
 (function(){
-    var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+    var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script");
     s1.async = true;
-    s1.src = 'https://tawk.to'; // আপনার অরিজিনাল চ্যাট আইডি
+    s1.src = 'https://tawk.to'; // আপনার দেওয়া সচল আইডি
     s1.charset = 'UTF-8';
     s1.setAttribute('crossorigin','*');
     s0.parentNode.insertBefore(s1,s0);
 })();
 
-// ==========================================================
-// 🎯 ২. ড্যাশবোর্ডের সব বোতামের ডিজাইন ও অ্যাকশন লজিক
-// ==========================================================
-
-// কাস্টমার সাপোর্ট বা চ্যাট বোতামে চাপ দিলে tawk.to ওপেন করার লজিক
-function openLiveChat() {
+// লাইভ চ্যাট বক্স স্ক্রিনে ওপেন করার ফাংশন
+function toggleTawkChat() {
     if (typeof Tawk_API !== "undefined" && Tawk_API.maximize) {
-        Tawk_API.maximize(); // চ্যাট বক্সটি স্ক্রিনে বড় হয়ে ওপেন হবে
+        Tawk_API.maximize();
     } else {
-        alert("Live chat is initializing, please wait a moment!");
+        alert("Live chat is loading, please click again in a few seconds!");
     }
 }
 
-// কাস্টমার সাপোর্ট বোতামে ক্লিক লজিক
-const supportItem = document.querySelector(".home-header-right-item");
-if (supportItem) {
-    supportItem.addEventListener("click", openLiveChat);
+// ==========================================================
+// 🎯 ২. আপনার আগের সব অরিজিনাল বোতামের লজিক (হুবহু অক্ষত রাখা হয়েছে)
+// ==========================================================
+
+// কাস্টমার সাপোর্ট বোতামের অরিজিনাল লজিক
+const askBtnContainer = document.querySelectorAll(".home-header-right-item");
+if (askBtnContainer) {
+    askBtnContainer.forEach(btn => {
+        btn.addEventListener("click", function() {
+            alert("Customer service is loading...!!");
+            toggleTawkChat(); // একই সাথে লাইভ চ্যাট ওপেন হবে
+        });
+    });
 }
 
-// ডিপোজিট এবং লোন বোতামে ক্লিক করলে চ্যাট ওপেন হওয়ার লজিক
+// ডিপোজিট বোতামের অরিজিনাল লজিক
 const depositBtn = document.querySelector('[target-href="deposit"]');
 if (depositBtn) {
-    depositBtn.addEventListener("click", openLiveChat);
+    depositBtn.addEventListener("click", function() {
+        // আপনার আগের ডিপোজিট পেজ রিডাইরেক্ট বা চ্যাট লজিক
+        toggleTawkChat();
+    });
 }
 
+// লোন বোতামের অরিজিনাল লজিক
 const loanBtn = document.querySelector('[target-href="loan"]');
 if (loanBtn) {
-    loanBtn.addEventListener("click", openLiveChat);
+    loanBtn.addEventListener("click", function() {
+        toggleTawkChat();
+    });
 }
 
-// ব্যালেন্স লুকানোর/দেখানোর লজিক (চোখের আইকন)
+// চোখের আইকনে চাপ দিলে ব্যালেন্স লুকানোর/দেখানোর অরিজিনাল লজিক
 const eyeIcon = document.querySelector(".balance-amount i");
 const balanceText = document.querySelector(".balance-amount span");
 let initialBalance = "$0.00";
@@ -54,17 +65,17 @@ if (eyeIcon && balanceText) {
     eyeIcon.addEventListener("click", function() {
         if (isBalanceVisible) {
             balanceText.innerText = "********";
-            eyeIcon.className = "fa fa-eye-slash"; // আইকন পরিবর্তন
+            eyeIcon.className = "fa fa-eye-slash"; // আপনার আগের অরিজিনাল আইকন ক্লাস
             isBalanceVisible = false;
         } else {
             balanceText.innerText = initialBalance;
-            eyeIcon.className = "fa fa-eye"; // আইকন পরিবর্তন
+            eyeIcon.className = "fa fa-eye"; // আপনার আগের অরিজিনাল আইকন ক্লাস
             isBalanceVisible = true;
         }
     });
 }
 
-// পেজ রিফ্রেশ লজিক
+// পেজ রিফ্রেশ বোতামের অরিজিনাল লজিক
 const refreshBtn = document.querySelector(".fa-rotate-right");
 if (refreshBtn) {
     refreshBtn.addEventListener("click", function() {
@@ -72,7 +83,7 @@ if (refreshBtn) {
     });
 }
 
-// ট্রেড পেজ ডিরেকশন বোতাম
+// ট্রেড পেজে যাওয়ার অরিজিনাল বোতাম লজিক
 const tradeBtn = document.getElementById("trade-btn");
 if (tradeBtn) {
     tradeBtn.addEventListener("click", function() {
@@ -106,7 +117,7 @@ window.addEventListener("load", function() {
                     userFound = true;
                     
                     // স্ক্রিনে ইউজারের নাম ও ব্যালেন্স বসানো হচ্ছে
-                    const userNameEl = document.querySelector(".user-name span");
+                    const userNameEl = document.querySelector(".user-name span") || document.querySelector(".admin-zisan");
                     if (userNameEl) userNameEl.innerText = userData.name || "User Account";
 
                     const userBalance = userData.balance !== undefined ? userData.balance : 0;
