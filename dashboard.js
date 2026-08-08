@@ -1,140 +1,402 @@
-// dashboard.js - Complete Original Logic Restored with New Firebase & Active Tawk.to
-window.WEB_LINK_API = "admin-zisan.html";
+/* ==========================================
+   CPTMARKETS DASHBOARD
+   dashboard.js - Complete Version
+========================================== */
 
-// ==========================================================
-// 🛠️ ১. আপনার আসল tawk.to লাইভ চ্যাট উইজেট স্ক্রিপ্ট
-// ==========================================================
-var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-(function(){
-    var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script");
-    s1.async = true;
-    s1.src = 'https://tawk.to'; // আপনার দেওয়া সচল আইডি
-    s1.charset = 'UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-})();
 
-// লাইভ চ্যাট বক্স স্ক্রিনে ওপেন করার ফাংশন
-function toggleTawkChat() {
-    if (typeof Tawk_API !== "undefined" && Tawk_API.maximize) {
-        Tawk_API.maximize();
-    } else {
-        alert("Live chat is loading, please click again in a few seconds!");
+/* ==========================================
+   TAWK.TO CUSTOMER SERVICE
+========================================== */
+
+// Tawk API initialize
+window.Tawk_API = window.Tawk_API || {};
+window.Tawk_LoadStart = new Date();
+
+let tawkLoaded = false;
+
+
+// Tawk.to loaded
+window.Tawk_API.onLoad = function () {
+
+    tawkLoaded = true;
+
+    console.log("Tawk.to Customer Service Loaded");
+
+    // Hide Tawk widget when dashboard loads
+    if (typeof window.Tawk_API.hideWidget === "function") {
+        window.Tawk_API.hideWidget();
     }
-}
+};
 
-// ==========================================================
-// 🎯 ২. আপনার আগের সব অরিজিনাল বোতামের লজিক (হুবহু অক্ষত রাখা হয়েছে)
-// ==========================================================
 
-// কাস্টমার সাপোর্ট বোতামের অরিজিনাল লজিক
-const askBtnContainer = document.querySelectorAll(".home-header-right-item");
-if (askBtnContainer) {
-    askBtnContainer.forEach(btn => {
-        btn.addEventListener("click", function() {
-            alert("Customer service is loading...!!");
-            toggleTawkChat(); // একই সাথে লাইভ চ্যাট ওপেন হবে
-        });
-    });
-}
+/* ==========================================
+   OPEN CUSTOMER SERVICE
+========================================== */
 
-// ডিপোজিট বোতামের অরিজিনাল লজিক
-const depositBtn = document.querySelector('[target-href="deposit"]');
-if (depositBtn) {
-    depositBtn.addEventListener("click", function() {
-        // আপনার আগের ডিপোজিট পেজ রিডাইরেক্ট বা চ্যাট লজিক
-        toggleTawkChat();
-    });
-}
+function openSupportChat() {
 
-// লোন বোতামের অরিজিনাল লজিক
-const loanBtn = document.querySelector('[target-href="loan"]');
-if (loanBtn) {
-    loanBtn.addEventListener("click", function() {
-        toggleTawkChat();
-    });
-}
+    // Tawk not loaded yet
+    if (!tawkLoaded) {
 
-// চোখের আইকনে চাপ দিলে ব্যালেন্স লুকানোর/দেখানোর অরিজিনাল লজিক
-const eyeIcon = document.querySelector(".balance-amount i");
-const balanceText = document.querySelector(".balance-amount span");
-let initialBalance = "$0.00";
-let isBalanceVisible = true;
+        // Try to show widget anyway
+        if (
+            typeof window.Tawk_API !== "undefined" &&
+            typeof window.Tawk_API.showWidget === "function"
+        ) {
 
-if (eyeIcon && balanceText) {
-    eyeIcon.addEventListener("click", function() {
-        if (isBalanceVisible) {
-            balanceText.innerText = "********";
-            eyeIcon.className = "fa fa-eye-slash"; // আপনার আগের অরিজিনাল আইকন ক্লাস
-            isBalanceVisible = false;
+            window.Tawk_API.showWidget();
+
         } else {
-            balanceText.innerText = initialBalance;
-            eyeIcon.className = "fa fa-eye"; // আপনার আগের অরিজিনাল আইকন ক্লাস
-            isBalanceVisible = true;
+
+            alert("Customer Service is loading...");
+
+            return;
         }
-    });
+    }
+
+
+    // Show Tawk widget
+    if (typeof window.Tawk_API.showWidget === "function") {
+        window.Tawk_API.showWidget();
+    }
+
+
+    // Open / maximize chat
+    setTimeout(function () {
+
+        if (typeof window.Tawk_API.maximize === "function") {
+            window.Tawk_API.maximize();
+        }
+
+    }, 300);
 }
 
-// পেজ রিফ্রেশ বোতামের অরিজিনাল লজিক
+
+/* ==========================================
+   BALANCE SHOW / HIDE
+========================================== */
+
+const eyeBtn = document.querySelector(".asset-header i");
+const balance = document.getElementById("balance");
+
+
+// Original balance text
+const balanceText = "$0.00";
+
+
+// Balance visibility
+let balanceVisible = true;
+
+
+if (eyeBtn && balance) {
+
+    eyeBtn.addEventListener("click", function () {
+
+        // Hide balance
+        if (balanceVisible) {
+
+            balance.innerHTML = "••••••";
+
+            eyeBtn.classList.remove("fa-eye");
+            eyeBtn.classList.add("fa-eye-slash");
+
+            balanceVisible = false;
+
+        }
+
+        // Show balance
+        else {
+
+            balance.innerHTML = balanceText;
+
+            eyeBtn.classList.remove("fa-eye-slash");
+            eyeBtn.classList.add("fa-eye");
+
+            balanceVisible = true;
+        }
+
+    });
+
+}
+
+
+/* ==========================================
+   REFRESH BUTTON
+========================================== */
+
 const refreshBtn = document.querySelector(".fa-rotate-right");
+
+
 if (refreshBtn) {
-    refreshBtn.addEventListener("click", function() {
-        location.reload();
+
+    refreshBtn.addEventListener("click", function () {
+
+        // Reset previous animation
+        refreshBtn.style.transition = "none";
+        refreshBtn.style.transform = "rotate(0deg)";
+
+
+        // Start animation
+        setTimeout(function () {
+
+            refreshBtn.style.transition = "0.6s";
+            refreshBtn.style.transform = "rotate(360deg)";
+
+        }, 10);
+
+
+        // Reset rotation
+        setTimeout(function () {
+
+            refreshBtn.style.transition = "none";
+            refreshBtn.style.transform = "rotate(0deg)";
+
+        }, 650);
+
     });
+
 }
 
-// ট্রেড পেজে যাওয়ার অরিজিনাল বোতাম লজিক
-const tradeBtn = document.getElementById("trade-btn");
+
+/* ==========================================
+   DEPOSIT BUTTON
+   Opens Tawk.to Customer Service
+========================================== */
+
+const depositBtn = document.querySelector(".deposit-btn");
+
+
+if (depositBtn) {
+
+    depositBtn.addEventListener("click", function (e) {
+
+        e.preventDefault();
+
+        openSupportChat();
+
+    });
+
+}
+
+
+/* ==========================================
+   SUPPORT BUTTON
+   Opens Tawk.to Customer Service
+========================================== */
+
+const supportBtn = document.querySelector(".support-btn");
+
+
+if (supportBtn) {
+
+    supportBtn.addEventListener("click", function (e) {
+
+        e.preventDefault();
+
+        openSupportChat();
+
+    });
+
+}
+
+
+/* ==========================================
+   LOAN BUTTON
+   Opens Tawk.to Customer Service
+========================================== */
+
+const loanBtn = document.querySelector(".loan-btn");
+
+
+if (loanBtn) {
+
+    loanBtn.addEventListener("click", function (e) {
+
+        e.preventDefault();
+
+        openSupportChat();
+
+    });
+
+}
+
+
+/* ==========================================
+   WITHDRAW BUTTON
+========================================== */
+
+const withdrawBtn = document.querySelector(".withdraw-btn");
+
+
+if (withdrawBtn) {
+
+    withdrawBtn.addEventListener("click", function (e) {
+
+        e.preventDefault();
+
+        alert("Withdraw page coming soon.");
+
+    });
+
+}
+
+
+/* ==========================================
+   TRANSFER BUTTON
+========================================== */
+
+const transferBtn = document.querySelector(".transfer-btn");
+
+
+if (transferBtn) {
+
+    transferBtn.addEventListener("click", function (e) {
+
+        e.preventDefault();
+
+        alert("Transfer page coming soon.");
+
+    });
+
+}
+
+
+/* ==========================================
+   TRADE BUTTON
+========================================== */
+
+const tradeBtn = document.querySelector(".trade-btn");
+
+
 if (tradeBtn) {
-    tradeBtn.addEventListener("click", function() {
+
+    tradeBtn.addEventListener("click", function (e) {
+
+        e.preventDefault();
+
         window.location.href = "trade.html";
+
     });
+
 }
 
-// ==========================================================
-// 🚀 ৩. নতুন ফায়ারবেস থেকে রিয়েল-টাইমে ডাটা ও ব্যালেন্স লোড করার লজিক
-// ==========================================================
-window.addEventListener("load", function() {
-    console.log("CPTMarkets Dashboard loading...");
 
-    // স্থানীয় স্টোরেজ (LocalStorage) থেকে লগইন করা ইউজারের UID খুঁজে বের করা
-    const loggedInUID = localStorage.getItem("userUID") || "UID1786089707472"; 
+/* ==========================================
+   MENU ITEM ANIMATION
+========================================== */
 
-    // ⚠️ আপনার নতুন সচল ফায়ারবেস রিয়েলটাইম ডাটাবেজ ইউআরএল
-    const databaseURL = "https://firebaseio.com";
+const menuItems = document.querySelectorAll(".menu-item");
 
-    // ডাটাবেজের 'users' ফোল্ডার থেকে সম্পূর্ণ কুয়েরি করে ওই UID-র ডাটা আনা হচ্ছে
-    fetch(`${databaseURL}/users.json`)
-    .then(response => response.json())
-    .then(allUsers => {
-        if (allUsers) {
-            let userFound = false;
 
-            // ডাটাবেজের সব ইউজারের ভেতর লুপ চালিয়ে UID মিলানো হচ্ছে
-            Object.keys(allUsers).forEach(key => {
-                const userData = allUsers[key];
-                if (userData.uid === loggedInUID) {
-                    userFound = true;
-                    
-                    // স্ক্রিনে ইউজারের নাম ও ব্যালেন্স বসানো হচ্ছে
-                    const userNameEl = document.querySelector(".user-name span") || document.querySelector(".admin-zisan");
-                    if (userNameEl) userNameEl.innerText = userData.name || "User Account";
+menuItems.forEach(function (item) {
 
-                    const userBalance = userData.balance !== undefined ? userData.balance : 0;
-                    initialBalance = "$" + Number(userBalance).toFixed(2);
-                    
-                    if (balanceText && isBalanceVisible) {
-                        balanceText.innerText = initialBalance;
-                    }
-                }
-            });
+    item.addEventListener("click", function () {
 
-            if (!userFound) {
-                console.log("No user found in database with UID: " + loggedInUID);
-            }
-        }
-    })
-    .catch(error => {
-        console.error("Firebase Fetch Error: ", error);
+        item.style.transform = "scale(0.95)";
+
+
+        setTimeout(function () {
+
+            item.style.transform = "scale(1)";
+
+        }, 120);
+
     });
+
 });
+
+
+/* ==========================================
+   MARKET FLASH ANIMATION
+========================================== */
+
+const marketPrices = document.querySelectorAll(".price");
+
+
+if (marketPrices.length > 0) {
+
+    setInterval(function () {
+
+        marketPrices.forEach(function (price) {
+
+            // Save original color
+            const originalColor = price.style.color;
+
+
+            // Flash color
+            price.style.color = "#f5c84c";
+
+
+            // Return to original
+            setTimeout(function () {
+
+                price.style.color = originalColor;
+
+            }, 500);
+
+        });
+
+    }, 3000);
+
+}
+
+
+/* ==========================================
+   BOTTOM NAVIGATION ACTIVE
+========================================== */
+
+const navItems = document.querySelectorAll(".bottom-nav a");
+
+
+navItems.forEach(function (item) {
+
+    item.addEventListener("click", function () {
+
+        navItems.forEach(function (nav) {
+
+            nav.classList.remove("active");
+
+        });
+
+
+        item.classList.add("active");
+
+    });
+
+});
+
+
+/* ==========================================
+   DASHBOARD LOADED
+========================================== */
+
+window.addEventListener("load", function () {
+
+    console.log("CptMarkets Dashboard Loaded");
+
+});
+
+
+/* ==========================================
+   TAWK WIDGET AUTO HIDE
+========================================== */
+
+const checkTawk = setInterval(function () {
+
+    if (
+        typeof window.Tawk_API !== "undefined" &&
+        typeof window.Tawk_API.hideWidget === "function"
+    ) {
+
+        window.Tawk_API.hideWidget();
+
+        clearInterval(checkTawk);
+
+    }
+
+}, 500);
+
+
+/* ==========================================
+   END OF DASHBOARD.JS
+========================================== */
