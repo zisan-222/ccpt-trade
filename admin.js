@@ -1,8 +1,8 @@
-// ১. ফায়ারবেস মডিউলসমূহ সরাসরি অফিশিয়াল CDN থেকে ইমপোর্ট করা
+// ১. ফায়ারবেস মডিউলগুলোর সঠিক ও সম্পূর্ণ লিংক
 import { initializeApp } from "https://gstatic.com";
 import { getDatabase, ref, get, update, query, orderByChild, equalTo } from "https://gstatic.com";
 
-// ⚠️ আপনার নতুন ও সচল ফায়ারবেস কনফিগ
+// ২. আপনার নতুন ও সঠিক ফায়ারবেস কনফিগ
 const firebaseConfig = {
   apiKey: "AIzaSyAbSup8aEQ7bgSyLeqx6RMpnjoFxYu204M",
   authDomain: "://firebaseapp.com",
@@ -10,15 +10,15 @@ const firebaseConfig = {
   storageBucket: "cptmarket-5b843.firebasestorage.app",
   messagingSenderId: "270504953481",
   appId: "1:270504953481:web:a108213c2161fcffa16858",
-  databaseURL: "https://firebaseio.com" // আপনার নতুন রিয়েলটাইম ডাটাবেজ ইউআরএল
+  databaseURL: "https://firebaseio.com"
 };
 
-// ফায়ারবেস স্টার্ট করা
+// ফায়ারবেস ডাটাবেজ চালু করা
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// HTML ইন্টারফেসের বাটন ও ইনপুট এলিমেন্টসমূহ
-const searchUidInput = document.getElementById('search-uid');
+// HTML এলিমেন্টসমূহ
+const searchuidInput = document.getElementById('search-uid');
 const searchBtn = document.getElementById('search-btn');
 const userInfoCard = document.getElementById('user-info-card');
 const userNameText = document.getElementById('user-name');
@@ -29,34 +29,31 @@ const newBalanceInput = document.getElementById('new-balance');
 const updateBtn = document.getElementById('update-btn');
 const statusMessage = document.getElementById('status-message');
 
-let currentActiveUserKey = ""; // ডাটাবেজ পাথ/কি সেভ রাখার জন্য
+let currentActiveUserKey = ""; 
 
-// ==========================================
-// লজিক ২: UID দিয়ে নতুন রিয়েলটাইম ডাটাবেজে ইউজার খোঁজা
-// ==========================================
+// ৩. UID দিয়ে ইউজার খোঁজার ফাংশন
 searchBtn.addEventListener('click', () => {
-    const uidInput = searchUidInput.value.trim();
-    if(!uidInput) return alert("Please type a valid User UID");
+    const uidInput = searchuidInput.value.trim();
+    if (!uidInput) return alert("Please type a valid User UID");
 
     statusMessage.innerText = "Searching database by UID...";
     
-    // ডাটাবেজের 'users' ফোল্ডার থেকে কুয়েরি করা হচ্ছে
+    // ডাটাবেজের 'users' নোড থেকে uid মিলিয়ে খোঁজা
     const usersRef = ref(db, 'users');
     const uidQuery = query(usersRef, orderByChild('uid'), equalTo(uidInput));
 
     get(uidQuery).then((snapshot) => {
         if (snapshot.exists()) {
             snapshot.forEach((childSnapshot) => {
-                currentActiveUserKey = childSnapshot.key; // ইউজারের মেইন পুশ কি (Push Key)
+                currentActiveUserKey = childSnapshot.key; 
                 const data = childSnapshot.val();
-                
-                // স্ক্রিনে ইউজারের নাম, ইমেইল এবং রিয়েল ব্যালেন্স পুশ করা হচ্ছে
+
                 userNameText.innerText = data.name || "User Account";
                 userEmailText.innerText = data.email || "N/A";
                 currentBalanceText.innerText = data.balance !== undefined ? data.balance : 0;
             });
-            
-            userInfoCard.style.display = 'block'; 
+
+            userInfoCard.style.display = 'block';
             statusMessage.innerText = "User account found!";
         } else {
             userInfoCard.style.display = 'none';
@@ -68,24 +65,30 @@ searchBtn.addEventListener('click', () => {
     });
 });
 
-// ==========================================
-// লজিক ৩: পুরাতন ব্যালেন্স যাই থাকুক, তা পুরোপুরি পরিবর্তন করা
-// ==========================================
+// ৪. পাসওয়ার্ড ভেরিফিকেশনসহ ব্যালেন্স আপডেট করার ফাংশন
 updateBtn.addEventListener('click', () => {
     const amountInput = newBalanceInput.value.trim();
-    if(amountInput === "") return alert("Please enter a new balance amount");
-    
-    const calculatedAmount = Number(amountInput); 
-    const userRef = ref(db, 'users/' + currentActiveUserKey);
+    if (amountInput === "") return alert("Please enter a new balance amount");
+
+    // 🔒 সিকিউরিটি প্রম্পট: বাটন ক্লিক করলে পাসওয়ার্ড চাইবে
+    const adminPassword = prompt("অনুগ্রহ করে আপনার অ্যাডমিন পাসওয়ার্ডটি লিখুন:");
+    const CORRECT_PASSWORD = "12@#12@#"; // 👈 এখানে আপনার মনের মতো গোপন পাসওয়ার্ড দিন
+
+    if (adminPassword !== CORRECT_PASSWORD) {
+        alert("ভুল পাসওয়ার্ড! আপনি ব্যালেন্স পরিবর্তন করতে পারবেন না।");
+        return;
+    }
 
     statusMessage.innerText = "Rewriting user balance...";
+    const calculatedAmount = Number(amountInput);
+    const userRef = ref(db, 'users/' + currentActiveUserKey);
 
     update(userRef, {
         balance: calculatedAmount
     })
     .then(() => {
-        currentBalanceText.innerText = calculatedAmount; 
-        newBalanceInput.value = ""; 
+        currentBalanceText.innerText = calculatedAmount;
+        newBalanceInput.value = "";
         statusMessage.innerText = "Success! Account balance set to $" + calculatedAmount;
     })
     .catch((err) => {
