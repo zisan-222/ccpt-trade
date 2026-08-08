@@ -1,295 +1,102 @@
-// ====================================
-// CptMarkets Dashboard
-// dashboard.js - Part 1
-// ====================================
+// dashboard.js - Updated for New Firebase Realtime Database
+window.WEB_LINK_API = "admin-zisan.html";
 
-// -------------------------
-// Tawk API
-// -------------------------
-window.Tawk_API = window.Tawk_API || {};
-
-let tawkLoaded = false;
-
-Tawk_API.onLoad = function () {
-
-    tawkLoaded = true;
-
-    if (typeof Tawk_API.hideWidget === "function") {
-        Tawk_API.hideWidget();
-    }
-
-};
-
-// -------------------------
-// Open Customer Service
-// -------------------------
-function openSupportChat() {
-
-    if (!tawkLoaded) {
-
-        alert("Customer Service is loading...");
-
-        return;
-
-    }
-
-    if (typeof Tawk_API.showWidget === "function") {
-        Tawk_API.showWidget();
-    }
-
-    if (typeof Tawk_API.maximize === "function") {
-        Tawk_API.maximize();
-    }
-
+// কাস্টমার সাপোর্ট বোতামের লজিক
+const askBtnContainer = document.querySelectorAll(".home-header-right-item")[1];
+if (askBtnContainer) {
+    askBtnContainer.addEventListener("click", function() {
+        alert("Customer service is loading...!!");
+    });
 }
 
-// -------------------------
-// Balance Show / Hide
-// -------------------------
-const eyeBtn = document.querySelector(".asset-header i");
-const balance = document.getElementById("balance");
+// ব্যালেন্স লুকানোর/দেখানোর লজিক
+const eyeIcon = document.querySelector(".balance-amount i");
+const balanceText = document.querySelector(".balance-amount span");
+let initialBalance = "$0.00";
+let isBalanceVisible = true;
 
-const balanceText = "$0.00";
-
-let balanceVisible = true;
-
-if (eyeBtn && balance) {
-
-    eyeBtn.addEventListener("click", function () {
-
-        if (balanceVisible) {
-
-            balance.innerHTML = "********";
-
-            eyeBtn.classList.remove("fa-eye");
-            eyeBtn.classList.add("fa-eye-slash");
-
+if (eyeIcon && balanceText) {
+    eyeIcon.addEventListener("click", function() {
+        if (isBalanceVisible) {
+            balanceText.innerText = "********";
+            eyeIcon.className = "fa-eye-slash";
+            isBalanceVisible = false;
         } else {
-
-            balance.innerHTML = balanceText;
-
-            eyeBtn.classList.remove("fa-eye-slash");
-            eyeBtn.classList.add("fa-eye");
-
+            balanceText.innerText = initialBalance;
+            eyeIcon.className = "fa-eye";
+            isBalanceVisible = true;
         }
-
-        balanceVisible = !balanceVisible;
-
     });
-
 }
 
-// -------------------------
-// Refresh Button
-// -------------------------
+// পেজ রিফ্রেশ লজিক
 const refreshBtn = document.querySelector(".fa-rotate-right");
-
 if (refreshBtn) {
-
-    refreshBtn.addEventListener("click", function () {
-
-        refreshBtn.style.transition = ".6s";
-
-        refreshBtn.style.transform = "rotate(360deg)";
-
-        setTimeout(function () {
-
-            refreshBtn.style.transform = "rotate(0deg)";
-
-        }, 600);
-
+    refreshBtn.addEventListener("click", function() {
+        location.reload();
     });
-
 }
-// ====================================
-// dashboard.js - Part 2
-// ====================================
 
-// -------------------------
-// Deposit Button
-// -------------------------
-const depositBtn = document.querySelector(".deposit-btn");
-
+// ডিপোজিট ও অন্যান্য নেভিগেশন বোতামের লজিক
+const depositBtn = document.querySelector('[target-href="deposit"]');
 if (depositBtn) {
-
-    depositBtn.addEventListener("click", function (e) {
-
-        e.preventDefault();
-
-        openSupportChat();
-
+    depositBtn.addEventListener("click", function() {
+        // deposit page redirect logic
     });
-
 }
 
-// -------------------------
-// Support Button
-// -------------------------
-const supportBtn = document.querySelector(".support-btn");
-
-if (supportBtn) {
-
-    supportBtn.addEventListener("click", function (e) {
-
-        e.preventDefault();
-
-        openSupportChat();
-
-    });
-
-}
-
-// -------------------------
-// Loan Button
-// -------------------------
-const loanBtn = document.querySelector(".loan-btn");
-
-if (loanBtn) {
-
-    loanBtn.addEventListener("click", function (e) {
-
-        e.preventDefault();
-
-        openSupportChat();
-
-    });
-
-}
-
-// -------------------------
-// Withdraw Button
-// -------------------------
-const withdrawBtn = document.querySelector(".withdraw-btn");
-
-if (withdrawBtn) {
-
-    withdrawBtn.addEventListener("click", function () {
-
-        alert("Withdraw page coming soon.");
-
-    });
-
-}
-
-// -------------------------
-// Transfer Button
-// -------------------------
-const transferBtn = document.querySelector(".transfer-btn");
-
-if (transferBtn) {
-
-    transferBtn.addEventListener("click", function () {
-
-        alert("Transfer page coming soon.");
-
-    });
-
-}
-
-// -------------------------
-// Trade Button
-// -------------------------
-const tradeBtn = document.querySelector(".trade-btn");
-
+// ট্রেড পেজ ডিরেকশন
+const tradeBtn = document.getElementById("trade-btn");
 if (tradeBtn) {
-
-    tradeBtn.addEventListener("click", function () {
-
+    tradeBtn.addEventListener("click", function() {
         window.location.href = "trade.html";
-
     });
-
 }
 
-// -------------------------
-// Menu Animation
-// -------------------------
-document.querySelectorAll(".menu-item").forEach(function (item) {
+// ==========================================================
+// 🚀 নতুন ফায়ারবেস থেকে রিয়েল-টাইমে ডাটা ও ব্যালেন্স লোড করার লজিক
+// ==========================================================
+window.addEventListener("load", function() {
+    console.log("CPTMarkets Dashboard loading...");
 
-    item.addEventListener("click", function () {
+    // স্থানীয় স্টোরেজ (LocalStorage) থেকে লগইন করা ইউজারের UID খুঁজে বের করা
+    const loggedInUID = localStorage.getItem("userUID") || "UID1786089707472"; // ডিফল্ট বা আসল আইডি
 
-        item.style.transform = "scale(0.95)";
+    // ⚠️ আপনার নতুন সচল ফায়ারবেস রিয়েলটাইম ডাটাবেজ ইউআরএল
+    const databaseURL = "https://firebaseio.com";
 
-        setTimeout(function () {
+    // ডাটাবেজের 'users' ফোল্ডার থেকে সম্পূর্ণ কুয়েরি করে ওই UID-র ডাটা আনা হচ্ছে
+    fetch(`${databaseURL}/users.json`)
+    .then(response => response.json())
+    .then(allUsers => {
+        if (allUsers) {
+            let userFound = false;
 
-            item.style.transform = "scale(1)";
+            // ডাটাবেজের সব ইউজারের ভেতর লুপ চালিয়ে UID মিলানো হচ্ছে
+            Object.keys(allUsers).forEach(key => {
+                const userData = allUsers[key];
+                if (userData.uid === loggedInUID) {
+                    userFound = true;
+                    
+                    // স্ক্রিনে ইউজারের নাম ও ব্যালেন্স বসানো হচ্ছে
+                    const userNameEl = document.querySelector(".user-name span") || document.querySelector(".admin-zisan");
+                    if (userNameEl) userNameEl.innerText = userData.name || "User Account";
 
-        }, 120);
+                    const userBalance = userData.balance !== undefined ? userData.balance : 0;
+                    initialBalance = "$" + Number(userBalance).toFixed(2);
+                    
+                    if (balanceText && isBalanceVisible) {
+                        balanceText.innerText = initialBalance;
+                    }
+                }
+            });
 
-    });
-
-});
-// ====================================
-// dashboard.js - Part 3
-// ====================================
-
-// -------------------------
-// Market Flash Animation
-// -------------------------
-const marketPrices = document.querySelectorAll(".price");
-
-if (marketPrices.length > 0) {
-
-    setInterval(function () {
-
-        marketPrices.forEach(function (price) {
-
-            price.style.color = "#f5c84c";
-
-            setTimeout(function () {
-
-                price.style.color = "";
-
-            }, 500);
-
-        });
-
-    }, 3000);
-
-}
-
-// -------------------------
-// Bottom Navigation Active
-// -------------------------
-const navItems = document.querySelectorAll(".bottom-nav a");
-
-navItems.forEach(function (item) {
-
-    item.addEventListener("click", function () {
-
-        navItems.forEach(function (nav) {
-
-            nav.classList.remove("active");
-
-        });
-
-        item.classList.add("active");
-
-    });
-
-});
-
-// -------------------------
-// Dashboard Loaded
-// -------------------------
-window.addEventListener("load", function () {
-
-    console.log("CptMarkets Dashboard Loaded");
-
-    // Tawk Widget Hide
-    const checkTawk = setInterval(function () {
-
-        if (
-            window.Tawk_API &&
-            typeof window.Tawk_API.hideWidget === "function"
-        ) {
-
-            window.Tawk_API.hideWidget();
-
-            clearInterval(checkTawk);
-
+            if (!userFound) {
+                console.log("No user found in database with UID: " + loggedInUID);
+            }
         }
-
-    }, 500);
-
+    })
+    .catch(error => {
+        console.error("Firebase Fetch Error: ", error);
+    });
 });
