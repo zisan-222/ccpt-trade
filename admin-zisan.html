@@ -47,6 +47,13 @@
     </div>
 
     <!-- Firebase SDK মডিউল স্ক্রিপ্ট লিংক -->
+    <script>
+    window.onerror = function(message, source, lineno, colno, error) {
+        alert("Error found: " + message + " at line " + lineno);
+        return true;
+    };
+</script>
+
     <script type="module" src="admin.js"></script>
 </body>
 </html>
