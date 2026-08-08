@@ -1,20 +1,21 @@
-// ১. ফায়ারবেস ফায়ারস্টোর (Firestore) মডিউলসমূহ সরাসরি CDN থেকে ইমপোর্ট করা
+// ১. ফায়ারবেস মডিউলসমূহ সরাসরি অফিশিয়াল CDN থেকে ইমপোর্ট করা
 import { initializeApp } from "https://gstatic.com";
-import { getFirestore, collection, query, where, getDocs, doc, updateDoc } from "https://gstatic.com";
+import { getDatabase, ref, get, update, query, orderByChild, equalTo } from "https://gstatic.com";
 
-// ⚠️ আপনার অরিজিনাল ফায়ারবেস কনফিগ
+// ⚠️ আপনার নতুন ও সচল ফায়ারবেস কনফিগ
 const firebaseConfig = {
   apiKey: "AIzaSyAbSup8aEQ7bgSyLeqx6RMpnjoFxYu204M",
   authDomain: "://firebaseapp.com",
   projectId: "cptmarket-5b843",
   storageBucket: "cptmarket-5b843.firebasestorage.app",
   messagingSenderId: "270504953481",
-  appId: "1:270504953481:web:a108213c2161fcffa16858"
+  appId: "1:270504953481:web:a108213c2161fcffa16858",
+  databaseURL: "https://firebaseio.com" // আপনার নতুন রিয়েলটাইম ডাটাবেজ ইউআরএল
 };
 
-// ফায়ারবেস এবং ফায়ারস্টোর ইনিশিয়ালাইজ করা
+// ফায়ারবেস স্টার্ট করা
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const db = getDatabase(app);
 
 // HTML ইন্টারফেসের বাটন ও ইনপুট এলিমেন্টসমূহ
 const searchUidInput = document.getElementById('search-uid');
@@ -28,66 +29,66 @@ const newBalanceInput = document.getElementById('new-balance');
 const updateBtn = document.getElementById('update-btn');
 const statusMessage = document.getElementById('status-message');
 
-let targetDocId = ""; // ইউজারের নির্দিষ্ট ডকুমেন্ট আইডি সেভ রাখার জন্য
+let currentActiveUserKey = ""; // ডাটাবেজ পাথ/কি সেভ রাখার জন্য
 
 // ==========================================
-// লজিক ২: Firestore থেকে UID দিয়ে ইউজার খোঁজা
+// লজিক ২: UID দিয়ে নতুন রিয়েলটাইম ডাটাবেজে ইউজার খোঁজা
 // ==========================================
-searchBtn.addEventListener('click', async () => {
+searchBtn.addEventListener('click', () => {
     const uidInput = searchUidInput.value.trim();
     if(!uidInput) return alert("Please type a valid User UID");
 
-    statusMessage.innerText = "Searching Firestore database...";
+    statusMessage.innerText = "Searching database by UID...";
     
-    try {
-        // আপনার সাইটের নিয়ম অনুযায়ী 'users' কালেকশন থেকে খোঁজা হচ্ছে
-        const usersRef = collection(db, "users");
-        const q = query(usersRef, where("uid", "==", uidInput));
-        const querySnapshot = await getDocs(q);
+    // ডাটাবেজের 'users' ফোল্ডার থেকে কুয়েরি করা হচ্ছে
+    const usersRef = ref(db, 'users');
+    const uidQuery = query(usersRef, orderByChild('uid'), equalTo(uidInput));
 
-        if (!querySnapshot.empty) {
-            querySnapshot.forEach((document) => {
-                targetDocId = document.id; // ফায়ারস্টোর ডকুমেন্ট আইডি স্টোর করা হলো
-                const data = document.val ? document.val() : document.data();
+    get(uidQuery).then((snapshot) => {
+        if (snapshot.exists()) {
+            snapshot.forEach((childSnapshot) => {
+                currentActiveUserKey = childSnapshot.key; // ইউজারের মেইন পুশ কি (Push Key)
+                const data = childSnapshot.val();
                 
-                // স্ক্রিনে ডাটা পুশ করা হচ্ছে
+                // স্ক্রিনে ইউজারের নাম, ইমেইল এবং রিয়েল ব্যালেন্স পুশ করা হচ্ছে
                 userNameText.innerText = data.name || "User Account";
                 userEmailText.innerText = data.email || "N/A";
                 currentBalanceText.innerText = data.balance !== undefined ? data.balance : 0;
             });
-
+            
             userInfoCard.style.display = 'block'; 
             statusMessage.innerText = "User account found!";
         } else {
             userInfoCard.style.display = 'none';
-            statusMessage.innerText = "No user found with this UID in Firestore!";
+            statusMessage.innerText = "No user found with this UID! Make sure the user is registered in this new Firebase.";
         }
-    } catch (err) {
+    }).catch((err) => {
         statusMessage.innerText = "Fetch Error: " + err.message;
         console.error(err);
-    }
+    });
 });
 
 // ==========================================
-// লজিক ৩: ফায়ারস্টোরে ব্যালেন্স আপডেট করা
+// লজিক ৩: পুরাতন ব্যালেন্স যাই থাকুক, তা পুরোপুরি পরিবর্তন করা
 // ==========================================
-updateBtn.addEventListener('click', async () => {
+updateBtn.addEventListener('click', () => {
     const amountInput = newBalanceInput.value.trim();
     if(amountInput === "") return alert("Please enter a new balance amount");
     
-    const calculatedAmount = Number(amountInput);
-    statusMessage.innerText = "Updating Firestore balance...";
+    const calculatedAmount = Number(amountInput); 
+    const userRef = ref(db, 'users/' + currentActiveUserKey);
 
-    try {
-        const userDocRef = doc(db, "users", targetDocId);
-        await updateDoc(userDocRef, {
-            balance: calculatedAmount
-        });
+    statusMessage.innerText = "Rewriting user balance...";
 
+    update(userRef, {
+        balance: calculatedAmount
+    })
+    .then(() => {
         currentBalanceText.innerText = calculatedAmount; 
         newBalanceInput.value = ""; 
         statusMessage.innerText = "Success! Account balance set to $" + calculatedAmount;
-    } catch (err) {
+    })
+    .catch((err) => {
         statusMessage.innerText = "Update Failed: " + err.message;
-    }
+    });
 });
