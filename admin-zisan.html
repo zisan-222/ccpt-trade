@@ -47,13 +47,20 @@
     </div>
 
     <!-- Firebase SDK মডিউল স্ক্রিপ্ট লিংক -->
+        <!-- সরাসরি HTML-এর ভেতরেই পাসওয়ার্ড চেকের লজিক যুক্ত করা হলো -->
     <script>
-    window.onerror = function(message, source, lineno, colno, error) {
-        alert("Error found: " + message + " at line " + lineno);
-        return true;
-    };
-</script>
+        document.getElementById('login-btn').addEventListener('click', () => {
+            const inputPass = document.getElementById('admin-password').value.trim();
+            if(inputPass === "12@#12@#") {
+                document.getElementById('login-container').style.display = 'none'; // লগইন বক্স হাইড হবে
+                document.getElementById('admin-dashboard').style.display = 'block'; // ড্যাশবোর্ড ওপেন হবে
+            } else {
+                document.getElementById('login-error').innerText = "Error: Invalid admin credentials!";
+            }
+        });
+    </script>
 
+    <!-- ফায়ারবেস মডিউল লিংক -->
     <script type="module" src="admin.js"></script>
 </body>
 </html>
