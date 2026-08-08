@@ -1,8 +1,8 @@
-// ১. ফায়ারবেস মডিউলসমূহ সরাসরি অফিশিয়াল CDN থেকে ইমপোর্ট করা
+ // ১. ফায়ারবেস মডিউলসমূহ সরাসরি অফিশিয়াল CDN থেকে ইমপোর্ট করা
 import { initializeApp } from "https://gstatic.com";
-import { getDatabase, ref, get, update } from "https://gstatic.com";
+import { getDatabase, ref, get, update, query, orderByChild, equalTo } from "https://gstatic.com";
 
-// ⚠️ আপনার স্ক্রিনশট থেকে নেওয়া অরিজিনাল ফায়ারবেস কনফিগ
+// ⚠️ আপনার অরিজিনাল ফায়ারবেস কনফিগ
 const firebaseConfig = {
   apiKey: "AIzaSyAbSup8aEQ7bgSyLeqx6RMpnjoFxYu204M",
   authDomain: "://firebaseapp.com",
@@ -16,16 +16,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// 🔑 আপনার দেওয়া নতুন সিক্রেট পাসওয়ার্ড
-const SECRET_ADMIN_PASSWORD = "12@#12@#"; 
-
 // HTML ইন্টারফেসের বাটন ও ইনপুট এলিমেন্টসমূহ
-const loginContainer = document.getElementById('login-container');
-const adminDashboard = document.getElementById('admin-dashboard');
-const adminPasswordInput = document.getElementById('admin-password');
-const loginBtn = document.getElementById('login-btn');
-const loginError = document.getElementById('login-error');
-
 const searchUidInput = document.getElementById('search-uid');
 const searchBtn = document.getElementById('search-btn');
 const userInfoCard = document.getElementById('user-info-card');
@@ -37,51 +28,45 @@ const newBalanceInput = document.getElementById('new-balance');
 const updateBtn = document.getElementById('update-btn');
 const statusMessage = document.getElementById('status-message');
 
-let currentActiveUID = ""; // সার্চ করা ইউজারের আইডি স্টোর রাখার জন্য গ্লোবাল ভেরিয়েবল
+let currentActiveUserKey = ""; // যে ইউজারের অ্যাকাউন্ট পাওয়া যাবে তার ডাটাবেজ কি (Key) বা পাথ রাখার জন্য
 
 // ==========================================
-// লজিক ১: নতুন পাসওয়ার্ড চেক করে প্যানেলে ঢোকা
-// ==========================================
-loginBtn.addEventListener('click', () => {
-    const inputPass = adminPasswordInput.value.trim();
-    if(inputPass === SECRET_ADMIN_PASSWORD) {
-        loginContainer.style.display = 'none'; // লগইন বক্স গায়েব হবে
-        adminDashboard.style.display = 'block'; // কন্ট্রোল প্যানেল ওপেন হবে
-    } else {
-        loginError.innerText = "Error: Invalid admin credentials!";
-    }
-});
-
-// ==========================================
-// লজিক ২: UID দিয়ে ইউজার সার্চ করে ডাটাবেজ থেকে ডাটা আনা
+// লজিক ২: UID দিয়ে ডাটাবেজে ইউজার খোঁজা (Query System)
 // ==========================================
 searchBtn.addEventListener('click', () => {
-    const uid = searchUidInput.value.trim();
-    if(!uid) return alert("Please type a valid User UID");
+    const uidInput = searchUidInput.value.trim();
+    if(!uidInput) return alert("Please type a valid User UID");
 
-    statusMessage.innerText = "Searching database...";
-    const userRef = ref(db, 'users/' + uid);
+    statusMessage.innerText = "Searching database by UID...";
+    
+    // মূল রুট ডিরেক্টরিতে কুয়েরি চালানো হচ্ছে যেন ভেতরের 'uid' ফিল্ডের সাথে ইনপুট করা UID মিলে যায়
+    const dbRef = ref(db, '/');
+    const uidQuery = query(dbRef, orderByChild('uid'), equalTo(uidInput));
 
-    get(userRef).then((snapshot) => {
+    get(uidQuery).then((snapshot) => {
         if (snapshot.exists()) {
-            const data = snapshot.val();
-            currentActiveUID = uid; // আইডি সেভ করা হলো
+            // ফায়ারবেস কুয়েরি অবজেক্ট আকারে ডাটা দেয়, তাই লুপ দিয়ে মেইন ইউজারকে বের করা হচ্ছে
+            snapshot.forEach((childSnapshot) => {
+                currentActiveUserKey = childSnapshot.key; // ইউজারের ডাটাবেজ পাথ/ইমেল কি (যেমন: zisanemailcom)
+                const data = childSnapshot.val();
+                
+                // স্ক্রিনে ইউজারের নাম, ইমেইল এবং রিয়েল ব্যালেন্স পুশ করা হচ্ছে
+                userNameText.innerText = data.name || "User Account";
+                userEmailText.innerText = data.email || "N/A";
+                
+                // ব্যালেন্স ফিল্ডের ডাটা স্ক্রিনে দেখানো
+                currentBalanceText.innerText = data.balance !== undefined ? data.balance : 0;
+            });
             
-            // স্ক্রিনে ইউজারের নাম, ইমেইল এবং রিয়েল ব্যালেন্স পুশ করা হচ্ছে
-            userNameText.innerText = data.name || "Unknown User";
-            userEmailText.innerText = data.email || "No Email";
-            
-            // যদি ডাটাবেজে ব্যালেন্স ডাটা না থাকে (অথবা ০ থাকে) তবে স্ক্রিনে ০ দেখাবে
-            currentBalanceText.innerText = data.balance !== undefined ? data.balance : 0; 
-            
-            userInfoCard.style.display = 'block'; // ইনফো কার্ড ওপেন (ভুল সংশোধন করা হয়েছে)
+            userInfoCard.style.display = 'block'; // ইনফো কার্ড ওপেন 
             statusMessage.innerText = "User account found!";
         } else {
             userInfoCard.style.display = 'none';
-            statusMessage.innerText = "No user found with this UID!";
+            statusMessage.innerText = "No user found with this UID! Make sure it matches exactly.";
         }
     }).catch((err) => {
         statusMessage.innerText = "Fetch Error: " + err.message;
+        console.error(err);
     });
 });
 
@@ -93,11 +78,11 @@ updateBtn.addEventListener('click', () => {
     if(amountInput === "") return alert("Please enter a new balance amount");
     
     const calculatedAmount = Number(amountInput); // টেক্সট থেকে পিওর নাম্বারে কনভার্ট (যেমন: ০ বা ১০০০)
-    const userRef = ref(db, 'users/' + currentActiveUID);
+    const userRef = ref(db, currentActiveUserKey);
 
     statusMessage.innerText = "Rewriting user balance...";
 
-    // ফায়ারবেস রিয়েলটাইম ডাটাবেজে ব্যালেন্স আপডেট করার কুয়েরি
+    // ফায়ারবেস রিয়েলটাইম ডাটাবেজে সরাসরি ব্যালেন্স আপডেট করা
     update(userRef, {
         balance: calculatedAmount
     })
