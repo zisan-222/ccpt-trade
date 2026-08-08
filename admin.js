@@ -1,97 +1,402 @@
-// ১. ফায়ারবেস মডিউলগুলোর সঠিক ও সম্পূর্ণ লিংক
-import { initializeApp } from "https://gstatic.com";
-import { getDatabase, ref, get, update, query, orderByChild, equalTo } from "https://gstatic.com";
+/* ==========================================
+   CPTMARKETS DASHBOARD
+   dashboard.js - Complete Version
+========================================== */
 
-// ২. আপনার নতুন ও সঠিক ফায়ারবেস কনফিগ
-const firebaseConfig = {
-  apiKey: "AIzaSyAbSup8aEQ7bgSyLeqx6RMpnjoFxYu204M",
-  authDomain: "://firebaseapp.com",
-  projectId: "cptmarket-5b843",
-  storageBucket: "cptmarket-5b843.firebasestorage.app",
-  messagingSenderId: "270504953481",
-  appId: "1:270504953481:web:a108213c2161fcffa16858",
-  databaseURL: "https://firebaseio.com"
+
+/* ==========================================
+   TAWK.TO CUSTOMER SERVICE
+========================================== */
+
+// Tawk API initialize
+window.Tawk_API = window.Tawk_API || {};
+window.Tawk_LoadStart = new Date();
+
+let tawkLoaded = false;
+
+
+// Tawk.to loaded
+window.Tawk_API.onLoad = function () {
+
+    tawkLoaded = true;
+
+    console.log("Tawk.to Customer Service Loaded");
+
+    // Hide Tawk widget when dashboard loads
+    if (typeof window.Tawk_API.hideWidget === "function") {
+        window.Tawk_API.hideWidget();
+    }
 };
 
-// ফায়ারবেস ডাটাবেজ চালু করা
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
 
-// HTML এলিমেন্টসমূহ
-const searchuidInput = document.getElementById('search-uid');
-const searchBtn = document.getElementById('search-btn');
-const userInfoCard = document.getElementById('user-info-card');
-const userNameText = document.getElementById('user-name');
-const userEmailText = document.getElementById('user-email');
-const currentBalanceText = document.getElementById('current-balance');
+/* ==========================================
+   OPEN CUSTOMER SERVICE
+========================================== */
 
-const newBalanceInput = document.getElementById('new-balance');
-const updateBtn = document.getElementById('update-btn');
-const statusMessage = document.getElementById('status-message');
+function openSupportChat() {
 
-let currentActiveUserKey = ""; 
+    // Tawk not loaded yet
+    if (!tawkLoaded) {
 
-// ৩. UID দিয়ে ইউজার খোঁজার ফাংশন
-searchBtn.addEventListener('click', () => {
-    const uidInput = searchuidInput.value.trim();
-    if (!uidInput) return alert("Please type a valid User UID");
+        // Try to show widget anyway
+        if (
+            typeof window.Tawk_API !== "undefined" &&
+            typeof window.Tawk_API.showWidget === "function"
+        ) {
 
-    statusMessage.innerText = "Searching database by UID...";
-    
-    // ডাটাবেজের 'users' নোড থেকে uid মিলিয়ে খোঁজা
-    const usersRef = ref(db, 'users');
-    const uidQuery = query(usersRef, orderByChild('uid'), equalTo(uidInput));
+            window.Tawk_API.showWidget();
 
-    get(uidQuery).then((snapshot) => {
-        if (snapshot.exists()) {
-            snapshot.forEach((childSnapshot) => {
-                currentActiveUserKey = childSnapshot.key; 
-                const data = childSnapshot.val();
-
-                userNameText.innerText = data.name || "User Account";
-                userEmailText.innerText = data.email || "N/A";
-                currentBalanceText.innerText = data.balance !== undefined ? data.balance : 0;
-            });
-
-            userInfoCard.style.display = 'block';
-            statusMessage.innerText = "User account found!";
         } else {
-            userInfoCard.style.display = 'none';
-            statusMessage.innerText = "No user found with this UID! Make sure the user is registered in this new Firebase.";
+
+            alert("Customer Service is loading...");
+
+            return;
         }
-    }).catch((err) => {
-        statusMessage.innerText = "Fetch Error: " + err.message;
-        console.error(err);
-    });
-});
-
-// ৪. পাসওয়ার্ড ভেরিফিকেশনসহ ব্যালেন্স আপডেট করার ফাংশন
-updateBtn.addEventListener('click', () => {
-    const amountInput = newBalanceInput.value.trim();
-    if (amountInput === "") return alert("Please enter a new balance amount");
-
-    // 🔒 সিকিউরিটি প্রম্পট: বাটন ক্লিক করলে পাসওয়ার্ড চাইবে
-    const adminPassword = prompt("অনুগ্রহ করে আপনার অ্যাডমিন পাসওয়ার্ডটি লিখুন:");
-    const CORRECT_PASSWORD = "12@#12@#"; // 👈 এখানে আপনার মনের মতো গোপন পাসওয়ার্ড দিন
-
-    if (adminPassword !== CORRECT_PASSWORD) {
-        alert("ভুল পাসওয়ার্ড! আপনি ব্যালেন্স পরিবর্তন করতে পারবেন না।");
-        return;
     }
 
-    statusMessage.innerText = "Rewriting user balance...";
-    const calculatedAmount = Number(amountInput);
-    const userRef = ref(db, 'users/' + currentActiveUserKey);
 
-    update(userRef, {
-        balance: calculatedAmount
-    })
-    .then(() => {
-        currentBalanceText.innerText = calculatedAmount;
-        newBalanceInput.value = "";
-        statusMessage.innerText = "Success! Account balance set to $" + calculatedAmount;
-    })
-    .catch((err) => {
-        statusMessage.innerText = "Update Failed: " + err.message;
+    // Show Tawk widget
+    if (typeof window.Tawk_API.showWidget === "function") {
+        window.Tawk_API.showWidget();
+    }
+
+
+    // Open / maximize chat
+    setTimeout(function () {
+
+        if (typeof window.Tawk_API.maximize === "function") {
+            window.Tawk_API.maximize();
+        }
+
+    }, 300);
+}
+
+
+/* ==========================================
+   BALANCE SHOW / HIDE
+========================================== */
+
+const eyeBtn = document.querySelector(".asset-header i");
+const balance = document.getElementById("balance");
+
+
+// Original balance text
+const balanceText = "$0.00";
+
+
+// Balance visibility
+let balanceVisible = true;
+
+
+if (eyeBtn && balance) {
+
+    eyeBtn.addEventListener("click", function () {
+
+        // Hide balance
+        if (balanceVisible) {
+
+            balance.innerHTML = "••••••";
+
+            eyeBtn.classList.remove("fa-eye");
+            eyeBtn.classList.add("fa-eye-slash");
+
+            balanceVisible = false;
+
+        }
+
+        // Show balance
+        else {
+
+            balance.innerHTML = balanceText;
+
+            eyeBtn.classList.remove("fa-eye-slash");
+            eyeBtn.classList.add("fa-eye");
+
+            balanceVisible = true;
+        }
+
     });
+
+}
+
+
+/* ==========================================
+   REFRESH BUTTON
+========================================== */
+
+const refreshBtn = document.querySelector(".fa-rotate-right");
+
+
+if (refreshBtn) {
+
+    refreshBtn.addEventListener("click", function () {
+
+        // Reset previous animation
+        refreshBtn.style.transition = "none";
+        refreshBtn.style.transform = "rotate(0deg)";
+
+
+        // Start animation
+        setTimeout(function () {
+
+            refreshBtn.style.transition = "0.6s";
+            refreshBtn.style.transform = "rotate(360deg)";
+
+        }, 10);
+
+
+        // Reset rotation
+        setTimeout(function () {
+
+            refreshBtn.style.transition = "none";
+            refreshBtn.style.transform = "rotate(0deg)";
+
+        }, 650);
+
+    });
+
+}
+
+
+/* ==========================================
+   DEPOSIT BUTTON
+   Opens Tawk.to Customer Service
+========================================== */
+
+const depositBtn = document.querySelector(".deposit-btn");
+
+
+if (depositBtn) {
+
+    depositBtn.addEventListener("click", function (e) {
+
+        e.preventDefault();
+
+        openSupportChat();
+
+    });
+
+}
+
+
+/* ==========================================
+   SUPPORT BUTTON
+   Opens Tawk.to Customer Service
+========================================== */
+
+const supportBtn = document.querySelector(".support-btn");
+
+
+if (supportBtn) {
+
+    supportBtn.addEventListener("click", function (e) {
+
+        e.preventDefault();
+
+        openSupportChat();
+
+    });
+
+}
+
+
+/* ==========================================
+   LOAN BUTTON
+   Opens Tawk.to Customer Service
+========================================== */
+
+const loanBtn = document.querySelector(".loan-btn");
+
+
+if (loanBtn) {
+
+    loanBtn.addEventListener("click", function (e) {
+
+        e.preventDefault();
+
+        openSupportChat();
+
+    });
+
+}
+
+
+/* ==========================================
+   WITHDRAW BUTTON
+========================================== */
+
+const withdrawBtn = document.querySelector(".withdraw-btn");
+
+
+if (withdrawBtn) {
+
+    withdrawBtn.addEventListener("click", function (e) {
+
+        e.preventDefault();
+
+        alert("Withdraw page coming soon.");
+
+    });
+
+}
+
+
+/* ==========================================
+   TRANSFER BUTTON
+========================================== */
+
+const transferBtn = document.querySelector(".transfer-btn");
+
+
+if (transferBtn) {
+
+    transferBtn.addEventListener("click", function (e) {
+
+        e.preventDefault();
+
+        alert("Transfer page coming soon.");
+
+    });
+
+}
+
+
+/* ==========================================
+   TRADE BUTTON
+========================================== */
+
+const tradeBtn = document.querySelector(".trade-btn");
+
+
+if (tradeBtn) {
+
+    tradeBtn.addEventListener("click", function (e) {
+
+        e.preventDefault();
+
+        window.location.href = "trade.html";
+
+    });
+
+}
+
+
+/* ==========================================
+   MENU ITEM ANIMATION
+========================================== */
+
+const menuItems = document.querySelectorAll(".menu-item");
+
+
+menuItems.forEach(function (item) {
+
+    item.addEventListener("click", function () {
+
+        item.style.transform = "scale(0.95)";
+
+
+        setTimeout(function () {
+
+            item.style.transform = "scale(1)";
+
+        }, 120);
+
+    });
+
 });
+
+
+/* ==========================================
+   MARKET FLASH ANIMATION
+========================================== */
+
+const marketPrices = document.querySelectorAll(".price");
+
+
+if (marketPrices.length > 0) {
+
+    setInterval(function () {
+
+        marketPrices.forEach(function (price) {
+
+            // Save original color
+            const originalColor = price.style.color;
+
+
+            // Flash color
+            price.style.color = "#f5c84c";
+
+
+            // Return to original
+            setTimeout(function () {
+
+                price.style.color = originalColor;
+
+            }, 500);
+
+        });
+
+    }, 3000);
+
+}
+
+
+/* ==========================================
+   BOTTOM NAVIGATION ACTIVE
+========================================== */
+
+const navItems = document.querySelectorAll(".bottom-nav a");
+
+
+navItems.forEach(function (item) {
+
+    item.addEventListener("click", function () {
+
+        navItems.forEach(function (nav) {
+
+            nav.classList.remove("active");
+
+        });
+
+
+        item.classList.add("active");
+
+    });
+
+});
+
+
+/* ==========================================
+   DASHBOARD LOADED
+========================================== */
+
+window.addEventListener("load", function () {
+
+    console.log("CptMarkets Dashboard Loaded");
+
+});
+
+
+/* ==========================================
+   TAWK WIDGET AUTO HIDE
+========================================== */
+
+const checkTawk = setInterval(function () {
+
+    if (
+        typeof window.Tawk_API !== "undefined" &&
+        typeof window.Tawk_API.hideWidget === "function"
+    ) {
+
+        window.Tawk_API.hideWidget();
+
+        clearInterval(checkTawk);
+
+    }
+
+}, 500);
+
+
+/* ==========================================
+   END OF DASHBOARD.JS
+========================================== */
