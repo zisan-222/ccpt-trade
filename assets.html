@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assets - CptMarkets</title>
+
+    <link rel="stylesheet" href="assets.css">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- ========= HEADER ========= -->
+
+<header class="assets-header">
+
+    <button class="back-btn"
+        onclick="window.location.href='dashboard.html'">
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+    </button>
+
+    <h2>Assets</h2>
+
+    <div class="header-icons">
+
+        <i class="fa-solid fa-clock-rotate-left"></i>
+
+        <i class="fa-solid fa-rotate-right"></i>
+
+    </div>
+
+</header>
+
+<!-- ========= TOTAL ASSETS ========= -->
+
+<section class="assets-card">
+
+    <div class="assets-title">
+
+        <span>Total Assets (USD)</span>
+
+        <i class="fa-regular fa-eye" id="assetEye"></i>
+
+    </div>
+
+    <h1 id="assetBalance">$0.00</h1>
+
+    <div class="assets-info">
+
+        <div>
+
+            <small>Available</small>
+
+            <strong id="availableBalance">$0.00</strong>
+
+        </div>
+
+        <div>
+
+            <small>Frozen</small>
+
+            <strong>$0.00</strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ========= ACCOUNT SUMMARY ========= -->
+
+<section class="account-summary">
+
+    <div class="summary-item">
+
+        <div>
+
+            <h3>Funding Account</h3>
+
+            <small>Main Wallet Balance</small>
+
+        </div>
+
+        <strong id="fundingBalance">
+            $0.00
+        </strong>
+
+    </div>
+
+    <div class="summary-item">
+
+        <div>
+
+            <h3>Spot Account</h3>
+
+            <small>Spot Trading Assets</small>
+
+        </div>
+
+        <strong>
+            $0.00
+        </strong>
+
+    </div>
+
+    <div class="summary-item">
+
+        <div>
+
+            <h3>Futures Account</h3>
+
+            <small>Futures Balance</small>
+
+        </div>
+
+        <strong>
+            $0.00
+        </strong>
+
+    </div>
+
+</section>
+<!-- ========= QUICK ACTION ========= -->
+
+<section class="asset-actions">
+
+    <button class="asset-btn deposit-btn">
+        <i class="fa-solid fa-circle-down"></i>
+        <span>Deposit</span>
+    </button>
+
+    <button class="asset-btn withdraw-btn">
+        <i class="fa-solid fa-circle-up"></i>
+        <span>Withdraw</span>
+    </button>
+
+    <button class="asset-btn transfer-btn">
+        <i class="fa-solid fa-right-left"></i>
+        <span>Transfer</span>
+    </button>
+
+</section>
+
+<!-- ========= MY ASSETS ========= -->
+
+<section class="asset-list">
+
+    <h3>My Assets</h3>
+
+    <div class="asset-item">
+
+        <div class="coin">
+
+            <i class="fa-solid fa-dollar-sign"></i>
+
+            <div>
+
+                <strong>USDT</strong>
+
+                <small>Tether USD</small>
+
+            </div>
+
+        </div>
+
+        <div class="coin-balance">
+
+            <strong>$0.00</strong>
+
+        </div>
+
+    </div>
+
+    <div class="asset-item">
+
+        <div class="coin">
+
+            <i class="fa-brands fa-bitcoin"></i>
+
+            <div>
+
+                <strong>BTC</strong>
+
+                <small>Bitcoin</small>
+
+            </div>
+
+        </div>
+
+        <div class="coin-balance">
+
+            <strong>0.000000</strong>
+
+        </div>
+
+    </div>
+
+    <div class="asset-item">
+
+        <div class="coin">
+
+            <i class="fa-brands fa-ethereum"></i>
+
+            <div>
+
+                <strong>ETH</strong>
+
+                <small>Ethereum</small>
+
+            </div>
+
+        </div>
+
+        <div class="coin-balance">
+
+            <strong>0.000000</strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ========= HISTORY ========= -->
+
+<section class="history-box">
+
+    <h3>History</h3>
+
+    <div class="empty-history">
+
+        <i class="fa-regular fa-folder-open"></i>
+
+        <p>No records</p>
+
+    </div>
+
+</section>
+<!-- ========= BOTTOM NAVIGATION ========= -->
+
+<nav class="bottom-nav">
+
+    <a href="dashboard.html">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+    </a>
+
+    <a href="market.html">
+        <i class="fa-solid fa-chart-line"></i>
+        <span>Markets</span>
+    </a>
+
+    <a href="trade.html">
+        <i class="fa-solid fa-arrow-right-arrow-left"></i>
+        <span>Trade</span>
+    </a>
+
+    <a href="assets.html" class="active">
+        <i class="fa-solid fa-wallet"></i>
+        <span>Assets</span>
+    </a>
+
+    <a href="mine.html">
+        <i class="fa-solid fa-user"></i>
+        <span>Mine</span>
+    </a>
+
+</nav>
+
+</div>
+
+<script src="balance.js"></script>
+<script src="assets.js"></script>
+
+</body>
+</html>
