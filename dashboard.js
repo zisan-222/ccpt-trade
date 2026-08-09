@@ -1,1065 +1,790 @@
 /* ==========================================
    CPTMARKETS DASHBOARD
-   dashboard.js - Edited Complete Version
+   dashboard.js - FINAL FIX
 ========================================== */
 
+document.addEventListener("DOMContentLoaded", function () {
 
-/* ==========================================
-   TAWK.TO CUSTOMER SERVICE
-========================================== */
+    /* ======================================
+       TAWK.TO
+    ====================================== */
 
-window.Tawk_API = window.Tawk_API || {};
-window.Tawk_LoadStart = new Date();
+    window.Tawk_API = window.Tawk_API || {};
+    window.Tawk_LoadStart = new Date();
 
-let tawkLoaded = false;
+    let tawkLoaded = false;
 
+    window.Tawk_API.onLoad = function () {
 
-/* ==========================================
-   TAWK.TO LOADED
-========================================== */
+        tawkLoaded = true;
 
-window.Tawk_API.onLoad = function () {
+        if (typeof window.Tawk_API.hideWidget === "function") {
+            window.Tawk_API.hideWidget();
+        }
 
-    tawkLoaded = true;
-
-    console.log("Tawk.to Customer Service Loaded");
-
-    if (typeof window.Tawk_API.hideWidget === "function") {
-        window.Tawk_API.hideWidget();
-    }
-
-};
+        console.log("Tawk.to loaded");
+    };
 
 
-/* ==========================================
-   OPEN CUSTOMER SERVICE
-========================================== */
+    /* ======================================
+       LOAD TAWK IF NECESSARY
+    ====================================== */
 
-function openSupportChat() {
-
-    if (!tawkLoaded) {
+    function loadTawk() {
 
         if (
-            typeof window.Tawk_API !== "undefined" &&
-            typeof window.Tawk_API.showWidget === "function"
+            document.querySelector(
+                'script[src*="embed.tawk.to"]'
+            )
+        ) {
+            return;
+        }
+
+        const script =
+            document.createElement("script");
+
+        script.async = true;
+
+        script.src =
+            "https://embed.tawk.to/6a71003c2d507b1d4a9fad4c/1jv4mhrhb";
+
+        script.charset = "UTF-8";
+
+        script.setAttribute(
+            "crossorigin",
+            "*"
+        );
+
+        document.body.appendChild(script);
+    }
+
+
+    loadTawk();
+
+
+    /* ======================================
+       OPEN CUSTOMER SERVICE
+    ====================================== */
+
+    window.openSupportChat = function () {
+
+        /* Hide floating green widget */
+
+        if (
+            window.Tawk_API &&
+            typeof window.Tawk_API.hideWidget ===
+                "function"
+        ) {
+            window.Tawk_API.hideWidget();
+        }
+
+
+        /* Show widget */
+
+        if (
+            window.Tawk_API &&
+            typeof window.Tawk_API.showWidget ===
+                "function"
         ) {
 
             window.Tawk_API.showWidget();
 
-        } else {
+            setTimeout(function () {
 
-            alert("Customer Service is loading...");
+                if (
+                    typeof window.Tawk_API.maximize ===
+                        "function"
+                ) {
+                    window.Tawk_API.maximize();
+                }
+
+            }, 300);
 
             return;
         }
-    }
 
 
-    if (typeof window.Tawk_API.showWidget === "function") {
-        window.Tawk_API.showWidget();
-    }
+        /* Tawk is still loading */
+
+        let attempts = 0;
+
+        const waitTawk =
+            setInterval(function () {
+
+                attempts++;
+
+                if (
+                    window.Tawk_API &&
+                    typeof window.Tawk_API.showWidget ===
+                        "function"
+                ) {
+
+                    clearInterval(waitTawk);
+
+                    window.Tawk_API.showWidget();
+
+                    setTimeout(function () {
+
+                        if (
+                            typeof window.Tawk_API.maximize ===
+                                "function"
+                        ) {
+                            window.Tawk_API.maximize();
+                        }
+
+                    }, 300);
+
+                }
 
 
-    setTimeout(function () {
+                if (attempts >= 30) {
 
-        if (typeof window.Tawk_API.maximize === "function") {
-            window.Tawk_API.maximize();
-        }
+                    clearInterval(waitTawk);
 
-    }, 300);
+                    alert(
+                        "Customer Service is loading. Please try again."
+                    );
 
-}
+                }
 
+            }, 500);
 
-/* ==========================================
-   BALANCE SHOW / HIDE
-========================================== */
-
-const eyeBtn = document.querySelector(".asset-header i");
-const balance = document.getElementById("balance");
+    };
 
 
-/*
-   Read the balance already displayed
-   inside dashboard.html.
+    /* ======================================
+       HIDE TAWK FLOATING ICON
+    ====================================== */
 
-   Example:
-   $100.00
-   $50.00
-   $0.00
-*/
+    const hideTawk =
+        setInterval(function () {
 
-let balanceText = "$0.00";
+            if (
+                window.Tawk_API &&
+                typeof window.Tawk_API.hideWidget ===
+                    "function"
+            ) {
 
-if (balance) {
+                window.Tawk_API.hideWidget();
 
-    const currentBalance = balance.textContent.trim();
+                clearInterval(hideTawk);
+            }
 
-    if (currentBalance !== "") {
-        balanceText = currentBalance;
-    }
-
-}
+        }, 500);
 
 
-let balanceVisible = true;
+    /* ======================================
+       BALANCE EYE
+    ====================================== */
 
+    const balanceElement =
+        document.getElementById("balance");
 
-if (eyeBtn && balance) {
-
-    eyeBtn.addEventListener("click", function () {
-
-        if (balanceVisible) {
-
-            balance.innerHTML = "••••••";
-
-            eyeBtn.classList.remove("fa-eye");
-            eyeBtn.classList.add("fa-eye-slash");
-
-            balanceVisible = false;
-
-        }
-
-        else {
-
-            balance.innerHTML = balanceText;
-
-            eyeBtn.classList.remove("fa-eye-slash");
-            eyeBtn.classList.add("fa-eye");
-
-            balanceVisible = true;
-
-        }
-
-    });
-
-}
-
-/* ==========================================
-   GET NUMERIC ACCOUNT BALANCE
-========================================== */
-
-function getAccountBalance() {
-
-    /* Use the central balance.js balance */
-    if (typeof getBalance === "function") {
-
-        const currentBalance = Number(
-            getBalance()
+    const eyeButton =
+        document.querySelector(
+            ".asset-card .fa-eye, #assetEye, .fa-eye"
         );
 
-        if (!isNaN(currentBalance)) {
-            return currentBalance;
+
+    let balanceVisible = true;
+
+
+    if (
+        balanceElement &&
+        eyeButton
+    ) {
+
+        eyeButton.addEventListener(
+            "click",
+            function () {
+
+                if (balanceVisible) {
+
+                    balanceElement.textContent =
+                        "••••••";
+
+                    eyeButton.classList.remove(
+                        "fa-eye"
+                    );
+
+                    eyeButton.classList.add(
+                        "fa-eye-slash"
+                    );
+
+                    balanceVisible = false;
+
+                }
+
+                else {
+
+                    if (
+                        typeof getBalance ===
+                            "function"
+                    ) {
+
+                        balanceElement.textContent =
+                            formatUSD(
+                                getBalance()
+                            );
+
+                    }
+
+                    else {
+
+                        balanceElement.textContent =
+                            "$0.00";
+
+                    }
+
+                    eyeButton.classList.remove(
+                        "fa-eye-slash"
+                    );
+
+                    eyeButton.classList.add(
+                        "fa-eye"
+                    );
+
+                    balanceVisible = true;
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* ======================================
+       SUPPORT BUTTON
+    ====================================== */
+
+    const supportButtons =
+        document.querySelectorAll(
+            ".support-btn"
+        );
+
+
+    supportButtons.forEach(function (button) {
+
+        button.addEventListener(
+            "click",
+            function (e) {
+
+                e.preventDefault();
+
+                openSupportChat();
+
+            }
+        );
+
+    });
+
+
+    /* ======================================
+       DEPOSIT BUTTON
+    ====================================== */
+
+    const depositButtons =
+        document.querySelectorAll(
+            ".deposit-btn"
+        );
+
+
+    depositButtons.forEach(function (button) {
+
+        button.addEventListener(
+            "click",
+            function (e) {
+
+                e.preventDefault();
+
+                openSupportChat();
+
+            }
+        );
+
+    });
+
+
+    /* ======================================
+       LOAN BUTTON
+    ====================================== */
+
+    const loanButtons =
+        document.querySelectorAll(
+            ".loan-btn"
+        );
+
+
+    loanButtons.forEach(function (button) {
+
+        button.addEventListener(
+            "click",
+            function (e) {
+
+                e.preventDefault();
+
+                openSupportChat();
+
+            }
+        );
+
+    });
+
+
+    /* ======================================
+       WITHDRAW INTERFACE
+    ====================================== */
+
+    function openWithdrawInterface() {
+
+        /* Prevent duplicate page */
+
+        const oldPage =
+            document.getElementById(
+                "cptWithdrawPage"
+            );
+
+        if (oldPage) {
+            oldPage.remove();
         }
 
-    }
 
+        const withdrawPage =
+            document.createElement("div");
 
-    /* Fallback */
-    const numericValue = parseFloat(
-        String(balanceText).replace(
-            /[^0-9.-]+/g,
-            ""
-        )
-    );
+        withdrawPage.id =
+            "cptWithdrawPage";
 
 
-    if (isNaN(numericValue)) {
-        return 0;
-    }
+        withdrawPage.innerHTML = `
 
-
-    return numericValue;
-
-}
-
-
-    const numericValue = parseFloat(
-        balanceText.replace(/[^0-9.-]+/g, "")
-    );
-
-    if (isNaN(numericValue)) {
-        return 0;
-    }
-
-    return numericValue;
-
-}
-
-
-/* ==========================================
-   REFRESH BUTTON
-========================================== */
-
-const refreshBtn = document.querySelector(".fa-rotate-right");
-
-
-if (refreshBtn) {
-
-    refreshBtn.addEventListener("click", function () {
-
-        refreshBtn.style.transition = "none";
-        refreshBtn.style.transform = "rotate(0deg)";
-
-
-        setTimeout(function () {
-
-            refreshBtn.style.transition = "0.6s";
-            refreshBtn.style.transform = "rotate(360deg)";
-
-        }, 10);
-
-
-        setTimeout(function () {
-
-            refreshBtn.style.transition = "none";
-            refreshBtn.style.transform = "rotate(0deg)";
-
-        }, 650);
-
-    });
-
-}
-
-
-/* ==========================================
-   DEPOSIT BUTTON
-   TAWK.TO CUSTOMER SERVICE
-========================================== */
-
-const depositBtn = document.querySelector(".deposit-btn");
-
-
-if (depositBtn) {
-
-    depositBtn.addEventListener("click", function (e) {
-
-        e.preventDefault();
-
-        openSupportChat();
-
-    });
-
-}
-
-
-/* ==========================================
-   SUPPORT BUTTON
-   TAWK.TO CUSTOMER SERVICE
-========================================== */
-
-const supportBtn = document.querySelector(".support-btn");
-
-
-if (supportBtn) {
-
-    supportBtn.addEventListener("click", function (e) {
-
-        e.preventDefault();
-
-        openSupportChat();
-
-    });
-
-}
-
-
-/* ==========================================
-   LOAN BUTTON
-   TAWK.TO CUSTOMER SERVICE
-========================================== */
-
-const loanBtn = document.querySelector(".loan-btn");
-
-
-if (loanBtn) {
-
-    loanBtn.addEventListener("click", function (e) {
-
-        e.preventDefault();
-
-        openSupportChat();
-
-    });
-
-}
-
-
-/* ==========================================
-   WITHDRAW INTERFACE
-========================================== */
-
-function openWithdrawInterface() {
-
-    /*
-       Create Withdrawal Interface
-       without creating a new HTML file.
-    */
-
-
-    const withdrawPage = document.createElement("div");
-
-    withdrawPage.id = "cptWithdrawPage";
-
-
-    withdrawPage.innerHTML = `
-
-        <div class="cpt-withdraw-header">
-
-            <button id="cptWithdrawBack" class="cpt-back-button">
-                ‹
-            </button>
-
-            <h1>Withdraw</h1>
-
-        </div>
-
-
-        <div class="cpt-withdraw-content">
-
-            <div class="cpt-withdraw-card">
-
-                <label>
-                    Withdrawal Amount
-                </label>
-
-                <input
-                    type="number"
-                    id="cptWithdrawAmount"
-                    placeholder="Withdrawal Amount (USD)"
-                    min="0"
-                    step="0.01"
-                >
-
-
-                <label>
-                    Receiving Address
-                </label>
-
-                <input
-                    type="text"
-                    id="cptReceivingAddress"
-                    placeholder="Receiving Address / Account"
-                >
-
+            <div class="cpt-withdraw-header">
 
                 <button
-                    id="cptSubmitWithdrawal"
-                    class="cpt-submit-withdraw"
+                    id="cptWithdrawBack"
+                    class="cpt-back-button"
                 >
-                    Submit Withdrawal
+                    ‹
                 </button>
+
+                <h1>Withdraw</h1>
 
             </div>
 
 
-            <div
-                id="cptWithdrawMessage"
-                class="cpt-withdraw-message"
-            ></div>
+            <div class="cpt-withdraw-content">
 
-        </div>
+                <div class="cpt-withdraw-card">
 
-    `;
+                    <label>
+                        Withdrawal Amount
+                    </label>
 
+                    <input
+                        type="number"
+                        id="cptWithdrawAmount"
+                        placeholder="Withdrawal Amount (USD)"
+                        min="0"
+                        step="0.01"
+                    >
 
-    document.body.appendChild(withdrawPage);
 
+                    <label>
+                        Receiving Address
+                    </label>
 
-    /* ======================================
-       WITHDRAW PAGE STYLE
-    ====================================== */
+                    <input
+                        type="text"
+                        id="cptReceivingAddress"
+                        placeholder="Receiving Address / Account"
+                    >
 
-    const withdrawStyle = document.createElement("style");
 
-    withdrawStyle.id = "cptWithdrawStyle";
+                    <button
+                        id="cptSubmitWithdrawal"
+                        class="cpt-submit-withdraw"
+                    >
+                        Submit Withdrawal
+                    </button>
 
+                    <div
+                        id="cptWithdrawMessage"
+                        class="cpt-withdraw-message"
+                    ></div>
 
-    withdrawStyle.innerHTML = `
+                </div>
 
-        #cptWithdrawPage {
+            </div>
+        `;
 
-            position: fixed;
 
-            inset: 0;
+        document.body.appendChild(
+            withdrawPage
+        );
 
-            z-index: 999999;
 
-            background:
-                linear-gradient(
-                    180deg,
-                    #081126 0%,
-                    #020817 100%
-                );
+        /* ==================================
+           STYLE
+        ================================== */
 
-            color: #ffffff;
+        const style =
+            document.createElement("style");
 
-            overflow-y: auto;
+        style.id =
+            "cptWithdrawStyle";
 
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
 
-        }
+        style.textContent = `
 
+            #cptWithdrawPage {
 
-        .cpt-withdraw-header {
+                position: fixed;
+                inset: 0;
+                z-index: 999999;
 
-            height: 90px;
+                background:
+                    linear-gradient(
+                        180deg,
+                        #081126 0%,
+                        #020817 100%
+                    );
 
-            display: flex;
+                color: white;
 
-            align-items: center;
+                overflow-y: auto;
 
-            justify-content: center;
+                font-family:
+                    Arial,
+                    Helvetica,
+                    sans-serif;
+            }
 
-            position: relative;
-
-            background: #0c152b;
-
-            border-bottom:
-                1px solid
-                rgba(255,255,255,0.08);
-
-        }
-
-
-        .cpt-withdraw-header h1 {
-
-            margin: 0;
-
-            font-size: 28px;
-
-            font-weight: 700;
-
-        }
-
-
-        .cpt-back-button {
-
-            position: absolute;
-
-            left: 18px;
-
-            top: 50%;
-
-            transform:
-                translateY(-50%);
-
-            border: none;
-
-            background: transparent;
-
-            color: #ffffff;
-
-            font-size: 42px;
-
-            line-height: 1;
-
-            cursor: pointer;
-
-        }
-
-
-        .cpt-withdraw-content {
-
-            padding:
-                30px
-                28px;
-
-        }
-
-
-        .cpt-withdraw-card {
-
-            width: 100%;
-
-            max-width: 650px;
-
-            margin: 0 auto;
-
-            padding: 30px;
-
-            border-radius: 30px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #122440,
-                    #172844
-                );
-
-            border:
-                1px solid
-                rgba(255,255,255,0.12);
-
-            box-shadow:
-                0 15px 45px
-                rgba(0,0,0,0.35);
-
-            box-sizing: border-box;
-
-        }
-
-
-        .cpt-withdraw-card label {
-
-            display: block;
-
-            margin:
-                0 0
-                12px;
-
-            color: #aebbd3;
-
-            font-size: 20px;
-
-        }
-
-
-        .cpt-withdraw-card input {
-
-            width: 100%;
-
-            height: 78px;
-
-            margin:
-                0 0
-                28px;
-
-            padding:
-                0 24px;
-
-            box-sizing: border-box;
-
-            border-radius: 24px;
-
-            border:
-                1px solid
-                rgba(130,160,210,0.28);
-
-            outline: none;
-
-            background: #070f22;
-
-            color: #ffffff;
-
-            font-size: 22px;
-
-        }
-
-
-        .cpt-withdraw-card input::placeholder {
-
-            color: #71809d;
-
-        }
-
-
-        .cpt-withdraw-card input:focus {
-
-            border-color: #f5c84c;
-
-            box-shadow:
-                0 0 0 2px
-                rgba(245,200,76,0.12);
-
-        }
-
-
-        .cpt-submit-withdraw {
-
-            width: 100%;
-
-            height: 78px;
-
-            border: none;
-
-            border-radius: 25px;
-
-            cursor: pointer;
-
-            font-size: 23px;
-
-            font-weight: 700;
-
-            color: #171717;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    #ffe68a,
-                    #f5c400,
-                    #d99100
-                );
-
-            box-shadow:
-                0 5px 25px
-                rgba(245,200,76,0.35);
-
-        }
-
-
-        .cpt-submit-withdraw:active {
-
-            transform: scale(0.98);
-
-        }
-
-
-        .cpt-withdraw-message {
-
-            display: none;
-
-            width: fit-content;
-
-            max-width: 90%;
-
-            margin:
-                55px auto
-                0;
-
-            padding:
-                22px
-                30px;
-
-            box-sizing: border-box;
-
-            text-align: center;
-
-            border-radius: 24px;
-
-            background: #182337;
-
-            color: #ffffff;
-
-            font-size: 21px;
-
-            line-height: 1.45;
-
-            box-shadow:
-                0 15px 40px
-                rgba(0,0,0,0.25);
-
-        }
-
-
-        @media (max-width: 480px) {
 
             .cpt-withdraw-header {
 
                 height: 88px;
 
+                display: flex;
+
+                align-items: center;
+
+                justify-content: center;
+
+                position: relative;
+
+                background: #0c152b;
+
+                border-bottom:
+                    1px solid
+                    rgba(255,255,255,.08);
             }
 
 
             .cpt-withdraw-header h1 {
 
-                font-size: 26px;
+                margin: 0;
 
+                font-size: 28px;
+            }
+
+
+            .cpt-back-button {
+
+                position: absolute;
+
+                left: 18px;
+
+                top: 50%;
+
+                transform:
+                    translateY(-50%);
+
+                border: none;
+
+                background: transparent;
+
+                color: white;
+
+                font-size: 42px;
             }
 
 
             .cpt-withdraw-content {
 
-                padding:
-                    30px 28px;
-
+                padding: 30px 28px;
             }
 
 
             .cpt-withdraw-card {
 
-                padding: 28px;
+                max-width: 650px;
+
+                margin: 0 auto;
+
+                padding: 30px;
 
                 border-radius: 30px;
 
+                background:
+                    linear-gradient(
+                        145deg,
+                        #122440,
+                        #172844
+                    );
+
+                border:
+                    1px solid
+                    rgba(255,255,255,.12);
+
+                box-shadow:
+                    0 15px 45px
+                    rgba(0,0,0,.35);
             }
 
 
             .cpt-withdraw-card label {
 
-                font-size: 19px;
+                display: block;
 
+                margin-bottom: 12px;
+
+                color: #aebbd3;
+
+                font-size: 20px;
             }
 
 
             .cpt-withdraw-card input {
 
+                width: 100%;
+
                 height: 78px;
 
-                font-size: 21px;
+                margin-bottom: 28px;
 
+                padding: 0 24px;
+
+                box-sizing: border-box;
+
+                border-radius: 24px;
+
+                border:
+                    1px solid
+                    rgba(130,160,210,.28);
+
+                outline: none;
+
+                background: #070f22;
+
+                color: white;
+
+                font-size: 22px;
+            }
+
+
+            .cpt-withdraw-card input::placeholder {
+
+                color: #71809d;
             }
 
 
             .cpt-submit-withdraw {
 
+                width: 100%;
+
                 height: 78px;
 
-                font-size: 21px;
+                border: none;
 
+                border-radius: 25px;
+
+                font-size: 23px;
+
+                font-weight: 700;
+
+                color: #171717;
+
+                background:
+                    linear-gradient(
+                        90deg,
+                        #ffe68a,
+                        #f5c400,
+                        #d99100
+                    );
             }
 
-        }
 
-    `;
+            .cpt-withdraw-message {
 
+                display: none;
 
-    document.head.appendChild(withdrawStyle);
+                margin-top: 25px;
 
+                padding: 20px;
 
-    /* ======================================
-       BACK BUTTON
-    ====================================== */
+                border-radius: 20px;
 
-    const backButton =
-        document.getElementById(
-            "cptWithdrawBack"
-        );
+                background: #182337;
 
+                text-align: center;
 
-    if (backButton) {
+                font-size: 20px;
 
-        backButton.addEventListener(
-            "click",
-            function () {
-
-                withdrawPage.remove();
-
-                const oldStyle =
-                    document.getElementById(
-                        "cptWithdrawStyle"
-                    );
-
-                if (oldStyle) {
-                    oldStyle.remove();
-                }
-
+                line-height: 1.5;
             }
-        );
 
-    }
+        `;
 
 
-    /* ======================================
-       SUBMIT WITHDRAWAL
-    ====================================== */
-
-    const submitButton =
-        document.getElementById(
-            "cptSubmitWithdrawal"
+        document.head.appendChild(
+            style
         );
 
 
-    if (submitButton) {
+        /* ==================================
+           BACK
+        ================================== */
 
-        submitButton.addEventListener(
-            "click",
-            function () {
+        document
+            .getElementById(
+                "cptWithdrawBack"
+            )
+            .addEventListener(
+                "click",
+                function () {
 
-                const amountInput =
-                    document.getElementById(
-                        "cptWithdrawAmount"
-                    );
+                    withdrawPage.remove();
 
+                    const s =
+                        document.getElementById(
+                            "cptWithdrawStyle"
+                        );
 
-                const addressInput =
-                    document.getElementById(
-                        "cptReceivingAddress"
-                    );
-
-
-                const message =
-                    document.getElementById(
-                        "cptWithdrawMessage"
-                    );
-
-
-                const amount =
-                    parseFloat(
-                        amountInput.value
-                    );
-
-
-                const receivingAddress =
-                    addressInput.value.trim();
-
-
-                /* ==========================
-                   VALIDATE AMOUNT
-                ========================== */
-
-                if (
-                    isNaN(amount) ||
-                    amount <= 0
-                ) {
-
-                    message.style.display =
-                        "block";
-
-                    message.innerHTML =
-                        "Please enter a valid withdrawal amount.";
-
-                    return;
+                    if (s) {
+                        s.remove();
+                    }
 
                 }
+            );
 
 
-                /* ==========================
-                   VALIDATE ADDRESS
-                ========================== */
+        /* ==================================
+           SUBMIT WITHDRAWAL
+        ================================== */
 
-                if (
-                    receivingAddress === ""
-                ) {
+        document
+            .getElementById(
+                "cptSubmitWithdrawal"
+            )
+            .addEventListener(
+                "click",
+                function () {
 
-                    message.style.display =
-                        "block";
-
-                    message.innerHTML =
-                        "Please enter your receiving address / account.";
-
-                    return;
-
-                }
-
-
-                /* ==========================
-                   GET ACCOUNT BALANCE
-                ========================== */
-
-                const accountBalance =
-                    getAccountBalance();
+                    const amount =
+                        parseFloat(
+                            document.getElementById(
+                                "cptWithdrawAmount"
+                            ).value
+                        );
 
 
-                console.log(
-                    "Account Balance:",
-                    accountBalance
-                );
-
-                console.log(
-                    "Withdrawal Amount:",
-                    amount
-                );
+                    const address =
+                        document.getElementById(
+                            "cptReceivingAddress"
+                        ).value.trim();
 
 
-                /* ==========================
-                   AMOUNT GREATER THAN BALANCE
-                ========================== */
+                    const message =
+                        document.getElementById(
+                            "cptWithdrawMessage"
+                        );
 
-                if (
-                    amount > accountBalance
-                ) {
+
+                    /* AMOUNT */
+
+                    if (
+                        isNaN(amount) ||
+                        amount <= 0
+                    ) {
+
+                        message.style.display =
+                            "block";
+
+                        message.innerHTML =
+                            "Please enter a valid withdrawal amount.";
+
+                        return;
+                    }
+
+
+                    /* ADDRESS */
+
+                    if (!address) {
+
+                        message.style.display =
+                            "block";
+
+                        message.innerHTML =
+                            "Please enter your receiving address / account.";
+
+                        return;
+                    }
+
+
+                    /* CURRENT BALANCE */
+
+                    let currentBalance = 0;
+
+
+                    if (
+                        typeof getBalance ===
+                            "function"
+                    ) {
+
+                        currentBalance =
+                            Number(
+                                getBalance()
+                            );
+
+                    }
+
+
+                    /* MORE THAN BALANCE */
+
+                    if (
+                        amount >
+                        currentBalance
+                    ) {
+
+                        message.style.display =
+                            "block";
+
+                        message.innerHTML = `
+                            Insufficient funding
+                            <br>
+                            account balance
+                        `;
+
+                        return;
+                    }
+
+
+                    /* BALANCE IS ENOUGH */
 
                     message.style.display =
                         "block";
 
                     message.innerHTML = `
-                        Insufficient funding
-                        <br>
-                        account balance
+                        Please contact Customer Service
+                        to complete your withdrawal.
                     `;
-
-                    return;
-
-                }
-
-
-                /* ==========================
-                   BALANCE IS ENOUGH
-                   CUSTOMER SERVICE
-                ========================== */
-
-                message.style.display =
-                    "block";
-
-                message.innerHTML = `
-                    Please contact Customer Service
-                    to complete your withdrawal.
-                `;
-
-
-                /*
-                   Open Tawk Customer Service
-                   after a short delay.
-                */
-
-                setTimeout(function () {
-
-                    openSupportChat();
-
-                }, 500);
-
-            }
-        );
-
-    }
-
-}
-
-
-/* ==========================================
-   WITHDRAW BUTTON
-========================================== */
-
-const withdrawBtn =
-    document.querySelector(
-        ".withdraw-btn"
-    );
-
-
-if (withdrawBtn) {
-
-    withdrawBtn.addEventListener(
-        "click",
-        function (e) {
-
-            e.preventDefault();
-
-            /*
-               IMPORTANT:
-
-               Withdraw button will ALWAYS
-               open the Withdrawal Interface.
-
-               Balance is checked only after
-               Submit Withdrawal is pressed.
-            */
-
-            openWithdrawInterface();
-
-        }
-    );
-
-}
-
-
-/* ==========================================
-   TRANSFER BUTTON
-========================================== */
-
-const transferBtn =
-    document.querySelector(
-        ".transfer-btn"
-    );
-
-
-if (transferBtn) {
-
-    transferBtn.addEventListener(
-        "click",
-        function (e) {
-
-            e.preventDefault();
-
-            alert(
-                "Transfer page coming soon."
-            );
-
-        }
-    );
-
-}
-
-
-/* ==========================================
-   TRADE BUTTON
-========================================== */
-
-const tradeBtn =
-    document.querySelector(
-        ".trade-btn"
-    );
-
-
-if (tradeBtn) {
-
-    tradeBtn.addEventListener(
-        "click",
-        function (e) {
-
-            e.preventDefault();
-
-            window.location.href =
-                "trade.html";
-
-        }
-    );
-
-}
-
-
-/* ==========================================
-   MENU ITEM ANIMATION
-========================================== */
-
-const menuItems =
-    document.querySelectorAll(
-        ".menu-item"
-    );
-
-
-menuItems.forEach(
-    function (item) {
-
-        item.addEventListener(
-            "click",
-            function () {
-
-                item.style.transform =
-                    "scale(0.95)";
-
-
-                setTimeout(
-                    function () {
-
-                        item.style.transform =
-                            "scale(1)";
-
-                    },
-                    120
-                );
-
-            }
-        );
-
-    }
-);
-
-
-/* ==========================================
-   MARKET FLASH ANIMATION
-========================================== */
-
-const marketPrices =
-    document.querySelectorAll(
-        ".price"
-    );
-
-
-if (marketPrices.length > 0) {
-
-    setInterval(
-        function () {
-
-            marketPrices.forEach(
-                function (price) {
-
-                    const originalColor =
-                        price.style.color;
-
-
-                    price.style.color =
-                        "#f5c84c";
 
 
                     setTimeout(
                         function () {
 
-                            price.style.color =
-                                originalColor;
+                            openSupportChat();
 
                         },
                         500
@@ -1068,98 +793,119 @@ if (marketPrices.length > 0) {
                 }
             );
 
-        },
-        3000
-    );
-
-}
+    }
 
 
-/* ==========================================
-   BOTTOM NAVIGATION ACTIVE
-========================================== */
+    /* ======================================
+       WITHDRAW BUTTONS
+    ====================================== */
 
-const navItems =
-    document.querySelectorAll(
-        ".bottom-nav a"
-    );
+    const withdrawButtons =
+        document.querySelectorAll(
+            ".withdraw-btn"
+        );
 
 
-navItems.forEach(
-    function (item) {
+    withdrawButtons.forEach(function (button) {
 
-        item.addEventListener(
+        button.addEventListener(
+            "click",
+            function (e) {
+
+                e.preventDefault();
+
+                /*
+                   IMPORTANT:
+                   Even with $0.00 balance,
+                   Withdraw page will open.
+                */
+
+                openWithdrawInterface();
+
+            }
+        );
+
+    });
+
+
+    /* ======================================
+       TRANSFER
+    ====================================== */
+
+    const transferButtons =
+        document.querySelectorAll(
+            ".transfer-btn"
+        );
+
+
+    transferButtons.forEach(function (button) {
+
+        button.addEventListener(
+            "click",
+            function (e) {
+
+                e.preventDefault();
+
+                alert(
+                    "Transfer page coming soon."
+                );
+
+            }
+        );
+
+    });
+
+
+    /* ======================================
+       REFRESH
+    ====================================== */
+
+    const refreshButton =
+        document.querySelector(
+            ".fa-rotate-right"
+        );
+
+
+    if (refreshButton) {
+
+        refreshButton.addEventListener(
             "click",
             function () {
 
-                navItems.forEach(
-                    function (nav) {
+                refreshButton.style.transition =
+                    "0.6s";
 
-                        nav.classList.remove(
-                            "active"
-                        );
+                refreshButton.style.transform =
+                    "rotate(360deg)";
+
+
+                setTimeout(function () {
+
+                    refreshButton.style.transition =
+                        "none";
+
+                    refreshButton.style.transform =
+                        "rotate(0deg)";
+
+                    if (
+                        typeof refreshBalanceUI ===
+                            "function"
+                    ) {
+
+                        refreshBalanceUI();
 
                     }
-                );
 
-
-                item.classList.add(
-                    "active"
-                );
+                }, 650);
 
             }
         );
 
     }
-);
 
 
-/* ==========================================
-   DASHBOARD LOADED
-========================================== */
-
-window.addEventListener(
-    "load",
-    function () {
-
-        console.log(
-            "CptMarkets Dashboard Loaded"
-        );
-
-    }
-);
-
-
-/* ==========================================
-   TAWK WIDGET AUTO HIDE
-========================================== */
-
-const checkTawk =
-    setInterval(
-        function () {
-
-            if (
-                typeof window.Tawk_API !==
-                    "undefined" &&
-
-                typeof window.Tawk_API
-                    .hideWidget ===
-                    "function"
-            ) {
-
-                window.Tawk_API.hideWidget();
-
-                clearInterval(
-                    checkTawk
-                );
-
-            }
-
-        },
-        500
+    console.log(
+        "CptMarkets Dashboard Ready"
     );
 
-
-/* ==========================================
-   END OF DASHBOARD.JS
-========================================== */
+}); 
