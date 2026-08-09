@@ -18,14 +18,35 @@ window.Tawk_API.onLoad = function () {
 
     console.log("Tawk Customer Service Ready");
 
-    if (typeof window.Tawk_API.hideWidget === "function") {
+
+    /* ======================================
+       HIDE TAWK WIDGET
+    ====================================== */
+
+    if (
+        typeof window.Tawk_API.hideWidget ===
+        "function"
+    ) {
 
         window.Tawk_API.hideWidget();
 
     }
 
-};
 
+    /* ======================================
+       HIDE GREEN LAUNCHER ICON
+    ====================================== */
+
+    if (
+        typeof window.Tawk_API.hide ===
+        "function"
+    ) {
+
+        window.Tawk_API.hide();
+
+    }
+
+};
 /* ==========================================
    OPEN SUPPORT CHAT
 ========================================== */
