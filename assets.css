@@ -1,0 +1,382 @@
+/* ==========================================
+   CPTMARKETS ASSETS
+   assets.css - Part 1
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#081126;
+    color:#fff;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+.container{
+    max-width:500px;
+    margin:auto;
+    min-height:100vh;
+    padding-bottom:90px;
+}
+
+/* ========= HEADER ========= */
+
+.assets-header{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 18px;
+    background:#0c152b;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.assets-header h2{
+    font-size:24px;
+    font-weight:700;
+}
+
+.back-btn{
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:50%;
+    background:#17233d;
+    color:#fff;
+    cursor:pointer;
+    font-size:18px;
+}
+
+.header-icons{
+    display:flex;
+    gap:15px;
+    font-size:18px;
+}
+
+.header-icons i{
+    cursor:pointer;
+}
+
+/* ========= ASSETS CARD ========= */
+
+.assets-card{
+    margin:18px;
+    padding:22px;
+    border-radius:22px;
+    background:linear-gradient(135deg,#14284a,#1b335a);
+    box-shadow:0 10px 30px rgba(0,0,0,.30);
+}
+
+.assets-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:#cfd8ea;
+    font-size:15px;
+}
+
+.assets-title i{
+    cursor:pointer;
+}
+
+.assets-card h1{
+    margin-top:18px;
+    font-size:36px;
+    font-weight:700;
+}
+
+.assets-info{
+    margin-top:22px;
+    display:flex;
+    justify-content:space-between;
+}
+
+.assets-info small{
+    display:block;
+    color:#a8b6d0;
+    margin-bottom:6px;
+}
+
+.assets-info strong{
+    font-size:18px;
+}
+
+/* ========= ACCOUNT SUMMARY ========= */
+
+.account-summary{
+    margin:18px;
+    background:#101c34;
+    border-radius:18px;
+    overflow:hidden;
+}
+
+.summary-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.summary-item:last-child{
+    border-bottom:none;
+}
+
+.summary-item h3{
+    font-size:17px;
+}
+
+.summary-item small{
+    display:block;
+    margin-top:4px;
+    color:#98a8c8;
+}
+
+.summary-item strong{
+    color:#f4c542;
+    font-size:17px;
+}
+/* ==========================================
+   CPTMARKETS ASSETS
+   assets.css - Part 2
+========================================== */
+
+/* ========= QUICK ACTION ========= */
+
+.asset-actions{
+    margin:18px;
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+}
+
+.asset-btn{
+    flex:1;
+    border:none;
+    border-radius:18px;
+    background:#101c34;
+    color:#fff;
+    padding:18px 10px;
+    cursor:pointer;
+    transition:.25s;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+.asset-btn:hover{
+    transform:translateY(-3px);
+    background:#17294a;
+}
+
+.asset-btn i{
+    font-size:26px;
+    color:#f5c84c;
+    margin-bottom:10px;
+}
+
+.asset-btn span{
+    font-size:15px;
+    font-weight:600;
+}
+
+/* ========= ASSET LIST ========= */
+
+.asset-list{
+    margin:18px;
+    background:#101c34;
+    border-radius:18px;
+    padding:18px;
+}
+
+.asset-list h3{
+    font-size:20px;
+    margin-bottom:18px;
+}
+
+.asset-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 0;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.asset-item:last-child{
+    border-bottom:none;
+}
+
+.coin{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.coin i{
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    background:#17294a;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#f5c84c;
+    font-size:22px;
+}
+
+.coin strong{
+    display:block;
+    font-size:17px;
+}
+
+.coin small{
+    color:#9ca9c4;
+    font-size:13px;
+}
+
+.coin-balance{
+    text-align:right;
+}
+
+.coin-balance strong{
+    font-size:17px;
+    color:#ffffff;
+}
+
+/* ==========================================
+   CPTMARKETS ASSETS
+   assets.css - Part 3
+========================================== */
+
+/* ========= HISTORY ========= */
+
+.history-box{
+    margin:18px;
+    background:#101c34;
+    border-radius:18px;
+    padding:18px;
+}
+
+.history-box h3{
+    font-size:20px;
+    margin-bottom:20px;
+}
+
+.empty-history{
+    min-height:180px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    color:#8fa1c4;
+}
+
+.empty-history i{
+    font-size:60px;
+    color:#3d4f73;
+    margin-bottom:15px;
+}
+
+.empty-history p{
+    font-size:16px;
+}
+
+/* ========= BOTTOM NAVIGATION ========= */
+
+.bottom-nav{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    max-width:500px;
+    margin:auto;
+    height:70px;
+    background:#0c152b;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+.bottom-nav a{
+    color:#94a6c7;
+    text-decoration:none;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    font-size:13px;
+    transition:.25s;
+}
+
+.bottom-nav a i{
+    font-size:20px;
+    margin-bottom:4px;
+}
+
+.bottom-nav a.active{
+    color:#f5c84c;
+}
+
+.bottom-nav a:hover{
+    color:#f5c84c;
+}
+
+/* ========= SCROLLBAR ========= */
+
+::-webkit-scrollbar{
+    width:6px;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#394c73;
+    border-radius:20px;
+}
+
+/* ========= RESPONSIVE ========= */
+
+@media (max-width:480px){
+
+    .assets-card h1{
+        font-size:30px;
+    }
+
+    .asset-actions{
+        gap:8px;
+    }
+
+    .asset-btn{
+        padding:15px 8px;
+    }
+
+    .asset-btn i{
+        font-size:22px;
+    }
+
+    .summary-item h3{
+        font-size:15px;
+    }
+
+    .coin strong{
+        font-size:15px;
+    }
+
+    .coin-balance strong{
+        font-size:15px;
+    }
+
+    .bottom-nav{
+        height:68px;
+    }
+}
+
+/* ==========================================
+   END OF assets.css
+========================================== */
+
