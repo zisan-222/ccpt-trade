@@ -232,3 +232,135 @@ const supportWidgetChecker =
         }
 
     }, 1000);
+/* ==========================================
+   CPTMARKETS SUPPORT
+   support.js - Part 3
+========================================== */
+
+/* ==========================================
+   TAWK STATUS
+========================================== */
+
+function isSupportReady() {
+
+    return (
+        typeof window.Tawk_API !== "undefined" &&
+        tawkLoaded === true
+    );
+
+}
+
+
+/* ==========================================
+   SUPPORT BUTTON CONNECTION
+========================================== */
+
+function connectSupportButtons() {
+
+    const supportButtons =
+        document.querySelectorAll(
+            ".support-btn, .deposit-btn"
+        );
+
+    supportButtons.forEach(function (button) {
+
+        /*
+           Prevent the same button from
+           receiving the event twice.
+        */
+
+        if (
+            button.dataset.supportConnected ===
+            "true"
+        ) {
+            return;
+        }
+
+        button.dataset.supportConnected =
+            "true";
+
+
+        button.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+                openSupportChatWhenReady();
+
+            }
+        );
+
+    });
+
+}
+
+
+/* ==========================================
+   PAGE READY
+========================================== */
+
+if (
+    document.readyState === "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            connectSupportButtons();
+
+        }
+    );
+
+}
+
+else {
+
+    connectSupportButtons();
+
+}
+
+
+/* ==========================================
+   RECONNECT AFTER DYNAMIC CONTENT
+========================================== */
+
+setInterval(function () {
+
+    connectSupportButtons();
+
+}, 1500);
+
+
+/* ==========================================
+   SUPPORT READY LOG
+========================================== */
+
+window.addEventListener(
+    "load",
+    function () {
+
+        if (isSupportReady()) {
+
+            console.log(
+                "CptMarkets Support is ready."
+            );
+
+        }
+
+        else {
+
+            console.log(
+                "Waiting for Tawk Customer Service..."
+            );
+
+        }
+
+    }
+);
+
+
+/* ==========================================
+   END OF SUPPORT.JS
+========================================== */
