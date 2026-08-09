@@ -135,20 +135,44 @@ if (eyeBtn && balance) {
 
 }
 
-
 /* ==========================================
    GET NUMERIC ACCOUNT BALANCE
 ========================================== */
 
 function getAccountBalance() {
 
-    /*
-       Convert:
+    /* Use the central balance.js balance */
+    if (typeof getBalance === "function") {
 
-       "$100.00" -> 100
-       "$1,250.50" -> 1250.50
-       "$0.00" -> 0
-    */
+        const currentBalance = Number(
+            getBalance()
+        );
+
+        if (!isNaN(currentBalance)) {
+            return currentBalance;
+        }
+
+    }
+
+
+    /* Fallback */
+    const numericValue = parseFloat(
+        String(balanceText).replace(
+            /[^0-9.-]+/g,
+            ""
+        )
+    );
+
+
+    if (isNaN(numericValue)) {
+        return 0;
+    }
+
+
+    return numericValue;
+
+}
+
 
     const numericValue = parseFloat(
         balanceText.replace(/[^0-9.-]+/g, "")
