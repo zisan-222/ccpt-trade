@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Invite Friends - CptMarkets</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="invite.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="invite-header">
+
+        <button class="back-btn" id="backBtn" type="button">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
+        <h1>Invite Friends</h1>
+
+        <div class="header-space"></div>
+
+    </header>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="invite-container">
+
+        <!-- Invite Code Card -->
+
+        <section class="invite-code-card">
+
+            <div class="invite-code-title">
+                My Invite Code
+            </div>
+
+            <div class="invite-code"
+                 id="inviteCode">
+                --------
+            </div>
+
+            <button class="copy-btn"
+                    id="copyInviteBtn"
+                    type="button">
+
+                <i class="fa-regular fa-copy"></i>
+
+                <span>Copy Invite Link</span>
+
+            </button>
+
+        </section>
+
+
+        <!-- ================= STATS ================= -->
+
+        <section class="invite-stats">
+
+            <div class="stat-box">
+
+                <strong id="inviteCount">
+                    0
+                </strong>
+
+                <span>
+                    Invitees
+                </span>
+
+            </div>
+
+
+            <div class="stat-divider"></div>
+
+
+            <div class="stat-box">
+
+                <strong id="commission">
+                    $0.00
+                </strong>
+
+                <span>
+                    Total Commission
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= REFERRALS ================= -->
+
+        <section class="referrals-card">
+
+            <h2>
+                My Referrals
+            </h2>
+
+            <div class="referral-list"
+                 id="referralList">
+
+                <div class="no-referrals"
+                     id="noReferrals">
+
+                    No referrals
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= COPY MESSAGE ================= -->
+
+    <div class="copy-toast"
+         id="copyToast">
+
+        <i class="fa-solid fa-circle-check"></i>
+
+        <span>
+            Invite link copied
+        </span>
+
+    </div>
+
+
+    <script src="invite.js"></script>
+
+</body>
+</html>
