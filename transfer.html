@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CptMarkets - Transfer</title>
+
+    <link rel="stylesheet" href="transfer.css">
+</head>
+
+<body>
+
+    <div class="transfer-page">
+
+        <!-- HEADER -->
+        <header class="transfer-header">
+
+            <button class="back-btn" onclick="history.back()">
+                ‹
+            </button>
+
+            <h1>Transfer</h1>
+
+            <div class="header-space"></div>
+
+        </header>
+
+
+        <!-- TRANSFER CARD -->
+        <main class="transfer-content">
+
+            <section class="transfer-card">
+
+                <div class="card-title">
+                    <div class="title-icon">⇄</div>
+
+                    <div>
+                        <h2>Transfer</h2>
+                        <p>Transfer funds between accounts</p>
+                    </div>
+                </div>
+
+
+                <!-- FROM -->
+                <div class="field-group">
+
+                    <label>From</label>
+
+                    <div class="account-box">
+
+                        <div class="account-icon">
+                            💼
+                        </div>
+
+                        <div class="account-info">
+                            <strong>Funding Account</strong>
+                            <span>Available Balance</span>
+                        </div>
+
+                        <div class="account-arrow">
+                            ›
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SWITCH -->
+                <div class="switch-area">
+
+                    <button type="button" class="switch-btn">
+                        ⇅
+                    </button>
+
+                </div>
+
+
+                <!-- TO -->
+                <div class="field-group">
+
+                    <label>To</label>
+
+                    <div class="account-box">
+
+                        <div class="account-icon">
+                            📈
+                        </div>
+
+                        <div class="account-info">
+                            <strong>Trading Account</strong>
+                            <span>Trading Balance</span>
+                        </div>
+
+                        <div class="account-arrow">
+                            ›
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- AMOUNT -->
+                <div class="field-group amount-group">
+
+                    <label>Transfer Amount</label>
+
+                    <div class="amount-box">
+
+                        <span class="currency">$</span>
+
+                        <input
+                            type="number"
+                            id="transferAmount"
+                            placeholder="0.00"
+                            min="0"
+                            step="0.01"
+                        >
+
+                        <span class="currency-code">
+                            USD
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- AVAILABLE BALANCE -->
+                <div class="balance-info">
+
+                    <span>Available Balance</span>
+
+                    <strong id="availableBalance">
+                        $0.00
+                    </strong>
+
+                </div>
+
+
+                <!-- SUBMIT -->
+                <button
+                    type="button"
+                    class="submit-transfer"
+                    id="submitTransfer"
+                >
+                    Confirm Transfer
+                </button>
+
+
+                <!-- MESSAGE -->
+                <div
+                    id="transferMessage"
+                    class="transfer-message"
+                    style="display:none;"
+                ></div>
+
+            </section>
+
+
+            <!-- INFO -->
+            <section class="transfer-info">
+
+                <div class="info-icon">
+                    ℹ
+                </div>
+
+                <div>
+                    <strong>Transfer Information</strong>
+
+                    <p>
+                        Transfers are processed securely between
+                        your accounts.
+                    </p>
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>
