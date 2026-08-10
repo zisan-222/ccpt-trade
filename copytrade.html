@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <title>Copy Square - CptMarkets</title>
+
+    <link rel="stylesheet" href="copytrade.css">
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    >
+</head>
+
+<body>
+
+    <!-- =========================
+         COPY SQUARE HEADER
+    ========================== -->
+
+    <header class="copy-header">
+
+        <button
+            type="button"
+            class="back-btn"
+            id="backBtn"
+            aria-label="Back"
+        >
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
+        <h1>Copy Square</h1>
+
+        <div class="header-space"></div>
+
+    </header>
+
+
+    <!-- =========================
+         COPY TRADE TABS
+    ========================== -->
+
+    <main class="copy-container">
+
+        <div class="copy-tabs">
+
+            <button
+                type="button"
+                class="copy-tab active"
+                id="traderTab"
+            >
+                Trader
+            </button>
+
+            <button
+                type="button"
+                class="copy-tab"
+                id="followsTab"
+            >
+                My Follows
+            </button>
+
+        </div>
+
+
+        <!-- =========================
+             TRADER SECTION
+        ========================== -->
+
+        <section
+            class="copy-content active"
+            id="traderContent"
+        >
+
+            <div class="empty-state">
+
+                <div class="empty-text">
+                    No traders
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             MY FOLLOWS SECTION
+        ========================== -->
+
+        <section
+            class="copy-content"
+            id="followsContent"
+        >
+
+            <div class="empty-state">
+
+                <div class="followers-icon">
+                    <i class="fa-solid fa-user-group"></i>
+                </div>
+
+                <div class="empty-text">
+                    Not following any trader
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script src="copytrade.js"></script>
+
+</body>
+</html>
