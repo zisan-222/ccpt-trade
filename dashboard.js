@@ -846,8 +846,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 e.preventDefault();
 
-                alert(
-                    "Transfer page coming soon."
+             
                 );
 
             }
