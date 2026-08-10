@@ -182,7 +182,75 @@
         </main>
 
     </div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
+    const amountInput = document.querySelector(
+        'input[type="number"], input[placeholder*="0.00"]'
+    );
+
+    const confirmButton = document.querySelector(
+        'button'
+    );
+
+    const balanceElement = document.querySelector(
+        '.available-balance'
+    );
+
+    // Account balance
+    // যদি তোমার balance.js localStorage-এ balance রাখে,
+    // এই key থেকে balance নেওয়া হবে।
+    let balance = parseFloat(localStorage.getItem("balance")) || 0;
+
+    function showMessage(message) {
+        let oldMessage = document.getElementById("transfer-message");
+
+        if (oldMessage) {
+            oldMessage.remove();
+        }
+
+        const box = document.createElement("div");
+        box.id = "transfer-message";
+        box.style.marginTop = "15px";
+        box.style.padding = "15px";
+        box.style.borderRadius = "12px";
+        box.style.textAlign = "center";
+        box.style.fontWeight = "700";
+        box.style.fontSize = "16px";
+        box.style.background = "#292929";
+        box.style.color = "#ffffff";
+        box.textContent = message;
+
+        confirmButton.parentNode.insertBefore(
+            box,
+            confirmButton.nextSibling
+        );
+    }
+
+    if (confirmButton) {
+        confirmButton.addEventListener("click", function () {
+
+            const amount = parseFloat(
+                amountInput ? amountInput.value : 0
+            ) || 0;
+
+            if (amount <= 0) {
+                showMessage("Please enter a transfer amount.");
+                return;
+            }
+
+            if (balance < amount) {
+                showMessage("Insufficient Balance");
+                return;
+            }
+
+            showMessage("Contact Your Customer Service");
+        });
+    }
+
+});
+</script>
+    
 </body>
 
 </html>
