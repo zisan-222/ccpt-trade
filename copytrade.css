@@ -1,0 +1,279 @@
+/* =========================================
+   COPY SQUARE - BASE
+========================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    background: #0d1117;
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.copy-header {
+    width: 100%;
+    height: 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 18px;
+
+    background: #11161e;
+    border-bottom: 1px solid #242b35;
+
+    position: relative;
+}
+
+.copy-header h1 {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+
+    font-size: 20px;
+    font-weight: 600;
+
+    color: #ffffff;
+    white-space: nowrap;
+}
+
+.back-btn {
+    width: 42px;
+    height: 42px;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+    color: #ffffff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 21px;
+
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.back-btn:active {
+    opacity: 0.65;
+}
+
+.header-space {
+    width: 42px;
+    height: 42px;
+}
+
+
+/* =========================================
+   MAIN CONTAINER
+========================================= */
+
+.copy-container {
+    width: 100%;
+    min-height: calc(100vh - 64px);
+
+    background: #0d1117;
+}
+
+
+/* =========================================
+   TABS
+========================================= */
+
+.copy-tabs {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    background: #11161e;
+
+    border-bottom: 1px solid #242b35;
+}
+
+.copy-tab {
+    position: relative;
+
+    flex: 1;
+
+    height: 54px;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: #8f98a5;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+.copy-tab.active {
+    color: #fbbf24;
+}
+
+.copy-tab.active::after {
+    content: "";
+
+    position: absolute;
+
+    left: 18%;
+    right: 18%;
+    bottom: 0;
+
+    height: 2px;
+
+    background: #fbbf24;
+
+    border-radius: 2px 2px 0 0;
+}
+
+.copy-tab:active {
+    opacity: 0.7;
+}
+
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.copy-content {
+    display: none;
+
+    width: 100%;
+    min-height: calc(100vh - 118px);
+}
+
+.copy-content.active {
+    display: block;
+}
+
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.empty-state {
+    width: 100%;
+
+    min-height: 330px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px 20px;
+}
+
+
+/* =========================================
+   NO TRADERS
+========================================= */
+
+.empty-text {
+    color: #8f98a5;
+
+    font-size: 15px;
+    font-weight: 400;
+
+    text-align: center;
+}
+
+
+/* =========================================
+   MY FOLLOWS ICON
+========================================= */
+
+.followers-icon {
+    width: 62px;
+    height: 62px;
+
+    margin-bottom: 18px;
+
+    border-radius: 50%;
+
+    background: #1b222c;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #fbbf24;
+
+    font-size: 25px;
+
+    border: 1px solid #29313d;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 480px) {
+
+    .copy-header {
+        height: 60px;
+        padding: 0 14px;
+    }
+
+    .copy-header h1 {
+        font-size: 19px;
+    }
+
+    .back-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+
+    .header-space {
+        width: 40px;
+        height: 40px;
+    }
+
+    .copy-tab {
+        height: 52px;
+        font-size: 15px;
+    }
+
+    .empty-state {
+        min-height: 300px;
+    }
+
+    .empty-text {
+        font-size: 15px;
+    }
+
+    .followers-icon {
+        width: 58px;
+        height: 58px;
+        font-size: 23px;
+   
