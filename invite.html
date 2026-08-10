@@ -2,25 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Invite Friends - CptMarkets</title>
-
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Invite Friends</title>
 
     <link rel="stylesheet" href="invite.css">
 </head>
 
 <body>
 
-    <!-- ================= HEADER ================= -->
-
+    <!-- Header -->
     <header class="invite-header">
 
-        <button class="back-btn" id="backBtn" type="button">
-            <i class="fa-solid fa-chevron-left"></i>
+        <button
+            type="button"
+            class="back-btn"
+            onclick="goBack()"
+            aria-label="Go back">
+            ‹
         </button>
 
         <h1>Invite Friends</h1>
@@ -30,87 +29,75 @@
     </header>
 
 
-    <!-- ================= MAIN ================= -->
-
     <main class="invite-container">
 
         <!-- Invite Code Card -->
-
         <section class="invite-code-card">
 
             <div class="invite-code-title">
                 My Invite Code
             </div>
 
-            <div class="invite-code"
-                 id="inviteCode">
-                --------
+            <div
+                id="inviteCode"
+                class="invite-code">
+                56771056
             </div>
 
-            <button class="copy-btn"
-                    id="copyInviteBtn"
-                    type="button">
-
-                <i class="fa-regular fa-copy"></i>
-
-                <span>Copy Invite Link</span>
-
+            <button
+                type="button"
+                id="copyInviteBtn"
+                class="copy-btn">
+                Copy Invite Link
             </button>
 
         </section>
 
 
-        <!-- ================= STATS ================= -->
+        <!-- Statistics -->
+        <section class="stats-card">
 
-        <section class="invite-stats">
+            <div class="stat-item">
 
-            <div class="stat-box">
-
-                <strong id="inviteCount">
+                <div
+                    id="inviteCount"
+                    class="stat-number">
                     0
-                </strong>
+                </div>
 
-                <span>
+                <div class="stat-label">
                     Invitees
-                </span>
+                </div>
 
             </div>
 
 
-            <div class="stat-divider"></div>
+            <div class="stat-item">
 
-
-            <div class="stat-box">
-
-                <strong id="commission">
+                <div class="stat-number commission">
                     $0.00
-                </strong>
+                </div>
 
-                <span>
+                <div class="stat-label">
                     Total Commission
-                </span>
+                </div>
 
             </div>
 
         </section>
 
 
-        <!-- ================= REFERRALS ================= -->
-
+        <!-- Referrals -->
         <section class="referrals-card">
 
-            <h2>
-                My Referrals
-            </h2>
+            <h2>My Referrals</h2>
 
-            <div class="referral-list"
-                 id="referralList">
+            <div
+                id="referralsList"
+                class="referrals-list">
 
-                <div class="no-referrals"
-                     id="noReferrals">
-
+                <div class="no-referrals">
                     No referrals
-
                 </div>
 
             </div>
@@ -120,17 +107,11 @@
     </main>
 
 
-    <!-- ================= COPY MESSAGE ================= -->
-
-    <div class="copy-toast"
-         id="copyToast">
-
-        <i class="fa-solid fa-circle-check"></i>
-
-        <span>
-            Invite link copied
-        </span>
-
+    <!-- Copy Success Message -->
+    <div
+        id="copyToast"
+        class="copy-toast">
+        Invite code copied!
     </div>
 
 
