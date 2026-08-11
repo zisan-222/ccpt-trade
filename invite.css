@@ -1,11 +1,7 @@
-/* ===============================
-   CptMarkets - Invite Page
-   =============================== */
-
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 html,
@@ -15,496 +11,373 @@ body {
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #050b18;
+    background: #050b19;
     color: #ffffff;
-    min-height: 100vh;
-    overflow-x: hidden;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 
-/* ===============================
+/* =========================
    HEADER
-   =============================== */
+========================= */
 
 .invite-header {
-    height: 74px;
     width: 100%;
+    height: 74px;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 24px;
+
+    padding: 0 18px;
+
     background: #0b1428;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+    border-bottom: 1px solid #1b2944;
 }
 
 .invite-header h1 {
-    font-size: 28px;
+    font-size: 25px;
     font-weight: 700;
-    color: #e9eefb;
+    color: #eef3ff;
+
     text-align: center;
-    flex: 1;
+}
+
+.back-btn {
+    width: 42px;
+    height: 42px;
+
+    border: 0;
+    background: transparent;
+
+    color: #ffffff;
+
+    font-size: 38px;
+    line-height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    padding: 0;
 }
 
 .header-space {
     width: 42px;
 }
 
-.back-btn {
-    width: 42px;
-    height: 42px;
-    border: none;
-    background: transparent;
-    color: #e9eefb;
-    font-size: 25px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-}
 
-.back-btn:active {
-    transform: scale(0.92);
-}
-
-
-/* ===============================
-   MAIN CONTAINER
-   =============================== */
+/* =========================
+   MAIN
+========================= */
 
 .invite-container {
     width: 100%;
-    max-width: 760px;
+    max-width: 520px;
+
     margin: 0 auto;
-    padding: 32px 30px 80px;
+
+    padding: 24px 18px 60px;
 }
 
 
-/* ===============================
-   INVITE CODE CARD
-   =============================== */
+/* =========================
+   INVITE CARD
+========================= */
 
 .invite-code-card {
     width: 100%;
-    min-height: 315px;
-    padding: 38px 32px 34px;
-    border-radius: 36px;
 
-    background:
-        linear-gradient(
-            145deg,
-            #303030 0%,
-            #202020 48%,
-            #161616 100%
-        );
-
-    border: 1px solid rgba(255, 193, 7, 0.65);
-
-    box-shadow:
-        0 0 25px rgba(255, 193, 7, 0.12),
-        inset 0 0 25px rgba(255, 255, 255, 0.02);
+    padding: 30px 20px;
 
     text-align: center;
+
+    background: linear-gradient(
+        145deg,
+        #292929,
+        #181818
+    );
+
+    border: 1px solid #c99b16;
+
+    border-radius: 28px;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.35);
 }
-
-
-/* Title */
 
 .invite-code-title {
-    color: #d7d7d7;
-    font-size: 29px;
-    line-height: 1.3;
-    margin-bottom: 22px;
+    font-size: 24px;
+
+    color: #d9d9df;
+
+    margin-bottom: 20px;
 }
-
-
-/* Code */
 
 .invite-code {
-    color: #ffffff;
-    font-size: 54px;
-    line-height: 1;
+    font-size: 42px;
+
     font-weight: 800;
-    letter-spacing: 3px;
-    margin-bottom: 34px;
+
+    letter-spacing: 2px;
+
+    color: #ffffff;
+
+    margin-bottom: 28px;
 }
 
 
-/* ===============================
+/* =========================
    COPY BUTTON
-   =============================== */
+========================= */
 
 .copy-btn {
     width: 100%;
-    height: 76px;
 
-    border: 1px solid rgba(255, 255, 255, 0.55);
-    border-radius: 38px;
+    height: 60px;
 
-    background:
-        linear-gradient(
-            90deg,
-            #ffe27a 0%,
-            #ffc21a 45%,
-            #c78500 100%
-        );
+    border: 0;
 
-    color: #171717;
+    border-radius: 32px;
 
-    font-size: 27px;
+    background: linear-gradient(
+        100deg,
+        #ffe66a,
+        #ffb900,
+        #e58c00
+    );
+
+    color: #151515;
+
+    font-size: 21px;
+
     font-weight: 700;
 
     cursor: pointer;
 
     box-shadow:
-        0 4px 0 rgba(255, 255, 255, 0.35),
-        0 8px 25px rgba(255, 193, 7, 0.22);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-
-    transition:
-        transform 0.15s ease,
-        box-shadow 0.15s ease;
-}
-
-.copy-btn i {
-    font-size: 24px;
+        0 6px 15px rgba(255, 190, 0, 0.20);
 }
 
 .copy-btn:active {
-    transform: translateY(3px) scale(0.99);
-
-    box-shadow:
-        0 2px 0 rgba(255, 255, 255, 0.25),
-        0 4px 15px rgba(255, 193, 7, 0.15);
+    transform: scale(0.98);
 }
 
 
-/* ===============================
-   STATS CARD
-   =============================== */
+/* =========================
+   STATISTICS
+========================= */
 
-.invite-stats {
+.stats-card {
     width: 100%;
-    min-height: 145px;
 
-    margin-top: 28px;
+    margin-top: 20px;
 
-    padding: 22px 28px;
-
-    border-radius: 32px;
-
-    background: #101b33;
-
-    border: 1px solid rgba(115, 143, 190, 0.28);
+    padding: 22px 10px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: space-around;
 
-    box-shadow:
-        0 8px 25px rgba(0, 0, 0, 0.18);
+    background: #101c35;
+
+    border: 1px solid #263d64;
+
+    border-radius: 24px;
 }
 
-
-/* Individual stat */
-
-.stat-box {
-    flex: 1;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.stat-item {
+    width: 50%;
 
     text-align: center;
 }
 
-.stat-box strong {
-    font-size: 36px;
-    line-height: 1.2;
+.stat-number {
+    font-size: 27px;
+
     font-weight: 700;
-    color: #f1f5ff;
-    margin-bottom: 8px;
+
+    color: #ffffff;
+
+    margin-bottom: 7px;
 }
 
-.stat-box:nth-of-type(2) strong {
-    color: #00d69b;
+.stat-number.commission {
+    color: #00d69a;
 }
 
-.stat-box span {
-    font-size: 21px;
-    color: #aebbd5;
-}
+.stat-label {
+    font-size: 15px;
 
-
-/* Divider */
-
-.stat-divider {
-    width: 1px;
-    height: 72px;
-    background: rgba(255, 255, 255, 0.10);
+    color: #8e9db9;
 }
 
 
-/* ===============================
-   REFERRALS CARD
-   =============================== */
+/* =========================
+   REFERRALS
+========================= */
 
 .referrals-card {
     width: 100%;
-    min-height: 380px;
 
-    margin-top: 28px;
+    min-height: 300px;
 
-    padding: 38px 38px;
+    margin-top: 20px;
 
-    border-radius: 34px;
+    padding: 25px 22px;
 
-    background: #101b33;
+    background: #101c35;
 
-    border: 1px solid rgba(115, 143, 190, 0.25);
+    border: 1px solid #263d64;
 
-    box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.18);
+    border-radius: 24px;
 }
 
 .referrals-card h2 {
-    font-size: 29px;
-    color: #e5ecfa;
-    margin-bottom: 30px;
+    font-size: 25px;
+
+    margin-bottom: 35px;
+
+    color: #eef3ff;
 }
 
-.referral-list {
-    width: 100%;
-    min-height: 250px;
+.referrals-list {
+    min-height: 190px;
 
     display: flex;
-    align-items: center;
+
     justify-content: center;
+
+    align-items: center;
 }
 
 .no-referrals {
-    color: #6f7f9d;
-    font-size: 24px;
-    text-align: center;
+    font-size: 19px;
+
+    color: #71819f;
 }
 
 
-/* ===============================
-   REFERRAL ITEM
-   =============================== */
-
-.referral-item {
-    width: 100%;
-    padding: 18px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.referral-user {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.referral-user strong {
-    color: #eaf0ff;
-    font-size: 18px;
-}
-
-.referral-user span {
-    color: #7f8da8;
-    font-size: 14px;
-}
-
-.referral-commission {
-    color: #00d69b;
-    font-size: 18px;
-    font-weight: 700;
-}
-
-
-/* ===============================
-   COPY TOAST
-   =============================== */
+/* =========================
+   TOAST
+========================= */
 
 .copy-toast {
     position: fixed;
 
     left: 50%;
-    bottom: 35px;
 
-    transform: translateX(-50%) translateY(120px);
+    bottom: 25px;
 
-    background: #17233b;
+    transform:
+        translateX(-50%)
+        translateY(80px);
+
+    padding: 12px 20px;
+
+    background: #00b982;
 
     color: #ffffff;
 
-    border: 1px solid rgba(255, 193, 7, 0.45);
+    border-radius: 10px;
 
-    border-radius: 14px;
-
-    padding: 14px 22px;
-
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    font-size: 16px;
-    font-weight: 600;
-
-    box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.35);
+    font-size: 15px;
 
     opacity: 0;
 
     pointer-events: none;
 
-    transition:
-        transform 0.25s ease,
-        opacity 0.25s ease;
+    transition: 0.25s ease;
 
     z-index: 9999;
 }
 
-.copy-toast i {
-    color: #00d69b;
-    font-size: 19px;
-}
-
 .copy-toast.show {
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
+
+    transform:
+        translateX(-50%)
+        translateY(0);
 }
 
 
-/* ===============================
+/* =========================
    MOBILE
-   =============================== */
+========================= */
 
-@media (max-width: 600px) {
+@media (max-width: 480px) {
 
     .invite-header {
-        height: 72px;
-        padding: 0 20px;
+        height: 68px;
+
+        padding: 0 14px;
     }
 
     .invite-header h1 {
-        font-size: 27px;
+        font-size: 23px;
+    }
+
+    .back-btn {
+        width: 38px;
+        height: 38px;
+
+        font-size: 34px;
+    }
+
+    .header-space {
+        width: 38px;
     }
 
     .invite-container {
-        padding: 30px 30px 70px;
+        padding: 20px 16px 50px;
     }
 
     .invite-code-card {
-        min-height: 315px;
-        padding: 35px 32px 32px;
-        border-radius: 34px;
+        padding: 28px 16px;
+
+        border-radius: 24px;
     }
 
     .invite-code-title {
-        font-size: 28px;
+        font-size: 22px;
     }
 
     .invite-code {
-        font-size: 52px;
-        letter-spacing: 3px;
-        margin-bottom: 34px;
+        font-size: 39px;
+
+        letter-spacing: 1px;
     }
 
     .copy-btn {
-        height: 74px;
+        height: 56px;
+
+        font-size: 19px;
+    }
+
+    .stats-card {
+        padding: 20px 5px;
+    }
+
+    .stat-number {
         font-size: 25px;
     }
 
-    .invite-stats {
-        min-height: 145px;
-        padding: 20px 15px;
-        border-radius: 30px;
-    }
-
-    .stat-box strong {
-        font-size: 35px;
-    }
-
-    .stat-box span {
-        font-size: 20px;
+    .stat-label {
+        font-size: 14px;
     }
 
     .referrals-card {
-        min-height: 370px;
-        padding: 35px 36px;
-        border-radius: 32px;
+        min-height: 280px;
+
+        padding: 24px 20px;
     }
 
     .referrals-card h2 {
-        font-size: 28px;
-    }
-
-    .no-referrals {
         font-size: 23px;
-    }
-}
-
-
-/* ===============================
-   SMALL MOBILE
-   =============================== */
-
-@media (max-width: 400px) {
-
-    .invite-container {
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-
-    .invite-code-card {
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-
-    .invite-code-title {
-        font-size: 24px;
-    }
-
-    .invite-code {
-        font-size: 43px;
-        letter-spacing: 2px;
-    }
-
-    .copy-btn {
-        height: 66px;
-        font-size: 21px;
-    }
-
-    .copy-btn i {
-        font-size: 20px;
-    }
-
-    .invite-stats {
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-
-    .stat-box strong {
-        font-size: 29px;
-    }
-
-    .stat-box span {
-        font-size: 17px;
-    }
-
-    .referrals-card {
-        padding: 30px 25px;
     }
 }
