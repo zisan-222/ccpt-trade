@@ -405,3 +405,54 @@ if (profitLossBox) {
 }
 }, 1000);
 
+/* =========================
+   CLOSE TRADE
+========================= */
+
+const closeTradeBtn = document.getElementById("closeTradeBtn");
+
+if (closeTradeBtn) {
+
+    closeTradeBtn.addEventListener("click", function () {
+
+        const closePrice = price;
+
+        const finalProfitLoss =
+            selectedSide === "LONG"
+                ? ((closePrice - entryPrice) / entryPrice) * parseFloat(
+                    document.getElementById("tradeAmount").innerText.replace("$", "")
+                )
+                : ((entryPrice - closePrice) / entryPrice) * parseFloat(
+                    document.getElementById("tradeAmount").innerText.replace("$", "")
+                );
+
+        const closedTrade = {
+            side: selectedSide,
+            entryPrice: entryPrice,
+            closePrice: closePrice,
+            profitLoss: finalProfitLoss,
+            amount: parseFloat(
+                document.getElementById("tradeAmount").innerText.replace("$", "")
+            ),
+            time: new Date().toLocaleString()
+        };
+
+        console.log("Trade Closed:", closedTrade);
+
+        alert(
+            selectedSide +
+            " trade closed.\n" +
+            "Close Price: $" +
+            closePrice.toFixed(2) +
+            "\nProfit/Loss: $" +
+            finalProfitLoss.toFixed(2)
+        );
+
+        if (openTradeCard) {
+            openTradeCard.style.display = "none";
+        }
+
+        selectedSide = null;
+        entryPrice = null;
+    });
+}
