@@ -123,20 +123,6 @@ new TradingView.widget({
 
 });
 
-/* =================================
-   TRADE ORDER MODAL - STEP 4
-================================= */
-
-const tradeModal = document.getElementById("tradeModal");
-const modalClose = document.getElementById("modalClose");
-
-const longButton = document.getElementById("longBtn");
-const shortButton = document.getElementById("shortBtn");
-
-const modalTitle = document.getElementById("modalTitle");
-const modalPrice = document.getElementById("modalPrice");
-
-
 /* =========================
    LONG BUTTON
 ========================= */
