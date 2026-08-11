@@ -363,4 +363,45 @@ if(confirmTradeBtn){
 
     });
 
+   /* =========================
+   LIVE PROFIT / LOSS
+========================= */
+
+setInterval(function () {
+
+    const currentPriceBox =
+        document.getElementById("currentTradePrice");
+
+    const tradeAmountBox =
+        document.getElementById("tradeAmount");
+
+    if (!currentPriceBox || !tradeAmountBox) {
+        return;
+    }
+
+    if (!selectedSide || !entryPrice) {
+        return;
+    }
+
+    const currentPrice = price;
+
+    const amount = parseFloat(
+        tradeAmountBox.innerText.replace("$", "")
+    ) || 0;
+
+    let profitLoss = 0;
+
+    if (selectedSide === "LONG") {
+        profitLoss = ((currentPrice - entryPrice) / entryPrice) * amount;
+    } else if (selectedSide === "SHORT") {
+        profitLoss = ((entryPrice - currentPrice) / entryPrice) * amount;
+    }
+
+    currentPriceBox.innerText = currentPrice.toFixed(2);
+   const profitLossBox = document.getElementById("profitLoss");
+
+if (profitLossBox) {
+    profitLossBox.innerText = "$" + profitLoss.toFixed(2);
 }
+}, 1000);
+
