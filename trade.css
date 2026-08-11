@@ -379,3 +379,443 @@ body{
 .bottom-nav .trade-btn i{
     font-size:28px;
 }
+/* ==========================
+   DEMO BALANCE
+========================== */
+
+.balance-card {
+
+    background: #112b50;
+
+    border-radius: 18px;
+
+    padding: 18px;
+
+    margin: 18px 0;
+
+}
+
+.balance-card span {
+
+    display: block;
+
+    color: #aebbd0;
+
+    font-size: 14px;
+
+    margin-bottom: 6px;
+
+}
+
+.balance-card strong {
+
+    color: #ffffff;
+
+    font-size: 24px;
+
+}
+
+
+/* ==========================
+   ORDER MODAL
+========================== */
+
+.order-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,.65);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    z-index: 9999;
+
+    padding: 20px;
+
+}
+
+
+.order-box {
+
+    width: 100%;
+
+    max-width: 420px;
+
+    background: #081b36;
+
+    border-radius: 22px;
+
+    padding: 24px;
+
+    color: white;
+
+}
+
+
+.order-box h2 {
+
+    margin-top: 0;
+
+    margin-bottom: 22px;
+
+}
+
+
+.order-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 13px 0;
+
+    border-bottom: 1px solid rgba(255,255,255,.08);
+
+}
+
+
+.order-row span {
+
+    color: #aebbd0;
+
+}
+
+
+.long-text {
+
+    color: #00d084 !important;
+
+}
+
+
+.short-text {
+
+    color: #ff3b5c !important;
+
+}
+
+
+.order-actions {
+
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 25px;
+
+}
+
+
+.order-actions button {
+
+    flex: 1;
+
+    border: none;
+
+    border-radius: 14px;
+
+    padding: 14px;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+}
+
+
+#cancelOrder {
+
+    background: #19345d;
+
+    color: white;
+
+}
+
+
+.confirm-long {
+
+    background: #00d084;
+
+    color: white;
+
+}
+
+
+.confirm-short {
+
+    background: #ff3b5c;
+
+    color: white;
+
+}
+
+
+/* ==========================
+   OPEN TRADE
+========================== */
+
+.open-trade-card {
+
+    background: #0c2445;
+
+    border-radius: 20px;
+
+    padding: 20px;
+
+    margin: 18px 0;
+
+}
+
+
+.open-trade-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+}
+
+
+.open-trade-header span {
+
+    color: #91a4bf;
+
+    font-size: 12px;
+
+}
+
+
+.open-trade-header h2 {
+
+    margin: 5px 0 0;
+
+}
+
+
+.open-trade-info {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 14px;
+
+    margin-top: 20px;
+
+}
+
+
+.open-trade-info div {
+
+    background: #122f55;
+
+    padding: 13px;
+
+    border-radius: 12px;
+
+}
+
+
+.open-trade-info span {
+
+    display: block;
+
+    color: #91a4bf;
+
+    font-size: 12px;
+
+    margin-bottom: 5px;
+
+}
+
+
+.position-pnl {
+
+    margin-top: 18px;
+
+    padding: 18px;
+
+    background: #122f55;
+
+    border-radius: 14px;
+
+}
+
+
+.position-pnl span {
+
+    display: block;
+
+    color: #91a4bf;
+
+    margin-bottom: 5px;
+
+}
+
+
+.position-pnl strong {
+
+    font-size: 25px;
+
+}
+
+
+.profit {
+
+    color: #00d084 !important;
+
+}
+
+
+.loss {
+
+    color: #ff3b5c !important;
+
+}
+
+
+.close-position-btn {
+
+    width: 100%;
+
+    margin-top: 18px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    padding: 15px;
+
+    background: #ff3b5c;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+}
+
+
+/* ==========================
+   MY ORDERS
+========================== */
+
+.history-card {
+
+    background: #0c2445;
+
+    border-radius: 20px;
+
+    padding: 20px;
+
+    margin: 18px 0 120px;
+
+}
+
+
+.history-title {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+}
+
+
+.history-title h2 {
+
+    margin: 0;
+
+}
+
+
+.history-title span {
+
+    color: #91a4bf;
+
+    font-size: 13px;
+
+}
+
+
+.history-item {
+
+    margin-top: 15px;
+
+    background: #122f55;
+
+    border-radius: 15px;
+
+    padding: 15px;
+
+}
+
+
+.history-top {
+
+    display: flex;
+
+    justify-content: space-between;
+
+}
+
+
+.history-top div {
+
+    display: flex;
+
+    gap: 10px;
+
+    align-items: center;
+
+}
+
+
+.history-details {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 8px;
+
+    margin-top: 13px;
+
+    color: #aebbd0;
+
+    font-size: 12px;
+
+}
+
+
+.history-date {
+
+    color: #7085a3;
+
+    font-size: 11px;
+
+    margin-top: 12px;
+
+}
+
+
+.empty-history {
+
+    text-align: center;
+
+    padding: 30px 10px;
+
+    color: #8094b1;
+
+}
