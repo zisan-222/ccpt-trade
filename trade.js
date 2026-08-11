@@ -122,3 +122,88 @@ new TradingView.widget({
     "container_id": "tvchart"
 
 });
+
+/* =================================
+   TRADE ORDER MODAL - STEP 4
+================================= */
+
+const tradeModal = document.getElementById("tradeModal");
+const modalClose = document.getElementById("modalClose");
+
+const longButton = document.getElementById("longBtn");
+const shortButton = document.getElementById("shortBtn");
+
+const modalTitle = document.getElementById("modalTitle");
+const modalPrice = document.getElementById("modalPrice");
+
+
+/* =========================
+   LONG BUTTON
+========================= */
+
+if (longButton) {
+
+    longButton.addEventListener("click", function () {
+
+        modalTitle.innerHTML = "Open Long";
+
+        modalPrice.innerHTML = price.toFixed(2);
+
+        tradeModal.classList.add("show");
+
+    });
+
+}
+
+
+/* =========================
+   SHORT BUTTON
+========================= */
+
+if (shortButton) {
+
+    shortButton.addEventListener("click", function () {
+
+        modalTitle.innerHTML = "Open Short";
+
+        modalPrice.innerHTML = price.toFixed(2);
+
+        tradeModal.classList.add("show");
+
+    });
+
+}
+
+
+/* =========================
+   CLOSE BUTTON
+========================= */
+
+if (modalClose) {
+
+    modalClose.addEventListener("click", function () {
+
+        tradeModal.classList.remove("show");
+
+    });
+
+}
+
+
+/* =========================
+   CLOSE BY CLICKING OUTSIDE
+========================= */
+
+if (tradeModal) {
+
+    tradeModal.addEventListener("click", function (event) {
+
+        if (event.target === tradeModal) {
+
+            tradeModal.classList.remove("show");
+
+        }
+
+    });
+
+}
