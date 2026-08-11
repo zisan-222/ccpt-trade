@@ -379,3 +379,189 @@ body{
 .bottom-nav .trade-btn i{
     font-size:28px;
 }
+/* =================================
+   TRADE ORDER MODAL
+================================= */
+
+.trade-modal{
+
+    display:none;
+
+    position:fixed;
+
+    left:0;
+    top:0;
+
+    width:100%;
+    height:100%;
+
+    background:rgba(0,0,0,.70);
+
+    z-index:5000;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+}
+
+
+.trade-modal.show{
+
+    display:flex;
+
+}
+
+
+.trade-modal-box{
+
+    width:100%;
+    max-width:420px;
+
+    background:#101d39;
+
+    border:1px solid #263d68;
+
+    border-radius:22px;
+
+    padding:24px;
+
+    position:relative;
+
+    box-shadow:0 20px 60px rgba(0,0,0,.45);
+
+}
+
+
+.trade-modal-box h2{
+
+    font-size:25px;
+
+    margin-bottom:10px;
+
+    color:#ffffff;
+
+}
+
+
+.modal-close{
+
+    position:absolute;
+
+    right:15px;
+    top:12px;
+
+    width:38px;
+    height:38px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#1d2e54;
+
+    color:#ffffff;
+
+    font-size:26px;
+
+    cursor:pointer;
+
+}
+
+
+.modal-price{
+
+    color:#aebbd2;
+
+    font-size:15px;
+
+    margin-bottom:22px;
+
+}
+
+
+.modal-price strong{
+
+    color:#00e4ff;
+
+    font-size:20px;
+
+}
+
+
+.trade-modal-box label{
+
+    display:block;
+
+    color:#cfd6e7;
+
+    font-size:14px;
+
+    margin-bottom:7px;
+
+}
+
+
+.trade-modal-box input,
+.trade-modal-box select{
+
+    width:100%;
+
+    height:50px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#1d2e54;
+
+    color:#ffffff;
+
+    padding:0 14px;
+
+    margin-bottom:17px;
+
+    font-size:16px;
+
+    outline:none;
+
+}
+
+
+.trade-modal-box select{
+
+    appearance:auto;
+
+}
+
+
+.confirm-trade-btn{
+
+    width:100%;
+
+    height:54px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#ffc928;
+
+    color:#111111;
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    margin-top:5px;
+
+}
+
+
+.confirm-trade-btn:active{
+
+    transform:scale(.98);
+
+}
