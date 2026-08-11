@@ -5,16 +5,15 @@
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     >
 
     <title>CptMarkets</title>
 
-    <link
-        rel="stylesheet"
-        href="investment.css"
-    >
+    <!-- Investment CSS -->
+    <link rel="stylesheet" href="./investment.css">
 
+    <!-- Font Awesome -->
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -40,11 +39,9 @@
             <i class="fa-solid fa-arrow-left"></i>
         </button>
 
-        <h1 id="pageTitle">
-            Wealth
-        </h1>
+        <h1 id="pageTitle">Wealth</h1>
 
-        <div class="header-space"></div>
+        <div class="header-space" aria-hidden="true"></div>
 
     </header>
 
@@ -59,7 +56,10 @@
              TABS
         ====================== -->
 
-        <div class="investment-tabs">
+        <nav
+            class="investment-tabs"
+            aria-label="Investment sections"
+        >
 
             <button
                 class="investment-tab active"
@@ -85,7 +85,7 @@
                 My Subscriptions
             </button>
 
-        </div>
+        </nav>
 
 
         <!-- =====================
@@ -95,6 +95,7 @@
         <section
             id="wealthFund"
             class="tab-content active"
+            aria-labelledby="wealthFundTab"
         >
 
             <div
@@ -114,6 +115,7 @@
         <section
             id="miningPower"
             class="tab-content"
+            aria-labelledby="miningPowerTab"
         >
 
             <div
@@ -146,9 +148,7 @@
                         <i class="fa-solid fa-chart-pie"></i>
                     </div>
 
-                    <h3>
-                        No subscriptions
-                    </h3>
+                    <h3>No subscriptions</h3>
 
                     <p>
                         Your active subscriptions will appear here.
@@ -170,18 +170,22 @@
     <div
         id="subscribeOverlay"
         class="subscribe-overlay"
+        aria-hidden="true"
     >
 
         <div
             class="subscribe-sheet"
             id="subscribeSheet"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="subscribeTitle"
         >
 
             <div class="sheet-handle"></div>
 
             <div class="sheet-header">
 
-                <h2>
+                <h2 id="subscribeTitle">
                     Subscribe
                 </h2>
 
@@ -197,7 +201,9 @@
             </div>
 
 
-            <!-- Product summary -->
+            <!-- =====================
+                 PRODUCT SUMMARY
+            ====================== -->
 
             <div class="subscribe-product">
 
@@ -223,13 +229,13 @@
             </div>
 
 
-            <!-- Daily return -->
+            <!-- =====================
+                 DAILY RETURN
+            ====================== -->
 
             <div class="subscribe-row">
 
-                <span>
-                    Daily Income
-                </span>
+                <span>Daily Income</span>
 
                 <strong
                     id="subscribeDailyIncome"
@@ -241,13 +247,13 @@
             </div>
 
 
-            <!-- Duration -->
+            <!-- =====================
+                 DURATION
+            ====================== -->
 
             <div class="subscribe-row">
 
-                <span>
-                    Duration
-                </span>
+                <span>Duration</span>
 
                 <strong id="subscribeDuration">
                     1 days
@@ -256,13 +262,13 @@
             </div>
 
 
-            <!-- Minimum -->
+            <!-- =====================
+                 MINIMUM
+            ====================== -->
 
             <div class="subscribe-row">
 
-                <span>
-                    Minimum
-                </span>
+                <span>Minimum</span>
 
                 <strong id="subscribeMinimum">
                     $10.00
@@ -271,7 +277,9 @@
             </div>
 
 
-            <!-- Amount -->
+            <!-- =====================
+                 AMOUNT
+            ====================== -->
 
             <div class="amount-section">
 
@@ -281,7 +289,10 @@
 
                 <div class="amount-input-wrapper">
 
-                    <span class="currency-symbol">
+                    <span
+                        class="currency-symbol"
+                        aria-hidden="true"
+                    >
                         $
                     </span>
 
@@ -300,12 +311,16 @@
                 <div
                     id="amountError"
                     class="amount-error"
+                    role="alert"
+                    aria-live="polite"
                 ></div>
 
             </div>
 
 
-            <!-- Confirm -->
+            <!-- =====================
+                 CONFIRM
+            ====================== -->
 
             <button
                 id="confirmSubscription"
@@ -322,11 +337,13 @@
 
     <!-- =========================
          SUCCESS MESSAGE
-    ========================== -->
+    ========================= -->
 
     <div
         id="successToast"
         class="success-toast"
+        role="status"
+        aria-live="polite"
     >
 
         <i class="fa-solid fa-circle-check"></i>
@@ -337,11 +354,11 @@
 
     </div>
 
-
 </div>
 
 
-<script src="investment.js"></script>
+<!-- Investment JavaScript -->
+<script src="./investment.js" defer></script>
 
 </body>
 </html>
