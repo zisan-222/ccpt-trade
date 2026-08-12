@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CptMarkets Admin</title>
+
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+    <main class="admin-container">
+
+        <section class="login-box">
+
+            <div class="admin-logo">
+
+                <div class="icon">
+                    CM
+                </div>
+
+                <h1>CptMarkets</h1>
+
+                <p>Administrator Panel</p>
+
+            </div>
+
+
+            <form id="adminLoginForm">
+
+                <div class="input-group">
+
+                    <label for="adminUsername">
+                        Admin Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="adminUsername"
+                        placeholder="Enter admin username"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label for="adminPassword">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="adminPassword"
+                        placeholder="Enter admin password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="login-btn"
+                >
+                    Admin Login
+                </button>
+
+
+                <div
+                    id="loginError"
+                    class="error-message"
+                >
+                    Invalid admin credentials.
+                </div>
+
+            </form>
+
+
+            <p class="admin-note">
+                Authorized administrators only
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <script type="module" src="admin.js"></script>
+
+</body>
+</html>
