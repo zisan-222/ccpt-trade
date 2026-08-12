@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Orders</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #061b38;
+            color: white;
+        }
+
+        .header {
+            padding: 20px;
+            background: #0b2345;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: #173861;
+            color: white;
+            font-size: 16px;
+        }
+
+        .tab.active {
+            background: #24558c;
+        }
+
+        .order-card {
+            background: #0d284c;
+            border-radius: 15px;
+            padding: 18px;
+            margin-bottom: 15px;
+        }
+
+        .side {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .long {
+            color: #00df70;
+        }
+
+        .short {
+            color: #ff4058;
+        }
+
+        .info {
+            margin: 7px 0;
+            color: #dce8f7;
+        }
+
+        .close-btn {
+            width: 100%;
+            margin-top: 12px;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: #ff4058;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 40px 10px;
+            color: #91a6c2;
+            font-size: 17px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        My Orders
+    </div>
+
+    <div class="container">
+
+        <div class="tabs">
+            <button class="tab active" onclick="showActive()">
+                My Orders
+            </button>
+
+            <button class="tab" onclick="showHistory()">
+                History
+            </button>
+        </div>
+
+        <div id="ordersList"></div>
+
+    </div>
+
+    <script>
+
+        function getHistory() {
+            try {
+                return JSON.parse(
+                    localStorage.getItem("cptTradeHistory")
+                ) || [];
+            } catch (error) {
+                return [];
+            }
+        }
+
+        function getActiveTrade() {
+            const side = localStorage.getItem("selectedSide");
+            const entryPrice = localStorage.getItem("entryPrice");
+            const amount = localStorage.getItem("tradeAmountValue");
+
+            if (!side || !entryPrice) {
+                return null;
+            }
+
+            return {
+                side: side,
+                entryPrice: Number(entryPrice),
+                amount: Number(amount || 0)
+            };
+        }
+
+        function showActive() {
+
+            const list = document.getElementById("ordersList");
+
+            const trade = getActiveTrade();
+
+            if (!trade) {
+                list.innerHTML = `
+                    <div class="empty">
+                        No active orders
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = `
+                <div class="order-card">
+
+                    <div class="side ${trade.side === "LONG" ? "long" : "short"}">
+                        ${trade.side}
+                    </div>
+
+                    <div class="info">
+                        Entry Price: $${trade.entryPrice.toFixed(2)}
+                    </div>
+
+                    <div class="info">
+                        Amount: $${trade.amount.toFixed(2)}
+                    </div>
+
+                    <button class="close-btn" onclick="closeTrade()">
+                        Close Trade
+                    </button>
+
+                </div>
+            `;
+        }
+
+        function showHistory() {
+
+            const list = document.getElementById("ordersList");
+
+            const history = getHistory();
+
+            if (!history.length) {
+                list.innerHTML = `
+                    <div class="empty">
+                        No trade history
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = history.map(trade => `
+
+                <div class="order-card">
+
+                    <div class="side ${trade.side === "LONG" ? "long" : "short"}">
+                        ${trade.side || ""}
+                    </div>
+
+                    <div class="info">
+                        Entry: $${Number(trade.entryPrice || 0).toFixed(2)}
+                    </div>
+
+                    <div class="info">
+                        Close: $${Number(trade.closePrice || 0).toFixed(2)}
+                    </div>
+
+                    <div class="info">
+                        Amount: $${Number(trade.amount || 0).toFixed(2)}
+                    </div>
+
+                    <div class="info">
+                        P/L: $${Number(trade.profitloss || 0).toFixed(2)}
+                    </div>
+
+                    <div class="info">
+                        ${trade.time || ""}
+                    </div>
+
+                </div>
+
+            `).join("");
+        }
+
+        function closeTrade() {
+
+            if (!confirm("Close this trade?")) {
+                return;
+            }
+
+            alert("Close function will be connected with trade.js in the next step.");
+
+        }
+
+        showActive();
+
+    </script>
+
+</body>
+</html>
