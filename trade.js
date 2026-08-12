@@ -350,6 +350,9 @@ if (confirmTradeBtn) {
 
 
      tradeAmountValue = orderAmount;
+       localStorage.setItem("selectedSide", selectedSide);
+localStorage.setItem("entryPrice", entryPrice);
+localStorage.setItem("tradeAmountValue", orderAmount);
 
        // CHECK & DEDUCT BALANCE
 
