@@ -620,13 +620,6 @@ if (typeof addBalance === "function") {
 
 
             /* =========================
-               SHOW HISTORY
-            ========================= */
-
-            renderTradeHistory();
-
-
-            /* =========================
                HIDE OPEN TRADE
             ========================= */
 
