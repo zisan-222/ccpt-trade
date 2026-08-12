@@ -641,3 +641,70 @@ body{
     font-weight:bold;
     cursor:pointer;
 }
+
+/* =========================
+   MY ORDERS
+========================= */
+
+.orders-section {
+    width: 100%;
+    margin-top: 20px;
+    padding: 0 12px 20px;
+    box-sizing: border-box;
+}
+
+.orders-tabs {
+    display: flex;
+    width: 100%;
+    background: #081a35;
+    border-radius: 14px;
+    padding: 5px;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+}
+
+.orders-tab {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: #9fb0cc;
+    font-size: 17px;
+    font-weight: 600;
+    padding: 14px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.orders-tab.active {
+    background: #1c3a68;
+    color: #ffffff;
+}
+
+.orders-panel {
+    width: 100%;
+}
+
+.orders-panel[style*="display:none"] {
+    display: none !important;
+}
+
+.orders-panel[style*="display: block"] {
+    display: block !important;
+}
+
+#myOrdersList,
+#historyList {
+    width: 100%;
+}
+
+.empty-orders {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 28px 15px;
+    text-align: center;
+    color: #8295b3;
+    background: #081a35;
+    border: 1px solid #17345b;
+    border-radius: 14px;
+    font-size: 15px;
+}
