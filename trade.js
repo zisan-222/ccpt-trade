@@ -349,8 +349,28 @@ if (confirmTradeBtn) {
         }
 
 
-        tradeAmountValue = orderAmount;
+     tradeAmountValue = orderAmount;
 
+       // CHECK & DEDUCT BALANCE
+
+if (typeof hasEnoughBalance !== "function" ||
+    typeof subtractBalance !== "function") {
+
+    alert("Balance system is not available.");
+    return;
+}
+
+if (!hasEnoughBalance(orderAmount)) {
+
+    alert("Insufficient balance.");
+    return;
+}
+
+if (!subtractBalance(orderAmount)) {
+
+    alert("Failed to deduct balance.");
+    return;
+}
 
         const openTradeCard =
             document.getElementById("openTradeCard");
@@ -541,6 +561,12 @@ if (closeTradeBtn) {
                         entryPrice) * amount;
 
             }
+
+           // RETURN TRADE AMOUNT + PROFIT/LOSS
+
+if (typeof addBalance === "function") {
+    addBalance(amount + finalProfitLoss);
+}
 
 
             /* =========================
