@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CptMarkets Admin Dashboard</title>
+
+    <link rel="stylesheet" href="admin-theme.css">
+</head>
+
+<body>
+
+    <header class="admin-header">
+
+        <div class="admin-brand">
+            <div class="admin-icon">CM</div>
+
+            <div>
+                <h1>CptMarkets</h1>
+                <span>Administrator Panel</span>
+            </div>
+        </div>
+
+        <button id="adminLogout" class="logout-btn">
+            Logout
+        </button>
+
+    </header>
+
+
+    <main class="admin-container">
+
+        <section class="welcome-section">
+
+            <h2>Admin Dashboard</h2>
+
+            <p>
+                Welcome to the CptMarkets administrator panel.
+            </p>
+
+        </section>
+
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-title">
+                    Total Users
+                </div>
+
+                <div id="userCount"
+                     class="stat-value">
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-title">
+                    Total Balance
+                </div>
+
+                <div id="totalBalance"
+                     class="stat-value">
+                    $0.00
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-title">
+                    Deposits
+                </div>
+
+                <div id="depositCount"
+                     class="stat-value">
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-title">
+                    Withdrawals
+                </div>
+
+                <div id="withdrawCount"
+                     class="stat-value">
+                    0
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="admin-menu">
+
+            <h2>Management</h2>
+
+
+            <div class="admin-menu-grid">
+
+                <button class="admin-menu-item">
+                    <strong>Users</strong>
+                    <span>Manage registered users</span>
+                </button>
+
+
+                <button class="admin-menu-item">
+                    <strong>Balances</strong>
+                    <span>View and manage balances</span>
+                </button>
+
+
+                <button class="admin-menu-item">
+                    <strong>Deposits</strong>
+                    <span>Manage deposit requests</span>
+                </button>
+
+
+                <button class="admin-menu-item">
+                    <strong>Withdrawals</strong>
+                    <span>Manage withdrawal requests</span>
+                </button>
+
+
+                <button class="admin-menu-item">
+                    <strong>Trades</strong>
+                    <span>View trading activity</span>
+                </button>
+
+
+                <button class="admin-menu-item">
+                    <strong>Support</strong>
+                    <span>Customer support</span>
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script type="module"
+            src="admin.js">
+    </script>
+
+</body>
+
+</html>
