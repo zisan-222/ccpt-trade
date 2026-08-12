@@ -1,12 +1,47 @@
 /* ===================================
    CPTMARKETS TRADE
-   trade.js - Part 1
+   trade.js - FIXED VERSION
 =================================== */
 
 let price = 4269.29;
 
+let selectedSide = "";
+let entryPrice = 0;
+
+
+/* =========================
+   DOM ELEMENTS
+========================= */
+
 const livePrice = document.getElementById("livePrice");
 const changeBox = document.getElementById("changeBox");
+
+const amount = document.getElementById("amount");
+
+const longButton = document.querySelector(".long-btn");
+const shortButton = document.querySelector(".short-btn");
+
+const tradeModal = document.getElementById("tradeModal");
+
+const modalTitle = document.getElementById("modalTitle");
+const modalSide = document.getElementById("modalSide");
+const modalPrice = document.getElementById("modalPrice");
+
+const modalClose = document.getElementById("modalClose");
+
+const confirmTradeBtn =
+    document.getElementById("confirmTradeBtn");
+
+const openTradeCard =
+    document.getElementById("openTradeCard");
+
+const closeTradeBtn =
+    document.getElementById("closeTradeBtn");
+
+
+/* =========================
+   LIVE PRICE
+========================= */
 
 setInterval(() => {
 
@@ -14,445 +49,631 @@ setInterval(() => {
 
     price += change;
 
-    livePrice.innerHTML = price.toFixed(2);
+    if (livePrice) {
+        livePrice.innerHTML = price.toFixed(2);
+    }
 
-    let percent = ((change / price) * 100).toFixed(2);
+    let percent =
+        ((change / price) * 100).toFixed(2);
 
-    if(change >= 0){
+    if (changeBox) {
 
-        changeBox.className = "change green";
-        changeBox.innerHTML = "+" + percent + "%";
+        if (change >= 0) {
 
-    }else{
+            changeBox.className = "change green";
+            changeBox.innerHTML =
+                "+" + percent + "%";
 
-        changeBox.className = "change red";
-        changeBox.innerHTML = percent + "%";
+        } else {
+
+            changeBox.className = "change red";
+            changeBox.innerHTML =
+                percent + "%";
+
+        }
 
     }
 
-},1000);
+}, 1000);
 
 
-document.querySelectorAll(".timeframe button").forEach(btn=>{
+/* =========================
+   TIMEFRAME BUTTONS
+========================= */
 
-    btn.onclick=()=>{
+document
+    .querySelectorAll(".timeframe button")
+    .forEach(btn => {
 
-        document
-        .querySelectorAll(".timeframe button")
-        .forEach(b=>b.classList.remove("active"));
+        btn.onclick = () => {
 
-        btn.classList.add("active");
+            document
+                .querySelectorAll(".timeframe button")
+                .forEach(b =>
+                    b.classList.remove("active")
+                );
 
-    }
+            btn.classList.add("active");
 
-});
+        };
 
-
-document.querySelectorAll(".indicator-bar button").forEach(btn=>{
-
-    btn.onclick=()=>{
-
-        document
-        .querySelectorAll(".indicator-bar button")
-        .forEach(b=>b.classList.remove("active"));
-
-        btn.classList.add("active");
-
-    }
-
-});
+    });
 
 
-document.querySelectorAll(".leverage-grid button").forEach(btn=>{
+/* =========================
+   INDICATOR BUTTONS
+========================= */
 
-    btn.onclick=()=>{
+document
+    .querySelectorAll(".indicator-bar button")
+    .forEach(btn => {
 
-        document
-        .querySelectorAll(".leverage-grid button")
-        .forEach(b=>b.classList.remove("active"));
+        btn.onclick = () => {
 
-        btn.classList.add("active");
+            document
+                .querySelectorAll(".indicator-bar button")
+                .forEach(b =>
+                    b.classList.remove("active")
+                );
 
-        document.getElementById("levValue").innerHTML =
-        btn.innerHTML;
+            btn.classList.add("active");
 
-    }
+        };
 
-});
+    });
 
 
-const amount=document.getElementById("amount");
+/* =========================
+   LEVERAGE BUTTONS
+========================= */
 
-amount.oninput=function(){
+document
+    .querySelectorAll(".leverage-grid button")
+    .forEach(btn => {
 
-    let margin=parseFloat(amount.value)||0;
+        btn.onclick = () => {
 
-    document.getElementById("marginValue").innerHTML=
-    "$"+margin.toFixed(2);
+            document
+                .querySelectorAll(".leverage-grid button")
+                .forEach(b =>
+                    b.classList.remove("active")
+                );
+
+            btn.classList.add("active");
+
+            const levValue =
+                document.getElementById("levValue");
+
+            if (levValue) {
+                levValue.innerHTML =
+                    btn.innerHTML;
+            }
+
+        };
+
+    });
+
+
+/* =========================
+   AMOUNT INPUT
+========================= */
+
+if (amount) {
+
+    amount.oninput = function () {
+
+        let margin =
+            parseFloat(amount.value) || 0;
+
+        const marginValue =
+            document.getElementById("marginValue");
+
+        if (marginValue) {
+
+            marginValue.innerHTML =
+                "$" + margin.toFixed(2);
+
+        }
+
+    };
 
 }
 
 
-new TradingView.widget({
+/* =========================
+   TRADINGVIEW
+========================= */
 
-    "autosize": true,
+if (
+    typeof TradingView !== "undefined" &&
+    document.getElementById("tvchart")
+) {
 
-    "symbol": "OANDA:XAUUSD",
+    new TradingView.widget({
 
-    "interval": "1",
+        autosize: true,
 
-    "timezone": "Etc/UTC",
+        symbol: "OANDA:XAUUSD",
 
-    "theme": "dark",
+        interval: "1",
 
-    "style": "1",
+        timezone: "Etc/UTC",
 
-    "locale": "en",
+        theme: "dark",
 
-    "toolbar_bg": "#08162f",
+        style: "1",
 
-    "enable_publishing": false,
+        locale: "en",
 
-    "hide_top_toolbar": true,
+        toolbar_bg: "#08162f",
 
-    "hide_legend": true,
+        enable_publishing: false,
 
-    "save_image": false,
+        hide_top_toolbar: true,
 
-    "container_id": "tvchart"
+        hide_legend: true,
 
-});
+        save_image: false,
+
+        container_id: "tvchart"
+
+    });
+
+}
+
 
 /* =========================
-   LONG BUTTON
+   OPEN LONG
 ========================= */
 
 if (longButton) {
 
-    longButton.addEventListener("click", function () {
+    longButton.addEventListener(
+        "click",
+        function () {
 
-        modalTitle.innerHTML = "Open Long";
+            selectedSide = "LONG";
 
-        modalPrice.innerHTML = price.toFixed(2);
+            entryPrice = price;
 
-        tradeModal.classList.add("show");
+            if (modalTitle) {
+                modalTitle.innerText =
+                    "Open Long";
+            }
 
-    });
+            if (modalSide) {
+                modalSide.innerText =
+                    "LONG";
+            }
+
+            if (modalPrice) {
+                modalPrice.innerText =
+                    entryPrice.toFixed(2);
+            }
+
+            if (tradeModal) {
+                tradeModal.style.display =
+                    "flex";
+            }
+
+        }
+    );
 
 }
 
 
 /* =========================
-   SHORT BUTTON
+   OPEN SHORT
 ========================= */
 
 if (shortButton) {
 
-    shortButton.addEventListener("click", function () {
+    shortButton.addEventListener(
+        "click",
+        function () {
 
-        modalTitle.innerHTML = "Open Short";
+            selectedSide = "SHORT";
 
-        modalPrice.innerHTML = price.toFixed(2);
+            entryPrice = price;
 
-        tradeModal.classList.add("show");
+            if (modalTitle) {
+                modalTitle.innerText =
+                    "Open Short";
+            }
 
-    });
+            if (modalSide) {
+                modalSide.innerText =
+                    "SHORT";
+            }
+
+            if (modalPrice) {
+                modalPrice.innerText =
+                    entryPrice.toFixed(2);
+            }
+
+            if (tradeModal) {
+                tradeModal.style.display =
+                    "flex";
+            }
+
+        }
+    );
 
 }
 
 
 /* =========================
-   CLOSE BUTTON
+   CLOSE MODAL BUTTON
 ========================= */
 
 if (modalClose) {
 
-    modalClose.addEventListener("click", function () {
+    modalClose.addEventListener(
+        "click",
+        function () {
 
-        tradeModal.classList.remove("show");
+            if (tradeModal) {
 
-    });
+                tradeModal.style.display =
+                    "none";
+
+            }
+
+        }
+    );
 
 }
 
 
 /* =========================
-   CLOSE BY CLICKING OUTSIDE
+   CLOSE MODAL OUTSIDE
 ========================= */
 
 if (tradeModal) {
 
-    tradeModal.addEventListener("click", function (event) {
+    tradeModal.addEventListener(
+        "click",
+        function (event) {
 
-        if (event.target === tradeModal) {
+            if (event.target === tradeModal) {
 
-            tradeModal.classList.remove("show");
+                tradeModal.style.display =
+                    "none";
+
+            }
 
         }
+    );
 
-    });
+}
+
 
 /* =========================
-   STEP 7
-   LONG / SHORT TRADE
+   CONFIRM TRADE
 ========================= */
 
-const longButton = document.querySelector(".long-btn");
-const shortButton = document.querySelector(".short-btn");
+if (confirmTradeBtn) {
 
-const tradeModal = document.getElementById("tradeModal");
+    confirmTradeBtn.addEventListener(
+        "click",
+        function () {
 
-const modalSide = document.getElementById("modalSide");
-const modalPrice = document.getElementById("modalPrice");
+            const orderAmountBox =
+                document.getElementById("orderAmount");
 
-const confirmTradeBtn =
-document.getElementById("confirmTradeBtn");
-
-
-let selectedSide = "";
-let entryPrice = 0;
+            const orderAmount =
+                orderAmountBox
+                    ? parseFloat(orderAmountBox.value) || 0
+                    : 0;
 
 
-/* LONG BUTTON */
+            if (!selectedSide) {
 
-if(longButton){
+                alert(
+                    "Please select LONG or SHORT."
+                );
 
-    longButton.addEventListener("click", function(){
+                return;
 
-        selectedSide = "LONG";
+            }
 
-        entryPrice = price;
 
-        if(modalSide){
-            modalSide.innerText = "LONG";
+            if (orderAmount <= 0) {
+
+                alert(
+                    "Please enter a valid amount."
+                );
+
+                return;
+
+            }
+
+
+            const positionSide =
+                document.getElementById(
+                    "positionSide"
+                );
+
+            const entryPriceBox =
+                document.getElementById(
+                    "entryPrice"
+                );
+
+            const currentTradePrice =
+                document.getElementById(
+                    "currentTradePrice"
+                );
+
+            const tradeAmount =
+                document.getElementById(
+                    "tradeAmount"
+                );
+
+
+            if (positionSide) {
+
+                positionSide.innerText =
+                    selectedSide;
+
+            }
+
+
+            if (entryPriceBox) {
+
+                entryPriceBox.innerText =
+                    entryPrice.toFixed(2);
+
+            }
+
+
+            if (currentTradePrice) {
+
+                currentTradePrice.innerText =
+                    price.toFixed(2);
+
+            }
+
+
+            if (tradeAmount) {
+
+                tradeAmount.innerText =
+                    "$" + orderAmount.toFixed(2);
+
+            }
+
+
+            if (openTradeCard) {
+
+                openTradeCard.style.display =
+                    "block";
+
+            }
+
+
+            if (tradeModal) {
+
+                tradeModal.style.display =
+                    "none";
+
+            }
+
+
+            alert(
+                selectedSide +
+                " trade opened successfully."
+            );
+
         }
-
-        if(modalPrice){
-            modalPrice.innerText = entryPrice.toFixed(2);
-        }
-
-        if(tradeModal){
-            tradeModal.style.display = "flex";
-        }
-
-    });
+    );
 
 }
 
 
-/* SHORT BUTTON */
-
-if(shortButton){
-
-    shortButton.addEventListener("click", function(){
-
-        selectedSide = "SHORT";
-
-        entryPrice = price;
-
-        if(modalSide){
-            modalSide.innerText = "SHORT";
-        }
-
-        if(modalPrice){
-            modalPrice.innerText = entryPrice.toFixed(2);
-        }
-
-        if(tradeModal){
-            tradeModal.style.display = "flex";
-        }
-
-    });
-
-}
-
-
-/* CONFIRM TRADE */
-
-if(confirmTradeBtn){
-
-    confirmTradeBtn.addEventListener("click", function(){
-
-        const orderAmount =
-        parseFloat(
-            document.getElementById("orderAmount").value
-        ) || 0;
-
-
-        if(orderAmount <= 0){
-
-            alert("Please enter a valid amount.");
-
-            return;
-
-        }
-
-
-        const openTradeCard =
-        document.getElementById("openTradeCard");
-
-
-        const positionSide =
-        document.getElementById("positionSide");
-
-
-        const entryPriceBox =
-        document.getElementById("entryPrice");
-
-
-        const currentTradePrice =
-        document.getElementById("currentTradePrice");
-
-
-        const tradeAmount =
-        document.getElementById("tradeAmount");
-
-
-        if(positionSide){
-
-            positionSide.innerText =
-            selectedSide;
-
-        }
-
-
-        if(entryPriceBox){
-
-            entryPriceBox.innerText =
-            entryPrice.toFixed(2);
-
-        }
-
-
-        if(currentTradePrice){
-
-            currentTradePrice.innerText =
-            price.toFixed(2);
-
-        }
-
-
-        if(tradeAmount){
-
-            tradeAmount.innerText =
-            "$" + orderAmount.toFixed(2);
-
-        }
-
-
-        if(openTradeCard){
-
-            openTradeCard.style.display =
-            "block";
-
-        }
-
-
-        if(tradeModal){
-
-            tradeModal.style.display =
-            "none";
-
-        }
-
-
-        alert(
-            selectedSide +
-            " trade opened successfully."
-        );
-
-    });
-
-   /* =========================
+/* =========================
    LIVE PROFIT / LOSS
 ========================= */
 
 setInterval(function () {
 
     const currentPriceBox =
-        document.getElementById("currentTradePrice");
+        document.getElementById(
+            "currentTradePrice"
+        );
 
     const tradeAmountBox =
-        document.getElementById("tradeAmount");
+        document.getElementById(
+            "tradeAmount"
+        );
 
-    if (!currentPriceBox || !tradeAmountBox) {
+    const profitLossBox =
+        document.getElementById(
+            "profitLoss"
+        );
+
+
+    if (
+        !currentPriceBox ||
+        !tradeAmountBox
+    ) {
+
         return;
+
     }
 
-    if (!selectedSide || !entryPrice) {
+
+    if (
+        !selectedSide ||
+        !entryPrice
+    ) {
+
         return;
+
     }
+
 
     const currentPrice = price;
 
-    const amount = parseFloat(
-        tradeAmountBox.innerText.replace("$", "")
-    ) || 0;
+
+    const amount =
+        parseFloat(
+            tradeAmountBox.innerText
+                .replace("$", "")
+        ) || 0;
+
 
     let profitLoss = 0;
 
+
     if (selectedSide === "LONG") {
-        profitLoss = ((currentPrice - entryPrice) / entryPrice) * amount;
-    } else if (selectedSide === "SHORT") {
-        profitLoss = ((entryPrice - currentPrice) / entryPrice) * amount;
+
+        profitLoss =
+            (
+                (currentPrice - entryPrice)
+                / entryPrice
+            ) * amount;
+
     }
 
-    currentPriceBox.innerText = currentPrice.toFixed(2);
-   const profitLossBox = document.getElementById("profitLoss");
 
-if (profitLossBox) {
-    profitLossBox.innerText = "$" + profitLoss.toFixed(2);
-}
+    else if (selectedSide === "SHORT") {
+
+        profitLoss =
+            (
+                (entryPrice - currentPrice)
+                / entryPrice
+            ) * amount;
+
+    }
+
+
+    currentPriceBox.innerText =
+        currentPrice.toFixed(2);
+
+
+    if (profitLossBox) {
+
+        profitLossBox.innerText =
+            "$" + profitLoss.toFixed(2);
+
+    }
+
 }, 1000);
+
 
 /* =========================
    CLOSE TRADE
 ========================= */
 
-const closeTradeBtn = document.getElementById("closeTradeBtn");
-
 if (closeTradeBtn) {
 
-    closeTradeBtn.addEventListener("click", function () {
+    closeTradeBtn.addEventListener(
+        "click",
+        function () {
 
-        const closePrice = price;
+            if (
+                !selectedSide ||
+                !entryPrice
+            ) {
 
-        const finalProfitLoss =
-            selectedSide === "LONG"
-                ? ((closePrice - entryPrice) / entryPrice) * parseFloat(
-                    document.getElementById("tradeAmount").innerText.replace("$", "")
-                )
-                : ((entryPrice - closePrice) / entryPrice) * parseFloat(
-                    document.getElementById("tradeAmount").innerText.replace("$", "")
+                alert(
+                    "No open trade."
                 );
 
-        const closedTrade = {
-            side: selectedSide,
-            entryPrice: entryPrice,
-            closePrice: closePrice,
-            profitLoss: finalProfitLoss,
-            amount: parseFloat(
-                document.getElementById("tradeAmount").innerText.replace("$", "")
-            ),
-            time: new Date().toLocaleString()
-        };
+                return;
 
-        console.log("Trade Closed:", closedTrade);
+            }
 
-        alert(
-            selectedSide +
-            " trade closed.\n" +
-            "Close Price: $" +
-            closePrice.toFixed(2) +
-            "\nProfit/Loss: $" +
-            finalProfitLoss.toFixed(2)
-        );
 
-        if (openTradeCard) {
-            openTradeCard.style.display = "none";
+            const tradeAmountBox =
+                document.getElementById(
+                    "tradeAmount"
+                );
+
+
+            const amount =
+                tradeAmountBox
+                    ? parseFloat(
+                        tradeAmountBox.innerText
+                            .replace("$", "")
+                    ) || 0
+                    : 0;
+
+
+            const closePrice = price;
+
+
+            let finalProfitLoss = 0;
+
+
+            if (selectedSide === "LONG") {
+
+                finalProfitLoss =
+                    (
+                        (closePrice - entryPrice)
+                        / entryPrice
+                    ) * amount;
+
+            }
+
+
+            else if (selectedSide === "SHORT") {
+
+                finalProfitLoss =
+                    (
+                        (entryPrice - closePrice)
+                        / entryPrice
+                    ) * amount;
+
+            }
+
+
+            const closedTrade = {
+
+                side: selectedSide,
+
+                entryPrice: entryPrice,
+
+                closePrice: closePrice,
+
+                profitLoss: finalProfitLoss,
+
+                amount: amount,
+
+                time: new Date()
+                    .toLocaleString()
+
+            };
+
+
+            console.log(
+                "Trade Closed:",
+                closedTrade
+            );
+
+
+            alert(
+                selectedSide +
+                " trade closed.\n" +
+                "Close Price: $" +
+                closePrice.toFixed(2) +
+                "\nProfit/Loss: $" +
+                finalProfitLoss.toFixed(2)
+            );
+
+
+            if (openTradeCard) {
+
+                openTradeCard.style.display =
+                    "none";
+
+            }
+
+
+            selectedSide = "";
+
+            entryPrice = 0;
+
         }
+    );
 
-        selectedSide = null;
-        entryPrice = null;
-    });
 }
