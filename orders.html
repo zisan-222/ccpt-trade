@@ -131,20 +131,20 @@
         }
 
         function getActiveTrade() {
-            const side = localStorage.getItem("selectedSide");
-            const entryPrice = localStorage.getItem("entryPrice");
-            const amount = localStorage.getItem("tradeAmountValue");
+    const side = localStorage.getItem("selectedSide");
+    const entryPrice = localStorage.getItem("entryPrice");
+    const amount = localStorage.getItem("tradeAmountValue");
 
-            if (!side || !entryPrice) {
-                return null;
-            }
+    if (!side || !entryPrice || !amount) {
+        return null;
+    }
 
-            return {
-                side: side,
-                entryPrice: Number(entryPrice),
-                amount: Number(amount || 0)
-            };
-        }
+    return {
+        side: side,
+        entryPrice: Number(entryPrice),
+        amount: Number(amount)
+    };
+}
 
         function showActive() {
 
