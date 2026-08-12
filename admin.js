@@ -3,70 +3,113 @@
    admin.js
 ========================================== */
 
-import { auth, db } from "./firebase/firebase-config.js";
+import { auth } from "./firebase/firebase-config.js";
 
 import {
+    signInWithEmailAndPassword,
     onAuthStateChanged,
     signOut
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-import {
-    collection,
-    getDocs
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-
 
 /* ==========================================
-   ADMIN ACCESS
+   ADMIN LOGIN FORM
 ========================================== */
 
-onAuthStateChanged(auth, async (user) => {
-
-    if (!user) {
-        window.location.href = "index.html";
-        return;
-    }
-
-    console.log("Admin authenticated:", user.email);
-
-    await loadUsers();
-
-});
+const loginForm = document.getElementById("adminLoginForm");
+const loginError = document.getElementById("loginError");
 
 
-/* ==========================================
-   LOAD USERS
-========================================== */
+if (loginForm) {
 
-async function loadUsers() {
+    loginForm.addEventListener("submit", async function (event) {
 
-    try {
+        event.preventDefault();
 
-        const usersSnapshot = await getDocs(
-            collection(db, "users")
-        );
+        const usernameInput =
+            document.getElementById("adminUsername");
 
-        console.log(
-            "Total users:",
-            usersSnapshot.size
-        );
+        const passwordInput =
+            document.getElementById("adminPassword");
 
-        const userCount = document.getElementById("userCount");
+        const email =
+            usernameInput.value.trim();
 
-        if (userCount) {
-            userCount.textContent = usersSnapshot.size;
+        const password =
+            passwordInput.value;
+
+        if (loginError) {
+            loginError.style.display = "none";
         }
 
-    } catch (error) {
+        try {
 
-        console.error(
-            "Failed to load users:",
-            error
-        );
+            await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
 
-    }
+            console.log("Admin login successful.");
+
+            /*
+             * আপাতত admin.html-এই থাকবে।
+             * পরের ধাপে আমরা Admin Dashboard তৈরি করব।
+             */
+
+            window.location.href = "admin-dashboard.html";
+
+        } catch (error) {
+
+            console.error(
+                "Admin login failed:",
+                error
+            );
+
+            if (loginError) {
+
+                loginError.textContent =
+                    "Invalid email or password.";
+
+                loginError.style.display =
+                    "block";
+            }
+
+        }
+
+    });
 
 }
+
+
+/* ==========================================
+   ADMIN DASHBOARD AUTH CHECK
+========================================== */
+
+onAuthStateChanged(auth, function (user) {
+
+    const currentPage =
+        window.location.pathname;
+
+    if (
+        currentPage.includes("admin-dashboard.html")
+    ) {
+
+        if (!user) {
+
+            window.location.href =
+                "admin.html";
+
+            return;
+        }
+
+        console.log(
+            "Admin dashboard authenticated:",
+            user.email
+        );
+    }
+
+});
 
 
 /* ==========================================
@@ -76,18 +119,19 @@ async function loadUsers() {
 const logoutButton =
     document.getElementById("adminLogout");
 
+
 if (logoutButton) {
 
     logoutButton.addEventListener(
         "click",
-        async () => {
+        async function () {
 
             try {
 
                 await signOut(auth);
 
                 window.location.href =
-                    "index.html";
+                    "admin.html";
 
             } catch (error) {
 
@@ -104,10 +148,6 @@ if (logoutButton) {
 }
 
 
-/* ==========================================
-   ADMIN PANEL READY
-========================================== */
-
 console.log(
-    "CPTMARKETS Admin Panel loaded successfully."
+    "CPTMARKETS Admin system loaded successfully."
 );
