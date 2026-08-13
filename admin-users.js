@@ -1,7 +1,7 @@
 /* ==========================================
    CPTMARKETS
    ADMIN USER MANAGEMENT
-========================================== */
+   ========================================== */
 
 import { auth, db } from "./firebase/firebase-config.js";
 
@@ -22,7 +22,7 @@ import {
 
 /* ==========================================
    VARIABLES
-========================================== */
+   ========================================== */
 
 let currentUser = null;
 let currentUserDoc = null;
@@ -30,7 +30,7 @@ let currentUserDoc = null;
 
 /* ==========================================
    ADMIN AUTH CHECK
-========================================== */
+   ========================================== */
 
 onAuthStateChanged(auth, (user) => {
 
@@ -50,8 +50,8 @@ onAuthStateChanged(auth, (user) => {
 
 
 /* ==========================================
-   SEARCH USER
-========================================== */
+   SEARCH BUTTON
+   ========================================== */
 
 const searchButton =
     document.getElementById("searchUserBtn");
@@ -68,13 +68,23 @@ if (searchButton) {
 
 
 /* ==========================================
-   SEARCH FUNCTION
-========================================== */
+   SEARCH USER
+   ========================================== */
 
 async function searchUser() {
 
     const uidInput =
         document.getElementById("userUidInput");
+
+    if (!uidInput) {
+
+        console.error(
+            "userUidInput not found."
+        );
+
+        return;
+    }
+
 
     const uid =
         uidInput.value.trim();
@@ -82,7 +92,9 @@ async function searchUser() {
 
     if (!uid) {
 
-        alert("Please enter a User UID.");
+        alert(
+            "Please enter a User UID."
+        );
 
         return;
     }
@@ -90,22 +102,60 @@ async function searchUser() {
 
     try {
 
-        const usersRef =
-            collection(db, "users");
+        console.log(
+            "Searching User ID:",
+            uid
+        );
 
+
+        const usersRef =
+            collection(
+                db,
+                "users"
+            );
+
+
+        /*
+         * IMPORTANT:
+         *
+         * The 8 digit UID shown
+         * on Mine page is saved
+         * in Firestore as:
+         *
+         * userId
+         *
+         * NOT:
+         *
+         * uid
+         */
 
         const userQuery =
             query(
                 usersRef,
-                where("uid", "==", uid)
+                where(
+                    "userId",
+                    "==",
+                    uid
+                )
             );
 
 
         const snapshot =
-            await getDocs(userQuery);
+            await getDocs(
+                userQuery
+            );
 
+
+        /* ==================================
+           USER NOT FOUND
+           ================================== */
 
         if (snapshot.empty) {
+
+            console.log(
+                "User not found:",
+                uid
+            );
 
             showNotFound();
 
@@ -113,12 +163,26 @@ async function searchUser() {
         }
 
 
+        /* ==================================
+           USER FOUND
+           ================================== */
+
         const userDoc =
             snapshot.docs[0];
 
 
-        currentUserDoc = userDoc;
-        currentUser = userDoc.data();
+        currentUserDoc =
+            userDoc;
+
+
+        currentUser =
+            userDoc.data();
+
+
+        console.log(
+            "User found:",
+            currentUser
+        );
 
 
         showUser(
@@ -134,6 +198,7 @@ async function searchUser() {
             error
         );
 
+
         alert(
             "Unable to search user."
         );
@@ -145,46 +210,91 @@ async function searchUser() {
 
 /* ==========================================
    SHOW USER
-========================================== */
+   ========================================== */
 
-function showUser(docId, userData) {
+function showUser(
+    docId,
+    userData
+) {
 
     const result =
-        document.getElementById("userResult");
+        document.getElementById(
+            "userResult"
+        );
+
 
     const notFound =
-        document.getElementById("notFound");
+        document.getElementById(
+            "notFound"
+        );
 
 
-    notFound.style.display =
-        "none";
+    if (notFound) {
 
-    result.style.display =
-        "block";
+        notFound.style.display =
+            "none";
 
-
-    document.getElementById(
-        "userName"
-    ).textContent =
-        userData.username ||
-        userData.name ||
-        "User";
+    }
 
 
-    document.getElementById(
-        "userUid"
-    ).textContent =
-        userData.uid || "-";
+    if (result) {
+
+        result.style.display =
+            "block";
+
+    }
 
 
-    document.getElementById(
-        "userEmail"
-    ).textContent =
-        userData.email || "-";
+    const nameElement =
+        document.getElementById(
+            "userName"
+        );
+
+
+    if (nameElement) {
+
+        nameElement.textContent =
+            userData.username ||
+            userData.name ||
+            "User";
+
+    }
+
+
+    const uidElement =
+        document.getElementById(
+            "userUid"
+        );
+
+
+    if (uidElement) {
+
+        uidElement.textContent =
+            userData.userId ||
+            "-";
+
+    }
+
+
+    const emailElement =
+        document.getElementById(
+            "userEmail"
+        );
+
+
+    if (emailElement) {
+
+        emailElement.textContent =
+            userData.email ||
+            "-";
+
+    }
 
 
     updateBalanceDisplay(
-        Number(userData.balance || 0)
+        Number(
+            userData.balance || 0
+        )
     );
 
 }
@@ -192,49 +302,83 @@ function showUser(docId, userData) {
 
 /* ==========================================
    BALANCE DISPLAY
-========================================== */
+   ========================================== */
 
-function updateBalanceDisplay(balance) {
+function updateBalanceDisplay(
+    balance
+) {
 
-    document.getElementById(
-        "userBalance"
-    ).textContent =
-        "$" + Number(balance).toFixed(2);
+    const balanceElement =
+        document.getElementById(
+            "userBalance"
+        );
+
+
+    if (!balanceElement) {
+
+        return;
+    }
+
+
+    balanceElement.textContent =
+        "$" +
+        Number(balance)
+        .toFixed(2);
 
 }
 
 
 /* ==========================================
    SHOW NOT FOUND
-========================================== */
+   ========================================== */
 
 function showNotFound() {
 
-    document.getElementById(
-        "userResult"
-    ).style.display = "none";
+    const result =
+        document.getElementById(
+            "userResult"
+        );
 
 
-    document.getElementById(
-        "notFound"
-    ).style.display = "block";
+    const notFound =
+        document.getElementById(
+            "notFound"
+        );
+
+
+    if (result) {
+
+        result.style.display =
+            "none";
+
+    }
+
+
+    if (notFound) {
+
+        notFound.style.display =
+            "block";
+
+    }
 
 }
 
 
 /* ==========================================
-   ADD BALANCE
-========================================== */
+   ADD BALANCE BUTTON
+   ========================================== */
 
 const addButton =
-    document.getElementById("addBalanceBtn");
+    document.getElementById(
+        "addBalanceBtn"
+    );
 
 
 if (addButton) {
 
     addButton.addEventListener(
         "click",
-        async () => {
+        async function () {
 
             await changeBalance(
                 "add"
@@ -247,8 +391,8 @@ if (addButton) {
 
 
 /* ==========================================
-   REMOVE BALANCE
-========================================== */
+   REMOVE BALANCE BUTTON
+   ========================================== */
 
 const removeButton =
     document.getElementById(
@@ -260,7 +404,7 @@ if (removeButton) {
 
     removeButton.addEventListener(
         "click",
-        async () => {
+        async function () {
 
             await changeBalance(
                 "remove"
@@ -274,9 +418,11 @@ if (removeButton) {
 
 /* ==========================================
    CHANGE BALANCE
-========================================== */
+   ========================================== */
 
-async function changeBalance(action) {
+async function changeBalance(
+    action
+) {
 
     if (!currentUserDoc) {
 
@@ -294,11 +440,26 @@ async function changeBalance(action) {
         );
 
 
+    if (!amountInput) {
+
+        alert(
+            "Balance input not found."
+        );
+
+        return;
+    }
+
+
     const amount =
-        Number(amountInput.value);
+        Number(
+            amountInput.value
+        );
 
 
-    if (!amount || amount <= 0) {
+    if (
+        !amount ||
+        amount <= 0
+    ) {
 
         alert(
             "Enter a valid amount."
@@ -317,15 +478,28 @@ async function changeBalance(action) {
     let newBalance;
 
 
+    /* ==================================
+       ADD
+       ================================== */
+
     if (action === "add") {
 
         newBalance =
-            oldBalance + amount;
+            oldBalance +
+            amount;
 
-    } else {
+    }
+
+
+    /* ==================================
+       REMOVE
+       ================================== */
+
+    else {
 
         newBalance =
-            oldBalance - amount;
+            oldBalance -
+            amount;
 
 
         if (newBalance < 0) {
@@ -342,6 +516,10 @@ async function changeBalance(action) {
 
     try {
 
+        /* ==================================
+           UPDATE FIRESTORE
+           ================================== */
+
         await updateDoc(
 
             doc(
@@ -351,28 +529,48 @@ async function changeBalance(action) {
             ),
 
             {
-                balance: newBalance
+                balance:
+                    newBalance
             }
 
         );
 
 
+        /* ==================================
+           UPDATE LOCAL USER
+           ================================== */
+
         currentUser.balance =
             newBalance;
 
+
+        /* ==================================
+           UPDATE SCREEN
+           ================================== */
 
         updateBalanceDisplay(
             newBalance
         );
 
 
-        amountInput.value = "";
+        amountInput.value =
+            "";
 
 
         showMessage(
+
             action === "add"
+
                 ? "Balance added successfully."
+
                 : "Balance removed successfully."
+
+        );
+
+
+        console.log(
+            "Balance updated:",
+            newBalance
         );
 
 
@@ -385,7 +583,8 @@ async function changeBalance(action) {
 
 
         alert(
-            "Balance update failed."
+            "Balance update failed: " +
+            error.message
         );
 
     }
@@ -394,10 +593,12 @@ async function changeBalance(action) {
 
 
 /* ==========================================
-   MESSAGE
-========================================== */
+   SUCCESS MESSAGE
+   ========================================== */
 
-function showMessage(message) {
+function showMessage(
+    message
+) {
 
     const element =
         document.getElementById(
@@ -405,22 +606,34 @@ function showMessage(message) {
         );
 
 
+    if (!element) {
+
+        alert(message);
+
+        return;
+    }
+
+
     element.textContent =
         message;
 
 
-    setTimeout(() => {
+    setTimeout(
+        function () {
 
-        element.textContent = "";
+            element.textContent =
+                "";
 
-    }, 3000);
+        },
+        3000
+    );
 
 }
 
 
 /* ==========================================
    LOGOUT
-========================================== */
+   ========================================== */
 
 const logoutButton =
     document.getElementById(
@@ -432,14 +645,18 @@ if (logoutButton) {
 
     logoutButton.addEventListener(
         "click",
-        async () => {
+        async function () {
 
             try {
 
-                await signOut(auth);
+                await signOut(
+                    auth
+                );
+
 
                 window.location.href =
                     "index.html";
+
 
             } catch (error) {
 
