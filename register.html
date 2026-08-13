@@ -27,11 +27,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 <div class="logo-area">
 
 <h1>
-
 <span class="gold">Create</span>
-
 <span class="white"> Account</span>
-
 </h1>
 
 <p>Join CptMarkets for global trading</p>
@@ -102,6 +99,7 @@ placeholder="Invite Code (optional)">
 </div>
 
 </div>
+
 <button
 type="submit"
 class="login-btn">
@@ -119,9 +117,7 @@ Already have an account?
 </span>
 
 <a href="index.html">
-
 Go to Sign In
-
 </a>
 
 </div>
@@ -130,37 +126,204 @@ Go to Sign In
 
 </div>
 
-<script>
-const registerForm = document.getElementById("registerForm");
 
-registerForm.addEventListener("submit", function(e){
-    e.preventDefault();
+<script type="module">
 
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
+import { auth, db }
+from "./firebase/firebase-config.js";
 
-    if(password !== confirmPassword){
-        alert("Passwords do not match!");
-        return;
+import {
+    createUserWithEmailAndPassword
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+import {
+    doc,
+    setDoc
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+const registerForm =
+    document.getElementById("registerForm");
+
+
+registerForm.addEventListener(
+    "submit",
+    async function(e) {
+
+        e.preventDefault();
+
+
+        const username =
+            document
+            .getElementById("username")
+            .value
+            .trim();
+
+
+        const password =
+            document
+            .getElementById("password")
+            .value;
+
+
+        const confirmPassword =
+            document
+            .getElementById("confirmPassword")
+            .value;
+
+
+        const invite =
+            document
+            .getElementById("invite")
+            .value
+            .trim();
+
+
+        if (!username) {
+
+            alert("Please enter a username.");
+
+            return;
+        }
+
+
+        if (password.length < 6) {
+
+            alert(
+                "Password must be at least 6 characters."
+            );
+
+            return;
+        }
+
+
+        if (password !== confirmPassword) {
+
+            alert(
+                "Passwords do not match!"
+            );
+
+            return;
+        }
+
+
+        try {
+
+            /*
+             * Firebase Authentication needs
+             * an email address.
+             *
+             * We create an internal email
+             * from the username.
+             */
+
+            const email =
+                username.toLowerCase()
+                + "@cptmarkets.local";
+
+
+            const userCredential =
+                await createUserWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                );
+
+
+            const user =
+                userCredential.user;
+
+
+            /*
+             * Save user information
+             * in Firestore.
+             */
+
+            await setDoc(
+                doc(db, "users", user.uid),
+                {
+
+                    uid: user.uid,
+
+                    username: username,
+
+                    email: email,
+
+                    inviteCode: invite,
+
+                    balance: 0,
+
+                    createdAt:
+                        new Date()
+
+                }
+            );
+
+
+            /*
+             * Keep a small local session
+             * temporarily for the existing
+             * dashboard system.
+             */
+
+            localStorage.setItem(
+                "currentUser",
+                JSON.stringify({
+
+                    uid: user.uid,
+
+                    username: username,
+
+                    email: email,
+
+                    balance: 0
+
+                })
+            );
+
+
+            alert(
+                "Registration Successful!"
+            );
+
+
+            window.location.href =
+                "index.html";
+
+
+        } catch (error) {
+
+            console.error(
+                "Registration failed:",
+                error
+            );
+
+
+            if (
+                error.code ===
+                "auth/email-already-in-use"
+            ) {
+
+                alert(
+                    "This username is already registered."
+                );
+
+            } else {
+
+                alert(
+                    "Registration failed: "
+                    + error.message
+                );
+
+            }
+
+        }
+
     }
+);
 
-    // নতুন User ID তৈরি
-    const userId = "UID" + Date.now();
-
-    // User Save
-    const user = {
-        username: username,
-        password: password,
-        userId: userId
-    };
-
-    localStorage.setItem("user", JSON.stringify(user));
-
-    alert("Registration Successful!");
-
-    window.location.href = "index.html";
-});
 </script>
 
 </body>
