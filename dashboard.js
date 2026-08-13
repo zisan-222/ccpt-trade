@@ -212,99 +212,46 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
+         /* ======================================
+   BALANCE HIDE / SHOW
+====================================== */
 
-            /* ==============================
-               HIDE BALANCE
-            ============================== */
+if (balanceVisible) {
 
-            if (balanceVisible) {
+    /* Hide balance */
+    balanceElement.textContent = "••••••";
 
-                balanceElement.textContent =
-                    "••••••";
+    /* Keep Font Awesome icon visible */
+    eye.className = "fa-solid fa-eye-slash";
 
+    balanceVisible = false;
 
-                eye.classList.remove(
-                    "fa-eye"
-                );
+    console.log("Balance hidden");
 
+} else {
 
-                eye.classList.remove(
-                    "fa-regular"
-                );
+    /* Show balance */
+    let currentBalance = 0;
 
+    if (typeof getBalance === "function") {
+        currentBalance = getBalance();
+    }
 
-                eye.classList.add(
-                    "fa-eye-slash"
-                );
+    balanceElement.textContent =
+        typeof formatUSD === "function"
+            ? formatUSD(currentBalance)
+            : "$" + Number(currentBalance).toFixed(2);
 
+    /* Change back to eye icon */
+    eye.className = "fa-solid fa-eye";
 
-                balanceVisible = false;
+    balanceVisible = true;
 
-
-                console.log(
-                    "Balance hidden"
-                );
-
-            }
-
-
-            /* ==============================
-               SHOW BALANCE
-            ============================== */
-
-            else {
-
-                let currentBalance = 0;
+    console.log("Balance shown");
+}  
 
 
-                if (
-                    typeof getBalance ===
-                    "function"
-                ) {
-
-                    currentBalance =
-                        getBalance();
-
-                }
-
-
-                balanceElement.textContent =
-                    typeof formatUSD ===
-                    "function"
-
-                        ? formatUSD(
-                            currentBalance
-                        )
-
-                        : "$" +
-                          Number(
-                              currentBalance
-                          ).toFixed(2);
-
-
-                eye.classList.remove(
-                    "fa-eye-slash"
-                );
-
-
-                eye.classList.add(
-                    "fa-eye"
-                );
-
-
-                balanceVisible = true;
-
-
-                console.log(
-                    "Balance shown"
-                );
-
-            }
-
-        }
-    );
-
-
+            
     /* ======================================
        WITHDRAW INTERFACE
     ====================================== */
