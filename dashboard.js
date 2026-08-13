@@ -182,73 +182,60 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
 
-    /* ======================================
-       BALANCE EYE
-    ====================================== */
+    /* ==========================================
+   BALANCE EYE HIDE / SHOW
+========================================== */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const eye = document.querySelector(".asset-header i");
+    const balanceElement = document.getElementById("balance");
+
+    if (!eye || !balanceElement) {
+        return;
+    }
 
     let balanceVisible = true;
 
+    eye.addEventListener("click", function (event) {
 
-    document.addEventListener(
-        "click",
-        function (event) {
+        event.preventDefault();
+        event.stopPropagation();
 
-            const eye =
-                event.target.closest(
-                    ".asset-header i, #assetEye"
-                );
+        if (balanceVisible) {
 
+            balanceElement.textContent = "••••••";
 
-            if (!eye) {
-                return;
+            eye.classList.remove("fa-eye");
+            eye.classList.add("fa-eye-slash");
+
+            balanceVisible = false;
+
+        } else {
+
+            let currentBalance = 0;
+
+            if (typeof getBalance === "function") {
+                currentBalance = getBalance();
             }
 
-
-            const balanceElement =
-                document.getElementById("balance");
-
-
-            if (!balanceElement) {
-                return;
+            if (typeof formatUSD === "function") {
+                balanceElement.textContent =
+                    formatUSD(currentBalance);
+            } else {
+                balanceElement.textContent =
+                    "$" + Number(currentBalance).toFixed(2);
             }
 
-         /* ======================================
-   BALANCE HIDE / SHOW
-====================================== */
+            eye.classList.remove("fa-eye-slash");
+            eye.classList.add("fa-eye");
 
-if (balanceVisible) {
+            balanceVisible = true;
+        }
 
-    /* Hide balance */
-    balanceElement.textContent = "••••••";
+    });
 
-    /* Keep Font Awesome icon visible */
-    eye.className = "fa-solid fa-eye-slash";
-
-    balanceVisible = false;
-
-    console.log("Balance hidden");
-
-} else {
-
-    /* Show balance */
-    let currentBalance = 0;
-
-    if (typeof getBalance === "function") {
-        currentBalance = getBalance();
-    }
-
-    balanceElement.textContent =
-        typeof formatUSD === "function"
-            ? formatUSD(currentBalance)
-            : "$" + Number(currentBalance).toFixed(2);
-
-    /* Change back to eye icon */
-    eye.className = "fa-solid fa-eye";
-
-    balanceVisible = true;
-
-    console.log("Balance shown");
-}  
+});
 
 
             
