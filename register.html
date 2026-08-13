@@ -241,25 +241,45 @@ registerForm.addEventListener(
              * in Firestore.
              */
 
-            await setDoc(
-                doc(db, "users", user.uid),
-                {
+            // ==========================================
+// CREATE 8 DIGIT USER ID
+// ==========================================
 
-                    uid: user.uid,
+const userId =
+    String(
+        Math.floor(
+            10000000 +
+            Math.random() * 90000000
+        )
+    );
 
-                    username: username,
 
-                    email: email,
+// ==========================================
+// SAVE USER INFORMATION
+// ==========================================
 
-                    inviteCode: invite,
+await setDoc(
+    doc(db, "users", user.uid),
+    {
 
-                    balance: 0,
+        // Firebase internal UID
+        uid: user.uid,
 
-                    createdAt:
-                        new Date()
+        // Custom 8 digit UID
+        userId: userId,
 
-                }
-            );
+        username: username,
+
+        email: email,
+
+        inviteCode: invite,
+
+        balance: 0,
+
+        createdAt: new Date()
+
+    }
+);
 
 
             /*
@@ -269,19 +289,21 @@ registerForm.addEventListener(
              */
 
             localStorage.setItem(
-                "currentUser",
-                JSON.stringify({
+    "currentUser",
+    JSON.stringify({
 
-                    uid: user.uid,
+        uid: user.uid,
 
-                    username: username,
+        userId: userId,
 
-                    email: email,
+        username: username,
 
-                    balance: 0
+        email: email,
 
-                })
-            );
+        balance: 0
+
+    })
+);
 
 
             alert(
