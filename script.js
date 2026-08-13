@@ -1,74 +1,255 @@
-// ==========================
-// CPTMarkets Login Script
-// Part 1
-// ==========================
+// ==========================================
+// CPTMARKETS LOGIN
+// Firebase Authentication
+// ==========================================
 
-// Show / Hide Password
+import { auth, db } from "./firebase/firebase-config.js";
 
-const passwordInput = document.getElementById("password");
-const togglePassword = document.getElementById("togglePassword");
+import {
+    signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-togglePassword.addEventListener("click", function () {
+import {
+    doc,
+    getDoc
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-    if (passwordInput.type === "password") {
 
-        passwordInput.type = "text";
+// ==========================================
+// PASSWORD SHOW / HIDE
+// ==========================================
 
-        togglePassword.classList.remove("fa-eye");
-        togglePassword.classList.add("fa-eye-slash");
+const passwordInput =
+    document.getElementById("password");
 
-    } else {
+const togglePassword =
+    document.getElementById("togglePassword");
 
-        passwordInput.type = "password";
+if (togglePassword && passwordInput) {
 
-        togglePassword.classList.remove("fa-eye-slash");
-        togglePassword.classList.add("fa-eye");
+    togglePassword.addEventListener(
+        "click",
+        function () {
 
-    }
+            if (passwordInput.type === "password") {
 
-});
-// ==========================
-// CPTMarkets Login Script
-// Part 2
-// ==========================
+                passwordInput.type = "text";
 
-const loginForm = document.getElementById("loginForm");
+                togglePassword.classList.remove(
+                    "fa-eye"
+                );
 
-loginForm.addEventListener("submit", function (e) {
+                togglePassword.classList.add(
+                    "fa-eye-slash"
+                );
 
-    e.preventDefault();
+            } else {
 
-    const username = document.getElementById("username").value.trim();
-    const password = passwordInput.value.trim();
+                passwordInput.type = "password";
 
-    if (username === "" || password === "") {
-        alert("Please enter Username and Password.");
-        return;
-    }
+                togglePassword.classList.remove(
+                    "fa-eye-slash"
+                );
 
-    // এখানে পরে Backend/API যুক্ত করা হবে
-   const savedUser = JSON.parse(localStorage.getItem("user"));
+                togglePassword.classList.add(
+                    "fa-eye"
+                );
 
-if (!savedUser) {
-    alert("No account found! Please register first.");
-    return;
+            }
+
+        }
+    );
+
 }
 
-if (username !== savedUser.username) {
-    alert("Wrong Username!");
-    return;
+
+// ==========================================
+// LOGIN FORM
+// ==========================================
+
+const loginForm =
+    document.getElementById("loginForm");
+
+
+if (loginForm) {
+
+    loginForm.addEventListener(
+        "submit",
+        async function (e) {
+
+            e.preventDefault();
+
+
+            const username =
+                document
+                .getElementById("username")
+                .value
+                .trim();
+
+
+            const password =
+                passwordInput.value;
+
+
+            if (!username || !password) {
+
+                alert(
+                    "Please enter Username and Password."
+                );
+
+                return;
+            }
+
+
+            try {
+
+                /*
+                 * Register system creates an
+                 * internal Firebase email from
+                 * the username.
+                 */
+
+                const email =
+                    username.toLowerCase()
+                    + "@cptmarkets.local";
+
+
+                /*
+                 * Firebase Login
+                 */
+
+                const userCredential =
+                    await signInWithEmailAndPassword(
+                        auth,
+                        email,
+                        password
+                    );
+
+
+                const firebaseUser =
+                    userCredential.user;
+
+
+                /*
+                 * Get user information
+                 * from Firestore.
+                 */
+
+                const userDoc =
+                    await getDoc(
+                        doc(
+                            db,
+                            "users",
+                            firebaseUser.uid
+                        )
+                    );
+
+
+                if (!userDoc.exists()) {
+
+                    alert(
+                        "User account data was not found."
+                    );
+
+                    return;
+                }
+
+
+                const userData =
+                    userDoc.data();
+
+
+                /*
+                 * Save current session
+                 * for the existing dashboard.
+                 */
+
+                localStorage.setItem(
+                    "currentUser",
+                    JSON.stringify({
+
+                        uid:
+                            firebaseUser.uid,
+
+                        username:
+                            userData.username ||
+                            username,
+
+                        email:
+                            userData.email ||
+                            email,
+
+                        balance:
+                            Number(
+                                userData.balance || 0
+                            )
+
+                    })
+                );
+
+
+                alert(
+                    "Login Success"
+                );
+
+
+                window.location.href =
+                    "dashboard.html";
+
+
+            } catch (error) {
+
+                console.error(
+                    "Login failed:",
+                    error
+                );
+
+
+                if (
+                    error.code ===
+                    "auth/invalid-credential"
+                ) {
+
+                    alert(
+                        "Wrong Username or Password."
+                    );
+
+                }
+
+                else if (
+                    error.code ===
+                    "auth/user-not-found"
+                ) {
+
+                    alert(
+                        "Username not found."
+                    );
+
+                }
+
+                else if (
+                    error.code ===
+                    "auth/wrong-password"
+                ) {
+
+                    alert(
+                        "Wrong Password."
+                    );
+
+                }
+
+                else {
+
+                    alert(
+                        "Login failed: "
+                        + error.message
+                    );
+
+                }
+
+            }
+
+        }
+    );
+
 }
-
-if (password !== savedUser.password) {
-    alert("Wrong Password!");
-    return;
-}
-
-// Login সফল
-// Login সফল
-alert("Login Success");
-
-localStorage.setItem("currentUser", JSON.stringify(savedUser));
-
-window.location.href = "dashboard.html";
-});
