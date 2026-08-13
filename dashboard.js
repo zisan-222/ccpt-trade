@@ -186,33 +186,28 @@ document.addEventListener("DOMContentLoaded", function () {
    BALANCE EYE HIDE / SHOW
 ========================================== */
 
-document.addEventListener("DOMContentLoaded", function () {
+const balanceEye = document.getElementById("balanceEye");
+const balanceElement = document.getElementById("balance");
 
-    const eye = document.querySelector(".asset-header i");
-    const balanceElement = document.getElementById("balance");
+let balanceVisible = true;
 
-    if (!eye || !balanceElement) {
-        return;
-    }
+if (balanceEye && balanceElement) {
 
-    let balanceVisible = true;
-
-    eye.addEventListener("click", function (event) {
-
-        event.preventDefault();
-        event.stopPropagation();
+    balanceEye.addEventListener("click", function () {
 
         if (balanceVisible) {
 
+            // Hide balance
             balanceElement.textContent = "••••••";
 
-            eye.classList.remove("fa-eye");
-            eye.classList.add("fa-eye-slash");
+            balanceEye.classList.remove("fa-eye");
+            balanceEye.classList.add("fa-eye-slash");
 
             balanceVisible = false;
 
         } else {
 
+            // Show balance
             let currentBalance = 0;
 
             if (typeof getBalance === "function") {
@@ -227,15 +222,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     "$" + Number(currentBalance).toFixed(2);
             }
 
-            eye.classList.remove("fa-eye-slash");
-            eye.classList.add("fa-eye");
+            balanceEye.classList.remove("fa-eye-slash");
+            balanceEye.classList.add("fa-eye");
 
             balanceVisible = true;
         }
 
     });
 
-});
+}
+
 
 
             
