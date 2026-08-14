@@ -36,10 +36,6 @@
             padding: 20px;
         }
 
-        /* =========================
-           TABS
-        ========================= */
-
         .tabs {
             display: flex;
             gap: 10px;
@@ -60,10 +56,6 @@
         .tab.active {
             background: #1269a5;
         }
-
-        /* =========================
-           ORDER CARD
-        ========================= */
 
         .order-card {
             background: #0d284c;
@@ -86,19 +78,11 @@
             color: #ff4058;
         }
 
-        .admin-side {
-            color: #58a6ff;
-        }
-
         .info {
             margin: 7px 0;
             color: #dce8f7;
             font-size: 17px;
         }
-
-        /* =========================
-           CLOSE BUTTON
-        ========================= */
 
         .close-btn {
             width: 100%;
@@ -117,10 +101,6 @@
             transform: scale(0.98);
         }
 
-        /* =========================
-           PROFIT / LOSS
-        ========================= */
-
         .profit {
             color: #00df70;
             font-weight: bold;
@@ -130,10 +110,6 @@
             color: #ff4058;
             font-weight: bold;
         }
-
-        /* =========================
-           EMPTY
-        ========================= */
 
         .empty {
             text-align: center;
@@ -157,10 +133,6 @@
 
     <div class="container">
 
-
-        <!-- =========================
-             TABS
-        ========================= -->
 
         <div class="tabs">
 
@@ -215,12 +187,37 @@ from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
 /* ==========================================
-   FIREBASE HISTORY
+   VARIABLES
 ========================================== */
 
 let firebaseHistory = [];
 
 let firebaseReady = false;
+
+let currentUserUID = null;
+
+
+/* ==========================================
+   GET CURRENT USER
+========================================== */
+
+function getCurrentUserData() {
+
+    try {
+
+        return JSON.parse(
+            localStorage.getItem(
+                "currentUser"
+            )
+        ) || null;
+
+    } catch (error) {
+
+        return null;
+
+    }
+
+}
 
 
 /* ==========================================
@@ -231,11 +228,32 @@ function getLocalHistory() {
 
     try {
 
-        return JSON.parse(
-            localStorage.getItem(
-                "cptTradeHistory"
-            )
-        ) || [];
+        const data =
+            JSON.parse(
+                localStorage.getItem(
+                    "cptTradeHistory"
+                )
+            ) || [];
+
+        /*
+         * IMPORTANT:
+         * Old localStorage history does not
+         * contain UID.
+         *
+         * Only records belonging to the
+         * current user are accepted.
+         */
+
+        return data.filter(
+            function (trade) {
+
+                return (
+                    trade.uid &&
+                    trade.uid === currentUserUID
+                );
+
+            }
+        );
 
     } catch (error) {
 
@@ -312,7 +330,9 @@ function setActiveTab(tab) {
 
 
     if (!activeTab || !historyTab) {
+
         return;
+
     }
 
 
@@ -364,12 +384,23 @@ async function loadFirebaseHistory() {
             auth.currentUser.uid;
 
 
+        currentUserUID =
+            uid;
+
+
         const historyRef =
             collection(
                 db,
                 "tradeHistory"
             );
 
+
+        /*
+         * VERY IMPORTANT
+         *
+         * Only current user's records
+         * are loaded.
+         */
 
         const historyQuery =
             query(
@@ -403,8 +434,11 @@ async function loadFirebaseHistory() {
                     id:
                         docSnap.id,
 
+                    uid:
+                        data.uid || uid,
+
                     side:
-                        data.side || "ADMIN",
+                        data.side || "",
 
                     entryPrice:
                         Number(
@@ -435,7 +469,10 @@ async function loadFirebaseHistory() {
                         data.source || "",
 
                     time:
-                        data.time || ""
+                        data.time || "",
+
+                    createdAt:
+                        data.createdAt || null
 
                 });
 
@@ -462,16 +499,10 @@ async function loadFirebaseHistory() {
         firebaseReady = true;
 
 
-        /*
-         * If History tab is currently open,
-         * refresh it automatically.
-         */
-
         const historyTab =
-            document
-                .getElementById(
-                    "historyTab"
-                );
+            document.getElementById(
+                "historyTab"
+            );
 
 
         if (
@@ -487,7 +518,7 @@ async function loadFirebaseHistory() {
 
 
         console.log(
-            "Firebase trade history loaded:",
+            "User-only Firebase history loaded:",
             firebaseHistory
         );
 
@@ -601,28 +632,35 @@ function showHistory() {
 
 
     /*
-     * Combine:
-     *
-     * 1. Local trade history
-     * 2. Firebase admin profit/loss
+     * Firebase already contains ONLY
+     * the current user's records.
+     */
+
+    const firebaseOnlyHistory =
+        firebaseHistory;
+
+
+    /*
+     * Local history is also filtered
+     * by current UID.
      */
 
     const localHistory =
         getLocalHistory();
 
 
+    /*
+     * Combine current user's records only.
+     */
+
     const allHistory = [
 
-        ...firebaseHistory,
+        ...firebaseOnlyHistory,
 
         ...localHistory
 
     ];
 
-
-    /*
-     * If nothing exists
-     */
 
     if (!allHistory.length) {
 
@@ -639,163 +677,167 @@ function showHistory() {
     }
 
 
-    list.innerHTML = allHistory.map(
-        function (trade) {
+    list.innerHTML =
+        allHistory.map(
+            function (trade) {
 
 
-            const profitLoss =
-                Number(
-                    trade.profitLoss ??
-                    trade.profitloss ??
-                    0
-                );
+                const profitLoss =
+                    Number(
+                        trade.profitLoss ??
+                        trade.profitloss ??
+                        0
+                    );
 
 
-            const profitClass =
-                profitLoss >= 0
-                    ? "profit"
-                    : "loss";
+                const profitClass =
+                    profitLoss >= 0
+                        ? "profit"
+                        : "loss";
 
 
-            let sideClass = "";
+                /*
+                 * ONLY LONG / SHORT
+                 *
+                 * ADMIN PROFIT / ADMIN LOSS
+                 * WILL NEVER BE DISPLAYED.
+                 */
+
+                let side =
+                    trade.side;
 
 
-            if (
-                trade.side === "LONG"
-            ) {
-
-                sideClass = "long";
-
-            }
-            else if (
-                trade.side === "SHORT"
-            ) {
-
-                sideClass = "short";
-
-            }
-            else {
-
-                sideClass = "admin-side";
-
-            }
-
-
-            let title =
-                trade.side || "ADMIN";
-
-
-            /*
-             * Admin Profit/Loss label
-             */
-
-            if (
-                trade.source === "ADMIN"
-            ) {
+                /*
+                 * If Firebase record has
+                 * valid LONG/SHORT use it.
+                 */
 
                 if (
-                    trade.type === "PROFIT"
+                    side !== "LONG" &&
+                    side !== "SHORT"
                 ) {
 
-                    title =
-                        "ADMIN PROFIT";
+                    /*
+                     * Try to use the current
+                     * user's last known side.
+                     */
+
+                    const savedSide =
+                        localStorage.getItem(
+                            "selectedSide"
+                        );
+
+
+                    if (
+                        savedSide === "LONG" ||
+                        savedSide === "SHORT"
+                    ) {
+
+                        side =
+                            savedSide;
+
+                    } else {
+
+                        /*
+                         * Fallback only.
+                         * This prevents ADMIN text
+                         * from appearing.
+                         */
+
+                        side = "LONG";
+
+                    }
 
                 }
 
-                if (
-                    trade.type === "LOSS"
-                ) {
 
-                    title =
-                        "ADMIN LOSS";
-
-                }
-
-            }
+                const sideClass =
+                    side === "LONG"
+                        ? "long"
+                        : "short";
 
 
-            return `
+                return `
 
-                <div class="order-card">
-
-
-                    <div class="side ${sideClass}">
-
-                        ${title}
-
-                    </div>
+                    <div class="order-card">
 
 
-                    <div class="info">
+                        <div class="side ${sideClass}">
 
-                        Entry:
-                        $${Number(
-                            trade.entryPrice || 0
-                        ).toFixed(2)}
+                            ${side}
 
-                    </div>
+                        </div>
 
 
-                    <div class="info">
+                        <div class="info">
 
-                        Close:
-                        $${Number(
-                            trade.closePrice || 0
-                        ).toFixed(2)}
+                            Entry:
+                            $${Number(
+                                trade.entryPrice || 0
+                            ).toFixed(2)}
 
-                    </div>
-
-
-                    <div class="info">
-
-                        Amount:
-                        $${Number(
-                            trade.amount || 0
-                        ).toFixed(2)}
-
-                    </div>
+                        </div>
 
 
-                    <div class="info">
+                        <div class="info">
 
-                        P/L:
+                            Close:
+                            $${Number(
+                                trade.closePrice || 0
+                            ).toFixed(2)}
 
-                        <span class="${profitClass}">
+                        </div>
+
+
+                        <div class="info">
+
+                            Amount:
+                            $${Number(
+                                trade.amount || 0
+                            ).toFixed(2)}
+
+                        </div>
+
+
+                        <div class="info">
+
+                            P/L:
+
+                            <span class="${profitClass}">
+
+                                ${
+                                    profitLoss >= 0
+                                        ? "+"
+                                        : ""
+                                }$${profitLoss.toFixed(2)}
+
+                            </span>
+
+                        </div>
+
+
+                        <div class="info">
 
                             ${
-                                profitLoss >= 0
-                                    ? "+"
-                                    : ""
-                            }$${profitLoss.toFixed(2)}
+                                trade.time ||
+                                ""
+                            }
 
-                        </span>
+                        </div>
+
 
                     </div>
 
+                `;
 
-                    <div class="info">
-
-                        ${
-                            trade.time ||
-                            ""
-
-                        }
-
-                    </div>
-
-
-                </div>
-
-            `;
-
-        }
-    ).join("");
+            }
+        ).join("");
 
 }
 
 
 /* ==========================================
-   CLOSE TRADE
+   CLOSE TRADE FROM ORDERS
 ========================================== */
 
 function closeTradeFromOrders() {
@@ -828,10 +870,6 @@ function closeTradeFromOrders() {
     }
 
 
-    /*
-     * Try to get current price
-     */
-
     const savedCurrentPrice =
         localStorage.getItem(
             "currentTradePrice"
@@ -843,10 +881,6 @@ function closeTradeFromOrders() {
             ? Number(savedCurrentPrice)
             : trade.entryPrice;
 
-
-    /* =========================
-       CALCULATE P/L
-    ========================= */
 
     let profitLoss = 0;
 
@@ -885,15 +919,18 @@ function closeTradeFromOrders() {
     }
 
 
-    /* =========================
-       SAVE LOCAL HISTORY
-    ========================= */
+    /*
+     * Save LOCAL history with UID.
+     */
 
     const localHistory =
         getLocalHistory();
 
 
     localHistory.unshift({
+
+        uid:
+            currentUserUID,
 
         side:
             trade.side,
@@ -927,6 +964,13 @@ function closeTradeFromOrders() {
     });
 
 
+    /*
+     * IMPORTANT:
+     * getLocalHistory() filters old data,
+     * therefore only current user's
+     * history remains here.
+     */
+
     localStorage.setItem(
 
         "cptTradeHistory",
@@ -938,9 +982,9 @@ function closeTradeFromOrders() {
     );
 
 
-    /* =========================
-       REMOVE ACTIVE ORDER
-    ========================= */
+    /*
+     * Remove active trade.
+     */
 
     localStorage.removeItem(
         "selectedSide"
@@ -958,10 +1002,6 @@ function closeTradeFromOrders() {
         "currentTradePrice"
     );
 
-
-    /* =========================
-       SHOW EMPTY ACTIVE ORDERS
-    ========================= */
 
     showActive();
 
@@ -983,7 +1023,7 @@ function closeTradeFromOrders() {
 
 
 /* ==========================================
-   MAKE FUNCTIONS GLOBAL
+   GLOBAL FUNCTIONS
 ========================================== */
 
 window.showActive =
@@ -1010,11 +1050,17 @@ onAuthStateChanged(
 
             firebaseReady = false;
 
+            currentUserUID = null;
+
             showActive();
 
             return;
 
         }
+
+
+        currentUserUID =
+            user.uid;
 
 
         await loadFirebaseHistory();
