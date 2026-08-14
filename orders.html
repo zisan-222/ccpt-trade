@@ -150,10 +150,6 @@
 <body>
 
 
-    <!-- =========================
-         HEADER
-    ========================= -->
-
     <div class="header">
         My Orders
     </div>
@@ -187,24 +183,51 @@
         </div>
 
 
-        <!-- =========================
-             ORDERS LIST
-        ========================= -->
-
         <div id="ordersList"></div>
 
 
     </div>
 
 
-<script>
+
+<script type="module">
 
 
 /* ==========================================
-   GET TRADE HISTORY
+   FIREBASE
 ========================================== */
 
-function getHistory() {
+import { auth, db }
+    from "./firebase/firebase-config.js";
+
+import {
+    onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+import {
+    collection,
+    query,
+    where,
+    getDocs
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+/* ==========================================
+   FIREBASE HISTORY
+========================================== */
+
+let firebaseHistory = [];
+
+let firebaseReady = false;
+
+
+/* ==========================================
+   GET LOCAL HISTORY
+========================================== */
+
+function getLocalHistory() {
 
     try {
 
@@ -219,20 +242,6 @@ function getHistory() {
         return [];
 
     }
-
-}
-
-
-/* ==========================================
-   SAVE TRADE HISTORY
-========================================== */
-
-function saveHistory(history) {
-
-    localStorage.setItem(
-        "cptTradeHistory",
-        JSON.stringify(history)
-    );
 
 }
 
@@ -337,6 +346,165 @@ function setActiveTab(tab) {
 
 
 /* ==========================================
+   LOAD FIREBASE TRADE HISTORY
+========================================== */
+
+async function loadFirebaseHistory() {
+
+    try {
+
+        if (!auth.currentUser) {
+
+            return;
+
+        }
+
+
+        const uid =
+            auth.currentUser.uid;
+
+
+        const historyRef =
+            collection(
+                db,
+                "tradeHistory"
+            );
+
+
+        const historyQuery =
+            query(
+                historyRef,
+                where(
+                    "uid",
+                    "==",
+                    uid
+                )
+            );
+
+
+        const snapshot =
+            await getDocs(
+                historyQuery
+            );
+
+
+        firebaseHistory = [];
+
+
+        snapshot.forEach(
+            function (docSnap) {
+
+                const data =
+                    docSnap.data();
+
+
+                firebaseHistory.push({
+
+                    id:
+                        docSnap.id,
+
+                    side:
+                        data.side || "ADMIN",
+
+                    entryPrice:
+                        Number(
+                            data.entryPrice || 0
+                        ),
+
+                    closePrice:
+                        Number(
+                            data.closePrice || 0
+                        ),
+
+                    amount:
+                        Number(
+                            data.amount || 0
+                        ),
+
+                    profitLoss:
+                        Number(
+                            data.profitLoss ??
+                            data.profitloss ??
+                            0
+                        ),
+
+                    type:
+                        data.type || "",
+
+                    source:
+                        data.source || "",
+
+                    time:
+                        data.time || ""
+
+                });
+
+            }
+        );
+
+
+        /*
+         * Newest first
+         */
+
+        firebaseHistory.sort(
+            function (a, b) {
+
+                return String(b.time)
+                    .localeCompare(
+                        String(a.time)
+                    );
+
+            }
+        );
+
+
+        firebaseReady = true;
+
+
+        /*
+         * If History tab is currently open,
+         * refresh it automatically.
+         */
+
+        const historyTab =
+            document
+                .getElementById(
+                    "historyTab"
+                );
+
+
+        if (
+            historyTab &&
+            historyTab.classList.contains(
+                "active"
+            )
+        ) {
+
+            showHistory();
+
+        }
+
+
+        console.log(
+            "Firebase trade history loaded:",
+            firebaseHistory
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Firebase trade history error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* ==========================================
    SHOW ACTIVE ORDERS
 ========================================== */
 
@@ -432,11 +600,31 @@ function showHistory() {
         );
 
 
-    const history =
-        getHistory();
+    /*
+     * Combine:
+     *
+     * 1. Local trade history
+     * 2. Firebase admin profit/loss
+     */
+
+    const localHistory =
+        getLocalHistory();
 
 
-    if (!history.length) {
+    const allHistory = [
+
+        ...firebaseHistory,
+
+        ...localHistory
+
+    ];
+
+
+    /*
+     * If nothing exists
+     */
+
+    if (!allHistory.length) {
 
         list.innerHTML = `
 
@@ -451,7 +639,7 @@ function showHistory() {
     }
 
 
-    list.innerHTML = history.map(
+    list.innerHTML = allHistory.map(
         function (trade) {
 
 
@@ -472,19 +660,56 @@ function showHistory() {
             let sideClass = "";
 
 
-            if (trade.side === "LONG") {
+            if (
+                trade.side === "LONG"
+            ) {
 
                 sideClass = "long";
 
-            } else if (
+            }
+            else if (
                 trade.side === "SHORT"
             ) {
 
                 sideClass = "short";
 
-            } else {
+            }
+            else {
 
                 sideClass = "admin-side";
+
+            }
+
+
+            let title =
+                trade.side || "ADMIN";
+
+
+            /*
+             * Admin Profit/Loss label
+             */
+
+            if (
+                trade.source === "ADMIN"
+            ) {
+
+                if (
+                    trade.type === "PROFIT"
+                ) {
+
+                    title =
+                        "ADMIN PROFIT";
+
+                }
+
+                if (
+                    trade.type === "LOSS"
+                ) {
+
+                    title =
+                        "ADMIN LOSS";
+
+                }
 
             }
 
@@ -496,7 +721,7 @@ function showHistory() {
 
                     <div class="side ${sideClass}">
 
-                        ${trade.side || "ADMIN"}
+                        ${title}
 
                     </div>
 
@@ -570,11 +795,10 @@ function showHistory() {
 
 
 /* ==========================================
-   CLOSE TRADE FROM MY ORDERS
+   CLOSE TRADE
 ========================================== */
 
 function closeTradeFromOrders() {
-
 
     const trade =
         getActiveTrade();
@@ -605,12 +829,7 @@ function closeTradeFromOrders() {
 
 
     /*
-     * Close price
-     *
-     * If trade.js saved current
-     * price, use it.
-     *
-     * Otherwise use entry price.
+     * Try to get current price
      */
 
     const savedCurrentPrice =
@@ -667,10 +886,14 @@ function closeTradeFromOrders() {
 
 
     /* =========================
-       CREATE HISTORY
+       SAVE LOCAL HISTORY
     ========================= */
 
-    const closedTrade = {
+    const localHistory =
+        getLocalHistory();
+
+
+    localHistory.unshift({
 
         side:
             trade.side,
@@ -701,29 +924,22 @@ function closeTradeFromOrders() {
         source:
             "USER"
 
-    };
+    });
 
 
-    /* =========================
-       GET OLD HISTORY
-    ========================= */
+    localStorage.setItem(
 
-    const history =
-        getHistory();
+        "cptTradeHistory",
 
+        JSON.stringify(
+            localHistory
+        )
 
-    history.unshift(
-        closedTrade
-    );
-
-
-    saveHistory(
-        history
     );
 
 
     /* =========================
-       REMOVE ACTIVE TRADE
+       REMOVE ACTIVE ORDER
     ========================= */
 
     localStorage.removeItem(
@@ -744,13 +960,14 @@ function closeTradeFromOrders() {
 
 
     /* =========================
-       SHOW MY ORDERS AGAIN
+       SHOW EMPTY ACTIVE ORDERS
     ========================= */
 
     showActive();
 
 
     alert(
+
         trade.side +
         " trade closed successfully.\n\n" +
 
@@ -759,9 +976,51 @@ function closeTradeFromOrders() {
 
         "\nP/L: $" +
         profitLoss.toFixed(2)
+
     );
 
 }
+
+
+/* ==========================================
+   MAKE FUNCTIONS GLOBAL
+========================================== */
+
+window.showActive =
+    showActive;
+
+window.showHistory =
+    showHistory;
+
+window.closeTradeFromOrders =
+    closeTradeFromOrders;
+
+
+/* ==========================================
+   FIREBASE AUTH
+========================================== */
+
+onAuthStateChanged(
+    auth,
+    async function (user) {
+
+        if (!user) {
+
+            firebaseHistory = [];
+
+            firebaseReady = false;
+
+            showActive();
+
+            return;
+
+        }
+
+
+        await loadFirebaseHistory();
+
+    }
+);
 
 
 /* ==========================================
@@ -769,37 +1028,6 @@ function closeTradeFromOrders() {
 ========================================== */
 
 showActive();
-
-
-/* ==========================================
-   AUTO REFRESH
-========================================== */
-
-window.addEventListener(
-    "storage",
-    function () {
-
-        const activeTab =
-            document
-                .getElementById(
-                    "activeTab"
-                )
-                ?.classList
-                .contains("active");
-
-
-        if (activeTab) {
-
-            showActive();
-
-        } else {
-
-            showHistory();
-
-        }
-
-    }
-);
 
 
 </script>
