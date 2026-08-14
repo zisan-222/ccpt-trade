@@ -1,7 +1,8 @@
 /* ==========================================
    CPTMARKETS
    ADMIN USER MANAGEMENT
-   ========================================== */
+   admin-users.js
+========================================== */
 
 import { auth, db } from "./firebase/firebase-config.js";
 
@@ -16,13 +17,15 @@ import {
     where,
     getDocs,
     updateDoc,
-    doc
+    doc,
+    addDoc,
+    serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
 /* ==========================================
    VARIABLES
-   ========================================== */
+========================================== */
 
 let currentUser = null;
 let currentUserDoc = null;
@@ -30,15 +33,15 @@ let currentUserDoc = null;
 
 /* ==========================================
    ADMIN AUTH CHECK
-   ========================================== */
+========================================== */
 
 onAuthStateChanged(auth, (user) => {
 
     if (!user) {
 
         window.location.href = "index.html";
-
         return;
+
     }
 
     console.log(
@@ -51,7 +54,7 @@ onAuthStateChanged(auth, (user) => {
 
 /* ==========================================
    SEARCH BUTTON
-   ========================================== */
+========================================== */
 
 const searchButton =
     document.getElementById("searchUserBtn");
@@ -69,12 +72,13 @@ if (searchButton) {
 
 /* ==========================================
    SEARCH USER
-   ========================================== */
+========================================== */
 
 async function searchUser() {
 
     const uidInput =
         document.getElementById("userUidInput");
+
 
     if (!uidInput) {
 
@@ -83,6 +87,7 @@ async function searchUser() {
         );
 
         return;
+
     }
 
 
@@ -97,6 +102,7 @@ async function searchUser() {
         );
 
         return;
+
     }
 
 
@@ -116,17 +122,10 @@ async function searchUser() {
 
 
         /*
-         * IMPORTANT:
-         *
-         * The 8 digit UID shown
-         * on Mine page is saved
-         * in Firestore as:
+         * Your visible 8-digit User ID
+         * is stored as:
          *
          * userId
-         *
-         * NOT:
-         *
-         * uid
          */
 
         const userQuery =
@@ -148,7 +147,7 @@ async function searchUser() {
 
         /* ==================================
            USER NOT FOUND
-           ================================== */
+        ================================== */
 
         if (snapshot.empty) {
 
@@ -157,15 +156,19 @@ async function searchUser() {
                 uid
             );
 
+            currentUser = null;
+            currentUserDoc = null;
+
             showNotFound();
 
             return;
+
         }
 
 
         /* ==================================
            USER FOUND
-           ================================== */
+        ================================== */
 
         const userDoc =
             snapshot.docs[0];
@@ -210,7 +213,7 @@ async function searchUser() {
 
 /* ==========================================
    SHOW USER
-   ========================================== */
+========================================== */
 
 function showUser(
     docId,
@@ -302,7 +305,7 @@ function showUser(
 
 /* ==========================================
    BALANCE DISPLAY
-   ========================================== */
+========================================== */
 
 function updateBalanceDisplay(
     balance
@@ -317,20 +320,21 @@ function updateBalanceDisplay(
     if (!balanceElement) {
 
         return;
+
     }
 
 
     balanceElement.textContent =
         "$" +
         Number(balance)
-        .toFixed(2);
+            .toFixed(2);
 
 }
 
 
 /* ==========================================
    SHOW NOT FOUND
-   ========================================== */
+========================================== */
 
 function showNotFound() {
 
@@ -365,8 +369,9 @@ function showNotFound() {
 
 
 /* ==========================================
-   ADD BALANCE BUTTON
-   ========================================== */
+   NORMAL BALANCE
+   ADD
+========================================== */
 
 const addButton =
     document.getElementById(
@@ -391,8 +396,9 @@ if (addButton) {
 
 
 /* ==========================================
-   REMOVE BALANCE BUTTON
-   ========================================== */
+   NORMAL BALANCE
+   REMOVE
+========================================== */
 
 const removeButton =
     document.getElementById(
@@ -417,8 +423,8 @@ if (removeButton) {
 
 
 /* ==========================================
-   CHANGE BALANCE
-   ========================================== */
+   NORMAL BALANCE CONTROL
+========================================== */
 
 async function changeBalance(
     action
@@ -431,6 +437,7 @@ async function changeBalance(
         );
 
         return;
+
     }
 
 
@@ -447,6 +454,7 @@ async function changeBalance(
         );
 
         return;
+
     }
 
 
@@ -466,6 +474,7 @@ async function changeBalance(
         );
 
         return;
+
     }
 
 
@@ -478,24 +487,13 @@ async function changeBalance(
     let newBalance;
 
 
-    /* ==================================
-       ADD
-       ================================== */
-
     if (action === "add") {
 
         newBalance =
             oldBalance +
             amount;
 
-    }
-
-
-    /* ==================================
-       REMOVE
-       ================================== */
-
-    else {
+    } else {
 
         newBalance =
             oldBalance -
@@ -509,16 +507,13 @@ async function changeBalance(
             );
 
             return;
+
         }
 
     }
 
 
     try {
-
-        /* ==================================
-           UPDATE FIRESTORE
-           ================================== */
 
         await updateDoc(
 
@@ -536,17 +531,9 @@ async function changeBalance(
         );
 
 
-        /* ==================================
-           UPDATE LOCAL USER
-           ================================== */
-
         currentUser.balance =
             newBalance;
 
-
-        /* ==================================
-           UPDATE SCREEN
-           ================================== */
 
         updateBalanceDisplay(
             newBalance
@@ -565,12 +552,6 @@ async function changeBalance(
 
                 : "Balance removed successfully."
 
-        );
-
-
-        console.log(
-            "Balance updated:",
-            newBalance
         );
 
 
@@ -593,8 +574,316 @@ async function changeBalance(
 
 
 /* ==========================================
+   PROFIT BUTTON
+========================================== */
+
+const profitButton =
+    document.getElementById(
+        "addProfitBtn"
+    );
+
+
+if (profitButton) {
+
+    profitButton.addEventListener(
+        "click",
+        async function () {
+
+            await addTradeResult(
+                "PROFIT"
+            );
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   LOSS BUTTON
+========================================== */
+
+const lossButton =
+    document.getElementById(
+        "addLossBtn"
+    );
+
+
+if (lossButton) {
+
+    lossButton.addEventListener(
+        "click",
+        async function () {
+
+            await addTradeResult(
+                "LOSS"
+            );
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   ADD TRADE PROFIT / LOSS
+========================================== */
+
+async function addTradeResult(
+    type
+) {
+
+    if (!currentUserDoc) {
+
+        alert(
+            "Please search for a user first."
+        );
+
+        return;
+
+    }
+
+
+    const amountInput =
+        document.getElementById(
+            "tradePLAmount"
+        );
+
+
+    if (!amountInput) {
+
+        alert(
+            "Trade P/L input not found."
+        );
+
+        return;
+
+    }
+
+
+    const amount =
+        Number(
+            amountInput.value
+        );
+
+
+    if (
+        !amount ||
+        amount <= 0
+    ) {
+
+        alert(
+            "Enter a valid profit/loss amount."
+        );
+
+        return;
+
+    }
+
+
+    const oldBalance =
+        Number(
+            currentUser.balance || 0
+        );
+
+
+    let profitLoss = 0;
+    let newBalance = 0;
+
+
+    /* ======================================
+       PROFIT
+    ====================================== */
+
+    if (type === "PROFIT") {
+
+        profitLoss =
+            amount;
+
+        newBalance =
+            oldBalance +
+            amount;
+
+    }
+
+
+    /* ======================================
+       LOSS
+    ====================================== */
+
+    if (type === "LOSS") {
+
+        profitLoss =
+            -amount;
+
+        newBalance =
+            oldBalance -
+            amount;
+
+
+        if (newBalance < 0) {
+
+            alert(
+                "Loss cannot be greater than the user's balance."
+            );
+
+            return;
+
+        }
+
+    }
+
+
+    try {
+
+        /* ==================================
+           UPDATE USER BALANCE
+        ================================== */
+
+        await updateDoc(
+
+            doc(
+                db,
+                "users",
+                currentUserDoc.id
+            ),
+
+            {
+                balance:
+                    newBalance
+            }
+
+        );
+
+
+        /* ==================================
+           CREATE TRADE HISTORY
+        ================================== */
+
+        await addDoc(
+
+            collection(
+                db,
+                "tradeHistory"
+            ),
+
+            {
+
+                uid:
+                    currentUserDoc.id,
+
+                userId:
+                    currentUser.userId ||
+                    "",
+
+                username:
+                    currentUser.username ||
+                    currentUser.name ||
+                    "User",
+
+                email:
+                    currentUser.email ||
+                    "",
+
+                side:
+                    "ADMIN",
+
+                entryPrice:
+                    0,
+
+                closePrice:
+                    0,
+
+                amount:
+                    Number(
+                        amount.toFixed(2)
+                    ),
+
+                profitLoss:
+                    Number(
+                        profitLoss.toFixed(2)
+                    ),
+
+                type:
+                    type,
+
+                source:
+                    "ADMIN",
+
+                time:
+                    new Date().toLocaleString(),
+
+                createdAt:
+                    serverTimestamp()
+
+            }
+
+        );
+
+
+        /* ==================================
+           UPDATE LOCAL DATA
+        ================================== */
+
+        currentUser.balance =
+            newBalance;
+
+
+        updateBalanceDisplay(
+            newBalance
+        );
+
+
+        amountInput.value =
+            "";
+
+
+        /* ==================================
+           SUCCESS MESSAGE
+        ================================== */
+
+        showMessage(
+
+            type === "PROFIT"
+
+                ? "Trade profit added successfully."
+
+                : "Trade loss added successfully."
+
+        );
+
+
+        console.log(
+            "Trade result saved:",
+            {
+                type,
+                profitLoss,
+                newBalance
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Trade P/L update failed:",
+            error
+        );
+
+
+        alert(
+            "Trade P/L update failed: " +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* ==========================================
    SUCCESS MESSAGE
-   ========================================== */
+========================================== */
 
 function showMessage(
     message
@@ -611,6 +900,7 @@ function showMessage(
         alert(message);
 
         return;
+
     }
 
 
@@ -633,7 +923,7 @@ function showMessage(
 
 /* ==========================================
    LOGOUT
-   ========================================== */
+========================================== */
 
 const logoutButton =
     document.getElementById(
@@ -672,6 +962,10 @@ if (logoutButton) {
 
 }
 
+
+/* ==========================================
+   END
+========================================== */
 
 console.log(
     "CptMarkets Admin User Management loaded."
