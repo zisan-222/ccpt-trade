@@ -1,250 +1,1162 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>My Orders</title>
 
+
     <style>
+
         * {
             box-sizing: border-box;
         }
 
+
         body {
+
             margin: 0;
-            font-family: Arial, sans-serif;
+
+            font-family:
+                Arial,
+                sans-serif;
+
             background: #061b38;
+
             color: white;
+
         }
+
 
         .header {
+
             padding: 20px;
+
             background: #0b2345;
+
             font-size: 25px;
+
             font-weight: bold;
+
         }
+
 
         .container {
+
             padding: 20px;
+
         }
+
 
         .tabs {
+
             display: flex;
+
             gap: 10px;
+
             margin-bottom: 20px;
+
         }
+
 
         .tab {
+
             flex: 1;
+
             padding: 15px;
+
             border: none;
+
             border-radius: 12px;
+
             background: #173861;
+
             color: white;
+
             font-size: 16px;
+
         }
+
 
         .tab.active {
+
             background: #24558c;
+
         }
+
 
         .order-card {
+
             background: #0d284c;
+
             border-radius: 15px;
+
             padding: 18px;
+
             margin-bottom: 15px;
+
         }
+
 
         .side {
+
             font-size: 20px;
+
             font-weight: bold;
+
             margin-bottom: 10px;
+
         }
+
 
         .long {
+
             color: #00df70;
+
         }
+
 
         .short {
+
             color: #ff4058;
+
         }
+
+
+        .admin-profit {
+
+            color: #00df70;
+
+        }
+
+
+        .admin-loss {
+
+            color: #ff4058;
+
+        }
+
 
         .info {
+
             margin: 7px 0;
+
             color: #dce8f7;
+
         }
+
+
+        .profit-value {
+
+            color: #00df70;
+
+            font-weight: bold;
+
+        }
+
+
+        .loss-value {
+
+            color: #ff4058;
+
+            font-weight: bold;
+
+        }
+
 
         .close-btn {
+
             width: 100%;
+
             margin-top: 12px;
+
             padding: 12px;
+
             border: none;
+
             border-radius: 10px;
+
             background: #ff4058;
+
             color: white;
+
             font-size: 16px;
+
             font-weight: bold;
+
         }
 
+
         .empty {
+
             text-align: center;
+
             padding: 40px 10px;
+
             color: #91a6c2;
+
             font-size: 17px;
+
         }
+
+
+        .loading {
+
+            text-align: center;
+
+            padding: 30px;
+
+            color: #91a6c2;
+
+        }
+
+
+        .error {
+
+            text-align: center;
+
+            padding: 30px 15px;
+
+            color: #ff4058;
+
+        }
+
+
+        .refresh-btn {
+
+            width: 100%;
+
+            margin-top: 10px;
+
+            padding: 12px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #173861;
+
+            color: white;
+
+            font-size: 15px;
+
+        }
+
     </style>
+
 </head>
+
 
 <body>
 
+
     <div class="header">
+
         My Orders
+
     </div>
+
 
     <div class="container">
 
+
         <div class="tabs">
-            <button class="tab active" onclick="showActive()">
+
+
+            <button
+                id="activeTab"
+                class="tab active"
+                onclick="showActive()"
+            >
                 My Orders
             </button>
 
-            <button class="tab" onclick="showHistory()">
+
+            <button
+                id="historyTab"
+                class="tab"
+                onclick="showHistory()"
+            >
                 History
             </button>
+
+
         </div>
+
 
         <div id="ordersList"></div>
 
+
     </div>
 
-    <script>
 
-        function getHistory() {
-            try {
-                return JSON.parse(
-                    localStorage.getItem("cptTradeHistory")
-                ) || [];
-            } catch (error) {
-                return [];
-            }
+
+    <!-- =====================================
+         FIREBASE + ORDERS SYSTEM
+    ====================================== -->
+
+    <script type="module">
+
+
+        /* =====================================
+           FIREBASE IMPORT
+        ===================================== */
+
+        import {
+            auth,
+            db
         }
+        from "./firebase/firebase-config.js";
+
+
+        import {
+            onAuthStateChanged
+        }
+        from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+        import {
+            collection,
+            query,
+            where,
+            getDocs
+        }
+        from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+
+        /* =====================================
+           GLOBAL
+        ===================================== */
+
+        let currentFirebaseUser = null;
+
+        let firebaseHistory = [];
+
+
+
+        /* =====================================
+           GET LOCAL HISTORY
+        ===================================== */
+
+        function getLocalHistory() {
+
+            try {
+
+                return JSON.parse(
+
+                    localStorage.getItem(
+                        "cptTradeHistory"
+                    )
+
+                ) || [];
+
+            } catch (error) {
+
+                console.error(
+                    "Local history error:",
+                    error
+                );
+
+                return [];
+
+            }
+
+        }
+
+
+
+        /* =====================================
+           GET ACTIVE TRADE
+        ===================================== */
 
         function getActiveTrade() {
-    const side = localStorage.getItem("selectedSide");
-    const entryPrice = localStorage.getItem("entryPrice");
-    const amount = localStorage.getItem("tradeAmountValue");
 
-    if (!side || !entryPrice || !amount) {
-        return null;
-    }
+            const side =
+                localStorage.getItem(
+                    "selectedSide"
+                );
 
-    return {
-        side: side,
-        entryPrice: Number(entryPrice),
-        amount: Number(amount)
-    };
-}
 
-        function showActive() {
+            const entryPrice =
+                localStorage.getItem(
+                    "entryPrice"
+                );
 
-            const list = document.getElementById("ordersList");
 
-            const trade = getActiveTrade();
+            const amount =
+                localStorage.getItem(
+                    "tradeAmountValue"
+                );
 
-            if (!trade) {
-                list.innerHTML = `
-                    <div class="empty">
-                        No active orders
-                    </div>
-                `;
-                return;
+
+            if (
+                !side ||
+                !entryPrice ||
+                !amount
+            ) {
+
+                return null;
+
             }
 
-            list.innerHTML = `
-                <div class="order-card">
 
-                    <div class="side ${trade.side === "LONG" ? "long" : "short"}">
-                        ${trade.side}
-                    </div>
+            return {
 
-                    <div class="info">
-                        Entry Price: $${trade.entryPrice.toFixed(2)}
-                    </div>
+                side:
+                    side,
 
-                    <div class="info">
-                        Amount: $${trade.amount.toFixed(2)}
-                    </div>
+                entryPrice:
+                    Number(entryPrice),
 
-                    <button class="close-btn" onclick="closeTrade()">
-                        Close Trade
-                    </button>
+                amount:
+                    Number(amount)
 
-                </div>
+            };
+
+        }
+
+
+
+        /* =====================================
+           FIREBASE HISTORY
+        ===================================== */
+
+        async function loadFirebaseHistory() {
+
+            if (!currentFirebaseUser) {
+
+                return [];
+
+            }
+
+
+            try {
+
+                const historyRef =
+                    collection(
+                        db,
+                        "tradeHistory"
+                    );
+
+
+                const historyQuery =
+                    query(
+
+                        historyRef,
+
+                        where(
+                            "uid",
+                            "==",
+                            currentFirebaseUser.uid
+                        )
+
+                    );
+
+
+                const snapshot =
+                    await getDocs(
+                        historyQuery
+                    );
+
+
+                const history = [];
+
+
+                snapshot.forEach(
+                    function (doc) {
+
+                        const data =
+                            doc.data();
+
+
+                        history.push({
+
+                            ...data,
+
+                            firebaseDocId:
+                                doc.id
+
+                        });
+
+                    }
+                );
+
+
+                console.log(
+                    "Firebase trade history:",
+                    history
+                );
+
+
+                return history;
+
+
+            } catch (error) {
+
+                console.error(
+                    "Firebase history error:",
+                    error
+                );
+
+
+                return [];
+
+            }
+
+        }
+
+
+
+        /* =====================================
+           SORT HISTORY
+        ===================================== */
+
+        function getHistoryDate(trade) {
+
+            /* Firebase timestamp */
+
+            if (
+                trade.createdAt &&
+                typeof trade.createdAt.toDate ===
+                "function"
+            ) {
+
+                return trade.createdAt.toDate();
+
+            }
+
+
+            /* Normal date string */
+
+            if (trade.time) {
+
+                const date =
+                    new Date(
+                        trade.time
+                    );
+
+
+                if (
+                    !isNaN(
+                        date.getTime()
+                    )
+                ) {
+
+                    return date;
+
+                }
+
+            }
+
+
+            return new Date(0);
+
+        }
+
+
+
+        /* =====================================
+           FORMAT P/L
+        ===================================== */
+
+        function formatProfitLoss(
+            value
+        ) {
+
+            const number =
+                Number(value || 0);
+
+
+            if (number >= 0) {
+
+                return `
+                    <span class="profit-value">
+                        +$${number.toFixed(2)}
+                    </span>
+                `;
+
+            }
+
+
+            return `
+                <span class="loss-value">
+                    -$${Math.abs(number).toFixed(2)}
+                </span>
             `;
+
         }
 
-        function showHistory() {
 
-            const list = document.getElementById("ordersList");
 
-            const history = getHistory();
+        /* =====================================
+           SHOW ACTIVE ORDERS
+        ===================================== */
 
-            if (!history.length) {
+        window.showActive =
+            function () {
+
+                const list =
+                    document.getElementById(
+                        "ordersList"
+                    );
+
+
+                const activeTab =
+                    document.getElementById(
+                        "activeTab"
+                    );
+
+
+                const historyTab =
+                    document.getElementById(
+                        "historyTab"
+                    );
+
+
+                activeTab.classList.add(
+                    "active"
+                );
+
+
+                historyTab.classList.remove(
+                    "active"
+                );
+
+
+                const trade =
+                    getActiveTrade();
+
+
+                if (!trade) {
+
+                    list.innerHTML = `
+
+                        <div class="empty">
+
+                            No active orders
+
+                        </div>
+
+                    `;
+
+                    return;
+
+                }
+
+
                 list.innerHTML = `
-                    <div class="empty">
-                        No trade history
+
+                    <div class="order-card">
+
+                        <div class="side ${
+                            trade.side === "LONG"
+                            ? "long"
+                            : "short"
+                        }">
+
+                            ${trade.side}
+
+                        </div>
+
+
+                        <div class="info">
+
+                            Entry Price:
+                            $${trade.entryPrice.toFixed(2)}
+
+                        </div>
+
+
+                        <div class="info">
+
+                            Amount:
+                            $${trade.amount.toFixed(2)}
+
+                        </div>
+
+
+                        <button
+                            class="close-btn"
+                            onclick="closeTrade()"
+                        >
+
+                            Close Trade
+
+                        </button>
+
+
                     </div>
+
                 `;
-                return;
+
+            };
+
+
+
+        /* =====================================
+           SHOW HISTORY
+        ===================================== */
+
+        window.showHistory =
+            async function () {
+
+                const list =
+                    document.getElementById(
+                        "ordersList"
+                    );
+
+
+                const activeTab =
+                    document.getElementById(
+                        "activeTab"
+                    );
+
+
+                const historyTab =
+                    document.getElementById(
+                        "historyTab"
+                    );
+
+
+                activeTab.classList.remove(
+                    "active"
+                );
+
+
+                historyTab.classList.add(
+                    "active"
+                );
+
+
+                list.innerHTML = `
+
+                    <div class="loading">
+
+                        Loading trade history...
+
+                    </div>
+
+                `;
+
+
+                /* ==========================
+                   LOCAL HISTORY
+                ========================== */
+
+                const localHistory =
+                    getLocalHistory();
+
+
+                /* ==========================
+                   FIREBASE HISTORY
+                ========================== */
+
+                firebaseHistory =
+                    await loadFirebaseHistory();
+
+
+                /* ==========================
+                   COMBINE
+                ========================== */
+
+                let allHistory = [
+
+                    ...localHistory,
+
+                    ...firebaseHistory
+
+                ];
+
+
+                /* ==========================
+                   SORT NEWEST FIRST
+                ========================== */
+
+                allHistory.sort(
+                    function (a, b) {
+
+                        return (
+
+                            getHistoryDate(b)
+                            -
+                            getHistoryDate(a)
+
+                        );
+
+                    }
+                );
+
+
+                /* ==========================
+                   EMPTY
+                ========================== */
+
+                if (
+                    allHistory.length === 0
+                ) {
+
+                    list.innerHTML = `
+
+                        <div class="empty">
+
+                            No trade history
+
+                        </div>
+
+                    `;
+
+                    return;
+
+                }
+
+
+                /* ==========================
+                   CREATE CARDS
+                ========================== */
+
+                list.innerHTML =
+
+                    allHistory
+                    .map(
+                        function (trade) {
+
+                            const profitLoss =
+                                Number(
+
+                                    trade.profitLoss !==
+                                    undefined
+
+                                    ? trade.profitLoss
+
+                                    :
+
+                                    trade.profitloss ||
+                                    0
+
+                                );
+
+
+                            /* ==================
+                               ADMIN PROFIT
+                            ================== */
+
+                            if (
+                                trade.source ===
+                                "ADMIN" &&
+                                trade.type ===
+                                "PROFIT"
+                            ) {
+
+                                return `
+
+                                    <div class="order-card">
+
+                                        <div class="
+                                            side
+                                            admin-profit
+                                        ">
+
+                                            PROFIT
+
+                                        </div>
+
+
+                                        <div class="info">
+
+                                            Type:
+                                            Trade Profit
+
+                                        </div>
+
+
+                                        <div class="info">
+
+                                            Amount:
+                                            $${Number(
+                                                trade.amount || 0
+                                            ).toFixed(2)}
+
+                                        </div>
+
+
+                                        <div class="info">
+
+                                            P/L:
+                                            ${formatProfitLoss(
+                                                profitLoss
+                                            )}
+
+                                        </div>
+
+
+                                        <div class="info">
+
+                                            ${
+                                                trade.time ||
+                                                ""
+                                            }
+
+                                        </div>
+
+                                    </div>
+
+                                `;
+
+                            }
+
+
+                            /* ==================
+                               ADMIN LOSS
+                            ================== */
+
+                            if (
+                                trade.source ===
+                                "ADMIN" &&
+                                trade.type ===
+                                "LOSS"
+                            ) {
+
+                                return `
+
+                                    <div class="order-card">
+
+                                        <div class="
+                                            side
+                                            admin-loss
+                                        ">
+
+                                            LOSS
+
+                                        </div>
+
+
+                                        <div class="info">
+
+                                            Type:
+                                            Trade Loss
+
+                                        </div>
+
+
+                                        <div class="info">
+
+                                            Amount:
+                                            $${Number(
+                                                trade.amount || 0
+                                            ).toFixed(2)}
+
+                                        </div>
+
+
+                                        <div class="info">
+
+                                            P/L:
+                                            ${formatProfitLoss(
+                                                profitLoss
+                                            )}
+
+                                        </div>
+
+
+                                        <div class="info">
+
+                                            ${
+                                                trade.time ||
+                                                ""
+                                            }
+
+                                        </div>
+
+                                    </div>
+
+                                `;
+
+                            }
+
+
+                            /* ==================
+                               NORMAL TRADE
+                            ================== */
+
+                            return `
+
+                                <div class="order-card">
+
+                                    <div class="
+                                        side
+                                        ${
+                                            trade.side ===
+                                            "LONG"
+
+                                            ? "long"
+
+                                            : "short"
+                                        }
+                                    ">
+
+                                        ${
+                                            trade.side ||
+                                            ""
+                                        }
+
+                                    </div>
+
+
+                                    <div class="info">
+
+                                        Entry:
+                                        $${Number(
+                                            trade.entryPrice ||
+                                            0
+                                        ).toFixed(2)}
+
+                                    </div>
+
+
+                                    <div class="info">
+
+                                        Close:
+                                        $${Number(
+                                            trade.closePrice ||
+                                            0
+                                        ).toFixed(2)}
+
+                                    </div>
+
+
+                                    <div class="info">
+
+                                        Amount:
+                                        $${Number(
+                                            trade.amount ||
+                                            0
+                                        ).toFixed(2)}
+
+                                    </div>
+
+
+                                    <div class="info">
+
+                                        P/L:
+                                        ${formatProfitLoss(
+                                            profitLoss
+                                        )}
+
+                                    </div>
+
+
+                                    <div class="info">
+
+                                        ${
+                                            trade.time ||
+                                            ""
+                                        }
+
+                                    </div>
+
+
+                                </div>
+
+                            `;
+
+                        }
+                    )
+                    .join("");
+
+
+            };
+
+
+
+        /* =====================================
+           CLOSE TRADE
+        ===================================== */
+
+        window.closeTrade =
+            function () {
+
+                if (
+                    !confirm(
+                        "Close this trade?"
+                    )
+                ) {
+
+                    return;
+
+                }
+
+
+                alert(
+                    "Close function is connected with trade.js."
+                );
+
+            };
+
+
+
+        /* =====================================
+           FIREBASE LOGIN
+        ===================================== */
+
+        onAuthStateChanged(
+
+            auth,
+
+            async function (user) {
+
+                if (!user) {
+
+                    currentFirebaseUser =
+                        null;
+
+                    console.log(
+                        "No Firebase user."
+                    );
+
+                    return;
+
+                }
+
+
+                currentFirebaseUser =
+                    user;
+
+
+                console.log(
+                    "Orders Firebase user:",
+                    user.uid
+                );
+
+
+                /*
+                 * Load history automatically
+                 */
+
+                firebaseHistory =
+                    await loadFirebaseHistory();
+
+
+                /*
+                 * Show active orders
+                 */
+
+                showActive();
+
             }
 
-            list.innerHTML = history.map(trade => `
+        );
 
-                <div class="order-card">
-
-                    <div class="side ${trade.side === "LONG" ? "long" : "short"}">
-                        ${trade.side || ""}
-                    </div>
-
-                    <div class="info">
-                        Entry: $${Number(trade.entryPrice || 0).toFixed(2)}
-                    </div>
-
-                    <div class="info">
-                        Close: $${Number(trade.closePrice || 0).toFixed(2)}
-                    </div>
-
-                    <div class="info">
-                        Amount: $${Number(trade.amount || 0).toFixed(2)}
-                    </div>
-
-                    <div class="info">
-                        P/L: $${Number(trade.profitloss || 0).toFixed(2)}
-                    </div>
-
-                    <div class="info">
-                        ${trade.time || ""}
-                    </div>
-
-                </div>
-
-            `).join("");
-        }
-
-        function closeTrade() {
-
-            if (!confirm("Close this trade?")) {
-                return;
-            }
-
-            alert("Close function will be connected with trade.js in the next step.");
-
-        }
-
-        showActive();
 
     </script>
 
 </body>
+
 </html>
