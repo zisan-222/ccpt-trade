@@ -2,17 +2,26 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>CptMarkets - Users</title>
 
-    <link rel="stylesheet" href="admin.css">
+    <link
+        rel="stylesheet"
+        href="admin.css"
+    >
+
 </head>
 
+
 <body>
+
 
 <header class="admin-header">
 
@@ -23,26 +32,46 @@
         </div>
 
         <div>
-            <h1>CptMarkets</h1>
-            <span>Administrator Panel</span>
+
+            <h1>
+                CptMarkets
+            </h1>
+
+            <span>
+                Administrator Panel
+            </span>
+
         </div>
 
     </div>
 
+
     <button
         id="adminLogout"
-        class="logout-btn">
+        class="logout-btn"
+        type="button"
+    >
+
         Logout
+
     </button>
 
 </header>
 
 
+
 <main class="admin-container">
+
+
+    <!-- =================================
+         PAGE TITLE
+    ================================== -->
 
     <section class="welcome-section">
 
-        <h2>User Management</h2>
+        <h2>
+            User Management
+        </h2>
 
         <p>
             Manage registered demo users.
@@ -51,55 +80,87 @@
     </section>
 
 
-    <!-- ==============================
+
+    <!-- =================================
          SEARCH USER
-    =============================== -->
+    ================================== -->
 
     <section class="user-search">
 
         <input
             type="text"
             id="userUidInput"
-            placeholder="Enter Firebase User UID">
+            placeholder="Enter Firebase UID or User ID"
+            autocomplete="off"
+        >
 
         <button
             id="searchUserBtn"
-            class="login-btn">
+            class="login-btn"
+            type="button"
+        >
+
             Search User
+
         </button>
 
     </section>
 
 
-    <!-- ==============================
+
+    <!-- =================================
          USER RESULT
-    =============================== -->
+    ================================== -->
 
     <section
         id="userResult"
         class="user-result"
-        style="display:none;">
+        style="display:none;"
+    >
+
 
         <div class="user-card">
+
+
+            <!-- USER NAME -->
 
             <h3 id="userName">
                 User
             </h3>
 
-            <p>
-                UID:
-                <span id="userUid"></span>
-            </p>
+
+
+            <!-- FIREBASE UID -->
 
             <p>
+
+                Firebase UID:
+
+                <span id="userUid">
+                    -
+                </span>
+
+            </p>
+
+
+
+            <!-- EMAIL -->
+
+            <p>
+
                 Email:
-                <span id="userEmail"></span>
+
+                <span id="userEmail">
+                    -
+                </span>
+
             </p>
 
 
-            <!-- ==========================
+
+            <!-- =================================
                  CURRENT BALANCE
-            =========================== -->
+            ================================== -->
 
             <div class="balance-box">
 
@@ -114,18 +175,24 @@
             </div>
 
 
-            <!-- ==========================
+
+            <!-- =================================
                  NORMAL BALANCE CONTROL
-            =========================== -->
+            ================================== -->
 
             <div class="admin-section">
+
 
                 <h3>
                     Balance Control
                 </h3>
 
+
                 <p class="section-description">
-                    Increase or decrease the user's main demo balance.
+
+                    Increase or decrease the
+                    user's main demo balance.
+
                 </p>
 
 
@@ -134,38 +201,57 @@
                     id="balanceAmount"
                     placeholder="Enter balance amount"
                     min="0"
-                    step="0.01">
+                    step="0.01"
+                >
 
 
                 <div class="balance-buttons">
 
-                    <button
-                        id="addBalanceBtn">
-                        + Add Balance
-                    </button>
 
                     <button
-                        id="removeBalanceBtn">
-                        − Remove Balance
+                        id="addBalanceBtn"
+                        type="button"
+                    >
+
+                        + Add Balance
+
                     </button>
+
+
+                    <button
+                        id="removeBalanceBtn"
+                        type="button"
+                    >
+
+                        − Remove Balance
+
+                    </button>
+
 
                 </div>
+
 
             </div>
 
 
-            <!-- ==========================
+
+            <!-- =================================
                  TRADE PROFIT / LOSS
-            =========================== -->
+            ================================== -->
 
             <div class="admin-section trade-control">
+
 
                 <h3>
                     Trade Profit / Loss
                 </h3>
 
+
                 <p class="section-description">
-                    Add a demo trading profit or loss to this user's account.
+
+                    Add a demo trading profit or
+                    loss to this user's account.
+
                 </p>
 
 
@@ -173,74 +259,110 @@
                     type="number"
                     id="tradePLAmount"
                     placeholder="Enter profit or loss amount"
-                    step="0.01">
+                    min="0"
+                    step="0.01"
+                >
 
 
                 <div class="balance-buttons">
 
+
                     <button
                         id="addProfitBtn"
-                        class="profit-btn">
+                        class="profit-btn"
+                        type="button"
+                    >
+
                         + Add Profit
+
                     </button>
+
 
                     <button
                         id="addLossBtn"
-                        class="loss-btn">
+                        class="loss-btn"
+                        type="button"
+                    >
+
                         − Add Loss
+
                     </button>
+
 
                 </div>
 
+
                 <p class="section-note">
-                    Profit/Loss will update the user's balance
-                    and create a trade history record.
+
+                    Profit/Loss will update the
+                    user's balance and create a
+                    trade history record.
+
                 </p>
+
 
             </div>
 
 
-            <!-- ==========================
+
+            <!-- =================================
                  ACTION MESSAGE
-            =========================== -->
+            ================================== -->
 
             <p
                 id="actionMessage"
-                class="action-message">
+                class="action-message"
+            >
             </p>
 
+
         </div>
+
 
     </section>
 
 
-    <!-- ==============================
+
+    <!-- =================================
          USER NOT FOUND
-    =============================== -->
+    ================================== -->
 
     <section
         id="notFound"
         class="user-card"
-        style="display:none;">
+        style="display:none;"
+    >
+
 
         <h3>
             User not found
         </h3>
 
+
         <p>
+
             No registered user was found
-            with this UID.
+            with this Firebase UID or User ID.
+
         </p>
 
+
     </section>
+
 
 </main>
 
 
+
+<!-- =================================
+     ADMIN USER SCRIPT
+================================== -->
+
 <script
     type="module"
-    src="admin-users.js">
-</script>
+    src="admin-users.js"
+></script>
+
 
 </body>
 
