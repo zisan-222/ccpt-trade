@@ -78,7 +78,6 @@ async function initializeTradeFirebase() {
                 "./firebase/firebase-config.js"
             );
 
-
         tradeAuth =
             config.auth;
 
@@ -103,6 +102,15 @@ async function initializeTradeFirebase() {
                     user
                         ? user.uid
                         : null;
+
+
+                if (!user) {
+
+                    hideOpenTradeCard();
+
+                    return;
+
+                }
 
 
                 await restoreActiveTrade();
@@ -258,8 +266,10 @@ function getStoredActiveTrade() {
 
     if (
         !side ||
-        !savedEntry ||
-        !amount ||
+        !Number.isFinite(savedEntry) ||
+        savedEntry <= 0 ||
+        !Number.isFinite(amount) ||
+        amount <= 0 ||
         !tradeId
     ) {
 
@@ -324,6 +334,8 @@ async function restoreActiveTrade() {
         stored.uid &&
         stored.uid !== currentTradeUID
     ) {
+
+        clearActiveTrade();
 
         hideOpenTradeCard();
 
@@ -583,6 +595,13 @@ document
 
                     }
 
+
+                    if (selectedSide) {
+
+                        saveActiveTrade();
+
+                    }
+
                 }
             );
 
@@ -795,6 +814,28 @@ function openTradeModal(
 
 
 /* ==========================================
+   CANCEL TRADE MODAL
+========================================== */
+
+function cancelTradeModal() {
+
+    if (tradeModal) {
+
+        tradeModal.style.display =
+            "none";
+
+    }
+
+    selectedSide =
+        null;
+
+    entryPrice =
+        null;
+
+}
+
+
+/* ==========================================
    CLOSE MODAL
 ========================================== */
 
@@ -802,22 +843,7 @@ if (modalClose) {
 
     modalClose.addEventListener(
         "click",
-        function () {
-
-            if (tradeModal) {
-
-                tradeModal.style.display =
-                    "none";
-
-            }
-
-            selectedSide =
-                null;
-
-            entryPrice =
-                null;
-
-        }
+        cancelTradeModal
     );
 
 }
@@ -834,14 +860,7 @@ if (tradeModal) {
                 tradeModal
             ) {
 
-                tradeModal.style.display =
-                    "none";
-
-                selectedSide =
-                    null;
-
-                entryPrice =
-                    null;
+                cancelTradeModal();
 
             }
 
@@ -994,19 +1013,16 @@ async function confirmTrade() {
     currentTradeId =
         createTradeId();
 
-
     tradeAmountValue =
         Number(
             orderAmount.toFixed(2)
         );
-
 
     currentTradeUID =
         tradeFirebaseUser.uid;
 
 
     saveActiveTrade();
-
 
     updateOpenTradeUI();
 
@@ -1042,7 +1058,10 @@ async function confirmTrade() {
                 entryPrice,
 
             amount:
-                tradeAmountValue
+                tradeAmountValue,
+
+            leverage:
+                selectedLeverage
 
         }
     );
@@ -1061,24 +1080,20 @@ function updateOpenTradeUI() {
             "openTradeCard"
         );
 
-
     const positionSide =
         document.getElementById(
             "positionSide"
         );
-
 
     const entryPriceBox =
         document.getElementById(
             "entryPrice"
         );
 
-
     const currentTradePrice =
         document.getElementById(
             "currentTradePrice"
         );
-
 
     const tradeAmount =
         document.getElementById(
@@ -1186,7 +1201,6 @@ setInterval(
             document.getElementById(
                 "currentTradePrice"
             );
-
 
         const profitLossBox =
             document.getElementById(
@@ -1367,12 +1381,20 @@ async function closeCurrentTrade() {
     }
 
 
+    const closedSide =
+        selectedSide;
+
+    const closedTradeId =
+        currentTradeId;
+
     const closePrice =
-        price;
+        Number(
+            price
+        );
 
 
     /*
-     * USER'S REAL-TIME P/L
+     * USER P/L
      */
 
     const userProfitLoss =
@@ -1382,11 +1404,8 @@ async function closeCurrentTrade() {
 
 
     /*
-     * GET ADMIN PENDING RESULT
+     * FIRESTORE
      */
-
-    let adminResult = null;
-
 
     try {
 
@@ -1404,130 +1423,95 @@ async function closeCurrentTrade() {
             );
 
 
-        const userSnapshot =
+        let adminResult = null;
+
+
+        /*
+         * READ ADMIN PENDING RESULT
+         */
+
+        const firstSnapshot =
             await firestore.getDoc(
                 userRef
             );
 
 
         if (
-            userSnapshot.exists()
+            firstSnapshot.exists()
         ) {
 
-            const userData =
-                userSnapshot.data();
+            const firstData =
+                firstSnapshot.data();
 
 
             if (
-                userData.pendingAdminTradeResult &&
-                userData.pendingAdminTradeResult.status ===
+                firstData.pendingAdminTradeResult &&
+                firstData.pendingAdminTradeResult.status ===
                     "PENDING"
             ) {
 
                 adminResult =
-                    userData.pendingAdminTradeResult;
+                    firstData.pendingAdminTradeResult;
 
             }
 
         }
 
 
-    } catch (error) {
+        /*
+         * ADMIN P/L
+         */
 
-        console.error(
-            "Pending admin result read failed:",
-            error
-        );
-
-
-        alert(
-            "Could not read pending trade result."
-        );
-
-        return;
-
-    }
+        const adminProfitLoss =
+            adminResult
+                ? Number(
+                    adminResult.profitLoss || 0
+                )
+                : 0;
 
 
-    /*
-     * ADMIN P/L
-     */
+        /*
+         * FINAL P/L
+         */
 
-    const adminProfitLoss =
-        adminResult
-            ? Number(
-                adminResult.profitLoss || 0
-            )
-            : 0;
-
-
-    /*
-     * FINAL P/L
-     *
-     * USER P/L + ADMIN P/L
-     */
-
-    const finalProfitLoss =
-        Number(
-            (
-                userProfitLoss +
-                adminProfitLoss
-            ).toFixed(2)
-        );
-
-
-    /*
-     * RETURN:
-     *
-     * original margin
-     * +
-     * final profit/loss
-     */
-
-    const returnAmount =
-        Number(
-            (
-                tradeAmountValue +
-                finalProfitLoss
-            ).toFixed(2)
-        );
-
-
-    if (
-        returnAmount < 0
-    ) {
-
-        alert(
-            "Invalid trade result."
-        );
-
-        return;
-
-    }
-
-
-    /*
-     * SAVE TRADE HISTORY + RETURN BALANCE
-     * + CLEAR PENDING RESULT
-     *
-     * ALL IN ONE FIRESTORE TRANSACTION
-     */
-
-    try {
-
-        const firestore =
-            await import(
-                "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js"
+        const finalProfitLoss =
+            Number(
+                (
+                    userProfitLoss +
+                    adminProfitLoss
+                ).toFixed(2)
             );
 
 
-        const userRef =
-            firestore.doc(
-                tradeDB,
-                "users",
-                tradeFirebaseUser.uid
+        /*
+         * RETURN MARGIN + P/L
+         */
+
+        const returnAmount =
+            Number(
+                (
+                    tradeAmountValue +
+                    finalProfitLoss
+                ).toFixed(2)
             );
 
+
+        if (
+            returnAmount < 0
+        ) {
+
+            alert(
+                "Invalid trade result."
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * HISTORY DOCUMENT
+         */
 
         const historyRef =
             firestore.doc(
@@ -1541,6 +1525,10 @@ async function closeCurrentTrade() {
         let finalBalance = 0;
         let oldBalance = 0;
 
+
+        /*
+         * SINGLE TRANSACTION
+         */
 
         await firestore.runTransaction(
             tradeDB,
@@ -1574,18 +1562,16 @@ async function closeCurrentTrade() {
 
 
                 /*
-                 * =================================
-                 * IMPORTANT
+                 * Balance currently has:
                  *
-                 * Balance currently contains:
+                 * Original Balance
+                 * - Trade Margin
                  *
-                 * Original balance
-                 * - opened trade margin
+                 * Therefore:
                  *
-                 * Therefore we return:
-                 *
-                 * margin + final P/L
-                 * =================================
+                 * Current Balance
+                 * + Margin
+                 * + Final P/L
                  */
 
                 finalBalance =
@@ -1597,9 +1583,16 @@ async function closeCurrentTrade() {
                     );
 
 
-                /*
-                 * UPDATE USER BALANCE
-                 */
+                if (
+                    finalBalance < 0
+                ) {
+
+                    throw new Error(
+                        "Final balance cannot be negative."
+                    );
+
+                }
+
 
                 const userUpdate = {
 
@@ -1610,13 +1603,12 @@ async function closeCurrentTrade() {
 
 
                 /*
-                 * CLEAR ADMIN PENDING RESULT
+                 * REMOVE ADMIN PENDING RESULT
                  */
 
                 if (adminResult) {
 
-                    userUpdate
-                        .pendingAdminTradeResult =
+                    userUpdate.pendingAdminTradeResult =
                         firestore.deleteField();
 
                 }
@@ -1629,7 +1621,7 @@ async function closeCurrentTrade() {
 
 
                 /*
-                 * SAVE COMPLETE TRADE HISTORY
+                 * SAVE TRADE HISTORY
                  */
 
                 transaction.set(
@@ -1637,7 +1629,7 @@ async function closeCurrentTrade() {
                     {
 
                         tradeId:
-                            currentTradeId,
+                            closedTradeId,
 
                         uid:
                             tradeFirebaseUser.uid,
@@ -1648,6 +1640,7 @@ async function closeCurrentTrade() {
 
                         username:
                             userData.username ||
+                            userData.name ||
                             "User",
 
                         email:
@@ -1655,7 +1648,7 @@ async function closeCurrentTrade() {
                             "",
 
                         side:
-                            selectedSide,
+                            closedSide,
 
                         entryPrice:
                             Number(
@@ -1695,6 +1688,11 @@ async function closeCurrentTrade() {
                                 ? "ADMIN"
                                 : null,
 
+                        adminResultType:
+                            adminResult
+                                ? adminResult.type
+                                : null,
+
                         status:
                             "COMPLETED",
 
@@ -1725,19 +1723,19 @@ async function closeCurrentTrade() {
 
 
         /*
-         * SAVE LOCAL HISTORY
+         * LOCAL HISTORY
          */
 
         saveLocalTradeHistory({
 
             tradeId:
-                currentTradeId,
+                closedTradeId,
 
             uid:
                 tradeFirebaseUser.uid,
 
             side:
-                selectedSide,
+                closedSide,
 
             entryPrice:
                 Number(
@@ -1770,44 +1768,38 @@ async function closeCurrentTrade() {
 
 
         /*
-         * UPDATE LOCAL BALANCE
+         * REFRESH BALANCE
          */
+
+        if (
+            typeof window.reloadBalance ===
+            "function"
+        ) {
+
+            window.reloadBalance();
+
+        }
+
 
         if (
             typeof window.refreshBalance ===
             "function"
         ) {
 
-            await window.refreshBalance();
+            window.refreshBalance();
 
         }
 
 
         /*
-         * HIDE OPEN TRADE
+         * HIDE TRADE CARD
          */
 
         hideOpenTradeCard();
 
 
         /*
-         * SAVE RESULT FOR ALERT
-         */
-
-        const closedSide =
-            selectedSide;
-
-
-        const closedPrice =
-            closePrice;
-
-
-        const closedPL =
-            finalProfitLoss;
-
-
-        /*
-         * RESET STATE
+         * RESET TRADE STATE
          */
 
         selectedSide =
@@ -1821,6 +1813,7 @@ async function closeCurrentTrade() {
 
         currentTradeId =
             null;
+
 
         currentTradeUID =
             tradeFirebaseUser
@@ -1841,7 +1834,7 @@ async function closeCurrentTrade() {
             " trade closed successfully.\n\n" +
 
             "Close Price: $" +
-            closedPrice.toFixed(2) +
+            closePrice.toFixed(2) +
 
             "\nUser P/L: " +
             (
@@ -1863,12 +1856,12 @@ async function closeCurrentTrade() {
 
             "\nFinal P/L: " +
             (
-                closedPL >= 0
+                finalProfitLoss >= 0
                     ? "+"
                     : ""
             ) +
             "$" +
-            closedPL.toFixed(2)
+            finalProfitLoss.toFixed(2)
 
         );
 
@@ -1878,7 +1871,7 @@ async function closeCurrentTrade() {
             {
 
                 tradeId:
-                    currentTradeId,
+                    closedTradeId,
 
                 userProfitLoss:
                     userProfitLoss,
