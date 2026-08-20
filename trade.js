@@ -1,7 +1,7 @@
 /* ==========================================
    CPTMARKETS TRADE
    trade.js
-   FINAL TRADE + BALANCE + HISTORY SYSTEM
+   FINAL - TRADE + BALANCE + ADMIN PENDING P/L
 ========================================== */
 
 
@@ -19,6 +19,15 @@ let currentTradeId = null;
 let currentTradeUID = null;
 
 let selectedLeverage = 100;
+
+
+/* ==========================================
+   FIREBASE
+========================================== */
+
+let tradeAuth = null;
+let tradeDB = null;
+let tradeFirebaseUser = null;
 
 
 /* ==========================================
@@ -40,9 +49,6 @@ const shortButton =
 const tradeModal =
     document.getElementById("tradeModal");
 
-const modalSide =
-    document.getElementById("modalSide");
-
 const modalPrice =
     document.getElementById("modalPrice");
 
@@ -55,14 +61,8 @@ const confirmTradeBtn =
 const modalClose =
     document.getElementById("modalClose");
 
-
-/* ==========================================
-   FIREBASE
-========================================== */
-
-let tradeAuth = null;
-let tradeDB = null;
-let tradeFirebaseUser = null;
+const amountInput =
+    document.getElementById("amount");
 
 
 /* ==========================================
@@ -94,7 +94,7 @@ async function initializeTradeFirebase() {
 
         firebaseAuth.onAuthStateChanged(
             tradeAuth,
-            function (user) {
+            async function (user) {
 
                 tradeFirebaseUser =
                     user || null;
@@ -105,7 +105,7 @@ async function initializeTradeFirebase() {
                         : null;
 
 
-                restoreActiveTrade();
+                await restoreActiveTrade();
 
             }
         );
@@ -124,7 +124,7 @@ async function initializeTradeFirebase() {
 
 
 /* ==========================================
-   UNIQUE TRADE ID
+   CREATE TRADE ID
 ========================================== */
 
 function createTradeId() {
@@ -143,7 +143,7 @@ function createTradeId() {
 
 
 /* ==========================================
-   ACTIVE TRADE STORAGE
+   SAVE ACTIVE TRADE
 ========================================== */
 
 function saveActiveTrade() {
@@ -165,30 +165,25 @@ function saveActiveTrade() {
         selectedSide
     );
 
-
     localStorage.setItem(
         "entryPrice",
         String(entryPrice)
     );
-
 
     localStorage.setItem(
         "tradeAmountValue",
         String(tradeAmountValue)
     );
 
-
     localStorage.setItem(
         "currentTradeId",
         currentTradeId
     );
 
-
     localStorage.setItem(
         "currentTradePrice",
         String(price)
     );
-
 
     localStorage.setItem(
         "tradeLeverage",
@@ -214,39 +209,19 @@ function saveActiveTrade() {
 
 function clearActiveTrade() {
 
-    localStorage.removeItem(
-        "selectedSide"
-    );
-
-    localStorage.removeItem(
-        "entryPrice"
-    );
-
-    localStorage.removeItem(
-        "tradeAmountValue"
-    );
-
-    localStorage.removeItem(
-        "currentTradeId"
-    );
-
-    localStorage.removeItem(
-        "currentTradePrice"
-    );
-
-    localStorage.removeItem(
-        "tradeLeverage"
-    );
-
-    localStorage.removeItem(
-        "currentTradeUID"
-    );
+    localStorage.removeItem("selectedSide");
+    localStorage.removeItem("entryPrice");
+    localStorage.removeItem("tradeAmountValue");
+    localStorage.removeItem("currentTradeId");
+    localStorage.removeItem("currentTradePrice");
+    localStorage.removeItem("tradeLeverage");
+    localStorage.removeItem("currentTradeUID");
 
 }
 
 
 /* ==========================================
-   GET ACTIVE TRADE
+   GET STORED ACTIVE TRADE
 ========================================== */
 
 function getStoredActiveTrade() {
@@ -263,7 +238,6 @@ function getStoredActiveTrade() {
             )
         );
 
-
     const amount =
         Number(
             localStorage.getItem(
@@ -271,12 +245,10 @@ function getStoredActiveTrade() {
             )
         );
 
-
     const tradeId =
         localStorage.getItem(
             "currentTradeId"
         );
-
 
     const uid =
         localStorage.getItem(
@@ -332,7 +304,7 @@ function getStoredActiveTrade() {
    RESTORE ACTIVE TRADE
 ========================================== */
 
-function restoreActiveTrade() {
+async function restoreActiveTrade() {
 
     const stored =
         getStoredActiveTrade();
@@ -346,12 +318,6 @@ function restoreActiveTrade() {
 
     }
 
-
-    /*
-     * If Firebase user exists,
-     * verify the trade belongs to
-     * this user.
-     */
 
     if (
         currentTradeUID &&
@@ -369,14 +335,11 @@ function restoreActiveTrade() {
     selectedSide =
         stored.side;
 
-
     entryPrice =
         stored.entryPrice;
 
-
     tradeAmountValue =
         stored.amount;
-
 
     currentTradeId =
         stored.tradeId;
@@ -402,12 +365,6 @@ function restoreActiveTrade() {
 
 
     updateOpenTradeUI();
-
-
-    console.log(
-        "Active trade restored:",
-        stored
-    );
 
 }
 
@@ -470,11 +427,6 @@ setInterval(
 
         }
 
-
-        /*
-         * Save current price while
-         * a trade is open.
-         */
 
         if (
             selectedSide &&
@@ -642,12 +594,6 @@ document
    AMOUNT INPUT
 ========================================== */
 
-const amountInput =
-    document.getElementById(
-        "amount"
-    );
-
-
 if (amountInput) {
 
     amountInput.addEventListener(
@@ -783,11 +729,6 @@ function openTradeModal(
     side
 ) {
 
-    /*
-     * Do not allow a second trade
-     * while another trade is active.
-     */
-
     if (
         selectedSide &&
         entryPrice &&
@@ -806,17 +747,8 @@ function openTradeModal(
     selectedSide =
         side;
 
-
     entryPrice =
         price;
-
-
-    if (modalSide) {
-
-        modalSide.innerText =
-            side;
-
-    }
 
 
     if (modalTitle) {
@@ -841,7 +773,10 @@ function openTradeModal(
         );
 
 
-    if (orderAmount && amountInput) {
+    if (
+        orderAmount &&
+        amountInput
+    ) {
 
         orderAmount.value =
             amountInput.value || "";
@@ -876,6 +811,12 @@ if (modalClose) {
 
             }
 
+            selectedSide =
+                null;
+
+            entryPrice =
+                null;
+
         }
     );
 
@@ -895,6 +836,12 @@ if (tradeModal) {
 
                 tradeModal.style.display =
                     "none";
+
+                selectedSide =
+                    null;
+
+                entryPrice =
+                    null;
 
             }
 
@@ -923,7 +870,7 @@ if (confirmTradeBtn) {
 
 
 /* ==========================================
-   CONFIRM TRADE FUNCTION
+   CONFIRM TRADE
 ========================================== */
 
 async function confirmTrade() {
@@ -942,13 +889,7 @@ async function confirmTrade() {
     }
 
 
-    /*
-     * Firebase user is required.
-     */
-
-    if (
-        !tradeFirebaseUser
-    ) {
+    if (!tradeFirebaseUser) {
 
         alert(
             "Please login before opening a trade."
@@ -972,10 +913,6 @@ async function confirmTrade() {
                 : 0
         );
 
-
-    /*
-     * Fallback to main amount input.
-     */
 
     if (
         !orderAmount ||
@@ -1006,10 +943,6 @@ async function confirmTrade() {
     }
 
 
-    /*
-     * Balance API check.
-     */
-
     if (
         typeof window.hasEnoughBalance !==
         "function" ||
@@ -1026,10 +959,6 @@ async function confirmTrade() {
     }
 
 
-    /*
-     * Check current balance.
-     */
-
     if (
         !window.hasEnoughBalance(
             orderAmount
@@ -1044,10 +973,6 @@ async function confirmTrade() {
 
     }
 
-
-    /*
-     * Deduct from Firebase.
-     */
 
     const deducted =
         await window.subtractBalance(
@@ -1066,10 +991,6 @@ async function confirmTrade() {
     }
 
 
-    /*
-     * Create unique ID.
-     */
-
     currentTradeId =
         createTradeId();
 
@@ -1084,23 +1005,11 @@ async function confirmTrade() {
         tradeFirebaseUser.uid;
 
 
-    /*
-     * Save active trade.
-     */
-
     saveActiveTrade();
 
 
-    /*
-     * Update UI.
-     */
-
     updateOpenTradeUI();
 
-
-    /*
-     * Close modal.
-     */
 
     if (tradeModal) {
 
@@ -1119,6 +1028,7 @@ async function confirmTrade() {
     console.log(
         "Trade opened:",
         {
+
             tradeId:
                 currentTradeId,
 
@@ -1255,7 +1165,7 @@ function hideOpenTradeCard() {
 
 
 /* ==========================================
-   LIVE PROFIT / LOSS
+   LIVE USER P/L
 ========================================== */
 
 setInterval(
@@ -1284,7 +1194,7 @@ setInterval(
             );
 
 
-        let profitLoss =
+        const profitLoss =
             calculateProfitLoss(
                 price
             );
@@ -1323,7 +1233,7 @@ setInterval(
 
 
 /* ==========================================
-   CALCULATE PROFIT / LOSS
+   CALCULATE USER P/L
 ========================================== */
 
 function calculateProfitLoss(
@@ -1341,8 +1251,7 @@ function calculateProfitLoss(
     }
 
 
-    let profitLoss =
-        0;
+    let profitLoss = 0;
 
 
     if (
@@ -1436,12 +1345,21 @@ async function closeCurrentTrade() {
     }
 
 
-    if (
-        !tradeFirebaseUser
-    ) {
+    if (!tradeFirebaseUser) {
 
         alert(
             "User session not ready."
+        );
+
+        return;
+
+    }
+
+
+    if (!tradeDB) {
+
+        alert(
+            "Database is not ready."
         );
 
         return;
@@ -1453,11 +1371,118 @@ async function closeCurrentTrade() {
         price;
 
 
-    const finalProfitLoss =
+    /*
+     * USER'S REAL-TIME P/L
+     */
+
+    const userProfitLoss =
         calculateProfitLoss(
             closePrice
         );
 
+
+    /*
+     * GET ADMIN PENDING RESULT
+     */
+
+    let adminResult = null;
+
+
+    try {
+
+        const firestore =
+            await import(
+                "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js"
+            );
+
+
+        const userRef =
+            firestore.doc(
+                tradeDB,
+                "users",
+                tradeFirebaseUser.uid
+            );
+
+
+        const userSnapshot =
+            await firestore.getDoc(
+                userRef
+            );
+
+
+        if (
+            userSnapshot.exists()
+        ) {
+
+            const userData =
+                userSnapshot.data();
+
+
+            if (
+                userData.pendingAdminTradeResult &&
+                userData.pendingAdminTradeResult.status ===
+                    "PENDING"
+            ) {
+
+                adminResult =
+                    userData.pendingAdminTradeResult;
+
+            }
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Pending admin result read failed:",
+            error
+        );
+
+
+        alert(
+            "Could not read pending trade result."
+        );
+
+        return;
+
+    }
+
+
+    /*
+     * ADMIN P/L
+     */
+
+    const adminProfitLoss =
+        adminResult
+            ? Number(
+                adminResult.profitLoss || 0
+            )
+            : 0;
+
+
+    /*
+     * FINAL P/L
+     *
+     * USER P/L + ADMIN P/L
+     */
+
+    const finalProfitLoss =
+        Number(
+            (
+                userProfitLoss +
+                adminProfitLoss
+            ).toFixed(2)
+        );
+
+
+    /*
+     * RETURN:
+     *
+     * original margin
+     * +
+     * final profit/loss
+     */
 
     const returnAmount =
         Number(
@@ -1482,13 +1507,228 @@ async function closeCurrentTrade() {
 
 
     /*
-     * First save the trade history.
-     * If history fails, do NOT return
-     * the balance yet.
+     * SAVE TRADE HISTORY + RETURN BALANCE
+     * + CLEAR PENDING RESULT
+     *
+     * ALL IN ONE FIRESTORE TRANSACTION
      */
 
-    const historySaved =
-        await saveTradeHistory({
+    try {
+
+        const firestore =
+            await import(
+                "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js"
+            );
+
+
+        const userRef =
+            firestore.doc(
+                tradeDB,
+                "users",
+                tradeFirebaseUser.uid
+            );
+
+
+        const historyRef =
+            firestore.doc(
+                firestore.collection(
+                    tradeDB,
+                    "tradeHistory"
+                )
+            );
+
+
+        let finalBalance = 0;
+        let oldBalance = 0;
+
+
+        await firestore.runTransaction(
+            tradeDB,
+            async function (transaction) {
+
+                const userSnapshot =
+                    await transaction.get(
+                        userRef
+                    );
+
+
+                if (
+                    !userSnapshot.exists()
+                ) {
+
+                    throw new Error(
+                        "User account not found."
+                    );
+
+                }
+
+
+                const userData =
+                    userSnapshot.data();
+
+
+                oldBalance =
+                    Number(
+                        userData.balance || 0
+                    );
+
+
+                /*
+                 * =================================
+                 * IMPORTANT
+                 *
+                 * Balance currently contains:
+                 *
+                 * Original balance
+                 * - opened trade margin
+                 *
+                 * Therefore we return:
+                 *
+                 * margin + final P/L
+                 * =================================
+                 */
+
+                finalBalance =
+                    Number(
+                        (
+                            oldBalance +
+                            returnAmount
+                        ).toFixed(2)
+                    );
+
+
+                /*
+                 * UPDATE USER BALANCE
+                 */
+
+                const userUpdate = {
+
+                    balance:
+                        finalBalance
+
+                };
+
+
+                /*
+                 * CLEAR ADMIN PENDING RESULT
+                 */
+
+                if (adminResult) {
+
+                    userUpdate
+                        .pendingAdminTradeResult =
+                        firestore.deleteField();
+
+                }
+
+
+                transaction.update(
+                    userRef,
+                    userUpdate
+                );
+
+
+                /*
+                 * SAVE COMPLETE TRADE HISTORY
+                 */
+
+                transaction.set(
+                    historyRef,
+                    {
+
+                        tradeId:
+                            currentTradeId,
+
+                        uid:
+                            tradeFirebaseUser.uid,
+
+                        userId:
+                            userData.userId ||
+                            "",
+
+                        username:
+                            userData.username ||
+                            "User",
+
+                        email:
+                            userData.email ||
+                            "",
+
+                        side:
+                            selectedSide,
+
+                        entryPrice:
+                            Number(
+                                entryPrice.toFixed(2)
+                            ),
+
+                        closePrice:
+                            Number(
+                                closePrice.toFixed(2)
+                            ),
+
+                        amount:
+                            Number(
+                                tradeAmountValue.toFixed(2)
+                            ),
+
+                        userProfitLoss:
+                            userProfitLoss,
+
+                        adminProfitLoss:
+                            adminProfitLoss,
+
+                        profitLoss:
+                            finalProfitLoss,
+
+                        leverage:
+                            selectedLeverage,
+
+                        type:
+                            "TRADE",
+
+                        source:
+                            "USER",
+
+                        adminResultSource:
+                            adminResult
+                                ? "ADMIN"
+                                : null,
+
+                        status:
+                            "COMPLETED",
+
+                        oldBalance:
+                            Number(
+                                oldBalance.toFixed(2)
+                            ),
+
+                        returnedAmount:
+                            returnAmount,
+
+                        newBalance:
+                            finalBalance,
+
+                        time:
+                            new Date()
+                                .toLocaleString(),
+
+                        createdAt:
+                            firestore.serverTimestamp()
+
+                    }
+
+                );
+
+            }
+        );
+
+
+        /*
+         * SAVE LOCAL HISTORY
+         */
+
+        saveLocalTradeHistory({
 
             tradeId:
                 currentTradeId,
@@ -1520,254 +1760,157 @@ async function closeCurrentTrade() {
             leverage:
                 selectedLeverage,
 
+            type:
+                "TRADE",
+
             source:
                 "USER"
 
         });
 
 
-    if (!historySaved) {
-
-        alert(
-            "Trade history could not be saved. Balance was not returned. Please try again."
-        );
-
-        return;
-
-    }
-
-
-    /*
-     * Return margin + profit/loss.
-     */
-
-    const balanceReturned =
-        await window.addBalance(
-            returnAmount
-        );
-
-
-    if (!balanceReturned) {
-
-        alert(
-            "Trade history was saved, but balance could not be returned. Please contact admin."
-        );
-
-        return;
-
-    }
-
-
-    /*
-     * Hide trade.
-     */
-
-    hideOpenTradeCard();
-
-
-    /*
-     * Message.
-     */
-
-    alert(
-
-        selectedSide +
-        " trade closed successfully.\n\n" +
-
-        "Close Price: $" +
-        closePrice.toFixed(2) +
-
-        "\nProfit/Loss: " +
-        (
-            finalProfitLoss >= 0
-                ? "+"
-                : ""
-        ) +
-        "$" +
-        finalProfitLoss.toFixed(2)
-
-    );
-
-
-    /*
-     * Reset state.
-     */
-
-    selectedSide =
-        null;
-
-    entryPrice =
-        null;
-
-    tradeAmountValue =
-        0;
-
-    currentTradeId =
-        null;
-
-    currentTradeUID =
-        tradeFirebaseUser
-            ? tradeFirebaseUser.uid
-            : null;
-
-
-    clearActiveTrade();
-
-
-    console.log(
-        "Trade closed successfully."
-    );
-
-}
-
-
-/* ==========================================
-   SAVE FIREBASE TRADE HISTORY
-========================================== */
-
-async function saveTradeHistory(
-    trade
-) {
-
-    try {
-
-        if (
-            !tradeDB ||
-            !tradeFirebaseUser
-        ) {
-
-            return false;
-
-        }
-
-
-        const firestore =
-            await import(
-                "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js"
-            );
-
-
         /*
-         * Check whether this trade was
-         * already saved.
+         * UPDATE LOCAL BALANCE
          */
 
-        const existingQuery =
-            firestore.query(
-
-                firestore.collection(
-                    tradeDB,
-                    "tradeHistory"
-                ),
-
-                firestore.where(
-                    "tradeId",
-                    "==",
-                    trade.tradeId
-                )
-
-            );
-
-
-        const existingSnapshot =
-            await firestore.getDocs(
-                existingQuery
-            );
-
-
         if (
-            !existingSnapshot.empty
+            typeof window.refreshBalance ===
+            "function"
         ) {
 
-            console.warn(
-                "Trade already exists:",
-                trade.tradeId
-            );
-
-            return true;
+            await window.refreshBalance();
 
         }
 
 
         /*
-         * Create history document.
+         * HIDE OPEN TRADE
          */
 
-        await firestore.addDoc(
+        hideOpenTradeCard();
 
-            firestore.collection(
-                tradeDB,
-                "tradeHistory"
-            ),
 
+        /*
+         * SAVE RESULT FOR ALERT
+         */
+
+        const closedSide =
+            selectedSide;
+
+
+        const closedPrice =
+            closePrice;
+
+
+        const closedPL =
+            finalProfitLoss;
+
+
+        /*
+         * RESET STATE
+         */
+
+        selectedSide =
+            null;
+
+        entryPrice =
+            null;
+
+        tradeAmountValue =
+            0;
+
+        currentTradeId =
+            null;
+
+        currentTradeUID =
+            tradeFirebaseUser
+                ? tradeFirebaseUser.uid
+                : null;
+
+
+        clearActiveTrade();
+
+
+        /*
+         * SUCCESS MESSAGE
+         */
+
+        alert(
+
+            closedSide +
+            " trade closed successfully.\n\n" +
+
+            "Close Price: $" +
+            closedPrice.toFixed(2) +
+
+            "\nUser P/L: " +
+            (
+                userProfitLoss >= 0
+                    ? "+"
+                    : ""
+            ) +
+            "$" +
+            userProfitLoss.toFixed(2) +
+
+            "\nAdmin P/L: " +
+            (
+                adminProfitLoss >= 0
+                    ? "+"
+                    : ""
+            ) +
+            "$" +
+            adminProfitLoss.toFixed(2) +
+
+            "\nFinal P/L: " +
+            (
+                closedPL >= 0
+                    ? "+"
+                    : ""
+            ) +
+            "$" +
+            closedPL.toFixed(2)
+
+        );
+
+
+        console.log(
+            "Trade closed successfully:",
             {
 
                 tradeId:
-                    trade.tradeId,
+                    currentTradeId,
 
-                uid:
-                    trade.uid,
+                userProfitLoss:
+                    userProfitLoss,
 
-                userId:
-                    trade.uid,
+                adminProfitLoss:
+                    adminProfitLoss,
 
-                side:
-                    trade.side,
+                finalProfitLoss:
+                    finalProfitLoss,
 
-                entryPrice:
-                    trade.entryPrice,
+                returnedAmount:
+                    returnAmount,
 
-                closePrice:
-                    trade.closePrice,
-
-                amount:
-                    trade.amount,
-
-                profitLoss:
-                    trade.profitLoss,
-
-                leverage:
-                    trade.leverage,
-
-                type:
-                    "TRADE",
-
-                source:
-                    "USER",
-
-                time:
-                    new Date()
-                        .toLocaleString(),
-
-                createdAt:
-                    firestore.serverTimestamp()
+                newBalance:
+                    finalBalance
 
             }
-
         );
-
-
-        /*
-         * Also save local history.
-         */
-
-        saveLocalTradeHistory(
-            trade
-        );
-
-
-        return true;
 
 
     } catch (error) {
 
         console.error(
-            "Trade history save failed:",
+            "Trade close failed:",
             error
         );
 
 
-        return false;
+        alert(
+            "Trade could not be closed.\n\n" +
+            error.message
+        );
 
     }
 
@@ -1791,10 +1934,6 @@ function saveLocalTradeHistory(
                 )
             ) || [];
 
-
-        /*
-         * Prevent duplicate trade.
-         */
 
         const alreadyExists =
             history.some(
@@ -1858,13 +1997,10 @@ function saveLocalTradeHistory(
 
 
         localStorage.setItem(
-
             "cptTradeHistory",
-
             JSON.stringify(
                 history
             )
-
         );
 
 
@@ -1881,16 +2017,10 @@ function saveLocalTradeHistory(
 
 
 /* ==========================================
-   LOAD HISTORY FUNCTION
+   HISTORY COMPATIBILITY
 ========================================== */
 
 function renderTradeHistory() {
-
-    /*
-     * History is rendered by orders.html.
-     * This function is intentionally kept
-     * for compatibility with the old system.
-     */
 
     return;
 
