@@ -2,7 +2,7 @@
    CPTMARKETS
    ADMIN USER MANAGEMENT
    admin-users.js
-   FINAL FIREBASE BALANCE + HISTORY VERSION
+   FINAL - PENDING TRADE RESULT SYSTEM
 ========================================== */
 
 import {
@@ -141,9 +141,6 @@ if (uidInput) {
 
 /* ==========================================
    SEARCH USER
-   Supports:
-   1. Firebase UID
-   2. Visible User ID
 ========================================== */
 
 async function searchUser() {
@@ -187,8 +184,7 @@ async function searchUser() {
 
 
         /* ==================================
-           FIRST:
-           TRY FIREBASE DOCUMENT ID / UID
+           TRY FIREBASE UID
         ================================== */
 
         const directRef =
@@ -216,7 +212,6 @@ async function searchUser() {
 
 
         /* ==================================
-           SECOND:
            TRY VISIBLE USER ID
         ================================== */
 
@@ -252,15 +247,10 @@ async function searchUser() {
 
 
         /* ==================================
-           USER NOT FOUND
+           NOT FOUND
         ================================== */
 
         if (!foundDoc) {
-
-            console.log(
-                "User not found:",
-                searchValue
-            );
 
             currentUser = null;
             currentUserDoc = null;
@@ -281,12 +271,6 @@ async function searchUser() {
 
         currentUser =
             foundDoc.data();
-
-
-        console.log(
-            "User found:",
-            currentUser
-        );
 
 
         showUser(
@@ -373,10 +357,6 @@ function showUser(
 
     if (uidElement) {
 
-        /*
-         * Show real Firebase document UID.
-         */
-
         uidElement.textContent =
             docId || "-";
 
@@ -402,6 +382,12 @@ function showUser(
         Number(
             userData.balance || 0
         )
+    );
+
+
+    console.log(
+        "User loaded:",
+        userData
     );
 
 }
@@ -513,7 +499,7 @@ if (removeButton) {
 
 
 /* ==========================================
-   CHANGE NORMAL BALANCE
+   NORMAL BALANCE CONTROL
 ========================================== */
 
 async function changeBalance(
@@ -538,10 +524,6 @@ async function changeBalance(
 
 
     if (!amountInput) {
-
-        alert(
-            "Balance input not found."
-        );
 
         return;
 
@@ -578,15 +560,9 @@ async function changeBalance(
 
     try {
 
-        let newBalance = 0;
         let oldBalance = 0;
+        let newBalance = 0;
 
-
-        /*
-         * =================================
-         * ATOMIC FIRESTORE TRANSACTION
-         * =================================
-         */
 
         await runTransaction(
             db,
@@ -647,24 +623,28 @@ async function changeBalance(
                 }
 
 
-                /*
-                 * UPDATE USER BALANCE
-                 */
+                newBalance =
+                    Number(
+                        newBalance.toFixed(2)
+                    );
+
+
+                /* ==========================
+                   UPDATE BALANCE
+                ========================== */
 
                 transaction.update(
                     userRef,
                     {
                         balance:
-                            Number(
-                                newBalance.toFixed(2)
-                            )
+                            newBalance
                     }
                 );
 
 
-                /*
-                 * CREATE ADMIN BALANCE HISTORY
-                 */
+                /* ==========================
+                   BALANCE HISTORY
+                ========================== */
 
                 const historyRef =
                     doc(
@@ -688,7 +668,6 @@ async function changeBalance(
 
                         username:
                             userData.username ||
-                            userData.name ||
                             "User",
 
                         email:
@@ -727,15 +706,16 @@ async function changeBalance(
                         source:
                             "ADMIN",
 
+                        status:
+                            "COMPLETED",
+
                         oldBalance:
                             Number(
                                 oldBalance.toFixed(2)
                             ),
 
                         newBalance:
-                            Number(
-                                newBalance.toFixed(2)
-                            ),
+                            newBalance,
 
                         time:
                             new Date().toLocaleString(),
@@ -744,15 +724,12 @@ async function changeBalance(
                             serverTimestamp()
 
                     }
+
                 );
 
             }
         );
 
-
-        /*
-         * UPDATE LOCAL ADMIN DATA
-         */
 
         currentUser.balance =
             newBalance;
@@ -770,22 +747,9 @@ async function changeBalance(
         showMessage(
 
             action === "ADD"
-
                 ? "Balance added successfully."
-
                 : "Balance removed successfully."
 
-        );
-
-
-        console.log(
-            "Balance changed:",
-            {
-                action,
-                oldBalance,
-                amount,
-                newBalance
-            }
         );
 
 
@@ -808,7 +772,7 @@ async function changeBalance(
 
 
 /* ==========================================
-   PROFIT BUTTON
+   ADMIN PROFIT
 ========================================== */
 
 if (profitButton) {
@@ -817,7 +781,7 @@ if (profitButton) {
         "click",
         async function () {
 
-            await addTradeResult(
+            await setPendingTradeResult(
                 "PROFIT"
             );
 
@@ -828,7 +792,7 @@ if (profitButton) {
 
 
 /* ==========================================
-   LOSS BUTTON
+   ADMIN LOSS
 ========================================== */
 
 if (lossButton) {
@@ -837,7 +801,7 @@ if (lossButton) {
         "click",
         async function () {
 
-            await addTradeResult(
+            await setPendingTradeResult(
                 "LOSS"
             );
 
@@ -848,10 +812,10 @@ if (lossButton) {
 
 
 /* ==========================================
-   ADD PROFIT / LOSS
+   SET PENDING TRADE RESULT
 ========================================== */
 
-async function addTradeResult(
+async function setPendingTradeResult(
     type
 ) {
 
@@ -913,16 +877,8 @@ async function addTradeResult(
 
     try {
 
-        let oldBalance = 0;
-        let newBalance = 0;
-        let profitLoss = 0;
+        let oldPending = null;
 
-
-        /*
-         * =================================
-         * ATOMIC TRANSACTION
-         * =================================
-         */
 
         await runTransaction(
             db,
@@ -949,170 +905,64 @@ async function addTradeResult(
                     userSnapshot.data();
 
 
-                oldBalance =
-                    Number(
-                        userData.balance || 0
-                    );
-
-
-                /* ==========================
-                   PROFIT
-                ========================== */
-
-                if (
-                    type === "PROFIT"
-                ) {
-
-                    profitLoss =
-                        amount;
-
-                    newBalance =
-                        oldBalance +
-                        amount;
-
-                }
-
-
-                /* ==========================
-                   LOSS
-                ========================== */
-
-                else {
-
-                    profitLoss =
-                        -amount;
-
-                    newBalance =
-                        oldBalance -
-                        amount;
-
-
-                    if (
-                        newBalance < 0
-                    ) {
-
-                        throw new Error(
-                            "Loss cannot be greater than the user's balance."
-                        );
-
-                    }
-
-                }
-
-
-                newBalance =
-                    Number(
-                        newBalance.toFixed(2)
-                    );
-
-
-                profitLoss =
-                    Number(
-                        profitLoss.toFixed(2)
-                    );
-
-
                 /*
-                 * UPDATE BALANCE
+                 * =================================
+                 * IMPORTANT
+                 *
+                 * DO NOT CHANGE BALANCE HERE.
+                 *
+                 * Profit/Loss is only stored as
+                 * pending until the trade closes.
+                 * =================================
                  */
+
+                oldPending =
+                    userData.pendingAdminTradeResult ||
+                    null;
+
+
+                const pendingResult = {
+
+                    type:
+                        type,
+
+                    amount:
+                        Number(
+                            amount.toFixed(2)
+                        ),
+
+                    profitLoss:
+                        Number(
+                            (
+                                type === "PROFIT"
+                                    ? amount
+                                    : -amount
+                            ).toFixed(2)
+                        ),
+
+                    source:
+                        "ADMIN",
+
+                    status:
+                        "PENDING",
+
+                    createdAt:
+                        new Date().toISOString()
+
+                };
+
 
                 transaction.update(
                     userRef,
                     {
-                        balance:
-                            newBalance
-                    }
-                );
 
-
-                /*
-                 * CREATE TRADE HISTORY
-                 */
-
-                const historyRef =
-                    doc(
-                        collection(
-                            db,
-                            "tradeHistory"
-                        )
-                    );
-
-
-                transaction.set(
-                    historyRef,
-                    {
-
-                        uid:
-                            currentUserDoc.id,
-
-                        userId:
-                            userData.userId ||
-                            "",
-
-                        username:
-                            userData.username ||
-                            userData.name ||
-                            "User",
-
-                        email:
-                            userData.email ||
-                            "",
-
-                        side:
-                            "ADMIN",
-
-                        entryPrice:
-                            0,
-
-                        closePrice:
-                            0,
-
-                        amount:
-                            Number(
-                                amount.toFixed(2)
-                            ),
-
-                        profitLoss:
-                            profitLoss,
-
-                        type:
-                            type,
-
-                        source:
-                            "ADMIN",
-
-                        oldBalance:
-                            Number(
-                                oldBalance.toFixed(2)
-                            ),
-
-                        newBalance:
-                            newBalance,
-
-                        time:
-                            new Date().toLocaleString(),
-
-                        createdAt:
-                            serverTimestamp()
+                        pendingAdminTradeResult:
+                            pendingResult
 
                     }
-
                 );
 
             }
-        );
-
-
-        /*
-         * UPDATE ADMIN SCREEN
-         */
-
-        currentUser.balance =
-            newBalance;
-
-
-        updateBalanceDisplay(
-            newBalance
         );
 
 
@@ -1120,24 +970,28 @@ async function addTradeResult(
             "";
 
 
+        /*
+         * =================================
+         * IMPORTANT MESSAGE
+         * =================================
+         */
+
         showMessage(
 
             type === "PROFIT"
 
-                ? "Trade profit added successfully."
+                ? "Profit is pending. It will be applied when the trade closes."
 
-                : "Trade loss added successfully."
+                : "Loss is pending. It will be applied when the trade closes."
 
         );
 
 
         console.log(
-            "Admin trade result saved:",
+            "Pending admin trade result saved:",
             {
                 type,
-                profitLoss,
-                oldBalance,
-                newBalance
+                amount
             }
         );
 
@@ -1145,13 +999,13 @@ async function addTradeResult(
     } catch (error) {
 
         console.error(
-            "Trade P/L update failed:",
+            "Pending trade result failed:",
             error
         );
 
 
         alert(
-            "Trade P/L update failed.\n\n" +
+            "Unable to save pending trade result.\n\n" +
             error.message
         );
 
@@ -1200,7 +1054,7 @@ function showMessage(
                     "";
 
             },
-            3000
+            4000
         );
 
 }
@@ -1253,5 +1107,5 @@ if (logoutButton) {
 ========================================== */
 
 console.log(
-    "CptMarkets Admin User Management loaded."
+    "CptMarkets Admin User Management - Pending Trade System loaded."
 );
