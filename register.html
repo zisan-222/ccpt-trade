@@ -5,110 +5,648 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-<title>CPTMarkets - Register</title>
+<title>CptMarkets - Create Account</title>
 
 <link rel="stylesheet" href="style.css">
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+>
+
+
+<!-- ==========================================
+     REGISTER PAGE PROFESSIONAL STYLE
+========================================== -->
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at top,
+            #0d3565 0%,
+            #061a35 42%,
+            #020b18 100%
+        );
+
+    color: #ffffff;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+}
+
+
+/* ==========================================
+   BACKGROUND
+========================================== */
+
+.background {
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(255, 193, 7, 0.08),
+            transparent 35%
+        );
+}
+
+
+/* ==========================================
+   MAIN CONTAINER
+========================================== */
+
+.login-container {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 28px 16px;
+}
+
+
+/* ==========================================
+   CARD
+========================================== */
+
+.login-card {
+    width: 100%;
+    max-width: 480px;
+
+    padding: 42px 36px 34px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(8, 38, 72, 0.98),
+            rgba(3, 22, 43, 0.98)
+        );
+
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    border-radius: 26px;
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+    position: relative;
+    overflow: hidden;
+}
+
+
+/* top glow */
+
+.login-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: -120px;
+    left: 50%;
+
+    width: 260px;
+    height: 260px;
+
+    transform: translateX(-50%);
+
+    background:
+        rgba(255, 193, 7, 0.08);
+
+    filter: blur(55px);
+
+    pointer-events: none;
+}
+
+
+/* ==========================================
+   LOGO AREA
+========================================== */
+
+.logo-area {
+    position: relative;
+
+    text-align: center;
+
+    margin-bottom: 34px;
+}
+
+
+.logo-area h1 {
+    margin: 0;
+
+    display: block;
+
+    font-size: clamp(38px, 9vw, 58px);
+
+    line-height: 1.05;
+
+    font-weight: 800;
+
+    letter-spacing: -1.5px;
+
+    white-space: nowrap;
+}
+
+
+.logo-area .gold {
+    color: #ffc107;
+
+    text-shadow:
+        0 0 12px rgba(255, 193, 7, 0.25);
+}
+
+
+.logo-area .white {
+    color: #ffffff;
+}
+
+
+.logo-area p {
+    margin: 14px 0 0;
+
+    color: #9eb2cc;
+
+    font-size: 15px;
+
+    line-height: 1.5;
+
+    letter-spacing: 0.2px;
+
+    text-align: center;
+
+    white-space: normal;
+}
+
+
+/* ==========================================
+   FORM
+========================================== */
+
+#registerForm {
+    position: relative;
+}
+
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: #eaf1f8;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.1px;
+}
+
+
+/* ==========================================
+   INPUT
+========================================== */
+
+.input-box {
+    width: 100%;
+}
+
+
+.input-box input {
+    width: 100%;
+
+    height: 56px;
+
+    padding: 0 17px;
+
+    border: 1px solid #214b76;
+
+    border-radius: 14px;
+
+    outline: none;
+
+    background:
+        rgba(8, 43, 80, 0.92);
+
+    color: #ffffff;
+
+    font-size: 16px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.input-box input::placeholder {
+    color: #7f9abb;
+}
+
+
+.input-box input:focus {
+    border-color: #ffc107;
+
+    background:
+        rgba(9, 48, 88, 0.98);
+
+    box-shadow:
+        0 0 0 3px rgba(255, 193, 7, 0.10);
+}
+
+
+/* ==========================================
+   REGISTER BUTTON
+========================================== */
+
+#registerBtn {
+    width: 100%;
+
+    height: 56px;
+
+    margin-top: 7px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffb300,
+            #ffd21a
+        );
+
+    color: #111111;
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 25px rgba(255, 193, 7, 0.18);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        opacity 0.2s ease;
+}
+
+
+#registerBtn:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 13px 30px rgba(255, 193, 7, 0.25);
+}
+
+
+#registerBtn:active {
+    transform: scale(0.99);
+}
+
+
+#registerBtn:disabled {
+    opacity: 0.65;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+/* ==========================================
+   BOTTOM LINKS
+========================================== */
+
+.bottom-links {
+    margin-top: 25px;
+
+    padding-top: 21px;
+
+    border-top:
+        1px solid rgba(255, 255, 255, 0.07);
+
+    text-align: center;
+
+    color: #879db8;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+
+.bottom-links span {
+    display: inline;
+}
+
+
+.bottom-links a {
+    margin-left: 5px;
+
+    color: #ffc107;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+
+.bottom-links a:hover {
+    color: #ffe082;
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 520px) {
+
+    .login-container {
+        padding:
+            18px 12px;
+    }
+
+
+    .login-card {
+        max-width: 100%;
+
+        padding:
+            34px 22px 27px;
+
+        border-radius: 22px;
+    }
+
+
+    .logo-area {
+        margin-bottom: 28px;
+    }
+
+
+    .logo-area h1 {
+        font-size: 42px;
+
+        letter-spacing: -1.2px;
+    }
+
+
+    .logo-area p {
+        max-width: 310px;
+
+        margin-left: auto;
+        margin-right: auto;
+
+        font-size: 14px;
+
+        line-height: 1.5;
+    }
+
+
+    .form-group {
+        margin-bottom: 17px;
+    }
+
+
+    .form-group label {
+        font-size: 14px;
+    }
+
+
+    .input-box input {
+        height: 54px;
+
+        font-size: 15px;
+    }
+
+
+    #registerBtn {
+        height: 54px;
+
+        font-size: 16px;
+    }
+
+}
+
+
+@media (max-width: 360px) {
+
+    .login-card {
+        padding:
+            30px 18px 24px;
+    }
+
+
+    .logo-area h1 {
+        font-size: 36px;
+    }
+
+
+    .logo-area p {
+        font-size: 13px;
+    }
+
+}
+
+</style>
 
 </head>
 
+
 <body>
+
 
 <div class="background"></div>
 
+
 <div class="login-container">
 
+
 <div class="login-card">
+
+
+<!-- ==========================================
+     LOGO / TITLE
+========================================== -->
 
 <div class="logo-area">
 
 <h1>
-<span class="gold">Create</span>
-<span class="white"> Account</span>
+
+<span class="gold">
+Create
+</span>
+
+<span class="white">
+ Account
+</span>
+
 </h1>
 
-<p>Join CptMarkets for global trading</p>
+
+<p>
+Join CptMarkets for global trading
+</p>
 
 </div>
+
+
+
+<!-- ==========================================
+     REGISTER FORM
+========================================== -->
 
 <form id="registerForm">
 
+
+<!-- USERNAME -->
+
 <div class="form-group">
 
-<label>Username</label>
+<label for="username">
+Username
+</label>
 
 <div class="input-box">
 
 <input
-type="text"
-id="username"
-placeholder="Username"
-required>
+    type="text"
+    id="username"
+    placeholder="Enter username"
+    autocomplete="username"
+    maxlength="20"
+    required
+>
 
 </div>
 
 </div>
+
+
+
+<!-- PASSWORD -->
 
 <div class="form-group">
 
-<label>Password</label>
+<label for="password">
+Password
+</label>
 
 <div class="input-box">
 
 <input
-type="password"
-id="password"
-placeholder="Password (min. 6 chars)"
-required>
+    type="password"
+    id="password"
+    placeholder="Password (min. 6 chars)"
+    autocomplete="new-password"
+    required
+>
 
 </div>
 
 </div>
+
+
+
+<!-- CONFIRM PASSWORD -->
 
 <div class="form-group">
 
-<label>Confirm Password</label>
+<label for="confirmPassword">
+Confirm Password
+</label>
 
 <div class="input-box">
 
 <input
-type="password"
-id="confirmPassword"
-placeholder="Confirm Password"
-required>
+    type="password"
+    id="confirmPassword"
+    placeholder="Confirm password"
+    autocomplete="new-password"
+    required
+>
 
 </div>
 
 </div>
+
+
+
+<!-- INVITE -->
 
 <div class="form-group">
 
-<label>Invite Code</label>
+<label for="invite">
+Invite Code
+</label>
 
 <div class="input-box">
 
 <input
-type="text"
-id="invite"
-placeholder="Invite Code (optional)">
+    type="text"
+    id="invite"
+    placeholder="Invite code (optional)"
+>
 
 </div>
 
 </div>
+
+
+
+<!-- REGISTER BUTTON -->
 
 <button
-type="submit"
-class="login-btn">
+    type="submit"
+    id="registerBtn"
+    class="login-btn"
+>
 
 Register
 
 </button>
 
+
 </form>
+
+
+
+<!-- ==========================================
+     LOGIN LINK
+========================================== -->
 
 <div class="bottom-links">
 
@@ -122,20 +660,37 @@ Go to Sign In
 
 </div>
 
-</div>
 
 </div>
 
+</div>
+
+
+
+<!-- ==========================================
+     FIREBASE REGISTRATION
+========================================== -->
 
 <script type="module">
 
-import { auth, db }
-from "./firebase/firebase-config.js";
+
+/* ==========================================
+   FIREBASE
+========================================== */
 
 import {
-    createUserWithEmailAndPassword
+    auth,
+    db
+}
+from "./firebase/firebase-config.js";
+
+
+import {
+    createUserWithEmailAndPassword,
+    deleteUser
 }
 from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
 
 import {
     doc,
@@ -144,85 +699,177 @@ import {
 from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-const registerForm =
-    document.getElementById("registerForm");
 
+/* ==========================================
+   ELEMENTS
+========================================== */
+
+const registerForm =
+    document.getElementById(
+        "registerForm"
+    );
+
+
+const registerButton =
+    document.getElementById(
+        "registerBtn"
+    );
+
+
+
+/* ==========================================
+   REGISTER
+========================================== */
 
 registerForm.addEventListener(
     "submit",
-    async function(e) {
+    async function (e) {
 
         e.preventDefault();
 
 
+        const usernameInput =
+            document.getElementById(
+                "username"
+            );
+
+
+        const passwordInput =
+            document.getElementById(
+                "password"
+            );
+
+
+        const confirmPasswordInput =
+            document.getElementById(
+                "confirmPassword"
+            );
+
+
+        const inviteInput =
+            document.getElementById(
+                "invite"
+            );
+
+
         const username =
-            document
-            .getElementById("username")
-            .value
-            .trim();
+            usernameInput.value.trim();
 
 
         const password =
-            document
-            .getElementById("password")
-            .value;
+            passwordInput.value;
 
 
         const confirmPassword =
-            document
-            .getElementById("confirmPassword")
-            .value;
+            confirmPasswordInput.value;
 
 
         const invite =
-            document
-            .getElementById("invite")
-            .value
-            .trim();
+            inviteInput.value.trim();
 
+
+
+        /* ======================================
+           VALIDATION
+        ====================================== */
 
         if (!username) {
 
-            alert("Please enter a username.");
+            alert(
+                "Please enter a username."
+            );
+
+            usernameInput.focus();
 
             return;
+
         }
 
 
-        if (password.length < 6) {
+        const usernamePattern =
+            /^[a-zA-Z0-9_]{3,20}$/;
+
+
+        if (
+            !usernamePattern.test(
+                username
+            )
+        ) {
+
+            alert(
+                "Username must be 3-20 characters and can contain only letters, numbers, and underscore."
+            );
+
+            usernameInput.focus();
+
+            return;
+
+        }
+
+
+        if (
+            password.length < 6
+        ) {
 
             alert(
                 "Password must be at least 6 characters."
             );
 
+            passwordInput.focus();
+
             return;
+
         }
 
 
-        if (password !== confirmPassword) {
+        if (
+            password !==
+            confirmPassword
+        ) {
 
             alert(
                 "Passwords do not match!"
             );
 
+            confirmPasswordInput.focus();
+
             return;
+
         }
+
+
+
+        /* ======================================
+           BUTTON LOADING
+        ====================================== */
+
+        registerButton.disabled =
+            true;
+
+
+        registerButton.textContent =
+            "Creating Account...";
+
+
+        const normalizedUsername =
+            username.toLowerCase();
+
+
+        const email =
+            normalizedUsername +
+            "@cptmarkets.local";
+
+
+        let createdFirebaseUser =
+            null;
 
 
         try {
 
-            /*
-             * Firebase Authentication needs
-             * an email address.
-             *
-             * We create an internal email
-             * from the username.
-             */
 
-            const email =
-                username.toLowerCase()
-                + "@cptmarkets.local";
-
+            /* ==================================
+               FIREBASE AUTH
+            ================================== */
 
             const userCredential =
                 await createUserWithEmailAndPassword(
@@ -232,82 +879,120 @@ registerForm.addEventListener(
                 );
 
 
-            const user =
+            createdFirebaseUser =
                 userCredential.user;
 
 
-            /*
-             * Save user information
-             * in Firestore.
-             */
-
-            // ==========================================
-// CREATE 8 DIGIT USER ID
-// ==========================================
-
-const userId =
-    String(
-        Math.floor(
-            10000000 +
-            Math.random() * 90000000
-        )
-    );
+            const uid =
+                createdFirebaseUser.uid;
 
 
-// ==========================================
-// SAVE USER INFORMATION
-// ==========================================
 
-await setDoc(
-    doc(db, "users", user.uid),
-    {
+            /* ==================================
+               CREATE USER ID
+            ================================== */
 
-        // Firebase internal UID
-        uid: user.uid,
-
-        // Custom 8 digit UID
-        userId: userId,
-
-        username: username,
-
-        email: email,
-
-        inviteCode: invite,
-
-        balance: 0,
-
-        createdAt: new Date()
-
-    }
-);
+            const userId =
+                String(
+                    Math.floor(
+                        10000000 +
+                        Math.random() *
+                        90000000
+                    )
+                );
 
 
-            /*
-             * Keep a small local session
-             * temporarily for the existing
-             * dashboard system.
-             */
+
+            /* ==================================
+               USER DATA
+            ================================== */
+
+            const userData = {
+
+                uid:
+                    uid,
+
+                userId:
+                    userId,
+
+                username:
+                    username,
+
+                usernameLower:
+                    normalizedUsername,
+
+                email:
+                    email,
+
+                inviteCode:
+                    invite,
+
+                balance:
+                    0,
+
+                createdAt:
+                    new Date()
+
+            };
+
+
+
+            /* ==================================
+               FIRESTORE
+            ================================== */
+
+            await setDoc(
+
+                doc(
+                    db,
+                    "users",
+                    uid
+                ),
+
+                userData
+
+            );
+
+
+
+            /* ==================================
+               LOCAL SESSION
+            ================================== */
 
             localStorage.setItem(
-    "currentUser",
-    JSON.stringify({
 
-        uid: user.uid,
+                "currentUser",
 
-        userId: userId,
+                JSON.stringify({
 
-        username: username,
+                    uid:
+                        uid,
 
-        email: email,
+                    userId:
+                        userId,
 
-        balance: 0
+                    username:
+                        username,
 
-    })
-);
+                    email:
+                        email,
 
+                    balance:
+                        0
+
+                })
+
+            );
+
+
+
+            /* ==================================
+               SUCCESS
+            ================================== */
 
             alert(
-                "Registration Successful!"
+                "Registration Successful!\n\nYour User ID: " +
+                userId
             );
 
 
@@ -317,11 +1002,43 @@ await setDoc(
 
         } catch (error) {
 
+
             console.error(
                 "Registration failed:",
                 error
             );
 
+
+            /* ==================================
+               ROLLBACK
+            ================================== */
+
+            if (
+                createdFirebaseUser
+            ) {
+
+                try {
+
+                    await deleteUser(
+                        createdFirebaseUser
+                    );
+
+                } catch (deleteError) {
+
+                    console.error(
+                        "Rollback failed:",
+                        deleteError
+                    );
+
+                }
+
+            }
+
+
+
+            /* ==================================
+               ERROR
+            ================================== */
 
             if (
                 error.code ===
@@ -329,17 +1046,43 @@ await setDoc(
             ) {
 
                 alert(
-                    "This username is already registered."
-                );
-
-            } else {
-
-                alert(
-                    "Registration failed: "
-                    + error.message
+                    "This username is already registered. Please choose another username."
                 );
 
             }
+
+            else if (
+                error.code ===
+                "auth/weak-password"
+            ) {
+
+                alert(
+                    "Password is too weak. Use at least 6 characters."
+                );
+
+            }
+
+            else {
+
+                alert(
+                    "Registration failed: " +
+                    (
+                        error.message ||
+                        "Unknown error"
+                    )
+                );
+
+            }
+
+
+        } finally {
+
+            registerButton.disabled =
+                false;
+
+
+            registerButton.textContent =
+                "Register";
 
         }
 
@@ -347,6 +1090,7 @@ await setDoc(
 );
 
 </script>
+
 
 </body>
 
