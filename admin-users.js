@@ -2,9 +2,13 @@
    CPTMARKETS
    ADMIN USER MANAGEMENT
    admin-users.js
+   FINAL FIREBASE BALANCE + HISTORY VERSION
 ========================================== */
 
-import { auth, db } from "./firebase/firebase-config.js";
+import {
+    auth,
+    db
+} from "./firebase/firebase-config.js";
 
 import {
     onAuthStateChanged,
@@ -13,12 +17,12 @@ import {
 
 import {
     collection,
+    doc,
+    getDoc,
+    getDocs,
     query,
     where,
-    getDocs,
-    updateDoc,
-    doc,
-    addDoc,
+    runTransaction,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
@@ -35,30 +39,66 @@ let currentUserDoc = null;
    ADMIN AUTH CHECK
 ========================================== */
 
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(
+    auth,
+    function (user) {
 
-    if (!user) {
+        if (!user) {
 
-        window.location.href = "index.html";
-        return;
+            window.location.href =
+                "index.html";
+
+            return;
+
+        }
+
+        console.log(
+            "Admin authenticated:",
+            user.email
+        );
 
     }
+);
 
-    console.log(
-        "Admin authenticated:",
-        user.email
+
+/* ==========================================
+   ELEMENTS
+========================================== */
+
+const searchButton =
+    document.getElementById(
+        "searchUserBtn"
     );
 
-});
+const addButton =
+    document.getElementById(
+        "addBalanceBtn"
+    );
+
+const removeButton =
+    document.getElementById(
+        "removeBalanceBtn"
+    );
+
+const profitButton =
+    document.getElementById(
+        "addProfitBtn"
+    );
+
+const lossButton =
+    document.getElementById(
+        "addLossBtn"
+    );
+
+const logoutButton =
+    document.getElementById(
+        "adminLogout"
+    );
 
 
 /* ==========================================
    SEARCH BUTTON
 ========================================== */
-
-const searchButton =
-    document.getElementById("searchUserBtn");
-
 
 if (searchButton) {
 
@@ -71,34 +111,58 @@ if (searchButton) {
 
 
 /* ==========================================
+   ENTER KEY SEARCH
+========================================== */
+
+const uidInput =
+    document.getElementById(
+        "userUidInput"
+    );
+
+if (uidInput) {
+
+    uidInput.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                searchUser();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* ==========================================
    SEARCH USER
+   Supports:
+   1. Firebase UID
+   2. Visible User ID
 ========================================== */
 
 async function searchUser() {
 
-    const uidInput =
-        document.getElementById("userUidInput");
-
-
     if (!uidInput) {
-
-        console.error(
-            "userUidInput not found."
-        );
 
         return;
 
     }
 
 
-    const uid =
+    const searchValue =
         uidInput.value.trim();
 
 
-    if (!uid) {
+    if (!searchValue) {
 
         alert(
-            "Please enter a User UID."
+            "Please enter Firebase UID or User ID."
         );
 
         return;
@@ -108,10 +172,8 @@ async function searchUser() {
 
     try {
 
-        console.log(
-            "Searching User ID:",
-            uid
-        );
+        currentUser = null;
+        currentUserDoc = null;
 
 
         const usersRef =
@@ -121,39 +183,83 @@ async function searchUser() {
             );
 
 
-        /*
-         * Your visible 8-digit User ID
-         * is stored as:
-         *
-         * userId
-         */
+        let foundDoc = null;
 
-        const userQuery =
-            query(
-                usersRef,
-                where(
-                    "userId",
-                    "==",
-                    uid
-                )
+
+        /* ==================================
+           FIRST:
+           TRY FIREBASE DOCUMENT ID / UID
+        ================================== */
+
+        const directRef =
+            doc(
+                db,
+                "users",
+                searchValue
             );
 
 
-        const snapshot =
-            await getDocs(
-                userQuery
+        const directSnapshot =
+            await getDoc(
+                directRef
             );
+
+
+        if (
+            directSnapshot.exists()
+        ) {
+
+            foundDoc =
+                directSnapshot;
+
+        }
+
+
+        /* ==================================
+           SECOND:
+           TRY VISIBLE USER ID
+        ================================== */
+
+        if (!foundDoc) {
+
+            const userQuery =
+                query(
+                    usersRef,
+                    where(
+                        "userId",
+                        "==",
+                        searchValue
+                    )
+                );
+
+
+            const snapshot =
+                await getDocs(
+                    userQuery
+                );
+
+
+            if (
+                !snapshot.empty
+            ) {
+
+                foundDoc =
+                    snapshot.docs[0];
+
+            }
+
+        }
 
 
         /* ==================================
            USER NOT FOUND
         ================================== */
 
-        if (snapshot.empty) {
+        if (!foundDoc) {
 
             console.log(
                 "User not found:",
-                uid
+                searchValue
             );
 
             currentUser = null;
@@ -170,16 +276,11 @@ async function searchUser() {
            USER FOUND
         ================================== */
 
-        const userDoc =
-            snapshot.docs[0];
-
-
         currentUserDoc =
-            userDoc;
-
+            foundDoc;
 
         currentUser =
-            userDoc.data();
+            foundDoc.data();
 
 
         console.log(
@@ -189,7 +290,7 @@ async function searchUser() {
 
 
         showUser(
-            userDoc.id,
+            foundDoc.id,
             currentUser
         );
 
@@ -203,7 +304,8 @@ async function searchUser() {
 
 
         alert(
-            "Unable to search user."
+            "Unable to search user.\n\n" +
+            error.message
         );
 
     }
@@ -224,7 +326,6 @@ function showUser(
         document.getElementById(
             "userResult"
         );
-
 
     const notFound =
         document.getElementById(
@@ -272,9 +373,12 @@ function showUser(
 
     if (uidElement) {
 
+        /*
+         * Show real Firebase document UID.
+         */
+
         uidElement.textContent =
-            userData.userId ||
-            "-";
+            docId || "-";
 
     }
 
@@ -326,8 +430,9 @@ function updateBalanceDisplay(
 
     balanceElement.textContent =
         "$" +
-        Number(balance)
-            .toFixed(2);
+        Number(
+            balance || 0
+        ).toFixed(2);
 
 }
 
@@ -342,7 +447,6 @@ function showNotFound() {
         document.getElementById(
             "userResult"
         );
-
 
     const notFound =
         document.getElementById(
@@ -369,15 +473,8 @@ function showNotFound() {
 
 
 /* ==========================================
-   NORMAL BALANCE
-   ADD
+   NORMAL BALANCE - ADD
 ========================================== */
-
-const addButton =
-    document.getElementById(
-        "addBalanceBtn"
-    );
-
 
 if (addButton) {
 
@@ -386,7 +483,7 @@ if (addButton) {
         async function () {
 
             await changeBalance(
-                "add"
+                "ADD"
             );
 
         }
@@ -396,15 +493,8 @@ if (addButton) {
 
 
 /* ==========================================
-   NORMAL BALANCE
-   REMOVE
+   NORMAL BALANCE - REMOVE
 ========================================== */
-
-const removeButton =
-    document.getElementById(
-        "removeBalanceBtn"
-    );
-
 
 if (removeButton) {
 
@@ -413,7 +503,7 @@ if (removeButton) {
         async function () {
 
             await changeBalance(
-                "remove"
+                "REMOVE"
             );
 
         }
@@ -423,7 +513,7 @@ if (removeButton) {
 
 
 /* ==========================================
-   NORMAL BALANCE CONTROL
+   CHANGE NORMAL BALANCE
 ========================================== */
 
 async function changeBalance(
@@ -465,7 +555,7 @@ async function changeBalance(
 
 
     if (
-        !amount ||
+        !Number.isFinite(amount) ||
         amount <= 0
     ) {
 
@@ -478,58 +568,191 @@ async function changeBalance(
     }
 
 
-    const oldBalance =
-        Number(
-            currentUser.balance || 0
+    const userRef =
+        doc(
+            db,
+            "users",
+            currentUserDoc.id
         );
-
-
-    let newBalance;
-
-
-    if (action === "add") {
-
-        newBalance =
-            oldBalance +
-            amount;
-
-    } else {
-
-        newBalance =
-            oldBalance -
-            amount;
-
-
-        if (newBalance < 0) {
-
-            alert(
-                "Balance cannot be negative."
-            );
-
-            return;
-
-        }
-
-    }
 
 
     try {
 
-        await updateDoc(
+        let newBalance = 0;
+        let oldBalance = 0;
 
-            doc(
-                db,
-                "users",
-                currentUserDoc.id
-            ),
 
-            {
-                balance:
-                    newBalance
+        /*
+         * =================================
+         * ATOMIC FIRESTORE TRANSACTION
+         * =================================
+         */
+
+        await runTransaction(
+            db,
+            async function (transaction) {
+
+                const userSnapshot =
+                    await transaction.get(
+                        userRef
+                    );
+
+
+                if (
+                    !userSnapshot.exists()
+                ) {
+
+                    throw new Error(
+                        "User document no longer exists."
+                    );
+
+                }
+
+
+                const userData =
+                    userSnapshot.data();
+
+
+                oldBalance =
+                    Number(
+                        userData.balance || 0
+                    );
+
+
+                if (
+                    action === "ADD"
+                ) {
+
+                    newBalance =
+                        oldBalance +
+                        amount;
+
+                } else {
+
+                    newBalance =
+                        oldBalance -
+                        amount;
+
+
+                    if (
+                        newBalance < 0
+                    ) {
+
+                        throw new Error(
+                            "Balance cannot be negative."
+                        );
+
+                    }
+
+                }
+
+
+                /*
+                 * UPDATE USER BALANCE
+                 */
+
+                transaction.update(
+                    userRef,
+                    {
+                        balance:
+                            Number(
+                                newBalance.toFixed(2)
+                            )
+                    }
+                );
+
+
+                /*
+                 * CREATE ADMIN BALANCE HISTORY
+                 */
+
+                const historyRef =
+                    doc(
+                        collection(
+                            db,
+                            "tradeHistory"
+                        )
+                    );
+
+
+                transaction.set(
+                    historyRef,
+                    {
+
+                        uid:
+                            currentUserDoc.id,
+
+                        userId:
+                            userData.userId ||
+                            "",
+
+                        username:
+                            userData.username ||
+                            userData.name ||
+                            "User",
+
+                        email:
+                            userData.email ||
+                            "",
+
+                        side:
+                            "ADMIN",
+
+                        entryPrice:
+                            0,
+
+                        closePrice:
+                            0,
+
+                        amount:
+                            Number(
+                                amount.toFixed(2)
+                            ),
+
+                        profitLoss:
+                            Number(
+                                (
+                                    action === "ADD"
+                                        ? amount
+                                        : -amount
+                                ).toFixed(2)
+                            ),
+
+                        type:
+                            "ADMIN_BALANCE",
+
+                        action:
+                            action,
+
+                        source:
+                            "ADMIN",
+
+                        oldBalance:
+                            Number(
+                                oldBalance.toFixed(2)
+                            ),
+
+                        newBalance:
+                            Number(
+                                newBalance.toFixed(2)
+                            ),
+
+                        time:
+                            new Date().toLocaleString(),
+
+                        createdAt:
+                            serverTimestamp()
+
+                    }
+                );
+
             }
-
         );
 
+
+        /*
+         * UPDATE LOCAL ADMIN DATA
+         */
 
         currentUser.balance =
             newBalance;
@@ -546,12 +769,23 @@ async function changeBalance(
 
         showMessage(
 
-            action === "add"
+            action === "ADD"
 
                 ? "Balance added successfully."
 
                 : "Balance removed successfully."
 
+        );
+
+
+        console.log(
+            "Balance changed:",
+            {
+                action,
+                oldBalance,
+                amount,
+                newBalance
+            }
         );
 
 
@@ -564,7 +798,7 @@ async function changeBalance(
 
 
         alert(
-            "Balance update failed: " +
+            "Balance update failed.\n\n" +
             error.message
         );
 
@@ -576,12 +810,6 @@ async function changeBalance(
 /* ==========================================
    PROFIT BUTTON
 ========================================== */
-
-const profitButton =
-    document.getElementById(
-        "addProfitBtn"
-    );
-
 
 if (profitButton) {
 
@@ -603,12 +831,6 @@ if (profitButton) {
    LOSS BUTTON
 ========================================== */
 
-const lossButton =
-    document.getElementById(
-        "addLossBtn"
-    );
-
-
 if (lossButton) {
 
     lossButton.addEventListener(
@@ -626,7 +848,7 @@ if (lossButton) {
 
 
 /* ==========================================
-   ADD TRADE PROFIT / LOSS
+   ADD PROFIT / LOSS
 ========================================== */
 
 async function addTradeResult(
@@ -668,7 +890,7 @@ async function addTradeResult(
 
 
     if (
-        !amount ||
+        !Number.isFinite(amount) ||
         amount <= 0
     ) {
 
@@ -681,149 +903,209 @@ async function addTradeResult(
     }
 
 
-    const oldBalance =
-        Number(
-            currentUser.balance || 0
+    const userRef =
+        doc(
+            db,
+            "users",
+            currentUserDoc.id
         );
-
-
-    let profitLoss = 0;
-    let newBalance = 0;
-
-
-    /* ======================================
-       PROFIT
-    ====================================== */
-
-    if (type === "PROFIT") {
-
-        profitLoss =
-            amount;
-
-        newBalance =
-            oldBalance +
-            amount;
-
-    }
-
-
-    /* ======================================
-       LOSS
-    ====================================== */
-
-    if (type === "LOSS") {
-
-        profitLoss =
-            -amount;
-
-        newBalance =
-            oldBalance -
-            amount;
-
-
-        if (newBalance < 0) {
-
-            alert(
-                "Loss cannot be greater than the user's balance."
-            );
-
-            return;
-
-        }
-
-    }
 
 
     try {
 
-        /* ==================================
-           UPDATE USER BALANCE
-        ================================== */
-
-        await updateDoc(
-
-            doc(
-                db,
-                "users",
-                currentUserDoc.id
-            ),
-
-            {
-                balance:
-                    newBalance
-            }
-
-        );
+        let oldBalance = 0;
+        let newBalance = 0;
+        let profitLoss = 0;
 
 
-        /* ==================================
-           CREATE TRADE HISTORY
-        ================================== */
+        /*
+         * =================================
+         * ATOMIC TRANSACTION
+         * =================================
+         */
 
-        await addDoc(
+        await runTransaction(
+            db,
+            async function (transaction) {
 
-            collection(
-                db,
-                "tradeHistory"
-            ),
+                const userSnapshot =
+                    await transaction.get(
+                        userRef
+                    );
 
-            {
 
-                uid:
-                    currentUserDoc.id,
+                if (
+                    !userSnapshot.exists()
+                ) {
 
-                userId:
-                    currentUser.userId ||
-                    "",
+                    throw new Error(
+                        "User document no longer exists."
+                    );
 
-                username:
-                    currentUser.username ||
-                    currentUser.name ||
-                    "User",
+                }
 
-                email:
-                    currentUser.email ||
-                    "",
 
-                side:
-                    "ADMIN",
+                const userData =
+                    userSnapshot.data();
 
-                entryPrice:
-                    0,
 
-                closePrice:
-                    0,
-
-                amount:
+                oldBalance =
                     Number(
-                        amount.toFixed(2)
-                    ),
+                        userData.balance || 0
+                    );
 
-                profitLoss:
+
+                /* ==========================
+                   PROFIT
+                ========================== */
+
+                if (
+                    type === "PROFIT"
+                ) {
+
+                    profitLoss =
+                        amount;
+
+                    newBalance =
+                        oldBalance +
+                        amount;
+
+                }
+
+
+                /* ==========================
+                   LOSS
+                ========================== */
+
+                else {
+
+                    profitLoss =
+                        -amount;
+
+                    newBalance =
+                        oldBalance -
+                        amount;
+
+
+                    if (
+                        newBalance < 0
+                    ) {
+
+                        throw new Error(
+                            "Loss cannot be greater than the user's balance."
+                        );
+
+                    }
+
+                }
+
+
+                newBalance =
+                    Number(
+                        newBalance.toFixed(2)
+                    );
+
+
+                profitLoss =
                     Number(
                         profitLoss.toFixed(2)
-                    ),
+                    );
 
-                type:
-                    type,
 
-                source:
-                    "ADMIN",
+                /*
+                 * UPDATE BALANCE
+                 */
 
-                time:
-                    new Date().toLocaleString(),
+                transaction.update(
+                    userRef,
+                    {
+                        balance:
+                            newBalance
+                    }
+                );
 
-                createdAt:
-                    serverTimestamp()
+
+                /*
+                 * CREATE TRADE HISTORY
+                 */
+
+                const historyRef =
+                    doc(
+                        collection(
+                            db,
+                            "tradeHistory"
+                        )
+                    );
+
+
+                transaction.set(
+                    historyRef,
+                    {
+
+                        uid:
+                            currentUserDoc.id,
+
+                        userId:
+                            userData.userId ||
+                            "",
+
+                        username:
+                            userData.username ||
+                            userData.name ||
+                            "User",
+
+                        email:
+                            userData.email ||
+                            "",
+
+                        side:
+                            "ADMIN",
+
+                        entryPrice:
+                            0,
+
+                        closePrice:
+                            0,
+
+                        amount:
+                            Number(
+                                amount.toFixed(2)
+                            ),
+
+                        profitLoss:
+                            profitLoss,
+
+                        type:
+                            type,
+
+                        source:
+                            "ADMIN",
+
+                        oldBalance:
+                            Number(
+                                oldBalance.toFixed(2)
+                            ),
+
+                        newBalance:
+                            newBalance,
+
+                        time:
+                            new Date().toLocaleString(),
+
+                        createdAt:
+                            serverTimestamp()
+
+                    }
+
+                );
 
             }
-
         );
 
 
-        /* ==================================
-           UPDATE LOCAL DATA
-        ================================== */
+        /*
+         * UPDATE ADMIN SCREEN
+         */
 
         currentUser.balance =
             newBalance;
@@ -838,10 +1120,6 @@ async function addTradeResult(
             "";
 
 
-        /* ==================================
-           SUCCESS MESSAGE
-        ================================== */
-
         showMessage(
 
             type === "PROFIT"
@@ -854,10 +1132,11 @@ async function addTradeResult(
 
 
         console.log(
-            "Trade result saved:",
+            "Admin trade result saved:",
             {
                 type,
                 profitLoss,
+                oldBalance,
                 newBalance
             }
         );
@@ -872,7 +1151,7 @@ async function addTradeResult(
 
 
         alert(
-            "Trade P/L update failed: " +
+            "Trade P/L update failed.\n\n" +
             error.message
         );
 
@@ -908,15 +1187,21 @@ function showMessage(
         message;
 
 
-    setTimeout(
-        function () {
-
-            element.textContent =
-                "";
-
-        },
-        3000
+    clearTimeout(
+        showMessage.timer
     );
+
+
+    showMessage.timer =
+        setTimeout(
+            function () {
+
+                element.textContent =
+                    "";
+
+            },
+            3000
+        );
 
 }
 
@@ -924,12 +1209,6 @@ function showMessage(
 /* ==========================================
    LOGOUT
 ========================================== */
-
-const logoutButton =
-    document.getElementById(
-        "adminLogout"
-    );
-
 
 if (logoutButton) {
 
@@ -953,6 +1232,12 @@ if (logoutButton) {
                 console.error(
                     "Logout failed:",
                     error
+                );
+
+
+                alert(
+                    "Logout failed.\n\n" +
+                    error.message
                 );
 
             }
