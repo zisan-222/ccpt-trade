@@ -1,41 +1,110 @@
 /* ==========================================
    CPTMARKETS
    balance.js
-   FIREBASE BALANCE SYNC
+   FIREBASE BALANCE SYSTEM
+   FINAL FOUNDATION
 ========================================== */
 
 
 /* ==========================================
-   LOCAL STORAGE PREFIX
+   FIREBASE
+========================================== */
+
+let CPT_AUTH = null;
+let CPT_DB = null;
+
+let currentFirebaseUser = null;
+let balanceUnsubscribe = null;
+
+
+/* ==========================================
+   LOCAL STORAGE
 ========================================== */
 
 const BALANCE_KEY_PREFIX =
     "cptmarkets_balance_";
 
-
-/* ==========================================
-   DEFAULT BALANCE
-========================================== */
-
 const DEFAULT_BALANCE = 0.00;
 
 
 /* ==========================================
-   CURRENT FIREBASE USER
+   FIREBASE INITIALIZATION
 ========================================== */
 
-let currentFirebaseUser = null;
+async function initializeCPTFirebase() {
+
+    try {
+
+        const firebaseConfig =
+            await import(
+                "./firebase/firebase-config.js"
+            );
+
+        CPT_AUTH =
+            firebaseConfig.auth;
+
+        CPT_DB =
+            firebaseConfig.db;
+
+
+        const firebaseAuth =
+            await import(
+                "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js"
+            );
+
+
+        firebaseAuth.onAuthStateChanged(
+            CPT_AUTH,
+            function (user) {
+
+                currentFirebaseUser =
+                    user || null;
+
+
+                if (!user) {
+
+                    if (
+                        typeof balanceUnsubscribe ===
+                        "function"
+                    ) {
+
+                        balanceUnsubscribe();
+
+                        balanceUnsubscribe =
+                            null;
+
+                    }
+
+
+                    refreshBalanceUI();
+
+                    return;
+
+                }
+
+
+                connectFirebaseBalance(
+                    user
+                );
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "CptMarkets Firebase initialization failed:",
+            error
+        );
+
+    }
+
+}
 
 
 /* ==========================================
-   FIREBASE LISTENER
-========================================== */
-
-let balanceUnsubscribe = null;
-
-
-/* ==========================================
-   GET LOCAL BALANCE KEY
+   BALANCE KEY
 ========================================== */
 
 function getBalanceKey() {
@@ -52,13 +121,17 @@ function getBalanceKey() {
 
     }
 
-    return BALANCE_KEY_PREFIX + "guest";
+
+    return (
+        BALANCE_KEY_PREFIX +
+        "guest"
+    );
 
 }
 
 
 /* ==========================================
-   INITIALIZE BALANCE
+   INITIALIZE LOCAL BALANCE
 ========================================== */
 
 function initializeBalance() {
@@ -91,16 +164,23 @@ function getBalance() {
 
 
     const value =
-        parseFloat(
+        Number(
             localStorage.getItem(
                 getBalanceKey()
             )
         );
 
 
-    return isNaN(value)
-        ? 0
-        : value;
+    if (
+        !Number.isFinite(value)
+    ) {
+
+        return 0;
+
+    }
+
+
+    return value;
 
 }
 
@@ -109,12 +189,18 @@ function getBalance() {
    SAVE LOCAL BALANCE
 ========================================== */
 
-function setLocalBalance(amount) {
+function setLocalBalance(
+    amount
+) {
 
-    amount = Number(amount);
+    amount =
+        Number(amount);
 
 
-    if (isNaN(amount)) {
+    if (
+        !Number.isFinite(amount) ||
+        amount < 0
+    ) {
 
         amount = 0;
 
@@ -133,21 +219,24 @@ function setLocalBalance(amount) {
 
 
 /* ==========================================
-   FORMAT USD
+   USD FORMAT
 ========================================== */
 
-function formatUSD(amount) {
+function formatUSD(
+    amount
+) {
 
     return (
         "$" +
-        Number(amount || 0).toFixed(2)
+        Number(amount || 0)
+            .toFixed(2)
     );
 
 }
 
 
 /* ==========================================
-   REFRESH BALANCE UI
+   REFRESH UI
 ========================================== */
 
 function refreshBalanceUI() {
@@ -156,158 +245,56 @@ function refreshBalanceUI() {
         getBalance();
 
 
-    /* ======================================
-       DASHBOARD
-    ====================================== */
+    const ids = [
 
-    const dashboardBalance =
-        document.getElementById(
-            "balance"
-        );
+        "balance",
+        "assetBalance",
+        "availableBalance",
+        "fundingBalance",
+        "tradeBalance",
+        "demoBalance",
+        "totalBalance",
+        "currentBalance"
 
-
-    if (dashboardBalance) {
-
-        dashboardBalance.textContent =
-            formatUSD(balance);
-
-    }
+    ];
 
 
-    /* ======================================
-       ASSETS
-    ====================================== */
+    ids.forEach(
+        function (id) {
 
-    const assetBalance =
-        document.getElementById(
-            "assetBalance"
-        );
+            const element =
+                document.getElementById(id);
 
 
-    if (assetBalance) {
+            if (element) {
 
-        assetBalance.textContent =
-            formatUSD(balance);
+                element.textContent =
+                    formatUSD(balance);
 
-    }
-
-
-    const availableBalance =
-        document.getElementById(
-            "availableBalance"
-        );
-
-
-    if (availableBalance) {
-
-        availableBalance.textContent =
-            formatUSD(balance);
-
-    }
-
-
-    const fundingBalance =
-        document.getElementById(
-            "fundingBalance"
-        );
-
-
-    if (fundingBalance) {
-
-        fundingBalance.textContent =
-            formatUSD(balance);
-
-    }
-
-
-    /* ======================================
-       TRADE
-    ====================================== */
-
-    const tradeBalance =
-        document.getElementById(
-            "tradeBalance"
-        );
-
-
-    if (tradeBalance) {
-
-        tradeBalance.textContent =
-            formatUSD(balance);
-
-    }
-
-
-    const demoBalance =
-        document.getElementById(
-            "demoBalance"
-        );
-
-
-    if (demoBalance) {
-
-        demoBalance.textContent =
-            formatUSD(balance);
-
-    }
-
-
-    /* ======================================
-       OTHER BALANCE ELEMENTS
-    ====================================== */
-
-    const totalBalance =
-        document.getElementById(
-            "totalBalance"
-        );
-
-
-    if (totalBalance) {
-
-        totalBalance.textContent =
-            formatUSD(balance);
-
-    }
-
-
-    const currentBalance =
-        document.getElementById(
-            "currentBalance"
-        );
-
-
-    if (currentBalance) {
-
-        currentBalance.textContent =
-            formatUSD(balance);
-
-    }
-
-
-    /* ======================================
-       DATA-BALANCE ELEMENTS
-    ====================================== */
-
-    const balanceElements =
-        document.querySelectorAll(
-            "[data-balance]"
-        );
-
-
-    balanceElements.forEach(
-        function (element) {
-
-            element.textContent =
-                formatUSD(balance);
+            }
 
         }
     );
+
+
+    document
+        .querySelectorAll(
+            "[data-balance]"
+        )
+        .forEach(
+            function (element) {
+
+                element.textContent =
+                    formatUSD(balance);
+
+            }
+        );
 
 }
 
 
 /* ==========================================
-   LOAD FIREBASE BALANCE
+   CONNECT FIREBASE BALANCE
 ========================================== */
 
 async function connectFirebaseBalance(
@@ -316,7 +303,10 @@ async function connectFirebaseBalance(
 
     try {
 
-        if (!firebaseUser) {
+        if (
+            !firebaseUser ||
+            !CPT_DB
+        ) {
 
             return;
 
@@ -330,45 +320,19 @@ async function connectFirebaseBalance(
         initializeBalance();
 
 
-        /*
-         * Firebase modules
-         */
-
-        const firebaseConfig =
-            await import(
-                "./firebase/firebase-config.js"
-            );
-
-
         const firestore =
             await import(
                 "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js"
             );
 
 
-        const db =
-            firebaseConfig.db;
-
-
-        const doc =
-            firestore.doc;
-
-
-        const onSnapshot =
-            firestore.onSnapshot;
-
-
         const userRef =
-            doc(
-                db,
+            firestore.doc(
+                CPT_DB,
                 "users",
                 firebaseUser.uid
             );
 
-
-        /*
-         * Remove old listener
-         */
 
         if (
             typeof balanceUnsubscribe ===
@@ -377,16 +341,16 @@ async function connectFirebaseBalance(
 
             balanceUnsubscribe();
 
+            balanceUnsubscribe =
+                null;
+
         }
 
 
-        /*
-         * REAL-TIME FIRESTORE LISTENER
-         */
-
         balanceUnsubscribe =
-            onSnapshot(
+            firestore.onSnapshot(
                 userRef,
+
                 function (snapshot) {
 
                     if (
@@ -394,7 +358,7 @@ async function connectFirebaseBalance(
                     ) {
 
                         console.warn(
-                            "CptMarkets: User document not found."
+                            "CptMarkets: user document does not exist."
                         );
 
                         return;
@@ -402,49 +366,55 @@ async function connectFirebaseBalance(
                     }
 
 
-                    const userData =
+                    const data =
                         snapshot.data();
 
 
-                    /*
-                     * IMPORTANT:
-                     * Admin balance
-                     */
-
                     const firebaseBalance =
                         Number(
-                            userData.balance || 0
+                            data.balance || 0
                         );
 
 
+                    const safeBalance =
+                        Number.isFinite(
+                            firebaseBalance
+                        )
+                            ? Math.max(
+                                0,
+                                firebaseBalance
+                            )
+                            : 0;
+
+
                     /*
-                     * Save Firebase balance
-                     * to local cache
+                     * Firebase is the
+                     * source of truth.
                      */
 
                     localStorage.setItem(
+
                         getBalanceKey(),
-                        firebaseBalance.toFixed(2)
+
+                        safeBalance.toFixed(2)
+
                     );
 
-
-                    /*
-                     * Update every page element
-                     */
 
                     refreshBalanceUI();
 
 
                     console.log(
-                        "CptMarkets Firebase Balance:",
-                        firebaseBalance
+                        "CptMarkets balance synced:",
+                        safeBalance
                     );
 
                 },
+
                 function (error) {
 
                     console.error(
-                        "Firebase balance listener error:",
+                        "Balance listener error:",
                         error
                     );
 
@@ -455,9 +425,160 @@ async function connectFirebaseBalance(
     } catch (error) {
 
         console.error(
-            "Failed to connect Firebase balance:",
+            "Firebase balance connection failed:",
             error
         );
+
+    }
+
+}
+
+
+/* ==========================================
+   FIREBASE BALANCE CHANGE
+========================================== */
+
+async function changeFirebaseBalance(
+    amount
+) {
+
+    amount =
+        Number(amount);
+
+
+    if (
+        !Number.isFinite(amount)
+    ) {
+
+        return false;
+
+    }
+
+
+    if (
+        !currentFirebaseUser ||
+        !CPT_DB
+    ) {
+
+        console.error(
+            "Firebase user is not ready."
+        );
+
+        return false;
+
+    }
+
+
+    try {
+
+        const firestore =
+            await import(
+                "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js"
+            );
+
+
+        const userRef =
+            firestore.doc(
+                CPT_DB,
+                "users",
+                currentFirebaseUser.uid
+            );
+
+
+        const result =
+            await firestore.runTransaction(
+                CPT_DB,
+
+                async function (transaction) {
+
+                    const snapshot =
+                        await transaction.get(
+                            userRef
+                        );
+
+
+                    if (
+                        !snapshot.exists()
+                    ) {
+
+                        throw new Error(
+                            "User account not found."
+                        );
+
+                    }
+
+
+                    const data =
+                        snapshot.data();
+
+
+                    const oldBalance =
+                        Number(
+                            data.balance || 0
+                        );
+
+
+                    const newBalance =
+                        oldBalance +
+                        amount;
+
+
+                    if (
+                        newBalance < 0
+                    ) {
+
+                        throw new Error(
+                            "Insufficient balance."
+                        );
+
+                    }
+
+
+                    const finalBalance =
+                        Number(
+                            newBalance.toFixed(2)
+                        );
+
+
+                    transaction.update(
+
+                        userRef,
+
+                        {
+                            balance:
+                                finalBalance
+                        }
+
+                    );
+
+
+                    return finalBalance;
+
+                }
+            );
+
+
+        /*
+         * Immediately update local cache.
+         */
+
+        setLocalBalance(
+            result
+        );
+
+
+        return true;
+
+
+    } catch (error) {
+
+        console.error(
+            "Firebase balance change failed:",
+            error
+        );
+
+
+        return false;
 
     }
 
@@ -468,14 +589,16 @@ async function connectFirebaseBalance(
    ADD BALANCE
 ========================================== */
 
-function addBalance(amount) {
+async function addBalance(
+    amount
+) {
 
     amount =
         Number(amount);
 
 
     if (
-        isNaN(amount) ||
+        !Number.isFinite(amount) ||
         amount <= 0
     ) {
 
@@ -484,16 +607,9 @@ function addBalance(amount) {
     }
 
 
-    const current =
-        getBalance();
-
-
-    setLocalBalance(
-        current + amount
+    return await changeFirebaseBalance(
+        amount
     );
-
-
-    return true;
 
 }
 
@@ -502,14 +618,16 @@ function addBalance(amount) {
    SUBTRACT BALANCE
 ========================================== */
 
-function subtractBalance(amount) {
+async function subtractBalance(
+    amount
+) {
 
     amount =
         Number(amount);
 
 
     if (
-        isNaN(amount) ||
+        !Number.isFinite(amount) ||
         amount <= 0
     ) {
 
@@ -531,12 +649,9 @@ function subtractBalance(amount) {
     }
 
 
-    setLocalBalance(
-        current - amount
+    return await changeFirebaseBalance(
+        -amount
     );
-
-
-    return true;
 
 }
 
@@ -545,10 +660,22 @@ function subtractBalance(amount) {
    CHECK BALANCE
 ========================================== */
 
-function hasEnoughBalance(amount) {
+function hasEnoughBalance(
+    amount
+) {
 
     amount =
         Number(amount);
+
+
+    if (
+        !Number.isFinite(amount) ||
+        amount <= 0
+    ) {
+
+        return false;
+
+    }
 
 
     return (
@@ -559,23 +686,95 @@ function hasEnoughBalance(amount) {
 
 
 /* ==========================================
-   RESET LOCAL BALANCE
+   DIRECT FIREBASE SET
 ========================================== */
 
-function resetBalance() {
+async function adminSetBalance(
+    amount
+) {
 
-    setLocalBalance(0);
+    amount =
+        Number(amount);
+
+
+    if (
+        !Number.isFinite(amount) ||
+        amount < 0
+    ) {
+
+        return false;
+
+    }
+
+
+    if (
+        !currentFirebaseUser ||
+        !CPT_DB
+    ) {
+
+        return false;
+
+    }
+
+
+    try {
+
+        const firestore =
+            await import(
+                "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js"
+            );
+
+
+        await firestore.updateDoc(
+
+            firestore.doc(
+                CPT_DB,
+                "users",
+                currentFirebaseUser.uid
+            ),
+
+            {
+                balance:
+                    Number(
+                        amount.toFixed(2)
+                    )
+            }
+
+        );
+
+
+        setLocalBalance(
+            amount
+        );
+
+
+        return true;
+
+
+    } catch (error) {
+
+        console.error(
+            "Admin balance set failed:",
+            error
+        );
+
+
+        return false;
+
+    }
 
 }
 
 
 /* ==========================================
-   ADMIN SUPPORT
+   RESET BALANCE
 ========================================== */
 
-function adminSetBalance(amount) {
+async function resetBalance() {
 
-    setLocalBalance(amount);
+    return await adminSetBalance(
+        0
+    );
 
 }
 
@@ -608,84 +807,7 @@ document.addEventListener(
 
 
 /* ==========================================
-   FIREBASE AUTH
-========================================== */
-
-async function initializeFirebaseBalance() {
-
-    try {
-
-        const firebaseConfig =
-            await import(
-                "./firebase/firebase-config.js"
-            );
-
-
-        const firebaseAuth =
-            await import(
-                "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js"
-            );
-
-
-        firebaseAuth.onAuthStateChanged(
-            firebaseConfig.auth,
-            function (user) {
-
-                if (!user) {
-
-                    currentFirebaseUser =
-                        null;
-
-                    refreshBalanceUI();
-
-                    return;
-
-                }
-
-
-                connectFirebaseBalance(
-                    user
-                );
-
-            }
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "Firebase Auth balance initialization failed:",
-            error
-        );
-
-    }
-
-}
-
-
-/* ==========================================
-   START FIREBASE BALANCE SYSTEM
-========================================== */
-
-initializeFirebaseBalance();
-
-
-/* ==========================================
-   STORAGE SYNC
-========================================== */
-
-window.addEventListener(
-    "storage",
-    function () {
-
-        refreshBalanceUI();
-
-    }
-);
-
-
-/* ==========================================
-   GLOBAL CPT BALANCE API
+   GLOBAL API
 ========================================== */
 
 window.CPTBalance = {
@@ -715,6 +837,56 @@ window.CPTBalance = {
         adminSetBalance
 
 };
+
+
+/* ==========================================
+   GLOBAL FUNCTIONS
+========================================== */
+
+window.getBalance =
+    getBalance;
+
+window.setLocalBalance =
+    setLocalBalance;
+
+window.addBalance =
+    addBalance;
+
+window.subtractBalance =
+    subtractBalance;
+
+window.hasEnoughBalance =
+    hasEnoughBalance;
+
+window.resetBalance =
+    resetBalance;
+
+window.adminSetBalance =
+    adminSetBalance;
+
+window.reloadBalance =
+    reloadBalance;
+
+
+/* ==========================================
+   START
+========================================== */
+
+initializeCPTFirebase();
+
+
+/* ==========================================
+   STORAGE SYNC
+========================================== */
+
+window.addEventListener(
+    "storage",
+    function () {
+
+        refreshBalanceUI();
+
+    }
+);
 
 
 /* ==========================================
