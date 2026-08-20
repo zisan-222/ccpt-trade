@@ -525,6 +525,10 @@ async function changeBalance(
 
     if (!amountInput) {
 
+        alert(
+            "Balance input not found."
+        );
+
         return;
 
     }
@@ -877,9 +881,6 @@ async function setPendingTradeResult(
 
     try {
 
-        let oldPending = null;
-
-
         await runTransaction(
             db,
             async function (transaction) {
@@ -905,20 +906,14 @@ async function setPendingTradeResult(
                     userSnapshot.data();
 
 
-                /*
-                 * =================================
-                 * IMPORTANT
-                 *
-                 * DO NOT CHANGE BALANCE HERE.
-                 *
-                 * Profit/Loss is only stored as
-                 * pending until the trade closes.
-                 * =================================
-                 */
+                /* =================================
+                   IMPORTANT
 
-                oldPending =
-                    userData.pendingAdminTradeResult ||
-                    null;
+                   BALANCE IS NOT CHANGED HERE.
+
+                   RESULT REMAINS PENDING UNTIL
+                   THE USER CLOSES THE TRADE.
+                ================================= */
 
 
                 const pendingResult = {
@@ -971,18 +966,16 @@ async function setPendingTradeResult(
 
 
         /*
-         * =================================
-         * IMPORTANT MESSAGE
-         * =================================
+         * BALANCE MUST REMAIN UNCHANGED
          */
 
         showMessage(
 
             type === "PROFIT"
 
-                ? "Profit is pending. It will be applied when the trade closes."
+                ? "Profit saved as PENDING. It will be applied when the trade closes."
 
-                : "Loss is pending. It will be applied when the trade closes."
+                : "Loss saved as PENDING. It will be applied when the trade closes."
 
         );
 
@@ -990,8 +983,21 @@ async function setPendingTradeResult(
         console.log(
             "Pending admin trade result saved:",
             {
-                type,
-                amount
+
+                type:
+                    type,
+
+                amount:
+                    amount,
+
+                profitLoss:
+                    type === "PROFIT"
+                        ? amount
+                        : -amount,
+
+                note:
+                    "User balance was NOT changed."
+
             }
         );
 
