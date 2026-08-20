@@ -1,29 +1,53 @@
-/* ===================================
+/* ==========================================
    CPTMARKETS TRADE
-   trade.js - HISTORY FIXED
-=================================== */
+   trade.js
+   FINAL TRADE + BALANCE + HISTORY SYSTEM
+========================================== */
+
+
+/* ==========================================
+   TRADE STATE
+========================================== */
 
 let price = 4269.29;
+
 let selectedSide = null;
 let entryPrice = null;
 let tradeAmountValue = 0;
+
 let currentTradeId = null;
+let currentTradeUID = null;
+
+let selectedLeverage = 100;
 
 
-/* =========================
+/* ==========================================
    BASIC ELEMENTS
-========================= */
+========================================== */
 
-const livePrice = document.getElementById("livePrice");
-const changeBox = document.getElementById("changeBox");
+const livePrice =
+    document.getElementById("livePrice");
 
-const longButton = document.querySelector(".long-btn");
-const shortButton = document.querySelector(".short-btn");
+const changeBox =
+    document.getElementById("changeBox");
 
-const tradeModal = document.getElementById("tradeModal");
+const longButton =
+    document.querySelector(".long-btn");
 
-const modalSide = document.getElementById("modalSide");
-const modalPrice = document.getElementById("modalPrice");
+const shortButton =
+    document.querySelector(".short-btn");
+
+const tradeModal =
+    document.getElementById("tradeModal");
+
+const modalSide =
+    document.getElementById("modalSide");
+
+const modalPrice =
+    document.getElementById("modalPrice");
+
+const modalTitle =
+    document.getElementById("modalTitle");
 
 const confirmTradeBtn =
     document.getElementById("confirmTradeBtn");
@@ -32,159 +56,633 @@ const modalClose =
     document.getElementById("modalClose");
 
 
-/* =========================
-   LIVE PRICE
-========================= */
+/* ==========================================
+   FIREBASE
+========================================== */
 
-setInterval(function () {
-
-    const change = (Math.random() - 0.5) * 3;
-
-    price += change;
-
-    if (livePrice) {
-        livePrice.innerText = price.toFixed(2);
-    }
-
-    const percent =
-        ((change / price) * 100).toFixed(2);
-
-    if (changeBox) {
-
-        if (change >= 0) {
-
-            changeBox.className = "change green";
-            changeBox.innerText = "+" + percent + "%";
-
-        } else {
-
-            changeBox.className = "change red";
-            changeBox.innerText = percent + "%";
-
-        }
-
-    }
-
-}, 1000);
+let tradeAuth = null;
+let tradeDB = null;
+let tradeFirebaseUser = null;
 
 
-/* =========================
-   TIMEFRAME BUTTONS
-========================= */
+/* ==========================================
+   FIREBASE INITIALIZATION
+========================================== */
 
-document
-    .querySelectorAll(".timeframe button")
-    .forEach(function (btn) {
+async function initializeTradeFirebase() {
 
-        btn.addEventListener("click", function () {
+    try {
 
-            document
-                .querySelectorAll(".timeframe button")
-                .forEach(function (b) {
-
-                    b.classList.remove("active");
-
-                });
-
-            btn.classList.add("active");
-
-        });
-
-    });
+        const config =
+            await import(
+                "./firebase/firebase-config.js"
+            );
 
 
-/* =========================
-   INDICATOR BUTTONS
-========================= */
+        tradeAuth =
+            config.auth;
 
-document
-    .querySelectorAll(".indicator-bar button")
-    .forEach(function (btn) {
-
-        btn.addEventListener("click", function () {
-
-            document
-                .querySelectorAll(".indicator-bar button")
-                .forEach(function (b) {
-
-                    b.classList.remove("active");
-
-                });
-
-            btn.classList.add("active");
-
-        });
-
-    });
+        tradeDB =
+            config.db;
 
 
-/* =========================
-   LEVERAGE
-========================= */
+        const firebaseAuth =
+            await import(
+                "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js"
+            );
 
-document
-    .querySelectorAll(".leverage-grid button")
-    .forEach(function (btn) {
 
-        btn.addEventListener("click", function () {
+        firebaseAuth.onAuthStateChanged(
+            tradeAuth,
+            function (user) {
 
-            document
-                .querySelectorAll(".leverage-grid button")
-                .forEach(function (b) {
+                tradeFirebaseUser =
+                    user || null;
 
-                    b.classList.remove("active");
+                currentTradeUID =
+                    user
+                        ? user.uid
+                        : null;
 
-                });
 
-            btn.classList.add("active");
-
-            const levValue =
-                document.getElementById("levValue");
-
-            if (levValue) {
-
-                levValue.innerText =
-                    btn.innerText;
+                restoreActiveTrade();
 
             }
-
-        });
-
-    });
+        );
 
 
-/* =========================
-   AMOUNT INPUT
-========================= */
+    } catch (error) {
 
-const amountInput =
-    document.getElementById("amount");
+        console.error(
+            "Trade Firebase initialization failed:",
+            error
+        );
 
-if (amountInput) {
-
-    amountInput.addEventListener("input", function () {
-
-        const margin =
-            parseFloat(amountInput.value) || 0;
-
-        const marginValue =
-            document.getElementById("marginValue");
-
-        if (marginValue) {
-
-            marginValue.innerText =
-                "$" + margin.toFixed(2);
-
-        }
-
-    });
+    }
 
 }
 
 
-/* =========================
+/* ==========================================
+   UNIQUE TRADE ID
+========================================== */
+
+function createTradeId() {
+
+    return (
+        "TRD-" +
+        Date.now() +
+        "-" +
+        Math.random()
+            .toString(36)
+            .substring(2, 9)
+            .toUpperCase()
+    );
+
+}
+
+
+/* ==========================================
+   ACTIVE TRADE STORAGE
+========================================== */
+
+function saveActiveTrade() {
+
+    if (
+        !selectedSide ||
+        !entryPrice ||
+        !tradeAmountValue ||
+        !currentTradeId
+    ) {
+
+        return;
+
+    }
+
+
+    localStorage.setItem(
+        "selectedSide",
+        selectedSide
+    );
+
+
+    localStorage.setItem(
+        "entryPrice",
+        String(entryPrice)
+    );
+
+
+    localStorage.setItem(
+        "tradeAmountValue",
+        String(tradeAmountValue)
+    );
+
+
+    localStorage.setItem(
+        "currentTradeId",
+        currentTradeId
+    );
+
+
+    localStorage.setItem(
+        "currentTradePrice",
+        String(price)
+    );
+
+
+    localStorage.setItem(
+        "tradeLeverage",
+        String(selectedLeverage)
+    );
+
+
+    if (currentTradeUID) {
+
+        localStorage.setItem(
+            "currentTradeUID",
+            currentTradeUID
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   CLEAR ACTIVE TRADE
+========================================== */
+
+function clearActiveTrade() {
+
+    localStorage.removeItem(
+        "selectedSide"
+    );
+
+    localStorage.removeItem(
+        "entryPrice"
+    );
+
+    localStorage.removeItem(
+        "tradeAmountValue"
+    );
+
+    localStorage.removeItem(
+        "currentTradeId"
+    );
+
+    localStorage.removeItem(
+        "currentTradePrice"
+    );
+
+    localStorage.removeItem(
+        "tradeLeverage"
+    );
+
+    localStorage.removeItem(
+        "currentTradeUID"
+    );
+
+}
+
+
+/* ==========================================
+   GET ACTIVE TRADE
+========================================== */
+
+function getStoredActiveTrade() {
+
+    const side =
+        localStorage.getItem(
+            "selectedSide"
+        );
+
+    const savedEntry =
+        Number(
+            localStorage.getItem(
+                "entryPrice"
+            )
+        );
+
+
+    const amount =
+        Number(
+            localStorage.getItem(
+                "tradeAmountValue"
+            )
+        );
+
+
+    const tradeId =
+        localStorage.getItem(
+            "currentTradeId"
+        );
+
+
+    const uid =
+        localStorage.getItem(
+            "currentTradeUID"
+        );
+
+
+    if (
+        !side ||
+        !savedEntry ||
+        !amount ||
+        !tradeId
+    ) {
+
+        return null;
+
+    }
+
+
+    if (
+        side !== "LONG" &&
+        side !== "SHORT"
+    ) {
+
+        return null;
+
+    }
+
+
+    return {
+
+        side:
+            side,
+
+        entryPrice:
+            savedEntry,
+
+        amount:
+            amount,
+
+        tradeId:
+            tradeId,
+
+        uid:
+            uid || null
+
+    };
+
+}
+
+
+/* ==========================================
+   RESTORE ACTIVE TRADE
+========================================== */
+
+function restoreActiveTrade() {
+
+    const stored =
+        getStoredActiveTrade();
+
+
+    if (!stored) {
+
+        hideOpenTradeCard();
+
+        return;
+
+    }
+
+
+    /*
+     * If Firebase user exists,
+     * verify the trade belongs to
+     * this user.
+     */
+
+    if (
+        currentTradeUID &&
+        stored.uid &&
+        stored.uid !== currentTradeUID
+    ) {
+
+        hideOpenTradeCard();
+
+        return;
+
+    }
+
+
+    selectedSide =
+        stored.side;
+
+
+    entryPrice =
+        stored.entryPrice;
+
+
+    tradeAmountValue =
+        stored.amount;
+
+
+    currentTradeId =
+        stored.tradeId;
+
+
+    const savedLeverage =
+        Number(
+            localStorage.getItem(
+                "tradeLeverage"
+            )
+        );
+
+
+    if (
+        Number.isFinite(savedLeverage) &&
+        savedLeverage > 0
+    ) {
+
+        selectedLeverage =
+            savedLeverage;
+
+    }
+
+
+    updateOpenTradeUI();
+
+
+    console.log(
+        "Active trade restored:",
+        stored
+    );
+
+}
+
+
+/* ==========================================
+   LIVE PRICE
+========================================== */
+
+setInterval(
+    function () {
+
+        const change =
+            (Math.random() - 0.5) * 3;
+
+
+        price += change;
+
+
+        if (price <= 0) {
+
+            price = 1;
+
+        }
+
+
+        if (livePrice) {
+
+            livePrice.innerText =
+                price.toFixed(2);
+
+        }
+
+
+        const percent =
+            (
+                (change / price) *
+                100
+            ).toFixed(2);
+
+
+        if (changeBox) {
+
+            if (change >= 0) {
+
+                changeBox.className =
+                    "change green";
+
+                changeBox.innerText =
+                    "+" + percent + "%";
+
+            } else {
+
+                changeBox.className =
+                    "change red";
+
+                changeBox.innerText =
+                    percent + "%";
+
+            }
+
+        }
+
+
+        /*
+         * Save current price while
+         * a trade is open.
+         */
+
+        if (
+            selectedSide &&
+            entryPrice &&
+            tradeAmountValue
+        ) {
+
+            localStorage.setItem(
+                "currentTradePrice",
+                String(price)
+            );
+
+        }
+
+    },
+    1000
+);
+
+
+/* ==========================================
+   TIMEFRAME
+========================================== */
+
+document
+    .querySelectorAll(
+        ".timeframe button"
+    )
+    .forEach(
+        function (btn) {
+
+            btn.addEventListener(
+                "click",
+                function () {
+
+                    document
+                        .querySelectorAll(
+                            ".timeframe button"
+                        )
+                        .forEach(
+                            function (button) {
+
+                                button.classList.remove(
+                                    "active"
+                                );
+
+                            }
+                        );
+
+
+                    btn.classList.add(
+                        "active"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+/* ==========================================
+   INDICATORS
+========================================== */
+
+document
+    .querySelectorAll(
+        ".indicator-bar button"
+    )
+    .forEach(
+        function (btn) {
+
+            btn.addEventListener(
+                "click",
+                function () {
+
+                    document
+                        .querySelectorAll(
+                            ".indicator-bar button"
+                        )
+                        .forEach(
+                            function (button) {
+
+                                button.classList.remove(
+                                    "active"
+                                );
+
+                            }
+                        );
+
+
+                    btn.classList.add(
+                        "active"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+/* ==========================================
+   LEVERAGE
+========================================== */
+
+document
+    .querySelectorAll(
+        ".leverage-grid button"
+    )
+    .forEach(
+        function (btn) {
+
+            btn.addEventListener(
+                "click",
+                function () {
+
+                    document
+                        .querySelectorAll(
+                            ".leverage-grid button"
+                        )
+                        .forEach(
+                            function (button) {
+
+                                button.classList.remove(
+                                    "active"
+                                );
+
+                            }
+                        );
+
+
+                    btn.classList.add(
+                        "active"
+                    );
+
+
+                    selectedLeverage =
+                        Number(
+                            btn.innerText
+                                .replace("x", "")
+                        );
+
+
+                    const levValue =
+                        document.getElementById(
+                            "levValue"
+                        );
+
+
+                    if (levValue) {
+
+                        levValue.innerText =
+                            btn.innerText;
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+/* ==========================================
+   AMOUNT INPUT
+========================================== */
+
+const amountInput =
+    document.getElementById(
+        "amount"
+    );
+
+
+if (amountInput) {
+
+    amountInput.addEventListener(
+        "input",
+        function () {
+
+            const margin =
+                Number(
+                    amountInput.value
+                ) || 0;
+
+
+            const marginValue =
+                document.getElementById(
+                    "marginValue"
+                );
+
+
+            if (marginValue) {
+
+                marginValue.innerText =
+                    "$" +
+                    margin.toFixed(2);
+
+            }
+
+        }
+    );
+
+}
+
+
+/* ==========================================
    TRADINGVIEW
-========================= */
+========================================== */
 
 if (
     typeof TradingView !== "undefined" &&
@@ -193,334 +691,603 @@ if (
 
     new TradingView.widget({
 
-        autosize: true,
+        autosize:
+            true,
 
-        symbol: "OANDA:XAUUSD",
+        symbol:
+            "OANDA:XAUUSD",
 
-        interval: "1",
+        interval:
+            "1",
 
-        timezone: "Etc/UTC",
+        timezone:
+            "Etc/UTC",
 
-        theme: "dark",
+        theme:
+            "dark",
 
-        style: "1",
+        style:
+            "1",
 
-        locale: "en",
+        locale:
+            "en",
 
-        toolbar_bg: "#08162f",
+        toolbar_bg:
+            "#08162f",
 
-        enable_publishing: false,
+        enable_publishing:
+            false,
 
-        hide_top_toolbar: true,
+        hide_top_toolbar:
+            true,
 
-        hide_legend: true,
+        hide_legend:
+            true,
 
-        save_image: false,
+        save_image:
+            false,
 
-        container_id: "tvchart"
+        container_id:
+            "tvchart"
 
     });
 
 }
 
 
-/* =========================
+/* ==========================================
    OPEN LONG
-========================= */
+========================================== */
 
 if (longButton) {
 
-    longButton.addEventListener("click", function () {
+    longButton.addEventListener(
+        "click",
+        function () {
 
-        selectedSide = "LONG";
-
-        entryPrice = price;
-
-        if (modalSide) {
-
-            modalSide.innerText =
-                "LONG";
+            openTradeModal(
+                "LONG"
+            );
 
         }
-
-        if (modalPrice) {
-
-            modalPrice.innerText =
-                entryPrice.toFixed(2);
-
-        }
-
-        if (tradeModal) {
-
-            tradeModal.style.display =
-                "flex";
-
-        }
-
-    });
+    );
 
 }
 
 
-/* =========================
+/* ==========================================
    OPEN SHORT
-========================= */
+========================================== */
 
 if (shortButton) {
 
-    shortButton.addEventListener("click", function () {
+    shortButton.addEventListener(
+        "click",
+        function () {
 
-        selectedSide = "SHORT";
-
-        entryPrice = price;
-
-        if (modalSide) {
-
-            modalSide.innerText =
-                "SHORT";
+            openTradeModal(
+                "SHORT"
+            );
 
         }
-
-        if (modalPrice) {
-
-            modalPrice.innerText =
-                entryPrice.toFixed(2);
-
-        }
-
-        if (tradeModal) {
-
-            tradeModal.style.display =
-                "flex";
-
-        }
-
-    });
+    );
 
 }
 
 
-/* =========================
+/* ==========================================
+   OPEN TRADE MODAL
+========================================== */
+
+function openTradeModal(
+    side
+) {
+
+    /*
+     * Do not allow a second trade
+     * while another trade is active.
+     */
+
+    if (
+        selectedSide &&
+        entryPrice &&
+        tradeAmountValue
+    ) {
+
+        alert(
+            "You already have an open trade. Close it before opening another trade."
+        );
+
+        return;
+
+    }
+
+
+    selectedSide =
+        side;
+
+
+    entryPrice =
+        price;
+
+
+    if (modalSide) {
+
+        modalSide.innerText =
+            side;
+
+    }
+
+
+    if (modalTitle) {
+
+        modalTitle.innerText =
+            "Open " + side;
+
+    }
+
+
+    if (modalPrice) {
+
+        modalPrice.innerText =
+            entryPrice.toFixed(2);
+
+    }
+
+
+    const orderAmount =
+        document.getElementById(
+            "orderAmount"
+        );
+
+
+    if (orderAmount && amountInput) {
+
+        orderAmount.value =
+            amountInput.value || "";
+
+    }
+
+
+    if (tradeModal) {
+
+        tradeModal.style.display =
+            "flex";
+
+    }
+
+}
+
+
+/* ==========================================
    CLOSE MODAL
-========================= */
+========================================== */
 
 if (modalClose) {
 
-    modalClose.addEventListener("click", function () {
+    modalClose.addEventListener(
+        "click",
+        function () {
 
-        if (tradeModal) {
+            if (tradeModal) {
 
-            tradeModal.style.display =
-                "none";
+                tradeModal.style.display =
+                    "none";
+
+            }
 
         }
-
-    });
+    );
 
 }
 
 
 if (tradeModal) {
 
-    tradeModal.addEventListener("click", function (event) {
+    tradeModal.addEventListener(
+        "click",
+        function (event) {
 
-        if (event.target === tradeModal) {
+            if (
+                event.target ===
+                tradeModal
+            ) {
 
-            tradeModal.style.display =
-                "none";
+                tradeModal.style.display =
+                    "none";
+
+            }
 
         }
-
-    });
+    );
 
 }
 
 
-/* =========================
+/* ==========================================
    CONFIRM TRADE
-========================= */
+========================================== */
 
 if (confirmTradeBtn) {
 
-    confirmTradeBtn.addEventListener("click", function () {
+    confirmTradeBtn.addEventListener(
+        "click",
+        async function () {
 
-        const orderAmountInput =
-            document.getElementById("orderAmount");
-
-        let orderAmount = 0;
-
-        if (orderAmountInput) {
-
-            orderAmount =
-                parseFloat(
-                    orderAmountInput.value
-                ) || 0;
+            await confirmTrade();
 
         }
+    );
+
+}
 
 
-        /* fallback */
+/* ==========================================
+   CONFIRM TRADE FUNCTION
+========================================== */
 
-        if (
-            orderAmount <= 0 &&
-            amountInput
-        ) {
+async function confirmTrade() {
 
-            orderAmount =
-                parseFloat(
-                    amountInput.value
-                ) || 0;
+    if (
+        !selectedSide ||
+        !entryPrice
+    ) {
 
-        }
-
-
-        if (orderAmount <= 0) {
-
-            alert(
-                "Please enter a valid amount."
-            );
-
-            return;
-
-        }
-
-
-        if (
-            !selectedSide ||
-            !entryPrice
-        ) {
-
-            alert(
-                "Please select LONG or SHORT."
-            );
-
-            return;
-
-        }
-
-
-        /*
-         * CREATE UNIQUE TRADE ID
-         */
-
-        currentTradeId =
-            "TRD-" +
-            Date.now() +
-            "-" +
-            Math.random()
-                .toString(36)
-                .substring(2, 8);
-
-
-        tradeAmountValue =
-            orderAmount;
-
-
-        /*
-         * SAVE ACTIVE TRADE
-         */
-
-        localStorage.setItem(
-            "selectedSide",
-            selectedSide
+        alert(
+            "Please select LONG or SHORT."
         );
 
-        localStorage.setItem(
-            "entryPrice",
-            entryPrice
+        return;
+
+    }
+
+
+    /*
+     * Firebase user is required.
+     */
+
+    if (
+        !tradeFirebaseUser
+    ) {
+
+        alert(
+            "Please login before opening a trade."
         );
 
-        localStorage.setItem(
-            "tradeAmountValue",
+        return;
+
+    }
+
+
+    const orderAmountInput =
+        document.getElementById(
+            "orderAmount"
+        );
+
+
+    let orderAmount =
+        Number(
+            orderAmountInput
+                ? orderAmountInput.value
+                : 0
+        );
+
+
+    /*
+     * Fallback to main amount input.
+     */
+
+    if (
+        !orderAmount ||
+        orderAmount <= 0
+    ) {
+
+        orderAmount =
+            Number(
+                amountInput
+                    ? amountInput.value
+                    : 0
+            );
+
+    }
+
+
+    if (
+        !Number.isFinite(orderAmount) ||
+        orderAmount <= 0
+    ) {
+
+        alert(
+            "Please enter a valid amount."
+        );
+
+        return;
+
+    }
+
+
+    /*
+     * Balance API check.
+     */
+
+    if (
+        typeof window.hasEnoughBalance !==
+        "function" ||
+        typeof window.subtractBalance !==
+        "function"
+    ) {
+
+        alert(
+            "Balance system is not ready. Please reload the page."
+        );
+
+        return;
+
+    }
+
+
+    /*
+     * Check current balance.
+     */
+
+    if (
+        !window.hasEnoughBalance(
+            orderAmount
+        )
+    ) {
+
+        alert(
+            "Insufficient balance."
+        );
+
+        return;
+
+    }
+
+
+    /*
+     * Deduct from Firebase.
+     */
+
+    const deducted =
+        await window.subtractBalance(
             orderAmount
         );
 
-        localStorage.setItem(
-            "currentTradeId",
-            currentTradeId
+
+    if (!deducted) {
+
+        alert(
+            "Unable to deduct balance. Please try again."
+        );
+
+        return;
+
+    }
+
+
+    /*
+     * Create unique ID.
+     */
+
+    currentTradeId =
+        createTradeId();
+
+
+    tradeAmountValue =
+        Number(
+            orderAmount.toFixed(2)
         );
 
 
-        /* =========================
-           CHECK BALANCE
-        ========================= */
+    currentTradeUID =
+        tradeFirebaseUser.uid;
+
+
+    /*
+     * Save active trade.
+     */
+
+    saveActiveTrade();
+
+
+    /*
+     * Update UI.
+     */
+
+    updateOpenTradeUI();
+
+
+    /*
+     * Close modal.
+     */
+
+    if (tradeModal) {
+
+        tradeModal.style.display =
+            "none";
+
+    }
+
+
+    alert(
+        selectedSide +
+        " trade opened successfully."
+    );
+
+
+    console.log(
+        "Trade opened:",
+        {
+            tradeId:
+                currentTradeId,
+
+            uid:
+                currentTradeUID,
+
+            side:
+                selectedSide,
+
+            entryPrice:
+                entryPrice,
+
+            amount:
+                tradeAmountValue
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   OPEN TRADE UI
+========================================== */
+
+function updateOpenTradeUI() {
+
+    const openTradeCard =
+        document.getElementById(
+            "openTradeCard"
+        );
+
+
+    const positionSide =
+        document.getElementById(
+            "positionSide"
+        );
+
+
+    const entryPriceBox =
+        document.getElementById(
+            "entryPrice"
+        );
+
+
+    const currentTradePrice =
+        document.getElementById(
+            "currentTradePrice"
+        );
+
+
+    const tradeAmount =
+        document.getElementById(
+            "tradeAmount"
+        );
+
+
+    if (!selectedSide) {
+
+        hideOpenTradeCard();
+
+        return;
+
+    }
+
+
+    if (positionSide) {
+
+        positionSide.innerText =
+            selectedSide;
+
+    }
+
+
+    if (entryPriceBox) {
+
+        entryPriceBox.innerText =
+            Number(
+                entryPrice || 0
+            ).toFixed(2);
+
+    }
+
+
+    if (currentTradePrice) {
+
+        currentTradePrice.innerText =
+            price.toFixed(2);
+
+    }
+
+
+    if (tradeAmount) {
+
+        tradeAmount.innerText =
+            "$" +
+            Number(
+                tradeAmountValue || 0
+            ).toFixed(2);
+
+    }
+
+
+    if (openTradeCard) {
+
+        openTradeCard.style.display =
+            "block";
+
+    }
+
+}
+
+
+/* ==========================================
+   HIDE OPEN TRADE
+========================================== */
+
+function hideOpenTradeCard() {
+
+    const card =
+        document.getElementById(
+            "openTradeCard"
+        );
+
+
+    if (card) {
+
+        card.style.display =
+            "none";
+
+    }
+
+}
+
+
+/* ==========================================
+   LIVE PROFIT / LOSS
+========================================== */
+
+setInterval(
+    function () {
 
         if (
-            typeof hasEnoughBalance !== "function" ||
-            typeof subtractBalance !== "function"
+            !selectedSide ||
+            !entryPrice ||
+            !tradeAmountValue
         ) {
 
-            alert(
-                "Balance system is not available."
-            );
-
             return;
 
         }
 
-
-        if (!hasEnoughBalance(orderAmount)) {
-
-            alert(
-                "Insufficient balance."
-            );
-
-            return;
-
-        }
-
-
-        if (!subtractBalance(orderAmount)) {
-
-            alert(
-                "Failed to deduct balance."
-            );
-
-            return;
-
-        }
-
-
-        const openTradeCard =
-            document.getElementById(
-                "openTradeCard"
-            );
-
-        const positionSide =
-            document.getElementById(
-                "positionSide"
-            );
-
-        const entryPriceBox =
-            document.getElementById(
-                "entryPrice"
-            );
 
         const currentTradePrice =
             document.getElementById(
                 "currentTradePrice"
             );
 
-        const tradeAmount =
+
+        const profitLossBox =
             document.getElementById(
-                "tradeAmount"
+                "tradePL"
             );
 
 
-        if (positionSide) {
-
-            positionSide.innerText =
-                selectedSide;
-
-        }
-
-
-        if (entryPriceBox) {
-
-            entryPriceBox.innerText =
-                entryPrice.toFixed(2);
-
-        }
+        let profitLoss =
+            calculateProfitLoss(
+                price
+            );
 
 
         if (currentTradePrice) {
@@ -531,146 +1298,101 @@ if (confirmTradeBtn) {
         }
 
 
-        if (tradeAmount) {
+        if (profitLossBox) {
 
-            tradeAmount.innerText =
+            profitLossBox.innerText =
+                (
+                    profitLoss >= 0
+                        ? "+"
+                        : ""
+                ) +
                 "$" +
-                orderAmount.toFixed(2);
+                profitLoss.toFixed(2);
+
+
+            profitLossBox.className =
+                profitLoss >= 0
+                    ? "profit"
+                    : "loss";
 
         }
 
-
-        if (openTradeCard) {
-
-            openTradeCard.style.display =
-                "block";
-
-        }
+    },
+    1000
+);
 
 
-        if (tradeModal) {
+/* ==========================================
+   CALCULATE PROFIT / LOSS
+========================================== */
 
-            tradeModal.style.display =
-                "none";
+function calculateProfitLoss(
+    currentPrice
+) {
 
-        }
+    if (
+        !selectedSide ||
+        !entryPrice ||
+        !tradeAmountValue
+    ) {
+
+        return 0;
+
+    }
 
 
-        alert(
-            selectedSide +
-            " trade opened successfully."
-        );
+    let profitLoss =
+        0;
 
-    });
+
+    if (
+        selectedSide === "LONG"
+    ) {
+
+        profitLoss =
+            (
+                (
+                    currentPrice -
+                    entryPrice
+                )
+                /
+                entryPrice
+            )
+            *
+            tradeAmountValue;
+
+    }
+
+
+    if (
+        selectedSide === "SHORT"
+    ) {
+
+        profitLoss =
+            (
+                (
+                    entryPrice -
+                    currentPrice
+                )
+                /
+                entryPrice
+            )
+            *
+            tradeAmountValue;
+
+    }
+
+
+    return Number(
+        profitLoss.toFixed(2)
+    );
 
 }
 
 
-/* ===================================
-   LIVE PROFIT / LOSS
-=================================== */
-
-setInterval(function () {
-
-    const currentTradePrice =
-        document.getElementById(
-            "currentTradePrice"
-        );
-
-    const tradeAmount =
-        document.getElementById(
-            "tradeAmount"
-        );
-
-    const profitLossBox =
-        document.getElementById(
-            "tradePL"
-        );
-
-
-    if (
-        !currentTradePrice ||
-        !tradeAmount
-    ) {
-
-        return;
-
-    }
-
-
-    if (
-        !selectedSide ||
-        !entryPrice
-    ) {
-
-        return;
-
-    }
-
-
-    const currentPrice =
-        price;
-
-
-    const amount =
-        tradeAmountValue ||
-        parseFloat(
-            tradeAmount.innerText
-                .replace("$", "")
-        ) || 0;
-
-
-    let profitLoss = 0;
-
-
-    if (selectedSide === "LONG") {
-
-        profitLoss =
-            (
-                (currentPrice -
-                    entryPrice)
-                /
-                entryPrice
-            )
-            *
-            amount;
-
-    }
-
-
-    if (selectedSide === "SHORT") {
-
-        profitLoss =
-            (
-                (entryPrice -
-                    currentPrice)
-                /
-                entryPrice
-            )
-            *
-            amount;
-
-    }
-
-
-    currentTradePrice.innerText =
-        currentPrice.toFixed(2);
-
-
-    if (profitLossBox) {
-
-        profitLossBox.innerText =
-            "$" +
-            profitLoss.toFixed(2);
-
-    }
-
-}, 1000);
-
-
-/* =========================
-   CLOSE TRADE
-========================= */
+/* ==========================================
+   CLOSE TRADE BUTTON
+========================================== */
 
 const closeTradeBtn =
     document.getElementById(
@@ -682,239 +1404,9 @@ if (closeTradeBtn) {
 
     closeTradeBtn.addEventListener(
         "click",
-        function () {
+        async function () {
 
-            if (
-                !selectedSide ||
-                !entryPrice
-            ) {
-
-                alert(
-                    "No open trade."
-                );
-
-                return;
-
-            }
-
-
-            const closePrice =
-                price;
-
-
-            const amount =
-                tradeAmountValue ||
-                parseFloat(
-                    document
-                        .getElementById(
-                            "tradeAmount"
-                        )
-                        ?.innerText
-                        .replace("$", "")
-                ) || 0;
-
-
-            let finalProfitLoss = 0;
-
-
-            if (selectedSide === "LONG") {
-
-                finalProfitLoss =
-                    (
-                        (closePrice -
-                            entryPrice)
-                        /
-                        entryPrice
-                    )
-                    *
-                    amount;
-
-            }
-
-
-            if (selectedSide === "SHORT") {
-
-                finalProfitLoss =
-                    (
-                        (entryPrice -
-                            closePrice)
-                        /
-                        entryPrice
-                    )
-                    *
-                    amount;
-
-            }
-
-
-            /* =========================
-               RETURN BALANCE
-            ========================= */
-
-            if (
-                typeof addBalance === "function"
-            ) {
-
-                addBalance(
-                    amount +
-                    finalProfitLoss
-                );
-
-            }
-
-
-            /* =========================
-               CLOSED TRADE
-            ========================= */
-
-            const closedTrade = {
-
-                tradeId:
-                    currentTradeId ||
-                    localStorage.getItem(
-                        "currentTradeId"
-                    ) ||
-                    "",
-
-                side:
-                    selectedSide,
-
-                entryPrice:
-                    Number(
-                        entryPrice.toFixed(2)
-                    ),
-
-                closePrice:
-                    Number(
-                        closePrice.toFixed(2)
-                    ),
-
-                profitLoss:
-                    Number(
-                        finalProfitLoss.toFixed(2)
-                    ),
-
-                amount:
-                    Number(
-                        amount.toFixed(2)
-                    ),
-
-                time:
-                    new Date().toLocaleString(),
-
-                source:
-                    "USER"
-
-            };
-
-
-            /* =========================
-               SAVE LOCAL HISTORY
-            ========================= */
-
-            let history = [];
-
-            try {
-
-                history =
-                    JSON.parse(
-                        localStorage.getItem(
-                            "cptTradeHistory"
-                        )
-                    ) || [];
-
-            } catch (error) {
-
-                history = [];
-
-            }
-
-
-            history.unshift(
-                closedTrade
-            );
-
-
-            localStorage.setItem(
-                "cptTradeHistory",
-                JSON.stringify(
-                    history
-                )
-            );
-
-
-            /* =========================
-               HIDE OPEN TRADE
-            ========================= */
-
-            const openTradeCard =
-                document.getElementById(
-                    "openTradeCard"
-                );
-
-
-            if (openTradeCard) {
-
-                openTradeCard.style.display =
-                    "none";
-
-            }
-
-
-            /* =========================
-               MESSAGE
-            ========================= */
-
-            alert(
-
-                selectedSide +
-                " trade closed.\n\n" +
-
-                "Close Price: $" +
-                closePrice.toFixed(2) +
-
-                "\nProfit/Loss: $" +
-                finalProfitLoss.toFixed(2)
-
-            );
-
-
-            /* =========================
-               RESET
-            ========================= */
-
-            selectedSide =
-                null;
-
-            entryPrice =
-                null;
-
-            tradeAmountValue =
-                0;
-
-            currentTradeId =
-                null;
-
-
-            localStorage.removeItem(
-                "selectedSide"
-            );
-
-            localStorage.removeItem(
-                "entryPrice"
-            );
-
-            localStorage.removeItem(
-                "tradeAmountValue"
-            );
-
-            localStorage.removeItem(
-                "currentTradePrice"
-            );
-
-            localStorage.removeItem(
-                "currentTradeId"
-            );
+            await closeCurrentTrade();
 
         }
     );
@@ -922,188 +1414,514 @@ if (closeTradeBtn) {
 }
 
 
-/* =========================
-   TRADE HISTORY
-========================= */
+/* ==========================================
+   CLOSE CURRENT TRADE
+========================================== */
 
-function renderTradeHistory() {
+async function closeCurrentTrade() {
 
-    const list =
-        document.getElementById(
-            "closedTradesList"
+    if (
+        !selectedSide ||
+        !entryPrice ||
+        !tradeAmountValue ||
+        !currentTradeId
+    ) {
+
+        alert(
+            "No open trade."
         );
-
-
-    if (!list) {
 
         return;
 
     }
 
 
-    let history = [];
+    if (
+        !tradeFirebaseUser
+    ) {
+
+        alert(
+            "User session not ready."
+        );
+
+        return;
+
+    }
+
+
+    const closePrice =
+        price;
+
+
+    const finalProfitLoss =
+        calculateProfitLoss(
+            closePrice
+        );
+
+
+    const returnAmount =
+        Number(
+            (
+                tradeAmountValue +
+                finalProfitLoss
+            ).toFixed(2)
+        );
+
+
+    if (
+        returnAmount < 0
+    ) {
+
+        alert(
+            "Invalid trade result."
+        );
+
+        return;
+
+    }
+
+
+    /*
+     * First save the trade history.
+     * If history fails, do NOT return
+     * the balance yet.
+     */
+
+    const historySaved =
+        await saveTradeHistory({
+
+            tradeId:
+                currentTradeId,
+
+            uid:
+                tradeFirebaseUser.uid,
+
+            side:
+                selectedSide,
+
+            entryPrice:
+                Number(
+                    entryPrice.toFixed(2)
+                ),
+
+            closePrice:
+                Number(
+                    closePrice.toFixed(2)
+                ),
+
+            amount:
+                Number(
+                    tradeAmountValue.toFixed(2)
+                ),
+
+            profitLoss:
+                finalProfitLoss,
+
+            leverage:
+                selectedLeverage,
+
+            source:
+                "USER"
+
+        });
+
+
+    if (!historySaved) {
+
+        alert(
+            "Trade history could not be saved. Balance was not returned. Please try again."
+        );
+
+        return;
+
+    }
+
+
+    /*
+     * Return margin + profit/loss.
+     */
+
+    const balanceReturned =
+        await window.addBalance(
+            returnAmount
+        );
+
+
+    if (!balanceReturned) {
+
+        alert(
+            "Trade history was saved, but balance could not be returned. Please contact admin."
+        );
+
+        return;
+
+    }
+
+
+    /*
+     * Hide trade.
+     */
+
+    hideOpenTradeCard();
+
+
+    /*
+     * Message.
+     */
+
+    alert(
+
+        selectedSide +
+        " trade closed successfully.\n\n" +
+
+        "Close Price: $" +
+        closePrice.toFixed(2) +
+
+        "\nProfit/Loss: " +
+        (
+            finalProfitLoss >= 0
+                ? "+"
+                : ""
+        ) +
+        "$" +
+        finalProfitLoss.toFixed(2)
+
+    );
+
+
+    /*
+     * Reset state.
+     */
+
+    selectedSide =
+        null;
+
+    entryPrice =
+        null;
+
+    tradeAmountValue =
+        0;
+
+    currentTradeId =
+        null;
+
+    currentTradeUID =
+        tradeFirebaseUser
+            ? tradeFirebaseUser.uid
+            : null;
+
+
+    clearActiveTrade();
+
+
+    console.log(
+        "Trade closed successfully."
+    );
+
+}
+
+
+/* ==========================================
+   SAVE FIREBASE TRADE HISTORY
+========================================== */
+
+async function saveTradeHistory(
+    trade
+) {
 
     try {
 
-        history =
+        if (
+            !tradeDB ||
+            !tradeFirebaseUser
+        ) {
+
+            return false;
+
+        }
+
+
+        const firestore =
+            await import(
+                "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js"
+            );
+
+
+        /*
+         * Check whether this trade was
+         * already saved.
+         */
+
+        const existingQuery =
+            firestore.query(
+
+                firestore.collection(
+                    tradeDB,
+                    "tradeHistory"
+                ),
+
+                firestore.where(
+                    "tradeId",
+                    "==",
+                    trade.tradeId
+                )
+
+            );
+
+
+        const existingSnapshot =
+            await firestore.getDocs(
+                existingQuery
+            );
+
+
+        if (
+            !existingSnapshot.empty
+        ) {
+
+            console.warn(
+                "Trade already exists:",
+                trade.tradeId
+            );
+
+            return true;
+
+        }
+
+
+        /*
+         * Create history document.
+         */
+
+        await firestore.addDoc(
+
+            firestore.collection(
+                tradeDB,
+                "tradeHistory"
+            ),
+
+            {
+
+                tradeId:
+                    trade.tradeId,
+
+                uid:
+                    trade.uid,
+
+                userId:
+                    trade.uid,
+
+                side:
+                    trade.side,
+
+                entryPrice:
+                    trade.entryPrice,
+
+                closePrice:
+                    trade.closePrice,
+
+                amount:
+                    trade.amount,
+
+                profitLoss:
+                    trade.profitLoss,
+
+                leverage:
+                    trade.leverage,
+
+                type:
+                    "TRADE",
+
+                source:
+                    "USER",
+
+                time:
+                    new Date()
+                        .toLocaleString(),
+
+                createdAt:
+                    firestore.serverTimestamp()
+
+            }
+
+        );
+
+
+        /*
+         * Also save local history.
+         */
+
+        saveLocalTradeHistory(
+            trade
+        );
+
+
+        return true;
+
+
+    } catch (error) {
+
+        console.error(
+            "Trade history save failed:",
+            error
+        );
+
+
+        return false;
+
+    }
+
+}
+
+
+/* ==========================================
+   LOCAL TRADE HISTORY
+========================================== */
+
+function saveLocalTradeHistory(
+    trade
+) {
+
+    try {
+
+        let history =
             JSON.parse(
                 localStorage.getItem(
                     "cptTradeHistory"
                 )
             ) || [];
 
-    } catch (error) {
 
-        history = [];
+        /*
+         * Prevent duplicate trade.
+         */
 
-    }
+        const alreadyExists =
+            history.some(
+                function (item) {
 
+                    return (
+                        item.tradeId ===
+                        trade.tradeId
+                    );
 
-    list.innerHTML = "";
-
-
-    if (history.length === 0) {
-
-        list.innerHTML =
-            '<p id="noClosedTrades">No closed trades yet.</p>';
-
-        return;
-
-    }
-
-
-    history.forEach(function (trade) {
-
-        const card =
-            document.createElement(
-                "div"
+                }
             );
 
 
-        card.className =
-            "closed-trade-card";
+        if (
+            alreadyExists
+        ) {
+
+            return;
+
+        }
 
 
-        const profitClass =
-            Number(
-                trade.profitLoss || 0
-            ) >= 0
-                ? "profit"
-                : "loss";
+        history.unshift({
+
+            tradeId:
+                trade.tradeId,
+
+            uid:
+                trade.uid,
+
+            side:
+                trade.side,
+
+            entryPrice:
+                trade.entryPrice,
+
+            closePrice:
+                trade.closePrice,
+
+            amount:
+                trade.amount,
+
+            profitLoss:
+                trade.profitLoss,
+
+            leverage:
+                trade.leverage,
+
+            type:
+                "TRADE",
+
+            source:
+                "USER",
+
+            time:
+                new Date()
+                    .toLocaleString()
+
+        });
 
 
-        card.innerHTML = `
+        localStorage.setItem(
 
-            <div>
+            "cptTradeHistory",
 
-                <strong>
-                    ${trade.side}
-                </strong>
+            JSON.stringify(
+                history
+            )
 
-                <span>
-                    ${trade.time || ""}
-                </span>
-
-            </div>
-
-
-            <div>
-
-                <span>
-                    Entry
-                </span>
-
-                <strong>
-                    $${Number(
-                        trade.entryPrice || 0
-                    ).toFixed(2)}
-                </strong>
-
-            </div>
-
-
-            <div>
-
-                <span>
-                    Close
-                </span>
-
-                <strong>
-                    $${Number(
-                        trade.closePrice || 0
-                    ).toFixed(2)}
-                </strong>
-
-            </div>
-
-
-            <div>
-
-                <span>
-                    Amount
-                </span>
-
-                <strong>
-                    $${Number(
-                        trade.amount || 0
-                    ).toFixed(2)}
-                </strong>
-
-            </div>
-
-
-            <div>
-
-                <span>
-                    P/L
-                </span>
-
-                <strong class="${profitClass}">
-                    ${
-                        Number(
-                            trade.profitLoss || 0
-                        ) >= 0
-                            ? "+"
-                            : ""
-                    }$${Number(
-                        trade.profitLoss || 0
-                    ).toFixed(2)}
-                </strong>
-
-            </div>
-
-        `;
-
-
-        list.appendChild(
-            card
         );
 
-    });
+
+    } catch (error) {
+
+        console.error(
+            "Local trade history error:",
+            error
+        );
+
+    }
 
 }
 
 
-/* =========================
-   LOAD HISTORY
-========================= */
+/* ==========================================
+   LOAD HISTORY FUNCTION
+========================================== */
 
-renderTradeHistory();
+function renderTradeHistory() {
+
+    /*
+     * History is rendered by orders.html.
+     * This function is intentionally kept
+     * for compatibility with the old system.
+     */
+
+    return;
+
+}
 
 
-/* =========================
+/* ==========================================
+   START
+========================================== */
+
+initializeTradeFirebase();
+
+
+/* ==========================================
    ERROR PROTECTION
-========================= */
+========================================== */
 
 window.addEventListener(
     "error",
     function (event) {
 
         console.error(
-            "Trade JS Error:",
+            "CptMarkets Trade JS Error:",
             event.error ||
             event.message
         );
 
     }
 );
+
+
+/* ==========================================
+   END
+========================================== */
