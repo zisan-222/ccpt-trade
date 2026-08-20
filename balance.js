@@ -2,12 +2,12 @@
    CPTMARKETS
    balance.js
    FIREBASE BALANCE SYSTEM
-   FINAL FOUNDATION
+   FINAL - FIREBASE SOURCE OF TRUTH
 ========================================== */
 
 
 /* ==========================================
-   FIREBASE
+   FIREBASE STATE
 ========================================== */
 
 let CPT_AUTH = null;
@@ -15,6 +15,8 @@ let CPT_DB = null;
 
 let currentFirebaseUser = null;
 let balanceUnsubscribe = null;
+
+let firebaseReady = false;
 
 
 /* ==========================================
@@ -24,7 +26,8 @@ let balanceUnsubscribe = null;
 const BALANCE_KEY_PREFIX =
     "cptmarkets_balance_";
 
-const DEFAULT_BALANCE = 0.00;
+const DEFAULT_BALANCE =
+    0.00;
 
 
 /* ==========================================
@@ -35,16 +38,17 @@ async function initializeCPTFirebase() {
 
     try {
 
-        const firebaseConfig =
+        const config =
             await import(
                 "./firebase/firebase-config.js"
             );
 
+
         CPT_AUTH =
-            firebaseConfig.auth;
+            config.auth;
 
         CPT_DB =
-            firebaseConfig.db;
+            config.db;
 
 
         const firebaseAuth =
@@ -55,11 +59,19 @@ async function initializeCPTFirebase() {
 
         firebaseAuth.onAuthStateChanged(
             CPT_AUTH,
-            function (user) {
+            async function (user) {
 
                 currentFirebaseUser =
                     user || null;
 
+
+                firebaseReady =
+                    !!user;
+
+
+                /* ==========================
+                   USER LOGGED OUT
+                ========================== */
 
                 if (!user) {
 
@@ -70,10 +82,11 @@ async function initializeCPTFirebase() {
 
                         balanceUnsubscribe();
 
-                        balanceUnsubscribe =
-                            null;
-
                     }
+
+
+                    balanceUnsubscribe =
+                        null;
 
 
                     refreshBalanceUI();
@@ -83,7 +96,11 @@ async function initializeCPTFirebase() {
                 }
 
 
-                connectFirebaseBalance(
+                /* ==========================
+                   CONNECT USER BALANCE
+                ========================== */
+
+                await connectFirebaseBalance(
                     user
                 );
 
@@ -180,7 +197,9 @@ function getBalance() {
     }
 
 
-    return value;
+    return Number(
+        value.toFixed(2)
+    );
 
 }
 
@@ -207,6 +226,12 @@ function setLocalBalance(
     }
 
 
+    amount =
+        Number(
+            amount.toFixed(2)
+        );
+
+
     localStorage.setItem(
         getBalanceKey(),
         amount.toFixed(2)
@@ -226,17 +251,20 @@ function formatUSD(
     amount
 ) {
 
+    const safeAmount =
+        Number(amount) || 0;
+
+
     return (
         "$" +
-        Number(amount || 0)
-            .toFixed(2)
+        safeAmount.toFixed(2)
     );
 
 }
 
 
 /* ==========================================
-   REFRESH UI
+   REFRESH BALANCE UI
 ========================================== */
 
 function refreshBalanceUI() {
@@ -334,6 +362,10 @@ async function connectFirebaseBalance(
             );
 
 
+        /* ==========================
+           REMOVE OLD LISTENER
+        ========================== */
+
         if (
             typeof balanceUnsubscribe ===
             "function"
@@ -341,14 +373,20 @@ async function connectFirebaseBalance(
 
             balanceUnsubscribe();
 
-            balanceUnsubscribe =
-                null;
-
         }
 
 
         balanceUnsubscribe =
+            null;
+
+
+        /* ==========================
+           REAL-TIME BALANCE LISTENER
+        ========================== */
+
+        balanceUnsubscribe =
             firestore.onSnapshot(
+
                 userRef,
 
                 function (snapshot) {
@@ -361,6 +399,10 @@ async function connectFirebaseBalance(
                             "CptMarkets: user document does not exist."
                         );
 
+                        setLocalBalance(
+                            0
+                        );
+
                         return;
 
                     }
@@ -370,33 +412,47 @@ async function connectFirebaseBalance(
                         snapshot.data();
 
 
-                    const firebaseBalance =
+                    let firebaseBalance =
                         Number(
                             data.balance || 0
                         );
 
 
-                    const safeBalance =
-                        Number.isFinite(
+                    if (
+                        !Number.isFinite(
                             firebaseBalance
                         )
-                            ? Math.max(
-                                0,
-                                firebaseBalance
-                            )
-                            : 0;
+                    ) {
+
+                        firebaseBalance =
+                            0;
+
+                    }
+
+
+                    firebaseBalance =
+                        Math.max(
+                            0,
+                            firebaseBalance
+                        );
+
+
+                    firebaseBalance =
+                        Number(
+                            firebaseBalance.toFixed(2)
+                        );
 
 
                     /*
-                     * Firebase is the
-                     * source of truth.
+                     * FIREBASE IS THE
+                     * SOURCE OF TRUTH.
                      */
 
                     localStorage.setItem(
 
                         getBalanceKey(),
 
-                        safeBalance.toFixed(2)
+                        firebaseBalance.toFixed(2)
 
                     );
 
@@ -406,7 +462,7 @@ async function connectFirebaseBalance(
 
                     console.log(
                         "CptMarkets balance synced:",
-                        safeBalance
+                        firebaseBalance
                     );
 
                 },
@@ -419,6 +475,7 @@ async function connectFirebaseBalance(
                     );
 
                 }
+
             );
 
 
@@ -485,11 +542,14 @@ async function changeFirebaseBalance(
             );
 
 
-        const result =
+        const finalBalance =
             await firestore.runTransaction(
+
                 CPT_DB,
 
-                async function (transaction) {
+                async function (
+                    transaction
+                ) {
 
                     const snapshot =
                         await transaction.get(
@@ -518,8 +578,16 @@ async function changeFirebaseBalance(
                         );
 
 
+                    const safeOldBalance =
+                        Number.isFinite(
+                            oldBalance
+                        )
+                            ? oldBalance
+                            : 0;
+
+
                     const newBalance =
-                        oldBalance +
+                        safeOldBalance +
                         amount;
 
 
@@ -534,7 +602,7 @@ async function changeFirebaseBalance(
                     }
 
 
-                    const finalBalance =
+                    const safeBalance =
                         Number(
                             newBalance.toFixed(2)
                         );
@@ -545,25 +613,28 @@ async function changeFirebaseBalance(
                         userRef,
 
                         {
+
                             balance:
-                                finalBalance
+                                safeBalance
+
                         }
 
                     );
 
 
-                    return finalBalance;
+                    return safeBalance;
 
                 }
+
             );
 
 
-        /*
-         * Immediately update local cache.
-         */
+        /* ==========================
+           UPDATE LOCAL CACHE
+        ========================== */
 
         setLocalBalance(
-            result
+            finalBalance
         );
 
 
@@ -629,19 +700,6 @@ async function subtractBalance(
     if (
         !Number.isFinite(amount) ||
         amount <= 0
-    ) {
-
-        return false;
-
-    }
-
-
-    const current =
-        getBalance();
-
-
-    if (
-        current < amount
     ) {
 
         return false;
@@ -725,26 +783,36 @@ async function adminSetBalance(
             );
 
 
-        await firestore.updateDoc(
-
+        const userRef =
             firestore.doc(
                 CPT_DB,
                 "users",
                 currentFirebaseUser.uid
-            ),
+            );
+
+
+        const safeAmount =
+            Number(
+                amount.toFixed(2)
+            );
+
+
+        await firestore.updateDoc(
+
+            userRef,
 
             {
+
                 balance:
-                    Number(
-                        amount.toFixed(2)
-                    )
+                    safeAmount
+
             }
 
         );
 
 
         setLocalBalance(
-            amount
+            safeAmount
         );
 
 
@@ -846,30 +914,51 @@ window.CPTBalance = {
 window.getBalance =
     getBalance;
 
+
 window.setLocalBalance =
     setLocalBalance;
+
+
+window.setBalance =
+    setLocalBalance;
+
 
 window.addBalance =
     addBalance;
 
+
 window.subtractBalance =
     subtractBalance;
+
 
 window.hasEnoughBalance =
     hasEnoughBalance;
 
+
 window.resetBalance =
     resetBalance;
 
+
 window.adminSetBalance =
     adminSetBalance;
+
 
 window.reloadBalance =
     reloadBalance;
 
 
+/*
+ * Compatibility:
+ *
+ * trade.js may call refreshBalance()
+ */
+
+window.refreshBalance =
+    refreshBalanceUI;
+
+
 /* ==========================================
-   START
+   START FIREBASE
 ========================================== */
 
 initializeCPTFirebase();
