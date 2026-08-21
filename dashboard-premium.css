@@ -1,605 +1,813 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#061326">
-<title>CptMarkets — Dashboard Premium CS</title>
+/* =========================================================
+   CPTMARKETS
+   PREMIUM DASHBOARD THEME
+   dashboard-premium.css
+   FINAL VERSION
+   ========================================================= */
 
-<style>
-:root{
-  --bg:#061326;
-  --panel:#0b1c35;
-  --panel2:#0d2340;
-  --line:#294664;
-  --gold:#ffc21c;
-  --gold2:#ffd95a;
-  --text:#f4f7ff;
-  --muted:#a9b7cf;
-  --green:#00e3a2;
-  --nav:#07162a;
-  --shadow:0 18px 40px rgba(0,0,0,.28);
+
+/* =========================
+   GLOBAL BACKGROUND
+   ========================= */
+
+html,
+body {
+    background:
+        radial-gradient(
+            circle at 15% 10%,
+            rgba(38, 86, 150, 0.22),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 85% 25%,
+            rgba(0, 140, 255, 0.12),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 50% 85%,
+            rgba(255, 190, 0, 0.07),
+            transparent 35%
+        ),
+        linear-gradient(
+            145deg,
+            #030813 0%,
+            #071326 45%,
+            #020611 100%
+        ) !important;
+
+    color: #f4f7ff;
 }
 
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
-body{min-height:100vh;overflow-x:hidden}
-
-button{font:inherit}
-button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-
-.app{
-  min-height:100vh;
-  padding-bottom:92px;
-  background:
-    radial-gradient(circle at 82% 28%,rgba(23,75,129,.16),transparent 30%),
-    linear-gradient(180deg,#07162a 0%,#061326 100%);
+body {
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
-/* ---------- TOP BAR ---------- */
-.topbar{
-  height:122px;
-  display:flex;
-  align-items:center;
-  gap:15px;
-  padding:26px 24px 18px;
-  border-bottom:1px solid rgba(109,139,170,.18);
-  background:linear-gradient(180deg,#07172b,#061326);
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            rgba(65, 130, 220, 0.08),
+            transparent 42%
+        );
+
+    z-index: 0;
 }
 
-.brand-mark{
-  width:52px;height:52px;border-radius:50%;
-  display:grid;place-items:center;
-  background:linear-gradient(145deg,#ffd44b,#ffb900);
-  color:#09162a;
-  box-shadow:0 8px 24px rgba(255,190,25,.25);
-  flex:0 0 auto;
+main,
+.dashboard-container,
+.container {
+    position: relative;
+    z-index: 1;
 }
 
-.brand-mark svg{width:29px;height:29px}
-.brand{
-  font-size:29px;
-  font-weight:800;
-  letter-spacing:-.8px;
-  color:#ffc62a;
-  text-shadow:0 0 18px rgba(255,190,30,.22);
-}
-.top-actions{margin-left:auto;display:flex;gap:18px}
-.top-btn{
-  border:0;background:transparent;color:#fff;
-  width:42px;height:42px;padding:0;
-  display:grid;place-items:center;cursor:pointer;
-}
-.top-btn svg{width:32px;height:32px;stroke-width:2.8}
 
-/* ---------- SHARED CARD WIDTH ---------- */
-.content-card{
-  width:calc(100% - 48px);
-  margin-left:24px;
-  margin-right:24px;
-}
+/* =========================
+   HEADER
+   ========================= */
 
-/* ---------- HERO ---------- */
-.hero{
-  margin-top:16px;
-  height:286px;
-  border-radius:31px;
-  overflow:hidden;
-  border:1px solid rgba(105,126,150,.65);
-  background:#061326;
-  box-shadow:var(--shadow);
-  position:relative;
-}
-.hero img{
-  width:100%;
-  height:100%;
-  display:block;
-  object-fit:cover;
-  object-position:center;
-}
-.hero:after{
-  content:"";
-  position:absolute;inset:0;
-  border-radius:31px;
-  pointer-events:none;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.04),
-             inset 0 -45px 70px rgba(2,10,20,.14);
+header,
+.dashboard-header,
+.top-header {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(8, 22, 43, 0.96),
+            rgba(3, 10, 22, 0.94)
+        ) !important;
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.08) !important;
+
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.35) !important;
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
 }
 
-/* ---------- ASSETS ---------- */
-.assets{
-  margin-top:14px;
-  padding:31px 30px 31px;
-  border-radius:28px;
-  border:1px solid rgba(82,111,143,.56);
-  background:
-    radial-gradient(circle at 82% 18%,rgba(255,196,43,.08),transparent 23%),
-    linear-gradient(145deg,#101f36,#0b1c35 65%,#0b1930);
-  box-shadow:var(--shadow);
+
+/* =========================
+   LOGO
+   ========================= */
+
+.logo,
+.brand,
+.brand-name,
+.logo-text,
+header h1 {
+    color: #ffc52b !important;
+
+    text-shadow:
+        0 0 10px rgba(255, 197, 43, 0.20),
+        0 0 25px rgba(255, 197, 43, 0.10);
 }
 
-.asset-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  color:#b9c5d8;
-  font-size:21px;
-}
-.eye{
-  width:45px;height:45px;border:0;background:transparent;
-  color:var(--gold);cursor:pointer;padding:0;
-}
-.eye svg{width:32px;height:32px}
 
-.balance{
-  margin-top:20px;
-  font-size:62px;
-  line-height:1;
-  font-weight:700;
-  letter-spacing:-2px;
-  color:#f6f8ff;
-}
+/* =========================================================
+   HERO / BANNER
+   ========================================================= */
 
-.asset-meta{
-  display:flex;
-  justify-content:space-between;
-  gap:20px;
-  margin-top:31px;
-  color:#aab8cf;
-  font-size:20px;
-}
-.asset-meta strong{font-weight:700}
-.green{color:var(--green)}
+.hero,
+.hero-card,
+.banner-card {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(5, 27, 58, 0.18),
+            rgba(8, 43, 86, 0.06)
+        ),
+        url("market-bg.svg") center center / cover no-repeat !important;
 
-.asset-actions{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px;
-  margin-top:31px;
-}
-.action{
-  height:80px;
-  border-radius:22px;
-  border:1px solid #3a587b;
-  color:#f0f4fc;
-  background:linear-gradient(180deg,#1a3558,#142b49);
-  box-shadow:inset 0 1px rgba(255,255,255,.06);
-  cursor:pointer;
-  font-weight:700;
-  font-size:21px;
-}
-.action.primary{
-  color:#171b23;
-  border-color:#ffd45c;
-  background:linear-gradient(180deg,#ffdf58,#ffb400);
-  box-shadow:0 9px 26px rgba(255,188,24,.2),inset 0 1px rgba(255,255,255,.55);
+    border:
+        1px solid rgba(255, 199, 44, 0.20) !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 12px 35px rgba(0, 0, 0, 0.30) !important;
+
+    overflow: hidden;
 }
 
-/* ---------- QUICK GRID ---------- */
-.quick{
-  margin-top:24px;
-  padding:32px 18px 30px;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:31px 28px;
+
+/* =========================================================
+   FINAL BANNER
+   ========================================================= */
+
+.banner {
+    position: relative !important;
+
+    /*
+       Balance card-à¦à¦° à¦®à¦¤à§‹ screen width alignmentà¥¤
+       à¦¦à§à¦‡ à¦ªà¦¾à¦¶à§‡ à¦¸à§à¦¨à§à¦¦à¦° margin à¦¥à¦¾à¦•à¦¬à§‡à¥¤
+    */
+    width: calc(100% - 52px) !important;
+
+    margin-left: auto !important;
+    margin-right: auto !important;
+
+    box-sizing: border-box !important;
+
+    /*
+       FINAL HEIGHT
+
+       2.10/1-à¦à¦° à¦¬à¦¦à¦²à§‡ fixed responsive height à¦¬à§à¦¯à¦¬à¦¹à¦¾à¦° à¦•à¦°à¦¾ à¦¹à¦šà§à¦›à§‡à¥¤
+       à¦à¦¤à§‡ mobile-à¦ banner à¦†à¦° à¦…à¦¤à¦¿à¦°à¦¿à¦•à§à¦¤ à¦šà§à¦¯à¦¾à¦ªà§à¦Ÿà¦¾ à¦¹à¦¬à§‡ à¦¨à¦¾à¥¤
+    */
+    height: 330px !important;
+
+    min-height: 330px !important;
+    max-height: 330px !important;
+
+    border-radius: 24px !important;
+
+    overflow: hidden !important;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(3, 20, 45, 0.08),
+            rgba(3, 20, 45, 0.02)
+        ),
+        url("market-bg.svg") center center / 100% 100% no-repeat !important;
+
+    border:
+        1px solid rgba(255, 199, 44, 0.25) !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 12px 32px rgba(0, 0, 0, 0.28) !important;
 }
 
-.quick-item{
-  border:0;background:transparent;color:var(--text);
-  display:flex;flex-direction:column;align-items:center;
-  gap:12px;cursor:pointer;min-width:0;
-}
-.quick-icon{
-  width:108px;height:108px;
-  border-radius:28px;
-  display:grid;place-items:center;
-  border:1px solid rgba(116,140,164,.58);
-  background:
-    radial-gradient(circle at 50% 15%,rgba(255,199,45,.25),transparent 36%),
-    linear-gradient(145deg,#172b48,#10223c);
-  box-shadow:inset 0 1px rgba(255,255,255,.05),
-             0 12px 25px rgba(0,0,0,.18);
-}
-.quick-icon svg{
-  width:45px;height:45px;
-  stroke:var(--gold);
-  fill:none;
-  stroke-width:2.6;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-}
-.quick-label{
-  font-size:19px;
-  line-height:1.15;
-  color:#e4eaf5;
-  text-align:center;
-  white-space:nowrap;
+
+/* =========================================================
+   BANNER DARK OVERLAY
+   ========================================================= */
+
+.banner::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(2, 15, 34, 0.24) 0%,
+            rgba(2, 15, 34, 0.06) 50%,
+            rgba(2, 15, 34, 0.08) 100%
+        );
+
+    pointer-events: none;
+
+    z-index: 1;
 }
 
-/* ---------- HOT MARKETS ---------- */
-.hot{
-  margin-top:0;
-  padding:28px 30px 32px;
-  border-radius:28px;
-  border:1px solid rgba(82,111,143,.56);
-  background:linear-gradient(145deg,#0d1e36,#0a1930);
-}
-.hot-title{
-  display:flex;justify-content:space-between;align-items:center;
-  font-size:24px;font-weight:700;
-}
-.hot-title span:last-child{
-  font-size:16px;font-weight:400;color:#9eacc1;
-}
-.market-row{
-  display:grid;
-  grid-template-columns:1fr auto;
-  gap:12px;
-  padding:19px 0;
-  border-bottom:1px solid rgba(95,122,150,.15);
-}
-.market-row:last-child{border-bottom:0}
-.market-name{font-weight:700}
-.market-sub{font-size:14px;color:#7f91aa;margin-top:4px}
-.market-price{text-align:right;font-weight:700}
-.market-up{color:var(--green);font-size:14px;margin-top:4px}
 
-/* ---------- BOTTOM NAV ---------- */
-.bottom-nav{
-  position:fixed;
-  left:0;right:0;bottom:0;
-  height:91px;
-  z-index:20;
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  align-items:center;
-  background:rgba(5,17,32,.96);
-  border-top:1px solid rgba(102,128,154,.22);
-  backdrop-filter:blur(14px);
-  padding-bottom:env(safe-area-inset-bottom);
-}
-.nav-item{
-  height:100%;
-  border:0;background:transparent;color:#8292aa;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:6px;cursor:pointer;
-  font-size:16px;
-}
-.nav-item svg{width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:2.2}
-.nav-item.active{color:var(--gold)}
-.trade-wrap{position:relative;height:100%;display:grid;place-items:center}
-.trade-btn{
-  width:88px;height:88px;border-radius:50%;
-  border:2px solid #ffe27c;
-  background:linear-gradient(145deg,#ffe143,#ffb600);
-  color:#101a29;
-  display:grid;place-items:center;
-  box-shadow:0 0 28px rgba(255,190,25,.38),inset 0 2px rgba(255,255,255,.6);
-  cursor:pointer;
-  transform:translateY(-22px);
-}
-.trade-btn svg{width:43px;height:43px;stroke-width:2.8}
+/* =========================================================
+   BANNER CONTENT
+   ========================================================= */
 
-/* ---------- TOAST ---------- */
-.toast{
-  position:fixed;
-  left:50%;bottom:105px;
-  transform:translate(-50%,20px);
-  opacity:0;pointer-events:none;
-  padding:12px 18px;border-radius:14px;
-  background:#142b48;border:1px solid #395978;
-  color:#fff;box-shadow:0 12px 30px rgba(0,0,0,.3);
-  transition:.25s;
-  z-index:50;
-}
-.toast.show{opacity:1;transform:translate(-50%,0)}
+.banner-content {
+    position: absolute !important;
 
-/* ---------- MOBILE ---------- */
-@media(max-width:600px){
-  .topbar{height:123px;padding:27px 22px 17px}
-  .brand{font-size:27px}
-  .content-card{width:calc(100% - 48px);margin-left:24px;margin-right:24px}
+    /*
+       Content à¦ªà§à¦°à§‹ banner-à¦à¦° à¦®à¦§à§à¦¯à§‡ à¦¥à¦¾à¦•à¦¬à§‡à¥¤
+       à¦à¦•à¦¦à¦® à¦®à¦¾à¦ à¦¬à¦°à¦¾à¦¬à¦° à¦¨à¦¾ à¦°à§‡à¦–à§‡ à¦à¦•à¦Ÿà§ à¦‰à¦ªà¦°à§‡à¦° à¦¦à¦¿à¦•à§‡ à¦°à¦¾à¦–à¦¾ à¦¹à§Ÿà§‡à¦›à§‡à¥¤
+    */
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
 
-  .hero{height:286px;border-radius:30px}
-  .assets{padding:30px 30px}
-  .balance{font-size:57px}
-  .asset-meta{font-size:19px}
-  .asset-actions{gap:17px}
-  .action{height:80px;font-size:20px}
+    width: 100% !important;
+    height: 100% !important;
 
-  .quick{padding-left:8px;padding-right:8px;gap:31px 24px}
-  .quick-icon{width:108px;height:108px}
+    box-sizing: border-box !important;
+
+    padding:
+        38px 30px 25px 30px !important;
+
+    overflow: hidden !important;
+
+    z-index: 2 !important;
 }
 
-@media(max-width:430px){
-  .content-card{width:calc(100% - 40px);margin-left:20px;margin-right:20px}
-  .brand{font-size:25px}
-  .topbar{padding-left:20px;padding-right:18px}
-  .hero{height:270px}
-  .assets{padding:27px 24px}
-  .balance{font-size:52px}
-  .asset-meta{font-size:17px}
-  .asset-actions{gap:10px}
-  .action{font-size:18px;height:72px}
-  .quick{gap:28px 15px}
-  .quick-icon{width:94px;height:94px;border-radius:25px}
-  .quick-label{font-size:16px}
+
+/* =========================================================
+   BANNER TITLE
+   ========================================================= */
+
+.banner h1 {
+    margin: 0 !important;
+
+    font-size: 30px !important;
+
+    line-height: 1.12 !important;
+
+    color: #ffc72c !important;
+
+    text-shadow:
+        0 2px 12px rgba(0, 0, 0, 0.48),
+        0 0 18px rgba(255, 199, 44, 0.14) !important;
 }
 
-/* On very narrow screens keep the three action buttons usable */
-@media(max-width:360px){
-  .content-card{width:calc(100% - 28px);margin-left:14px;margin-right:14px}
-  .hero{height:250px}
-  .assets{padding:24px 18px}
-  .balance{font-size:46px}
-  .asset-meta{font-size:15px}
-  .action{height:66px;font-size:16px}
-  .quick-icon{width:82px;height:82px}
-}
-</style>
-</head>
 
-<body>
-<div class="app">
+/* =========================================================
+   BANNER SUBTITLE
+   ========================================================= */
 
-  <!-- HEADER -->
-  <header class="topbar">
-    <div class="brand-mark" aria-hidden="true">
-      <svg viewBox="0 0 32 32">
-        <path d="M16 3l10 4v7c0 7-4.5 12-10 15C10.5 26 6 21 6 14V7l10-4z"
-              fill="none" stroke="currentColor" stroke-width="2.2"/>
-        <path d="M12 16l2.5 2.5L21 12" fill="none"
-              stroke="currentColor" stroke-width="2.6"
-              stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-    <div class="brand">CptMarkets</div>
+.banner p {
+    margin:
+        18px 0 0 0 !important;
 
-    <div class="top-actions">
-      <button class="top-btn" onclick="showToast('Dashboard refreshed')" aria-label="Refresh">
-        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor">
-          <path d="M27 15a11 11 0 1 0-3.2 7.7"/>
-          <path d="M27 7v8h-8"/>
-        </svg>
-      </button>
-      <button class="top-btn" onclick="showToast('Add')" aria-label="Add">
-        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor">
-          <path d="M16 6v20M6 16h20"/>
-        </svg>
-      </button>
-    </div>
-  </header>
+    font-size: 16px !important;
 
-  <main>
+    line-height: 1.35 !important;
 
-    <!-- BANNER: same horizontal width as Total Assets card -->
-    <section class="hero content-card" aria-label="Market banner">
-      <img src="market-bg.svg" alt="Global market trading banner">
-    </section>
+    max-width: 90% !important;
 
-    <!-- TOTAL ASSETS -->
-    <section class="assets content-card">
-      <div class="asset-head">
-        <span>Total Assets (USD)</span>
-        <button class="eye" onclick="toggleBalance()" aria-label="Show or hide balance">
-          <svg viewBox="0 0 36 36" fill="none" stroke="currentColor">
-            <path d="M4 18s5-9 14-9 14 9 14 9-5 9-14 9S4 18 4 18z"/>
-            <circle cx="18" cy="18" r="4"/>
-          </svg>
-        </button>
-      </div>
+    color: #eef3fb !important;
 
-      <div id="balance" class="balance">$0.00</div>
-
-      <div class="asset-meta">
-        <div>Floating P/L <strong class="green">+0.00</strong></div>
-        <div>Equity <strong id="equity">$0.00</strong></div>
-      </div>
-
-      <div class="asset-actions">
-        <button class="action primary" onclick="showToast('Deposit selected')">Deposit</button>
-        <button class="action" onclick="showToast('Withdraw selected')">Withdraw</button>
-        <button class="action" onclick="showToast('Transfer selected')">Transfer</button>
-      </div>
-    </section>
-
-    <!-- QUICK ACTIONS -->
-    <section class="quick content-card">
-
-      <button class="quick-item" onclick="showToast('Support')">
-        <span class="quick-icon">
-          <svg viewBox="0 0 48 48">
-            <path d="M10 25v-4a14 14 0 0 1 28 0v4"/>
-            <rect x="7" y="24" width="8" height="11" rx="3"/>
-            <rect x="33" y="24" width="8" height="11" rx="3"/>
-            <path d="M33 35c-2 5-7 6-12 6"/>
-          </svg>
-        </span>
-        <span class="quick-label">Support</span>
-      </button>
-
-      <button class="quick-item" onclick="showToast('Withdraw')">
-        <span class="quick-icon">
-          <svg viewBox="0 0 48 48">
-            <rect x="8" y="13" width="32" height="23" rx="4"/>
-            <path d="M8 19h32"/>
-            <path d="M20 26h10"/>
-          </svg>
-        </span>
-        <span class="quick-label">Withdraw</span>
-      </button>
-
-      <button class="quick-item" onclick="showToast('Transfer')">
-        <span class="quick-icon">
-          <svg viewBox="0 0 48 48">
-            <path d="M10 17h25"/>
-            <path d="M29 11l6 6-6 6"/>
-            <path d="M38 31H13"/>
-            <path d="M19 25l-6 6 6 6"/>
-          </svg>
-        </span>
-        <span class="quick-label">Transfer</span>
-      </button>
-
-      <button class="quick-item" onclick="showToast('Copy Trade')">
-        <span class="quick-icon">
-          <svg viewBox="0 0 48 48">
-            <circle cx="18" cy="17" r="6"/>
-            <circle cx="32" cy="17" r="6"/>
-            <circle cx="25" cy="31" r="6"/>
-            <path d="M8 38c1-6 5-9 10-9"/>
-            <path d="M38 38c-1-6-5-9-10-9"/>
-          </svg>
-        </span>
-        <span class="quick-label">Copy Trade</span>
-      </button>
-
-      <button class="quick-item" onclick="showToast('Loan')">
-        <span class="quick-icon">
-          <svg viewBox="0 0 48 48">
-            <rect x="7" y="13" width="34" height="23" rx="4"/>
-            <path d="M7 20h34"/>
-            <path d="M13 29h10"/>
-          </svg>
-        </span>
-        <span class="quick-label">Loan</span>
-      </button>
-
-      <button class="quick-item" onclick="showToast('Wealth')">
-        <span class="quick-icon">
-          <svg viewBox="0 0 48 48">
-            <path d="M9 38V25"/>
-            <path d="M19 38V19"/>
-            <path d="M29 38V13"/>
-            <path d="M39 38V8"/>
-            <path d="M7 38h34"/>
-            <path d="M12 20l7-5 8 3 10-10"/>
-          </svg>
-        </span>
-        <span class="quick-label">Wealth</span>
-      </button>
-
-      <button class="quick-item" onclick="showToast('Mining')">
-        <span class="quick-icon">
-          <svg viewBox="0 0 48 48">
-            <path d="M11 34l12-12"/>
-            <path d="M25 11l12 12"/>
-            <path d="M19 17l12 12"/>
-            <path d="M13 37l22-22"/>
-            <path d="M29 10l7 7"/>
-          </svg>
-        </span>
-        <span class="quick-label">Mining</span>
-      </button>
-
-      <button class="quick-item" onclick="showToast('Invite')">
-        <span class="quick-icon">
-          <svg viewBox="0 0 48 48">
-            <path d="M24 10v28"/>
-            <path d="M10 24h28"/>
-            <path d="M15 15l18 18"/>
-            <path d="M33 15L15 33"/>
-          </svg>
-        </span>
-        <span class="quick-label">Invite</span>
-      </button>
-
-    </section>
-
-    <!-- HOT MARKETS -->
-    <section class="hot content-card">
-      <div class="hot-title">
-        <span>Hot Markets</span>
-        <span>View All ›</span>
-      </div>
-
-      <div class="market-row">
-        <div><div class="market-name">BTC/USD</div><div class="market-sub">Bitcoin</div></div>
-        <div class="market-price">$68,420.20<div class="market-up">+2.31%</div></div>
-      </div>
-      <div class="market-row">
-        <div><div class="market-name">ETH/USD</div><div class="market-sub">Ethereum</div></div>
-        <div class="market-price">$3,742.18<div class="market-up">+1.84%</div></div>
-      </div>
-      <div class="market-row">
-        <div><div class="market-name">XAU/USD</div><div class="market-sub">Gold</div></div>
-        <div class="market-price">$2,964.70<div class="market-up">+0.76%</div></div>
-      </div>
-    </section>
-
-  </main>
-</div>
-
-<!-- BOTTOM NAV -->
-<nav class="bottom-nav">
-
-  <button class="nav-item active" onclick="showToast('Home')">
-    <svg viewBox="0 0 32 32">
-      <path d="M5 14l11-9 11 9v13H19v-8h-6v8H5z"/>
-    </svg>
-    <span>Home</span>
-  </button>
-
-  <button class="nav-item" onclick="showToast('Markets')">
-    <svg viewBox="0 0 32 32">
-      <path d="M5 25V7"/>
-      <path d="M5 25h22"/>
-      <path d="M8 20l6-6 5 3 8-10"/>
-    </svg>
-    <span>Markets</span>
-  </button>
-
-  <div class="trade-wrap">
-    <button class="trade-btn" onclick="showToast('Trade')" aria-label="Trade">
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor">
-        <path d="M14 12h20"/>
-        <path d="M28 6l6 6-6 6"/>
-        <path d="M34 36H14"/>
-        <path d="M20 30l-6 6 6 6"/>
-      </svg>
-    </button>
-  </div>
-
-  <button class="nav-item" onclick="showToast('Assets')">
-    <svg viewBox="0 0 32 32">
-      <circle cx="16" cy="16" r="11"/>
-      <path d="M13 12h7M13 16h7M13 20h5"/>
-    </svg>
-    <span>Assets</span>
-  </button>
-
-  <button class="nav-item" onclick="showToast('Mine')">
-    <svg viewBox="0 0 32 32">
-      <circle cx="16" cy="9" r="4"/>
-      <path d="M8 27c1-6 4-9 8-9s7 3 8 9"/>
-    </svg>
-    <span>Mine</span>
-  </button>
-
-</nav>
-
-<div id="toast" class="toast"></div>
-
-<script>
-let balanceVisible = true;
-const balanceEl = document.getElementById('balance');
-const equityEl = document.getElementById('equity');
-
-function toggleBalance(){
-  balanceVisible = !balanceVisible;
-  balanceEl.textContent = balanceVisible ? '$0.00' : '••••••';
-  equityEl.textContent = balanceVisible ? '$0.00' : '••••••';
+    text-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.50) !important;
 }
 
-let toastTimer;
-function showToast(message){
-  const toast = document.getElementById('toast');
-  toast.textContent = message;
-  toast.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(()=>toast.classList.remove('show'),1400);
-}
-</script>
 
-</body>
-</html>
+/* =========================================================
+   TOTAL ASSETS / BALANCE
+   ========================================================= */
+
+.asset-card,
+.assets-card,
+.balance-card,
+.total-assets {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(22, 39, 67, 0.97),
+            rgba(6, 17, 34, 0.98)
+        ) !important;
+
+    border:
+        1px solid rgba(93, 137, 196, 0.24) !important;
+
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+
+/* =========================
+   BALANCE
+   ========================= */
+
+#balance,
+.balance,
+.balance-value,
+.asset-value {
+    color: #f7f9ff !important;
+
+    text-shadow:
+        0 0 18px rgba(255, 255, 255, 0.08);
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+button,
+.btn,
+button[type="button"],
+button[type="submit"] {
+    transition:
+        transform 0.20s ease,
+        box-shadow 0.20s ease,
+        background 0.20s ease,
+        border-color 0.20s ease;
+}
+
+
+/* PRIMARY */
+
+.deposit,
+.deposit-btn,
+.primary-btn {
+    background:
+        linear-gradient(
+            135deg,
+            #ffe27a 0%,
+            #ffc52b 42%,
+            #e99d00 100%
+        ) !important;
+
+    color: #101318 !important;
+
+    border:
+        1px solid rgba(255, 226, 122, 0.75) !important;
+
+    box-shadow:
+        0 8px 25px rgba(255, 190, 20, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.45) !important;
+}
+
+
+/* SECONDARY */
+
+.withdraw,
+.withdraw-btn,
+.transfer,
+.transfer-btn,
+.secondary-btn {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(42, 66, 104, 0.95),
+            rgba(17, 34, 59, 0.98)
+        ) !important;
+
+    color: #f3f6ff !important;
+
+    border:
+        1px solid rgba(121, 160, 210, 0.28) !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 8px 25px rgba(0, 0, 0, 0.25) !important;
+}
+
+
+/* HOVER */
+
+button:hover,
+.btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.35) !important;
+}
+
+button:active,
+.btn:active {
+    transform: scale(0.97);
+}
+
+
+/* =========================================================
+   QUICK MENU
+   ========================================================= */
+
+.quick-menu,
+.menu-grid,
+.action-grid {
+    position: relative;
+}
+
+.item,
+.menu-item,
+.action-item,
+.quick-item {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(20, 38, 67, 0.96),
+            rgba(7, 18, 36, 0.98)
+        ) !important;
+
+    border:
+        1px solid rgba(111, 151, 204, 0.25) !important;
+
+    border-radius: 20px !important;
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+/* ICONS */
+
+.item i,
+.menu-item i,
+.action-item i,
+.quick-item i {
+    color: #ffc52b !important;
+
+    text-shadow:
+        0 0 10px rgba(255, 197, 43, 0.22),
+        0 0 22px rgba(255, 197, 43, 0.10);
+
+    transition:
+        transform 0.25s ease,
+        filter 0.25s ease;
+}
+
+
+/* QUICK HOVER */
+
+.item:hover,
+.menu-item:hover,
+.action-item:hover,
+.quick-item:hover {
+    transform: translateY(-4px);
+
+    border-color:
+        rgba(255, 197, 43, 0.38) !important;
+
+    box-shadow:
+        0 18px 35px rgba(0, 0, 0, 0.45),
+        0 0 20px rgba(255, 197, 43, 0.07) !important;
+}
+
+.item:hover i,
+.menu-item:hover i,
+.action-item:hover i,
+.quick-item:hover i {
+    transform: scale(1.08);
+
+    filter:
+        drop-shadow(
+            0 0 8px rgba(255, 197, 43, 0.45)
+        );
+}
+
+
+/* =========================================================
+   HOT MARKETS
+   ========================================================= */
+
+.hot-market,
+.hot-markets,
+.market-section {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(15, 31, 55, 0.95),
+            rgba(5, 15, 29, 0.98)
+        ) !important;
+
+    border:
+        1px solid rgba(91, 133, 188, 0.22) !important;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.38),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+
+    border-radius: 22px !important;
+}
+
+
+/* MARKET CARDS */
+
+.market-card {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(28, 49, 82, 0.90),
+            rgba(9, 22, 42, 0.96)
+        ) !important;
+
+    border:
+        1px solid rgba(106, 145, 194, 0.20) !important;
+
+    box-shadow:
+        0 8px 22px rgba(0, 0, 0, 0.28) !important;
+}
+
+
+/* =========================================================
+   PROFIT
+   ========================================================= */
+
+.up,
+.profit,
+.profit-value {
+    color: #00e89a !important;
+
+    text-shadow:
+        0 0 10px rgba(0, 232, 154, 0.15);
+}
+
+
+/* =========================================================
+   BOTTOM NAVIGATION
+   ========================================================= */
+
+.bottom-nav,
+.navbar,
+.bottom-navigation {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(7, 17, 32, 0.92),
+            rgba(2, 8, 17, 0.98)
+        ) !important;
+
+    border-top:
+        1px solid rgba(106, 147, 199, 0.18) !important;
+
+    box-shadow:
+        0 -10px 35px rgba(0, 0, 0, 0.42) !important;
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+
+/* NAV ITEMS */
+
+.nav-item {
+    color: #8290a8 !important;
+
+    transition:
+        color 0.20s ease,
+        transform 0.20s ease;
+}
+
+.nav-item i {
+    transition:
+        transform 0.20s ease,
+        filter 0.20s ease;
+}
+
+.nav-item.active {
+    color: #ffc52b !important;
+
+    text-shadow:
+        0 0 12px rgba(255, 197, 43, 0.18);
+}
+
+.nav-item.active i {
+    filter:
+        drop-shadow(
+            0 0 8px rgba(255, 197, 43, 0.35)
+        );
+}
+
+
+/* CENTER TRADE */
+
+.trade i {
+    background:
+        linear-gradient(
+            145deg,
+            #ffe27a,
+            #ffc52b 50%,
+            #eaa000
+        ) !important;
+
+    color: #111 !important;
+
+    box-shadow:
+        0 0 0 5px rgba(255, 197, 43, 0.07),
+        0 0 28px rgba(255, 197, 43, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.50) !important;
+}
+
+
+/* =========================================================
+   TEXT
+   ========================================================= */
+
+h1,
+h2,
+h3,
+h4,
+strong {
+    color: #f4f7ff;
+}
+
+p,
+span,
+label {
+    color: #aebbd0;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: #030813;
+}
+
+::-webkit-scrollbar-thumb {
+    background:
+        linear-gradient(
+            #274a73,
+            #ffc52b
+        );
+
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   MOBILE â€” FINAL
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    body {
+        background:
+            radial-gradient(
+                circle at 50% 0%,
+                rgba(31, 73, 126, 0.18),
+                transparent 32%
+            ),
+            linear-gradient(
+                145deg,
+                #030813,
+                #071326 55%,
+                #020611
+            ) !important;
+    }
+
+
+    /* =========================
+       FINAL MOBILE BANNER
+       ========================= */
+
+    .banner {
+        width: calc(100% - 52px) !important;
+
+        /*
+           à¦à¦Ÿà¦¾à¦‡ à¦®à§‚à¦² à¦ªà¦°à¦¿à¦¬à¦°à§à¦¤à¦¨à¥¤
+
+           Banner à¦à¦–à¦¨:
+           - à¦†à¦—à§‡à¦° à¦›à§‹à¦Ÿ version-à¦à¦° à¦šà§‡à§Ÿà§‡ à¦²à¦®à§à¦¬à¦¾
+           - Balance card-à¦à¦° à¦•à¦¾à¦›à¦¾à¦•à¦¾à¦›à¦¿ visual height
+           - à¦•à¦¿à¦¨à§à¦¤à§ Balance card-à¦à¦° à¦šà§‡à§Ÿà§‡ à¦›à§‹à¦Ÿ
+        */
+
+        height: 330px !important;
+
+        min-height: 330px !important;
+        max-height: 330px !important;
+
+        aspect-ratio: auto !important;
+
+        margin-left: auto !important;
+        margin-right: auto !important;
+
+        border-radius: 24px !important;
+
+        background-position: center center !important;
+
+        /*
+           à¦ªà§à¦°à§‹ market-bg.svg à¦¦à§‡à¦–à¦¾ à¦¯à¦¾à¦¬à§‡à¥¤
+           à¦à¦¤à§‡ chart à¦…à¦¤à¦¿à¦°à¦¿à¦•à§à¦¤ zoom à¦¹à§Ÿà§‡ text-à¦à¦° à¦“à¦ªà¦° à¦‰à¦ à¦¬à§‡ à¦¨à¦¾à¥¤
+        */
+        background-size: 100% 100% !important;
+
+        overflow: hidden !important;
+    }
+
+
+    /* =========================
+       MOBILE CONTENT
+       ========================= */
+
+    .banner-content {
+        padding:
+            38px 28px 25px 28px !important;
+    }
+
+
+    .banner h1 {
+        font-size: 28px !important;
+
+        line-height: 1.15 !important;
+
+        margin: 0 !important;
+    }
+
+
+    .banner p {
+        font-size: 15px !important;
+
+        line-height: 1.35 !important;
+
+        margin-top: 18px !important;
+
+        max-width: 90% !important;
+    }
+
+
+    /* QUICK MENU */
+
+    .item,
+    .menu-item,
+    .action-item,
+    .quick-item {
+        border-radius: 19px !important;
+    }
+
+
+    button:hover,
+    .btn:hover {
+        transform: none;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .banner {
+        width: calc(100% - 40px) !important;
+
+        height: 300px !important;
+
+        min-height: 300px !important;
+        max-height: 300px !important;
+
+        aspect-ratio: auto !important;
+
+        border-radius: 22px !important;
+    }
+
+
+    .banner-content {
+        padding:
+            34px 22px 22px 22px !important;
+    }
+
+
+    .banner h1 {
+        font-size: 26px !important;
+    }
+
+
+    .banner p {
+        font-size: 14px !important;
+
+        margin-top: 16px !important;
+    }
+}
