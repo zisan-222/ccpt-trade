@@ -1,55 +1,49 @@
 /* =========================================
-   CPT MARKETS — MENU ICON SYSTEM
+   CPT MARKETS — MENU BUTTON DESIGN
    ========================================= */
 
 .menu-grid {
-    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    padding: 18px 10px;
 }
 
-/* MENU CARDS */
+/* Compact menu button */
 .menu-item {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    min-height: 125px !important;
+    padding: 8px 4px !important;
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(18, 40, 73, 0.96),
-            rgba(8, 23, 48, 0.96)
-        ) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
 
-    border: 1px solid rgba(255, 255, 255, 0.10) !important;
-    border-radius: 22px !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
 
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.06),
-        0 8px 25px rgba(0,0,0,0.20) !important;
+    border-radius: 20px !important;
 }
 
-/* =========================================
-   ICON BOX
-   ========================================= */
-
+/* Small rounded icon box */
 .menu-icon {
-    width: 68px !important;
-    height: 68px !important;
+    width: 72px !important;
+    height: 72px !important;
 
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
 
-    margin-bottom: 10px !important;
+    margin-bottom: 8px !important;
 
-    border-radius: 19px !important;
+    border-radius: 22px !important;
 
     background:
         radial-gradient(
             circle at 50% 25%,
-            rgba(255, 199, 44, 0.16),
-            transparent 55%
+            rgba(255, 199, 44, 0.14),
+            transparent 58%
         ),
         linear-gradient(
             145deg,
@@ -61,56 +55,56 @@
 
     box-shadow:
         inset 0 1px 2px rgba(255,255,255,0.08),
-        0 0 18px rgba(255,199,44,0.08) !important;
-
-    border-radius: 19px !important;
+        0 0 16px rgba(255,199,44,0.08) !important;
 }
 
-/* FONT AWESOME ICON */
+/* Icons */
 .menu-icon i {
     color: #ffc72c !important;
-
-    font-size: 27px !important;
-
+    font-size: 28px !important;
     line-height: 1 !important;
 
     filter:
-        drop-shadow(0 0 5px rgba(255,199,44,0.30)) !important;
+        drop-shadow(0 0 5px rgba(255,199,44,0.25)) !important;
 }
 
-/* TEXT */
+/* Text */
 .menu-item > span {
     color: #eef3fb !important;
 
     font-size: 14px !important;
     font-weight: 500 !important;
 
-    text-align: center;
+    line-height: 1.2 !important;
+    text-align: center !important;
 }
 
-/* REMOVE OLD CIRCLE EFFECTS */
-.menu-icon::before,
-.menu-icon::after,
-.menu-item::before,
-.menu-item::after {
-    background: transparent !important;
-    box-shadow: none !important;
-}
-
-/* MOBILE */
+/* Mobile */
 @media (max-width: 600px) {
+
+    .menu-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        padding: 14px 6px;
+    }
+
+    .menu-item {
+        min-height: 120px !important;
+        padding: 6px 2px !important;
+    }
 
     .menu-icon {
         width: 68px !important;
         height: 68px !important;
-        border-radius: 19px !important;
+        border-radius: 21px !important;
+        margin-bottom: 8px !important;
     }
 
     .menu-icon i {
-        font-size: 27px !important;
+        font-size: 26px !important;
     }
 
     .menu-item > span {
-        font-size: 14px !important;
+        font-size: 13px !important;
     }
 }
