@@ -1,39 +1,36 @@
 /* =========================================================
-   CPTMARKETS
-   PREMIUM DASHBOARD THEME
+   CPTMARKETS — PREMIUM DASHBOARD THEME
    dashboard-premium.css
-
-   SAFE VISUAL OVERRIDE
-   Does NOT replace existing dashboard functionality.
+   VISUAL ONLY — FUNCTIONALITY UNCHANGED
 ========================================================= */
 
 
 /* =========================================================
-   GLOBAL PREMIUM BACKGROUND
+   GLOBAL BACKGROUND
 ========================================================= */
 
 html,
 body {
     background:
         radial-gradient(
-            circle at 15% 10%,
-            rgba(38, 86, 150, 0.22),
+            circle at 12% 8%,
+            rgba(40, 88, 150, 0.22),
             transparent 32%
         ),
         radial-gradient(
-            circle at 85% 25%,
-            rgba(0, 140, 255, 0.12),
+            circle at 88% 22%,
+            rgba(0, 140, 255, 0.10),
             transparent 30%
         ),
         radial-gradient(
-            circle at 50% 85%,
-            rgba(255, 190, 0, 0.07),
+            circle at 50% 88%,
+            rgba(255, 190, 0, 0.06),
             transparent 35%
         ),
         linear-gradient(
             145deg,
             #030813 0%,
-            #071326 45%,
+            #071326 48%,
             #020611 100%
         ) !important;
 
@@ -42,7 +39,7 @@ body {
 
 
 /* =========================================================
-   BODY PREMIUM LIGHTING
+   BODY LIGHTING
 ========================================================= */
 
 body {
@@ -51,21 +48,17 @@ body {
     overflow-x: hidden;
 }
 
-
-/* Soft background glow */
-
 body::before {
     content: "";
     position: fixed;
     inset: 0;
-
     pointer-events: none;
 
     background:
         radial-gradient(
-            circle at 50% 20%,
-            rgba(65, 130, 220, 0.08),
-            transparent 42%
+            circle at 50% 18%,
+            rgba(65, 130, 220, 0.07),
+            transparent 44%
         );
 
     z-index: 0;
@@ -94,8 +87,8 @@ header,
     background:
         linear-gradient(
             180deg,
-            rgba(8, 22, 43, 0.96),
-            rgba(3, 10, 22, 0.94)
+            rgba(8, 22, 43, 0.97),
+            rgba(3, 10, 22, 0.96)
         ) !important;
 
     border-bottom:
@@ -110,7 +103,7 @@ header,
 
 
 /* =========================================================
-   BRAND / LOGO TEXT
+   LOGO / BRAND
 ========================================================= */
 
 .logo,
@@ -127,39 +120,173 @@ header h1 {
 
 
 /* =========================================================
-   HERO / BANNER
+   PREMIUM BANNER
 ========================================================= */
 
 .hero,
 .banner,
 .hero-card,
 .banner-card {
+
+    position: relative !important;
+
+    isolation: isolate;
+
+    overflow: hidden !important;
+
+    min-height: 250px;
+
+    border-radius: 28px !important;
+
     background:
         linear-gradient(
-            135deg,
-            rgba(18, 43, 76, 0.96),
-            rgba(5, 15, 31, 0.98)
-        ) !important;
+            90deg,
+            rgba(4, 15, 31, 0.88) 0%,
+            rgba(4, 18, 37, 0.55) 43%,
+            rgba(5, 18, 35, 0.28) 100%
+        ),
+        radial-gradient(
+            circle at 82% 30%,
+            rgba(255, 201, 62, 0.24),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 70% 78%,
+            rgba(31, 106, 196, 0.18),
+            transparent 38%
+        ),
+        url("market-bg.svg") center / cover no-repeat !important;
 
     border:
-        1px solid rgba(104, 155, 220, 0.22) !important;
+        1px solid rgba(255, 198, 70, 0.22) !important;
 
     box-shadow:
-        0 15px 40px rgba(0, 0, 0, 0.40),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+        0 18px 42px rgba(0, 0, 0, 0.42),
+        0 0 0 1px rgba(255, 255, 255, 0.025) inset,
+        0 1px 0 rgba(255, 255, 255, 0.08) inset !important;
+}
 
-    overflow: hidden;
+
+/* Premium glass layer */
+
+.hero::before,
+.banner::before,
+.hero-card::before,
+.banner-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 0;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.035),
+            transparent 24%
+        ),
+        linear-gradient(
+            90deg,
+            rgba(2, 10, 23, 0.18),
+            transparent 52%,
+            rgba(255, 196, 55, 0.06)
+        );
+}
+
+
+/* Gold premium glow */
+
+.hero::after,
+.banner::after,
+.hero-card::after,
+.banner-card::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 260px;
+    height: 260px;
+
+    right: -70px;
+    top: -75px;
+
+    z-index: 0;
+
+    pointer-events: none;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 205, 70, 0.24) 0%,
+            rgba(255, 205, 70, 0.07) 34%,
+            transparent 70%
+        );
+
+    filter: blur(3px);
+}
+
+
+/* Banner content */
+
+.banner-content,
+.hero-content {
+
+    position: relative !important;
+
+    z-index: 2 !important;
+}
+
+
+/* Banner title */
+
+.banner h1,
+.hero h1,
+.banner-card h1,
+.hero-card h1 {
+
+    color: #ffc52b !important;
+
+    font-weight: 700;
+
+    letter-spacing: -0.4px;
+
+    text-shadow:
+        0 2px 12px rgba(0, 0, 0, 0.42),
+        0 0 20px rgba(255, 197, 43, 0.10);
+}
+
+
+/* Banner subtitle */
+
+.banner p,
+.hero p,
+.banner-card p,
+.hero-card p {
+
+    color: #e8eef8 !important;
+
+    text-shadow:
+        0 2px 9px rgba(0, 0, 0, 0.42);
 }
 
 
 /* =========================================================
-   TOTAL ASSETS CARD
+   ASSET / BALANCE CARD
 ========================================================= */
 
 .asset-card,
 .assets-card,
 .balance-card,
 .total-assets {
+
     background:
         linear-gradient(
             145deg,
@@ -187,6 +314,7 @@ header h1 {
 .balance,
 .balance-value,
 .asset-value {
+
     color: #f7f9ff !important;
 
     text-shadow:
@@ -195,13 +323,14 @@ header h1 {
 
 
 /* =========================================================
-   PRIMARY GOLD BUTTON
+   BUTTONS
 ========================================================= */
 
 button,
 .btn,
 button[type="button"],
 button[type="submit"] {
+
     transition:
         transform 0.20s ease,
         box-shadow 0.20s ease,
@@ -210,11 +339,12 @@ button[type="submit"] {
 }
 
 
-/* Deposit / primary action */
+/* Primary */
 
 .deposit,
 .deposit-btn,
 .primary-btn {
+
     background:
         linear-gradient(
             135deg,
@@ -234,15 +364,14 @@ button[type="submit"] {
 }
 
 
-/* =========================================================
-   SECONDARY BUTTONS
-========================================================= */
+/* Secondary */
 
 .withdraw,
 .withdraw-btn,
 .transfer,
 .transfer-btn,
 .secondary-btn {
+
     background:
         linear-gradient(
             145deg,
@@ -261,18 +390,12 @@ button[type="submit"] {
 }
 
 
-/* =========================================================
-   BUTTON HOVER / TOUCH
-========================================================= */
+/* Hover */
 
 button:hover,
 .btn:hover {
     transform: translateY(-2px);
-
-    box-shadow:
-        0 12px 30px rgba(0, 0, 0, 0.35) !important;
 }
-
 
 button:active,
 .btn:active {
@@ -281,7 +404,7 @@ button:active,
 
 
 /* =========================================================
-   QUICK MENU / ICON GRID
+   QUICK MENU
 ========================================================= */
 
 .quick-menu,
@@ -292,13 +415,14 @@ button:active,
 
 
 /* =========================================================
-   QUICK MENU CARDS
+   MENU CARDS
 ========================================================= */
 
 .item,
 .menu-item,
 .action-item,
 .quick-item {
+
     background:
         linear-gradient(
             145deg,
@@ -317,42 +441,35 @@ button:active,
 
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-
-    transition:
-        transform 0.25s ease,
-        border-color 0.25s ease,
-        box-shadow 0.25s ease;
 }
 
 
 /* =========================================================
-   ICONS
+   MENU ICONS
 ========================================================= */
 
 .item i,
 .menu-item i,
 .action-item i,
 .quick-item i {
+
     color: #ffc52b !important;
 
     text-shadow:
         0 0 10px rgba(255, 197, 43, 0.22),
         0 0 22px rgba(255, 197, 43, 0.10);
-
-    transition:
-        transform 0.25s ease,
-        filter 0.25s ease;
 }
 
 
 /* =========================================================
-   ICON HOVER
+   MENU HOVER
 ========================================================= */
 
 .item:hover,
 .menu-item:hover,
 .action-item:hover,
 .quick-item:hover {
+
     transform: translateY(-4px);
 
     border-color:
@@ -364,19 +481,6 @@ button:active,
 }
 
 
-.item:hover i,
-.menu-item:hover i,
-.action-item:hover i,
-.quick-item:hover i {
-    transform: scale(1.08);
-
-    filter:
-        drop-shadow(
-            0 0 8px rgba(255, 197, 43, 0.45)
-        );
-}
-
-
 /* =========================================================
    HOT MARKETS
 ========================================================= */
@@ -384,6 +488,7 @@ button:active,
 .hot-market,
 .hot-markets,
 .market-section {
+
     background:
         linear-gradient(
             145deg,
@@ -407,6 +512,7 @@ button:active,
 ========================================================= */
 
 .market-card {
+
     background:
         linear-gradient(
             145deg,
@@ -423,12 +529,13 @@ button:active,
 
 
 /* =========================================================
-   POSITIVE PROFIT
+   PROFIT
 ========================================================= */
 
 .up,
 .profit,
 .profit-value {
+
     color: #00e89a !important;
 
     text-shadow:
@@ -443,6 +550,7 @@ button:active,
 .bottom-nav,
 .navbar,
 .bottom-navigation {
+
     background:
         linear-gradient(
             180deg,
@@ -466,22 +574,13 @@ button:active,
 ========================================================= */
 
 .nav-item {
+
     color: #8290a8 !important;
-
-    transition:
-        color 0.20s ease,
-        transform 0.20s ease;
-}
-
-
-.nav-item i {
-    transition:
-        transform 0.20s ease,
-        filter 0.20s ease;
 }
 
 
 .nav-item.active {
+
     color: #ffc52b !important;
 
     text-shadow:
@@ -489,19 +588,12 @@ button:active,
 }
 
 
-.nav-item.active i {
-    filter:
-        drop-shadow(
-            0 0 8px rgba(255, 197, 43, 0.35)
-        );
-}
-
-
 /* =========================================================
-   CENTER TRADE BUTTON
+   TRADE BUTTON
 ========================================================= */
 
 .trade i {
+
     background:
         linear-gradient(
             145deg,
@@ -520,7 +612,7 @@ button:active,
 
 
 /* =========================================================
-   TEXT COLORS
+   TEXT
 ========================================================= */
 
 h1,
@@ -530,7 +622,6 @@ h4,
 strong {
     color: #f4f7ff;
 }
-
 
 p,
 span,
@@ -547,13 +638,12 @@ label {
     width: 5px;
 }
 
-
 ::-webkit-scrollbar-track {
     background: #030813;
 }
 
-
 ::-webkit-scrollbar-thumb {
+
     background:
         linear-gradient(
             #274a73,
@@ -565,7 +655,7 @@ label {
 
 
 /* =========================================================
-   MOBILE POLISH
+   MOBILE
 ========================================================= */
 
 @media (max-width: 600px) {
@@ -594,81 +684,21 @@ label {
     }
 
 
+    .hero,
+    .banner,
+    .hero-card,
+    .banner-card {
+
+        min-height: 235px;
+
+        border-radius: 26px !important;
+
+        background-position: center !important;
+    }
+
+
     button:hover,
     .btn:hover {
         transform: none;
     }
-
 }
-
-/* =========================================
-   CPT MARKETS — PREMIUM BANNER FIX
-   ========================================= */
-
-.banner {
-    position: relative;
-    overflow: hidden;
-
-    min-height: 250px;
-    border-radius: 28px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(5, 27, 58, 0.30),
-            rgba(8, 43, 86, 0.18)
-        ),
-        url("market-bg.svg") center center / cover no-repeat !important;
-
-    border: 1px solid rgba(255, 199, 44, 0.20);
-
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.08),
-        0 12px 35px rgba(0,0,0,0.22);
-}
-
-/* Dark overlay */
-.banner::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(3, 20, 45, 0.15),
-            rgba(3, 20, 45, 0.02)
-        );
-
-    pointer-events: none;
-}
-
-/* Banner text */
-.banner-content {
-    position: relative;
-    z-index: 2;
-}
-
-.banner h1 {
-    color: #ffc72c;
-    text-shadow: 0 2px 12px rgba(0,0,0,0.35);
-}
-
-.banner p {
-    color: #eef3fb;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.35);
-}
-
-@media (max-width: 600px) {
-    .banner {
-        min-height: 235px;
-        border-radius: 26px;
-
-        background-position: center center !important;
-    }
-}
-
-
-/* =========================================================
-   END
-========================================================= */
