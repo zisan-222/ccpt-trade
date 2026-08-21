@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg"
      xmlns:xlink="http://www.w3.org/1999/xlink"
-     viewBox="0 0 1536 819"
+     viewBox="0 0 600 320"
      preserveAspectRatio="xMidYMid slice">
-
-  <image
-    x="0"
-    y="0"
-    width="1536"
-    height="819"
-    preserveAspectRatio="xMidYMid slice"
-    href="data:image/png;base64,এখানে_ছবির_সম্পূর্ণ_BASE64_ডেটা_থাকবে"
-    xlink:href="data:image/png;base64,এখানে_ছবির_সম্পূর্ণ_BASE64_ডেটা_থাকবে"/>
+  <image x="0" y="0" width="600" height="320"
+         preserveAspectRatio="xMidYMid slice"
+         href="data:image/jpeg;base64,REPLACE_WITH_EMBEDDED_IMAGE_DATA"
+         xlink:href="data:image/jpeg;base64,REPLACE_WITH_EMBEDDED_IMAGE_DATA"/>
 </svg>
