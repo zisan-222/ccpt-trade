@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>CptMarkets - User Management</title>
+
+    <!-- NEW USER MANAGEMENT CSS -->
+    <link
+        rel="stylesheet"
+        href="admin-users-new.css"
+    >
+</head>
+
+<body>
+
+    <!-- ==========================================
+         ADMIN HEADER
+    =========================================== -->
+
+    <header class="new-admin-header">
+
+        <div class="new-admin-brand">
+
+            <div class="new-admin-logo">
+                CM
+            </div>
+
+            <div class="new-admin-brand-text">
+                <h1>CptMarkets</h1>
+                <span>Administrator Panel</span>
+            </div>
+
+        </div>
+
+        <button
+            id="adminLogout"
+            class="new-logout-btn"
+            type="button"
+        >
+            Logout
+        </button>
+
+    </header>
+
+
+    <!-- ==========================================
+         MAIN CONTAINER
+    =========================================== -->
+
+    <main class="new-admin-container">
+
+
+        <!-- ======================================
+             PAGE TITLE
+        ======================================= -->
+
+        <section class="new-page-title">
+
+            <div class="page-title-small">
+                USER MANAGEMENT
+            </div>
+
+            <h2>
+                Manage Users
+            </h2>
+
+            <p>
+                Search and manage registered demo users.
+            </p>
+
+        </section>
+
+
+        <!-- ======================================
+             SEARCH USER
+        ======================================= -->
+
+        <section class="new-search-card">
+
+            <div class="section-heading">
+
+                <div class="section-heading-icon">
+                    🔍
+                </div>
+
+                <div>
+                    <h3>Search User</h3>
+
+                    <p>
+                        Enter Firebase UID or User ID
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="new-search-row">
+
+                <input
+                    type="text"
+                    id="userUidInput"
+                    placeholder="Enter Firebase UID or User ID"
+                    autocomplete="off"
+                >
+
+                <button
+                    id="searchUserBtn"
+                    class="new-search-btn"
+                    type="button"
+                >
+                    Search User
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ======================================
+             USER NOT FOUND
+        ======================================= -->
+
+        <section
+            id="notFound"
+            class="new-not-found"
+            style="display: none;"
+        >
+
+            <div class="not-found-icon">
+                !
+            </div>
+
+            <div>
+                <h3>User Not Found</h3>
+
+                <p>
+                    No registered user was found with this
+                    Firebase UID or User ID.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- ======================================
+             USER RESULT
+        ======================================= -->
+
+        <section
+            id="userResult"
+            class="new-user-result"
+            style="display: none;"
+        >
+
+
+            <!-- ==================================
+                 USER INFORMATION
+            =================================== -->
+
+            <div class="user-profile-card">
+
+                <div class="user-profile-top">
+
+                    <div class="user-avatar">
+                        U
+                    </div>
+
+                    <div class="user-profile-name">
+
+                        <span>
+                            USER ACCOUNT
+                        </span>
+
+                        <h2 id="userName">
+                            User
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="user-information-grid">
+
+                    <div class="information-box">
+
+                        <span>
+                            Firebase UID
+                        </span>
+
+                        <strong id="userUid">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="information-box">
+
+                        <span>
+                            Email Address
+                        </span>
+
+                        <strong id="userEmail">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================
+                 BALANCE CARD
+            =================================== -->
+
+            <div class="new-balance-card">
+
+                <div>
+
+                    <span>
+                        CURRENT DEMO BALANCE
+                    </span>
+
+                    <strong id="userBalance">
+                        $0.00
+                    </strong>
+
+                </div>
+
+                <div class="balance-active">
+                    ACTIVE
+                </div>
+
+            </div>
+
+
+            <!-- ==================================
+                 CONTROL CARDS
+            =================================== -->
+
+            <div class="new-control-grid">
+
+
+                <!-- =================================
+                     BALANCE CONTROL
+                ================================== -->
+
+                <div class="new-control-card">
+
+                    <div class="new-control-header">
+
+                        <div class="control-icon balance-control-icon">
+                            $
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Balance Control
+                            </h3>
+
+                            <p>
+                                Increase or decrease the
+                                user's main demo balance.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <label
+                        for="balanceAmount"
+                        class="new-input-label"
+                    >
+                        Balance Amount
+                    </label>
+
+
+                    <div class="new-amount-input">
+
+                        <span>$</span>
+
+                        <input
+                            type="number"
+                            id="balanceAmount"
+                            placeholder="0.00"
+                            min="0"
+                            step="0.01"
+                        >
+
+                    </div>
+
+
+                    <div class="new-action-buttons">
+
+                        <button
+                            id="addBalanceBtn"
+                            class="new-action-btn add-balance-btn"
+                            type="button"
+                        >
+                            + Add Balance
+                        </button>
+
+
+                        <button
+                            id="removeBalanceBtn"
+                            class="new-action-btn remove-balance-btn"
+                            type="button"
+                        >
+                            − Remove Balance
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================
+                     TRADE PROFIT / LOSS
+                ================================== -->
+
+                <div class="new-control-card">
+
+                    <div class="new-control-header">
+
+                        <div class="control-icon trade-control-icon">
+                            %
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Trade Profit / Loss
+                            </h3>
+
+                            <p>
+                                Set a pending trading result
+                                for this user.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <label
+                        for="tradePLAmount"
+                        class="new-input-label"
+                    >
+                        Profit / Loss Amount
+                    </label>
+
+
+                    <div class="new-amount-input">
+
+                        <span>$</span>
+
+                        <input
+                            type="number"
+                            id="tradePLAmount"
+                            placeholder="0.00"
+                            min="0"
+                            step="0.01"
+                        >
+
+                    </div>
+
+
+                    <div class="new-action-buttons">
+
+                        <button
+                            id="addProfitBtn"
+                            class="new-action-btn new-profit-btn"
+                            type="button"
+                        >
+                            + Add Profit
+                        </button>
+
+
+                        <button
+                            id="addLossBtn"
+                            class="new-action-btn new-loss-btn"
+                            type="button"
+                        >
+                            − Add Loss
+                        </button>
+
+                    </div>
+
+
+                    <div class="pending-notice">
+
+                        <span class="notice-dot"></span>
+
+                        <span>
+                            Profit/Loss remains pending until
+                            the trade is closed.
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================
+                 ACTION MESSAGE
+            =================================== -->
+
+            <div
+                id="actionMessage"
+                class="new-action-message"
+            >
+            </div>
+
+
+        </section>
+
+    </main>
+
+
+    <!-- ==========================================
+         NEW JAVASCRIPT
+    =========================================== -->
+
+    <script
+        type="module"
+        src="admin-users-new.js"
+    ></script>
+
+</body>
+
+</html>
