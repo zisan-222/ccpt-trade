@@ -1394,7 +1394,7 @@ async function closeCurrentTrade() {
 
 
     /*
-     * USER P/L
+     * USER MARKET P/L
      */
 
     const userProfitLoss =
@@ -1402,10 +1402,6 @@ async function closeCurrentTrade() {
             closePrice
         );
 
-
-    /*
-     * FIRESTORE
-     */
 
     try {
 
@@ -1426,41 +1422,62 @@ async function closeCurrentTrade() {
         let adminResult = null;
 
 
-        /*
-         * READ ADMIN PENDING RESULT
-         */
+        /* ======================================
+           READ ADMIN PENDING RESULT
+        ====================================== */
 
-        const firstSnapshot =
+        const userSnapshot =
             await firestore.getDoc(
                 userRef
             );
 
 
         if (
-            firstSnapshot.exists()
+            userSnapshot.exists()
         ) {
 
-            const firstData =
-                firstSnapshot.data();
+            const userData =
+                userSnapshot.data();
 
+
+            /*
+             * NEW ADMIN SYSTEM
+             */
 
             if (
-                firstData.pendingAdminTradeResult &&
-                firstData.pendingAdminTradeResult.status ===
+                userData.pendingAdminTradeResult &&
+                userData.pendingAdminTradeResult.status ===
                     "PENDING"
             ) {
 
-                adminResult =
-                    firstData.pendingAdminTradeResult;
+                const pending =
+                    userData.pendingAdminTradeResult;
+
+
+                /*
+                 * Make sure pending result
+                 * belongs to this trade.
+                 */
+
+                if (
+                    !pending.tradeId ||
+                    pending.tradeId ===
+                    closedTradeId
+                ) {
+
+                    adminResult =
+                        pending;
+
+                }
 
             }
 
         }
 
 
-        /*
-         * ADMIN P/L
-         */
+        /* ======================================
+           ADMIN P/L
+        ====================================== */
 
         const adminProfitLoss =
             adminResult
@@ -1470,9 +1487,13 @@ async function closeCurrentTrade() {
                 : 0;
 
 
-        /*
-         * FINAL P/L
-         */
+        /* ======================================
+           FINAL P/L
+           
+           User market P/L
+           +
+           Admin assigned P/L
+        ====================================== */
 
         const finalProfitLoss =
             Number(
@@ -1483,9 +1504,9 @@ async function closeCurrentTrade() {
             );
 
 
-        /*
-         * RETURN MARGIN + P/L
-         */
+        /* ======================================
+           RETURN MARGIN + FINAL P/L
+        ====================================== */
 
         const returnAmount =
             Number(
@@ -1509,9 +1530,9 @@ async function closeCurrentTrade() {
         }
 
 
-        /*
-         * HISTORY DOCUMENT
-         */
+        /* ======================================
+           HISTORY DOCUMENT
+        ====================================== */
 
         const historyRef =
             firestore.doc(
@@ -1526,9 +1547,9 @@ async function closeCurrentTrade() {
         let oldBalance = 0;
 
 
-        /*
-         * SINGLE TRANSACTION
-         */
+        /* ======================================
+           SINGLE TRANSACTION
+        ====================================== */
 
         await firestore.runTransaction(
             tradeDB,
@@ -1562,16 +1583,12 @@ async function closeCurrentTrade() {
 
 
                 /*
-                 * Balance currently has:
+                 * Current balance already has
+                 * the trade margin deducted.
                  *
-                 * Original Balance
-                 * - Trade Margin
+                 * Return:
                  *
-                 * Therefore:
-                 *
-                 * Current Balance
-                 * + Margin
-                 * + Final P/L
+                 * Margin + Final P/L
                  */
 
                 finalBalance =
@@ -1614,15 +1631,27 @@ async function closeCurrentTrade() {
                 }
 
 
+                /*
+                 * Also remove old pending fields
+                 * if they exist.
+                 */
+
+                userUpdate.pendingTradeProfitLoss =
+                    firestore.deleteField();
+
+                userUpdate.pendingTradeId =
+                    firestore.deleteField();
+
+
                 transaction.update(
                     userRef,
                     userUpdate
                 );
 
 
-                /*
-                 * SAVE TRADE HISTORY
-                 */
+                /* ==================================
+                   SAVE TRADE HISTORY
+                ================================== */
 
                 transaction.set(
                     historyRef,
@@ -1690,7 +1719,12 @@ async function closeCurrentTrade() {
 
                         adminResultType:
                             adminResult
-                                ? adminResult.type
+                                ? adminResult.type ||
+                                  (
+                                      adminProfitLoss >= 0
+                                          ? "PROFIT"
+                                          : "LOSS"
+                                  )
                                 : null,
 
                         status:
@@ -1722,9 +1756,9 @@ async function closeCurrentTrade() {
         );
 
 
-        /*
-         * LOCAL HISTORY
-         */
+        /* ======================================
+           LOCAL HISTORY
+        ====================================== */
 
         saveLocalTradeHistory({
 
@@ -1767,9 +1801,9 @@ async function closeCurrentTrade() {
         });
 
 
-        /*
-         * REFRESH BALANCE
-         */
+        /* ======================================
+           REFRESH BALANCE
+        ====================================== */
 
         if (
             typeof window.reloadBalance ===
@@ -1791,16 +1825,16 @@ async function closeCurrentTrade() {
         }
 
 
-        /*
-         * HIDE TRADE CARD
-         */
+        /* ======================================
+           HIDE TRADE CARD
+        ====================================== */
 
         hideOpenTradeCard();
 
 
-        /*
-         * RESET TRADE STATE
-         */
+        /* ======================================
+           RESET TRADE STATE
+        ====================================== */
 
         selectedSide =
             null;
@@ -1824,9 +1858,34 @@ async function closeCurrentTrade() {
         clearActiveTrade();
 
 
-        /*
-         * SUCCESS MESSAGE
-         */
+        /* ======================================
+           CROSS PAGE NOTIFICATION
+        ====================================== */
+
+        localStorage.setItem(
+            "cptTradeClosedAt",
+            String(Date.now())
+        );
+
+
+        setTimeout(
+            function () {
+
+                localStorage.removeItem(
+                    "cptTradeClosedAt"
+                );
+
+            },
+            1000
+        );
+
+
+        /* ======================================
+           SUCCESS POPUP
+           
+           IMPORTANT:
+           Admin P/L line removed.
+        ====================================== */
 
         alert(
 
@@ -1844,15 +1903,6 @@ async function closeCurrentTrade() {
             ) +
             "$" +
             userProfitLoss.toFixed(2) +
-
-            "\nAdmin P/L: " +
-            (
-                adminProfitLoss >= 0
-                    ? "+"
-                    : ""
-            ) +
-            "$" +
-            adminProfitLoss.toFixed(2) +
 
             "\nFinal P/L: " +
             (
