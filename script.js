@@ -91,6 +91,10 @@ if (loginForm) {
                 passwordInput.value;
 
 
+            // ======================================
+            // EMPTY INPUT CHECK
+            // ======================================
+
             if (!username || !password) {
 
                 alert(
@@ -98,96 +102,24 @@ if (loginForm) {
                 );
 
                 return;
-            }
-
-
-            // ======================================
-            // LOGIN BUTTON
-            // ======================================
-
-            const loginButton =
-                loginForm.querySelector(
-                    'button[type="submit"]'
-                );
-
-
-            /*
-             * Prevent multiple clicks
-             */
-
-            if (loginButton) {
-
-                loginButton.disabled = true;
-
-                loginButton.innerHTML = `
-                    <span
-                        style="
-                            display:inline-block;
-                            width:17px;
-                            height:17px;
-                            border:3px solid rgba(0,0,0,0.25);
-                            border-top-color:#000;
-                            border-radius:50%;
-                            vertical-align:-3px;
-                            margin-right:8px;
-                            animation:cptLoginSpin 0.8s linear infinite;
-                        "
-                    ></span>
-                    Please Wait...
-                `;
-
-            }
-
-
-            /*
-             * Add loading animation
-             * without changing style.css
-             */
-
-            if (
-                !document.getElementById(
-                    "cptLoginSpinnerStyle"
-                )
-            ) {
-
-                const style =
-                    document.createElement("style");
-
-                style.id =
-                    "cptLoginSpinnerStyle";
-
-                style.textContent = `
-                    @keyframes cptLoginSpin {
-                        from {
-                            transform: rotate(0deg);
-                        }
-                        to {
-                            transform: rotate(360deg);
-                        }
-                    }
-                `;
-
-                document.head.appendChild(style);
 
             }
 
 
             try {
 
-                /*
-                 * Register system creates an
-                 * internal Firebase email from
-                 * the username.
-                 */
+                // ==================================
+                // CREATE INTERNAL EMAIL
+                // ==================================
 
                 const email =
                     username.toLowerCase()
                     + "@cptmarkets.local";
 
 
-                /*
-                 * Firebase Login
-                 */
+                // ==================================
+                // FIREBASE LOGIN
+                // ==================================
 
                 const userCredential =
                     await signInWithEmailAndPassword(
@@ -201,10 +133,9 @@ if (loginForm) {
                     userCredential.user;
 
 
-                /*
-                 * Get user information
-                 * from Firestore.
-                 */
+                // ==================================
+                // GET USER DATA
+                // ==================================
 
                 const userDoc =
                     await getDoc(
@@ -216,26 +147,18 @@ if (loginForm) {
                     );
 
 
+                // ==================================
+                // USER DATA NOT FOUND
+                // ==================================
+
                 if (!userDoc.exists()) {
-
-                    /*
-                     * Restore button
-                     */
-
-                    if (loginButton) {
-
-                        loginButton.disabled = false;
-
-                        loginButton.innerHTML =
-                            "Go to Sign In";
-
-                    }
 
                     alert(
                         "User account data was not found."
                     );
 
                     return;
+
                 }
 
 
@@ -243,10 +166,9 @@ if (loginForm) {
                     userDoc.data();
 
 
-                /*
-                 * Save current session
-                 * for the existing dashboard.
-                 */
+                // ==================================
+                // SAVE CURRENT SESSION
+                // ==================================
 
                 localStorage.setItem(
                     "currentUser",
@@ -276,39 +198,9 @@ if (loginForm) {
                 );
 
 
-                // ======================================
-                // LOADING TIME
-                // ======================================
-
-                /*
-                 * Keep the loading visible for
-                 * about 1.5 seconds.
-                 */
-
-                await new Promise(
-                    function (resolve) {
-
-                        setTimeout(
-                            resolve,
-                            1500
-                        );
-
-                    }
-                );
-
-
-                // ======================================
-                // LOGIN SUCCESS
-                // ======================================
-
-                alert(
-                    "Login Successful"
-                );
-
-
-                // ======================================
-                // GO TO DASHBOARD
-                // ======================================
+                // ==================================
+                // DIRECT DASHBOARD
+                // ==================================
 
                 window.location.href =
                     "dashboard.html";
@@ -322,21 +214,9 @@ if (loginForm) {
                 );
 
 
-                /*
-                 * Restore button after
-                 * unsuccessful login.
-                 */
-
-                if (loginButton) {
-
-                    loginButton.disabled =
-                        false;
-
-                    loginButton.innerHTML =
-                        "Go to Sign In";
-
-                }
-
+                // ==================================
+                // LOGIN ERROR
+                // ==================================
 
                 if (
                     error.code ===
@@ -374,8 +254,8 @@ if (loginForm) {
                 else {
 
                     alert(
-                        "Login failed: "
-                        + error.message
+                        "Login failed: " +
+                        error.message
                     );
 
                 }
