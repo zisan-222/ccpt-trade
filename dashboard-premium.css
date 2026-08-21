@@ -1,0 +1,607 @@
+/* =========================================================
+   CPTMARKETS
+   PREMIUM DASHBOARD THEME
+   dashboard-premium.css
+
+   SAFE VISUAL OVERRIDE
+   Does NOT replace existing dashboard functionality.
+========================================================= */
+
+
+/* =========================================================
+   GLOBAL PREMIUM BACKGROUND
+========================================================= */
+
+html,
+body {
+    background:
+        radial-gradient(
+            circle at 15% 10%,
+            rgba(38, 86, 150, 0.22),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 85% 25%,
+            rgba(0, 140, 255, 0.12),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 50% 85%,
+            rgba(255, 190, 0, 0.07),
+            transparent 35%
+        ),
+        linear-gradient(
+            145deg,
+            #030813 0%,
+            #071326 45%,
+            #020611 100%
+        ) !important;
+
+    color: #f4f7ff;
+}
+
+
+/* =========================================================
+   BODY PREMIUM LIGHTING
+========================================================= */
+
+body {
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+
+/* Soft background glow */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            rgba(65, 130, 220, 0.08),
+            transparent 42%
+        );
+
+    z-index: 0;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
+
+main,
+.dashboard-container,
+.container {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+header,
+.dashboard-header,
+.top-header {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(8, 22, 43, 0.96),
+            rgba(3, 10, 22, 0.94)
+        ) !important;
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.08) !important;
+
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.35) !important;
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+
+/* =========================================================
+   BRAND / LOGO TEXT
+========================================================= */
+
+.logo,
+.brand,
+.brand-name,
+.logo-text,
+header h1 {
+    color: #ffc52b !important;
+
+    text-shadow:
+        0 0 10px rgba(255, 197, 43, 0.20),
+        0 0 25px rgba(255, 197, 43, 0.10);
+}
+
+
+/* =========================================================
+   HERO / BANNER
+========================================================= */
+
+.hero,
+.banner,
+.hero-card,
+.banner-card {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(18, 43, 76, 0.96),
+            rgba(5, 15, 31, 0.98)
+        ) !important;
+
+    border:
+        1px solid rgba(104, 155, 220, 0.22) !important;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.40),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   TOTAL ASSETS CARD
+========================================================= */
+
+.asset-card,
+.assets-card,
+.balance-card,
+.total-assets {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(22, 39, 67, 0.97),
+            rgba(6, 17, 34, 0.98)
+        ) !important;
+
+    border:
+        1px solid rgba(93, 137, 196, 0.24) !important;
+
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+
+/* =========================================================
+   BALANCE VALUE
+========================================================= */
+
+#balance,
+.balance,
+.balance-value,
+.asset-value {
+    color: #f7f9ff !important;
+
+    text-shadow:
+        0 0 18px rgba(255, 255, 255, 0.08);
+}
+
+
+/* =========================================================
+   PRIMARY GOLD BUTTON
+========================================================= */
+
+button,
+.btn,
+button[type="button"],
+button[type="submit"] {
+    transition:
+        transform 0.20s ease,
+        box-shadow 0.20s ease,
+        background 0.20s ease,
+        border-color 0.20s ease;
+}
+
+
+/* Deposit / primary action */
+
+.deposit,
+.deposit-btn,
+.primary-btn {
+    background:
+        linear-gradient(
+            135deg,
+            #ffe27a 0%,
+            #ffc52b 42%,
+            #e99d00 100%
+        ) !important;
+
+    color: #101318 !important;
+
+    border:
+        1px solid rgba(255, 226, 122, 0.75) !important;
+
+    box-shadow:
+        0 8px 25px rgba(255, 190, 20, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.45) !important;
+}
+
+
+/* =========================================================
+   SECONDARY BUTTONS
+========================================================= */
+
+.withdraw,
+.withdraw-btn,
+.transfer,
+.transfer-btn,
+.secondary-btn {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(42, 66, 104, 0.95),
+            rgba(17, 34, 59, 0.98)
+        ) !important;
+
+    color: #f3f6ff !important;
+
+    border:
+        1px solid rgba(121, 160, 210, 0.28) !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 8px 25px rgba(0, 0, 0, 0.25) !important;
+}
+
+
+/* =========================================================
+   BUTTON HOVER / TOUCH
+========================================================= */
+
+button:hover,
+.btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.35) !important;
+}
+
+
+button:active,
+.btn:active {
+    transform: scale(0.97);
+}
+
+
+/* =========================================================
+   QUICK MENU / ICON GRID
+========================================================= */
+
+.quick-menu,
+.menu-grid,
+.action-grid {
+    position: relative;
+}
+
+
+/* =========================================================
+   QUICK MENU CARDS
+========================================================= */
+
+.item,
+.menu-item,
+.action-item,
+.quick-item {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(20, 38, 67, 0.96),
+            rgba(7, 18, 36, 0.98)
+        ) !important;
+
+    border:
+        1px solid rgba(111, 151, 204, 0.25) !important;
+
+    border-radius: 20px !important;
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+/* =========================================================
+   ICONS
+========================================================= */
+
+.item i,
+.menu-item i,
+.action-item i,
+.quick-item i {
+    color: #ffc52b !important;
+
+    text-shadow:
+        0 0 10px rgba(255, 197, 43, 0.22),
+        0 0 22px rgba(255, 197, 43, 0.10);
+
+    transition:
+        transform 0.25s ease,
+        filter 0.25s ease;
+}
+
+
+/* =========================================================
+   ICON HOVER
+========================================================= */
+
+.item:hover,
+.menu-item:hover,
+.action-item:hover,
+.quick-item:hover {
+    transform: translateY(-4px);
+
+    border-color:
+        rgba(255, 197, 43, 0.38) !important;
+
+    box-shadow:
+        0 18px 35px rgba(0, 0, 0, 0.45),
+        0 0 20px rgba(255, 197, 43, 0.07) !important;
+}
+
+
+.item:hover i,
+.menu-item:hover i,
+.action-item:hover i,
+.quick-item:hover i {
+    transform: scale(1.08);
+
+    filter:
+        drop-shadow(
+            0 0 8px rgba(255, 197, 43, 0.45)
+        );
+}
+
+
+/* =========================================================
+   HOT MARKETS
+========================================================= */
+
+.hot-market,
+.hot-markets,
+.market-section {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(15, 31, 55, 0.95),
+            rgba(5, 15, 29, 0.98)
+        ) !important;
+
+    border:
+        1px solid rgba(91, 133, 188, 0.22) !important;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.38),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+
+    border-radius: 22px !important;
+}
+
+
+/* =========================================================
+   MARKET CARDS
+========================================================= */
+
+.market-card {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(28, 49, 82, 0.90),
+            rgba(9, 22, 42, 0.96)
+        ) !important;
+
+    border:
+        1px solid rgba(106, 145, 194, 0.20) !important;
+
+    box-shadow:
+        0 8px 22px rgba(0, 0, 0, 0.28) !important;
+}
+
+
+/* =========================================================
+   POSITIVE PROFIT
+========================================================= */
+
+.up,
+.profit,
+.profit-value {
+    color: #00e89a !important;
+
+    text-shadow:
+        0 0 10px rgba(0, 232, 154, 0.15);
+}
+
+
+/* =========================================================
+   BOTTOM NAVIGATION
+========================================================= */
+
+.bottom-nav,
+.navbar,
+.bottom-navigation {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(7, 17, 32, 0.92),
+            rgba(2, 8, 17, 0.98)
+        ) !important;
+
+    border-top:
+        1px solid rgba(106, 147, 199, 0.18) !important;
+
+    box-shadow:
+        0 -10px 35px rgba(0, 0, 0, 0.42) !important;
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+
+/* =========================================================
+   NAV ITEMS
+========================================================= */
+
+.nav-item {
+    color: #8290a8 !important;
+
+    transition:
+        color 0.20s ease,
+        transform 0.20s ease;
+}
+
+
+.nav-item i {
+    transition:
+        transform 0.20s ease,
+        filter 0.20s ease;
+}
+
+
+.nav-item.active {
+    color: #ffc52b !important;
+
+    text-shadow:
+        0 0 12px rgba(255, 197, 43, 0.18);
+}
+
+
+.nav-item.active i {
+    filter:
+        drop-shadow(
+            0 0 8px rgba(255, 197, 43, 0.35)
+        );
+}
+
+
+/* =========================================================
+   CENTER TRADE BUTTON
+========================================================= */
+
+.trade i {
+    background:
+        linear-gradient(
+            145deg,
+            #ffe27a,
+            #ffc52b 50%,
+            #eaa000
+        ) !important;
+
+    color: #111 !important;
+
+    box-shadow:
+        0 0 0 5px rgba(255, 197, 43, 0.07),
+        0 0 28px rgba(255, 197, 43, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.50) !important;
+}
+
+
+/* =========================================================
+   TEXT COLORS
+========================================================= */
+
+h1,
+h2,
+h3,
+h4,
+strong {
+    color: #f4f7ff;
+}
+
+
+p,
+span,
+label {
+    color: #aebbd0;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+
+::-webkit-scrollbar-track {
+    background: #030813;
+}
+
+
+::-webkit-scrollbar-thumb {
+    background:
+        linear-gradient(
+            #274a73,
+            #ffc52b
+        );
+
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   MOBILE POLISH
+========================================================= */
+
+@media (max-width: 600px) {
+
+    body {
+        background:
+            radial-gradient(
+                circle at 50% 0%,
+                rgba(31, 73, 126, 0.18),
+                transparent 32%
+            ),
+            linear-gradient(
+                145deg,
+                #030813,
+                #071326 55%,
+                #020611
+            ) !important;
+    }
+
+
+    .item,
+    .menu-item,
+    .action-item,
+    .quick-item {
+        border-radius: 19px !important;
+    }
+
+
+    button:hover,
+    .btn:hover {
+        transform: none;
+    }
+
+}
+
+
+/* =========================================================
+   END
+========================================================= */
