@@ -543,8 +543,19 @@ registerForm.addEventListener(
             );
 
 
+            /*
+             * ==================================
+             * DIRECT DASHBOARD REDIRECT
+             * ==================================
+             *
+             * Registration সফল হলে আর Login
+             * page-এ যাবে না।
+             *
+             * সরাসরি Dashboard খুলবে।
+             */
+
             window.location.href =
-                "index.html";
+                "dashboard.html";
 
 
         } catch (error) {
