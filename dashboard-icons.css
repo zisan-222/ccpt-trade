@@ -210,3 +210,90 @@
         font-size: 14px;
     }
 }
+/* =========================================
+   CPT MARKETS — REAL ACTION ICON OVERRIDE
+   ========================================= */
+
+.action-buttons button,
+.quick-actions button,
+.actions-grid button,
+.action-grid button {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(20, 43, 78, 0.96),
+            rgba(8, 24, 50, 0.98)
+        ) !important;
+
+    border: 1px solid rgba(255, 199, 44, 0.28) !important;
+    border-radius: 20px !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.06),
+        0 8px 22px rgba(0,0,0,0.20) !important;
+}
+
+/* Remove old yellow circular icon background */
+.action-buttons button i,
+.quick-actions button i,
+.actions-grid button i,
+.action-grid button i {
+    width: 58px !important;
+    height: 58px !important;
+
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    margin: 0 0 9px 0 !important;
+
+    border-radius: 16px !important;
+
+    background:
+        radial-gradient(
+            circle at 50% 30%,
+            rgba(255,199,44,0.12),
+            transparent 65%
+        ) !important;
+
+    border: 1px solid rgba(255,199,44,0.38) !important;
+
+    color: #ffc72c !important;
+
+    font-size: 27px !important;
+
+    box-shadow:
+        inset 0 1px 2px rgba(255,255,255,0.08),
+        0 0 16px rgba(255,199,44,0.08) !important;
+}
+
+/* Remove any old circle/pseudo background */
+.action-buttons button i::before,
+.quick-actions button i::before,
+.actions-grid button i::before,
+.action-grid button i::before {
+    background: transparent !important;
+    border-radius: 0 !important;
+}
+
+/* Action text */
+.action-buttons button,
+.quick-actions button,
+.actions-grid button,
+.action-grid button {
+    color: #eef3fb !important;
+    font-weight: 500 !important;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .action-buttons button i,
+    .quick-actions button i,
+    .actions-grid button i,
+    .action-grid button i {
+        width: 58px !important;
+        height: 58px !important;
+        font-size: 26px !important;
+        border-radius: 16px !important;
+    }
+}
