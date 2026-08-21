@@ -1,90 +1,49 @@
 /* =========================================
-   CPT MARKETS — PROFESSIONAL ICON SYSTEM
+   CPT MARKETS — MENU ICON SYSTEM
    ========================================= */
 
-:root {
-    --icon-gold: #ffc72c;
-    --icon-gold-light: #ffd95a;
-    --icon-bg: rgba(17, 35, 66, 0.82);
-    --icon-border: rgba(255, 199, 44, 0.32);
-    --icon-shadow: rgba(255, 199, 44, 0.18);
-}
-
-/* Quick action area */
-.quick-actions,
-.actions-grid,
-.action-grid {
+.menu-grid {
     position: relative;
 }
 
-/* Individual action cards */
-.quick-action,
-.action-item,
-.action-card {
+/* MENU CARDS */
+.menu-item {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     background:
-        radial-gradient(
-            circle at 50% 18%,
-            rgba(255, 199, 44, 0.10),
-            transparent 38%
-        ),
         linear-gradient(
             145deg,
             rgba(18, 40, 73, 0.96),
             rgba(8, 23, 48, 0.96)
-        );
+        ) !important;
 
-    border: 1px solid rgba(255, 255, 255, 0.10);
-    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.10) !important;
+    border-radius: 22px !important;
 
     box-shadow:
         inset 0 1px 0 rgba(255,255,255,0.06),
-        0 8px 25px rgba(0,0,0,0.20);
-
-    transition:
-        transform 0.22s ease,
-        border-color 0.22s ease,
-        box-shadow 0.22s ease;
-}
-
-/* Hover / touch effect */
-.quick-action:hover,
-.action-item:hover,
-.action-card:hover {
-    transform: translateY(-3px);
-
-    border-color: var(--icon-border);
-
-    box-shadow:
-        0 10px 30px rgba(0,0,0,0.28),
-        0 0 22px var(--icon-shadow);
+        0 8px 25px rgba(0,0,0,0.20) !important;
 }
 
 /* =========================================
    ICON BOX
    ========================================= */
 
-.quick-action .icon,
-.quick-action .action-icon,
-.action-item .icon,
-.action-item .action-icon,
-.action-card .icon,
-.action-card .action-icon {
+.menu-icon {
+    width: 68px !important;
+    height: 68px !important;
 
-    width: 72px;
-    height: 72px;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    margin-bottom: 10px !important;
 
-    margin-bottom: 10px;
-
-    border-radius: 20px;
+    border-radius: 19px !important;
 
     background:
         radial-gradient(
@@ -96,204 +55,62 @@
             145deg,
             rgba(31, 54, 88, 0.96),
             rgba(11, 28, 54, 0.98)
-        );
+        ) !important;
 
-    border: 1px solid rgba(255, 199, 44, 0.30);
+    border: 1px solid rgba(255, 199, 44, 0.30) !important;
 
     box-shadow:
         inset 0 1px 2px rgba(255,255,255,0.08),
-        0 0 18px rgba(255,199,44,0.08);
+        0 0 18px rgba(255,199,44,0.08) !important;
+
+    border-radius: 19px !important;
 }
 
-/* Font Awesome icon */
-.quick-action i,
-.quick-action .icon i,
-.quick-action .action-icon i,
-.action-item i,
-.action-item .icon i,
-.action-item .action-icon i,
-.action-card i,
-.action-card .icon i,
-.action-card .action-icon i {
-
-    color: var(--icon-gold) !important;
-
-    font-size: 29px;
-
-    line-height: 1;
-
-    filter:
-        drop-shadow(0 0 5px rgba(255,199,44,0.30));
-}
-
-/* Text under icons */
-.quick-action span,
-.quick-action .label,
-.action-item span,
-.action-item .label,
-.action-card span,
-.action-card .label {
-
-    color: #eef3fb;
-
-    font-size: 15px;
-    font-weight: 500;
-
-    letter-spacing: 0.1px;
-
-    text-align: center;
-}
-
-/* =========================================
-   REMOVE OLD GIANT YELLOW CIRCLES
-   ========================================= */
-
-.quick-action::before,
-.quick-action::after,
-.action-item::before,
-.action-item::after,
-.action-card::before,
-.action-card::after {
-    pointer-events: none;
-}
-
-/* If old icon wrapper uses circle */
-.quick-action .icon-circle,
-.action-item .icon-circle,
-.action-card .icon-circle {
-    background: transparent !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-}
-
-/* =========================================
-   MOBILE
-   ========================================= */
-
-@media (max-width: 600px) {
-
-    .quick-action,
-    .action-item,
-    .action-card {
-        border-radius: 22px;
-    }
-
-    .quick-action .icon,
-    .quick-action .action-icon,
-    .action-item .icon,
-    .action-item .action-icon,
-    .action-card .icon,
-    .action-card .action-icon {
-        width: 68px;
-        height: 68px;
-        border-radius: 19px;
-    }
-
-    .quick-action i,
-    .quick-action .icon i,
-    .quick-action .action-icon i,
-    .action-item i,
-    .action-item .icon i,
-    .action-item .action-icon i,
-    .action-card i,
-    .action-card .icon i,
-    .action-card .action-icon i {
-        font-size: 27px;
-    }
-
-    .quick-action span,
-    .quick-action .label,
-    .action-item span,
-    .action-item .label,
-    .action-card span,
-    .action-card .label {
-        font-size: 14px;
-    }
-}
-/* =========================================
-   CPT MARKETS — REAL ACTION ICON OVERRIDE
-   ========================================= */
-
-.action-buttons button,
-.quick-actions button,
-.actions-grid button,
-.action-grid button {
-    background:
-        linear-gradient(
-            145deg,
-            rgba(20, 43, 78, 0.96),
-            rgba(8, 24, 50, 0.98)
-        ) !important;
-
-    border: 1px solid rgba(255, 199, 44, 0.28) !important;
-    border-radius: 20px !important;
-
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.06),
-        0 8px 22px rgba(0,0,0,0.20) !important;
-}
-
-/* Remove old yellow circular icon background */
-.action-buttons button i,
-.quick-actions button i,
-.actions-grid button i,
-.action-grid button i {
-    width: 58px !important;
-    height: 58px !important;
-
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-
-    margin: 0 0 9px 0 !important;
-
-    border-radius: 16px !important;
-
-    background:
-        radial-gradient(
-            circle at 50% 30%,
-            rgba(255,199,44,0.12),
-            transparent 65%
-        ) !important;
-
-    border: 1px solid rgba(255,199,44,0.38) !important;
-
+/* FONT AWESOME ICON */
+.menu-icon i {
     color: #ffc72c !important;
 
     font-size: 27px !important;
 
-    box-shadow:
-        inset 0 1px 2px rgba(255,255,255,0.08),
-        0 0 16px rgba(255,199,44,0.08) !important;
+    line-height: 1 !important;
+
+    filter:
+        drop-shadow(0 0 5px rgba(255,199,44,0.30)) !important;
 }
 
-/* Remove any old circle/pseudo background */
-.action-buttons button i::before,
-.quick-actions button i::before,
-.actions-grid button i::before,
-.action-grid button i::before {
-    background: transparent !important;
-    border-radius: 0 !important;
-}
-
-/* Action text */
-.action-buttons button,
-.quick-actions button,
-.actions-grid button,
-.action-grid button {
+/* TEXT */
+.menu-item > span {
     color: #eef3fb !important;
+
+    font-size: 14px !important;
     font-weight: 500 !important;
+
+    text-align: center;
 }
 
-/* Mobile */
+/* REMOVE OLD CIRCLE EFFECTS */
+.menu-icon::before,
+.menu-icon::after,
+.menu-item::before,
+.menu-item::after {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* MOBILE */
 @media (max-width: 600px) {
-    .action-buttons button i,
-    .quick-actions button i,
-    .actions-grid button i,
-    .action-grid button i {
-        width: 58px !important;
-        height: 58px !important;
-        font-size: 26px !important;
-        border-radius: 16px !important;
+
+    .menu-icon {
+        width: 68px !important;
+        height: 68px !important;
+        border-radius: 19px !important;
+    }
+
+    .menu-icon i {
+        font-size: 27px !important;
+    }
+
+    .menu-item > span {
+        font-size: 14px !important;
     }
 }
