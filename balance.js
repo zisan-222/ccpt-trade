@@ -2,7 +2,7 @@
    CPTMARKETS
    balance.js
    FIREBASE BALANCE SYSTEM
-   FINAL - FIREBASE SOURCE OF TRUTH
+   FINAL - TRADE + ADMIN COMPATIBLE
 ========================================== */
 
 
@@ -13,131 +13,39 @@
 let CPT_AUTH = null;
 let CPT_DB = null;
 
-let currentFirebaseUser = null;
+let currentBalanceUser = null;
 let balanceUnsubscribe = null;
 
 let firebaseReady = false;
 
 
 /* ==========================================
-   LOCAL STORAGE
+   LOCAL CACHE
 ========================================== */
 
 const BALANCE_KEY_PREFIX =
     "cptmarkets_balance_";
 
-const DEFAULT_BALANCE =
-    0.00;
+const DEFAULT_BALANCE = 0.00;
 
 
 /* ==========================================
-   FIREBASE INITIALIZATION
-========================================== */
-
-async function initializeCPTFirebase() {
-
-    try {
-
-        const config =
-            await import(
-                "./firebase/firebase-config.js"
-            );
-
-
-        CPT_AUTH =
-            config.auth;
-
-        CPT_DB =
-            config.db;
-
-
-        const firebaseAuth =
-            await import(
-                "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js"
-            );
-
-
-        firebaseAuth.onAuthStateChanged(
-            CPT_AUTH,
-            async function (user) {
-
-                currentFirebaseUser =
-                    user || null;
-
-
-                firebaseReady =
-                    !!user;
-
-
-                /* ==========================
-                   USER LOGGED OUT
-                ========================== */
-
-                if (!user) {
-
-                    if (
-                        typeof balanceUnsubscribe ===
-                        "function"
-                    ) {
-
-                        balanceUnsubscribe();
-
-                    }
-
-
-                    balanceUnsubscribe =
-                        null;
-
-
-                    refreshBalanceUI();
-
-                    return;
-
-                }
-
-
-                /* ==========================
-                   CONNECT USER BALANCE
-                ========================== */
-
-                await connectFirebaseBalance(
-                    user
-                );
-
-            }
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "CptMarkets Firebase initialization failed:",
-            error
-        );
-
-    }
-
-}
-
-
-/* ==========================================
-   BALANCE KEY
+   GET LOCAL BALANCE KEY
 ========================================== */
 
 function getBalanceKey() {
 
     if (
-        currentFirebaseUser &&
-        currentFirebaseUser.uid
+        currentBalanceUser &&
+        currentBalanceUser.uid
     ) {
 
         return (
             BALANCE_KEY_PREFIX +
-            currentFirebaseUser.uid
+            currentBalanceUser.uid
         );
 
     }
-
 
     return (
         BALANCE_KEY_PREFIX +
@@ -151,7 +59,7 @@ function getBalanceKey() {
    INITIALIZE LOCAL BALANCE
 ========================================== */
 
-function initializeBalance() {
+function initializeLocalBalance() {
 
     const key =
         getBalanceKey();
@@ -177,7 +85,7 @@ function initializeBalance() {
 
 function getBalance() {
 
-    initializeBalance();
+    initializeLocalBalance();
 
 
     const value =
@@ -197,15 +105,16 @@ function getBalance() {
     }
 
 
-    return Number(
-        value.toFixed(2)
+    return Math.max(
+        0,
+        value
     );
 
 }
 
 
 /* ==========================================
-   SAVE LOCAL BALANCE
+   LOCAL BALANCE SET
 ========================================== */
 
 function setLocalBalance(
@@ -240,6 +149,9 @@ function setLocalBalance(
 
     refreshBalanceUI();
 
+
+    return amount;
+
 }
 
 
@@ -251,13 +163,11 @@ function formatUSD(
     amount
 ) {
 
-    const safeAmount =
-        Number(amount) || 0;
-
-
     return (
         "$" +
-        safeAmount.toFixed(2)
+        Number(
+            amount || 0
+        ).toFixed(2)
     );
 
 }
@@ -282,7 +192,8 @@ function refreshBalanceUI() {
         "tradeBalance",
         "demoBalance",
         "totalBalance",
-        "currentBalance"
+        "currentBalance",
+        "userBalance"
 
     ];
 
@@ -322,7 +233,97 @@ function refreshBalanceUI() {
 
 
 /* ==========================================
-   CONNECT FIREBASE BALANCE
+   CONNECT FIREBASE
+========================================== */
+
+async function initializeCPTFirebase() {
+
+    try {
+
+        const config =
+            await import(
+                "./firebase/firebase-config.js"
+            );
+
+
+        CPT_AUTH =
+            config.auth;
+
+        CPT_DB =
+            config.db;
+
+
+        const firebaseAuth =
+            await import(
+                "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js"
+            );
+
+
+        firebaseReady = true;
+
+
+        firebaseAuth.onAuthStateChanged(
+            CPT_AUTH,
+            async function (user) {
+
+                currentBalanceUser =
+                    user || null;
+
+
+                /* ==========================
+                   NO USER
+                ========================== */
+
+                if (!user) {
+
+                    if (
+                        typeof balanceUnsubscribe ===
+                        "function"
+                    ) {
+
+                        balanceUnsubscribe();
+
+                        balanceUnsubscribe =
+                            null;
+
+                    }
+
+
+                    initializeLocalBalance();
+
+                    refreshBalanceUI();
+
+                    return;
+
+                }
+
+
+                /* ==========================
+                   USER LOGGED IN
+                ========================== */
+
+                await connectFirebaseBalance(
+                    user
+                );
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "CptMarkets Firebase initialization failed:",
+            error
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   FIREBASE BALANCE LISTENER
 ========================================== */
 
 async function connectFirebaseBalance(
@@ -341,11 +342,11 @@ async function connectFirebaseBalance(
         }
 
 
-        currentFirebaseUser =
+        currentBalanceUser =
             firebaseUser;
 
 
-        initializeBalance();
+        initializeLocalBalance();
 
 
         const firestore =
@@ -373,15 +374,14 @@ async function connectFirebaseBalance(
 
             balanceUnsubscribe();
 
+            balanceUnsubscribe =
+                null;
+
         }
 
 
-        balanceUnsubscribe =
-            null;
-
-
         /* ==========================
-           REAL-TIME BALANCE LISTENER
+           FIREBASE REAL-TIME LISTENER
         ========================== */
 
         balanceUnsubscribe =
@@ -396,11 +396,7 @@ async function connectFirebaseBalance(
                     ) {
 
                         console.warn(
-                            "CptMarkets: user document does not exist."
-                        );
-
-                        setLocalBalance(
-                            0
+                            "CptMarkets: User document not found."
                         );
 
                         return;
@@ -444,8 +440,8 @@ async function connectFirebaseBalance(
 
 
                     /*
-                     * FIREBASE IS THE
-                     * SOURCE OF TRUTH.
+                     * Firebase is the
+                     * MAIN SOURCE OF TRUTH.
                      */
 
                     localStorage.setItem(
@@ -513,7 +509,8 @@ async function changeFirebaseBalance(
 
 
     if (
-        !currentFirebaseUser ||
+        !currentBalanceUser ||
+        !currentBalanceUser.uid ||
         !CPT_DB
     ) {
 
@@ -538,7 +535,7 @@ async function changeFirebaseBalance(
             firestore.doc(
                 CPT_DB,
                 "users",
-                currentFirebaseUser.uid
+                currentBalanceUser.uid
             );
 
 
@@ -547,9 +544,7 @@ async function changeFirebaseBalance(
 
                 CPT_DB,
 
-                async function (
-                    transaction
-                ) {
+                async function (transaction) {
 
                     const snapshot =
                         await transaction.get(
@@ -568,26 +563,30 @@ async function changeFirebaseBalance(
                     }
 
 
-                    const data =
+                    const userData =
                         snapshot.data();
 
 
-                    const oldBalance =
+                    let oldBalance =
                         Number(
-                            data.balance || 0
+                            userData.balance || 0
                         );
 
 
-                    const safeOldBalance =
-                        Number.isFinite(
+                    if (
+                        !Number.isFinite(
                             oldBalance
                         )
-                            ? oldBalance
-                            : 0;
+                    ) {
+
+                        oldBalance =
+                            0;
+
+                    }
 
 
-                    const newBalance =
-                        safeOldBalance +
+                    let newBalance =
+                        oldBalance +
                         amount;
 
 
@@ -602,7 +601,7 @@ async function changeFirebaseBalance(
                     }
 
 
-                    const safeBalance =
+                    newBalance =
                         Number(
                             newBalance.toFixed(2)
                         );
@@ -615,23 +614,23 @@ async function changeFirebaseBalance(
                         {
 
                             balance:
-                                safeBalance
+                                newBalance
 
                         }
 
                     );
 
 
-                    return safeBalance;
+                    return newBalance;
 
                 }
 
             );
 
 
-        /* ==========================
-           UPDATE LOCAL CACHE
-        ========================== */
+        /*
+         * Update local cache immediately.
+         */
 
         setLocalBalance(
             finalBalance
@@ -707,6 +706,24 @@ async function subtractBalance(
     }
 
 
+    /*
+     * Quick local check.
+     */
+
+    if (
+        getBalance() < amount
+    ) {
+
+        return false;
+
+    }
+
+
+    /*
+     * Firebase transaction performs
+     * the real balance check.
+     */
+
     return await changeFirebaseBalance(
         -amount
     );
@@ -744,7 +761,7 @@ function hasEnoughBalance(
 
 
 /* ==========================================
-   DIRECT FIREBASE SET
+   DIRECT BALANCE SET
 ========================================== */
 
 async function adminSetBalance(
@@ -766,7 +783,8 @@ async function adminSetBalance(
 
 
     if (
-        !currentFirebaseUser ||
+        !currentBalanceUser ||
+        !currentBalanceUser.uid ||
         !CPT_DB
     ) {
 
@@ -787,13 +805,7 @@ async function adminSetBalance(
             firestore.doc(
                 CPT_DB,
                 "users",
-                currentFirebaseUser.uid
-            );
-
-
-        const safeAmount =
-            Number(
-                amount.toFixed(2)
+                currentBalanceUser.uid
             );
 
 
@@ -804,7 +816,9 @@ async function adminSetBalance(
             {
 
                 balance:
-                    safeAmount
+                    Number(
+                        amount.toFixed(2)
+                    )
 
             }
 
@@ -812,7 +826,7 @@ async function adminSetBalance(
 
 
         setLocalBalance(
-            safeAmount
+            amount
         );
 
 
@@ -822,7 +836,7 @@ async function adminSetBalance(
     } catch (error) {
 
         console.error(
-            "Admin balance set failed:",
+            "Balance set failed:",
             error
         );
 
@@ -859,23 +873,7 @@ function reloadBalance() {
 
 
 /* ==========================================
-   PAGE LOAD
-========================================== */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-
-        initializeBalance();
-
-        refreshBalanceUI();
-
-    }
-);
-
-
-/* ==========================================
-   GLOBAL API
+   GLOBAL CPT BALANCE API
 ========================================== */
 
 window.CPTBalance = {
@@ -914,47 +912,45 @@ window.CPTBalance = {
 window.getBalance =
     getBalance;
 
-
 window.setLocalBalance =
     setLocalBalance;
-
-
-window.setBalance =
-    setLocalBalance;
-
 
 window.addBalance =
     addBalance;
 
-
 window.subtractBalance =
     subtractBalance;
-
 
 window.hasEnoughBalance =
     hasEnoughBalance;
 
-
 window.resetBalance =
     resetBalance;
-
 
 window.adminSetBalance =
     adminSetBalance;
 
-
 window.reloadBalance =
     reloadBalance;
 
-
-/*
- * Compatibility:
- *
- * trade.js may call refreshBalance()
- */
-
 window.refreshBalance =
     refreshBalanceUI;
+
+
+/* ==========================================
+   PAGE LOAD
+========================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        initializeLocalBalance();
+
+        refreshBalanceUI();
+
+    }
+);
 
 
 /* ==========================================
@@ -973,6 +969,24 @@ window.addEventListener(
     function () {
 
         refreshBalanceUI();
+
+    }
+);
+
+
+/* ==========================================
+   ERROR PROTECTION
+========================================== */
+
+window.addEventListener(
+    "error",
+    function (event) {
+
+        console.error(
+            "CptMarkets Balance JS Error:",
+            event.error ||
+            event.message
+        );
 
     }
 );
