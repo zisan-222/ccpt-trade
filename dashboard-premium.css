@@ -682,6 +682,180 @@ label {
     }
 }
 
+/* =========================================================
+   CPTMARKETS — FINAL MOBILE BANNER SIZE FIX
+   Keeps the banner inside the screen and makes it compact
+========================================================= */
+
+.banner {
+    position: relative !important;
+
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+
+    /* Compact premium banner ratio */
+    height: clamp(250px, 40vw, 310px) !important;
+    min-height: 0 !important;
+    max-height: 310px !important;
+
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+
+    box-sizing: border-box !important;
+
+    border-radius: 28px !important;
+    overflow: hidden !important;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(3, 20, 45, 0.18),
+            rgba(3, 20, 45, 0.05)
+        ),
+        url("market-bg.svg") center center / cover no-repeat !important;
+
+    border: 1px solid rgba(255, 199, 44, 0.22) !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.08),
+        0 12px 35px rgba(0,0,0,0.25) !important;
+}
+
+
+/* Make sure banner content stays inside */
+.banner-content {
+    position: absolute !important;
+    inset: 0 !important;
+
+    z-index: 2 !important;
+
+    box-sizing: border-box !important;
+
+    padding: 28px 36px !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+
+    overflow: hidden !important;
+}
+
+
+/* Banner title */
+.banner h1 {
+    margin: 0 !important;
+
+    font-size: clamp(28px, 4vw, 42px) !important;
+    line-height: 1.1 !important;
+
+    color: #ffc52c !important;
+
+    text-shadow:
+        0 2px 12px rgba(0,0,0,0.45),
+        0 0 18px rgba(255,197,43,0.12) !important;
+}
+
+
+/* Banner subtitle */
+.banner p {
+    margin-top: 18px !important;
+
+    max-width: 650px !important;
+
+    font-size: clamp(16px, 2.5vw, 23px) !important;
+    line-height: 1.35 !important;
+
+    color: #eef3fb !important;
+
+    text-shadow:
+        0 2px 8px rgba(0,0,0,0.45) !important;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .banner {
+        width: 100% !important;
+        max-width: 100% !important;
+
+        height: 280px !important;
+        min-height: 0 !important;
+        max-height: 280px !important;
+
+        border-radius: 25px !important;
+
+        background-position: center center !important;
+        background-size: cover !important;
+
+        box-sizing: border-box !important;
+    }
+
+
+    .banner-content {
+        padding: 25px 28px !important;
+    }
+
+
+    .banner h1 {
+        font-size: 30px !important;
+        line-height: 1.1 !important;
+    }
+
+
+    .banner p {
+        margin-top: 14px !important;
+
+        font-size: 17px !important;
+        line-height: 1.3 !important;
+
+        max-width: 90% !important;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .banner {
+        height: 235px !important;
+        max-height: 235px !important;
+
+        border-radius: 23px !important;
+    }
+
+
+    .banner-content {
+        padding: 22px 22px !important;
+    }
+
+
+    .banner h1 {
+        font-size: 27px !important;
+    }
+
+
+    .banner p {
+        font-size: 15px !important;
+        margin-top: 12px !important;
+    }
+}
+
+
+/* Prevent horizontal overflow from banner */
+html,
+body {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+}
+
 
 /* =========================================================
    END
