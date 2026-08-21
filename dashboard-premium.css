@@ -2,7 +2,9 @@
    CPTMARKETS
    PREMIUM DASHBOARD THEME
    dashboard-premium.css
+   FINAL VERSION
    ========================================================= */
+
 
 /* =========================
    GLOBAL BACKGROUND
@@ -92,7 +94,7 @@ header,
 
 
 /* =========================
-   LOGO / BRAND
+   LOGO
    ========================= */
 
 .logo,
@@ -109,8 +111,7 @@ header h1 {
 
 
 /* =========================================================
-   PREMIUM MARKET BANNER
-   Uses market-bg.svg
+   HERO / BANNER
    ========================================================= */
 
 .hero,
@@ -119,8 +120,8 @@ header h1 {
     background:
         linear-gradient(
             135deg,
-            rgba(5, 27, 58, 0.22),
-            rgba(8, 43, 86, 0.10)
+            rgba(5, 27, 58, 0.18),
+            rgba(8, 43, 86, 0.06)
         ),
         url("market-bg.svg") center center / cover no-repeat !important;
 
@@ -132,42 +133,37 @@ header h1 {
         0 12px 35px rgba(0, 0, 0, 0.30) !important;
 
     overflow: hidden;
-
-    border-radius: 26px !important;
 }
 
 
 /* =========================================================
-   MAIN BANNER
-   Compact premium proportion
+   FINAL BANNER
    ========================================================= */
 
 .banner {
     position: relative !important;
 
     /*
-       Balance card-এর কাছাকাছি width।
-       Screen-এর দুই পাশে নিরাপদ spacing থাকবে।
+       Balance card-এর মতো screen width alignment।
+       দুই পাশে সুন্দর margin থাকবে।
     */
-    width: calc(100% - 48px) !important;
-
-    max-width: none !important;
-    min-width: 0 !important;
+    width: calc(100% - 52px) !important;
 
     margin-left: auto !important;
     margin-right: auto !important;
 
-    /*
-       Banner-এর height ইচ্ছাকৃতভাবে compact রাখা হয়েছে।
-       Balance card-এর তুলনায় ছোট দেখাবে।
-    */
-    aspect-ratio: 2.45 / 1 !important;
-
-    height: auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
-
     box-sizing: border-box !important;
+
+    /*
+       FINAL HEIGHT
+
+       2.10/1-এর বদলে fixed responsive height ব্যবহার করা হচ্ছে।
+       এতে mobile-এ banner আর অতিরিক্ত চ্যাপ্টা হবে না।
+    */
+    height: 330px !important;
+
+    min-height: 330px !important;
+    max-height: 330px !important;
 
     border-radius: 24px !important;
 
@@ -176,23 +172,23 @@ header h1 {
     background:
         linear-gradient(
             135deg,
-            rgba(3, 20, 45, 0.10),
+            rgba(3, 20, 45, 0.08),
             rgba(3, 20, 45, 0.02)
         ),
-        url("market-bg.svg") center center / cover no-repeat !important;
+        url("market-bg.svg") center center / 100% 100% no-repeat !important;
 
     border:
         1px solid rgba(255, 199, 44, 0.25) !important;
 
     box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.08),
-        0 10px 30px rgba(0, 0, 0, 0.25) !important;
+        0 12px 32px rgba(0, 0, 0, 0.28) !important;
 }
 
 
-/* =========================
-   BANNER DARK READABILITY
-   ========================= */
+/* =========================================================
+   BANNER DARK OVERLAY
+   ========================================================= */
 
 .banner::before {
     content: "";
@@ -203,14 +199,9 @@ header h1 {
     background:
         linear-gradient(
             90deg,
-            rgba(2, 15, 34, 0.30) 0%,
-            rgba(2, 15, 34, 0.10) 48%,
-            rgba(2, 15, 34, 0.07) 100%
-        ),
-        linear-gradient(
-            180deg,
-            rgba(0, 0, 0, 0.03),
-            rgba(0, 0, 0, 0.13)
+            rgba(2, 15, 34, 0.24) 0%,
+            rgba(2, 15, 34, 0.06) 50%,
+            rgba(2, 15, 34, 0.08) 100%
         );
 
     pointer-events: none;
@@ -219,25 +210,29 @@ header h1 {
 }
 
 
-/* =========================
+/* =========================================================
    BANNER CONTENT
-   ========================= */
+   ========================================================= */
 
 .banner-content {
     position: absolute !important;
 
-    inset: 0 !important;
+    /*
+       Content পুরো banner-এর মধ্যে থাকবে।
+       একদম মাঝ বরাবর না রেখে একটু উপরের দিকে রাখা হয়েছে।
+    */
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
 
     width: 100% !important;
     height: 100% !important;
 
     box-sizing: border-box !important;
 
-    /*
-       Content-এর padding কমানো হয়েছে
-       যাতে ছোট banner-এর ভিতরে সুন্দরভাবে বসে।
-    */
-    padding: 20px 28px !important;
+    padding:
+        38px 30px 25px 30px !important;
 
     overflow: hidden !important;
 
@@ -245,48 +240,49 @@ header h1 {
 }
 
 
-/* =========================
+/* =========================================================
    BANNER TITLE
-   ========================= */
+   ========================================================= */
 
 .banner h1 {
     margin: 0 !important;
 
     font-size: 30px !important;
 
-    line-height: 1.1 !important;
+    line-height: 1.12 !important;
 
     color: #ffc72c !important;
 
     text-shadow:
-        0 2px 12px rgba(0, 0, 0, 0.42),
+        0 2px 12px rgba(0, 0, 0, 0.48),
         0 0 18px rgba(255, 199, 44, 0.14) !important;
 }
 
 
-/* =========================
+/* =========================================================
    BANNER SUBTITLE
-   ========================= */
+   ========================================================= */
 
 .banner p {
-    margin: 10px 0 0 0 !important;
+    margin:
+        18px 0 0 0 !important;
 
     font-size: 16px !important;
 
-    line-height: 1.3 !important;
+    line-height: 1.35 !important;
 
-    max-width: 92% !important;
+    max-width: 90% !important;
 
     color: #eef3fb !important;
 
     text-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.42) !important;
+        0 2px 8px rgba(0, 0, 0, 0.50) !important;
 }
 
 
-/* =========================
-   TOTAL ASSETS
-   ========================= */
+/* =========================================================
+   TOTAL ASSETS / BALANCE
+   ========================================================= */
 
 .asset-card,
 .assets-card,
@@ -326,9 +322,9 @@ header h1 {
 }
 
 
-/* =========================
+/* =========================================================
    BUTTONS
-   ========================= */
+   ========================================================= */
 
 button,
 .btn,
@@ -342,7 +338,7 @@ button[type="submit"] {
 }
 
 
-/* GOLD PRIMARY BUTTON */
+/* PRIMARY */
 
 .deposit,
 .deposit-btn,
@@ -366,7 +362,7 @@ button[type="submit"] {
 }
 
 
-/* SECONDARY BUTTONS */
+/* SECONDARY */
 
 .withdraw,
 .withdraw-btn,
@@ -391,7 +387,7 @@ button[type="submit"] {
 }
 
 
-/* BUTTON HOVER */
+/* HOVER */
 
 button:hover,
 .btn:hover {
@@ -407,9 +403,9 @@ button:active,
 }
 
 
-/* =========================
+/* =========================================================
    QUICK MENU
-   ========================= */
+   ========================================================= */
 
 .quick-menu,
 .menu-grid,
@@ -465,7 +461,7 @@ button:active,
 }
 
 
-/* QUICK CARD HOVER */
+/* QUICK HOVER */
 
 .item:hover,
 .menu-item:hover,
@@ -494,9 +490,9 @@ button:active,
 }
 
 
-/* =========================
+/* =========================================================
    HOT MARKETS
-   ========================= */
+   ========================================================= */
 
 .hot-market,
 .hot-markets,
@@ -537,9 +533,9 @@ button:active,
 }
 
 
-/* =========================
+/* =========================================================
    PROFIT
-   ========================= */
+   ========================================================= */
 
 .up,
 .profit,
@@ -551,9 +547,9 @@ button:active,
 }
 
 
-/* =========================
+/* =========================================================
    BOTTOM NAVIGATION
-   ========================= */
+   ========================================================= */
 
 .bottom-nav,
 .navbar,
@@ -607,7 +603,7 @@ button:active,
 }
 
 
-/* CENTER TRADE BUTTON */
+/* CENTER TRADE */
 
 .trade i {
     background:
@@ -627,9 +623,9 @@ button:active,
 }
 
 
-/* =========================
+/* =========================================================
    TEXT
-   ========================= */
+   ========================================================= */
 
 h1,
 h2,
@@ -646,9 +642,9 @@ label {
 }
 
 
-/* =========================
+/* =========================================================
    SCROLLBAR
-   ========================= */
+   ========================================================= */
 
 ::-webkit-scrollbar {
     width: 5px;
@@ -670,7 +666,7 @@ label {
 
 
 /* =========================================================
-   MOBILE
+   MOBILE — FINAL
    ========================================================= */
 
 @media (max-width: 600px) {
@@ -692,25 +688,27 @@ label {
 
 
     /* =========================
-       MOBILE BANNER
+       FINAL MOBILE BANNER
        ========================= */
 
     .banner {
-        /*
-           Balance card-এর width-এর সাথে মিল রাখার জন্য
-           side spacing কমানো হয়েছে।
-        */
-        width: calc(100% - 48px) !important;
+        width: calc(100% - 52px) !important;
 
         /*
-           Reference-এর মতো compact banner।
-           Height ইচ্ছাকৃতভাবে balance card-এর চেয়ে ছোট।
-        */
-        aspect-ratio: 2.45 / 1 !important;
+           এটাই মূল পরিবর্তন।
 
-        height: auto !important;
-        min-height: 0 !important;
-        max-height: none !important;
+           Banner এখন:
+           - আগের ছোট version-এর চেয়ে লম্বা
+           - Balance card-এর কাছাকাছি visual height
+           - কিন্তু Balance card-এর চেয়ে ছোট
+        */
+
+        height: 330px !important;
+
+        min-height: 330px !important;
+        max-height: 330px !important;
+
+        aspect-ratio: auto !important;
 
         margin-left: auto !important;
         margin-right: auto !important;
@@ -718,32 +716,48 @@ label {
         border-radius: 24px !important;
 
         background-position: center center !important;
-        background-size: cover !important;
+
+        /*
+           পুরো market-bg.svg দেখা যাবে।
+           এতে chart অতিরিক্ত zoom হয়ে text-এর ওপর উঠবে না।
+        */
+        background-size: 100% 100% !important;
+
+        overflow: hidden !important;
     }
 
 
+    /* =========================
+       MOBILE CONTENT
+       ========================= */
+
     .banner-content {
-        padding: 20px 28px !important;
+        padding:
+            38px 28px 25px 28px !important;
     }
 
 
     .banner h1 {
         font-size: 28px !important;
 
-        line-height: 1.1 !important;
+        line-height: 1.15 !important;
+
+        margin: 0 !important;
     }
 
 
     .banner p {
         font-size: 15px !important;
 
-        line-height: 1.3 !important;
+        line-height: 1.35 !important;
 
-        margin-top: 9px !important;
+        margin-top: 18px !important;
 
-        max-width: 94% !important;
+        max-width: 90% !important;
     }
 
+
+    /* QUICK MENU */
 
     .item,
     .menu-item,
@@ -767,23 +781,22 @@ label {
 @media (max-width: 400px) {
 
     .banner {
-        /*
-           ছোট ফোনেও screen-এর মধ্যে থাকবে।
-        */
-        width: calc(100% - 36px) !important;
+        width: calc(100% - 40px) !important;
 
-        aspect-ratio: 2.40 / 1 !important;
+        height: 300px !important;
 
-        height: auto !important;
-        min-height: 0 !important;
-        max-height: none !important;
+        min-height: 300px !important;
+        max-height: 300px !important;
+
+        aspect-ratio: auto !important;
 
         border-radius: 22px !important;
     }
 
 
     .banner-content {
-        padding: 18px 22px !important;
+        padding:
+            34px 22px 22px 22px !important;
     }
 
 
@@ -795,6 +808,6 @@ label {
     .banner p {
         font-size: 14px !important;
 
-        margin-top: 8px !important;
+        margin-top: 16px !important;
     }
 }
