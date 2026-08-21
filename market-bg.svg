@@ -1,0 +1,174 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 1200 420"
+     preserveAspectRatio="xMidYMid slice">
+
+  <defs>
+
+    <!-- Dark blue background -->
+    <linearGradient id="bg"
+                    x1="0"
+                    y1="0"
+                    x2="1"
+                    y2="1">
+
+      <stop offset="0%" stop-color="#07182f"/>
+      <stop offset="55%" stop-color="#0b2348"/>
+      <stop offset="100%" stop-color="#06152c"/>
+
+    </linearGradient>
+
+    <!-- Golden glow -->
+    <radialGradient id="goldGlow">
+
+      <stop offset="0%"
+            stop-color="#ffc72c"
+            stop-opacity=".35"/>
+
+      <stop offset="45%"
+            stop-color="#ffc72c"
+            stop-opacity=".12"/>
+
+      <stop offset="100%"
+            stop-color="#ffc72c"
+            stop-opacity="0"/>
+
+    </radialGradient>
+
+    <!-- Grid -->
+    <pattern id="grid"
+             width="70"
+             height="70"
+             patternUnits="userSpaceOnUse">
+
+      <path d="M70 0H0V70"
+            fill="none"
+            stroke="#7fa5d9"
+            stroke-opacity=".09"
+            stroke-width="1"/>
+
+    </pattern>
+
+    <!-- Soft glow -->
+    <filter id="glow">
+
+      <feGaussianBlur
+          stdDeviation="5"
+          result="blur"/>
+
+      <feMerge>
+
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+
+      </feMerge>
+
+    </filter>
+
+  </defs>
+
+  <!-- Main background -->
+  <rect width="1200"
+        height="420"
+        fill="url(#bg)"/>
+
+  <!-- Grid -->
+  <rect width="1200"
+        height="420"
+        fill="url(#grid)"/>
+
+  <!-- Gold atmospheric glow -->
+  <ellipse cx="920"
+           cy="80"
+           rx="300"
+           ry="180"
+           fill="url(#goldGlow)"/>
+
+  <!-- Network lines -->
+
+  <g fill="none"
+     stroke="#7198d0"
+     stroke-opacity=".18"
+     stroke-width="1">
+
+    <path d="M40 300
+             L170 235
+             L285 270
+             L405 190
+             L520 235
+             L640 145
+             L760 185
+             L890 105
+             L1010 140
+             L1160 55"/>
+
+    <path d="M90 350
+             L220 300
+             L350 320
+             L470 250
+             L600 275
+             L720 210
+             L860 230
+             L990 170
+             L1140 190"/>
+
+  </g>
+
+  <!-- Golden market line -->
+
+  <path d="
+      M20 330
+      C100 320 120 270 180 290
+      C240 310 270 245 330 260
+      C390 275 410 205 470 220
+      C530 235 560 175 620 195
+      C680 215 710 145 770 165
+      C830 185 860 120 920 140
+      C980 160 1010 95 1070 110
+      C1120 122 1150 70 1190 82
+      "
+      fill="none"
+      stroke="#ffc72c"
+      stroke-width="4"
+      stroke-linecap="round"
+      filter="url(#glow)"/>
+
+  <!-- Market points -->
+
+  <g fill="#ffc72c"
+     filter="url(#glow)">
+
+    <circle cx="180" cy="290" r="5"/>
+    <circle cx="330" cy="260" r="5"/>
+    <circle cx="470" cy="220" r="5"/>
+    <circle cx="620" cy="195" r="5"/>
+    <circle cx="770" cy="165" r="5"/>
+    <circle cx="920" cy="140" r="5"/>
+    <circle cx="1070" cy="110" r="5"/>
+
+  </g>
+
+  <!-- Small network nodes -->
+
+  <g fill="#9bb7e5"
+     fill-opacity=".65">
+
+    <circle cx="120" cy="245" r="2"/>
+    <circle cx="250" cy="215" r="2"/>
+    <circle cx="400" cy="180" r="2"/>
+    <circle cx="540" cy="150" r="2"/>
+    <circle cx="680" cy="120" r="2"/>
+    <circle cx="820" cy="95" r="2"/>
+    <circle cx="980" cy="80" r="2"/>
+    <circle cx="1100" cy="55" r="2"/>
+
+  </g>
+
+  <!-- Bottom dark overlay -->
+
+  <rect y="285"
+        width="1200"
+        height="135"
+        fill="#06152c"
+        opacity=".24"/>
+
+</svg>
