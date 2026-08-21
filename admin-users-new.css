@@ -1,6 +1,7 @@
 /* ==========================================
    CPTMARKETS
    NEW ADMIN USER MANAGEMENT
+   DARK / BLACK THEME
    admin-users-new.css
 ========================================== */
 
@@ -16,6 +17,11 @@
 }
 
 
+html {
+    background: #08090b;
+}
+
+
 body {
     font-family:
         Inter,
@@ -23,8 +29,8 @@ body {
         Helvetica,
         sans-serif;
 
-    background: #f4f6f8;
-    color: #111827;
+    background: #08090b;
+    color: #f5f5f5;
 
     min-height: 100vh;
 }
@@ -40,9 +46,9 @@ body {
 
     min-height: 76px;
 
-    background: #ffffff;
+    background: #0d0f12;
 
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid #202328;
 
     display: flex;
 
@@ -57,6 +63,9 @@ body {
     top: 0;
 
     z-index: 100;
+
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.25);
 }
 
 
@@ -77,9 +86,9 @@ body {
 
     border-radius: 12px;
 
-    background: #111827;
+    background: #ffffff;
 
-    color: #ffffff;
+    color: #0a0b0d;
 
     display: flex;
 
@@ -89,7 +98,7 @@ body {
 
     font-size: 15px;
 
-    font-weight: 800;
+    font-weight: 900;
 
     letter-spacing: 0.5px;
 }
@@ -103,7 +112,7 @@ body {
 
     font-weight: 800;
 
-    color: #111827;
+    color: #ffffff;
 }
 
 
@@ -115,19 +124,23 @@ body {
 
     font-size: 11px;
 
-    color: #6b7280;
+    color: #8b919b;
 
     font-weight: 500;
 }
 
 
+/* ==========================================
+   LOGOUT
+========================================== */
+
 .new-logout-btn {
 
-    border: 1px solid #e5e7eb;
+    border: 1px solid #30343a;
 
-    background: #ffffff;
+    background: #15171b;
 
-    color: #374151;
+    color: #e5e7eb;
 
     padding: 10px 18px;
 
@@ -145,11 +158,11 @@ body {
 
 .new-logout-btn:hover {
 
-    background: #111827;
+    background: #ffffff;
 
-    color: #ffffff;
+    color: #090a0c;
 
-    border-color: #111827;
+    border-color: #ffffff;
 }
 
 
@@ -187,9 +200,9 @@ body {
 
     font-weight: 800;
 
-    letter-spacing: 1.2px;
+    letter-spacing: 1.3px;
 
-    color: #6b7280;
+    color: #8b919b;
 
     margin-bottom: 7px;
 }
@@ -201,7 +214,7 @@ body {
 
     line-height: 1.2;
 
-    color: #111827;
+    color: #ffffff;
 
     font-weight: 800;
 }
@@ -211,7 +224,7 @@ body {
 
     margin-top: 8px;
 
-    color: #6b7280;
+    color: #858b95;
 
     font-size: 14px;
 }
@@ -223,16 +236,16 @@ body {
 
 .new-search-card {
 
-    background: #ffffff;
+    background: #101216;
 
-    border: 1px solid #e5e7eb;
+    border: 1px solid #23262c;
 
     border-radius: 16px;
 
     padding: 24px;
 
     box-shadow:
-        0 5px 18px rgba(17, 24, 39, 0.05);
+        0 8px 25px rgba(0, 0, 0, 0.22);
 
     margin-bottom: 24px;
 }
@@ -257,7 +270,9 @@ body {
 
     border-radius: 11px;
 
-    background: #f1f3f5;
+    background: #1b1e23;
+
+    border: 1px solid #2b2f36;
 
     display: flex;
 
@@ -275,7 +290,7 @@ body {
 
     font-weight: 800;
 
-    color: #111827;
+    color: #ffffff;
 }
 
 
@@ -285,9 +300,13 @@ body {
 
     font-size: 12px;
 
-    color: #6b7280;
+    color: #858b95;
 }
 
+
+/* ==========================================
+   SEARCH ROW
+========================================== */
 
 .new-search-row {
 
@@ -307,9 +326,9 @@ body {
 
     height: 48px;
 
-    border: 1px solid #d9dde3;
+    border: 1px solid #30343b;
 
-    background: #fafafa;
+    background: #0a0c0f;
 
     border-radius: 10px;
 
@@ -317,7 +336,7 @@ body {
 
     outline: none;
 
-    color: #111827;
+    color: #ffffff;
 
     font-size: 14px;
 
@@ -327,18 +346,18 @@ body {
 
 .new-search-row input::placeholder {
 
-    color: #9ca3af;
+    color: #666d78;
 }
 
 
 .new-search-row input:focus {
 
-    background: #ffffff;
+    background: #0d0f12;
 
-    border-color: #111827;
+    border-color: #ffffff;
 
     box-shadow:
-        0 0 0 3px rgba(17, 24, 39, 0.07);
+        0 0 0 3px rgba(255, 255, 255, 0.06);
 }
 
 
@@ -348,13 +367,13 @@ body {
 
     padding: 0 24px;
 
-    border: none;
+    border: 1px solid #ffffff;
 
     border-radius: 10px;
 
-    background: #111827;
+    background: #ffffff;
 
-    color: #ffffff;
+    color: #090a0c;
 
     font-size: 13px;
 
@@ -370,7 +389,9 @@ body {
 
 .new-search-btn:hover {
 
-    background: #000000;
+    background: #dcdcdc;
+
+    border-color: #dcdcdc;
 
     transform: translateY(-1px);
 }
@@ -388,9 +409,9 @@ body {
 
 .new-not-found {
 
-    background: #ffffff;
+    background: #101216;
 
-    border: 1px solid #e5e7eb;
+    border: 1px solid #292d34;
 
     border-radius: 16px;
 
@@ -413,9 +434,11 @@ body {
 
     border-radius: 50%;
 
-    background: #f3f4f6;
+    background: #1c1f24;
 
-    color: #111827;
+    border: 1px solid #343941;
+
+    color: #ffffff;
 
     display: flex;
 
@@ -431,7 +454,7 @@ body {
 
     font-size: 15px;
 
-    color: #111827;
+    color: #ffffff;
 
     margin-bottom: 4px;
 }
@@ -441,7 +464,7 @@ body {
 
     font-size: 12px;
 
-    color: #6b7280;
+    color: #858b95;
 
     line-height: 1.5;
 }
@@ -453,16 +476,16 @@ body {
 
 .user-profile-card {
 
-    background: #ffffff;
+    background: #101216;
 
-    border: 1px solid #e5e7eb;
+    border: 1px solid #23262c;
 
     border-radius: 16px;
 
     padding: 25px;
 
     box-shadow:
-        0 5px 18px rgba(17, 24, 39, 0.05);
+        0 8px 25px rgba(0, 0, 0, 0.22);
 
     margin-bottom: 18px;
 }
@@ -478,7 +501,7 @@ body {
 
     padding-bottom: 22px;
 
-    border-bottom: 1px solid #eef0f2;
+    border-bottom: 1px solid #252930;
 }
 
 
@@ -489,9 +512,9 @@ body {
 
     border-radius: 15px;
 
-    background: #111827;
+    background: #ffffff;
 
-    color: #ffffff;
+    color: #090a0c;
 
     display: flex;
 
@@ -501,7 +524,7 @@ body {
 
     font-size: 20px;
 
-    font-weight: 800;
+    font-weight: 900;
 }
 
 
@@ -515,7 +538,7 @@ body {
 
     letter-spacing: 1px;
 
-    color: #9ca3af;
+    color: #777e89;
 
     margin-bottom: 5px;
 }
@@ -525,7 +548,7 @@ body {
 
     font-size: 21px;
 
-    color: #111827;
+    color: #ffffff;
 
     font-weight: 800;
 }
@@ -550,9 +573,9 @@ body {
 
 .information-box {
 
-    background: #f8f9fa;
+    background: #0b0d10;
 
-    border: 1px solid #eef0f2;
+    border: 1px solid #252930;
 
     border-radius: 11px;
 
@@ -570,7 +593,7 @@ body {
 
     font-weight: 800;
 
-    color: #9ca3af;
+    color: #777e89;
 
     text-transform: uppercase;
 
@@ -586,7 +609,7 @@ body {
 
     font-size: 13px;
 
-    color: #374151;
+    color: #e5e7eb;
 
     font-weight: 700;
 
@@ -600,9 +623,11 @@ body {
 
 .new-balance-card {
 
-    background: #111827;
+    background: #ffffff;
 
-    color: #ffffff;
+    color: #090a0c;
+
+    border: 1px solid #ffffff;
 
     border-radius: 16px;
 
@@ -619,7 +644,7 @@ body {
     margin-bottom: 18px;
 
     box-shadow:
-        0 8px 22px rgba(17, 24, 39, 0.13);
+        0 8px 25px rgba(0, 0, 0, 0.25);
 }
 
 
@@ -627,7 +652,7 @@ body {
 
     display: block;
 
-    color: #9ca3af;
+    color: #60656d;
 
     font-size: 10px;
 
@@ -643,23 +668,23 @@ body {
 
     display: block;
 
-    color: #ffffff;
+    color: #090a0c;
 
     font-size: 30px;
 
     line-height: 1;
 
-    font-weight: 800;
+    font-weight: 900;
 }
 
 
 .balance-active {
 
-    border: 1px solid #374151;
+    border: 1px solid #d5d5d5;
 
-    background: #1f2937;
+    background: #f1f1f1;
 
-    color: #ffffff;
+    color: #111111;
 
     padding: 8px 12px;
 
@@ -694,16 +719,16 @@ body {
 
 .new-control-card {
 
-    background: #ffffff;
+    background: #101216;
 
-    border: 1px solid #e5e7eb;
+    border: 1px solid #23262c;
 
     border-radius: 16px;
 
     padding: 24px;
 
     box-shadow:
-        0 5px 18px rgba(17, 24, 39, 0.04);
+        0 8px 25px rgba(0, 0, 0, 0.20);
 }
 
 
@@ -742,17 +767,21 @@ body {
 
 .balance-control-icon {
 
-    background: #f1f3f5;
+    background: #1c1f24;
 
-    color: #111827;
+    border: 1px solid #30343b;
+
+    color: #ffffff;
 }
 
 
 .trade-control-icon {
 
-    background: #f1f3f5;
+    background: #1c1f24;
 
-    color: #111827;
+    border: 1px solid #30343b;
+
+    color: #ffffff;
 }
 
 
@@ -760,7 +789,7 @@ body {
 
     font-size: 16px;
 
-    color: #111827;
+    color: #ffffff;
 
     font-weight: 800;
 
@@ -770,7 +799,7 @@ body {
 
 .new-control-header p {
 
-    color: #6b7280;
+    color: #858b95;
 
     font-size: 12px;
 
@@ -779,14 +808,14 @@ body {
 
 
 /* ==========================================
-   INPUT
+   INPUT LABEL
 ========================================== */
 
 .new-input-label {
 
     display: block;
 
-    color: #374151;
+    color: #c5c9d0;
 
     font-size: 11px;
 
@@ -795,6 +824,10 @@ body {
     margin-bottom: 8px;
 }
 
+
+/* ==========================================
+   AMOUNT INPUT
+========================================== */
 
 .new-amount-input {
 
@@ -806,9 +839,9 @@ body {
 
     align-items: center;
 
-    background: #fafafa;
+    background: #0a0c0f;
 
-    border: 1px solid #d9dde3;
+    border: 1px solid #30343b;
 
     border-radius: 10px;
 
@@ -822,12 +855,12 @@ body {
 
 .new-amount-input:focus-within {
 
-    background: #ffffff;
+    background: #0d0f12;
 
-    border-color: #111827;
+    border-color: #ffffff;
 
     box-shadow:
-        0 0 0 3px rgba(17, 24, 39, 0.07);
+        0 0 0 3px rgba(255, 255, 255, 0.06);
 }
 
 
@@ -843,11 +876,11 @@ body {
 
     justify-content: center;
 
-    color: #6b7280;
+    color: #9ca3af;
 
     font-weight: 800;
 
-    border-right: 1px solid #e5e7eb;
+    border-right: 1px solid #292d34;
 }
 
 
@@ -865,7 +898,7 @@ body {
 
     padding: 0 13px;
 
-    color: #111827;
+    color: #ffffff;
 
     font-size: 14px;
 }
@@ -873,7 +906,7 @@ body {
 
 .new-amount-input input::placeholder {
 
-    color: #9ca3af;
+    color: #626975;
 }
 
 
@@ -910,77 +943,89 @@ body {
 }
 
 
+/* ADD BALANCE */
+
 .add-balance-btn {
 
-    background: #111827;
+    background: #ffffff;
 
-    color: #ffffff;
+    color: #090a0c;
 
-    border: 1px solid #111827;
+    border: 1px solid #ffffff;
 }
 
 
 .add-balance-btn:hover {
 
-    background: #000000;
+    background: #dcdcdc;
+
+    border-color: #dcdcdc;
 
     transform: translateY(-1px);
 }
 
 
+/* REMOVE BALANCE */
+
 .remove-balance-btn {
 
-    background: #ffffff;
+    background: #15171b;
 
-    color: #374151;
+    color: #e5e7eb;
 
-    border: 1px solid #d9dde3;
+    border: 1px solid #343941;
 }
 
 
 .remove-balance-btn:hover {
 
-    background: #f3f4f6;
+    background: #22252b;
 
-    border-color: #9ca3af;
+    border-color: #555b65;
 
     transform: translateY(-1px);
 }
 
 
+/* PROFIT */
+
 .new-profit-btn {
 
-    background: #111827;
+    background: #ffffff;
 
-    color: #ffffff;
+    color: #090a0c;
 
-    border: 1px solid #111827;
+    border: 1px solid #ffffff;
 }
 
 
 .new-profit-btn:hover {
 
-    background: #000000;
+    background: #dcdcdc;
+
+    border-color: #dcdcdc;
 
     transform: translateY(-1px);
 }
 
 
+/* LOSS */
+
 .new-loss-btn {
 
-    background: #ffffff;
+    background: #15171b;
 
-    color: #374151;
+    color: #e5e7eb;
 
-    border: 1px solid #d9dde3;
+    border: 1px solid #343941;
 }
 
 
 .new-loss-btn:hover {
 
-    background: #f3f4f6;
+    background: #22252b;
 
-    border-color: #9ca3af;
+    border-color: #555b65;
 
     transform: translateY(-1px);
 }
@@ -1002,13 +1047,13 @@ body {
 
     padding: 11px 12px;
 
-    background: #f8f9fa;
+    background: #0b0d10;
 
-    border: 1px solid #eef0f2;
+    border: 1px solid #252930;
 
     border-radius: 9px;
 
-    color: #6b7280;
+    color: #858b95;
 
     font-size: 11px;
 
@@ -1025,7 +1070,7 @@ body {
 
     border-radius: 50%;
 
-    background: #6b7280;
+    background: #ffffff;
 
     margin-top: 5px;
 }
@@ -1043,11 +1088,41 @@ body {
 
     text-align: center;
 
-    color: #374151;
+    color: #ffffff;
 
     font-size: 13px;
 
     font-weight: 700;
+}
+
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+::-webkit-scrollbar {
+
+    width: 7px;
+}
+
+
+::-webkit-scrollbar-track {
+
+    background: #08090b;
+}
+
+
+::-webkit-scrollbar-thumb {
+
+    background: #30343b;
+
+    border-radius: 10px;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+
+    background: #4a505a;
 }
 
 
