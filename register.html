@@ -1,4 +1,516 @@
-JSON.stringify({
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>CPTMarkets - Register</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+>
+
+</head>
+
+
+<body>
+
+<div class="background"></div>
+
+
+<div class="login-container">
+
+<div class="login-card">
+
+
+<!-- ==========================================
+     LOGO
+========================================== -->
+
+<div class="logo-area">
+
+<h1>
+<span class="gold">Create</span>
+<span class="white"> Account</span>
+</h1>
+
+<p>
+Join CptMarkets for global trading
+</p>
+
+</div>
+
+
+<!-- ==========================================
+     REGISTER FORM
+========================================== -->
+
+<form id="registerForm">
+
+
+<!-- USERNAME -->
+
+<div class="form-group">
+
+<label>
+Username
+</label>
+
+<div class="input-box">
+
+<input
+    type="text"
+    id="username"
+    placeholder="Enter Username"
+    autocomplete="username"
+    required
+>
+
+</div>
+
+</div>
+
+
+<!-- PASSWORD -->
+
+<div class="form-group">
+
+<label>
+Password
+</label>
+
+<div class="input-box">
+
+<input
+    type="password"
+    id="password"
+    placeholder="Password (min. 6 chars)"
+    autocomplete="new-password"
+    required
+>
+
+</div>
+
+</div>
+
+
+<!-- CONFIRM PASSWORD -->
+
+<div class="form-group">
+
+<label>
+Confirm Password
+</label>
+
+<div class="input-box">
+
+<input
+    type="password"
+    id="confirmPassword"
+    placeholder="Confirm Password"
+    autocomplete="new-password"
+    required
+>
+
+</div>
+
+</div>
+
+
+<!-- INVITE -->
+
+<div class="form-group">
+
+<label>
+Invite Code
+</label>
+
+<div class="input-box">
+
+<input
+    type="text"
+    id="invite"
+    placeholder="Invite Code (optional)"
+>
+
+</div>
+
+</div>
+
+
+<!-- REGISTER BUTTON -->
+
+<button
+    type="submit"
+    class="login-btn"
+    id="registerBtn"
+>
+
+Register
+
+</button>
+
+
+</form>
+
+
+<!-- ==========================================
+     LOGIN LINK
+========================================== -->
+
+<div class="bottom-links">
+
+<span>
+Already have an account?
+</span>
+
+<a href="index.html">
+Go to Sign In
+</a>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<!-- ==========================================
+     FIREBASE REGISTRATION
+========================================== -->
+
+<script type="module">
+
+
+/* ==========================================
+   FIREBASE
+========================================== */
+
+import {
+    auth,
+    db
+}
+from "./firebase/firebase-config.js";
+
+
+import {
+    createUserWithEmailAndPassword,
+    deleteUser
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+import {
+    doc,
+    setDoc
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+
+/* ==========================================
+   FORM
+========================================== */
+
+const registerForm =
+    document.getElementById(
+        "registerForm"
+    );
+
+
+const registerButton =
+    document.getElementById(
+        "registerBtn"
+    );
+
+
+
+/* ==========================================
+   REGISTER
+========================================== */
+
+registerForm.addEventListener(
+    "submit",
+    async function (e) {
+
+        e.preventDefault();
+
+
+        /* ======================================
+           GET INPUT
+        ====================================== */
+
+        const usernameInput =
+            document.getElementById(
+                "username"
+            );
+
+
+        const passwordInput =
+            document.getElementById(
+                "password"
+            );
+
+
+        const confirmPasswordInput =
+            document.getElementById(
+                "confirmPassword"
+            );
+
+
+        const inviteInput =
+            document.getElementById(
+                "invite"
+            );
+
+
+        const username =
+            usernameInput.value.trim();
+
+
+        const password =
+            passwordInput.value;
+
+
+        const confirmPassword =
+            confirmPasswordInput.value;
+
+
+        const invite =
+            inviteInput.value.trim();
+
+
+
+        /* ======================================
+           VALIDATION
+        ====================================== */
+
+        if (!username) {
+
+            alert(
+                "Please enter a username."
+            );
+
+            usernameInput.focus();
+
+            return;
+
+        }
+
+
+        /*
+         * Username rules
+         *
+         * Letters
+         * Numbers
+         * Underscore
+         * 3-20 characters
+         */
+
+        const usernamePattern =
+            /^[a-zA-Z0-9_]{3,20}$/;
+
+
+        if (
+            !usernamePattern.test(
+                username
+            )
+        ) {
+
+            alert(
+                "Username must be 3-20 characters and can contain only letters, numbers, and underscore."
+            );
+
+            usernameInput.focus();
+
+            return;
+
+        }
+
+
+        if (
+            password.length < 6
+        ) {
+
+            alert(
+                "Password must be at least 6 characters."
+            );
+
+            passwordInput.focus();
+
+            return;
+
+        }
+
+
+        if (
+            password !==
+            confirmPassword
+        ) {
+
+            alert(
+                "Passwords do not match!"
+            );
+
+            confirmPasswordInput.focus();
+
+            return;
+
+        }
+
+
+
+        /* ======================================
+           DISABLE BUTTON
+        ====================================== */
+
+        registerButton.disabled =
+            true;
+
+
+        registerButton.textContent =
+            "Creating Account...";
+
+
+
+        /* ======================================
+           NORMALIZE USERNAME
+        ====================================== */
+
+        const normalizedUsername =
+            username.toLowerCase();
+
+
+        /*
+         * Firebase Authentication
+         * requires an email.
+         *
+         * We keep the existing system
+         * compatible with script.js.
+         */
+
+        const email =
+            normalizedUsername +
+            "@cptmarkets.local";
+
+
+
+        let createdFirebaseUser =
+            null;
+
+
+
+        try {
+
+
+            /* ==================================
+               CREATE FIREBASE AUTH ACCOUNT
+            ================================== */
+
+            const userCredential =
+                await createUserWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                );
+
+
+            createdFirebaseUser =
+                userCredential.user;
+
+
+            const uid =
+                createdFirebaseUser.uid;
+
+
+
+            /* ==================================
+               CREATE 8 DIGIT USER ID
+            ================================== */
+
+            const userId =
+                String(
+                    Math.floor(
+                        10000000 +
+                        Math.random() *
+                        90000000
+                    )
+                );
+
+
+
+            /* ==================================
+               USER DATA
+            ================================== */
+
+            const userData = {
+
+                uid:
+                    uid,
+
+                userId:
+                    userId,
+
+                username:
+                    username,
+
+                usernameLower:
+                    normalizedUsername,
+
+                email:
+                    email,
+
+                inviteCode:
+                    invite,
+
+                balance:
+                    0,
+
+                createdAt:
+                    new Date()
+
+            };
+
+
+
+            /* ==================================
+               SAVE FIRESTORE USER
+            ================================== */
+
+            await setDoc(
+
+                doc(
+                    db,
+                    "users",
+                    uid
+                ),
+
+                userData
+
+            );
+
+
+
+            /* ==================================
+               LOCAL SESSION
+            ================================== */
+
+            localStorage.setItem(
+
+                "currentUser",
+
+                JSON.stringify({
 
                     uid:
                         uid,
@@ -31,8 +543,19 @@ JSON.stringify({
             );
 
 
+            /*
+             * ==================================
+             * DIRECT DASHBOARD REDIRECT
+             * ==================================
+             *
+             * Registration সফল হলে আর Login
+             * page-এ যাবে না।
+             *
+             * সরাসরি Dashboard খুলবে।
+             */
+
             window.location.href =
-                "index.html";
+                "dashboard.html";
 
 
         } catch (error) {
