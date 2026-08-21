@@ -1,10 +1,356 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg"
-     xmlns:xlink="http://www.w3.org/1999/xlink"
-     viewBox="0 0 600 320"
+     viewBox="0 0 1600 850"
      preserveAspectRatio="xMidYMid slice">
-  <image x="0" y="0" width="600" height="320"
-         preserveAspectRatio="xMidYMid slice"
-         href="data:image/jpeg;base64,REPLACE_WITH_EMBEDDED_IMAGE_DATA"
-         xlink:href="data:image/jpeg;base64,REPLACE_WITH_EMBEDDED_IMAGE_DATA"/>
+
+  <defs>
+
+    <!-- DARK SPACE -->
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#010611"/>
+      <stop offset="0.55" stop-color="#031226"/>
+      <stop offset="1" stop-color="#020817"/>
+    </linearGradient>
+
+    <!-- GOLD -->
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff3a0"/>
+      <stop offset="0.35" stop-color="#ffd447"/>
+      <stop offset="0.7" stop-color="#ffb300"/>
+      <stop offset="1" stop-color="#d88900"/>
+    </linearGradient>
+
+    <!-- EARTH -->
+    <radialGradient id="earth" cx="50%" cy="20%">
+      <stop offset="0" stop-color="#1b4c78"/>
+      <stop offset="0.5" stop-color="#08284a"/>
+      <stop offset="1" stop-color="#010916"/>
+    </radialGradient>
+
+    <!-- GLOW -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+
+    <!-- GRID -->
+    <pattern id="grid" width="80" height="40" patternUnits="userSpaceOnUse">
+      <path d="M80 0H0V40"
+            fill="none"
+            stroke="#28618b"
+            stroke-opacity=".22"
+            stroke-width="1"/>
+    </pattern>
+
+  </defs>
+
+  <!-- BACKGROUND -->
+  <rect width="1600" height="850" fill="url(#bg)"/>
+
+  <!-- ATMOSPHERE -->
+  <ellipse cx="800" cy="730"
+           rx="700"
+           ry="120"
+           fill="#12609b"
+           opacity=".18"
+           filter="url(#softGlow)"/>
+
+  <!-- NETWORK LINES -->
+  <g stroke="#dca52a"
+     stroke-width="1"
+     opacity=".25"
+     fill="none">
+
+    <path d="M80 245 Q400 100 790 270 T1510 160"/>
+    <path d="M120 410 Q450 220 820 300 T1500 330"/>
+    <path d="M250 140 Q520 390 820 180 T1390 420"/>
+    <path d="M420 80 Q700 330 1050 190 T1510 270"/>
+    <path d="M170 520 Q500 310 850 430 T1470 470"/>
+
+  </g>
+
+  <!-- NORTH AMERICA -->
+  <path d="
+    M80 190
+    L135 130
+    L230 105
+    L310 125
+    L370 175
+    L350 225
+    L300 240
+    L280 300
+    L230 330
+    L205 390
+    L155 350
+    L150 300
+    L105 270
+    Z"
+    fill="#071b2d"
+    stroke="url(#gold)"
+    stroke-width="3"
+    filter="url(#glow)"/>
+
+  <!-- SOUTH AMERICA -->
+  <path d="
+    M360 380
+    L420 395
+    L450 450
+    L425 520
+    L390 585
+    L350 625
+    L320 570
+    L330 510
+    L300 455
+    Z"
+    fill="#071b2d"
+    stroke="url(#gold)"
+    stroke-width="3"
+    filter="url(#glow)"/>
+
+  <!-- EUROPE -->
+  <path d="
+    M680 170
+    L730 135
+    L785 145
+    L820 175
+    L795 205
+    L745 205
+    L710 230
+    L675 215
+    Z"
+    fill="#071b2d"
+    stroke="url(#gold)"
+    stroke-width="3"
+    filter="url(#glow)"/>
+
+  <!-- AFRICA -->
+  <path d="
+    M690 270
+    L770 255
+    L825 300
+    L815 390
+    L770 485
+    L710 535
+    L665 475
+    L655 390
+    L670 320
+    Z"
+    fill="#071b2d"
+    stroke="url(#gold)"
+    stroke-width="3"
+    filter="url(#glow)"/>
+
+  <!-- ASIA -->
+  <path d="
+    M800 155
+    L900 110
+    L1040 125
+    L1170 165
+    L1260 210
+    L1210 270
+    L1120 260
+    L1050 300
+    L960 270
+    L880 300
+    L825 250
+    Z"
+    fill="#071b2d"
+    stroke="url(#gold)"
+    stroke-width="3"
+    filter="url(#glow)"/>
+
+  <!-- INDIA / SE ASIA -->
+  <path d="
+    M1000 275
+    L1050 300
+    L1035 360
+    L1000 395
+    L970 345
+    Z"
+    fill="#071b2d"
+    stroke="url(#gold)"
+    stroke-width="3"/>
+
+  <!-- AUSTRALIA -->
+  <path d="
+    M1120 500
+    L1200 475
+    L1280 500
+    L1310 555
+    L1260 600
+    L1180 595
+    L1120 560
+    Z"
+    fill="#071b2d"
+    stroke="url(#gold)"
+    stroke-width="3"
+    filter="url(#glow)"/>
+
+  <!-- CITY / DATA DOTS -->
+  <g fill="#ffd34a" filter="url(#glow)">
+
+    <circle cx="245" cy="205" r="5"/>
+    <circle cx="300" cy="235" r="4"/>
+    <circle cx="350" cy="260" r="5"/>
+    <circle cx="395" cy="445" r="4"/>
+
+    <circle cx="710" cy="190" r="5"/>
+    <circle cx="750" cy="180" r="4"/>
+    <circle cx="785" cy="205" r="5"/>
+
+    <circle cx="760" cy="320" r="6"/>
+    <circle cx="735" cy="385" r="4"/>
+    <circle cx="780" cy="430" r="5"/>
+
+    <circle cx="870" cy="190" r="5"/>
+    <circle cx="940" cy="165" r="5"/>
+    <circle cx="1030" cy="190" r="6"/>
+    <circle cx="1110" cy="220" r="5"/>
+    <circle cx="1190" cy="250" r="5"/>
+
+    <circle cx="1010" cy="340" r="5"/>
+    <circle cx="1160" cy="540" r="5"/>
+
+  </g>
+
+  <!-- CONNECTIONS -->
+  <g stroke="#ffc52b"
+     stroke-width="1.5"
+     opacity=".55"
+     fill="none">
+
+    <path d="M245 205 Q470 120 710 190"/>
+    <path d="M300 235 Q530 270 760 320"/>
+    <path d="M350 260 Q520 150 870 190"/>
+    <path d="M710 190 Q850 120 1030 190"/>
+    <path d="M760 320 Q900 250 1110 220"/>
+    <path d="M1030 190 Q1140 190 1190 250"/>
+    <path d="M760 430 Q930 400 1010 340"/>
+    <path d="M1010 340 Q1110 430 1160 540"/>
+
+  </g>
+
+  <!-- HORIZON GLOW -->
+  <ellipse cx="800"
+           cy="675"
+           rx="420"
+           ry="45"
+           fill="#ffd24a"
+           opacity=".22"
+           filter="url(#softGlow)"/>
+
+  <circle cx="800"
+          cy="670"
+          r="22"
+          fill="#fff0a0"
+          opacity=".85"
+          filter="url(#softGlow)"/>
+
+  <circle cx="800"
+          cy="670"
+          r="7"
+          fill="#fff5b0"
+          filter="url(#glow)"/>
+
+  <!-- EARTH HORIZON -->
+  <path d="
+    M0 720
+    Q400 620 800 690
+    Q1200 620 1600 720
+    L1600 850
+    L0 850 Z"
+    fill="url(#earth)"
+    stroke="#e5bd4a"
+    stroke-width="3"/>
+
+  <!-- EARTH GRID -->
+  <path d="
+    M0 720
+    Q400 620 800 690
+    Q1200 620 1600 720
+    L1600 850
+    L0 850 Z"
+    fill="url(#grid)"
+    opacity=".65"/>
+
+  <!-- CITY BARS -->
+  <g fill="#12639a" opacity=".45">
+
+    <rect x="25" y="620" width="15" height="100"/>
+    <rect x="50" y="585" width="18" height="135"/>
+    <rect x="80" y="640" width="14" height="80"/>
+    <rect x="110" y="600" width="20" height="120"/>
+    <rect x="145" y="570" width="14" height="150"/>
+    <rect x="175" y="625" width="18" height="95"/>
+
+    <rect x="1420" y="600" width="18" height="120"/>
+    <rect x="1450" y="560" width="15" height="160"/>
+    <rect x="1480" y="620" width="20" height="100"/>
+    <rect x="1515" y="580" width="15" height="140"/>
+    <rect x="1545" y="530" width="20" height="190"/>
+
+  </g>
+
+  <!-- RISING MARKET CHART -->
+  <g stroke="#ffc52b"
+     fill="none"
+     stroke-width="4"
+     filter="url(#glow)">
+
+    <path d="
+      M920 555
+      Q1010 530 1080 500
+      Q1150 470 1210 440
+      Q1280 390 1340 340
+      Q1410 280 1490 190
+      Q1530 150 1580 110"/>
+
+  </g>
+
+  <!-- CANDLESTICKS -->
+  <g stroke="#ffc52b"
+     stroke-width="4"
+     fill="#ffc52b">
+
+    <line x1="930" y1="520" x2="930" y2="590"/>
+    <rect x="920" y="535" width="20" height="42"/>
+
+    <line x1="985" y1="490" x2="985" y2="555"/>
+    <rect x="975" y="500" width="20" height="38"/>
+
+    <line x1="1040" y1="465" x2="1040" y2="530"/>
+    <rect x="1030" y="475" width="20" height="38"/>
+
+    <line x1="1100" y1="445" x2="1100" y2="505"/>
+    <rect x="1090" y="452" width="20" height="38"/>
+
+    <line x1="1160" y1="410" x2="1160" y2="475"/>
+    <rect x="1150" y="420" width="20" height="40"/>
+
+    <line x1="1220" y1="370" x2="1220" y2="445"/>
+    <rect x="1210" y="380" width="20" height="48"/>
+
+    <line x1="1280" y1="330" x2="1280" y2="410"/>
+    <rect x="1270" y="345" width="20" height="48"/>
+
+    <line x1="1340" y1="285" x2="1340" y2="365"/>
+    <rect x="1330" y="295" width="20" height="48"/>
+
+    <line x1="1400" y1="240" x2="1400" y2="330"/>
+    <rect x="1390" y="250" width="20" height="55"/>
+
+    <line x1="1460" y1="190" x2="1460" y2="285"/>
+    <rect x="1450" y="205" width="20" height="58"/>
+
+    <line x1="1520" y1="140" x2="1520" y2="235"/>
+    <rect x="1510" y="150" width="20" height="60"/>
+
+  </g>
+
 </svg>
