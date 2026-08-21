@@ -1,817 +1,427 @@
-<svg xmlns="http://www.w3.org/2000/svg"
-     viewBox="0 0 720 360"
-     preserveAspectRatio="xMidYMid slice">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" preserveAspectRatio="xMidYMid slice">
 
   <defs>
 
-    <!-- Premium dark blue background -->
-    <linearGradient id="bg"
-                    x1="0"
-                    y1="0"
-                    x2="1"
-                    y2="1">
-
-      <stop offset="0"
-            stop-color="#07172d"/>
-
-      <stop offset="0.48"
-            stop-color="#061d3a"/>
-
-      <stop offset="1"
-            stop-color="#020a18"/>
-
+    <!-- Background -->
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#06152b"/>
+      <stop offset="55%" stop-color="#071d38"/>
+      <stop offset="100%" stop-color="#020b1b"/>
     </linearGradient>
 
-
-    <!-- Gold lighting -->
-    <radialGradient id="goldGlow"
-                    cx="78%"
-                    cy="25%"
-                    r="58%">
-
-      <stop offset="0"
-            stop-color="#f7c843"
-            stop-opacity="0.30"/>
-
-      <stop offset="0.45"
-            stop-color="#d89d1e"
-            stop-opacity="0.10"/>
-
-      <stop offset="1"
-            stop-color="#000000"
-            stop-opacity="0"/>
-
-    </radialGradient>
-
-
-    <!-- Gold candle gradient -->
-    <linearGradient id="gold"
-                    x1="0"
-                    y1="0"
-                    x2="0"
-                    y2="1">
-
-      <stop offset="0"
-            stop-color="#ffe38a"/>
-
-      <stop offset="0.45"
-            stop-color="#f7c843"/>
-
-      <stop offset="1"
-            stop-color="#b87908"/>
-
+    <!-- Gold -->
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#c58b18"/>
+      <stop offset="45%" stop-color="#ffe27a"/>
+      <stop offset="100%" stop-color="#d99b18"/>
     </linearGradient>
 
+    <!-- Candle -->
+    <linearGradient id="candleGold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffe99a"/>
+      <stop offset="100%" stop-color="#d69a20"/>
+    </linearGradient>
 
-    <!-- Soft shadow -->
-    <filter id="shadow">
-
-      <feDropShadow
-          dx="0"
-          dy="4"
-          stdDeviation="5"
-          flood-color="#000000"
-          flood-opacity="0.45"/>
-
-    </filter>
-
-
-    <!-- Candle glow -->
-    <filter id="candleGlow">
-
-      <feGaussianBlur
-          stdDeviation="5"
-          result="blur"/>
-
+    <!-- Glow -->
+    <filter id="glowGold">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
       <feMerge>
-
         <feMergeNode in="blur"/>
-
         <feMergeNode in="SourceGraphic"/>
-
       </feMerge>
-
     </filter>
 
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+
+    <!-- Grid -->
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M60 0H0V60"
+            fill="none"
+            stroke="#3b6287"
+            stroke-opacity=".14"
+            stroke-width="1"/>
+    </pattern>
+
+    <!-- World map simplified -->
+    <path id="world"
+      d="
+      M95 125
+      L130 105 170 108 190 128 178 145 148 146 130 160
+      112 151 92 157 76 145 82 132 Z
+
+      M205 165
+      L230 150 258 155 275 173 267 193
+      250 204 238 230 225 252 214 246
+      207 220 216 201 204 184 Z
+
+      M315 112
+      L345 94 382 98 402 113 438 110 464 126
+      493 124 516 140 505 157 475 160
+      452 150 430 161 407 155 388 165
+      363 157 342 169 320 155 Z
+
+      M535 165
+      L565 151 592 158 610 177 603 199
+      580 207 566 228 549 216 556 194 540 184 Z
+
+      M630 110
+      L665 96 700 103 724 121 758 118
+      783 132 805 127 829 141 820 157
+      790 160 768 151 742 162 716 155
+      695 169 670 158 648 148 Z
+
+      M850 184
+      L875 175 901 184 916 202 908 219
+      888 226 870 215 852 222 838 207 Z
+
+      M948 240
+      L978 229 1007 235 1025 252
+      1012 270 982 276 959 267 941 254 Z
+      "/>
   </defs>
 
 
-  <!-- =====================================================
-       BACKGROUND
-  ====================================================== -->
+  <!-- ================================================= -->
+  <!-- BACKGROUND -->
+  <!-- ================================================= -->
 
-  <rect
-      width="720"
-      height="360"
-      fill="url(#bg)"/>
+  <rect width="1200" height="420" fill="url(#bg)"/>
 
-
-  <rect
-      width="720"
-      height="360"
-      fill="url(#goldGlow)"/>
+  <rect width="1200" height="420" fill="url(#grid)"/>
 
 
-  <!-- =====================================================
-       SUBTLE GRID
-  ====================================================== -->
+  <!-- Atmospheric glow -->
 
-  <g
-      stroke="#7aa5d8"
-      stroke-opacity="0.055"
-      stroke-width="1">
+  <ellipse
+    cx="930"
+    cy="145"
+    rx="250"
+    ry="150"
+    fill="#dba51e"
+    opacity=".10"
+    filter="url(#softGlow)"
+  />
 
-    <path d="M20 0V360"/>
-    <path d="M65 0V360"/>
-    <path d="M110 0V360"/>
-    <path d="M155 0V360"/>
-    <path d="M200 0V360"/>
-    <path d="M245 0V360"/>
-    <path d="M290 0V360"/>
-    <path d="M335 0V360"/>
-    <path d="M380 0V360"/>
-    <path d="M425 0V360"/>
-    <path d="M470 0V360"/>
-    <path d="M515 0V360"/>
-    <path d="M560 0V360"/>
-    <path d="M605 0V360"/>
-    <path d="M650 0V360"/>
-    <path d="M695 0V360"/>
-
-    <path d="M0 20H720"/>
-    <path d="M0 58H720"/>
-    <path d="M0 96H720"/>
-    <path d="M0 134H720"/>
-    <path d="M0 172H720"/>
-    <path d="M0 210H720"/>
-    <path d="M0 248H720"/>
-    <path d="M0 286H720"/>
-    <path d="M0 324H720"/>
-
-  </g>
+  <ellipse
+    cx="300"
+    cy="300"
+    rx="280"
+    ry="130"
+    fill="#1464a0"
+    opacity=".10"
+    filter="url(#softGlow)"
+  />
 
 
-  <!-- =====================================================
-       WORLD MAP
-  ====================================================== -->
+  <!-- ================================================= -->
+  <!-- WORLD MAP -->
+  <!-- ================================================= -->
 
-  <g
-      fill="#0b2a4b"
-      stroke="#d7aa38"
-      stroke-opacity="0.28"
-      stroke-width="1.2">
+  <use
+    href="#world"
+    fill="none"
+    stroke="#9bb8d4"
+    stroke-width="2"
+    stroke-opacity=".28"
+  />
 
-    <!-- North America -->
+  <!-- Map golden network -->
 
-    <path d="
-      M80 115
-      C105 82 145 65 190 72
-      C225 78 246 98 260 120
-      L244 142
-      L214 150
-      L202 174
-      L174 168
-      L155 150
-      L122 154
-      L102 140
-      Z"/>
+  <g fill="none"
+     stroke="#d7a52a"
+     stroke-width="1.5"
+     stroke-opacity=".38">
 
+    <path d="M130 138 Q260 185 345 130"/>
+    <path d="M345 130 Q470 110 570 185"/>
+    <path d="M570 185 Q700 130 820 150"/>
+    <path d="M820 150 Q910 190 985 250"/>
 
-    <!-- South America -->
-
-    <path d="
-      M245 188
-      C268 181 288 194 291 218
-      L278 244
-      L270 280
-      L250 304
-      L236 285
-      L242 254
-      L230 232
-      Z"/>
-
-
-    <!-- Europe -->
-
-    <path d="
-      M355 108
-      C372 91 399 86 421 96
-      L438 110
-      L423 123
-      L398 119
-      L380 132
-      L361 124
-      Z"/>
-
-
-    <!-- Africa -->
-
-    <path d="
-      M390 140
-      C416 135 444 149 451 178
-      L440 213
-      L420 248
-      L396 237
-      L385 205
-      L372 178
-      Z"/>
-
-
-    <!-- Asia -->
-
-    <path d="
-      M430 105
-      C470 75 530 68 594 83
-      L650 103
-      L682 126
-      L668 150
-      L622 145
-      L586 158
-      L548 148
-      L512 137
-      L474 143
-      L450 129
-      Z"/>
-
-
-    <!-- India / South East Asia -->
-
-    <path d="
-      M535 151
-      L562 160
-      L574 183
-      L555 197
-      L538 183
-      L522 166
-      Z"/>
-
-
-    <!-- Australia -->
-
-    <path d="
-      M595 245
-      C620 226 665 230 687 250
-      L679 276
-      L644 287
-      L610 277
-      L594 260
-      Z"/>
-
-
-    <!-- Greenland -->
-
-    <path d="
-      M255 55
-      C275 35 305 37 322 54
-      L309 78
-      L278 84
-      L260 72
-      Z"/>
+    <path d="M220 250 Q360 180 500 225"/>
+    <path d="M500 225 Q650 260 780 190"/>
+    <path d="M780 190 Q880 170 960 250"/>
 
   </g>
 
 
-  <!-- =====================================================
-       WORLD MAP NETWORK CONNECTIONS
-  ====================================================== -->
+  <!-- ================================================= -->
+  <!-- NETWORK NODES -->
+  <!-- ================================================= -->
 
-  <g
-      fill="none"
-      stroke="#e9c85b"
-      stroke-opacity="0.16"
-      stroke-width="1">
+  <g fill="#ffd75a" filter="url(#glowGold)">
 
-    <path d="M120 125L250 190"/>
-    <path d="M180 150L360 110"/>
-    <path d="M250 190L410 160"/>
-    <path d="M330 115L520 145"/>
-    <path d="M420 150L610 120"/>
-    <path d="M500 145L650 245"/>
-    <path d="M210 160L390 205"/>
-    <path d="M390 120L540 230"/>
+    <circle cx="145" cy="138" r="4"/>
+    <circle cx="270" cy="165" r="4"/>
+    <circle cx="390" cy="132" r="4"/>
+    <circle cx="500" cy="151" r="4"/>
+    <circle cx="610" cy="178" r="4"/>
+    <circle cx="715" cy="145" r="5"/>
+    <circle cx="815" cy="150" r="4"/>
+    <circle cx="900" cy="205" r="5"/>
+    <circle cx="985" cy="250" r="5"/>
 
   </g>
 
 
-  <!-- Network points -->
+  <!-- ================================================= -->
+  <!-- CANDLESTICK CHART -->
+  <!-- ================================================= -->
 
-  <g
-      fill="#f3c84b"
-      fill-opacity="0.75">
+  <g>
 
-    <circle cx="120" cy="125" r="2.2"/>
-    <circle cx="250" cy="190" r="2.2"/>
+    <!-- candle 1 -->
+    <line x1="70" y1="315" x2="70" y2="355"
+          stroke="#d7b55c" stroke-width="3"/>
+    <rect x="62" y="325" width="16" height="22"
+          rx="2" fill="#7f91a5"/>
 
-    <circle cx="180" cy="150" r="2.2"/>
-    <circle cx="360" cy="110" r="2.2"/>
+    <!-- candle 2 -->
+    <line x1="105" y1="300" x2="105" y2="342"
+          stroke="#e0bd58" stroke-width="3"/>
+    <rect x="97" y="310" width="16" height="24"
+          rx="2" fill="url(#candleGold)"/>
 
-    <circle cx="330" cy="115" r="2.2"/>
-    <circle cx="520" cy="145" r="2.2"/>
+    <!-- candle 3 -->
+    <line x1="140" y1="285" x2="140" y2="330"
+          stroke="#e0bd58" stroke-width="3"/>
+    <rect x="132" y="296" width="16" height="25"
+          rx="2" fill="url(#candleGold)"/>
 
-    <circle cx="420" cy="150" r="2.2"/>
-    <circle cx="610" cy="120" r="2.2"/>
+    <!-- candle 4 -->
+    <line x1="175" y1="295" x2="175" y2="340"
+          stroke="#9aa8b8" stroke-width="3"/>
+    <rect x="167" y="306" width="16" height="25"
+          rx="2" fill="#75869b"/>
 
-    <circle cx="500" cy="145" r="2.2"/>
-    <circle cx="650" cy="245" r="2.2"/>
+    <!-- candle 5 -->
+    <line x1="210" y1="270" x2="210" y2="322"
+          stroke="#e4c365" stroke-width="3"/>
+    <rect x="202" y="280" width="16" height="30"
+          rx="2" fill="url(#candleGold)"/>
+
+    <!-- candle 6 -->
+    <line x1="245" y1="260" x2="245" y2="310"
+          stroke="#e4c365" stroke-width="3"/>
+    <rect x="237" y="270" width="16" height="27"
+          rx="2" fill="url(#candleGold)"/>
+
+    <!-- candle 7 -->
+    <line x1="280" y1="250" x2="280" y2="300"
+          stroke="#e4c365" stroke-width="3"/>
+    <rect x="272" y="258" width="16" height="29"
+          rx="2" fill="url(#candleGold)"/>
+
+    <!-- candle 8 -->
+    <line x1="315" y1="235" x2="315" y2="290"
+          stroke="#e4c365" stroke-width="3"/>
+    <rect x="307" y="244" width="16" height="31"
+          rx="2" fill="url(#candleGold)"/>
+
+    <!-- candle 9 -->
+    <line x1="350" y1="220" x2="350" y2="275"
+          stroke="#e4c365" stroke-width="3"/>
+    <rect x="342" y="230" width="16" height="30"
+          rx="2" fill="url(#candleGold)"/>
+
+    <!-- candle 10 -->
+    <line x1="385" y1="235" x2="385" y2="285"
+          stroke="#9aa8b8" stroke-width="3"/>
+    <rect x="377" y="244" width="16" height="28"
+          rx="2" fill="#8292a4"/>
+
+    <!-- candle 11 -->
+    <line x1="420" y1="205" x2="420" y2="260"
+          stroke="#e4c365" stroke-width="3"/>
+    <rect x="412" y="215" width="16" height="30"
+          rx="2" fill="url(#candleGold)"/>
+
+    <!-- candle 12 -->
+    <line x1="455" y1="190" x2="455" y2="250"
+          stroke="#e4c365" stroke-width="3"/>
+    <rect x="447" y="202" width="16" height="32"
+          rx="2" fill="url(#candleGold)"/>
+
+    <!-- candle 13 -->
+    <line x1="490" y1="180" x2="490" y2="235"
+          stroke="#e4c365" stroke-width="3"/>
+    <rect x="482" y="190" width="16" height="30"
+          rx="2" fill="url(#candleGold)"/>
+
+    <!-- candle 14 -->
+    <line x1="525" y1="195" x2="525" y2="245"
+          stroke="#9aa8b8" stroke-width="3"/>
+    <rect x="517" y="203" width="16" height="27"
+          rx="2" fill="#8292a4"/>
+
+    <!-- candle 15 -->
+    <line x1="560" y1="165" x2="560" y2="225"
+          stroke="#e4c365" stroke-width="3"/>
+    <rect x="552" y="177" width="16" height="32"
+          rx="2" fill="url(#candleGold)"/>
+
+    <!-- candle 16 -->
+    <line x1="595" y1="150" x2="595" y2="210"
+          stroke="#e4c365" stroke-width="3"/>
+    <rect x="587" y="160" width="16" height="34"
+          rx="2" fill="url(#candleGold)"/>
+
+    <!-- candle 17 -->
+    <line x1="630" y1="160" x2="630" y2="215"
+          stroke="#9aa8b8" stroke-width="3"/>
+    <rect x="622" y="168" width="16" height="29"
+          rx="2" fill="#8292a4"/>
+
+    <!-- candle 18 -->
+    <line x1="665" y1="135" x2="665" y2="195"
+          stroke="#e4c365" stroke-width="3"/>
+    <rect x="657" y="145" width="16" height="34"
+          rx="2" fill="url(#candleGold)"/>
+
+    <!-- candle 19 -->
+    <line x1="700" y1="125" x2="700" y2="185"
+          stroke="#e4c365" stroke-width="3"/>
+    <rect x="692" y="135" width="16" height="34"
+          rx="2" fill="url(#candleGold)"/>
+
+    <!-- candle 20 -->
+    <line x1="735" y1="140" x2="735" y2="190"
+          stroke="#9aa8b8" stroke-width="3"/>
+    <rect x="727" y="148" width="16" height="27"
+          rx="2" fill="#8292a4"/>
+
+    <!-- candle 21 -->
+    <line x1="770" y1="115" x2="770" y2="175"
+          stroke="#e4c365" stroke-width="3"/>
+    <rect x="762" y="125" width="16" height="35"
+          rx="2" fill="url(#candleGold)"/>
+
+    <!-- candle 22 -->
+    <line x1="805" y1="100" x2="805" y2="165"
+          stroke="#e4c365" stroke-width="3"/>
+    <rect x="797" y="110" width="16" height="38"
+          rx="2" fill="url(#candleGold)"/>
+
+    <!-- candle 23 -->
+    <line x1="840" y1="112" x2="840" y2="170"
+          stroke="#9aa8b8" stroke-width="3"/>
+    <rect x="832" y="122" width="16" height="30"
+          rx="2" fill="#8292a4"/>
+
+    <!-- candle 24 -->
+    <line x1="875" y1="92" x2="875" y2="155"
+          stroke="#e4c365" stroke-width="3"/>
+    <rect x="867" y="102" width="16" height="37"
+          rx="2" fill="url(#candleGold)"/>
+
+    <!-- candle 25 -->
+    <line x1="910" y1="82" x2="910" y2="145"
+          stroke="#e4c365" stroke-width="3"/>
+    <rect x="902" y="92" width="16" height="37"
+          rx="2" fill="url(#candleGold)"/>
+
+    <!-- candle 26 -->
+    <line x1="945" y1="95" x2="945" y2="145"
+          stroke="#9aa8b8" stroke-width="3"/>
+    <rect x="937" y="103" width="16" height="28"
+          rx="2" fill="#8292a4"/>
+
+    <!-- candle 27 -->
+    <line x1="980" y1="70" x2="980" y2="135"
+          stroke="#e4c365" stroke-width="3"/>
+    <rect x="972" y="80" width="16" height="38"
+          rx="2" fill="url(#candleGold)"/>
+
+    <!-- candle 28 -->
+    <line x1="1015" y1="58" x2="1015" y2="125"
+          stroke="#e4c365" stroke-width="3"/>
+    <rect x="1007" y="68" width="16" height="40"
+          rx="2" fill="url(#candleGold)"/>
+
+    <!-- candle 29 -->
+    <line x1="1050" y1="65" x2="1050" y2="120"
+          stroke="#e4c365" stroke-width="3"/>
+    <rect x="1042" y="75" width="16" height="32"
+          rx="2" fill="url(#candleGold)"/>
+
+    <!-- candle 30 -->
+    <line x1="1085" y1="45" x2="1085" y2="115"
+          stroke="#e4c365" stroke-width="3"/>
+    <rect x="1077" y="55" width="16" height="42"
+          rx="2" fill="url(#candleGold)"/>
+
+    <!-- candle 31 -->
+    <line x1="1120" y1="38" x2="1120" y2="105"
+          stroke="#e4c365" stroke-width="3"/>
+    <rect x="1112" y="48" width="16" height="40"
+          rx="2" fill="url(#candleGold)"/>
 
   </g>
 
 
-  <!-- =====================================================
-       GOLD CANDLESTICK CHART
-  ====================================================== -->
-
-  <g filter="url(#candleGlow)">
-
-    <!-- Candle 1 -->
-
-    <line
-        x1="34"
-        y1="276"
-        x2="34"
-        y2="312"
-        stroke="#ffe28a"
-        stroke-width="2"/>
-
-    <rect
-        x="29"
-        y="285"
-        width="10"
-        height="15"
-        rx="1.5"
-        fill="#f4c64b"/>
-
-
-    <!-- Candle 2 -->
-
-    <line x1="55" y1="279" x2="55" y2="304"
-          stroke="#7e91aa" stroke-width="2"/>
-
-    <rect x="50" y="286"
-          width="10"
-          height="10"
-          rx="1.5"
-          fill="#a8b7cc"/>
-
-
-    <!-- Candle 3 -->
-
-    <line x1="76" y1="273" x2="76" y2="306"
-          stroke="#ffe28a" stroke-width="2"/>
-
-    <rect x="71" y="281"
-          width="10"
-          height="17"
-          rx="1.5"
-          fill="#f4c64b"/>
-
-
-    <!-- Candle 4 -->
-
-    <line x1="97" y1="264" x2="97" y2="291"
-          stroke="#ffe28a" stroke-width="2"/>
-
-    <rect x="92" y="270"
-          width="10"
-          height="12"
-          rx="1.5"
-          fill="#f4c64b"/>
-
-
-    <!-- Candle 5 -->
-
-    <line x1="118" y1="265" x2="118" y2="287"
-          stroke="#7e91aa" stroke-width="2"/>
-
-    <rect x="113" y="271"
-          width="10"
-          height="8"
-          rx="1.5"
-          fill="#a8b7cc"/>
-
-
-    <!-- Candle 6 -->
-
-    <line x1="139" y1="250" x2="139" y2="286"
-          stroke="#ffe28a" stroke-width="2"/>
-
-    <rect x="134" y="258"
-          width="10"
-          height="22"
-          rx="1.5"
-          fill="#f4c64b"/>
-
-
-    <!-- Candle 7 -->
-
-    <line x1="160" y1="239" x2="160" y2="266"
-          stroke="#ffe28a" stroke-width="2"/>
-
-    <rect x="155" y="246"
-          width="10"
-          height="13"
-          rx="1.5"
-          fill="#f4c64b"/>
-
-
-    <!-- Candle 8 -->
-
-    <line x1="181" y1="238" x2="181" y2="262"
-          stroke="#7e91aa"
-          stroke-width="2"/>
-
-    <rect x="176" y="247"
-          width="10"
-          height="7"
-          rx="1.5"
-          fill="#a8b7cc"/>
-
-
-    <!-- Candle 9 -->
-
-    <line x1="202" y1="228" x2="202" y2="261"
-          stroke="#ffe28a"
-          stroke-width="2"/>
-
-    <rect x="197" y="236"
-          width="10"
-          height="19"
-          rx="1.5"
-          fill="#f4c64b"/>
-
-
-    <!-- Candle 10 -->
-
-    <line x1="223" y1="218" x2="223" y2="246"
-          stroke="#ffe28a"
-          stroke-width="2"/>
-
-    <rect x="218" y="225"
-          width="10"
-          height="12"
-          rx="1.5"
-          fill="#f4c64b"/>
-
-
-    <!-- Candle 11 -->
-
-    <line x1="244" y1="215" x2="244" y2="239"
-          stroke="#7e91aa"
-          stroke-width="2"/>
-
-    <rect x="239" y="226"
-          width="10"
-          height="7"
-          rx="1.5"
-          fill="#a8b7cc"/>
-
-
-    <!-- Candle 12 -->
-
-    <line x1="265" y1="204" x2="265" y2="238"
-          stroke="#ffe28a"
-          stroke-width="2"/>
-
-    <rect x="260" y="212"
-          width="10"
-          height="21"
-          rx="1.5"
-          fill="#f4c64b"/>
-
-
-    <!-- Candle 13 -->
-
-    <line x1="286" y1="201" x2="286" y2="226"
-          stroke="#7e91aa"
-          stroke-width="2"/>
-
-    <rect x="281" y="214"
-          width="10"
-          height="7"
-          rx="1.5"
-          fill="#a8b7cc"/>
-
-
-    <!-- Candle 14 -->
-
-    <line x1="307" y1="190" x2="307" y2="226"
-          stroke="#ffe28a"
-          stroke-width="2"/>
-
-    <rect x="302" y="198"
-          width="10"
-          height="22"
-          rx="1.5"
-          fill="#f4c64b"/>
-
-
-    <!-- Candle 15 -->
-
-    <line x1="328" y1="175" x2="328" y2="207"
-          stroke="#ffe28a"
-          stroke-width="2"/>
-
-    <rect x="323" y="183"
-          width="10"
-          height="16"
-          rx="1.5"
-          fill="#f4c64b"/>
-
-
-    <!-- Candle 16 -->
-
-    <line x1="349" y1="176" x2="349" y2="198"
-          stroke="#7e91aa"
-          stroke-width="2"/>
-
-    <rect x="344" y="184"
-          width="10"
-          height="7"
-          rx="1.5"
-          fill="#a8b7cc"/>
-
-
-    <!-- Candle 17 -->
-
-    <line x1="370" y1="161" x2="370" y2="200"
-          stroke="#ffe28a"
-          stroke-width="2"/>
-
-    <rect x="365" y="169"
-          width="10"
-          height="23"
-          rx="1.5"
-          fill="#f4c64b"/>
-
-
-    <!-- Candle 18 -->
-
-    <line x1="391" y1="151" x2="391" y2="178"
-          stroke="#ffe28a"
-          stroke-width="2"/>
-
-    <rect x="386" y="158"
-          width="10"
-          height="11"
-          rx="1.5"
-          fill="#f4c64b"/>
-
-
-    <!-- Candle 19 -->
-
-    <line x1="412" y1="149" x2="412" y2="176"
-          stroke="#7e91aa"
-          stroke-width="2"/>
-
-    <rect x="407" y="159"
-          width="10"
-          height="9"
-          rx="1.5"
-          fill="#a8b7cc"/>
-
-
-    <!-- Candle 20 -->
-
-    <line x1="433" y1="140" x2="433" y2="178"
-          stroke="#ffe28a"
-          stroke-width="2"/>
-
-    <rect x="428" y="147"
-          width="10"
-          height="22"
-          rx="1.5"
-          fill="#f4c64b"/>
-
-
-    <!-- Candle 21 -->
-
-    <line x1="454" y1="139" x2="454" y2="164"
-          stroke="#7e91aa"
-          stroke-width="2"/>
-
-    <rect x="449" y="148"
-          width="10"
-          height="7"
-          rx="1.5"
-          fill="#a8b7cc"/>
-
-
-    <!-- Candle 22 -->
-
-    <line x1="475" y1="123" x2="475" y2="160"
-          stroke="#ffe28a"
-          stroke-width="2"/>
-
-    <rect x="470" y="132"
-          width="10"
-          height="23"
-          rx="1.5"
-          fill="#f4c64b"/>
-
-
-    <!-- Candle 23 -->
-
-    <line x1="496" y1="124" x2="496" y2="149"
-          stroke="#7e91aa"
-          stroke-width="2"/>
-
-    <rect x="491" y="133"
-          width="10"
-          height="8"
-          rx="1.5"
-          fill="#a8b7cc"/>
-
-
-    <!-- Candle 24 -->
-
-    <line x1="517" y1="110" x2="517" y2="148"
-          stroke="#ffe28a"
-          stroke-width="2"/>
-
-    <rect x="512" y="119"
-          width="10"
-          height="23"
-          rx="1.5"
-          fill="#f4c64b"/>
-
-
-    <!-- Candle 25 -->
-
-    <line x1="538" y1="108" x2="538" y2="136"
-          stroke="#7e91aa"
-          stroke-width="2"/>
-
-    <rect x="533" y="120"
-          width="10"
-          height="8"
-          rx="1.5"
-          fill="#a8b7cc"/>
-
-
-    <!-- Candle 26 -->
-
-    <line x1="559" y1="96" x2="559" y2="135"
-          stroke="#ffe28a"
-          stroke-width="2"/>
-
-    <rect x="554" y="105"
-          width="10"
-          height="24"
-          rx="1.5"
-          fill="#f4c64b"/>
-
-
-    <!-- Candle 27 -->
-
-    <line x1="580" y1="94" x2="580" y2="122"
-          stroke="#7e91aa"
-          stroke-width="2"/>
-
-    <rect x="575" y="106"
-          width="10"
-          height="8"
-          rx="1.5"
-          fill="#a8b7cc"/>
-
-
-    <!-- Candle 28 -->
-
-    <line x1="601" y1="84" x2="601" y2="120"
-          stroke="#ffe28a"
-          stroke-width="2"/>
-
-    <rect x="596" y="92"
-          width="10"
-          height="23"
-          rx="1.5"
-          fill="#f4c64b"/>
-
-
-    <!-- Candle 29 -->
-
-    <line x1="622" y1="81" x2="622" y2="109"
-          stroke="#7e91aa"
-          stroke-width="2"/>
-
-    <rect x="617" y="93"
-          width="10"
-          height="8"
-          rx="1.5"
-          fill="#a8b7cc"/>
-
-
-    <!-- Candle 30 -->
-
-    <line x1="643" y1="70" x2="643" y2="108"
-          stroke="#ffe28a"
-          stroke-width="2"/>
-
-    <rect x="638" y="78"
-          width="10"
-          height="24"
-          rx="1.5"
-          fill="#f4c64b"/>
-
-
-    <!-- Candle 31 -->
-
-    <line x1="664" y1="67" x2="664" y2="96"
-          stroke="#7e91aa"
-          stroke-width="2"/>
-
-    <rect x="659" y="79"
-          width="10"
-          height="9"
-          rx="1.5"
-          fill="#a8b7cc"/>
-
-
-    <!-- Candle 32 -->
-
-    <line x1="685" y1="55" x2="685" y2="96"
-          stroke="#ffe28a"
-          stroke-width="2"/>
-
-    <rect x="680" y="64"
-          width="10"
-          height="25"
-          rx="1.5"
-          fill="#f4c64b"/>
-
-  </g>
-
-
-  <!-- =====================================================
-       GOLD TREND LINE
-  ====================================================== -->
+  <!-- ================================================= -->
+  <!-- GOLD TREND LINE -->
+  <!-- ================================================= -->
 
   <path
-      d="
-        M20 300
-        C110 285 150 255 220 260
-        C300 265 330 205 395 218
-        C460 230 490 165 555 176
-        C620 187 650 130 710 112
-      "
-      fill="none"
-      stroke="#f6c63d"
-      stroke-opacity="0.20"
-      stroke-width="10"
-      filter="url(#candleGlow)"/>
-
+    d="M30 345
+       C130 330 175 320 250 305
+       C340 285 390 275 455 250
+       C525 225 570 240 635 210
+       C700 180 755 195 820 155
+       C885 115 930 130 990 100
+       C1050 70 1100 80 1170 42"
+    fill="none"
+    stroke="#f5c94a"
+    stroke-width="4"
+    stroke-linecap="round"
+    opacity=".95"
+    filter="url(#glowGold)"
+  />
 
   <path
-      d="
-        M20 300
-        C110 285 150 255 220 260
-        C300 265 330 205 395 218
-        C460 230 490 165 555 176
-        C620 187 650 130 710 112
-      "
-      fill="none"
-      stroke="url(#gold)"
-      stroke-width="3.5"
-      filter="url(#candleGlow)"/>
+    d="M30 345
+       C130 330 175 320 250 305
+       C340 285 390 275 455 250
+       C525 225 570 240 635 210
+       C700 180 755 195 820 155
+       C885 115 930 130 990 100
+       C1050 70 1100 80 1170 42"
+    fill="none"
+    stroke="#ffe58a"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    opacity=".9"
+  />
 
 
-  <!-- Highlight points -->
+  <!-- ================================================= -->
+  <!-- FOREGROUND GLOW -->
+  <!-- ================================================= -->
 
-  <g fill="#f7c843">
+  <circle cx="820" cy="155" r="9"
+          fill="#ffd34e"
+          filter="url(#glowGold)"/>
 
-    <circle cx="220" cy="260" r="5"/>
-    <circle cx="395" cy="218" r="5"/>
-    <circle cx="555" cy="176" r="5"/>
-    <circle cx="710" cy="112" r="5"/>
+  <circle cx="990" cy="100" r="8"
+          fill="#ffd34e"
+          filter="url(#glowGold)"/>
 
-  </g>
-
-
-  <!-- Highlight rings -->
-
-  <g
-      fill="none"
-      stroke="#f7c843"
-      stroke-opacity="0.16">
-
-    <circle cx="220" cy="260" r="11"/>
-    <circle cx="395" cy="218" r="11"/>
-    <circle cx="555" cy="176" r="11"/>
-    <circle cx="710" cy="112" r="11"/>
-
-  </g>
+  <circle cx="1170" cy="42" r="8"
+          fill="#ffd34e"
+          filter="url(#glowGold)"/>
 
 
-  <!-- Premium border -->
+  <!-- subtle dark bottom fade -->
 
   <rect
-      x="1"
-      y="1"
-      width="718"
-      height="358"
-      rx="8"
-      fill="none"
-      stroke="#8bb0dc"
-      stroke-opacity="0.14"
-      stroke-width="2"/>
+    x="0"
+    y="300"
+    width="1200"
+    height="120"
+    fill="#020a17"
+    opacity=".20"
+  />
 
 </svg>
