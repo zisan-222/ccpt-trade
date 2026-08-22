@@ -1,0 +1,514 @@
+/* =========================================================
+   CPTMARKETS - PREMIUM REGISTER PAGE
+   File: register-premium.css
+   No external library required
+   ========================================================= */
+
+:root {
+    --rp-bg: #020b18;
+    --rp-bg-2: #04152a;
+    --rp-card: rgba(5, 25, 48, 0.78);
+    --rp-border: rgba(87, 154, 220, 0.22);
+    --rp-border-hover: rgba(255, 193, 7, 0.55);
+
+    --rp-text: #f5f7fb;
+    --rp-muted: #91a4bf;
+    --rp-input: rgba(10, 42, 76, 0.78);
+
+    --rp-yellow: #ffc400;
+    --rp-yellow-2: #ffda3d;
+
+    --rp-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.55),
+        0 0 60px rgba(0, 120, 255, 0.08);
+}
+
+/* =========================
+   PAGE BACKGROUND
+   ========================= */
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    color: var(--rp-text);
+
+    background:
+        radial-gradient(
+            circle at 15% 10%,
+            rgba(0, 110, 255, 0.18),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(255, 193, 7, 0.08),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(0, 80, 180, 0.14),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #010814 0%,
+            #03162d 50%,
+            #020b18 100%
+        );
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+    overflow-x: hidden;
+}
+
+/* Subtle background lighting */
+
+body::before {
+    content: "";
+    position: fixed;
+    width: 420px;
+    height: 420px;
+
+    top: -180px;
+    left: -160px;
+
+    background: rgba(0, 132, 255, 0.12);
+    filter: blur(100px);
+
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    width: 350px;
+    height: 350px;
+
+    right: -150px;
+    bottom: -130px;
+
+    background: rgba(255, 193, 7, 0.07);
+    filter: blur(100px);
+
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+
+/* =========================
+   MAIN REGISTER CARD
+   ========================= */
+
+body > div,
+.register-container,
+.register-card,
+.auth-container,
+.auth-card {
+    position: relative;
+    z-index: 1;
+}
+
+/*
+   The following selectors help if your
+   existing register page uses a normal
+   centered container.
+*/
+
+.register-container,
+.auth-container {
+    background: linear-gradient(
+        145deg,
+        rgba(9, 38, 70, 0.88),
+        rgba(2, 17, 34, 0.94)
+    );
+
+    border: 1px solid var(--rp-border);
+
+    border-radius: 28px;
+
+    box-shadow: var(--rp-shadow);
+
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+}
+
+
+/* =========================
+   HEADINGS
+   ========================= */
+
+h1,
+h2 {
+    color: #ffffff;
+    font-weight: 800;
+    letter-spacing: -1.2px;
+}
+
+h1 {
+    text-shadow:
+        0 0 18px rgba(255, 193, 7, 0.18);
+}
+
+/* Highlight first/important heading text */
+
+h1 span,
+h2 span {
+    color: var(--rp-yellow);
+}
+
+
+/* =========================
+   LABELS
+   ========================= */
+
+label {
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: #e8eef7;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    letter-spacing: 0.1px;
+}
+
+
+/* =========================
+   INPUTS
+   ========================= */
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="tel"] {
+    width: 100%;
+    box-sizing: border-box;
+
+    min-height: 58px;
+
+    padding: 0 18px;
+
+    color: #ffffff;
+
+    font-size: 16px;
+    font-weight: 500;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(15, 57, 95, 0.75),
+            rgba(7, 34, 63, 0.72)
+        );
+
+    border: 1px solid rgba(90, 150, 210, 0.24);
+
+    border-radius: 16px;
+
+    outline: none;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.035),
+        0 8px 25px rgba(0, 0, 0, 0.12);
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease,
+        transform 0.25s ease;
+}
+
+input::placeholder {
+    color: #8198b5;
+}
+
+input:hover {
+    border-color: rgba(110, 170, 230, 0.4);
+}
+
+input:focus {
+    border-color: var(--rp-yellow);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(16, 60, 101, 0.9),
+            rgba(7, 37, 68, 0.9)
+        );
+
+    box-shadow:
+        0 0 0 3px rgba(255, 196, 0, 0.09),
+        0 0 28px rgba(255, 196, 0, 0.10),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================
+   FORM SPACING
+   ========================= */
+
+form {
+    position: relative;
+}
+
+form > div {
+    margin-bottom: 18px;
+}
+
+
+/* =========================
+   REGISTER BUTTON
+   ========================= */
+
+button,
+button[type="submit"],
+input[type="submit"] {
+    position: relative;
+
+    width: 100%;
+    min-height: 58px;
+
+    margin-top: 8px;
+
+    border: 0;
+    border-radius: 16px;
+
+    color: #101010;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffbf00 0%,
+            #ffd633 50%,
+            #ffbf00 100%
+        );
+
+    font-size: 17px;
+    font-weight: 800;
+
+    letter-spacing: 0.1px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 30px rgba(255, 193, 7, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.35);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        filter 0.2s ease;
+}
+
+button:hover,
+button[type="submit"]:hover,
+input[type="submit"]:hover {
+    transform: translateY(-2px);
+
+    filter: brightness(1.05);
+
+    box-shadow:
+        0 16px 38px rgba(255, 193, 7, 0.28),
+        0 0 25px rgba(255, 193, 7, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+button:active,
+button[type="submit"]:active,
+input[type="submit"]:active {
+    transform: translateY(0);
+}
+
+
+/* =========================
+   LINKS
+   ========================= */
+
+a {
+    color: #a9bdd6;
+
+    font-weight: 600;
+
+    transition:
+        color 0.2s ease,
+        text-shadow 0.2s ease;
+}
+
+a:hover {
+    color: var(--rp-yellow);
+
+    text-shadow:
+        0 0 12px rgba(255, 193, 7, 0.25);
+}
+
+
+/* =========================
+   "GO TO SIGN IN"
+   ========================= */
+
+a[href*="login"],
+a[href*="signin"],
+a[href*="sign"],
+.signin-link,
+.login-link {
+    color: var(--rp-yellow);
+    text-decoration: none;
+}
+
+a[href*="login"]:hover,
+a[href*="signin"]:hover,
+a[href*="sign"]:hover,
+.signin-link:hover,
+.login-link:hover {
+    color: #ffe477;
+}
+
+
+/* =========================
+   OPTIONAL DIVIDER
+   ========================= */
+
+.register-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin: 24px 0;
+
+    color: #647b98;
+
+    font-size: 12px;
+}
+
+.register-divider::before,
+.register-divider::after {
+    content: "";
+
+    flex: 1;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(100, 150, 200, 0.25),
+            transparent
+        );
+}
+
+
+/* =========================
+   ERROR / SUCCESS MESSAGE
+   ========================= */
+
+.error,
+.error-message {
+    margin-top: 8px;
+    padding: 10px 12px;
+
+    color: #ff9e9e;
+
+    background: rgba(255, 55, 55, 0.07);
+
+    border: 1px solid rgba(255, 75, 75, 0.18);
+
+    border-radius: 10px;
+
+    font-size: 13px;
+}
+
+.success,
+.success-message {
+    margin-top: 8px;
+    padding: 10px 12px;
+
+    color: #9dffc0;
+
+    background: rgba(30, 220, 100, 0.07);
+
+    border: 1px solid rgba(30, 220, 100, 0.18);
+
+    border-radius: 10px;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 12px;
+        box-sizing: border-box;
+    }
+
+    .register-container,
+    .auth-container {
+        width: 100%;
+        box-sizing: border-box;
+
+        border-radius: 24px;
+
+        padding: 24px 20px;
+    }
+
+    h1 {
+        font-size: 42px;
+        line-height: 1.05;
+    }
+
+    h2 {
+        font-size: 30px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="number"],
+    input[type="tel"] {
+        min-height: 56px;
+        font-size: 15px;
+    }
+
+    button,
+    button[type="submit"],
+    input[type="submit"] {
+        min-height: 56px;
+    }
+}
+
+
+/* =========================
+   REDUCED MOTION
+   ========================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+}
