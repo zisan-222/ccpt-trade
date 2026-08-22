@@ -1,569 +1,626 @@
 /*
- * TRADE PROFESSIONAL UI
- * ------------------------------------------------------------
- * Design-only stylesheet.
- * No JavaScript, trading logic, calculations, API, or language code.
- *
- * IMPORTANT:
- * This file is intentionally written as a standalone design layer.
- * Connect the selectors to the existing Trade page later.
- */
+===========================================================
+ CPTMARKETS — PROFESSIONAL TRADE UI
+ Design only. No JS / trading logic / calculations.
+ Load AFTER trade.css.
+===========================================================
+*/
 
-/* =========================
-   DESIGN TOKENS
-   ========================= */
-:root {
-  --trade-bg: #061a33;
-  --trade-bg-deep: #041427;
-  --trade-surface: #0a2342;
-  --trade-surface-2: #0e2b50;
-  --trade-surface-3: #12345d;
-  --trade-border: rgba(148, 177, 214, 0.13);
-  --trade-border-strong: rgba(148, 177, 214, 0.22);
+:root{
+  --tp-page:#061b35;
+  --tp-page-2:#04152a;
+  --tp-panel:#062846;
+  --tp-panel-2:#0a3154;
+  --tp-control:#10385f;
+  --tp-control-hover:#15466f;
+  --tp-border:rgba(148,184,220,.13);
+  --tp-border-strong:rgba(71,170,225,.28);
 
-  --trade-text: #f4f7fb;
-  --trade-text-soft: #aebdd2;
-  --trade-text-muted: #71849d;
+  --tp-text:#f4f8fc;
+  --tp-muted:#8ea4bd;
+  --tp-accent:#25b7ff;
+  --tp-accent-2:#168ddd;
+  --tp-accent-soft:rgba(37,183,255,.12);
 
-  --trade-accent: #ffc400;
-  --trade-accent-hover: #ffd43b;
-  --trade-accent-text: #111827;
+  --tp-long:#08d486;
+  --tp-short:#ff3d5b;
 
-  --trade-long: #00d084;
-  --trade-long-hover: #16df96;
-  --trade-short: #ff3b57;
-  --trade-short-hover: #ff526a;
-
-  --trade-radius-xl: 24px;
-  --trade-radius-lg: 18px;
-  --trade-radius-md: 14px;
-  --trade-radius-sm: 11px;
-
-  --trade-shadow: 0 18px 45px rgba(0, 0, 0, 0.24);
-  --trade-shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.18);
-
-  --trade-transition: 180ms ease;
+  --tp-radius:18px;
+  --tp-radius-sm:13px;
+  --tp-ease:180ms ease;
 }
 
-/* =========================
-   TRADE PAGE / MAIN BACKGROUND
-   ========================= */
-.trade-page,
-.trade-container,
-.trade-screen,
-.trading-page {
+/* =========================================================
+   PAGE FOUNDATION
+========================================================= */
+
+html,
+body{
+  background:linear-gradient(180deg,var(--tp-page) 0%,var(--tp-page-2) 100%) !important;
+  color:var(--tp-text);
+}
+
+body{
+  margin:0;
+  overflow-x:hidden;
+}
+
+.trade-page{
+  min-height:100vh;
   background:
-    radial-gradient(circle at 50% -10%, rgba(30, 84, 145, 0.18), transparent 38%),
-    linear-gradient(180deg, var(--trade-bg) 0%, var(--trade-bg-deep) 100%);
-  color: var(--trade-text);
+    radial-gradient(circle at 50% -15%,rgba(22,113,177,.18),transparent 36%),
+    linear-gradient(180deg,var(--tp-page) 0%,var(--tp-page-2) 100%) !important;
+}
+
+/* =========================================================
+   HEADER / PRICE AREA
+========================================================= */
+
+.trade-header{
+  background:rgba(4,21,42,.92) !important;
+  border-bottom:1px solid rgba(255,255,255,.045);
+}
+
+.price-box{
+  background:transparent !important;
+  padding-top:4px !important;
+  padding-bottom:14px !important;
+}
+
+.price-box h2{
+  color:#27c4ff !important;
+  text-shadow:0 0 22px rgba(39,196,255,.10);
+}
+
+.price-box .change{
+  border-radius:11px !important;
+  box-shadow:none !important;
+}
+
+/* =========================================================
+   CHART AREA
+   IMPORTANT:
+   The chart, indicator row and timeframe are visually joined.
+   No floating "image/banner/card" appearance.
+========================================================= */
+
+/* Indicator row becomes part of the chart module */
+.indicator-bar{
+  display:flex !important;
+  align-items:center !important;
+  gap:9px !important;
+  width:100% !important;
+  box-sizing:border-box !important;
+  padding:10px 15px 12px !important;
+  margin:0 !important;
+  background:#071b32 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  overflow-x:auto !important;
+  scrollbar-width:none;
+}
+
+.indicator-bar::-webkit-scrollbar{
+  display:none;
+}
+
+.indicator-bar button{
+  flex:0 0 auto !important;
+  min-width:58px !important;
+  height:40px !important;
+  padding:0 17px !important;
+
+  border:1px solid rgba(117,166,207,.10) !important;
+  border-radius:999px !important;
+
+  background:#12345a !important;
+  color:#c8d7e8 !important;
+
+  font-size:14px !important;
+  font-weight:600 !important;
+
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.025) !important;
+  transition:all var(--tp-ease) !important;
+}
+
+.indicator-bar button:hover{
+  background:#174267 !important;
+  border-color:rgba(37,183,255,.25) !important;
+}
+
+.indicator-bar button.active{
+  background:linear-gradient(180deg,#26bfff 0%,#168fda 100%) !important;
+  color:#031525 !important;
+  border-color:transparent !important;
+  box-shadow:0 5px 16px rgba(37,183,255,.16) !important;
 }
 
 /*
- * Keep the chart and its controls visually attached.
- * The chart area should not look like a separate floating website/card.
- */
-.trade-chart-section,
-.chart-section,
-.chart-wrapper,
-.chart-container {
-  background: #080f19;
-  border: 1px solid rgba(148, 177, 214, 0.14);
-  border-radius: var(--trade-radius-xl);
-  overflow: hidden;
-  box-shadow: var(--trade-shadow-soft);
-  margin: 0;
+  Remove the "separate screenshot/banner" feeling from TradingView.
+  The chart is full-width inside the trade page and sits directly
+  between the indicator and timeframe rows.
+*/
+.chart-card{
+  width:100% !important;
+  max-width:none !important;
+  box-sizing:border-box !important;
+
+  margin:0 !important;
+  padding:0 !important;
+
+  background:#080e16 !important;
+  border:0 !important;
+  border-top:1px solid rgba(255,255,255,.035) !important;
+  border-bottom:1px solid rgba(255,255,255,.035) !important;
+
+  border-radius:0 !important;
+  box-shadow:none !important;
+
+  overflow:hidden !important;
 }
 
-/* Remove visual gaps between chart controls and chart */
-.trade-chart-section .chart-toolbar,
-.chart-section .chart-toolbar,
-.chart-wrapper .chart-toolbar,
-.chart-container .chart-toolbar {
-  margin: 0;
-  border: 0;
-  border-radius: 0;
-  background: #080f19;
+/* TradingView iframe/container must occupy the whole chart band */
+#tvchart{
+  width:100% !important;
+  min-height:390px !important;
+  height:390px !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:#080e16 !important;
 }
 
-/* =========================
-   INDICATOR BUTTONS
-   MA / EMA / BOLL / RSI / MACD
-   ========================= */
-.indicator-tabs,
-.chart-indicators,
-.indicator-buttons {
-  display: flex;
-  gap: 10px;
-  padding: 10px 0;
-  background: transparent;
+/* Some TradingView generated elements inherit these dimensions */
+#tvchart iframe{
+  display:block !important;
+  width:100% !important;
+  max-width:none !important;
+  border:0 !important;
 }
 
-.indicator-tabs button,
-.chart-indicators button,
-.indicator-buttons button {
-  min-height: 48px;
-  padding: 0 24px;
-  border: 1px solid var(--trade-border);
-  border-radius: 999px;
-  background: linear-gradient(180deg, #14345d 0%, #102b4d 100%);
-  color: #d7e1ef;
-  font-weight: 600;
-  letter-spacing: 0.1px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.035);
-  transition: transform var(--trade-transition),
-              background var(--trade-transition),
-              border-color var(--trade-transition),
-              color var(--trade-transition),
-              box-shadow var(--trade-transition);
+/* =========================================================
+   TIMEFRAME ROW — SAME CHART MODULE
+========================================================= */
+
+.timeframe{
+  display:grid !important;
+  grid-template-columns:repeat(6,minmax(0,1fr)) !important;
+  gap:8px !important;
+
+  width:100% !important;
+  box-sizing:border-box !important;
+
+  margin:0 !important;
+  padding:12px 15px 15px !important;
+
+  background:#071b32 !important;
+  border:0 !important;
+  border-radius:0 !important;
+
+  box-shadow:none !important;
 }
 
-.indicator-tabs button:hover,
-.chart-indicators button:hover,
-.indicator-buttons button:hover {
-  transform: translateY(-1px);
-  border-color: rgba(255, 196, 0, 0.32);
-  background: #193d69;
+.timeframe button{
+  min-width:0 !important;
+  height:42px !important;
+
+  border:1px solid rgba(117,166,207,.09) !important;
+  border-radius:12px !important;
+
+  background:#12345a !important;
+  color:#c8d7e8 !important;
+
+  font-size:14px !important;
+  font-weight:650 !important;
+
+  transition:all var(--tp-ease) !important;
 }
 
-.indicator-tabs button.active,
-.chart-indicators button.active,
-.indicator-buttons button.active,
-.indicator-tabs button[aria-selected="true"],
-.chart-indicators button[aria-selected="true"] {
-  background: linear-gradient(180deg, #ffd21a 0%, #ffbf00 100%);
-  color: #111827;
-  border-color: transparent;
-  box-shadow: 0 8px 22px rgba(255, 196, 0, 0.16);
+.timeframe button:hover{
+  background:#174267 !important;
+  border-color:rgba(37,183,255,.24) !important;
 }
 
-/* =========================
-   TIMEFRAME BUTTONS
-   ========================= */
-.timeframe-tabs,
-.timeframes,
-.chart-timeframes {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 12px;
-  margin: 12px 0 22px;
+.timeframe button.active{
+  background:linear-gradient(180deg,#26bfff 0%,#168fda 100%) !important;
+  color:#031525 !important;
+  border-color:transparent !important;
+  box-shadow:0 5px 16px rgba(37,183,255,.14) !important;
 }
 
-.timeframe-tabs button,
-.timeframes button,
-.chart-timeframes button {
-  min-height: 56px;
-  border: 1px solid var(--trade-border);
-  border-radius: var(--trade-radius-md);
-  background: linear-gradient(180deg, #14345d 0%, #102b4d 100%);
-  color: #dce5f2;
-  font-size: 16px;
-  font-weight: 650;
-  transition: all var(--trade-transition);
-}
+/* =========================================================
+   PROFESSIONAL ORDER PANEL
+========================================================= */
 
-.timeframe-tabs button:hover,
-.timeframes button:hover,
-.chart-timeframes button:hover {
-  transform: translateY(-1px);
-  background: #193d69;
-}
+.trade-panel{
+  width:calc(100% - 30px) !important;
+  box-sizing:border-box !important;
 
-.timeframe-tabs button.active,
-.timeframes button.active,
-.chart-timeframes button.active,
-.timeframe-tabs button[aria-selected="true"] {
-  background: linear-gradient(180deg, #ffd21a 0%, #ffbf00 100%);
-  color: #111827;
-  border-color: transparent;
-  box-shadow: 0 8px 22px rgba(255, 196, 0, 0.14);
-}
+  margin:15px !important;
+  padding:20px 17px 18px !important;
 
-/* =========================
-   TRADING PANEL
-   ========================= */
-.trade-panel,
-.order-panel,
-.trade-form,
-.trading-form {
   background:
-    linear-gradient(180deg, rgba(13, 40, 73, 0.98), rgba(8, 30, 55, 0.98));
-  border: 1px solid var(--trade-border);
-  border-radius: var(--trade-radius-xl);
-  padding: 24px;
-  box-shadow: var(--trade-shadow);
+    linear-gradient(180deg,#062c4c 0%,#052640 100%) !important;
+
+  border:1px solid rgba(66,151,205,.15) !important;
+  border-radius:20px !important;
+
+  box-shadow:
+    0 12px 35px rgba(0,0,0,.22),
+    inset 0 1px 0 rgba(255,255,255,.025) !important;
 }
 
-.trade-panel h1,
-.trade-panel h2,
-.trade-panel h3,
-.order-panel h1,
-.order-panel h2,
-.order-panel h3 {
-  color: var(--trade-text);
+.trade-panel h3{
+  margin:0 0 17px !important;
+  color:#edf6ff !important;
+  font-size:20px !important;
+  font-weight:750 !important;
 }
 
-/* =========================
-   LEVERAGE
-   ========================= */
-.leverage-section,
-.leverage-container {
-  background: transparent;
-  border: 0;
-  padding: 0;
+/* =========================================================
+   LEVERAGE BUTTONS — NO YELLOW
+========================================================= */
+
+.leverage-grid{
+  display:grid !important;
+  grid-template-columns:repeat(5,minmax(0,1fr)) !important;
+  gap:8px !important;
 }
 
-.leverage-section h2,
-.leverage-section h3,
-.leverage-title {
-  margin: 0 0 18px;
-  color: #f6f8fc;
-  font-weight: 750;
-  letter-spacing: -0.2px;
+.leverage-grid button{
+  min-width:0 !important;
+  height:51px !important;
+
+  border:1px solid rgba(72,151,204,.13) !important;
+  border-radius:12px !important;
+
+  background:linear-gradient(180deg,#0f3a61 0%,#0b3153 100%) !important;
+  color:#d5e4f2 !important;
+
+  font-size:13px !important;
+  font-weight:650 !important;
+
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.025) !important;
+  transition:all var(--tp-ease) !important;
 }
 
-.leverage-grid,
-.leverage-buttons {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 10px;
+.leverage-grid button:hover{
+  transform:translateY(-1px) !important;
+  background:#15466f !important;
+  border-color:rgba(37,183,255,.28) !important;
 }
 
-.leverage-grid button,
-.leverage-buttons button {
-  min-height: 54px;
-  border: 1px solid rgba(148, 177, 214, 0.10);
-  border-radius: var(--trade-radius-md);
-  background: linear-gradient(180deg, #173963 0%, #123054 100%);
-  color: #e1e9f4;
-  font-size: 15px;
-  font-weight: 650;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.025);
-  transition: all var(--trade-transition);
+.leverage-grid button.active{
+  background:linear-gradient(180deg,#27bfff 0%,#158ed8 100%) !important;
+  color:#031525 !important;
+  border-color:transparent !important;
+  box-shadow:0 7px 18px rgba(37,183,255,.16) !important;
 }
 
-.leverage-grid button:hover,
-.leverage-buttons button:hover {
-  transform: translateY(-1px);
-  background: #1b416f;
-  border-color: rgba(255, 196, 0, 0.22);
+/* =========================================================
+   AMOUNT / LOTS SWITCH — NO YELLOW
+========================================================= */
+
+.mode-switch{
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  gap:9px !important;
+  margin:20px 0 16px !important;
 }
 
-.leverage-grid button.active,
-.leverage-buttons button.active,
-.leverage-grid button[aria-pressed="true"],
-.leverage-buttons button[aria-pressed="true"] {
-  background: linear-gradient(180deg, #ffd21a 0%, #ffbd00 100%);
-  color: #111827;
-  border-color: transparent;
-  box-shadow: 0 8px 22px rgba(255, 196, 0, 0.15);
+.mode-switch button{
+  height:48px !important;
+
+  border:1px solid rgba(72,151,204,.13) !important;
+  border-radius:11px !important;
+
+  background:#12375d !important;
+  color:#c9d9e9 !important;
+
+  font-size:14px !important;
+  font-weight:650 !important;
+
+  transition:all var(--tp-ease) !important;
 }
 
-/* =========================
-   AMOUNT / LOTS SWITCH
-   ========================= */
-.order-mode,
-.amount-lots-tabs,
-.trade-mode-tabs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin: 22px 0;
+.mode-switch button:hover{
+  background:#164369 !important;
 }
 
-.order-mode button,
-.amount-lots-tabs button,
-.trade-mode-tabs button {
-  min-height: 54px;
-  border: 1px solid var(--trade-border);
-  border-radius: var(--trade-radius-md);
-  background: #15365f;
-  color: #dbe5f2;
-  font-weight: 650;
-  transition: all var(--trade-transition);
+.mode-switch button.active{
+  background:linear-gradient(180deg,#25b7ff 0%,#158ed8 100%) !important;
+  color:#031525 !important;
+  border-color:transparent !important;
+  box-shadow:0 7px 18px rgba(37,183,255,.13) !important;
 }
 
-.order-mode button:hover,
-.amount-lots-tabs button:hover,
-.trade-mode-tabs button:hover {
-  background: #1a416e;
-}
+/* =========================================================
+   LABELS / INPUTS
+========================================================= */
 
-.order-mode button.active,
-.amount-lots-tabs button.active,
-.trade-mode-tabs button.active,
-.order-mode button[aria-selected="true"] {
-  background: linear-gradient(180deg, #ffd21a 0%, #ffbf00 100%);
-  color: #111827;
-  border-color: transparent;
-  box-shadow: 0 8px 22px rgba(255, 196, 0, 0.14);
-}
+.trade-panel label{
+  display:block !important;
+  margin:0 0 8px !important;
 
-/* =========================
-   INPUTS
-   ========================= */
-.trade-panel label,
-.order-panel label,
-.trade-form label {
-  color: var(--trade-text-soft);
-  font-size: 14px;
-  font-weight: 600;
+  color:#8fa7bf !important;
+  font-size:12px !important;
+  font-weight:600 !important;
 }
 
 .trade-panel input,
-.order-panel input,
-.trade-form input,
-.trade-panel select,
-.order-panel select,
-.trade-form select {
-  width: 100%;
-  min-height: 58px;
-  padding: 0 18px;
-  border: 1px solid rgba(148, 177, 214, 0.12);
-  border-radius: var(--trade-radius-md);
-  outline: none;
-  background: linear-gradient(180deg, #15365f 0%, #122f54 100%);
-  color: #f5f8fc;
-  font-size: 16px;
-  font-weight: 550;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.025);
-  transition: border-color var(--trade-transition),
-              box-shadow var(--trade-transition),
-              background var(--trade-transition);
+.trade-panel select{
+  width:100% !important;
+  height:55px !important;
+  box-sizing:border-box !important;
+
+  padding:0 15px !important;
+
+  border:1px solid rgba(72,151,204,.13) !important;
+  border-radius:12px !important;
+
+  outline:none !important;
+
+  background:#0b365b !important;
+  color:#edf6ff !important;
+
+  font-size:15px !important;
+  font-weight:550 !important;
+
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.025) !important;
+  transition:all var(--tp-ease) !important;
 }
 
-.trade-panel input::placeholder,
-.order-panel input::placeholder,
-.trade-form input::placeholder {
-  color: #71839b;
+.trade-panel input::placeholder{
+  color:#657f99 !important;
 }
 
 .trade-panel input:focus,
-.order-panel input:focus,
-.trade-form input:focus,
-.trade-panel select:focus,
-.order-panel select:focus {
-  border-color: rgba(255, 196, 0, 0.55);
-  background: #173963;
-  box-shadow: 0 0 0 3px rgba(255, 196, 0, 0.08);
+.trade-panel select:focus{
+  background:#0e3e65 !important;
+  border-color:rgba(37,183,255,.48) !important;
+  box-shadow:0 0 0 3px rgba(37,183,255,.07) !important;
 }
 
-/* =========================
-   INFO / SUMMARY CARDS
-   ========================= */
-.trade-summary,
-.order-summary,
-.trade-stats {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 18px;
+/* TP / SL */
+.tp-sl{
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  gap:10px !important;
+  margin-top:17px !important;
 }
 
-.trade-summary > *,
-.order-summary > *,
-.trade-stats > * {
-  min-height: 92px;
-  padding: 17px 18px;
-  border: 1px solid rgba(148, 177, 214, 0.09);
-  border-radius: var(--trade-radius-md);
-  background: linear-gradient(180deg, #15365f 0%, #122f54 100%);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.025);
+/* =========================================================
+   SUMMARY CARDS
+========================================================= */
+
+.summary{
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  gap:10px !important;
+  margin-top:18px !important;
 }
 
-.trade-summary small,
-.order-summary small,
-.trade-stats small {
-  display: block;
-  margin-bottom: 8px;
-  color: #91a5bd;
+.summary > div{
+  min-height:72px !important;
+  box-sizing:border-box !important;
+
+  padding:13px 13px 11px !important;
+
+  background:linear-gradient(180deg,#10385f 0%,#0d3154 100%) !important;
+  border:1px solid rgba(72,151,204,.10) !important;
+  border-radius:12px !important;
+
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.02) !important;
 }
 
-.trade-summary strong,
-.order-summary strong,
-.trade-stats strong {
-  color: #f4f7fb;
-  font-size: 17px;
-  font-weight: 700;
+.summary span{
+  display:block !important;
+  margin-bottom:7px !important;
+
+  color:#8fa7bf !important;
+  font-size:11px !important;
 }
 
-/* =========================
-   LONG / SHORT ACTION BUTTONS
-   ========================= */
-.trade-actions,
-.order-actions,
-.trade-buttons {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin-top: 20px;
+.summary strong{
+  color:#eef6fd !important;
+  font-size:14px !important;
+  font-weight:700 !important;
 }
 
-.trade-actions button,
-.order-actions button,
-.trade-buttons button {
-  min-height: 62px;
-  border: 0;
-  border-radius: 16px;
-  color: #fff;
-  font-size: 17px;
-  font-weight: 750;
-  letter-spacing: 0.1px;
-  transition: transform var(--trade-transition),
-              box-shadow var(--trade-transition),
-              filter var(--trade-transition);
+/* =========================================================
+   LONG / SHORT — STRONG TRADING TERMINAL STYLE
+========================================================= */
+
+.trade-buttons{
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  gap:11px !important;
+  margin-top:18px !important;
 }
 
-.trade-actions button:hover,
-.order-actions button:hover,
-.trade-buttons button:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.05);
+.trade-buttons button{
+  height:56px !important;
+
+  border:0 !important;
+  border-radius:13px !important;
+
+  color:#fff !important;
+  font-size:15px !important;
+  font-weight:750 !important;
+
+  transition:transform var(--tp-ease),filter var(--tp-ease),box-shadow var(--tp-ease) !important;
 }
 
-.trade-actions button:active,
-.order-actions button:active,
-.trade-buttons button:active {
-  transform: translateY(0);
+.trade-buttons button:hover{
+  transform:translateY(-1px) !important;
+  filter:brightness(1.06) !important;
 }
 
-.trade-actions .long,
-.order-actions .long,
-.trade-buttons .long,
-button.long,
-.long-button {
-  background: linear-gradient(180deg, #0de092 0%, #00c979 100%);
-  box-shadow: 0 10px 25px rgba(0, 208, 132, 0.18);
+.trade-buttons .long-btn{
+  background:linear-gradient(180deg,#0be296 0%,#00c878 100%) !important;
+  box-shadow:0 8px 20px rgba(0,210,130,.16) !important;
 }
 
-.trade-actions .short,
-.order-actions .short,
-.trade-buttons .short,
-button.short,
-.short-button {
-  background: linear-gradient(180deg, #ff4b63 0%, #f72e4d 100%);
-  box-shadow: 0 10px 25px rgba(255, 59, 87, 0.18);
+.trade-buttons .short-btn{
+  background:linear-gradient(180deg,#ff4c67 0%,#f52f4d 100%) !important;
+  box-shadow:0 8px 20px rgba(255,61,91,.16) !important;
 }
 
-/* =========================
-   GENERAL BUTTON POLISH
-   ========================= */
-button {
-  -webkit-tap-highlight-color: transparent;
-  cursor: pointer;
+/* =========================================================
+   MODAL
+========================================================= */
+
+.trade-modal{
+  background:rgba(1,10,20,.76) !important;
+  backdrop-filter:blur(7px);
 }
 
-button:focus-visible {
-  outline: 2px solid rgba(255, 196, 0, 0.65);
-  outline-offset: 2px;
+.trade-modal-box{
+  background:linear-gradient(180deg,#092d4c 0%,#061f37 100%) !important;
+  border:1px solid rgba(72,151,204,.18) !important;
+  border-radius:20px !important;
+  box-shadow:0 25px 70px rgba(0,0,0,.45) !important;
 }
 
-/* =========================
+.modal-close{
+  color:#9fb3c8 !important;
+  background:transparent !important;
+}
+
+.confirm-trade-btn{
+  background:linear-gradient(180deg,#25b7ff 0%,#158ed8 100%) !important;
+  color:#031525 !important;
+  border:0 !important;
+  border-radius:12px !important;
+  box-shadow:0 8px 20px rgba(37,183,255,.15) !important;
+}
+
+/* =========================================================
+   OPEN TRADE CARD
+========================================================= */
+
+.open-trade-card{
+  width:calc(100% - 30px) !important;
+  box-sizing:border-box !important;
+
+  margin:0 15px 18px !important;
+  padding:18px !important;
+
+  background:linear-gradient(180deg,#082e4e 0%,#06243e 100%) !important;
+  border:1px solid rgba(72,151,204,.14) !important;
+  border-radius:18px !important;
+
+  box-shadow:0 12px 32px rgba(0,0,0,.20) !important;
+}
+
+.open-trade-header{
+  border-bottom:1px solid rgba(255,255,255,.06) !important;
+  padding-bottom:12px !important;
+}
+
+.open-trade-info{
+  gap:9px !important;
+}
+
+.open-trade-info > div{
+  background:#0e3659 !important;
+  border:1px solid rgba(72,151,204,.08) !important;
+  border-radius:11px !important;
+  padding:12px !important;
+}
+
+.close-trade-btn{
+  background:#153b5f !important;
+  color:#dce8f4 !important;
+  border:1px solid rgba(37,183,255,.18) !important;
+  border-radius:11px !important;
+}
+
+/* =========================================================
+   BOTTOM NAV — DARK, CLEAN, NOT YELLOW
+========================================================= */
+
+.bottom-nav{
+  background:rgba(4,20,38,.97) !important;
+  border-top:1px solid rgba(100,153,194,.12) !important;
+  box-shadow:0 -10px 30px rgba(0,0,0,.16) !important;
+}
+
+.bottom-nav a{
+  color:#91a6bc !important;
+}
+
+.bottom-nav a:hover{
+  color:#cfe3f5 !important;
+}
+
+.bottom-nav .trade-btn{
+  background:linear-gradient(180deg,#25b7ff 0%,#158ed8 100%) !important;
+  color:#031525 !important;
+  box-shadow:0 7px 20px rgba(37,183,255,.16) !important;
+}
+
+/* =========================================================
    MOBILE
-   ========================= */
-@media (max-width: 640px) {
-  .trade-panel,
-  .order-panel,
-  .trade-form,
-  .trading-form {
-    padding: 18px;
-    border-radius: 20px;
+========================================================= */
+
+@media (max-width:640px){
+
+  #tvchart{
+    min-height:390px !important;
+    height:390px !important;
   }
 
-  .indicator-tabs,
-  .chart-indicators,
-  .indicator-buttons {
-    gap: 8px;
-    overflow-x: auto;
-    scrollbar-width: none;
+  .indicator-bar{
+    padding-left:15px !important;
+    padding-right:15px !important;
   }
 
-  .indicator-tabs::-webkit-scrollbar,
-  .chart-indicators::-webkit-scrollbar,
-  .indicator-buttons::-webkit-scrollbar {
-    display: none;
+  .indicator-bar button{
+    height:40px !important;
+    min-width:58px !important;
   }
 
-  .indicator-tabs button,
-  .chart-indicators button,
-  .indicator-buttons button {
-    min-width: max-content;
-    min-height: 46px;
-    padding: 0 20px;
+  .timeframe{
+    padding-left:15px !important;
+    padding-right:15px !important;
   }
 
-  .timeframe-tabs,
-  .timeframes,
-  .chart-timeframes {
-    gap: 9px;
-  }
-
-  .timeframe-tabs button,
-  .timeframes button,
-  .chart-timeframes button {
-    min-height: 52px;
-    font-size: 14px;
-  }
-
-  .leverage-grid,
-  .leverage-buttons {
-    gap: 9px;
-  }
-
-  .leverage-grid button,
-  .leverage-buttons button {
-    min-height: 52px;
-  }
-
-  .trade-actions button,
-  .order-actions button,
-  .trade-buttons button {
-    min-height: 58px;
+  .trade-panel{
+    width:calc(100% - 30px) !important;
+    margin-left:15px !important;
+    margin-right:15px !important;
   }
 }
 
-@media (max-width: 380px) {
-  .trade-panel,
-  .order-panel,
-  .trade-form,
-  .trading-form {
-    padding: 15px;
+@media (max-width:380px){
+
+  #tvchart{
+    min-height:350px !important;
+    height:350px !important;
   }
 
-  .timeframe-tabs,
-  .timeframes,
-  .chart-timeframes {
-    gap: 7px;
+  .trade-panel{
+    padding:17px 14px !important;
   }
 
-  .leverage-grid,
-  .leverage-buttons {
-    gap: 7px;
+  .leverage-grid{
+    gap:7px !important;
   }
 
-  .leverage-grid button,
-  .leverage-buttons button {
-    font-size: 13px;
+  .leverage-grid button{
+    height:48px !important;
+    font-size:12px !important;
+  }
+
+  .timeframe{
+    gap:6px !important;
+    padding-left:12px !important;
+    padding-right:12px !important;
+  }
+
+  .timeframe button{
+    font-size:13px !important;
   }
 }
-
-/* =========================
-   OPTIONAL: REMOVE DEFAULT
-   CARD-LIKE "FLOATING" LOOK
-   ========================= */
-.trade-page .chart-section,
-.trade-page .chart-wrapper,
-.trade-page .chart-container {
-  margin-bottom: 0;
-}
-
-.trade-page .chart-section + .timeframe-tabs,
-.trade-page .chart-wrapper + .timeframe-tabs,
-.trade-page .chart-container + .timeframe-tabs {
-  margin-top: 0;
-}
-
-/*
- * CONNECTION NOTE:
- * Later, connect these selector groups to the exact class/id names
- * used by the existing Trade page. This file contains design only.
- */
