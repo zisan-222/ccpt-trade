@@ -911,29 +911,28 @@ select:focus-visible {
         transition-duration: 0.01ms !important;
     }
 }
+
 /* =========================================================
-   CPTMARKETS — PROFESSIONAL FULL WIDTH CHART
+   CPTMARKETS — FINAL FULL WIDTH CHART FIX
    ========================================================= */
 
-/* Chart-এর বাইরের পুরোনো border/card remove */
-#tvchart {
+/* Chart-এর parent/container */
+#tvchart,
+.chart-container,
+.chart-box,
+.tradingview-widget-container {
     width: 100vw !important;
-    max-width: none !important;
+    max-width: 100vw !important;
 
-    /* দুই পাশের ফাঁকা জায়গা সম্পূর্ণ remove */
-    margin-left: calc(50% - 50vw) !important;
-    margin-right: 0 !important;
+    position: relative !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
 
-    /* Chart একটু খাটো */
-    height: 355px !important;
-    min-height: 355px !important;
-
+    margin: 0 !important;
     padding: 0 !important;
 
-    /* বাইরের border নেই */
     border: none !important;
     outline: none !important;
-
     border-radius: 0 !important;
 
     background: #05080d !important;
@@ -944,33 +943,67 @@ select:focus-visible {
 }
 
 
-/* TradingView-এর ভিতরের অংশ */
-#tvchart > div {
-    width: 100% !important;
-    height: 100% !important;
+/* =========================================================
+   CHART HEIGHT — SHORT & ZOOMED LOOK
+   ========================================================= */
 
-    margin: 0 !important;
-    padding: 0 !important;
-
-    border: none !important;
+#tvchart {
+    height: 300px !important;
+    min-height: 300px !important;
+    max-height: 300px !important;
 }
 
 
-/* iframe থাকলে সেটাও full width */
-#tvchart iframe {
+/* TradingView ভিতরের অংশ */
+#tvchart > div,
+#tvchart iframe,
+.tradingview-widget-container > div,
+.tradingview-widget-container iframe {
+
     width: 100% !important;
     height: 100% !important;
 
-    display: block !important;
+    min-height: 0 !important;
+    max-height: none !important;
 
-    border: none !important;
     margin: 0 !important;
     padding: 0 !important;
+
+    border: none !important;
+    border-radius: 0 !important;
+
+    display: block !important;
 }
 
 
 /* =========================================================
-   MOBILE — আরও ZOOMED / COMPACT
+   REMOVE PARENT SIDE SPACING
+   ========================================================= */
+
+#tvchart::before,
+#tvchart::after {
+    display: none !important;
+}
+
+
+/* যে section-এর ভিতরে chart আছে */
+.chart-section,
+.chart-wrapper,
+.chart-area {
+
+    width: 100% !important;
+    max-width: 100% !important;
+
+    margin: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+
+    border: none !important;
+}
+
+
+/* =========================================================
+   MOBILE
    ========================================================= */
 
 @media (max-width: 600px) {
@@ -978,27 +1011,23 @@ select:focus-visible {
     #tvchart {
 
         width: 100vw !important;
+        max-width: 100vw !important;
 
-        margin-left: calc(50% - 50vw) !important;
-        margin-right: 0 !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
 
-        /* আগের থেকে আরও খাটো */
-        height: 345px !important;
-        min-height: 345px !important;
-
+        margin: 0 !important;
         padding: 0 !important;
 
+        height: 300px !important;
+        min-height: 300px !important;
+        max-height: 300px !important;
+
         border: none !important;
-        outline: none !important;
         border-radius: 0 !important;
 
-        background: #05080d !important;
-
         box-shadow: none !important;
-
-        overflow: hidden !important;
     }
-
 
     #tvchart > div,
     #tvchart iframe {
@@ -1010,38 +1039,6 @@ select:focus-visible {
         padding: 0 !important;
 
         border: none !important;
+        border-radius: 0 !important;
     }
-}
-
-
-/* =========================================================
-   REMOVE EXTRA SPACE AROUND CHART
-   ========================================================= */
-
-.chart-container,
-.chart-box,
-.tradingview-widget-container {
-
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-}
-
-
-/* Chart section-এর অতিরিক্ত padding থাকলে remove */
-.chart-section {
-
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-}
-
-
-/* =========================================================
-   GOLD PROFESSIONAL ACCENT
-   ========================================================= */
-
-#tvchart::before {
-    display: none !important;
 }
