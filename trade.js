@@ -644,9 +644,8 @@ if (amountInput) {
 
 }
 
-
 /* ==========================================
-   TRADINGVIEW — FULL WIDTH / FULL MARKET
+   TRADINGVIEW — FULL WIDTH MARKET CHART
 ========================================== */
 
 if (
@@ -670,7 +669,7 @@ if (
 
         locale: "en",
 
-        toolbar_bg: "#020507",
+        toolbar_bg: "#05080d",
 
         enable_publishing: false,
 
@@ -678,27 +677,43 @@ if (
 
         hide_legend: true,
 
-        hide_side_toolbar: true,
-
         save_image: false,
 
-        allow_symbol_change: false,
+        container_id: "tvchart",
 
-        withdateranges: false,
+        /* ==============================
+           CHART WIDTH / CANDLE CONTROL
+        ============================== */
 
-        details: false,
+        time_scale: {
+            right_bar_stays_on_scroll: true,
+            bar_spacing: 6,
+            min_bar_spacing: 1
+        },
 
-        hotlist: false,
+        /* ==============================
+           KEEP CURRENT PRICE NEAR RIGHT
+        ============================== */
 
-        calendar: false,
+        right_bar_stays_on_scroll: true,
 
-        studies: [],
+        /* ==============================
+           REMOVE EXTRA TOOLBAR SPACE
+        ============================== */
 
-        container_id: "tvchart"
+        disabled_features: [
+            "header_widget",
+            "left_toolbar"
+        ],
+
+        enabled_features: [
+            "hide_left_toolbar_by_default"
+        ]
 
     });
 
 }
+
 
 /* ==========================================
    OPEN LONG
