@@ -44,12 +44,17 @@
 }
 
 html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
     background: var(--trade-bg);
 }
 
 body {
     margin: 0;
+    padding: 0;
     min-height: 100vh;
+    width: 100%;
 
     color: var(--text);
 
@@ -91,6 +96,11 @@ body {
 .trade-container,
 .trade-page,
 .container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+
     background: transparent;
 }
 
@@ -314,17 +324,138 @@ header button:hover,
 
 
 /* =========================================================
-   CHART
+   CHART BASE
    ========================================================= */
 
 #tvchart {
     background: #020507 !important;
 
-    border-top:
-        1px solid rgba(255, 196, 0, 0.07);
+    border: none !important;
+    outline: none !important;
 
-    border-bottom:
-        1px solid rgba(255, 196, 0, 0.07);
+    box-shadow: none !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    overflow: hidden !important;
+}
+
+
+/* =========================================================
+   CHART PARENT / WRAPPER
+   ========================================================= */
+
+.chart-section,
+.chart-wrapper,
+.chart-area,
+.chart-container,
+.chart-box,
+.tradingview-widget-container {
+
+    width: 100% !important;
+    max-width: 100% !important;
+
+    margin: 0 !important;
+
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+
+    border-left: none !important;
+    border-right: none !important;
+
+    outline: none !important;
+
+    background: transparent !important;
+
+    box-shadow: none !important;
+}
+
+
+/* =========================================================
+   FULL SCREEN CHART
+   ========================================================= */
+
+#tvchart {
+
+    width: 100vw !important;
+    max-width: 100vw !important;
+
+    position: relative !important;
+
+    left: auto !important;
+    right: auto !important;
+
+    margin-left: calc(50% - 50vw) !important;
+    margin-right: calc(50% - 50vw) !important;
+
+    padding: 0 !important;
+
+    border: none !important;
+    border-radius: 0 !important;
+
+    background: #020507 !important;
+
+    overflow: hidden !important;
+
+    box-shadow: none !important;
+}
+
+
+/* =========================================================
+   CHART HEIGHT
+   ========================================================= */
+
+#tvchart {
+
+    height: 420px !important;
+
+    min-height: 420px !important;
+
+    max-height: 420px !important;
+}
+
+
+/* =========================================================
+   TRADINGVIEW INNER CONTAINER
+   ========================================================= */
+
+#tvchart > div,
+#tvchart iframe,
+.tradingview-widget-container > div,
+.tradingview-widget-container iframe {
+
+    display: block !important;
+
+    width: 100% !important;
+    max-width: 100% !important;
+
+    height: 100% !important;
+
+    min-height: 100% !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    border: none !important;
+    outline: none !important;
+
+    border-radius: 0 !important;
+
+    background: #020507 !important;
+}
+
+
+/* =========================================================
+   REMOVE CHART DECORATION
+   ========================================================= */
+
+#tvchart::before,
+#tvchart::after {
+
+    display: none !important;
+
+    content: none !important;
 }
 
 
@@ -866,16 +997,99 @@ nav.bottom-nav .active i {
             );
     }
 
+
     .indicator-bar button,
     .timeframe button,
     .leverage-grid button {
+
         min-height: 40px;
+
     }
+
 
     .trade-panel,
     .order-panel,
     .trading-panel {
+
         border-radius: 18px !important;
+
+    }
+
+
+    /* ==========================================
+       MOBILE — FULL WIDTH TRADINGVIEW
+       ========================================== */
+
+    #tvchart {
+
+        width: 100vw !important;
+        max-width: 100vw !important;
+
+        position: relative !important;
+
+        left: auto !important;
+        right: auto !important;
+
+        margin-left: calc(50% - 50vw) !important;
+        margin-right: calc(50% - 50vw) !important;
+
+        padding: 0 !important;
+
+        height: 420px !important;
+        min-height: 420px !important;
+        max-height: 420px !important;
+
+        border: none !important;
+        outline: none !important;
+
+        border-radius: 0 !important;
+
+        background: #020507 !important;
+
+        overflow: hidden !important;
+
+        box-shadow: none !important;
+    }
+
+
+    #tvchart > div,
+    #tvchart iframe {
+
+        width: 100% !important;
+        max-width: 100% !important;
+
+        height: 100% !important;
+        min-height: 100% !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        border: none !important;
+        outline: none !important;
+
+        border-radius: 0 !important;
+
+        display: block !important;
+    }
+
+
+    .chart-section,
+    .chart-wrapper,
+    .chart-area,
+    .chart-container,
+    .chart-box,
+    .tradingview-widget-container {
+
+        width: 100% !important;
+        max-width: 100% !important;
+
+        margin: 0 !important;
+
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+
+        border-left: none !important;
+        border-right: none !important;
     }
 
 }
@@ -907,202 +1121,36 @@ select:focus-visible {
     *::after {
 
         animation-duration: 0.01ms !important;
+
         animation-iteration-count: 1 !important;
+
         transition-duration: 0.01ms !important;
     }
 }
 
+
 /* =========================================================
-   CPTMARKETS — TRUE FULL SCREEN CHART
-   LEFT + RIGHT GAP = ZERO
+   CPTMARKETS — FINAL CHART EDGE RESET
    ========================================================= */
 
-/* Chart-এর সব possible parent */
-.chart-section,
-.chart-wrapper,
-.chart-area,
-.chart-container,
-.tradingview-widget-container {
+#tvchart,
+#tvchart * {
 
-    width: 100vw !important;
-    max-width: 100vw !important;
-
-    margin-left: calc(50% - 50vw) !important;
-    margin-right: 0 !important;
-
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-
-    border: none !important;
-    outline: none !important;
-    border-radius: 0 !important;
-
-    background: #020507 !important;
-
-    box-shadow: none !important;
-
-    overflow: hidden !important;
+    box-sizing: border-box !important;
 }
 
 
-/* =========================================================
-   MAIN TRADINGVIEW CHART
-   ========================================================= */
+/* Remove possible spacing from chart ancestors */
 
 #tvchart {
-
-    width: 100vw !important;
-    max-width: 100vw !important;
-
-    margin-left: calc(50% - 50vw) !important;
-    margin-right: 0 !important;
-
-    padding: 0 !important;
-
-    position: relative !important;
-    left: 0 !important;
-    right: auto !important;
-
-    transform: none !important;
-
-    height: 500px !important;
-    min-height: 500px !important;
-    max-height: 500px !important;
-
-    border: none !important;
-    outline: none !important;
-    border-radius: 0 !important;
-
-    background: #020507 !important;
-
-    box-shadow: none !important;
-
-    overflow: hidden !important;
+    float: none !important;
+    clear: both !important;
 }
 
 
-/* =========================================================
-   TRADINGVIEW INTERNAL FRAME
-   ========================================================= */
+/* Prevent chart parent from creating side gaps */
 
-#tvchart > div,
-#tvchart iframe,
-.tradingview-widget-container > div,
-.tradingview-widget-container iframe {
-
-    width: 100vw !important;
-    max-width: 100vw !important;
-
-    height: 500px !important;
-    min-height: 500px !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    display: block !important;
-
-    border: none !important;
-    outline: none !important;
-    border-radius: 0 !important;
-
-    box-shadow: none !important;
-
-    background: #020507 !important;
-}
-
-
-/* =========================================================
-   REMOVE EXTRA SPACE / DECORATION
-   ========================================================= */
-
-#tvchart::before,
-#tvchart::after,
-.chart-section::before,
-.chart-section::after,
-.chart-wrapper::before,
-.chart-wrapper::after,
-.chart-area::before,
-.chart-area::after {
-
-    display: none !important;
-    content: none !important;
-}
-
-
-/* =========================================================
-   MOBILE — EDGE TO EDGE
-   ========================================================= */
-
-@media (max-width: 600px) {
-
-    .chart-section,
-    .chart-wrapper,
-    .chart-area,
-    .chart-container,
-    .tradingview-widget-container {
-
-        width: 100vw !important;
-        max-width: 100vw !important;
-
-        margin-left: calc(50% - 50vw) !important;
-        margin-right: 0 !important;
-
-        padding: 0 !important;
-
-        border: none !important;
-        border-radius: 0 !important;
-
-        overflow: hidden !important;
-    }
-
-
-    #tvchart {
-
-        width: 100vw !important;
-        max-width: 100vw !important;
-
-        height: 500px !important;
-        min-height: 500px !important;
-        max-height: 500px !important;
-
-        margin-left: calc(50% - 50vw) !important;
-        margin-right: 0 !important;
-
-        padding: 0 !important;
-
-        left: 0 !important;
-        right: auto !important;
-
-        transform: none !important;
-
-        border: none !important;
-        outline: none !important;
-        border-radius: 0 !important;
-
-        box-shadow: none !important;
-
-        overflow: hidden !important;
-    }
-
-
-    #tvchart > div,
-    #tvchart iframe,
-    .tradingview-widget-container > div,
-    .tradingview-widget-container iframe {
-
-        width: 100vw !important;
-        max-width: 100vw !important;
-
-        height: 500px !important;
-        min-height: 500px !important;
-
-        margin: 0 !important;
-        padding: 0 !important;
-
-        border: none !important;
-        outline: none !important;
-        border-radius: 0 !important;
-
-        display: block !important;
-    }
+#tvchart + *,
+#tvchart ~ * {
+    box-sizing: border-box;
 }
