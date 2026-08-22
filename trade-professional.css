@@ -1,626 +1,913 @@
-/*
-===========================================================
- CPTMARKETS — PROFESSIONAL TRADE UI
- Design only. No JS / trading logic / calculations.
- Load AFTER trade.css.
-===========================================================
-*/
+/* =========================================================
+   CPT MARKETS — TRADE PROFESSIONAL THEME
+   File: trade-professional.css
 
-:root{
-  --tp-page:#061b35;
-  --tp-page-2:#04152a;
-  --tp-panel:#062846;
-  --tp-panel-2:#0a3154;
-  --tp-control:#10385f;
-  --tp-control-hover:#15466f;
-  --tp-border:rgba(148,184,220,.13);
-  --tp-border-strong:rgba(71,170,225,.28);
+   UI ONLY
+   Does not change trade.js functionality.
+   ========================================================= */
 
-  --tp-text:#f4f8fc;
-  --tp-muted:#8ea4bd;
-  --tp-accent:#25b7ff;
-  --tp-accent-2:#168ddd;
-  --tp-accent-soft:rgba(37,183,255,.12);
-
-  --tp-long:#08d486;
-  --tp-short:#ff3d5b;
-
-  --tp-radius:18px;
-  --tp-radius-sm:13px;
-  --tp-ease:180ms ease;
-}
 
 /* =========================================================
-   PAGE FOUNDATION
-========================================================= */
+   COLOR SYSTEM
+   ========================================================= */
 
-html,
-body{
-  background:linear-gradient(180deg,var(--tp-page) 0%,var(--tp-page-2) 100%) !important;
-  color:var(--tp-text);
+:root {
+    --trade-bg: #020912;
+    --trade-bg-2: #041525;
+    --trade-panel: #061b2e;
+    --trade-panel-2: #08243b;
+
+    --trade-border: rgba(255, 196, 0, 0.16);
+    --trade-border-soft: rgba(255, 255, 255, 0.07);
+
+    --gold: #ffc400;
+    --gold-light: #ffe27a;
+    --gold-dark: #d99f00;
+
+    --text: #f5f7fa;
+    --muted: #8da2b8;
+
+    --green: #00dc88;
+    --red: #ff3158;
+
+    --radius: 16px;
 }
 
-body{
-  margin:0;
-  overflow-x:hidden;
-}
-
-.trade-page{
-  min-height:100vh;
-  background:
-    radial-gradient(circle at 50% -15%,rgba(22,113,177,.18),transparent 36%),
-    linear-gradient(180deg,var(--tp-page) 0%,var(--tp-page-2) 100%) !important;
-}
 
 /* =========================================================
-   HEADER / PRICE AREA
-========================================================= */
+   GLOBAL
+   ========================================================= */
 
-.trade-header{
-  background:rgba(4,21,42,.92) !important;
-  border-bottom:1px solid rgba(255,255,255,.045);
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.price-box{
-  background:transparent !important;
-  padding-top:4px !important;
-  padding-bottom:14px !important;
+html {
+    background: var(--trade-bg);
 }
 
-.price-box h2{
-  color:#27c4ff !important;
-  text-shadow:0 0 22px rgba(39,196,255,.10);
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    color: var(--text);
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(255, 196, 0, 0.055),
+            transparent 28%
+        ),
+
+        radial-gradient(
+            circle at 0% 70%,
+            rgba(0, 100, 180, 0.08),
+            transparent 35%
+        ),
+
+        linear-gradient(
+            145deg,
+            #020912 0%,
+            #031321 50%,
+            #01070e 100%
+        );
+
+    font-family:
+        Inter,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+    overflow-x: hidden;
 }
 
-.price-box .change{
-  border-radius:11px !important;
-  box-shadow:none !important;
-}
 
 /* =========================================================
-   CHART AREA
-   IMPORTANT:
-   The chart, indicator row and timeframe are visually joined.
-   No floating "image/banner/card" appearance.
-========================================================= */
+   MAIN TRADE CONTAINER
+   ========================================================= */
 
-/* Indicator row becomes part of the chart module */
-.indicator-bar{
-  display:flex !important;
-  align-items:center !important;
-  gap:9px !important;
-  width:100% !important;
-  box-sizing:border-box !important;
-  padding:10px 15px 12px !important;
-  margin:0 !important;
-  background:#071b32 !important;
-  border:0 !important;
-  border-radius:0 !important;
-  overflow-x:auto !important;
-  scrollbar-width:none;
+.trade-container,
+.trade-page,
+.container {
+    background: transparent;
 }
 
-.indicator-bar::-webkit-scrollbar{
-  display:none;
-}
-
-.indicator-bar button{
-  flex:0 0 auto !important;
-  min-width:58px !important;
-  height:40px !important;
-  padding:0 17px !important;
-
-  border:1px solid rgba(117,166,207,.10) !important;
-  border-radius:999px !important;
-
-  background:#12345a !important;
-  color:#c8d7e8 !important;
-
-  font-size:14px !important;
-  font-weight:600 !important;
-
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.025) !important;
-  transition:all var(--tp-ease) !important;
-}
-
-.indicator-bar button:hover{
-  background:#174267 !important;
-  border-color:rgba(37,183,255,.25) !important;
-}
-
-.indicator-bar button.active{
-  background:linear-gradient(180deg,#26bfff 0%,#168fda 100%) !important;
-  color:#031525 !important;
-  border-color:transparent !important;
-  box-shadow:0 5px 16px rgba(37,183,255,.16) !important;
-}
-
-/*
-  Remove the "separate screenshot/banner" feeling from TradingView.
-  The chart is full-width inside the trade page and sits directly
-  between the indicator and timeframe rows.
-*/
-.chart-card{
-  width:100% !important;
-  max-width:none !important;
-  box-sizing:border-box !important;
-
-  margin:0 !important;
-  padding:0 !important;
-
-  background:#080e16 !important;
-  border:0 !important;
-  border-top:1px solid rgba(255,255,255,.035) !important;
-  border-bottom:1px solid rgba(255,255,255,.035) !important;
-
-  border-radius:0 !important;
-  box-shadow:none !important;
-
-  overflow:hidden !important;
-}
-
-/* TradingView iframe/container must occupy the whole chart band */
-#tvchart{
-  width:100% !important;
-  min-height:390px !important;
-  height:390px !important;
-  margin:0 !important;
-  padding:0 !important;
-  border:0 !important;
-  border-radius:0 !important;
-  background:#080e16 !important;
-}
-
-/* Some TradingView generated elements inherit these dimensions */
-#tvchart iframe{
-  display:block !important;
-  width:100% !important;
-  max-width:none !important;
-  border:0 !important;
-}
 
 /* =========================================================
-   TIMEFRAME ROW — SAME CHART MODULE
-========================================================= */
+   HEADER
+   ========================================================= */
 
-.timeframe{
-  display:grid !important;
-  grid-template-columns:repeat(6,minmax(0,1fr)) !important;
-  gap:8px !important;
+header,
+.trade-header,
+.top-header {
+    background:
+        linear-gradient(
+            180deg,
+            #071a2d 0%,
+            #041321 100%
+        ) !important;
 
-  width:100% !important;
-  box-sizing:border-box !important;
+    border-bottom:
+        1px solid rgba(255, 196, 0, 0.08);
 
-  margin:0 !important;
-  padding:12px 15px 15px !important;
-
-  background:#071b32 !important;
-  border:0 !important;
-  border-radius:0 !important;
-
-  box-shadow:none !important;
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.28);
 }
 
-.timeframe button{
-  min-width:0 !important;
-  height:42px !important;
 
-  border:1px solid rgba(117,166,207,.09) !important;
-  border-radius:12px !important;
+/* Header text */
 
-  background:#12345a !important;
-  color:#c8d7e8 !important;
-
-  font-size:14px !important;
-  font-weight:650 !important;
-
-  transition:all var(--tp-ease) !important;
+header h1,
+.trade-header h1,
+.pair-name {
+    color: #ffffff !important;
+    font-weight: 750;
 }
 
-.timeframe button:hover{
-  background:#174267 !important;
-  border-color:rgba(37,183,255,.24) !important;
+
+/* Gold secondary text */
+
+.pair-subtitle,
+.pair-box small,
+header small {
+    color: var(--muted) !important;
 }
 
-.timeframe button.active{
-  background:linear-gradient(180deg,#26bfff 0%,#168fda 100%) !important;
-  color:#031525 !important;
-  border-color:transparent !important;
-  box-shadow:0 5px 16px rgba(37,183,255,.14) !important;
-}
 
 /* =========================================================
-   PROFESSIONAL ORDER PANEL
-========================================================= */
+   HEADER ICON BUTTONS
+   ========================================================= */
 
-.trade-panel{
-  width:calc(100% - 30px) !important;
-  box-sizing:border-box !important;
+header button,
+.header button,
+.header-icon,
+.icon-btn,
+.trade-header button {
 
-  margin:15px !important;
-  padding:20px 17px 18px !important;
+    width: 44px;
+    height: 44px;
 
-  background:
-    linear-gradient(180deg,#062c4c 0%,#052640 100%) !important;
+    border-radius: 50% !important;
 
-  border:1px solid rgba(66,151,205,.15) !important;
-  border-radius:20px !important;
+    border:
+        1px solid rgba(255, 196, 0, 0.16) !important;
 
-  box-shadow:
-    0 12px 35px rgba(0,0,0,.22),
-    inset 0 1px 0 rgba(255,255,255,.025) !important;
+    background:
+        linear-gradient(
+            145deg,
+            #102c48,
+            #07192c
+        ) !important;
+
+    color: var(--gold) !important;
+
+    box-shadow:
+        0 7px 18px rgba(0, 0, 0, 0.30),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
-.trade-panel h3{
-  margin:0 0 17px !important;
-  color:#edf6ff !important;
-  font-size:20px !important;
-  font-weight:750 !important;
+header button:active,
+.header button:active,
+.header-icon:active,
+.icon-btn:active {
+    transform: scale(0.94);
 }
+
+header button:hover,
+.header button:hover,
+.header-icon:hover,
+.icon-btn:hover {
+    border-color:
+        rgba(255, 196, 0, 0.55) !important;
+
+    box-shadow:
+        0 0 18px rgba(255, 196, 0, 0.14);
+}
+
 
 /* =========================================================
-   LEVERAGE BUTTONS — NO YELLOW
-========================================================= */
+   PRICE
+   ========================================================= */
 
-.leverage-grid{
-  display:grid !important;
-  grid-template-columns:repeat(5,minmax(0,1fr)) !important;
-  gap:8px !important;
+#livePrice {
+    color: var(--gold) !important;
+
+    text-shadow:
+        0 0 18px rgba(255, 196, 0, 0.18);
+
+    font-weight: 800;
 }
 
-.leverage-grid button{
-  min-width:0 !important;
-  height:51px !important;
-
-  border:1px solid rgba(72,151,204,.13) !important;
-  border-radius:12px !important;
-
-  background:linear-gradient(180deg,#0f3a61 0%,#0b3153 100%) !important;
-  color:#d5e4f2 !important;
-
-  font-size:13px !important;
-  font-weight:650 !important;
-
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.025) !important;
-  transition:all var(--tp-ease) !important;
-}
-
-.leverage-grid button:hover{
-  transform:translateY(-1px) !important;
-  background:#15466f !important;
-  border-color:rgba(37,183,255,.28) !important;
-}
-
-.leverage-grid button.active{
-  background:linear-gradient(180deg,#27bfff 0%,#158ed8 100%) !important;
-  color:#031525 !important;
-  border-color:transparent !important;
-  box-shadow:0 7px 18px rgba(37,183,255,.16) !important;
-}
 
 /* =========================================================
-   AMOUNT / LOTS SWITCH — NO YELLOW
-========================================================= */
+   CHANGE BOX
+   ========================================================= */
 
-.mode-switch{
-  display:grid !important;
-  grid-template-columns:1fr 1fr !important;
-  gap:9px !important;
-  margin:20px 0 16px !important;
+#changeBox,
+.change {
+    border-radius: 11px !important;
+
+    font-weight: 750;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
 }
 
-.mode-switch button{
-  height:48px !important;
+.change.green,
+.green {
+    background:
+        linear-gradient(
+            135deg,
+            #00d878,
+            #00b96b
+        ) !important;
 
-  border:1px solid rgba(72,151,204,.13) !important;
-  border-radius:11px !important;
+    color: #001b11 !important;
 
-  background:#12375d !important;
-  color:#c9d9e9 !important;
-
-  font-size:14px !important;
-  font-weight:650 !important;
-
-  transition:all var(--tp-ease) !important;
+    box-shadow:
+        0 7px 20px rgba(0, 220, 136, 0.16);
 }
 
-.mode-switch button:hover{
-  background:#164369 !important;
+.change.red,
+.red {
+    background:
+        linear-gradient(
+            135deg,
+            #ff3158,
+            #e91645
+        ) !important;
+
+    color: #ffffff !important;
+
+    box-shadow:
+        0 7px 20px rgba(255, 49, 88, 0.15);
 }
 
-.mode-switch button.active{
-  background:linear-gradient(180deg,#25b7ff 0%,#158ed8 100%) !important;
-  color:#031525 !important;
-  border-color:transparent !important;
-  box-shadow:0 7px 18px rgba(37,183,255,.13) !important;
-}
 
 /* =========================================================
-   LABELS / INPUTS
-========================================================= */
+   INDICATOR BAR
+   ========================================================= */
 
-.trade-panel label{
-  display:block !important;
-  margin:0 0 8px !important;
+.indicator-bar {
+    background: transparent !important;
 
-  color:#8fa7bf !important;
-  font-size:12px !important;
-  font-weight:600 !important;
+    gap: 8px !important;
 }
 
-.trade-panel input,
-.trade-panel select{
-  width:100% !important;
-  height:55px !important;
-  box-sizing:border-box !important;
 
-  padding:0 15px !important;
+/* Indicator buttons */
 
-  border:1px solid rgba(72,151,204,.13) !important;
-  border-radius:12px !important;
+.indicator-bar button {
 
-  outline:none !important;
+    border:
+        1px solid rgba(255, 196, 0, 0.10) !important;
 
-  background:#0b365b !important;
-  color:#edf6ff !important;
+    border-radius: 13px !important;
 
-  font-size:15px !important;
-  font-weight:550 !important;
+    background:
+        linear-gradient(
+            145deg,
+            #0b2b47,
+            #071d32
+        ) !important;
 
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.025) !important;
-  transition:all var(--tp-ease) !important;
+    color: #aebed0 !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.035),
+        0 5px 14px rgba(0,0,0,0.16);
+
+    transition:
+        all 0.2s ease;
 }
 
-.trade-panel input::placeholder{
-  color:#657f99 !important;
+
+/* Active indicator */
+
+.indicator-bar button.active {
+
+    color: #10151b !important;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffc400,
+            #ffe06a
+        ) !important;
+
+    border-color:
+        rgba(255, 220, 90, 0.85) !important;
+
+    box-shadow:
+        0 0 20px rgba(255, 196, 0, 0.22),
+        inset 0 1px 0 rgba(255,255,255,0.5);
+
+    font-weight: 800;
 }
 
-.trade-panel input:focus,
-.trade-panel select:focus{
-  background:#0e3e65 !important;
-  border-color:rgba(37,183,255,.48) !important;
-  box-shadow:0 0 0 3px rgba(37,183,255,.07) !important;
-}
-
-/* TP / SL */
-.tp-sl{
-  display:grid !important;
-  grid-template-columns:1fr 1fr !important;
-  gap:10px !important;
-  margin-top:17px !important;
-}
 
 /* =========================================================
-   SUMMARY CARDS
-========================================================= */
+   CHART
+   ========================================================= */
 
-.summary{
-  display:grid !important;
-  grid-template-columns:1fr 1fr !important;
-  gap:10px !important;
-  margin-top:18px !important;
+#tvchart {
+    background: #020507 !important;
+
+    border-top:
+        1px solid rgba(255, 196, 0, 0.07);
+
+    border-bottom:
+        1px solid rgba(255, 196, 0, 0.07);
 }
 
-.summary > div{
-  min-height:72px !important;
-  box-sizing:border-box !important;
-
-  padding:13px 13px 11px !important;
-
-  background:linear-gradient(180deg,#10385f 0%,#0d3154 100%) !important;
-  border:1px solid rgba(72,151,204,.10) !important;
-  border-radius:12px !important;
-
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.02) !important;
-}
-
-.summary span{
-  display:block !important;
-  margin-bottom:7px !important;
-
-  color:#8fa7bf !important;
-  font-size:11px !important;
-}
-
-.summary strong{
-  color:#eef6fd !important;
-  font-size:14px !important;
-  font-weight:700 !important;
-}
 
 /* =========================================================
-   LONG / SHORT — STRONG TRADING TERMINAL STYLE
-========================================================= */
+   TIMEFRAME
+   ========================================================= */
 
-.trade-buttons{
-  display:grid !important;
-  grid-template-columns:1fr 1fr !important;
-  gap:11px !important;
-  margin-top:18px !important;
+.timeframe {
+
+    background:
+        linear-gradient(
+            180deg,
+            #041525,
+            #020b14
+        ) !important;
+
+    border-top:
+        1px solid rgba(255, 196, 0, 0.06);
+
+    border-bottom:
+        1px solid rgba(255, 196, 0, 0.06);
+
+    padding-top: 14px !important;
+    padding-bottom: 14px !important;
 }
 
-.trade-buttons button{
-  height:56px !important;
 
-  border:0 !important;
-  border-radius:13px !important;
+/* Timeframe buttons */
 
-  color:#fff !important;
-  font-size:15px !important;
-  font-weight:750 !important;
+.timeframe button {
 
-  transition:transform var(--tp-ease),filter var(--tp-ease),box-shadow var(--tp-ease) !important;
+    border:
+        1px solid rgba(255, 196, 0, 0.10) !important;
+
+    border-radius: 13px !important;
+
+    background:
+        linear-gradient(
+            145deg,
+            #0b2b47,
+            #071b2e
+        ) !important;
+
+    color: #aebed0 !important;
+
+    font-weight: 650;
+
+    transition:
+        all 0.2s ease;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.03);
 }
 
-.trade-buttons button:hover{
-  transform:translateY(-1px) !important;
-  filter:brightness(1.06) !important;
+
+/* Active timeframe */
+
+.timeframe button.active {
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffc400,
+            #ffe06a
+        ) !important;
+
+    color: #10151b !important;
+
+    border-color:
+        #ffd84c !important;
+
+    box-shadow:
+        0 0 20px rgba(255, 196, 0, 0.24),
+        inset 0 1px 0 rgba(255,255,255,0.5);
+
+    font-weight: 800;
 }
 
-.trade-buttons .long-btn{
-  background:linear-gradient(180deg,#0be296 0%,#00c878 100%) !important;
-  box-shadow:0 8px 20px rgba(0,210,130,.16) !important;
-}
-
-.trade-buttons .short-btn{
-  background:linear-gradient(180deg,#ff4c67 0%,#f52f4d 100%) !important;
-  box-shadow:0 8px 20px rgba(255,61,91,.16) !important;
-}
 
 /* =========================================================
-   MODAL
-========================================================= */
+   TRADE PANEL
+   ========================================================= */
 
-.trade-modal{
-  background:rgba(1,10,20,.76) !important;
-  backdrop-filter:blur(7px);
+.trade-panel,
+.order-panel,
+.trading-panel {
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(7, 31, 51, 0.98),
+            rgba(3, 18, 30, 0.98)
+        ) !important;
+
+    border:
+        1px solid rgba(255, 196, 0, 0.12) !important;
+
+    border-radius:
+        20px !important;
+
+    box-shadow:
+        0 18px 45px rgba(0,0,0,0.30),
+        inset 0 1px 0 rgba(255,255,255,0.035);
 }
 
-.trade-modal-box{
-  background:linear-gradient(180deg,#092d4c 0%,#061f37 100%) !important;
-  border:1px solid rgba(72,151,204,.18) !important;
-  border-radius:20px !important;
-  box-shadow:0 25px 70px rgba(0,0,0,.45) !important;
-}
-
-.modal-close{
-  color:#9fb3c8 !important;
-  background:transparent !important;
-}
-
-.confirm-trade-btn{
-  background:linear-gradient(180deg,#25b7ff 0%,#158ed8 100%) !important;
-  color:#031525 !important;
-  border:0 !important;
-  border-radius:12px !important;
-  box-shadow:0 8px 20px rgba(37,183,255,.15) !important;
-}
 
 /* =========================================================
-   OPEN TRADE CARD
-========================================================= */
+   LEVERAGE TITLE
+   ========================================================= */
 
-.open-trade-card{
-  width:calc(100% - 30px) !important;
-  box-sizing:border-box !important;
+.leverage-title,
+.trade-panel h3,
+.order-panel h3 {
 
-  margin:0 15px 18px !important;
-  padding:18px !important;
+    color: #ffffff !important;
 
-  background:linear-gradient(180deg,#082e4e 0%,#06243e 100%) !important;
-  border:1px solid rgba(72,151,204,.14) !important;
-  border-radius:18px !important;
-
-  box-shadow:0 12px 32px rgba(0,0,0,.20) !important;
+    font-weight: 750;
 }
 
-.open-trade-header{
-  border-bottom:1px solid rgba(255,255,255,.06) !important;
-  padding-bottom:12px !important;
-}
-
-.open-trade-info{
-  gap:9px !important;
-}
-
-.open-trade-info > div{
-  background:#0e3659 !important;
-  border:1px solid rgba(72,151,204,.08) !important;
-  border-radius:11px !important;
-  padding:12px !important;
-}
-
-.close-trade-btn{
-  background:#153b5f !important;
-  color:#dce8f4 !important;
-  border:1px solid rgba(37,183,255,.18) !important;
-  border-radius:11px !important;
-}
 
 /* =========================================================
-   BOTTOM NAV — DARK, CLEAN, NOT YELLOW
-========================================================= */
+   LEVERAGE BUTTON GRID
+   ========================================================= */
 
-.bottom-nav{
-  background:rgba(4,20,38,.97) !important;
-  border-top:1px solid rgba(100,153,194,.12) !important;
-  box-shadow:0 -10px 30px rgba(0,0,0,.16) !important;
+.leverage-grid {
+    gap: 8px !important;
 }
 
-.bottom-nav a{
-  color:#91a6bc !important;
+
+/* Leverage buttons */
+
+.leverage-grid button {
+
+    border:
+        1px solid rgba(255, 196, 0, 0.08) !important;
+
+    border-radius: 13px !important;
+
+    background:
+        linear-gradient(
+            145deg,
+            #0b2c49,
+            #071d32
+        ) !important;
+
+    color: #aebed0 !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.035),
+        0 5px 12px rgba(0,0,0,0.14);
+
+    transition:
+        all 0.2s ease;
 }
 
-.bottom-nav a:hover{
-  color:#cfe3f5 !important;
+
+/* Active leverage */
+
+.leverage-grid button.active {
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffc400,
+            #ffe06a
+        ) !important;
+
+    color: #10151b !important;
+
+    border-color:
+        #ffd84c !important;
+
+    font-weight: 800;
+
+    box-shadow:
+        0 0 20px rgba(255,196,0,0.23),
+        inset 0 1px 0 rgba(255,255,255,0.55);
 }
 
-.bottom-nav .trade-btn{
-  background:linear-gradient(180deg,#25b7ff 0%,#158ed8 100%) !important;
-  color:#031525 !important;
-  box-shadow:0 7px 20px rgba(37,183,255,.16) !important;
+
+/* =========================================================
+   BY AMOUNT / BY LOTS
+   ========================================================= */
+
+.trade-mode,
+.mode-switch,
+.amount-mode {
+
+    background: transparent !important;
 }
+
+
+.trade-mode button,
+.mode-switch button,
+.amount-mode button {
+
+    border:
+        1px solid rgba(255, 196, 0, 0.10) !important;
+
+    border-radius: 13px !important;
+
+    background:
+        linear-gradient(
+            145deg,
+            #0a2b47,
+            #071c30
+        ) !important;
+
+    color: #aebed0 !important;
+
+    font-weight: 700;
+}
+
+
+.trade-mode button.active,
+.mode-switch button.active,
+.amount-mode button.active {
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffc400,
+            #ffe06a
+        ) !important;
+
+    color: #10151b !important;
+
+    border-color: #ffd84c !important;
+
+    box-shadow:
+        0 0 18px rgba(255,196,0,0.20);
+}
+
+
+/* =========================================================
+   INPUT FIELDS
+   ========================================================= */
+
+input,
+select {
+
+    color: #ffffff !important;
+
+    background:
+        linear-gradient(
+            145deg,
+            #0a2e4d,
+            #07223a
+        ) !important;
+
+    border:
+        1px solid rgba(255, 196, 0, 0.10) !important;
+
+    border-radius:
+        13px !important;
+
+    outline: none !important;
+
+    box-shadow:
+        inset 0 2px 8px rgba(0,0,0,0.18);
+}
+
+
+input::placeholder {
+    color: #71879c !important;
+}
+
+
+input:focus,
+select:focus {
+
+    border-color:
+        rgba(255, 196, 0, 0.58) !important;
+
+    box-shadow:
+        0 0 0 2px rgba(255,196,0,0.08),
+        0 0 18px rgba(255,196,0,0.08),
+        inset 0 2px 8px rgba(0,0,0,0.18);
+}
+
+
+/* =========================================================
+   LABELS
+   ========================================================= */
+
+label,
+.input-label,
+.form-label {
+
+    color: #91a7bc !important;
+
+    font-weight: 550;
+}
+
+
+/* =========================================================
+   INFO BOXES
+   ========================================================= */
+
+.info-box,
+.stat-box,
+.value-box,
+.calculation-box {
+
+    background:
+        linear-gradient(
+            145deg,
+            #0a2944,
+            #071d31
+        ) !important;
+
+    border:
+        1px solid rgba(255, 196, 0, 0.08) !important;
+
+    border-radius:
+        13px !important;
+
+    color: #ffffff !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.025);
+}
+
+
+/* Gold values */
+
+.info-box strong,
+.stat-box strong,
+.value-box strong,
+.calculation-box strong {
+
+    color: var(--gold) !important;
+}
+
+
+/* =========================================================
+   LONG / SHORT BUTTONS
+   ========================================================= */
+
+.long-btn,
+button.long,
+.long,
+#longBtn {
+
+    background:
+        linear-gradient(
+            135deg,
+            #00df88,
+            #00b96d
+        ) !important;
+
+    color: #001a10 !important;
+
+    border:
+        1px solid rgba(0,255,160,0.28) !important;
+
+    border-radius:
+        14px !important;
+
+    font-weight: 800 !important;
+
+    box-shadow:
+        0 10px 24px rgba(0,220,136,0.17),
+        inset 0 1px 0 rgba(255,255,255,0.28);
+}
+
+
+.short-btn,
+button.short,
+.short,
+#shortBtn {
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff3158,
+            #e91443
+        ) !important;
+
+    color: #ffffff !important;
+
+    border:
+        1px solid rgba(255,70,100,0.30) !important;
+
+    border-radius:
+        14px !important;
+
+    font-weight: 800 !important;
+
+    box-shadow:
+        0 10px 24px rgba(255,49,88,0.17),
+        inset 0 1px 0 rgba(255,255,255,0.22);
+}
+
+
+/* =========================================================
+   BUTTON PRESS EFFECT
+   ========================================================= */
+
+button {
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+
+button:active {
+    transform: scale(0.97);
+}
+
+
+/* =========================================================
+   BOTTOM NAVIGATION
+   ========================================================= */
+
+.bottom-nav,
+.bottom-navigation,
+nav.bottom-nav {
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(4,18,30,0.96),
+            rgba(2,10,17,0.99)
+        ) !important;
+
+    border-top:
+        1px solid rgba(255, 196, 0, 0.10) !important;
+
+    box-shadow:
+        0 -10px 30px rgba(0,0,0,0.30);
+}
+
+
+/* Navigation icons */
+
+.bottom-nav i,
+.bottom-navigation i,
+nav.bottom-nav i {
+
+    color: #8095aa !important;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* Active navigation */
+
+.bottom-nav .active i,
+.bottom-navigation .active i,
+nav.bottom-nav .active i {
+
+    color: var(--gold) !important;
+
+    filter:
+        drop-shadow(
+            0 0 7px rgba(255,196,0,0.35)
+        );
+}
+
+
+/* Navigation text */
+
+.bottom-nav span,
+.bottom-nav p,
+.bottom-navigation span,
+.bottom-navigation p {
+
+    color: #7f94a8 !important;
+}
+
+
+.bottom-nav .active span,
+.bottom-nav .active p,
+.bottom-navigation .active span,
+.bottom-navigation .active p {
+
+    color: var(--gold) !important;
+}
+
+
+/* =========================================================
+   GOLD ICONS
+   ========================================================= */
+
+.trade-icon,
+.trade-panel i,
+.order-panel i,
+.form-group i {
+
+    color: var(--gold) !important;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: #020912;
+}
+
+::-webkit-scrollbar-thumb {
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffc400,
+            #9b7200
+        );
+
+    border-radius: 10px;
+}
+
 
 /* =========================================================
    MOBILE
-========================================================= */
+   ========================================================= */
 
-@media (max-width:640px){
+@media (max-width: 600px) {
 
-  #tvchart{
-    min-height:390px !important;
-    height:390px !important;
-  }
+    body {
+        background:
+            radial-gradient(
+                circle at 50% 0%,
+                rgba(255,196,0,0.045),
+                transparent 25%
+            ),
+            linear-gradient(
+                145deg,
+                #020912,
+                #031321,
+                #01070e
+            );
+    }
 
-  .indicator-bar{
-    padding-left:15px !important;
-    padding-right:15px !important;
-  }
+    .indicator-bar button,
+    .timeframe button,
+    .leverage-grid button {
+        min-height: 40px;
+    }
 
-  .indicator-bar button{
-    height:40px !important;
-    min-width:58px !important;
-  }
+    .trade-panel,
+    .order-panel,
+    .trading-panel {
+        border-radius: 18px !important;
+    }
 
-  .timeframe{
-    padding-left:15px !important;
-    padding-right:15px !important;
-  }
-
-  .trade-panel{
-    width:calc(100% - 30px) !important;
-    margin-left:15px !important;
-    margin-right:15px !important;
-  }
 }
 
-@media (max-width:380px){
 
-  #tvchart{
-    min-height:350px !important;
-    height:350px !important;
-  }
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
 
-  .trade-panel{
-    padding:17px 14px !important;
-  }
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
 
-  .leverage-grid{
-    gap:7px !important;
-  }
+    outline:
+        2px solid rgba(255,196,0,0.75) !important;
 
-  .leverage-grid button{
-    height:48px !important;
-    font-size:12px !important;
-  }
+    outline-offset: 2px;
+}
 
-  .timeframe{
-    gap:6px !important;
-    padding-left:12px !important;
-    padding-right:12px !important;
-  }
 
-  .timeframe button{
-    font-size:13px !important;
-  }
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }
