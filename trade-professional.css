@@ -1,0 +1,569 @@
+/*
+ * TRADE PROFESSIONAL UI
+ * ------------------------------------------------------------
+ * Design-only stylesheet.
+ * No JavaScript, trading logic, calculations, API, or language code.
+ *
+ * IMPORTANT:
+ * This file is intentionally written as a standalone design layer.
+ * Connect the selectors to the existing Trade page later.
+ */
+
+/* =========================
+   DESIGN TOKENS
+   ========================= */
+:root {
+  --trade-bg: #061a33;
+  --trade-bg-deep: #041427;
+  --trade-surface: #0a2342;
+  --trade-surface-2: #0e2b50;
+  --trade-surface-3: #12345d;
+  --trade-border: rgba(148, 177, 214, 0.13);
+  --trade-border-strong: rgba(148, 177, 214, 0.22);
+
+  --trade-text: #f4f7fb;
+  --trade-text-soft: #aebdd2;
+  --trade-text-muted: #71849d;
+
+  --trade-accent: #ffc400;
+  --trade-accent-hover: #ffd43b;
+  --trade-accent-text: #111827;
+
+  --trade-long: #00d084;
+  --trade-long-hover: #16df96;
+  --trade-short: #ff3b57;
+  --trade-short-hover: #ff526a;
+
+  --trade-radius-xl: 24px;
+  --trade-radius-lg: 18px;
+  --trade-radius-md: 14px;
+  --trade-radius-sm: 11px;
+
+  --trade-shadow: 0 18px 45px rgba(0, 0, 0, 0.24);
+  --trade-shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.18);
+
+  --trade-transition: 180ms ease;
+}
+
+/* =========================
+   TRADE PAGE / MAIN BACKGROUND
+   ========================= */
+.trade-page,
+.trade-container,
+.trade-screen,
+.trading-page {
+  background:
+    radial-gradient(circle at 50% -10%, rgba(30, 84, 145, 0.18), transparent 38%),
+    linear-gradient(180deg, var(--trade-bg) 0%, var(--trade-bg-deep) 100%);
+  color: var(--trade-text);
+}
+
+/*
+ * Keep the chart and its controls visually attached.
+ * The chart area should not look like a separate floating website/card.
+ */
+.trade-chart-section,
+.chart-section,
+.chart-wrapper,
+.chart-container {
+  background: #080f19;
+  border: 1px solid rgba(148, 177, 214, 0.14);
+  border-radius: var(--trade-radius-xl);
+  overflow: hidden;
+  box-shadow: var(--trade-shadow-soft);
+  margin: 0;
+}
+
+/* Remove visual gaps between chart controls and chart */
+.trade-chart-section .chart-toolbar,
+.chart-section .chart-toolbar,
+.chart-wrapper .chart-toolbar,
+.chart-container .chart-toolbar {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: #080f19;
+}
+
+/* =========================
+   INDICATOR BUTTONS
+   MA / EMA / BOLL / RSI / MACD
+   ========================= */
+.indicator-tabs,
+.chart-indicators,
+.indicator-buttons {
+  display: flex;
+  gap: 10px;
+  padding: 10px 0;
+  background: transparent;
+}
+
+.indicator-tabs button,
+.chart-indicators button,
+.indicator-buttons button {
+  min-height: 48px;
+  padding: 0 24px;
+  border: 1px solid var(--trade-border);
+  border-radius: 999px;
+  background: linear-gradient(180deg, #14345d 0%, #102b4d 100%);
+  color: #d7e1ef;
+  font-weight: 600;
+  letter-spacing: 0.1px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.035);
+  transition: transform var(--trade-transition),
+              background var(--trade-transition),
+              border-color var(--trade-transition),
+              color var(--trade-transition),
+              box-shadow var(--trade-transition);
+}
+
+.indicator-tabs button:hover,
+.chart-indicators button:hover,
+.indicator-buttons button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 196, 0, 0.32);
+  background: #193d69;
+}
+
+.indicator-tabs button.active,
+.chart-indicators button.active,
+.indicator-buttons button.active,
+.indicator-tabs button[aria-selected="true"],
+.chart-indicators button[aria-selected="true"] {
+  background: linear-gradient(180deg, #ffd21a 0%, #ffbf00 100%);
+  color: #111827;
+  border-color: transparent;
+  box-shadow: 0 8px 22px rgba(255, 196, 0, 0.16);
+}
+
+/* =========================
+   TIMEFRAME BUTTONS
+   ========================= */
+.timeframe-tabs,
+.timeframes,
+.chart-timeframes {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 12px;
+  margin: 12px 0 22px;
+}
+
+.timeframe-tabs button,
+.timeframes button,
+.chart-timeframes button {
+  min-height: 56px;
+  border: 1px solid var(--trade-border);
+  border-radius: var(--trade-radius-md);
+  background: linear-gradient(180deg, #14345d 0%, #102b4d 100%);
+  color: #dce5f2;
+  font-size: 16px;
+  font-weight: 650;
+  transition: all var(--trade-transition);
+}
+
+.timeframe-tabs button:hover,
+.timeframes button:hover,
+.chart-timeframes button:hover {
+  transform: translateY(-1px);
+  background: #193d69;
+}
+
+.timeframe-tabs button.active,
+.timeframes button.active,
+.chart-timeframes button.active,
+.timeframe-tabs button[aria-selected="true"] {
+  background: linear-gradient(180deg, #ffd21a 0%, #ffbf00 100%);
+  color: #111827;
+  border-color: transparent;
+  box-shadow: 0 8px 22px rgba(255, 196, 0, 0.14);
+}
+
+/* =========================
+   TRADING PANEL
+   ========================= */
+.trade-panel,
+.order-panel,
+.trade-form,
+.trading-form {
+  background:
+    linear-gradient(180deg, rgba(13, 40, 73, 0.98), rgba(8, 30, 55, 0.98));
+  border: 1px solid var(--trade-border);
+  border-radius: var(--trade-radius-xl);
+  padding: 24px;
+  box-shadow: var(--trade-shadow);
+}
+
+.trade-panel h1,
+.trade-panel h2,
+.trade-panel h3,
+.order-panel h1,
+.order-panel h2,
+.order-panel h3 {
+  color: var(--trade-text);
+}
+
+/* =========================
+   LEVERAGE
+   ========================= */
+.leverage-section,
+.leverage-container {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+.leverage-section h2,
+.leverage-section h3,
+.leverage-title {
+  margin: 0 0 18px;
+  color: #f6f8fc;
+  font-weight: 750;
+  letter-spacing: -0.2px;
+}
+
+.leverage-grid,
+.leverage-buttons {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.leverage-grid button,
+.leverage-buttons button {
+  min-height: 54px;
+  border: 1px solid rgba(148, 177, 214, 0.10);
+  border-radius: var(--trade-radius-md);
+  background: linear-gradient(180deg, #173963 0%, #123054 100%);
+  color: #e1e9f4;
+  font-size: 15px;
+  font-weight: 650;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.025);
+  transition: all var(--trade-transition);
+}
+
+.leverage-grid button:hover,
+.leverage-buttons button:hover {
+  transform: translateY(-1px);
+  background: #1b416f;
+  border-color: rgba(255, 196, 0, 0.22);
+}
+
+.leverage-grid button.active,
+.leverage-buttons button.active,
+.leverage-grid button[aria-pressed="true"],
+.leverage-buttons button[aria-pressed="true"] {
+  background: linear-gradient(180deg, #ffd21a 0%, #ffbd00 100%);
+  color: #111827;
+  border-color: transparent;
+  box-shadow: 0 8px 22px rgba(255, 196, 0, 0.15);
+}
+
+/* =========================
+   AMOUNT / LOTS SWITCH
+   ========================= */
+.order-mode,
+.amount-lots-tabs,
+.trade-mode-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 22px 0;
+}
+
+.order-mode button,
+.amount-lots-tabs button,
+.trade-mode-tabs button {
+  min-height: 54px;
+  border: 1px solid var(--trade-border);
+  border-radius: var(--trade-radius-md);
+  background: #15365f;
+  color: #dbe5f2;
+  font-weight: 650;
+  transition: all var(--trade-transition);
+}
+
+.order-mode button:hover,
+.amount-lots-tabs button:hover,
+.trade-mode-tabs button:hover {
+  background: #1a416e;
+}
+
+.order-mode button.active,
+.amount-lots-tabs button.active,
+.trade-mode-tabs button.active,
+.order-mode button[aria-selected="true"] {
+  background: linear-gradient(180deg, #ffd21a 0%, #ffbf00 100%);
+  color: #111827;
+  border-color: transparent;
+  box-shadow: 0 8px 22px rgba(255, 196, 0, 0.14);
+}
+
+/* =========================
+   INPUTS
+   ========================= */
+.trade-panel label,
+.order-panel label,
+.trade-form label {
+  color: var(--trade-text-soft);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.trade-panel input,
+.order-panel input,
+.trade-form input,
+.trade-panel select,
+.order-panel select,
+.trade-form select {
+  width: 100%;
+  min-height: 58px;
+  padding: 0 18px;
+  border: 1px solid rgba(148, 177, 214, 0.12);
+  border-radius: var(--trade-radius-md);
+  outline: none;
+  background: linear-gradient(180deg, #15365f 0%, #122f54 100%);
+  color: #f5f8fc;
+  font-size: 16px;
+  font-weight: 550;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.025);
+  transition: border-color var(--trade-transition),
+              box-shadow var(--trade-transition),
+              background var(--trade-transition);
+}
+
+.trade-panel input::placeholder,
+.order-panel input::placeholder,
+.trade-form input::placeholder {
+  color: #71839b;
+}
+
+.trade-panel input:focus,
+.order-panel input:focus,
+.trade-form input:focus,
+.trade-panel select:focus,
+.order-panel select:focus {
+  border-color: rgba(255, 196, 0, 0.55);
+  background: #173963;
+  box-shadow: 0 0 0 3px rgba(255, 196, 0, 0.08);
+}
+
+/* =========================
+   INFO / SUMMARY CARDS
+   ========================= */
+.trade-summary,
+.order-summary,
+.trade-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.trade-summary > *,
+.order-summary > *,
+.trade-stats > * {
+  min-height: 92px;
+  padding: 17px 18px;
+  border: 1px solid rgba(148, 177, 214, 0.09);
+  border-radius: var(--trade-radius-md);
+  background: linear-gradient(180deg, #15365f 0%, #122f54 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.025);
+}
+
+.trade-summary small,
+.order-summary small,
+.trade-stats small {
+  display: block;
+  margin-bottom: 8px;
+  color: #91a5bd;
+}
+
+.trade-summary strong,
+.order-summary strong,
+.trade-stats strong {
+  color: #f4f7fb;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+/* =========================
+   LONG / SHORT ACTION BUTTONS
+   ========================= */
+.trade-actions,
+.order-actions,
+.trade-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.trade-actions button,
+.order-actions button,
+.trade-buttons button {
+  min-height: 62px;
+  border: 0;
+  border-radius: 16px;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 750;
+  letter-spacing: 0.1px;
+  transition: transform var(--trade-transition),
+              box-shadow var(--trade-transition),
+              filter var(--trade-transition);
+}
+
+.trade-actions button:hover,
+.order-actions button:hover,
+.trade-buttons button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+.trade-actions button:active,
+.order-actions button:active,
+.trade-buttons button:active {
+  transform: translateY(0);
+}
+
+.trade-actions .long,
+.order-actions .long,
+.trade-buttons .long,
+button.long,
+.long-button {
+  background: linear-gradient(180deg, #0de092 0%, #00c979 100%);
+  box-shadow: 0 10px 25px rgba(0, 208, 132, 0.18);
+}
+
+.trade-actions .short,
+.order-actions .short,
+.trade-buttons .short,
+button.short,
+.short-button {
+  background: linear-gradient(180deg, #ff4b63 0%, #f72e4d 100%);
+  box-shadow: 0 10px 25px rgba(255, 59, 87, 0.18);
+}
+
+/* =========================
+   GENERAL BUTTON POLISH
+   ========================= */
+button {
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
+
+button:focus-visible {
+  outline: 2px solid rgba(255, 196, 0, 0.65);
+  outline-offset: 2px;
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+@media (max-width: 640px) {
+  .trade-panel,
+  .order-panel,
+  .trade-form,
+  .trading-form {
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .indicator-tabs,
+  .chart-indicators,
+  .indicator-buttons {
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .indicator-tabs::-webkit-scrollbar,
+  .chart-indicators::-webkit-scrollbar,
+  .indicator-buttons::-webkit-scrollbar {
+    display: none;
+  }
+
+  .indicator-tabs button,
+  .chart-indicators button,
+  .indicator-buttons button {
+    min-width: max-content;
+    min-height: 46px;
+    padding: 0 20px;
+  }
+
+  .timeframe-tabs,
+  .timeframes,
+  .chart-timeframes {
+    gap: 9px;
+  }
+
+  .timeframe-tabs button,
+  .timeframes button,
+  .chart-timeframes button {
+    min-height: 52px;
+    font-size: 14px;
+  }
+
+  .leverage-grid,
+  .leverage-buttons {
+    gap: 9px;
+  }
+
+  .leverage-grid button,
+  .leverage-buttons button {
+    min-height: 52px;
+  }
+
+  .trade-actions button,
+  .order-actions button,
+  .trade-buttons button {
+    min-height: 58px;
+  }
+}
+
+@media (max-width: 380px) {
+  .trade-panel,
+  .order-panel,
+  .trade-form,
+  .trading-form {
+    padding: 15px;
+  }
+
+  .timeframe-tabs,
+  .timeframes,
+  .chart-timeframes {
+    gap: 7px;
+  }
+
+  .leverage-grid,
+  .leverage-buttons {
+    gap: 7px;
+  }
+
+  .leverage-grid button,
+  .leverage-buttons button {
+    font-size: 13px;
+  }
+}
+
+/* =========================
+   OPTIONAL: REMOVE DEFAULT
+   CARD-LIKE "FLOATING" LOOK
+   ========================= */
+.trade-page .chart-section,
+.trade-page .chart-wrapper,
+.trade-page .chart-container {
+  margin-bottom: 0;
+}
+
+.trade-page .chart-section + .timeframe-tabs,
+.trade-page .chart-wrapper + .timeframe-tabs,
+.trade-page .chart-container + .timeframe-tabs {
+  margin-top: 0;
+}
+
+/*
+ * CONNECTION NOTE:
+ * Later, connect these selector groups to the exact class/id names
+ * used by the existing Trade page. This file contains design only.
+ */
