@@ -671,5 +671,30 @@ a:focus-visible,
 }
 
 /* =========================================================
+   Chrome Autofill Fix
+   Keeps Username & Password dark
+   ========================================================= */
+
+.input-box input:-webkit-autofill,
+.input-box input:-webkit-autofill:hover,
+.input-box input:-webkit-autofill:focus,
+.input-box input:-webkit-autofill:active {
+    -webkit-text-fill-color: #f7faff !important;
+
+    -webkit-box-shadow:
+        0 0 0 1000px #082f54 inset !important;
+
+    box-shadow:
+        0 0 0 1000px #082f54 inset !important;
+
+    background-color: #082f54 !important;
+
+    border: none !important;
+
+    transition:
+        background-color 9999s ease-in-out 0s !important;
+}
+
+/* =========================================================
    END OF CPTMARKETS PROFESSIONAL THEME
    ========================================================= */
