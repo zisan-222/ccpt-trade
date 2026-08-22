@@ -646,7 +646,7 @@ if (amountInput) {
 
 
 /* ==========================================
-   TRADINGVIEW
+   TRADINGVIEW — FULL WIDTH / FULL MARKET
 ========================================== */
 
 if (
@@ -656,49 +656,49 @@ if (
 
     new TradingView.widget({
 
-        autosize:
-            true,
+        autosize: true,
 
-        symbol:
-            "OANDA:XAUUSD",
+        symbol: "OANDA:XAUUSD",
 
-        interval:
-            "1",
+        interval: "1",
 
-        timezone:
-            "Etc/UTC",
+        timezone: "Etc/UTC",
 
-        theme:
-            "dark",
+        theme: "dark",
 
-        style:
-            "1",
+        style: "1",
 
-        locale:
-            "en",
+        locale: "en",
 
-        toolbar_bg:
-            "#08162f",
+        toolbar_bg: "#020507",
 
-        enable_publishing:
-            false,
+        enable_publishing: false,
 
-        hide_top_toolbar:
-            true,
+        hide_top_toolbar: true,
 
-        hide_legend:
-            true,
+        hide_legend: true,
 
-        save_image:
-            false,
+        hide_side_toolbar: true,
 
-        container_id:
-            "tvchart"
+        save_image: false,
+
+        allow_symbol_change: false,
+
+        withdateranges: false,
+
+        details: false,
+
+        hotlist: false,
+
+        calendar: false,
+
+        studies: [],
+
+        container_id: "tvchart"
 
     });
 
 }
-
 
 /* ==========================================
    OPEN LONG
