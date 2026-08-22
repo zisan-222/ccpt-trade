@@ -1,0 +1,525 @@
+/* =========================================================
+   CPTMarkets - Professional Login Theme
+   File: index-professional.css
+
+   IMPORTANT:
+   This file keeps the existing style.css design and
+   upgrades it with a darker, cleaner and more professional
+   appearance.
+   ========================================================= */
+
+
+/* =========================================================
+   1. LOAD YOUR ORIGINAL CSS
+   ========================================================= */
+
+@import url("style.css");
+
+
+/* =========================================================
+   2. DARK PROFESSIONAL BACKGROUND
+   ========================================================= */
+
+html {
+    background: #020812 !important;
+}
+
+body {
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(0, 78, 150, 0.18),
+            transparent 38%
+        ),
+        radial-gradient(
+            circle at 10% 90%,
+            rgba(255, 196, 0, 0.035),
+            transparent 28%
+        ),
+        linear-gradient(
+            145deg,
+            #061a30 0%,
+            #031326 45%,
+            #010812 100%
+        ) !important;
+
+    color: #f5f7fb !important;
+}
+
+
+/* =========================================================
+   3. BACKGROUND EFFECT
+   ========================================================= */
+
+.background {
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            rgba(0, 90, 180, 0.10),
+            transparent 40%
+        ),
+        linear-gradient(
+            180deg,
+            rgba(0, 8, 18, 0.12),
+            rgba(0, 0, 0, 0.25)
+        ) !important;
+}
+
+
+/* =========================================================
+   4. LOGIN CONTAINER
+   ========================================================= */
+
+.login-container {
+    position: relative;
+    z-index: 2;
+}
+
+
+/* =========================================================
+   5. LOGIN CARD
+   ========================================================= */
+
+.login-card {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(7, 30, 55, 0.96),
+            rgba(2, 15, 30, 0.98)
+        ) !important;
+
+    border: 1px solid rgba(120, 175, 225, 0.16) !important;
+
+    border-radius: 30px !important;
+
+    box-shadow:
+        0 30px 75px rgba(0, 0, 0, 0.50),
+        inset 0 1px 0 rgba(255, 255, 255, 0.025) !important;
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+
+/* =========================================================
+   6. LANGUAGE BUTTON
+   ========================================================= */
+
+.language {
+    border-radius: 50% !important;
+
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+
+    background: rgba(255, 255, 255, 0.96) !important;
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.28) !important;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease !important;
+
+    cursor: pointer;
+}
+
+.language:hover {
+    transform: translateY(-2px) scale(1.03);
+
+    box-shadow:
+        0 15px 32px rgba(0, 0, 0, 0.35) !important;
+}
+
+
+/* =========================================================
+   7. LOGO
+   ========================================================= */
+
+.logo-area h1 {
+    letter-spacing: -1.5px;
+}
+
+.logo-area h1 .gold {
+    color: #ffc400 !important;
+
+    text-shadow:
+        0 0 8px rgba(255, 196, 0, 0.65),
+        0 0 25px rgba(255, 196, 0, 0.22);
+}
+
+.logo-area h1 .white {
+    color: #f8fafc !important;
+}
+
+.logo-area p {
+    color: #9eafc5 !important;
+
+    letter-spacing: 0.45em;
+}
+
+
+/* =========================================================
+   8. FORM LABELS
+   ========================================================= */
+
+.form-group label {
+    color: #f1f5f9 !important;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   9. INPUT BOX
+   ========================================================= */
+
+.input-box {
+    position: relative;
+}
+
+
+/* Username / Password input */
+
+.input-box input {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(10, 48, 84, 0.96),
+            rgba(6, 35, 62, 0.98)
+        ) !important;
+
+    color: #f7faff !important;
+
+    border: 1px solid rgba(120, 174, 224, 0.18) !important;
+
+    border-radius: 18px !important;
+
+    outline: none !important;
+
+    transition:
+        border-color 0.22s ease,
+        box-shadow 0.22s ease,
+        background 0.22s ease,
+        transform 0.22s ease !important;
+}
+
+
+/* Placeholder */
+
+.input-box input::placeholder {
+    color: #8398b4 !important;
+}
+
+
+/* Input focus */
+
+.input-box input:focus {
+    border-color: rgba(255, 196, 0, 0.70) !important;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(13, 57, 98, 0.98),
+            rgba(8, 43, 77, 0.98)
+        ) !important;
+
+    box-shadow:
+        0 0 0 4px rgba(255, 196, 0, 0.07),
+        0 10px 28px rgba(0, 0, 0, 0.18) !important;
+}
+
+
+/* =========================================================
+   10. USERNAME / PASSWORD ICON
+   ========================================================= */
+
+.input-box > i:first-child {
+    color: #ffc400 !important;
+
+    transition:
+        transform 0.2s ease,
+        color 0.2s ease !important;
+}
+
+
+/* =========================================================
+   11. PASSWORD EYE ICON
+   ========================================================= */
+
+#togglePassword {
+    color: #ffc400 !important;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        color 0.2s ease !important;
+}
+
+#togglePassword:hover {
+    color: #ffdc3d !important;
+
+    transform:
+        translateY(-50%)
+        scale(1.08) !important;
+}
+
+
+/* =========================================================
+   12. MAIN SIGN IN BUTTON
+   ========================================================= */
+
+.login-btn {
+    position: relative;
+
+    overflow: hidden;
+
+    border: 0 !important;
+
+    border-radius: 18px !important;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffbd00 0%,
+            #ffd21a 48%,
+            #ffc000 100%
+        ) !important;
+
+    color: #07111d !important;
+
+    font-weight: 800 !important;
+
+    box-shadow:
+        0 13px 30px rgba(255, 190, 0, 0.23),
+        inset 0 1px 0 rgba(255, 255, 255, 0.45) !important;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.20s ease,
+        box-shadow 0.20s ease,
+        filter 0.20s ease !important;
+}
+
+
+/* Button shine */
+
+.login-btn::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 75%;
+    height: 100%;
+
+    transform: skewX(-23deg);
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.38),
+            transparent
+        );
+
+    transition: left 0.55s ease;
+}
+
+
+/* Button hover */
+
+.login-btn:hover {
+    transform: translateY(-2px);
+
+    filter: brightness(1.04);
+
+    box-shadow:
+        0 18px 38px rgba(255, 190, 0, 0.31),
+        inset 0 1px 0 rgba(255, 255, 255, 0.50) !important;
+}
+
+.login-btn:hover::before {
+    left: 135%;
+}
+
+
+/* Button click */
+
+.login-btn:active {
+    transform: scale(0.985);
+}
+
+
+/* =========================================================
+   13. BOTTOM LINKS
+   ========================================================= */
+
+.bottom-links {
+    gap: 10px !important;
+}
+
+
+/* Create Account + Forgot Password */
+
+.bottom-links a {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    min-height: 42px;
+
+    padding: 8px 13px !important;
+
+    border-radius: 13px !important;
+
+    border: 1px solid rgba(255, 255, 255, 0.055) !important;
+
+    background: rgba(255, 255, 255, 0.025) !important;
+
+    text-decoration: none !important;
+
+    font-weight: 650 !important;
+
+    transition:
+        transform 0.20s ease,
+        background 0.20s ease,
+        border-color 0.20s ease,
+        color 0.20s ease !important;
+}
+
+
+/* Create Account */
+
+.bottom-links a:first-child {
+    color: #c09aff !important;
+}
+
+
+/* Forgot Password */
+
+.bottom-links a:last-child {
+    color: #719bff !important;
+}
+
+
+/* Link hover */
+
+.bottom-links a:hover {
+    transform: translateY(-2px);
+
+    color: #ffffff !important;
+
+    background: rgba(255, 255, 255, 0.065) !important;
+
+    border-color:
+        rgba(255, 196, 0, 0.18) !important;
+}
+
+
+/* Link icons */
+
+.bottom-links a i {
+    transition:
+        transform 0.20s ease;
+}
+
+.bottom-links a:hover i {
+    transform: scale(1.10);
+}
+
+
+/* =========================================================
+   14. FOCUS ACCESSIBILITY
+   ========================================================= */
+
+input:focus-visible,
+button:focus-visible,
+a:focus-visible,
+#togglePassword:focus-visible {
+    outline:
+        2px solid rgba(255, 196, 0, 0.80) !important;
+
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   15. MOBILE VERSION
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    body {
+        background:
+            radial-gradient(
+                circle at 50% 8%,
+                rgba(0, 78, 150, 0.17),
+                transparent 38%
+            ),
+            linear-gradient(
+                145deg,
+                #061a30,
+                #031326 50%,
+                #010812
+            ) !important;
+    }
+
+
+    .login-card {
+        border-radius: 27px !important;
+    }
+
+
+    .input-box input {
+        border-radius: 17px !important;
+    }
+
+
+    .login-btn {
+        border-radius: 17px !important;
+    }
+
+
+    .bottom-links a {
+        border-radius: 12px !important;
+
+        padding:
+            7px 9px !important;
+
+        font-size: 13px;
+    }
+}
+
+
+/* =========================================================
+   16. VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    .login-card {
+        border-radius: 25px !important;
+    }
+
+
+    .bottom-links {
+        gap: 7px !important;
+    }
+
+
+    .bottom-links a {
+        width: 100%;
+    }
+}
+
+
+/* =========================================================
+   END OF CPTMARKETS PROFESSIONAL THEME
+   ========================================================= */
