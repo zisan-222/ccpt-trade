@@ -1,514 +1,521 @@
 /* =========================================================
-   CPTMARKETS - PREMIUM REGISTER PAGE
-   File: register-premium.css
-   No external library required
+   CPTMARKETS - PREMIUM TRADING REGISTER UI
+   Clean Dark TradingView-inspired design
    ========================================================= */
 
 :root {
-    --rp-bg: #020b18;
-    --rp-bg-2: #04152a;
-    --rp-card: rgba(5, 25, 48, 0.78);
-    --rp-border: rgba(87, 154, 220, 0.22);
-    --rp-border-hover: rgba(255, 193, 7, 0.55);
+    --tv-bg: #0b0e11;
+    --tv-card: #131722;
+    --tv-input: #1e222d;
+    --tv-border: #2a2e39;
+    --tv-border-hover: #3d4350;
 
-    --rp-text: #f5f7fb;
-    --rp-muted: #91a4bf;
-    --rp-input: rgba(10, 42, 76, 0.78);
+    --tv-text: #f0f3f7;
+    --tv-muted: #8b93a5;
 
-    --rp-yellow: #ffc400;
-    --rp-yellow-2: #ffda3d;
+    --tv-gold: #f5b800;
+    --tv-gold-hover: #ffc928;
 
-    --rp-shadow:
-        0 30px 80px rgba(0, 0, 0, 0.55),
-        0 0 60px rgba(0, 120, 255, 0.08);
+    --tv-blue: #2962ff;
 }
 
-/* =========================
-   PAGE BACKGROUND
-   ========================= */
+
+/* =========================================================
+   PAGE
+   ========================================================= */
 
 html,
 body {
-    min-height: 100%;
-}
-
-body {
     margin: 0;
-    color: var(--rp-text);
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
 
-    background:
-        radial-gradient(
-            circle at 15% 10%,
-            rgba(0, 110, 255, 0.18),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 85% 20%,
-            rgba(255, 193, 7, 0.08),
-            transparent 25%
-        ),
-        radial-gradient(
-            circle at 50% 100%,
-            rgba(0, 80, 180, 0.14),
-            transparent 35%
-        ),
-        linear-gradient(
-            135deg,
-            #010814 0%,
-            #03162d 50%,
-            #020b18 100%
-        );
+    background: var(--tv-bg) !important;
+    color: var(--tv-text);
 
     font-family:
-        Inter,
         -apple-system,
         BlinkMacSystemFont,
         "Segoe UI",
         Roboto,
         Arial,
         sans-serif;
+}
 
+body {
     overflow-x: hidden;
 }
 
-/* Subtle background lighting */
 
-body::before {
-    content: "";
-    position: fixed;
-    width: 420px;
-    height: 420px;
+/* Remove old decorative background */
 
-    top: -180px;
-    left: -160px;
-
-    background: rgba(0, 132, 255, 0.12);
-    filter: blur(100px);
-
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 0;
-}
-
-body::after {
-    content: "";
-    position: fixed;
-    width: 350px;
-    height: 350px;
-
-    right: -150px;
-    bottom: -130px;
-
-    background: rgba(255, 193, 7, 0.07);
-    filter: blur(100px);
-
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 0;
+.background {
+    display: none !important;
 }
 
 
-/* =========================
-   MAIN REGISTER CARD
-   ========================= */
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
 
-body > div,
-.register-container,
-.register-card,
-.auth-container,
-.auth-card {
-    position: relative;
-    z-index: 1;
-}
+.login-container {
+    width: 100% !important;
+    min-height: 100vh !important;
 
-/*
-   The following selectors help if your
-   existing register page uses a normal
-   centered container.
-*/
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 
-.register-container,
-.auth-container {
-    background: linear-gradient(
-        145deg,
-        rgba(9, 38, 70, 0.88),
-        rgba(2, 17, 34, 0.94)
-    );
+    padding: 24px 16px !important;
+    box-sizing: border-box !important;
 
-    border: 1px solid var(--rp-border);
-
-    border-radius: 28px;
-
-    box-shadow: var(--rp-shadow);
-
-    backdrop-filter: blur(22px);
-    -webkit-backdrop-filter: blur(22px);
+    background: var(--tv-bg) !important;
 }
 
 
-/* =========================
-   HEADINGS
-   ========================= */
+/* =========================================================
+   CARD
+   ========================================================= */
 
-h1,
-h2 {
-    color: #ffffff;
-    font-weight: 800;
-    letter-spacing: -1.2px;
-}
+.login-card {
+    width: 100% !important;
+    max-width: 390px !important;
 
-h1 {
-    text-shadow:
-        0 0 18px rgba(255, 193, 7, 0.18);
-}
+    box-sizing: border-box !important;
 
-/* Highlight first/important heading text */
+    padding: 32px 30px 28px !important;
 
-h1 span,
-h2 span {
-    color: var(--rp-yellow);
-}
+    background: var(--tv-card) !important;
 
+    border: 1px solid var(--tv-border) !important;
 
-/* =========================
-   LABELS
-   ========================= */
-
-label {
-    display: block;
-
-    margin-bottom: 9px;
-
-    color: #e8eef7;
-
-    font-size: 15px;
-    font-weight: 600;
-
-    letter-spacing: 0.1px;
-}
-
-
-/* =========================
-   INPUTS
-   ========================= */
-
-input[type="text"],
-input[type="password"],
-input[type="email"],
-input[type="number"],
-input[type="tel"] {
-    width: 100%;
-    box-sizing: border-box;
-
-    min-height: 58px;
-
-    padding: 0 18px;
-
-    color: #ffffff;
-
-    font-size: 16px;
-    font-weight: 500;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(15, 57, 95, 0.75),
-            rgba(7, 34, 63, 0.72)
-        );
-
-    border: 1px solid rgba(90, 150, 210, 0.24);
-
-    border-radius: 16px;
-
-    outline: none;
+    border-radius: 10px !important;
 
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.035),
-        0 8px 25px rgba(0, 0, 0, 0.12);
+        0 18px 45px rgba(0, 0, 0, 0.38) !important;
+}
+
+
+/* =========================================================
+   LOGO / TITLE
+   ========================================================= */
+
+.logo-area {
+    margin: 0 0 28px !important;
+
+    padding: 0 !important;
+
+    text-align: center !important;
+
+    border: none !important;
+    background: transparent !important;
+}
+
+
+/* Create Account */
+
+.logo-area h1 {
+    margin: 0 !important;
+    padding: 0 !important;
+
+    font-size: 42px !important;
+    line-height: 1.05 !important;
+
+    font-weight: 700 !important;
+
+    letter-spacing: -1.5px !important;
+
+    color: var(--tv-text) !important;
+
+    text-shadow: none !important;
+}
+
+
+/* Gold word */
+
+.logo-area h1 .gold {
+    color: var(--tv-gold) !important;
+
+    text-shadow: none !important;
+}
+
+
+/* White word */
+
+.logo-area h1 .white {
+    color: #f0f3f7 !important;
+}
+
+
+/* Subtitle */
+
+.logo-area p {
+    margin: 12px 0 0 !important;
+    padding: 0 !important;
+
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+
+    font-weight: 400 !important;
+
+    letter-spacing: 0.4px !important;
+
+    color: var(--tv-muted) !important;
+
+    text-align: center !important;
+}
+
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+#registerForm {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+
+/* =========================================================
+   FORM GROUP
+   ========================================================= */
+
+.form-group {
+    width: 100% !important;
+
+    margin: 0 0 16px !important;
+    padding: 0 !important;
+}
+
+
+/* =========================================================
+   LABEL
+   ========================================================= */
+
+.form-group label {
+    display: block !important;
+
+    margin: 0 0 7px !important;
+
+    padding: 0 !important;
+
+    font-size: 13px !important;
+
+    line-height: 1.4 !important;
+
+    font-weight: 500 !important;
+
+    letter-spacing: 0 !important;
+
+    color: #d1d5db !important;
+}
+
+
+/* =========================================================
+   INPUT WRAPPER
+   IMPORTANT:
+   No border/background here.
+   This prevents DOUBLE BOXES.
+   ========================================================= */
+
+.input-box {
+    position: relative !important;
+
+    width: 100% !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    border: none !important;
+
+    background: transparent !important;
+
+    box-shadow: none !important;
+}
+
+
+/* =========================================================
+   INPUT
+   ========================================================= */
+
+.input-box input,
+#registerForm input[type="text"],
+#registerForm input[type="password"],
+#registerForm input[type="email"] {
+    display: block !important;
+
+    width: 100% !important;
+    height: 44px !important;
+
+    box-sizing: border-box !important;
+
+    margin: 0 !important;
+    padding: 0 13px !important;
+
+    background: var(--tv-input) !important;
+
+    color: var(--tv-text) !important;
+
+    border: 1px solid var(--tv-border) !important;
+
+    border-radius: 6px !important;
+
+    outline: none !important;
+
+    font-size: 14px !important;
+    font-weight: 400 !important;
+
+    letter-spacing: 0 !important;
+
+    box-shadow: none !important;
 
     transition:
-        border-color 0.25s ease,
-        box-shadow 0.25s ease,
-        background 0.25s ease,
-        transform 0.25s ease;
+        border-color 0.15s ease,
+        background 0.15s ease !important;
 }
 
-input::placeholder {
-    color: #8198b5;
+
+/* Placeholder */
+
+.input-box input::placeholder {
+    color: #737b8c !important;
+
+    opacity: 1 !important;
+
+    letter-spacing: 0 !important;
 }
 
-input:hover {
-    border-color: rgba(110, 170, 230, 0.4);
+
+/* Hover */
+
+.input-box input:hover {
+    border-color: var(--tv-border-hover) !important;
 }
 
-input:focus {
-    border-color: var(--rp-yellow);
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(16, 60, 101, 0.9),
-            rgba(7, 37, 68, 0.9)
-        );
+/* Focus */
+
+.input-box input:focus {
+    background: #202531 !important;
+
+    border-color: var(--tv-blue) !important;
 
     box-shadow:
-        0 0 0 3px rgba(255, 196, 0, 0.09),
-        0 0 28px rgba(255, 196, 0, 0.10),
-        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        0 0 0 1px rgba(41, 98, 255, 0.12) !important;
 
-    transform: translateY(-1px);
+    transform: none !important;
 }
 
 
-/* =========================
-   FORM SPACING
-   ========================= */
-
-form {
-    position: relative;
-}
-
-form > div {
-    margin-bottom: 18px;
-}
-
-
-/* =========================
+/* =========================================================
    REGISTER BUTTON
-   ========================= */
+   ========================================================= */
 
-button,
-button[type="submit"],
-input[type="submit"] {
-    position: relative;
+#registerForm button,
+#registerForm button[type="submit"],
+#registerForm input[type="submit"] {
+    width: 100% !important;
 
-    width: 100%;
-    min-height: 58px;
+    height: 46px !important;
 
-    margin-top: 8px;
+    margin: 5px 0 0 !important;
+    padding: 0 18px !important;
 
-    border: 0;
-    border-radius: 16px;
+    box-sizing: border-box !important;
 
-    color: #101010;
+    border: none !important;
 
-    background:
-        linear-gradient(
-            135deg,
-            #ffbf00 0%,
-            #ffd633 50%,
-            #ffbf00 100%
-        );
+    border-radius: 6px !important;
 
-    font-size: 17px;
-    font-weight: 800;
+    background: var(--tv-gold) !important;
 
-    letter-spacing: 0.1px;
+    color: #111111 !important;
 
-    cursor: pointer;
+    font-size: 14px !important;
 
-    box-shadow:
-        0 10px 30px rgba(255, 193, 7, 0.18),
-        inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    font-weight: 700 !important;
+
+    letter-spacing: 0 !important;
+
+    cursor: pointer !important;
+
+    box-shadow: none !important;
 
     transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease,
-        filter 0.2s ease;
-}
-
-button:hover,
-button[type="submit"]:hover,
-input[type="submit"]:hover {
-    transform: translateY(-2px);
-
-    filter: brightness(1.05);
-
-    box-shadow:
-        0 16px 38px rgba(255, 193, 7, 0.28),
-        0 0 25px rgba(255, 193, 7, 0.12),
-        inset 0 1px 0 rgba(255, 255, 255, 0.4);
-}
-
-button:active,
-button[type="submit"]:active,
-input[type="submit"]:active {
-    transform: translateY(0);
+        background 0.15s ease,
+        transform 0.15s ease !important;
 }
 
 
-/* =========================
-   LINKS
-   ========================= */
+#registerForm button:hover,
+#registerForm button[type="submit"]:hover {
+    background: var(--tv-gold-hover) !important;
 
-a {
-    color: #a9bdd6;
+    transform: none !important;
 
-    font-weight: 600;
-
-    transition:
-        color 0.2s ease,
-        text-shadow 0.2s ease;
-}
-
-a:hover {
-    color: var(--rp-yellow);
-
-    text-shadow:
-        0 0 12px rgba(255, 193, 7, 0.25);
+    box-shadow: none !important;
 }
 
 
-/* =========================
-   "GO TO SIGN IN"
-   ========================= */
-
-a[href*="login"],
-a[href*="signin"],
-a[href*="sign"],
-.signin-link,
-.login-link {
-    color: var(--rp-yellow);
-    text-decoration: none;
-}
-
-a[href*="login"]:hover,
-a[href*="signin"]:hover,
-a[href*="sign"]:hover,
-.signin-link:hover,
-.login-link:hover {
-    color: #ffe477;
+#registerForm button:active {
+    transform: translateY(1px) !important;
 }
 
 
-/* =========================
-   OPTIONAL DIVIDER
-   ========================= */
+/* =========================================================
+   SIGN-IN AREA
+   ========================================================= */
 
-.register-divider {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+.login-card > p:last-child,
+.login-card .signin-link {
+    margin-top: 20px !important;
 
-    margin: 24px 0;
+    margin-bottom: 0 !important;
 
-    color: #647b98;
+    text-align: center !important;
 
-    font-size: 12px;
-}
+    font-size: 13px !important;
 
-.register-divider::before,
-.register-divider::after {
-    content: "";
-
-    flex: 1;
-
-    height: 1px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(100, 150, 200, 0.25),
-            transparent
-        );
+    color: var(--tv-muted) !important;
 }
 
 
-/* =========================
-   ERROR / SUCCESS MESSAGE
-   ========================= */
+/* Sign in link */
+
+.login-card a {
+    color: #aeb5c3 !important;
+
+    font-weight: 500 !important;
+
+    text-decoration: none !important;
+
+    transition: color 0.15s ease !important;
+}
+
+
+.login-card a:hover {
+    color: var(--tv-gold) !important;
+
+    text-shadow: none !important;
+}
+
+
+/* =========================================================
+   ERROR / SUCCESS
+   ========================================================= */
 
 .error,
 .error-message {
-    margin-top: 8px;
-    padding: 10px 12px;
+    margin-top: 7px !important;
 
-    color: #ff9e9e;
+    padding: 8px 10px !important;
 
-    background: rgba(255, 55, 55, 0.07);
+    border-radius: 5px !important;
 
-    border: 1px solid rgba(255, 75, 75, 0.18);
+    font-size: 12px !important;
 
-    border-radius: 10px;
+    background: rgba(242, 54, 69, 0.08) !important;
 
-    font-size: 13px;
+    border: 1px solid rgba(242, 54, 69, 0.25) !important;
+
+    color: #f23645 !important;
 }
+
 
 .success,
 .success-message {
-    margin-top: 8px;
-    padding: 10px 12px;
+    margin-top: 7px !important;
 
-    color: #9dffc0;
+    padding: 8px 10px !important;
 
-    background: rgba(30, 220, 100, 0.07);
+    border-radius: 5px !important;
 
-    border: 1px solid rgba(30, 220, 100, 0.18);
+    font-size: 12px !important;
 
-    border-radius: 10px;
+    background: rgba(38, 166, 154, 0.08) !important;
 
-    font-size: 13px;
+    border: 1px solid rgba(38, 166, 154, 0.25) !important;
+
+    color: #26a69a !important;
 }
 
 
-/* =========================
+/* =========================================================
    MOBILE
-   ========================= */
+   ========================================================= */
 
 @media (max-width: 600px) {
 
-    body {
-        padding: 12px;
-        box-sizing: border-box;
+    .login-container {
+        min-height: 100vh !important;
+
+        padding: 18px 12px !important;
+
+        align-items: center !important;
     }
 
-    .register-container,
-    .auth-container {
-        width: 100%;
-        box-sizing: border-box;
 
-        border-radius: 24px;
+    .login-card {
+        max-width: 360px !important;
 
-        padding: 24px 20px;
+        padding: 27px 22px 24px !important;
+
+        border-radius: 9px !important;
     }
 
-    h1 {
-        font-size: 42px;
-        line-height: 1.05;
+
+    .logo-area {
+        margin-bottom: 24px !important;
     }
 
-    h2 {
-        font-size: 30px;
+
+    .logo-area h1 {
+        font-size: 38px !important;
+
+        letter-spacing: -1.3px !important;
     }
 
-    input[type="text"],
-    input[type="password"],
-    input[type="email"],
-    input[type="number"],
-    input[type="tel"] {
-        min-height: 56px;
-        font-size: 15px;
+
+    .logo-area p {
+        margin-top: 10px !important;
+
+        font-size: 12px !important;
+
+        letter-spacing: 0.3px !important;
     }
 
-    button,
-    button[type="submit"],
-    input[type="submit"] {
-        min-height: 56px;
+
+    .form-group {
+        margin-bottom: 14px !important;
     }
-}
 
 
-/* =========================
-   REDUCED MOTION
-   ========================= */
+    .form-group label {
+        margin-bottom: 6px !important;
 
-@media (prefers-reduced-motion: reduce) {
+        font-size: 12px !important;
+    }
 
-    *,
-    *::before,
-    *::after {
-        animation: none !important;
-        transition: none !important;
+
+    .input-box input,
+    #registerForm input[type="text"],
+    #registerForm input[type="password"],
+    #registerForm input[type="email"] {
+        height: 42px !important;
+
+        padding: 0 12px !important;
+
+        font-size: 13px !important;
+    }
+
+
+    #registerForm button,
+    #registerForm button[type="submit"],
+    #registerForm input[type="submit"] {
+        height: 44px !important;
+
+        font-size: 14px !important;
     }
 }
