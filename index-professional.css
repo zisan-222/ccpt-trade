@@ -521,5 +521,155 @@ a:focus-visible,
 
 
 /* =========================================================
+   FINAL INPUT BOX FIX
+   Removes the unwanted inner border/line
+   ========================================================= */
+
+/* The OUTER box becomes the actual input button */
+.input-box {
+    position: relative !important;
+
+    width: 100% !important;
+    height: 60px !important;
+
+    display: flex !important;
+    align-items: center !important;
+
+    border-radius: 18px !important;
+
+    border: 1px solid rgba(120, 174, 224, 0.20) !important;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(10, 48, 84, 0.96),
+            rgba(6, 35, 62, 0.98)
+        ) !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.035),
+        0 8px 22px rgba(0,0,0,0.12) !important;
+
+    overflow: hidden !important;
+
+    transition:
+        border-color 0.22s ease,
+        box-shadow 0.22s ease,
+        background 0.22s ease !important;
+}
+
+
+/* Remove the SECOND box/border from the actual input */
+.input-box input {
+    width: 100% !important;
+    height: 100% !important;
+
+    margin: 0 !important;
+
+    padding: 0 52px !important;
+
+    border: none !important;
+    outline: none !important;
+
+    border-radius: 0 !important;
+
+    background: transparent !important;
+
+    box-shadow: none !important;
+
+    color: #f5f8fc !important;
+
+    font-size: 16px !important;
+}
+
+
+/* Remove the inner line when input is focused */
+.input-box input:focus {
+    border: none !important;
+    outline: none !important;
+
+    box-shadow: none !important;
+
+    background: transparent !important;
+}
+
+
+/* Professional focus effect on the WHOLE box */
+.input-box:focus-within {
+    border-color: rgba(255, 196, 0, 0.65) !important;
+
+    box-shadow:
+        0 0 0 3px rgba(255, 196, 0, 0.07),
+        0 10px 28px rgba(0,0,0,0.18) !important;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(13, 57, 98, 0.98),
+            rgba(8, 43, 77, 0.98)
+        ) !important;
+}
+
+
+/* Username / Password icons */
+.input-box > i:first-child {
+    position: absolute !important;
+
+    left: 18px !important;
+
+    top: 50% !important;
+
+    transform: translateY(-50%) !important;
+
+    z-index: 3 !important;
+
+    color: #ffc400 !important;
+
+    font-size: 20px !important;
+
+    pointer-events: none !important;
+}
+
+
+/* Password eye */
+#togglePassword {
+    position: absolute !important;
+
+    right: 16px !important;
+
+    top: 50% !important;
+
+    transform: translateY(-50%) !important;
+
+    z-index: 4 !important;
+
+    color: #ffc400 !important;
+
+    cursor: pointer !important;
+
+    font-size: 20px !important;
+
+    padding: 5px !important;
+}
+
+
+/* Mobile */
+@media (max-width: 600px) {
+
+    .input-box {
+        height: 58px !important;
+
+        border-radius: 17px !important;
+    }
+
+    .input-box input {
+        font-size: 15px !important;
+
+        padding-left: 51px !important;
+        padding-right: 50px !important;
+    }
+}
+
+/* =========================================================
    END OF CPTMARKETS PROFESSIONAL THEME
    ========================================================= */
