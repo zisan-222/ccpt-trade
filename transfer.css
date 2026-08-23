@@ -1,377 +1,1213 @@
+/* ==========================================
+   CPTMARKETS
+   TRANSFER PREMIUM DARK UI
+========================================== */
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #101010;
-    color: #ffffff;
-    min-height: 100vh;
+html {
+    min-height: 100%;
+    background: #030303;
 }
+
+body {
+    min-height: 100vh;
+    font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(255, 194, 28, 0.055),
+            transparent 34%
+        ),
+        #030303;
+
+    color: #ffffff;
+
+    overflow-x: hidden;
+}
+
+
+/* ==========================================
+   PAGE
+========================================== */
 
 .transfer-page {
     width: 100%;
     max-width: 760px;
     min-height: 100vh;
+
     margin: 0 auto;
-    background: #101010;
+
+    background:
+        linear-gradient(
+            180deg,
+            #050505 0%,
+            #030303 100%
+        );
 }
 
 
-/* =========================
+/* ==========================================
    HEADER
-========================= */
+========================================== */
 
 .transfer-header {
-    height: 72px;
+    height: 78px;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
-    border-bottom: 1px solid #292929;
+
+    padding: 0 22px;
+
+    background:
+        rgba(5, 5, 5, 0.92);
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+
+    position: relative;
+    z-index: 20;
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
 }
 
 .transfer-header h1 {
-    font-size: 22px;
-    font-weight: 700;
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    font-size: 23px;
+    font-weight: 750;
+
+    letter-spacing: -0.4px;
+
+    white-space: nowrap;
 }
 
 .header-space {
-    width: 42px;
+    width: 46px;
 }
+
+
+/* ==========================================
+   BACK BUTTON
+========================================== */
 
 .back-btn {
-    width: 42px;
-    height: 42px;
-    border: 0;
+    width: 46px;
+    height: 46px;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
     border-radius: 50%;
-    background: #222222;
-    color: #ffffff;
-    font-size: 32px;
-    line-height: 35px;
-    cursor: pointer;
-}
 
-
-/* =========================
-   CONTENT
-========================= */
-
-.transfer-content {
-    padding: 24px 20px 40px;
-}
-
-
-/* =========================
-   MAIN CARD
-========================= */
-
-.transfer-card {
-    background: #1b1b1b;
-    border: 1px solid #2c2c2c;
-    border-radius: 24px;
-    padding: 24px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
-}
-
-
-/* =========================
-   TITLE
-========================= */
-
-.card-title {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 30px;
-}
-
-.title-icon {
-    width: 52px;
-    height: 52px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    background: #ffc21c;
-    color: #111111;
-    font-size: 28px;
-    font-weight: 700;
+
+    background:
+        linear-gradient(
+            145deg,
+            #202020,
+            #111111
+        );
+
+    color: #ffffff;
+
+    cursor: pointer;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.06),
+        0 8px 24px rgba(0,0,0,0.35);
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.back-btn span {
+    font-size: 35px;
+    line-height: 1;
+
+    margin-top: -3px;
+}
+
+.back-btn:hover {
+    border-color: rgba(255,194,28,0.35);
+
+    box-shadow:
+        0 0 18px rgba(255,194,28,0.12);
+}
+
+.back-btn:active {
+    transform: scale(0.91);
+}
+
+
+/* ==========================================
+   CONTENT
+========================================== */
+
+.transfer-content {
+    padding: 28px 20px 50px;
+}
+
+
+/* ==========================================
+   MAIN CARD
+========================================== */
+
+.transfer-card {
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            #171717 0%,
+            #101010 55%,
+            #0d0d0d 100%
+        );
+
+    border: 1px solid rgba(255,255,255,0.075);
+
+    border-radius: 28px;
+
+    padding: 27px;
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,0.65),
+        inset 0 1px 0 rgba(255,255,255,0.035);
+}
+
+
+/* ==========================================
+   CARD GLOW
+========================================== */
+
+.card-glow {
+    position: absolute;
+
+    width: 260px;
+    height: 260px;
+
+    top: -170px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,194,28,0.12) 0%,
+            rgba(255,194,28,0.035) 35%,
+            transparent 70%
+        );
+
+    pointer-events: none;
+}
+
+
+/* ==========================================
+   TITLE
+========================================== */
+
+.card-title {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 31px;
+}
+
+.title-icon {
+    width: 55px;
+    height: 55px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffd34d,
+            #ffb300
+        );
+
+    color: #080808;
+
+    font-size: 30px;
+    font-weight: 800;
+
+    box-shadow:
+        0 0 0 1px rgba(255,255,255,0.12),
+        0 0 25px rgba(255,194,28,0.22),
+        0 9px 24px rgba(0,0,0,0.35);
+}
+
+.title-icon span {
+    transform: translateY(-1px);
 }
 
 .card-title h2 {
     font-size: 22px;
+    font-weight: 750;
+
+    letter-spacing: -0.4px;
+
     margin-bottom: 5px;
 }
 
 .card-title p {
-    color: #999999;
+    color: #8e8e8e;
+
     font-size: 13px;
+
+    line-height: 1.4;
 }
 
 
-/* =========================
-   FIELDS
-========================= */
+/* ==========================================
+   ACCOUNT AREA
+========================================== */
 
-.field-group {
-    margin-bottom: 18px;
+.accounts-area {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    z-index: 3;
 }
 
-.field-group label {
+
+/* ==========================================
+   ACCOUNT SLOT
+========================================== */
+
+.account-slot {
+    position: relative;
+
+    transition:
+        order 0.5s ease,
+        transform 0.5s cubic-bezier(.2,.8,.2,1),
+        opacity 0.3s ease;
+}
+
+.field-label {
     display: block;
-    color: #bdbdbd;
-    font-size: 14px;
+
     margin-bottom: 9px;
+
+    color: #a6a6a6;
+
+    font-size: 14px;
+    font-weight: 500;
 }
 
 
-/* =========================
+/* ==========================================
    ACCOUNT BOX
-========================= */
+========================================== */
 
 .account-box {
-    min-height: 76px;
+    min-height: 82px;
+
     display: flex;
     align-items: center;
-    padding: 13px 15px;
-    border-radius: 16px;
-    background: #242424;
-    border: 1px solid #333333;
+
+    padding: 13px 16px;
+
+    border-radius: 19px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #222222,
+            #171717
+        );
+
+    border: 1px solid rgba(255,255,255,0.075);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.035),
+        0 12px 30px rgba(0,0,0,0.30);
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
 }
 
+.account-box:hover {
+    border-color: rgba(255,194,28,0.22);
+
+    box-shadow:
+        0 0 25px rgba(255,194,28,0.06),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+}
+
+
+/* ==========================================
+   ACCOUNT ICON
+========================================== */
+
 .account-icon {
-    width: 46px;
-    height: 46px;
+    width: 50px;
+    height: 50px;
+
+    flex-shrink: 0;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    background: #ffc21c;
+
+    margin-right: 14px;
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffd43f,
+            #ffb000
+        );
+
     color: #111111;
-    font-size: 22px;
-    margin-right: 13px;
+
+    font-size: 24px;
+
+    box-shadow:
+        0 0 18px rgba(255,194,28,0.15),
+        inset 0 1px 0 rgba(255,255,255,0.2);
 }
 
 .account-info {
     display: flex;
     flex-direction: column;
+
     gap: 5px;
+
+    min-width: 0;
 }
 
 .account-info strong {
+    color: #f6f6f6;
+
     font-size: 16px;
+    font-weight: 700;
+
+    letter-spacing: -0.15px;
 }
 
 .account-info span {
-    color: #8e8e8e;
+    color: #858585;
+
     font-size: 12px;
 }
 
 .account-arrow {
     margin-left: auto;
-    color: #888888;
-    font-size: 26px;
+
+    color: #666666;
+
+    font-size: 28px;
+    font-weight: 300;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.account-box:hover .account-arrow {
+    color: #ffc21c;
+    transform: translateX(3px);
 }
 
 
-/* =========================
-   SWITCH
-========================= */
+/* ==========================================
+   SWITCH AREA
+========================================== */
 
 .switch-area {
+    height: 54px;
+
     display: flex;
+    align-items: center;
     justify-content: center;
-    height: 20px;
+
     position: relative;
-    z-index: 2;
+
+    z-index: 10;
 }
+
+
+/* horizontal glow line */
+
+.switch-line {
+    height: 1px;
+
+    width: 34%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,194,28,0.12),
+            transparent
+        );
+}
+
+
+/* ==========================================
+   SWITCH BUTTON
+========================================== */
 
 .switch-btn {
-    width: 44px;
-    height: 44px;
-    margin-top: -12px;
+    position: relative;
+
+    width: 54px;
+    height: 54px;
+
+    flex-shrink: 0;
+
+    margin: 0 9px;
+
     border-radius: 50%;
-    border: 4px solid #1b1b1b;
-    background: #ffc21c;
-    color: #111111;
-    font-size: 22px;
-    font-weight: 700;
+
+    border: 2px solid rgba(255,194,28,0.65);
+
+    background:
+        radial-gradient(
+            circle at 35% 25%,
+            #ffe17b 0%,
+            #ffc21c 35%,
+            #e79d00 100%
+        );
+
+    color: #080808;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     cursor: pointer;
+
+    box-shadow:
+        0 0 0 5px rgba(255,194,28,0.035),
+        0 0 18px rgba(255,194,28,0.28),
+        0 0 45px rgba(255,194,28,0.12),
+        inset 0 2px 2px rgba(255,255,255,0.35),
+        inset 0 -4px 8px rgba(120,70,0,0.18);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.switch-icon {
+    position: relative;
+    z-index: 3;
+
+    font-size: 25px;
+    font-weight: 900;
+
+    line-height: 1;
+
+    transition:
+        transform 0.5s cubic-bezier(.2,.8,.2,1);
+}
+
+.switch-btn:hover {
+    transform: scale(1.07);
+
+    box-shadow:
+        0 0 0 6px rgba(255,194,28,0.055),
+        0 0 25px rgba(255,194,28,0.45),
+        0 0 60px rgba(255,194,28,0.18),
+        inset 0 2px 2px rgba(255,255,255,0.4);
+}
+
+.switch-btn:active {
+    transform: scale(0.90);
 }
 
 
-/* =========================
+/* ==========================================
+   SWITCH RIPPLE
+========================================== */
+
+.switch-ripple {
+    position: absolute;
+
+    inset: -2px;
+
+    border-radius: 50%;
+
+    border: 2px solid rgba(255,194,28,0.75);
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+.switch-btn.is-switching .switch-ripple {
+    animation: switchRipple 0.65s ease-out;
+}
+
+.switch-btn.is-switching .switch-icon {
+    transform: rotate(180deg);
+}
+
+@keyframes switchRipple {
+
+    0% {
+        transform: scale(0.95);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(1.8);
+        opacity: 0;
+    }
+
+}
+
+
+/* ==========================================
+   SWAP ANIMATION
+========================================== */
+
+.accounts-area.is-swapping .account-slot {
+    animation:
+        accountSwap 0.5s cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes accountSwap {
+
+    0% {
+        opacity: 0.55;
+        transform: translateY(0) scale(0.985);
+    }
+
+    45% {
+        opacity: 0.7;
+        transform: translateY(-5px) scale(0.99);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+
+/* ==========================================
    AMOUNT
-========================= */
+========================================== */
 
 .amount-group {
-    margin-top: 24px;
+    position: relative;
+
+    z-index: 2;
+
+    margin-top: 26px;
+}
+
+.amount-group label {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: #a6a6a6;
+
+    font-size: 14px;
+    font-weight: 500;
 }
 
 .amount-box {
-    height: 64px;
+    height: 68px;
+
     display: flex;
     align-items: center;
-    padding: 0 16px;
-    border-radius: 16px;
-    background: #242424;
-    border: 1px solid #333333;
+
+    padding: 0 18px;
+
+    border-radius: 19px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #222222,
+            #171717
+        );
+
+    border: 1px solid rgba(255,255,255,0.075);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.035),
+        0 10px 25px rgba(0,0,0,0.25);
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.amount-box:focus-within {
+    border-color: rgba(255,194,28,0.55);
+
+    box-shadow:
+        0 0 0 3px rgba(255,194,28,0.06),
+        0 0 25px rgba(255,194,28,0.08);
 }
 
 .currency {
     color: #ffc21c;
-    font-size: 25px;
+
+    font-size: 28px;
     font-weight: 700;
-    margin-right: 10px;
+
+    margin-right: 11px;
+
+    text-shadow:
+        0 0 12px rgba(255,194,28,0.25);
 }
 
 .amount-box input {
     flex: 1;
+
     width: 100%;
+
     border: 0;
     outline: 0;
+
     background: transparent;
+
     color: #ffffff;
-    font-size: 22px;
+
+    font-size: 23px;
+    font-weight: 600;
+
+    min-width: 0;
 }
 
 .amount-box input::placeholder {
-    color: #666666;
+    color: #565656;
+}
+
+.amount-box input::-webkit-outer-spin-button,
+.amount-box input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.amount-box input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
 }
 
 .currency-code {
-    color: #999999;
-    font-size: 14px;
-    font-weight: 600;
+    color: #7f7f7f;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    letter-spacing: 0.5px;
 }
 
 
-/* =========================
+/* ==========================================
    BALANCE
-========================= */
+========================================== */
 
 .balance-info {
+    position: relative;
+    z-index: 2;
+
+    min-height: 58px;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 15px 2px 20px;
+
+    padding: 14px 3px 12px;
 }
 
-.balance-info span {
-    color: #999999;
+.balance-label {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    color: #888888;
+
     font-size: 13px;
 }
 
+.balance-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #ffc21c;
+
+    box-shadow:
+        0 0 8px rgba(255,194,28,0.55);
+}
+
 .balance-info strong {
-    color: #ffffff;
+    color: #f7f7f7;
+
+    font-size: 17px;
+    font-weight: 750;
+
+    letter-spacing: -0.2px;
+}
+
+
+/* ==========================================
+   TRANSFER DIRECTION
+========================================== */
+
+.transfer-direction {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 6px;
+
+    min-height: 36px;
+
+    margin-bottom: 13px;
+
+    padding: 8px 12px;
+
+    border-radius: 12px;
+
+    background: rgba(255,194,28,0.035);
+
+    border: 1px solid rgba(255,194,28,0.07);
+
+    color: #888888;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.direction-dot {
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: #ffc21c;
+
+    box-shadow:
+        0 0 7px rgba(255,194,28,0.6);
+}
+
+.direction-arrow {
+    color: #ffc21c;
+
     font-size: 15px;
 }
 
 
-/* =========================
-   SUBMIT
-========================= */
+/* ==========================================
+   SUBMIT BUTTON
+========================================== */
 
 .submit-transfer {
+    position: relative;
+
+    overflow: hidden;
+
     width: 100%;
-    height: 56px;
-    border: 0;
-    border-radius: 16px;
-    background: #ffc21c;
-    color: #111111;
+    height: 59px;
+
+    border: 1px solid rgba(255,224,120,0.55);
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffd64d 0%,
+            #ffc21c 45%,
+            #f0aa00 100%
+        );
+
+    color: #080808;
+
     font-size: 17px;
-    font-weight: 700;
+    font-weight: 800;
+
     cursor: pointer;
+
+    box-shadow:
+        0 0 0 1px rgba(255,194,28,0.08),
+        0 0 24px rgba(255,194,28,0.18),
+        0 12px 30px rgba(0,0,0,0.35),
+        inset 0 2px 1px rgba(255,255,255,0.35);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.25s ease;
+}
+
+.submit-transfer:hover {
+    box-shadow:
+        0 0 0 1px rgba(255,224,120,0.25),
+        0 0 32px rgba(255,194,28,0.34),
+        0 15px 35px rgba(0,0,0,0.42),
+        inset 0 2px 1px rgba(255,255,255,0.4);
 }
 
 .submit-transfer:active {
-    transform: scale(0.98);
+    transform: scale(0.975);
 }
 
 
-/* =========================
-   MESSAGE
-========================= */
+/* button content */
 
-.transfer-message {
-    margin-top: 16px;
-    padding: 14px 16px;
-    border-radius: 13px;
-    text-align: center;
-    font-size: 14px;
-    line-height: 1.5;
-}
+.button-content {
+    position: relative;
+    z-index: 3;
 
-
-/* =========================
-   INFORMATION
-========================= */
-
-.transfer-info {
-    display: flex;
-    gap: 13px;
-    align-items: flex-start;
-    margin-top: 18px;
-    padding: 18px;
-    border-radius: 18px;
-    background: #181818;
-    border: 1px solid #292929;
-}
-
-.info-icon {
-    width: 34px;
-    height: 34px;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    gap: 12px;
+}
+
+.button-arrow {
+    font-size: 20px;
+
+    transition:
+        transform 0.2s ease;
+}
+
+.submit-transfer:hover .button-arrow {
+    transform: translateX(4px);
+}
+
+
+/* button shine */
+
+.button-shine {
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 70%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,0.35),
+            transparent
+        );
+
+    transform: skewX(-20deg);
+
+    pointer-events: none;
+}
+
+.submit-transfer:hover .button-shine {
+    animation: buttonShine 0.75s ease;
+}
+
+@keyframes buttonShine {
+
+    0% {
+        left: -120%;
+    }
+
+    100% {
+        left: 150%;
+    }
+
+}
+
+
+/* ==========================================
+   MESSAGE
+========================================== */
+
+.transfer-message {
+    position: relative;
+
+    margin-top: 15px;
+
+    padding: 13px 15px;
+
+    border-radius: 13px;
+
+    text-align: center;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    background: #191919;
+
+    border: 1px solid #292929;
+}
+
+
+/* ==========================================
+   INFORMATION
+========================================== */
+
+.transfer-info {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 13px;
+
+    margin-top: 18px;
+
+    padding: 19px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #131313,
+            #0d0d0d
+        );
+
+    border: 1px solid rgba(255,255,255,0.055);
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,0.30);
+}
+
+.info-icon {
+    width: 36px;
+    height: 36px;
+
     flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     border-radius: 50%;
-    background: #2b2b2b;
+
+    background: #222222;
+
     color: #ffc21c;
+
+    font-size: 16px;
+    font-weight: 800;
+
+    box-shadow:
+        0 0 15px rgba(255,194,28,0.08);
+}
+
+.info-text strong {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #e9e9e9;
+
+    font-size: 14px;
     font-weight: 700;
 }
 
-.transfer-info strong {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 14px;
-}
+.info-text p {
+    color: #747474;
 
-.transfer-info p {
-    color: #888888;
     font-size: 12px;
-    line-height: 1.5;
+
+    line-height: 1.55;
 }
 
 
-/* =========================
+/* ==========================================
    MOBILE
-========================= */
+========================================== */
 
 @media (max-width: 480px) {
 
-    .transfer-content {
-        padding: 18px 16px 35px;
-    }
-
-    .transfer-card {
-        padding: 19px;
-        border-radius: 21px;
-    }
-
     .transfer-header {
+        height: 72px;
+
         padding: 0 16px;
     }
 
+    .transfer-header h1 {
+        font-size: 21px;
+    }
+
+    .back-btn {
+        width: 43px;
+        height: 43px;
+    }
+
+    .header-space {
+        width: 43px;
+    }
+
+    .transfer-content {
+        padding: 18px 14px 38px;
+    }
+
+    .transfer-card {
+        padding: 20px 17px;
+
+        border-radius: 24px;
+    }
+
     .card-title {
-        margin-bottom: 24px;
+        gap: 12px;
+
+        margin-bottom: 26px;
+    }
+
+    .title-icon {
+        width: 50px;
+        height: 50px;
+
+        border-radius: 16px;
+
+        font-size: 27px;
+    }
+
+    .card-title h2 {
+        font-size: 20px;
+    }
+
+    .card-title p {
+        font-size: 12px;
     }
 
     .account-box {
-        min-height: 70px;
+        min-height: 76px;
+
+        padding: 11px 13px;
+
+        border-radius: 17px;
+    }
+
+    .account-icon {
+        width: 46px;
+        height: 46px;
+
+        margin-right: 12px;
+
+        border-radius: 14px;
+    }
+
+    .account-info strong {
+        font-size: 15px;
+    }
+
+    .account-info span {
+        font-size: 11px;
+    }
+
+    .switch-area {
+        height: 52px;
+    }
+
+    .switch-btn {
+        width: 50px;
+        height: 50px;
+
+        margin: 0 7px;
+    }
+
+    .switch-icon {
+        font-size: 23px;
+    }
+
+    .amount-box {
+        height: 64px;
+
+        border-radius: 17px;
+    }
+
+    .submit-transfer {
+        height: 57px;
+
+        border-radius: 17px;
+    }
+
+    .transfer-info {
+        padding: 17px;
+
+        border-radius: 18px;
+    }
+
+}
+
+
+/* ==========================================
+   VERY SMALL DEVICES
+========================================== */
+
+@media (max-width: 360px) {
+
+    .transfer-card {
+        padding: 18px 14px;
+    }
+
+    .account-box {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .account-icon {
+        width: 43px;
+        height: 43px;
+
+        margin-right: 10px;
+    }
+
+    .account-info strong {
+        font-size: 14px;
+    }
+
+    .transfer-direction {
+        font-size: 10px;
     }
 
 }
