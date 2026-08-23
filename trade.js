@@ -1376,39 +1376,57 @@ if (
    OPEN LONG  
    ========================================================= */  
   
-if (longButton) {  
-  
-    longButton.addEventListener(  
-        "click",  
-        function () {  
-  
-            openTradeModal(  
-                "LONG"  
-            );  
-  
-        }  
-    );  
-  
-}  
+if (longButton) {
+
+    longButton.addEventListener(
+        "click",
+        function () {
+
+            cptShowTradeConfirmation(
+                "LONG",
+                price,
+                selectedLeverage,
+                function () {
+
+                    openTradeModal(
+                        "LONG"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+} 
   
   
 /* =========================================================  
    OPEN SHORT  
    ========================================================= */  
   
-if (shortButton) {  
-  
-    shortButton.addEventListener(  
-        "click",  
-        function () {  
-  
-            openTradeModal(  
-                "SHORT"  
-            );  
-  
-        }  
-    );  
-  
+if (shortButton) {
+
+    shortButton.addEventListener(
+        "click",
+        function () {
+
+            cptShowTradeConfirmation(
+                "SHORT",
+                price,
+                selectedLeverage,
+                function () {
+
+                    openTradeModal(
+                        "SHORT"
+                    );
+
+                }
+            );
+
+        }
+    );
+
 }  
   
   
