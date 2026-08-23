@@ -1,0 +1,389 @@
+/* =========================================================
+   CPT MARKETS
+   PROFESSIONAL TRADE POPUPS
+   ========================================================= */
+
+.cpt-popup-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        radial-gradient(
+            circle at 50% 30%,
+            rgba(0, 153, 255, 0.10),
+            transparent 45%
+        ),
+        rgba(1, 6, 14, 0.82);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+
+/* =========================================================
+   POPUP BOX
+   ========================================================= */
+
+.cpt-popup {
+    width: 100%;
+    max-width: 430px;
+
+    position: relative;
+
+    padding: 28px 24px 24px;
+
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(13, 29, 48, 0.98),
+            rgba(4, 14, 26, 0.99)
+        );
+
+    border: 1px solid rgba(79, 177, 255, 0.16);
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.65),
+        0 0 35px rgba(0, 140, 255, 0.08);
+
+    transform: translateY(20px) scale(0.96);
+    opacity: 0;
+
+    transition:
+        transform 0.22s ease,
+        opacity 0.22s ease;
+}
+
+
+.cpt-popup-overlay.active {
+    display: flex;
+}
+
+
+.cpt-popup-overlay.active .cpt-popup {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+
+/* =========================================================
+   TOP ICON
+   ========================================================= */
+
+.cpt-popup-icon {
+    width: 58px;
+    height: 58px;
+
+    margin: 0 auto 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 18px;
+
+    font-size: 27px;
+    font-weight: 700;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(17, 154, 232, 0.18),
+            rgba(15, 80, 130, 0.08)
+        );
+
+    border: 1px solid rgba(32, 177, 255, 0.25);
+
+    box-shadow:
+        0 0 25px rgba(0, 170, 255, 0.12);
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.cpt-popup-brand {
+    text-align: center;
+
+    color: #8fa9c2;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 1.8px;
+
+    text-transform: uppercase;
+
+    margin-bottom: 7px;
+}
+
+
+.cpt-popup-title {
+    margin: 0;
+
+    text-align: center;
+
+    color: #f3f7fb;
+
+    font-size: 24px;
+    font-weight: 700;
+
+    line-height: 1.3;
+}
+
+
+.cpt-popup-subtitle {
+    margin: 10px 0 22px;
+
+    text-align: center;
+
+    color: #8ea4b9;
+
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+
+/* =========================================================
+   TRADE SUMMARY
+   ========================================================= */
+
+.cpt-popup-summary {
+    padding: 15px;
+
+    margin-bottom: 18px;
+
+    border-radius: 16px;
+
+    background:
+        rgba(3, 13, 24, 0.72);
+
+    border: 1px solid rgba(111, 155, 190, 0.12);
+}
+
+
+.cpt-popup-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 8px 0;
+}
+
+
+.cpt-popup-row + .cpt-popup-row {
+    border-top: 1px solid rgba(120, 160, 190, 0.08);
+}
+
+
+.cpt-popup-label {
+    color: #7890a7;
+    font-size: 13px;
+}
+
+
+.cpt-popup-value {
+    color: #eaf3fb;
+    font-size: 14px;
+    font-weight: 700;
+
+    text-align: right;
+}
+
+
+/* =========================================================
+   WARNING
+   ========================================================= */
+
+.cpt-popup-warning {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 10px;
+
+    padding: 13px 14px;
+
+    margin-bottom: 20px;
+
+    border-radius: 14px;
+
+    background:
+        rgba(255, 174, 0, 0.055);
+
+    border: 1px solid rgba(255, 174, 0, 0.12);
+
+    color: #b7a986;
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+
+.cpt-popup-warning-icon {
+    flex-shrink: 0;
+
+    color: #e7b94d;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   BUTTON AREA
+   ========================================================= */
+
+.cpt-popup-actions {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 12px;
+}
+
+
+.cpt-popup-btn {
+    height: 52px;
+
+    border: 0;
+    outline: none;
+
+    border-radius: 15px;
+
+    font-family: inherit;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        opacity 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+
+.cpt-popup-btn:active {
+    transform: scale(0.97);
+}
+
+
+.cpt-popup-cancel {
+    color: #9aadc0;
+
+    background:
+        rgba(11, 25, 39, 0.9);
+
+    border: 1px solid rgba(111, 151, 184, 0.15);
+}
+
+
+.cpt-popup-confirm {
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #078dd0,
+            #075f9b
+        );
+
+    box-shadow:
+        0 8px 25px rgba(0, 147, 220, 0.22);
+}
+
+
+/* =========================================================
+   SUCCESS
+   ========================================================= */
+
+.cpt-popup-success .cpt-popup-icon {
+    color: #19d88b;
+
+    background:
+        rgba(0, 204, 126, 0.10);
+
+    border-color:
+        rgba(0, 218, 136, 0.22);
+
+    box-shadow:
+        0 0 28px rgba(0, 218, 136, 0.13);
+}
+
+
+.cpt-popup-success-title {
+    color: #f4faf7;
+}
+
+
+.cpt-popup-success-message {
+    color: #8fa9a0;
+}
+
+
+/* =========================================================
+   RESULT / CLOSE POPUP
+   ========================================================= */
+
+.cpt-popup-result {
+    margin-top: 5px;
+}
+
+
+.cpt-result-profit {
+    color: #18d88b !important;
+}
+
+
+.cpt-result-loss {
+    color: #ff5266 !important;
+}
+
+
+.cpt-popup-single-btn {
+    width: 100%;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .cpt-popup-overlay {
+        padding: 16px;
+    }
+
+    .cpt-popup {
+        max-width: 100%;
+
+        padding: 25px 18px 19px;
+
+        border-radius: 22px;
+    }
+
+    .cpt-popup-title {
+        font-size: 22px;
+    }
+
+    .cpt-popup-subtitle {
+        font-size: 13px;
+    }
+
+    .cpt-popup-btn {
+        height: 50px;
+    }
+
+}
