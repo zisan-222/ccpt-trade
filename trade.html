@@ -8,6 +8,7 @@
 
 <link rel="stylesheet" href="trade.css">
   <link rel="stylesheet" href="trade.professional.css">
+  <link rel="stylesheet" href="trade-popups.css">
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
@@ -341,7 +342,199 @@ MACD
 
 </div>
 
-   
+   <!-- =====================================================
+     CPTMARKETS TRADE POPUPS
+     ===================================================== -->
+
+<div id="tradePopupOverlay" class="trade-popup-overlay">
+
+    <!-- ================= CONFIRM TRADE ================= -->
+
+    <div id="tradeConfirmPopup" class="trade-popup">
+
+        <button
+            type="button"
+            class="trade-popup-close"
+            id="tradePopupClose">
+            ×
+        </button>
+
+        <div class="trade-popup-icon confirm-icon">
+            <i class="fa-solid fa-chart-line"></i>
+        </div>
+
+        <div class="trade-popup-brand">
+            Crypto Market
+        </div>
+
+        <h2 id="tradeConfirmTitle">
+            Confirm Trade
+        </h2>
+
+        <p class="trade-popup-message">
+            You are about to open a
+            <strong id="confirmTradeSide">LONG</strong>
+            position.
+        </p>
+
+        <div class="trade-popup-info">
+
+            <div>
+                <span>Current Price</span>
+                <strong id="confirmTradePrice">
+                    0.00
+                </strong>
+            </div>
+
+            <div>
+                <span>Amount</span>
+                <strong id="confirmTradeAmount">
+                    $0.00
+                </strong>
+            </div>
+
+            <div>
+                <span>Leverage</span>
+                <strong id="confirmTradeLeverage">
+                    100x
+                </strong>
+            </div>
+
+        </div>
+
+        <p class="trade-popup-warning">
+            Please review your trade details carefully
+            before continuing.
+        </p>
+
+        <div class="trade-popup-actions">
+
+            <button
+                type="button"
+                id="tradePopupCancel"
+                class="trade-popup-secondary">
+                Cancel
+            </button>
+
+            <button
+                type="button"
+                id="tradePopupConfirm"
+                class="trade-popup-primary">
+                Confirm Trade
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= TRADE OPENED ================= -->
+
+    <div
+        id="tradeOpenedPopup"
+        class="trade-popup success-popup">
+
+        <div class="trade-popup-icon success-icon">
+            <i class="fa-solid fa-check"></i>
+        </div>
+
+        <div class="trade-popup-brand">
+            Crypto Market
+        </div>
+
+        <h2>
+            Trade Opened
+        </h2>
+
+        <p class="trade-popup-message">
+            Your trade has been successfully opened.
+        </p>
+
+        <div class="trade-popup-result">
+
+            <div>
+                <span>Position</span>
+                <strong id="openedTradeSide">
+                    LONG
+                </strong>
+            </div>
+
+            <div>
+                <span>Entry Price</span>
+                <strong id="openedTradePrice">
+                    0.00
+                </strong>
+            </div>
+
+            <div>
+                <span>Amount</span>
+                <strong id="openedTradeAmount">
+                    $0.00
+                </strong>
+            </div>
+
+        </div>
+
+        <button
+            type="button"
+            id="tradeOpenedOk"
+            class="trade-popup-primary full-width">
+            Continue
+        </button>
+
+    </div>
+
+
+    <!-- ================= TRADE CLOSED ================= -->
+
+    <div
+        id="tradeClosedPopup"
+        class="trade-popup close-success-popup">
+
+        <div class="trade-popup-icon close-icon">
+            <i class="fa-solid fa-check-double"></i>
+        </div>
+
+        <div class="trade-popup-brand">
+            Crypto Market
+        </div>
+
+        <h2>
+            Trade Closed Successfully
+        </h2>
+
+        <p class="trade-popup-message">
+            Your position has been successfully closed.
+        </p>
+
+        <div class="trade-popup-result">
+
+            <div>
+                <span>Close Price</span>
+                <strong id="closedTradePrice">
+                    0.00
+                </strong>
+            </div>
+
+            <div>
+                <span>Total Profit / Loss</span>
+                <strong id="closedTradeProfit">
+                    $0.00
+                </strong>
+            </div>
+
+        </div>
+
+        <button
+            type="button"
+            id="tradeClosedOk"
+            class="trade-popup-primary full-width">
+            Done
+        </button>
+
+    </div>
+
+</div>
     
 <!-- BOTTOM NAVIGATION -->
 
@@ -375,6 +568,6 @@ MACD
 
 <script src="balance.js"></script>   
 <script src="trade.js"></script>
-
+<script type="module" src="trade-popups.js"></script>
 </body>
 </html>
