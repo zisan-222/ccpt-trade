@@ -1,6 +1,6 @@
 /* ==========================================
    CPTMARKETS
-   transfer.js
+   TRANSFER.JS
    Premium Transfer System
 ========================================== */
 
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const availableBalance =
         document.getElementById("availableBalance");
 
-    const confirmButton =
+    const submitButton =
         document.getElementById("submitTransfer");
 
     const switchButton =
@@ -25,64 +25,73 @@ document.addEventListener("DOMContentLoaded", function () {
     const accountsArea =
         document.getElementById("accountsArea");
 
-    const fundingSlot =
-        document.querySelector(".funding-slot");
-
-    const tradingSlot =
-        document.querySelector(".trading-slot");
-
     const transferDirection =
         document.getElementById("transferDirection");
 
-    const transferMessage =
-        document.getElementById("transferMessage");
+    const amountBox =
+        document.getElementById("amountBox");
 
 
     /* ==========================================
-       STATE
+       SUPPORT MODAL
+    ========================================== */
+
+    const supportOverlay =
+        document.getElementById("supportOverlay");
+
+    const supportClose =
+        document.getElementById("supportClose");
+
+    const supportButton =
+        document.getElementById("supportButton");
+
+
+    /* ==========================================
+       ACCOUNT STATE
     ========================================== */
 
     let isReversed = false;
 
 
     /* ==========================================
-       UPDATE BALANCE
+       GET BALANCE
     ========================================== */
 
     function updateTransferBalance() {
 
-        if (typeof getBalance !== "function") {
+        if (
+            typeof getBalance !== "function"
+        ) {
 
             console.error(
-                "balance.js is not connected or getBalance() is missing."
+                "balance.js is not connected."
             );
 
             if (availableBalance) {
-                availableBalance.textContent = "$0.00";
+                availableBalance.textContent =
+                    "$0.00";
             }
 
             return;
         }
 
 
-        try {
+        const balance = Number(
+            getBalance()
+        );
 
-            const balance = Number(getBalance());
+
+        const safeBalance =
+            Number.isFinite(balance)
+                ? balance
+                : 0;
 
 
-            if (!isNaN(balance) && availableBalance) {
+        if (availableBalance) {
 
-                availableBalance.textContent =
-                    "$" + balance.toFixed(2);
-
-            }
-
-        } catch (error) {
-
-            console.error(
-                "Unable to read balance:",
-                error
-            );
+            availableBalance.textContent =
+                "$" +
+                safeBalance.toFixed(2);
 
         }
 
@@ -90,7 +99,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* ==========================================
-       UPDATE DIRECTION TEXT
+       INITIAL BALANCE
+    ========================================== */
+
+    updateTransferBalance();
+
+
+    /* ==========================================
+       SWITCH ACCOUNT UI
     ========================================== */
 
     function updateDirection() {
@@ -100,13 +116,13 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        if (isReversed) {
+        if (!isReversed) {
 
             transferDirection.innerHTML = `
                 <span class="direction-dot"></span>
 
                 <span>
-                    Trading Account
+                    Funding Account
                 </span>
 
                 <span class="direction-arrow">
@@ -114,7 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 </span>
 
                 <span>
-                    Funding Account
+                    Trading Account
                 </span>
             `;
 
@@ -124,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <span class="direction-dot"></span>
 
                 <span>
-                    Funding Account
+                    Trading Account
                 </span>
 
                 <span class="direction-arrow">
@@ -132,7 +148,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 </span>
 
                 <span>
-                    Trading Account
+                    Funding Account
                 </span>
             `;
 
@@ -142,88 +158,107 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* ==========================================
-       SWITCH ACCOUNT POSITION
+       SWAP ACCOUNT POSITIONS
     ========================================== */
 
-    function switchAccounts() {
+    function swapAccounts() {
 
-        if (!accountsArea) {
+        if (
+            !accountsArea ||
+            !switchButton
+        ) {
             return;
         }
 
 
-        /* Button lighting */
-
-        if (switchButton) {
-
-            switchButton.classList.remove(
-                "is-switching"
-            );
-
-            /*
-             * Force browser reflow so the animation
-             * can run every time the button is pressed.
-             */
-
-            void switchButton.offsetWidth;
-
-            switchButton.classList.add(
-                "is-switching"
-            );
-
-        }
+        isReversed = !isReversed;
 
 
-        /* Account animation */
+        /*
+         * Add animation class
+         */
 
         accountsArea.classList.remove(
             "is-swapping"
         );
 
+        switchButton.classList.remove(
+            "is-switching"
+        );
+
+
+        /*
+         * Force browser reflow
+         * so animation can run again.
+         */
+
         void accountsArea.offsetWidth;
+        void switchButton.offsetWidth;
+
 
         accountsArea.classList.add(
             "is-swapping"
         );
 
+        switchButton.classList.add(
+            "is-switching"
+        );
+
 
         /*
-         * Change actual visual order.
+         * Find account blocks
          */
 
-        if (!isReversed) {
+        const fundingSlot =
+            accountsArea.querySelector(
+                ".funding-slot"
+            );
 
-            /*
-             * Trading goes UP
-             * Funding goes DOWN
-             */
+        const tradingSlot =
+            accountsArea.querySelector(
+                ".trading-slot"
+            );
 
-            tradingSlot.style.order = "1";
-            switchButton.parentElement.style.order = "2";
-            fundingSlot.style.order = "3";
 
-            isReversed = true;
+        if (
+            !fundingSlot ||
+            !tradingSlot
+        ) {
+            return;
+        }
+
+
+        /*
+         * Actually change their positions
+         */
+
+        if (isReversed) {
+
+            accountsArea.insertBefore(
+                tradingSlot,
+                fundingSlot
+            );
 
         } else {
 
-            /*
-             * Funding goes UP
-             * Trading goes DOWN
-             */
-
-            fundingSlot.style.order = "1";
-            switchButton.parentElement.style.order = "2";
-            tradingSlot.style.order = "3";
-
-            isReversed = false;
+            accountsArea.insertBefore(
+                fundingSlot,
+                tradingSlot
+            );
 
         }
 
 
+        /*
+         * Update labels
+         */
+
         updateDirection();
 
 
-        /* Remove animation classes */
+        /*
+         * Remove animation classes
+         */
 
         setTimeout(function () {
 
@@ -231,20 +266,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 "is-swapping"
             );
 
+            switchButton.classList.remove(
+                "is-switching"
+            );
+
         }, 550);
-
-
-        if (switchButton) {
-
-            setTimeout(function () {
-
-                switchButton.classList.remove(
-                    "is-switching"
-                );
-
-            }, 700);
-
-        }
 
     }
 
@@ -257,7 +283,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         switchButton.addEventListener(
             "click",
-            switchAccounts
+            swapAccounts
         );
 
     }
@@ -273,13 +299,215 @@ document.addEventListener("DOMContentLoaded", function () {
             "input",
             function () {
 
+                let value =
+                    amountInput.value;
+
+
                 /*
-                 * Prevent negative numbers.
+                 * Prevent negative value
                  */
 
-                if (Number(this.value) < 0) {
-                    this.value = "";
+                if (
+                    value !== "" &&
+                    Number(value) < 0
+                ) {
+
+                    amountInput.value = "";
+
                 }
+
+
+                /*
+                 * Keep maximum 2 decimal places
+                 */
+
+                if (
+                    value.includes(".")
+                ) {
+
+                    const parts =
+                        value.split(".");
+
+                    if (
+                        parts[1] &&
+                        parts[1].length > 2
+                    ) {
+
+                        amountInput.value =
+                            parts[0] +
+                            "." +
+                            parts[1].substring(
+                                0,
+                                2
+                            );
+
+                    }
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* ==========================================
+       OPEN SUPPORT MODAL
+    ========================================== */
+
+    function openSupportModal() {
+
+        if (!supportOverlay) {
+            return;
+        }
+
+
+        supportOverlay.classList.add(
+            "active"
+        );
+
+
+        supportOverlay.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+
+        /*
+         * Prevent background scrolling
+         */
+
+        document.body.style.overflow =
+            "hidden";
+
+
+        /*
+         * Focus close button
+         */
+
+        setTimeout(function () {
+
+            if (supportClose) {
+                supportClose.focus();
+            }
+
+        }, 150);
+
+    }
+
+
+    /* ==========================================
+       CLOSE SUPPORT MODAL
+    ========================================== */
+
+    function closeSupportModal() {
+
+        if (!supportOverlay) {
+            return;
+        }
+
+
+        supportOverlay.classList.remove(
+            "active"
+        );
+
+
+        supportOverlay.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+
+        /*
+         * Restore scrolling
+         */
+
+        document.body.style.overflow =
+            "";
+
+    }
+
+
+    /* ==========================================
+       CLOSE BUTTON
+    ========================================== */
+
+    if (supportClose) {
+
+        supportClose.addEventListener(
+            "click",
+            closeSupportModal
+        );
+
+    }
+
+
+    /* ==========================================
+       CLICK OUTSIDE MODAL
+    ========================================== */
+
+    if (supportOverlay) {
+
+        supportOverlay.addEventListener(
+            "click",
+            function (event) {
+
+                if (
+                    event.target ===
+                    supportOverlay
+                ) {
+
+                    closeSupportModal();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* ==========================================
+       ESCAPE KEY
+    ========================================== */
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                event.key === "Escape" &&
+                supportOverlay &&
+                supportOverlay.classList.contains(
+                    "active"
+                )
+            ) {
+
+                closeSupportModal();
+
+            }
+
+        }
+    );
+
+
+    /* ==========================================
+       SUPPORT BUTTON
+    ========================================== */
+
+    if (supportButton) {
+
+        supportButton.addEventListener(
+            "click",
+            function () {
+
+                /*
+                 * If you later connect
+                 * customer service / chat,
+                 * put that action here.
+                 */
+
+                closeSupportModal();
 
             }
         );
@@ -291,68 +519,136 @@ document.addEventListener("DOMContentLoaded", function () {
        CONFIRM TRANSFER
     ========================================== */
 
-    if (confirmButton) {
+    if (submitButton) {
 
-        confirmButton.addEventListener(
+        submitButton.addEventListener(
             "click",
             function () {
 
+                /*
+                 * Read amount
+                 */
+
                 const amount =
-                    Number(amountInput?.value);
+                    Number(
+                        amountInput
+                            ? amountInput.value
+                            : 0
+                    );
 
 
-                /* Empty / invalid */
+                /* ==================================
+                   INVALID AMOUNT
+                ================================== */
 
                 if (
-                    isNaN(amount) ||
+                    !Number.isFinite(amount) ||
                     amount <= 0
                 ) {
 
-                    alert(
-                        "Please enter a valid transfer amount."
-                    );
+                    if (amountBox) {
+
+                        amountBox.classList.remove(
+                            "input-error"
+                        );
+
+                        void amountBox.offsetWidth;
+
+                        amountBox.classList.add(
+                            "input-error"
+                        );
+
+                    }
+
+
+                    if (amountInput) {
+                        amountInput.focus();
+                    }
+
 
                     return;
+
                 }
 
 
-                /* Get current balance */
+                /* ==================================
+                   GET CURRENT BALANCE
+                ================================== */
 
-                if (typeof getBalance !== "function") {
+                if (
+                    typeof getBalance !==
+                    "function"
+                ) {
 
-                    alert(
-                        "Balance system is not available."
+                    console.error(
+                        "getBalance() not found."
                     );
 
+                    openSupportModal();
+
                     return;
+
                 }
 
 
                 const balance =
-                    Number(getBalance());
-
-
-                /* Insufficient balance */
-
-                if (balance < amount) {
-
-                    alert(
-                        "Insufficient Balance"
+                    Number(
+                        getBalance()
                     );
 
+
+                /* ==================================
+                   INSUFFICIENT BALANCE
+                ================================== */
+
+                if (
+                    !Number.isFinite(balance) ||
+                    balance < amount
+                ) {
+
+                    if (amountBox) {
+
+                        amountBox.classList.remove(
+                            "input-error"
+                        );
+
+                        void amountBox.offsetWidth;
+
+                        amountBox.classList.add(
+                            "input-error"
+                        );
+
+                    }
+
+
+                    /*
+                     * Show a small message
+                     * instead of browser alert.
+                     */
+
+                    showTransferMessage(
+                        "Insufficient balance."
+                    );
+
+
                     return;
+
                 }
 
 
+                /* ==================================
+                   VALID BALANCE
+                ================================== */
+
                 /*
-                 * Keep your current transfer behavior.
+                 * Your existing system does NOT
+                 * automatically transfer the money.
                  *
-                 * No automatic/demo balance is added.
+                 * Instead we show the professional
+                 * Customer Service modal.
                  */
 
-                alert(
-                    "Contact Your Customer Service"
-                );
+                openSupportModal();
 
             }
         );
@@ -361,34 +657,102 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* ==========================================
-       INITIAL STATE
+       SMALL TRANSFER MESSAGE
     ========================================== */
 
-    if (fundingSlot) {
-        fundingSlot.style.order = "1";
+    function showTransferMessage(
+        message
+    ) {
+
+        const messageBox =
+            document.getElementById(
+                "transferMessage"
+            );
+
+
+        if (!messageBox) {
+            return;
+        }
+
+
+        messageBox.textContent =
+            message;
+
+
+        messageBox.style.display =
+            "block";
+
+
+        /*
+         * Hide automatically
+         */
+
+        clearTimeout(
+            showTransferMessage.timer
+        );
+
+
+        showTransferMessage.timer =
+            setTimeout(function () {
+
+                messageBox.style.display =
+                    "none";
+
+            }, 2800);
+
     }
-
-    if (switchButton?.parentElement) {
-        switchButton.parentElement.style.order = "2";
-    }
-
-    if (tradingSlot) {
-        tradingSlot.style.order = "3";
-    }
-
-
-    updateTransferBalance();
-
-    updateDirection();
 
 
     /* ==========================================
-       REFRESH BALANCE WHEN PAGE RETURNS
+       INPUT ERROR ANIMATION
     ========================================== */
 
-    window.addEventListener(
-        "focus",
-        updateTransferBalance
-    );
+    const style =
+        document.createElement("style");
+
+
+    style.textContent = `
+        .input-error {
+            animation: transferInputError 0.35s ease;
+            border-color: rgba(255, 70, 70, 0.65) !important;
+            box-shadow:
+                0 0 0 3px rgba(255, 70, 70, 0.05),
+                0 0 18px rgba(255, 70, 70, 0.08) !important;
+        }
+
+        @keyframes transferInputError {
+
+            0% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-4px);
+            }
+
+            50% {
+                transform: translateX(4px);
+            }
+
+            75% {
+                transform: translateX(-3px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+
+        }
+    `;
+
+
+    document.head.appendChild(style);
+
+
+    /* ==========================================
+       INITIAL DIRECTION
+    ========================================== */
+
+    updateDirection();
 
 });
