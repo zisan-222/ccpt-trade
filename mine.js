@@ -34,12 +34,721 @@ function generate8DigitUID() {
 
 
 // =======================================
+// PROFESSIONAL SIGN OUT POPUP
+// =======================================
+
+function createSignOutPopup() {
+
+    // Prevent duplicate popup
+    if (document.getElementById("cptLogoutModal")) {
+        return;
+    }
+
+
+    // ===================================
+    // CSS
+    // ===================================
+
+    const style = document.createElement("style");
+
+    style.id = "cptLogoutModalStyle";
+
+    style.textContent = `
+
+        /* ==========================================
+           LOGOUT OVERLAY
+        ========================================== */
+
+        #cptLogoutModal {
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 999999;
+
+            display: none;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 22px;
+
+            background:
+                rgba(0, 0, 0, 0.82);
+
+            backdrop-filter:
+                blur(12px);
+
+            -webkit-backdrop-filter:
+                blur(12px);
+
+        }
+
+
+        /* ==========================================
+           MODAL CARD
+        ========================================== */
+
+        .cpt-logout-card {
+
+            position: relative;
+
+            width: 100%;
+
+            max-width: 390px;
+
+            padding: 30px 24px 24px;
+
+            border-radius: 28px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #151515 0%,
+                    #0d0d0d 100%
+                );
+
+            border:
+                1px solid
+                rgba(255, 193, 7, 0.18);
+
+            box-shadow:
+
+                0 30px 80px
+                rgba(0, 0, 0, 0.75),
+
+                0 0 45px
+                rgba(255, 193, 7, 0.07);
+
+            transform:
+                translateY(18px)
+                scale(0.96);
+
+            opacity: 0;
+
+            transition:
+                transform 0.25s ease,
+                opacity 0.25s ease;
+
+        }
+
+
+        #cptLogoutModal.active
+        .cpt-logout-card {
+
+            transform:
+                translateY(0)
+                scale(1);
+
+            opacity: 1;
+
+        }
+
+
+        /* ==========================================
+           CLOSE BUTTON
+        ========================================== */
+
+        .cpt-logout-close {
+
+            position: absolute;
+
+            top: 15px;
+
+            right: 15px;
+
+            width: 38px;
+
+            height: 38px;
+
+            border: 1px solid
+                rgba(255,255,255,0.08);
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,0.055);
+
+            color: #a9a9a9;
+
+            font-size: 24px;
+
+            line-height: 1;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+
+        }
+
+
+        .cpt-logout-close:hover {
+
+            color: #ffffff;
+
+            background:
+                rgba(255,255,255,0.10);
+
+        }
+
+
+        /* ==========================================
+           ICON
+        ========================================== */
+
+        .cpt-logout-icon {
+
+            width: 72px;
+
+            height: 72px;
+
+            margin:
+                4px auto 20px;
+
+            border-radius: 22px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #ffc107,
+                    #ff9800
+                );
+
+            color: #111111;
+
+            font-size: 30px;
+
+            box-shadow:
+
+                0 0 0 6px
+                rgba(255,193,7,0.06),
+
+                0 0 35px
+                rgba(255,193,7,0.25);
+
+        }
+
+
+        /* ==========================================
+           TITLE
+        ========================================== */
+
+        .cpt-logout-title {
+
+            margin: 0;
+
+            text-align: center;
+
+            color: #ffffff;
+
+            font-size: 24px;
+
+            font-weight: 700;
+
+            letter-spacing: -0.3px;
+
+        }
+
+
+        /* ==========================================
+           DESCRIPTION
+        ========================================== */
+
+        .cpt-logout-text {
+
+            margin: 10px auto 0;
+
+            max-width: 300px;
+
+            text-align: center;
+
+            color: #8e8e8e;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+
+        }
+
+
+        /* ==========================================
+           DIVIDER
+        ========================================== */
+
+        .cpt-logout-divider {
+
+            height: 1px;
+
+            margin:
+                24px 0 20px;
+
+            background:
+                rgba(255,255,255,0.07);
+
+        }
+
+
+        /* ==========================================
+           BUTTON AREA
+        ========================================== */
+
+        .cpt-logout-actions {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 12px;
+
+        }
+
+
+        /* ==========================================
+           CANCEL
+        ========================================== */
+
+        .cpt-logout-cancel {
+
+            height: 52px;
+
+            border-radius: 15px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.10);
+
+            background:
+                #1b1b1b;
+
+            color: #d0d0d0;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+
+        }
+
+
+        .cpt-logout-cancel:active {
+
+            transform: scale(0.97);
+
+        }
+
+
+        /* ==========================================
+           CONFIRM
+        ========================================== */
+
+        .cpt-logout-confirm {
+
+            height: 52px;
+
+            border: none;
+
+            border-radius: 15px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffc107,
+                    #ff9800
+                );
+
+            color: #111111;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 8px 25px
+                rgba(255,193,7,0.20);
+
+            transition: 0.2s ease;
+
+        }
+
+
+        .cpt-logout-confirm:active {
+
+            transform: scale(0.97);
+
+        }
+
+
+        .cpt-logout-confirm.loading {
+
+            opacity: 0.65;
+
+            pointer-events: none;
+
+        }
+
+
+        /* ==========================================
+           MOBILE
+        ========================================== */
+
+        @media (max-width: 420px) {
+
+            .cpt-logout-card {
+
+                padding:
+                    28px 20px 20px;
+
+                border-radius: 25px;
+
+            }
+
+            .cpt-logout-title {
+
+                font-size: 22px;
+
+            }
+
+        }
+
+    `;
+
+    document.head.appendChild(style);
+
+
+    // ===================================
+    // CREATE HTML
+    // ===================================
+
+    const modal =
+        document.createElement("div");
+
+    modal.id =
+        "cptLogoutModal";
+
+
+    modal.innerHTML = `
+
+        <div class="cpt-logout-card">
+
+
+            <!-- CLOSE -->
+
+            <button
+                type="button"
+                class="cpt-logout-close"
+                id="cptLogoutClose"
+                aria-label="Close"
+            >
+                ×
+            </button>
+
+
+            <!-- ICON -->
+
+            <div class="cpt-logout-icon">
+
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+
+            </div>
+
+
+            <!-- TITLE -->
+
+            <h2 class="cpt-logout-title">
+
+                Sign Out
+
+            </h2>
+
+
+            <!-- MESSAGE -->
+
+            <p class="cpt-logout-text">
+
+                Are you sure you want to Sign Out
+                from your CptMarkets account?
+
+            </p>
+
+
+            <!-- DIVIDER -->
+
+            <div class="cpt-logout-divider"></div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="cpt-logout-actions">
+
+
+                <button
+                    type="button"
+                    class="cpt-logout-cancel"
+                    id="cptLogoutCancel"
+                >
+
+                    Cancel
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="cpt-logout-confirm"
+                    id="cptLogoutConfirm"
+                >
+
+                    OK
+
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+    `;
+
+
+    document.body.appendChild(modal);
+
+
+    // ===================================
+    // CLOSE FUNCTION
+    // ===================================
+
+    function closeLogoutPopup() {
+
+        modal.classList.remove("active");
+
+        setTimeout(
+            function () {
+
+                modal.style.display =
+                    "none";
+
+            },
+            230
+        );
+
+    }
+
+
+    // ===================================
+    // OPEN FUNCTION
+    // ===================================
+
+    window.openLogoutPopup =
+        function () {
+
+            modal.style.display =
+                "flex";
+
+            requestAnimationFrame(
+                function () {
+
+                    modal.classList.add(
+                        "active"
+                    );
+
+                }
+            );
+
+        };
+
+
+    // ===================================
+    // CLOSE BUTTON
+    // ===================================
+
+    document
+        .getElementById("cptLogoutClose")
+        .addEventListener(
+            "click",
+            closeLogoutPopup
+        );
+
+
+    // ===================================
+    // CANCEL BUTTON
+    // ===================================
+
+    document
+        .getElementById("cptLogoutCancel")
+        .addEventListener(
+            "click",
+            closeLogoutPopup
+        );
+
+
+    // ===================================
+    // CLICK OUTSIDE
+    // ===================================
+
+    modal.addEventListener(
+        "click",
+        function (event) {
+
+            if (
+                event.target === modal
+            ) {
+
+                closeLogoutPopup();
+
+            }
+
+        }
+    );
+
+
+    // ===================================
+    // ESC KEY
+    // ===================================
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                event.key === "Escape" &&
+                modal.classList.contains("active")
+            ) {
+
+                closeLogoutPopup();
+
+            }
+
+        }
+    );
+
+
+    // ===================================
+    // CONFIRM LOGOUT
+    // ===================================
+
+    document
+        .getElementById("cptLogoutConfirm")
+        .addEventListener(
+            "click",
+            async function () {
+
+                const confirmButton =
+                    this;
+
+
+                confirmButton.classList.add(
+                    "loading"
+                );
+
+                confirmButton.textContent =
+                    "Signing Out...";
+
+
+                try {
+
+                    // =========================
+                    // FIREBASE SIGN OUT
+                    // =========================
+
+                    await signOut(auth);
+
+
+                    // =========================
+                    // CLEAR LOCAL DATA
+                    // =========================
+
+                    localStorage.removeItem(
+                        "currentUser"
+                    );
+
+                    localStorage.removeItem(
+                        "user"
+                    );
+
+
+                    // =========================
+                    // GO LOGIN PAGE
+                    // =========================
+
+                    window.location.href =
+                        "index.html";
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Sign out failed:",
+                        error
+                    );
+
+
+                    confirmButton.classList.remove(
+                        "loading"
+                    );
+
+                    confirmButton.textContent =
+                        "OK";
+
+
+                    closeLogoutPopup();
+
+
+                    // Professional error message
+                    setTimeout(
+                        function () {
+
+                            alert(
+                                "Unable to sign out. Please try again."
+                            );
+
+                        },
+                        250
+                    );
+
+                }
+
+            }
+        );
+
+}
+
+
+// =======================================
 // PAGE LOAD
 // =======================================
 
 document.addEventListener(
     "DOMContentLoaded",
     function () {
+
+
+        // ===================================
+        // CREATE LOGOUT POPUP
+        // ===================================
+
+        createSignOutPopup();
+
 
         const name =
             document.getElementById("username");
@@ -59,6 +768,7 @@ document.addEventListener(
             auth,
             async function (firebaseUser) {
 
+
                 // -----------------------------------
                 // NO USER
                 // -----------------------------------
@@ -66,22 +776,27 @@ document.addEventListener(
                 if (!firebaseUser) {
 
                     if (name) {
-                        name.textContent = "User";
+                        name.textContent =
+                            "User";
                     }
 
                     if (uidElement) {
-                        uidElement.textContent = "N/A";
+                        uidElement.textContent =
+                            "N/A";
                     }
 
                     if (avatar) {
-                        avatar.textContent = "U";
+                        avatar.textContent =
+                            "U";
                     }
 
                     return;
+
                 }
 
 
                 try {
+
 
                     // ===================================
                     // GET FIRESTORE USER
@@ -110,18 +825,22 @@ document.addEventListener(
                         );
 
                         if (name) {
-                            name.textContent = "User";
+                            name.textContent =
+                                "User";
                         }
 
                         if (uidElement) {
-                            uidElement.textContent = "N/A";
+                            uidElement.textContent =
+                                "N/A";
                         }
 
                         if (avatar) {
-                            avatar.textContent = "U";
+                            avatar.textContent =
+                                "U";
                         }
 
                         return;
+
                     }
 
 
@@ -147,16 +866,6 @@ document.addEventListener(
                             userData.userId || ""
                         ).trim();
 
-
-                    /*
-                     * Check whether UID is exactly
-                     * 8 numeric digits.
-                     *
-                     * Example:
-                     * 42623883  = VALID
-                     *
-                     * UID1786607165288230 = INVALID
-                     */
 
                     const validUID =
                         /^\d{8}$/.test(
@@ -204,7 +913,7 @@ document.addEventListener(
 
 
                     // ===================================
-                    // SHOW 8 DIGIT UID
+                    // SHOW UID
                     // ===================================
 
                     if (uidElement) {
@@ -230,7 +939,7 @@ document.addEventListener(
 
 
                     // ===================================
-                    // GET BALANCE
+                    // BALANCE
                     // ===================================
 
                     const balance =
@@ -384,9 +1093,6 @@ document.addEventListener(
         window.openSupportChat =
             function () {
 
-                // --------------------------------
-                // TAWK ALREADY READY
-                // --------------------------------
 
                 if (
                     window.Tawk_API &&
@@ -422,10 +1128,6 @@ document.addEventListener(
 
                 }
 
-
-                // --------------------------------
-                // WAIT FOR TAWK
-                // --------------------------------
 
                 let attempts = 0;
 
@@ -474,10 +1176,6 @@ document.addEventListener(
 
                             }
 
-
-                            // --------------------------------
-                            // TIMEOUT
-                            // --------------------------------
 
                             if (
                                 attempts >= 30
@@ -548,9 +1246,6 @@ document.addEventListener(
                     "click",
                     function (e) {
 
-                        // --------------------------------
-                        // CLICK ANIMATION
-                        // --------------------------------
 
                         this.style.transform =
                             "scale(0.98)";
@@ -572,10 +1267,6 @@ document.addEventListener(
                                 "href"
                             );
 
-
-                        // --------------------------------
-                        // REAL LINK
-                        // --------------------------------
 
                         if (
                             link &&
@@ -606,9 +1297,7 @@ document.addEventListener(
                                 .toLowerCase();
 
 
-                        // =================================
                         // MY ASSETS
-                        // =================================
 
                         if (
                             buttonName ===
@@ -625,9 +1314,7 @@ document.addEventListener(
                         }
 
 
-                        // =================================
                         // MY ORDERS
-                        // =================================
 
                         if (
                             buttonName ===
@@ -644,9 +1331,7 @@ document.addEventListener(
                         }
 
 
-                        // =================================
                         // COPY TRADING
-                        // =================================
 
                         if (
                             buttonName ===
@@ -663,9 +1348,7 @@ document.addEventListener(
                         }
 
 
-                        // =================================
                         // LOAN
-                        // =================================
 
                         if (
                             buttonName ===
@@ -681,9 +1364,7 @@ document.addEventListener(
                         }
 
 
-                        // =================================
                         // WEALTH / MINING
-                        // =================================
 
                         if (
                             buttonName ===
@@ -700,9 +1381,7 @@ document.addEventListener(
                         }
 
 
-                        // =================================
                         // INVITE FRIENDS
-                        // =================================
 
                         if (
                             buttonName ===
@@ -719,9 +1398,7 @@ document.addEventListener(
                         }
 
 
-                        // =================================
                         // WALLET MANAGEMENT
-                        // =================================
 
                         if (
                             buttonName ===
@@ -738,9 +1415,7 @@ document.addEventListener(
                         }
 
 
-                        // =================================
                         // SECURITY
-                        // =================================
 
                         if (
                             buttonName ===
@@ -756,9 +1431,7 @@ document.addEventListener(
                         }
 
 
-                        // =================================
                         // ANNOUNCEMENTS
-                        // =================================
 
                         if (
                             buttonName ===
@@ -774,9 +1447,7 @@ document.addEventListener(
                         }
 
 
-                        // =================================
                         // SUPPORT
-                        // =================================
 
                         if (
                             buttonName ===
@@ -864,10 +1535,6 @@ document.addEventListener(
                             .toLowerCase();
 
 
-                    // --------------------------------
-                    // HOME
-                    // --------------------------------
-
                     if (
                         text === "home"
                     ) {
@@ -877,10 +1544,6 @@ document.addEventListener(
 
                     }
 
-
-                    // --------------------------------
-                    // MARKETS
-                    // --------------------------------
 
                     if (
                         text === "markets"
@@ -892,10 +1555,6 @@ document.addEventListener(
                     }
 
 
-                    // --------------------------------
-                    // ASSETS
-                    // --------------------------------
-
                     if (
                         text === "assets"
                     ) {
@@ -905,10 +1564,6 @@ document.addEventListener(
 
                     }
 
-
-                    // --------------------------------
-                    // MINE
-                    // --------------------------------
 
                     if (
                         text === "mine"
@@ -923,9 +1578,7 @@ document.addEventListener(
             );
 
 
-            // =================================
             // TRADE BUTTON
-            // =================================
 
             const tradeButton =
                 bottomNav.querySelector(
@@ -964,53 +1617,20 @@ document.addEventListener(
 
             signOutBtn.addEventListener(
                 "click",
-                async function () {
+                function (event) {
 
-                    const confirmed =
-                        confirm(
-                            "Are you sure you want to Sign Out?"
-                        );
+                    event.preventDefault();
 
+                    // IMPORTANT:
+                    // No browser confirm()
+                    // Professional popup instead
 
-                    if (!confirmed) {
+                    if (
+                        typeof window.openLogoutPopup ===
+                        "function"
+                    ) {
 
-                        return;
-
-                    }
-
-
-                    try {
-
-                        await signOut(
-                            auth
-                        );
-
-
-                        localStorage.removeItem(
-                            "currentUser"
-                        );
-
-
-                        localStorage.removeItem(
-                            "user"
-                        );
-
-
-                        window.location.href =
-                            "index.html";
-
-
-                    } catch (error) {
-
-                        console.error(
-                            "Sign out failed:",
-                            error
-                        );
-
-
-                        alert(
-                            "Sign out failed."
-                        );
+                        window.openLogoutPopup();
 
                     }
 
