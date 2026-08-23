@@ -181,26 +181,6 @@ if (withdrawBtn) {
 
 }
 
-
-/* ==========================================
-   TRANSFER BUTTON
-========================================== */
-
-const transferBtn = document.querySelector(".transfer-btn");
-
-if (transferBtn) {
-
-    transferBtn.addEventListener("click", function (e) {
-
-        e.preventDefault();
-
-        alert("Transfer page coming soon.");
-
-    });
-
-}
-
-
 /* ==========================================
    UPDATE BALANCE
 ========================================== */
