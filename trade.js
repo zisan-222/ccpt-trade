@@ -2491,33 +2491,12 @@ async function closeCurrentTrade() {
         );  
   
   
-        alert(  
-  
-            closedSide +  
-            " trade closed successfully.\n\n" +  
-  
-            "Close Price: $" +  
-            closePrice.toFixed(2) +  
-  
-            "\nUser P/L: " +  
-            (  
-                userProfitLoss >= 0  
-                    ? "+"  
-                    : ""  
-            ) +  
-            "$" +  
-            userProfitLoss.toFixed(2) +  
-  
-            "\nFinal P/L: " +  
-            (  
-                finalProfitLoss >= 0  
-                    ? "+"  
-                    : ""  
-            ) +  
-            "$" +  
-            finalProfitLoss.toFixed(2)  
-  
-        );  
+      cptShowTradeClosed(
+    closedSide,
+    entryPrice,
+    closePrice,
+    finalProfitLoss
+);
   
   
         console.log(  
