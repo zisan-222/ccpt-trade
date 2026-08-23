@@ -153,7 +153,32 @@ if (depositBtn) {
     });
 
 }
+/* ==========================================
+   WITHDRAW BUTTON
+   USE DASHBOARD WITHDRAW INTERFACE
+========================================== */
 
+const withdrawBtn =
+    document.querySelector(".withdraw-btn");
+
+if (withdrawBtn) {
+
+    withdrawBtn.addEventListener(
+        "click",
+        function (e) {
+
+            e.preventDefault();
+
+            /*
+             * Dashboard-এর একই
+             * Withdrawal Interface খুলবে
+             */
+            openWithdrawInterface();
+
+        }
+    );
+
+}
 
 /* ==========================================
    UPDATE BALANCE
