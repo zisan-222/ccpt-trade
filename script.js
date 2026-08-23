@@ -19,46 +19,30 @@ import {
 // PASSWORD SHOW / HIDE
 // ==========================================
 
-const passwordInput =
-    document.getElementById("password");
-
-const togglePassword =
-    document.getElementById("togglePassword");
+const passwordInput = document.getElementById("password");
+const togglePassword = document.getElementById("togglePassword");
 
 if (togglePassword && passwordInput) {
 
-    togglePassword.addEventListener(
-        "click",
-        function () {
+    togglePassword.addEventListener("click", function () {
 
-            if (passwordInput.type === "password") {
+        if (passwordInput.type === "password") {
 
-                passwordInput.type = "text";
+            passwordInput.type = "text";
 
-                togglePassword.classList.remove(
-                    "fa-eye"
-                );
+            togglePassword.classList.remove("fa-eye");
+            togglePassword.classList.add("fa-eye-slash");
 
-                togglePassword.classList.add(
-                    "fa-eye-slash"
-                );
+        } else {
 
-            } else {
+            passwordInput.type = "password";
 
-                passwordInput.type = "password";
-
-                togglePassword.classList.remove(
-                    "fa-eye-slash"
-                );
-
-                togglePassword.classList.add(
-                    "fa-eye"
-                );
-
-            }
+            togglePassword.classList.remove("fa-eye-slash");
+            togglePassword.classList.add("fa-eye");
 
         }
-    );
+
+    });
 
 }
 
@@ -67,270 +51,243 @@ if (togglePassword && passwordInput) {
 // LOGIN FORM
 // ==========================================
 
-const loginForm =
-    document.getElementById("loginForm");
-
-
-// ==========================================
-// LOGIN BUTTON
-// ==========================================
-
-const loginButton =
-    loginForm
-        ? loginForm.querySelector(".login-btn")
-        : null;
-
-
-// ==========================================
-// IMPORTANT
-// Login is allowed ONLY after clicking
-// "Go to Sign In"
-// ==========================================
-
-let loginButtonPressed = false;
-
-
-if (loginButton) {
-
-    loginButton.addEventListener(
-        "click",
-        function () {
-
-            loginButtonPressed = true;
-
-        }
-    );
-
-}
-
-
-// ==========================================
-// LOGIN FORM SUBMIT
-// ==========================================
+const loginForm = document.getElementById("loginForm");
 
 if (loginForm) {
 
-    loginForm.addEventListener(
-        "submit",
-        async function (e) {
+    loginForm.addEventListener("submit", async function (e) {
 
-            e.preventDefault();
+        e.preventDefault();
+
+        // ==================================
+        // GET USERNAME
+        // ==================================
+
+        const usernameInput =
+            document.getElementById("username");
+
+        const username =
+            usernameInput
+                ? usernameInput.value.trim()
+                : "";
+
+        // ==================================
+        // GET PASSWORD
+        // ==================================
+
+        const password =
+            passwordInput
+                ? passwordInput.value
+                : "";
+
+        // ==================================
+        // CHECK EMPTY FIELDS
+        // ==================================
+
+        if (!username || !password) {
+
+            alert(
+                "Please enter Username and Password."
+            );
+
+            return;
+        }
+
+
+        // ==================================
+        // DISABLE BUTTON WHILE LOGIN
+        // ==================================
+
+        const loginButton =
+            loginForm.querySelector(".login-btn");
+
+        if (loginButton) {
+
+            loginButton.disabled = true;
+
+            loginButton.textContent = "Signing In...";
+
+        }
+
+
+        // ==================================
+        // FIREBASE LOGIN
+        // ==================================
+
+        try {
+
+            /*
+             * Register system uses:
+             *
+             * username@cptmarkets.local
+             */
+
+            const email =
+                username.toLowerCase()
+                + "@cptmarkets.local";
 
 
             // ==================================
-            // BLOCK AUTO SUBMIT
+            // FIREBASE AUTHENTICATION
             // ==================================
 
-            if (!loginButtonPressed) {
-
-                return;
-
-            }
-
-
-            // Reset immediately so another
-            // automatic submit cannot login.
-            loginButtonPressed = false;
+            const userCredential =
+                await signInWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                );
 
 
-            // ==================================
-            // GET USERNAME
-            // ==================================
-
-            const username =
-                document
-                .getElementById("username")
-                .value
-                .trim();
+            const firebaseUser =
+                userCredential.user;
 
 
             // ==================================
-            // GET PASSWORD
+            // GET USER DATA FROM FIRESTORE
             // ==================================
 
-            const password =
-                passwordInput.value;
+            const userDoc =
+                await getDoc(
+                    doc(
+                        db,
+                        "users",
+                        firebaseUser.uid
+                    )
+                );
 
 
             // ==================================
-            // CHECK EMPTY FIELDS
+            // USER DATA NOT FOUND
             // ==================================
 
-            if (!username || !password) {
+            if (!userDoc.exists()) {
 
                 alert(
-                    "Please enter Username and Password."
+                    "User account data was not found."
                 );
 
                 return;
-
             }
 
 
+            const userData =
+                userDoc.data();
+
+
             // ==================================
-            // FIREBASE LOGIN
+            // SAVE CURRENT USER SESSION
             // ==================================
 
-            try {
+            localStorage.setItem(
+                "currentUser",
+                JSON.stringify({
 
-                /*
-                 * Register system creates an
-                 * internal Firebase email from
-                 * the username.
-                 */
+                    uid:
+                        firebaseUser.uid,
 
-                const email =
-                    username.toLowerCase()
-                    + "@cptmarkets.local";
+                    username:
+                        userData.username ||
+                        username,
 
-
-                /*
-                 * Firebase Login
-                 */
-
-                const userCredential =
-                    await signInWithEmailAndPassword(
-                        auth,
+                    email:
+                        userData.email ||
                         email,
-                        password
-                    );
 
-
-                const firebaseUser =
-                    userCredential.user;
-
-
-                // ==================================
-                // GET USER DATA FROM FIRESTORE
-                // ==================================
-
-                const userDoc =
-                    await getDoc(
-                        doc(
-                            db,
-                            "users",
-                            firebaseUser.uid
+                    balance:
+                        Number(
+                            userData.balance || 0
                         )
-                    );
+
+                })
+            );
 
 
-                if (!userDoc.exists()) {
+            // ==================================
+            // LOGIN SUCCESS
+            // ==================================
 
-                    alert(
-                        "User account data was not found."
-                    );
-
-                    return;
-
-                }
+            alert("Login Success");
 
 
-                const userData =
-                    userDoc.data();
+            // ==================================
+            // GO TO DASHBOARD
+            // ==================================
+
+            window.location.href =
+                "dashboard.html";
 
 
-                // ==================================
-                // SAVE CURRENT USER SESSION
-                // ==================================
+        } catch (error) {
 
-                localStorage.setItem(
-                    "currentUser",
-                    JSON.stringify({
-
-                        uid:
-                            firebaseUser.uid,
-
-                        username:
-                            userData.username ||
-                            username,
-
-                        email:
-                            userData.email ||
-                            email,
-
-                        balance:
-                            Number(
-                                userData.balance || 0
-                            )
-
-                    })
-                );
+            console.error(
+                "Login failed:",
+                error
+            );
 
 
-                // ==================================
-                // LOGIN SUCCESS
-                // ==================================
+            // ==================================
+            // RESTORE BUTTON
+            // ==================================
+
+            if (loginButton) {
+
+                loginButton.disabled = false;
+
+                loginButton.textContent =
+                    "Go to Sign In";
+
+            }
+
+
+            // ==================================
+            // FIREBASE ERROR HANDLING
+            // ==================================
+
+            if (
+                error.code ===
+                "auth/invalid-credential"
+            ) {
 
                 alert(
-                    "Login Success"
+                    "Wrong Username or Password."
                 );
 
+            }
 
-                // ==================================
-                // GO TO DASHBOARD
-                // ==================================
+            else if (
+                error.code ===
+                "auth/user-not-found"
+            ) {
 
-                window.location.href =
-                    "dashboard.html";
-
-
-            } catch (error) {
-
-                console.error(
-                    "Login failed:",
-                    error
+                alert(
+                    "Username not found."
                 );
 
+            }
 
-                // ==================================
-                // LOGIN ERRORS
-                // ==================================
+            else if (
+                error.code ===
+                "auth/wrong-password"
+            ) {
 
-                if (
-                    error.code ===
-                    "auth/invalid-credential"
-                ) {
+                alert(
+                    "Wrong Password."
+                );
 
-                    alert(
-                        "Wrong Username or Password."
-                    );
+            }
 
-                }
+            else {
 
-                else if (
-                    error.code ===
-                    "auth/user-not-found"
-                ) {
-
-                    alert(
-                        "Username not found."
-                    );
-
-                }
-
-                else if (
-                    error.code ===
-                    "auth/wrong-password"
-                ) {
-
-                    alert(
-                        "Wrong Password."
-                    );
-
-                }
-
-                else {
-
-                    alert(
-                        "Login failed: "
-                        + error.message
-                    );
-
-                }
+                alert(
+                    "Login failed: "
+                    + error.message
+                );
 
             }
 
         }
-    );
+
+    });
 
 }
