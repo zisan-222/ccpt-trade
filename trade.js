@@ -783,44 +783,30 @@ if (amountInput) {
 
 }
 
-
 /* =========================================================
-   TRADINGVIEW — PROFESSIONAL MOBILE CHART
+   TRADINGVIEW CHART
+   CPTMARKETS - FIXED VERSION
    ========================================================= */
 
-function initializeTradingView() {
+let tradingViewWidget = null;
+let tradingViewLoading = false;
 
-    const chart =
-        document.getElementById("tvchart");
 
-    if (!chart) {
+/* =========================================================
+   CHART SIZE
+   ========================================================= */
 
-        console.warn(
-            "TradingView container #tvchart not found."
-        );
+function fixMobileChartHeight() {
 
-        return;
+    const chart = document.getElementById("tvchart");
+    const card = document.querySelector(".chart-card");
 
-    }
+    if (!chart) return;
 
-    if (
-        typeof TradingView ===
-        "undefined"
-    ) {
-
-        console.warn(
-            "TradingView library is not loaded."
-        );
-
-        return;
-
-    }
-
-    /*
-     * Make sure the container is completely clean.
-     */
-
-    chart.innerHTML = "";
+    const height =
+        window.innerWidth <= 600
+            ? 360
+            : 430;
 
     chart.style.setProperty(
         "width",
@@ -829,190 +815,456 @@ function initializeTradingView() {
     );
 
     chart.style.setProperty(
-        "max-width",
-        "100%",
+        "height",
+        height + "px",
         "important"
     );
 
     chart.style.setProperty(
-        "margin",
-        "0",
+        "min-height",
+        height + "px",
         "important"
     );
 
     chart.style.setProperty(
-        "padding",
-        "0",
+        "max-height",
+        height + "px",
         "important"
     );
 
     chart.style.setProperty(
-        "overflow",
-        "hidden",
+        "display",
+        "block",
         "important"
     );
 
+    if (card) {
 
-    /*
-     * Chart and card must have identical height.
-     */
+        card.style.setProperty(
+            "width",
+            "100%",
+            "important"
+        );
+
+        card.style.setProperty(
+            "height",
+            height + "px",
+            "important"
+        );
+
+        card.style.setProperty(
+            "min-height",
+            height + "px",
+            "important"
+        );
+
+        card.style.setProperty(
+            "overflow",
+            "hidden",
+            "important"
+        );
+
+        card.style.setProperty(
+            "padding",
+            "0",
+            "important"
+        );
+
+        card.style.setProperty(
+            "margin-left",
+            "0",
+            "important"
+        );
+
+        card.style.setProperty(
+            "margin-right",
+            "0",
+            "important"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   LOAD TRADINGVIEW LIBRARY
+   ========================================================= */
+
+function loadTradingViewLibrary() {
+
+    return new Promise(function(resolve, reject) {
+
+        if (
+            typeof TradingView !== "undefined"
+        ) {
+
+            resolve();
+            return;
+
+        }
+
+
+        const existingScript =
+            document.querySelector(
+                'script[src="https://s3.tradingview.com/tv.js"]'
+            );
+
+
+        if (existingScript) {
+
+            let attempts = 0;
+
+            const checker =
+                setInterval(function() {
+
+                    attempts++;
+
+                    if (
+                        typeof TradingView !==
+                        "undefined"
+                    ) {
+
+                        clearInterval(checker);
+
+                        resolve();
+
+                        return;
+
+                    }
+
+
+                    if (attempts >= 50) {
+
+                        clearInterval(checker);
+
+                        reject(
+                            new Error(
+                                "TradingView library did not load."
+                            )
+                        );
+
+                    }
+
+                }, 100);
+
+            return;
+
+        }
+
+
+        const script =
+            document.createElement("script");
+
+        script.src =
+            "https://s3.tradingview.com/tv.js";
+
+        script.async =
+            true;
+
+
+        script.onload =
+            function() {
+
+                if (
+                    typeof TradingView !==
+                    "undefined"
+                ) {
+
+                    resolve();
+
+                } else {
+
+                    reject(
+                        new Error(
+                            "TradingView library loaded but TradingView object is unavailable."
+                        )
+                    );
+
+                }
+
+            };
+
+
+        script.onerror =
+            function() {
+
+                reject(
+                    new Error(
+                        "Unable to load TradingView library."
+                    )
+                );
+
+            };
+
+
+        document.head.appendChild(
+            script
+        );
+
+    });
+
+}
+
+
+/* =========================================================
+   CREATE TRADINGVIEW CHART
+   ========================================================= */
+
+async function initializeTradingView() {
+
+    const chart =
+        document.getElementById(
+            "tvchart"
+        );
+
+
+    if (!chart) {
+
+        console.error(
+            "TradingView container #tvchart not found."
+        );
+
+        return;
+
+    }
+
+
+    if (tradingViewLoading) {
+
+        return;
+
+    }
+
+
+    tradingViewLoading =
+        true;
+
 
     fixMobileChartHeight();
 
 
+    /*
+     * Remove old widget if one exists.
+     */
+
+    chart.innerHTML = "";
+
+
     try {
 
-        new TradingView.widget({
-
-            /*
-             * FULL SIZE
-             */
-
-            autosize: true,
-
-            width: "100%",
-
-            height: "100%",
+        await loadTradingViewLibrary();
 
 
-            /*
-             * GOLD / USD
-             */
-
-            symbol:
-                "OANDA:XAUUSD",
+        fixMobileChartHeight();
 
 
-            /*
-             * 1 minute candles
-             */
+        /*
+         * Make sure TradingView receives
+         * a real visible container.
+         */
 
-            interval:
-                "1",
+        chart.style.position =
+            "relative";
 
-
-            timezone:
-                "Etc/UTC",
-
-
-            /*
-             * PROFESSIONAL DARK THEME
-             */
-
-            theme:
-                "dark",
+        chart.style.background =
+            "#050a11";
 
 
-            style:
-                "1",
+        /*
+         * IMPORTANT:
+         *
+         * Do NOT use autosize alone on mobile.
+         * Give TradingView explicit dimensions.
+         */
+
+        const width =
+            Math.max(
+                chart.clientWidth,
+                window.innerWidth,
+                320
+            );
 
 
-            locale:
-                "en",
+        const height =
+            window.innerWidth <= 600
+                ? 360
+                : 430;
 
 
-            /*
-             * Dark chart background
-             */
+        tradingViewWidget =
+            new TradingView.widget({
 
-            backgroundColor:
-                "#02070E",
+                container_id:
+                    "tvchart",
 
+                width:
+                    width,
 
-            gridColor:
-                "rgba(75, 104, 135, 0.18)",
+                height:
+                    height,
 
+                symbol:
+                    "OANDA:XAUUSD",
 
-            toolbar_bg:
-                "#02070E",
+                interval:
+                    "1",
 
+                timezone:
+                    "Etc/UTC",
 
-            /*
-             * Remove unnecessary
-             * TradingView controls.
-             */
+                theme:
+                    "dark",
 
-            enable_publishing:
-                false,
+                style:
+                    "1",
 
-            save_image:
-                false,
+                locale:
+                    "en",
 
-            hide_top_toolbar:
-                true,
+                toolbar_bg:
+                    "#050a11",
 
-            hide_legend:
-                true,
+                enable_publishing:
+                    false,
 
+                allow_symbol_change:
+                    false,
 
-            /*
-             * Remove extra TradingView
-             * toolbars so candle area
-             * gets maximum space.
-             */
+                save_image:
+                    false,
 
-            disabled_features: [
-
-                "header_widget",
-
-                "left_toolbar",
-
-                "header_symbol_search",
-
-                "header_compare",
-
-                "header_settings",
-
-                "header_saveload",
-
-                "header_fullscreen_button",
-
-                "header_indicators",
-
-                "timeframes_toolbar",
-
-                "control_bar",
-
-                "display_market_status",
-
-                "border_around_the_chart"
-
-            ],
-
-
-            enabled_features: [
-
-                "hide_left_toolbar_by_default"
-
-            ],
-
-
-            /*
-             * Candle spacing
-             */
-
-            time_scale: {
-
-                right_bar_stays_on_scroll:
+                hide_top_toolbar:
                     true,
 
-                bar_spacing:
-                    7,
+                hide_legend:
+                    false,
 
-                min_bar_spacing:
-                    2
+                hide_side_toolbar:
+                    true,
+
+                withdateranges:
+                    false,
+
+                details:
+                    false,
+
+                hotlist:
+                    false,
+
+                calendar:
+                    false,
+
+                studies:
+                    [],
+
+                disabled_features: [
+
+                    "header_widget",
+
+                    "header_symbol_search",
+
+                    "header_compare",
+
+                    "header_settings",
+
+                    "header_saveload",
+
+                    "header_fullscreen_button",
+
+                    "header_indicators",
+
+                    "left_toolbar",
+
+                    "timeframes_toolbar"
+
+                ],
+
+                enabled_features: [
+
+                    "hide_left_toolbar_by_default"
+
+                ],
+
+                overrides: {
+
+                    "paneProperties.background":
+                        "#050a11",
+
+                    "paneProperties.backgroundType":
+                        "solid",
+
+                    "paneProperties.vertGridProperties.color":
+                        "rgba(90,110,130,0.10)",
+
+                    "paneProperties.horzGridProperties.color":
+                        "rgba(90,110,130,0.10)",
+
+                    "scalesProperties.textColor":
+                        "#8ea2b8",
+
+                    "scalesProperties.lineColor":
+                        "rgba(120,140,160,0.20)",
+
+                    "mainSeriesProperties.candleStyle.upColor":
+                        "#16c784",
+
+                    "mainSeriesProperties.candleStyle.downColor":
+                        "#ea3943",
+
+                    "mainSeriesProperties.candleStyle.borderUpColor":
+                        "#16c784",
+
+                    "mainSeriesProperties.candleStyle.borderDownColor":
+                        "#ea3943",
+
+                    "mainSeriesProperties.candleStyle.wickUpColor":
+                        "#16c784",
+
+                    "mainSeriesProperties.candleStyle.wickDownColor":
+                        "#ea3943"
+
+                },
+
+                time_scale: {
+
+                    right_bar_stays_on_scroll:
+                        true,
+
+                    bar_spacing:
+                        6,
+
+                    min_bar_spacing:
+                        2
+
+                }
+
+            });
+
+
+        /*
+         * Wait for iframe/widget rendering.
+         */
+
+        setTimeout(
+            function() {
+
+                fixMobileChartHeight();
 
             },
+            500
+        );
 
 
-            right_bar_stays_on_scroll:
-                true,
+        setTimeout(
+            function() {
 
+                fixMobileChartHeight();
 
-            container_id:
-                "tvchart"
+            },
+            1500
+        );
 
-        });
 
     } catch (error) {
 
@@ -1021,9 +1273,104 @@ function initializeTradingView() {
             error
         );
 
+
+        /*
+         * Show a useful error instead of
+         * leaving a completely mysterious blank area.
+         */
+
+        chart.innerHTML =
+
+            '<div style="' +
+            'height:100%;' +
+            'width:100%;' +
+            'display:flex;' +
+            'align-items:center;' +
+            'justify-content:center;' +
+            'flex-direction:column;' +
+            'gap:8px;' +
+            'background:#050a11;' +
+            'color:#8ea2b8;' +
+            'font-family:Arial,sans-serif;' +
+            'text-align:center;' +
+            '">' +
+
+            '<div style="' +
+            'font-size:28px;' +
+            'color:#38bdf8;' +
+            '">◌</div>' +
+
+            '<div style="' +
+            'font-size:14px;' +
+            '">Chart connection failed</div>' +
+
+            '<div style="' +
+            'font-size:11px;' +
+            'opacity:.65;' +
+            '">Please check your internet connection.</div>' +
+
+            '</div>';
+
     }
 
+
+    tradingViewLoading =
+        false;
+
 }
+
+
+/* =========================================================
+   RESIZE
+   ========================================================= */
+
+window.addEventListener(
+    "resize",
+    function() {
+
+        fixMobileChartHeight();
+
+    }
+);
+
+
+/* =========================================================
+   START TRADINGVIEW
+   ========================================================= */
+
+function startTradingViewChart() {
+
+    fixMobileChartHeight();
+
+
+    setTimeout(
+        function() {
+
+            initializeTradingView();
+
+        },
+        300
+    );
+
+}
+
+
+if (
+    document.readyState ===
+    "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        startTradingViewChart
+    );
+
+} else {
+
+    startTradingViewChart();
+
+}
+
 
 /* =========================================================
    OPEN LONG
