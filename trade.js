@@ -1,13 +1,42 @@
-/* ==========================================
+/* =========================================================
    CPTMARKETS TRADE
    trade.js
-   FINAL - TRADE + BALANCE + ADMIN PENDING P/L
-========================================== */
+   FINAL MOBILE + TRADINGVIEW + TRADE SYSTEM
+   ========================================================= */
 
 
-/* ==========================================
+/* =========================================================
+   MOBILE VIEWPORT FIX
+   ========================================================= */
+
+(function fixMobileViewport() {
+
+    let viewport =
+        document.querySelector('meta[name="viewport"]');
+
+    if (!viewport) {
+
+        viewport =
+            document.createElement("meta");
+
+        viewport.name =
+            "viewport";
+
+        document.head.appendChild(viewport);
+
+    }
+
+    viewport.setAttribute(
+        "content",
+        "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    );
+
+})();
+
+
+/* =========================================================
    TRADE STATE
-========================================== */
+   ========================================================= */
 
 let price = 4269.29;
 
@@ -21,18 +50,18 @@ let currentTradeUID = null;
 let selectedLeverage = 100;
 
 
-/* ==========================================
+/* =========================================================
    FIREBASE
-========================================== */
+   ========================================================= */
 
 let tradeAuth = null;
 let tradeDB = null;
 let tradeFirebaseUser = null;
 
 
-/* ==========================================
+/* =========================================================
    BASIC ELEMENTS
-========================================== */
+   ========================================================= */
 
 const livePrice =
     document.getElementById("livePrice");
@@ -40,11 +69,24 @@ const livePrice =
 const changeBox =
     document.getElementById("changeBox");
 
+
+/*
+ * LONG / SHORT
+ *
+ * Multiple selectors are used so the buttons
+ * continue working even if HTML uses ID or class.
+ */
+
 const longButton =
-    document.querySelector(".long-btn");
+    document.querySelector(
+        ".long-btn, #longBtn, button.long"
+    );
 
 const shortButton =
-    document.querySelector(".short-btn");
+    document.querySelector(
+        ".short-btn, #shortBtn, button.short"
+    );
+
 
 const tradeModal =
     document.getElementById("tradeModal");
@@ -65,9 +107,85 @@ const amountInput =
     document.getElementById("amount");
 
 
-/* ==========================================
+/* =========================================================
+   MOBILE CHART HEIGHT
+   ========================================================= */
+
+function fixMobileChartHeight() {
+
+    const chart =
+        document.getElementById("tvchart");
+
+    if (!chart) {
+        return;
+    }
+
+
+    /*
+     * 420px chart was too tall for mobile.
+     *
+     * 320px gives enough room for candles
+     * while keeping leverage / amount /
+     * LONG-SHORT controls reachable.
+     */
+
+    if (window.innerWidth <= 600) {
+
+        chart.style.setProperty(
+            "height",
+            "320px",
+            "important"
+        );
+
+        chart.style.setProperty(
+            "min-height",
+            "320px",
+            "important"
+        );
+
+        chart.style.setProperty(
+            "max-height",
+            "320px",
+            "important"
+        );
+
+    } else {
+
+        chart.style.setProperty(
+            "height",
+            "360px",
+            "important"
+        );
+
+        chart.style.setProperty(
+            "min-height",
+            "360px",
+            "important"
+        );
+
+        chart.style.setProperty(
+            "max-height",
+            "360px",
+            "important"
+        );
+
+    }
+
+}
+
+
+fixMobileChartHeight();
+
+
+window.addEventListener(
+    "resize",
+    fixMobileChartHeight
+);
+
+
+/* =========================================================
    FIREBASE INITIALIZATION
-========================================== */
+   ========================================================= */
 
 async function initializeTradeFirebase() {
 
@@ -77,6 +195,7 @@ async function initializeTradeFirebase() {
             await import(
                 "./firebase/firebase-config.js"
             );
+
 
         tradeAuth =
             config.auth;
@@ -131,9 +250,9 @@ async function initializeTradeFirebase() {
 }
 
 
-/* ==========================================
+/* =========================================================
    CREATE TRADE ID
-========================================== */
+   ========================================================= */
 
 function createTradeId() {
 
@@ -150,9 +269,9 @@ function createTradeId() {
 }
 
 
-/* ==========================================
+/* =========================================================
    SAVE ACTIVE TRADE
-========================================== */
+   ========================================================= */
 
 function saveActiveTrade() {
 
@@ -211,9 +330,9 @@ function saveActiveTrade() {
 }
 
 
-/* ==========================================
+/* =========================================================
    CLEAR ACTIVE TRADE
-========================================== */
+   ========================================================= */
 
 function clearActiveTrade() {
 
@@ -228,9 +347,9 @@ function clearActiveTrade() {
 }
 
 
-/* ==========================================
+/* =========================================================
    GET STORED ACTIVE TRADE
-========================================== */
+   ========================================================= */
 
 function getStoredActiveTrade() {
 
@@ -239,12 +358,14 @@ function getStoredActiveTrade() {
             "selectedSide"
         );
 
+
     const savedEntry =
         Number(
             localStorage.getItem(
                 "entryPrice"
             )
         );
+
 
     const amount =
         Number(
@@ -253,10 +374,12 @@ function getStoredActiveTrade() {
             )
         );
 
+
     const tradeId =
         localStorage.getItem(
             "currentTradeId"
         );
+
 
     const uid =
         localStorage.getItem(
@@ -310,9 +433,9 @@ function getStoredActiveTrade() {
 }
 
 
-/* ==========================================
+/* =========================================================
    RESTORE ACTIVE TRADE
-========================================== */
+   ========================================================= */
 
 async function restoreActiveTrade() {
 
@@ -381,9 +504,9 @@ async function restoreActiveTrade() {
 }
 
 
-/* ==========================================
+/* =========================================================
    LIVE PRICE
-========================================== */
+   ========================================================= */
 
 setInterval(
     function () {
@@ -458,9 +581,9 @@ setInterval(
 );
 
 
-/* ==========================================
+/* =========================================================
    TIMEFRAME
-========================================== */
+   ========================================================= */
 
 document
     .querySelectorAll(
@@ -499,9 +622,9 @@ document
     );
 
 
-/* ==========================================
+/* =========================================================
    INDICATORS
-========================================== */
+   ========================================================= */
 
 document
     .querySelectorAll(
@@ -540,9 +663,9 @@ document
     );
 
 
-/* ==========================================
+/* =========================================================
    LEVERAGE
-========================================== */
+   ========================================================= */
 
 document
     .querySelectorAll(
@@ -609,9 +732,9 @@ document
     );
 
 
-/* ==========================================
+/* =========================================================
    AMOUNT INPUT
-========================================== */
+   ========================================================= */
 
 if (amountInput) {
 
@@ -644,80 +767,226 @@ if (amountInput) {
 
 }
 
-/* ==========================================
-   TRADINGVIEW — FULL WIDTH MARKET CHART
-========================================== */
 
-if (
-    typeof TradingView !== "undefined" &&
-    document.getElementById("tvchart")
-) {
+/* =========================================================
+   TRADINGVIEW
+   MOBILE SAFE VERSION
+   ========================================================= */
 
-    new TradingView.widget({
+function initializeTradingView() {
 
-        autosize: true,
+    const chart =
+        document.getElementById(
+            "tvchart"
+        );
 
-        symbol: "OANDA:XAUUSD",
 
-        interval: "1",
+    if (!chart) {
 
-        timezone: "Etc/UTC",
+        console.warn(
+            "TradingView container #tvchart not found."
+        );
 
-        theme: "dark",
+        return;
 
-        style: "1",
+    }
 
-        locale: "en",
 
-        toolbar_bg: "#05080d",
+    if (
+        typeof TradingView ===
+        "undefined"
+    ) {
 
-        enable_publishing: false,
+        console.warn(
+            "TradingView library is not loaded."
+        );
 
-        hide_top_toolbar: true,
+        return;
 
-        hide_legend: true,
+    }
 
-        save_image: false,
 
-        container_id: "tvchart",
+    /*
+     * Remove accidental horizontal overflow.
+     */
 
-        /* ==============================
-           CHART WIDTH / CANDLE CONTROL
-        ============================== */
+    chart.style.setProperty(
+        "width",
+        "100%",
+        "important"
+    );
 
-        time_scale: {
-            right_bar_stays_on_scroll: true,
-            bar_spacing: 6,
-            min_bar_spacing: 1
-        },
+    chart.style.setProperty(
+        "max-width",
+        "100%",
+        "important"
+    );
 
-        /* ==============================
-           KEEP CURRENT PRICE NEAR RIGHT
-        ============================== */
+    chart.style.setProperty(
+        "margin-left",
+        "0",
+        "important"
+    );
 
-        right_bar_stays_on_scroll: true,
+    chart.style.setProperty(
+        "margin-right",
+        "0",
+        "important"
+    );
 
-        /* ==============================
-           REMOVE EXTRA TOOLBAR SPACE
-        ============================== */
 
-        disabled_features: [
-            "header_widget",
-            "left_toolbar"
-        ],
+    /*
+     * Mobile chart = 320px
+     * Desktop chart = 360px
+     */
 
-        enabled_features: [
-            "hide_left_toolbar_by_default"
-        ]
+    fixMobileChartHeight();
 
-    });
+
+    try {
+
+        new TradingView.widget({
+
+            autosize: true,
+
+            symbol:
+                "OANDA:XAUUSD",
+
+            interval:
+                "1",
+
+            timezone:
+                "Etc/UTC",
+
+            theme:
+                "dark",
+
+            style:
+                "1",
+
+            locale:
+                "en",
+
+            toolbar_bg:
+                "#05080d",
+
+            enable_publishing:
+                false,
+
+            hide_top_toolbar:
+                true,
+
+            hide_legend:
+                true,
+
+            save_image:
+                false,
+
+            container_id:
+                "tvchart",
+
+
+            /*
+             * Keep candles compact.
+             */
+
+            time_scale: {
+
+                right_bar_stays_on_scroll:
+                    true,
+
+                bar_spacing:
+                    5,
+
+                min_bar_spacing:
+                    1
+
+            },
+
+
+            right_bar_stays_on_scroll:
+                true,
+
+
+            disabled_features: [
+
+                "header_widget",
+
+                "left_toolbar",
+
+                "header_symbol_search",
+
+                "header_compare",
+
+                "header_settings",
+
+                "header_saveload",
+
+                "header_fullscreen_button",
+
+                "header_indicators",
+
+                "timeframes_toolbar"
+
+            ],
+
+
+            enabled_features: [
+
+                "hide_left_toolbar_by_default"
+
+            ]
+
+        });
+
+
+    } catch (error) {
+
+        console.error(
+            "TradingView initialization failed:",
+            error
+        );
+
+    }
 
 }
 
 
-/* ==========================================
+/*
+ * Wait until DOM and TradingView
+ * are ready.
+ */
+
+if (
+    document.readyState ===
+    "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            setTimeout(
+                initializeTradingView,
+                150
+            );
+
+        }
+    );
+
+} else {
+
+    setTimeout(
+        initializeTradingView,
+        150
+    );
+
+}
+
+
+/* =========================================================
    OPEN LONG
-========================================== */
+   ========================================================= */
 
 if (longButton) {
 
@@ -735,9 +1004,9 @@ if (longButton) {
 }
 
 
-/* ==========================================
+/* =========================================================
    OPEN SHORT
-========================================== */
+   ========================================================= */
 
 if (shortButton) {
 
@@ -755,9 +1024,9 @@ if (shortButton) {
 }
 
 
-/* ==========================================
+/* =========================================================
    OPEN TRADE MODAL
-========================================== */
+   ========================================================= */
 
 function openTradeModal(
     side
@@ -828,9 +1097,9 @@ function openTradeModal(
 }
 
 
-/* ==========================================
+/* =========================================================
    CANCEL TRADE MODAL
-========================================== */
+   ========================================================= */
 
 function cancelTradeModal() {
 
@@ -850,9 +1119,9 @@ function cancelTradeModal() {
 }
 
 
-/* ==========================================
+/* =========================================================
    CLOSE MODAL
-========================================== */
+   ========================================================= */
 
 if (modalClose) {
 
@@ -885,9 +1154,9 @@ if (tradeModal) {
 }
 
 
-/* ==========================================
+/* =========================================================
    CONFIRM TRADE
-========================================== */
+   ========================================================= */
 
 if (confirmTradeBtn) {
 
@@ -903,9 +1172,9 @@ if (confirmTradeBtn) {
 }
 
 
-/* ==========================================
+/* =========================================================
    CONFIRM TRADE
-========================================== */
+   ========================================================= */
 
 async function confirmTrade() {
 
@@ -1084,9 +1353,9 @@ async function confirmTrade() {
 }
 
 
-/* ==========================================
+/* =========================================================
    OPEN TRADE UI
-========================================== */
+   ========================================================= */
 
 function updateOpenTradeUI() {
 
@@ -1172,9 +1441,9 @@ function updateOpenTradeUI() {
 }
 
 
-/* ==========================================
+/* =========================================================
    HIDE OPEN TRADE
-========================================== */
+   ========================================================= */
 
 function hideOpenTradeCard() {
 
@@ -1194,9 +1463,9 @@ function hideOpenTradeCard() {
 }
 
 
-/* ==========================================
+/* =========================================================
    LIVE USER P/L
-========================================== */
+   ========================================================= */
 
 setInterval(
     function () {
@@ -1261,9 +1530,9 @@ setInterval(
 );
 
 
-/* ==========================================
+/* =========================================================
    CALCULATE USER P/L
-========================================== */
+   ========================================================= */
 
 function calculateProfitLoss(
     currentPrice
@@ -1280,11 +1549,13 @@ function calculateProfitLoss(
     }
 
 
-    let profitLoss = 0;
+    let profitLoss =
+        0;
 
 
     if (
-        selectedSide === "LONG"
+        selectedSide ===
+        "LONG"
     ) {
 
         profitLoss =
@@ -1303,7 +1574,8 @@ function calculateProfitLoss(
 
 
     if (
-        selectedSide === "SHORT"
+        selectedSide ===
+        "SHORT"
     ) {
 
         profitLoss =
@@ -1328,9 +1600,9 @@ function calculateProfitLoss(
 }
 
 
-/* ==========================================
+/* =========================================================
    CLOSE TRADE BUTTON
-========================================== */
+   ========================================================= */
 
 const closeTradeBtn =
     document.getElementById(
@@ -1352,9 +1624,9 @@ if (closeTradeBtn) {
 }
 
 
-/* ==========================================
+/* =========================================================
    CLOSE CURRENT TRADE
-========================================== */
+   ========================================================= */
 
 async function closeCurrentTrade() {
 
@@ -1403,14 +1675,8 @@ async function closeCurrentTrade() {
         currentTradeId;
 
     const closePrice =
-        Number(
-            price
-        );
+        Number(price);
 
-
-    /*
-     * USER MARKET P/L
-     */
 
     const userProfitLoss =
         calculateProfitLoss(
@@ -1434,12 +1700,9 @@ async function closeCurrentTrade() {
             );
 
 
-        let adminResult = null;
+        let adminResult =
+            null;
 
-
-        /* ======================================
-           READ ADMIN PENDING RESULT
-        ====================================== */
 
         const userSnapshot =
             await firestore.getDoc(
@@ -1455,10 +1718,6 @@ async function closeCurrentTrade() {
                 userSnapshot.data();
 
 
-            /*
-             * NEW ADMIN SYSTEM
-             */
-
             if (
                 userData.pendingAdminTradeResult &&
                 userData.pendingAdminTradeResult.status ===
@@ -1468,11 +1727,6 @@ async function closeCurrentTrade() {
                 const pending =
                     userData.pendingAdminTradeResult;
 
-
-                /*
-                 * Make sure pending result
-                 * belongs to this trade.
-                 */
 
                 if (
                     !pending.tradeId ||
@@ -1490,10 +1744,6 @@ async function closeCurrentTrade() {
         }
 
 
-        /* ======================================
-           ADMIN P/L
-        ====================================== */
-
         const adminProfitLoss =
             adminResult
                 ? Number(
@@ -1501,14 +1751,6 @@ async function closeCurrentTrade() {
                 )
                 : 0;
 
-
-        /* ======================================
-           FINAL P/L
-           
-           User market P/L
-           +
-           Admin assigned P/L
-        ====================================== */
 
         const finalProfitLoss =
             Number(
@@ -1518,10 +1760,6 @@ async function closeCurrentTrade() {
                 ).toFixed(2)
             );
 
-
-        /* ======================================
-           RETURN MARGIN + FINAL P/L
-        ====================================== */
 
         const returnAmount =
             Number(
@@ -1545,10 +1783,6 @@ async function closeCurrentTrade() {
         }
 
 
-        /* ======================================
-           HISTORY DOCUMENT
-        ====================================== */
-
         const historyRef =
             firestore.doc(
                 firestore.collection(
@@ -1558,13 +1792,12 @@ async function closeCurrentTrade() {
             );
 
 
-        let finalBalance = 0;
-        let oldBalance = 0;
+        let finalBalance =
+            0;
 
+        let oldBalance =
+            0;
 
-        /* ======================================
-           SINGLE TRANSACTION
-        ====================================== */
 
         await firestore.runTransaction(
             tradeDB,
@@ -1597,15 +1830,6 @@ async function closeCurrentTrade() {
                     );
 
 
-                /*
-                 * Current balance already has
-                 * the trade margin deducted.
-                 *
-                 * Return:
-                 *
-                 * Margin + Final P/L
-                 */
-
                 finalBalance =
                     Number(
                         (
@@ -1634,10 +1858,6 @@ async function closeCurrentTrade() {
                 };
 
 
-                /*
-                 * REMOVE ADMIN PENDING RESULT
-                 */
-
                 if (adminResult) {
 
                     userUpdate.pendingAdminTradeResult =
@@ -1645,11 +1865,6 @@ async function closeCurrentTrade() {
 
                 }
 
-
-                /*
-                 * Also remove old pending fields
-                 * if they exist.
-                 */
 
                 userUpdate.pendingTradeProfitLoss =
                     firestore.deleteField();
@@ -1663,10 +1878,6 @@ async function closeCurrentTrade() {
                     userUpdate
                 );
 
-
-                /* ==================================
-                   SAVE TRADE HISTORY
-                ================================== */
 
                 transaction.set(
                     historyRef,
@@ -1771,10 +1982,6 @@ async function closeCurrentTrade() {
         );
 
 
-        /* ======================================
-           LOCAL HISTORY
-        ====================================== */
-
         saveLocalTradeHistory({
 
             tradeId:
@@ -1816,10 +2023,6 @@ async function closeCurrentTrade() {
         });
 
 
-        /* ======================================
-           REFRESH BALANCE
-        ====================================== */
-
         if (
             typeof window.reloadBalance ===
             "function"
@@ -1840,16 +2043,8 @@ async function closeCurrentTrade() {
         }
 
 
-        /* ======================================
-           HIDE TRADE CARD
-        ====================================== */
-
         hideOpenTradeCard();
 
-
-        /* ======================================
-           RESET TRADE STATE
-        ====================================== */
 
         selectedSide =
             null;
@@ -1863,7 +2058,6 @@ async function closeCurrentTrade() {
         currentTradeId =
             null;
 
-
         currentTradeUID =
             tradeFirebaseUser
                 ? tradeFirebaseUser.uid
@@ -1872,10 +2066,6 @@ async function closeCurrentTrade() {
 
         clearActiveTrade();
 
-
-        /* ======================================
-           CROSS PAGE NOTIFICATION
-        ====================================== */
 
         localStorage.setItem(
             "cptTradeClosedAt",
@@ -1894,13 +2084,6 @@ async function closeCurrentTrade() {
             1000
         );
 
-
-        /* ======================================
-           SUCCESS POPUP
-           
-           IMPORTANT:
-           Admin P/L line removed.
-        ====================================== */
 
         alert(
 
@@ -1975,9 +2158,9 @@ async function closeCurrentTrade() {
 }
 
 
-/* ==========================================
+/* =========================================================
    LOCAL TRADE HISTORY
-========================================== */
+   ========================================================= */
 
 function saveLocalTradeHistory(
     trade
@@ -2074,9 +2257,9 @@ function saveLocalTradeHistory(
 }
 
 
-/* ==========================================
+/* =========================================================
    HISTORY COMPATIBILITY
-========================================== */
+   ========================================================= */
 
 function renderTradeHistory() {
 
@@ -2085,16 +2268,16 @@ function renderTradeHistory() {
 }
 
 
-/* ==========================================
+/* =========================================================
    START
-========================================== */
+   ========================================================= */
 
 initializeTradeFirebase();
 
 
-/* ==========================================
+/* =========================================================
    ERROR PROTECTION
-========================================== */
+   ========================================================= */
 
 window.addEventListener(
     "error",
@@ -2110,6 +2293,6 @@ window.addEventListener(
 );
 
 
-/* ==========================================
+/* =========================================================
    END
-========================================== */
+   ========================================================= */
