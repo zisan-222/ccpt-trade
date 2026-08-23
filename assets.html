@@ -1,32 +1,581 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Assets - CptMarkets</title>
 
     <link rel="stylesheet" href="assets.css">
 
     <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+
+    <!-- ==========================================
+         WITHDRAWAL INFORMATION INTERFACE CSS
+    =========================================== -->
+
+    <style>
+
+        /* =========================================
+           WITHDRAWAL OVERLAY
+        ========================================= */
+
+        .withdraw-info-page {
+
+            position: fixed;
+
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            display: none;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background:
+                radial-gradient(
+                    circle at 50% 20%,
+                    rgba(245,197,66,0.12),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    180deg,
+                    #07101f 0%,
+                    #020711 100%
+                );
+
+            z-index: 999999;
+
+            overflow-y: auto;
+
+            animation:
+                withdrawFadeIn
+                .25s
+                ease
+                forwards;
+        }
+
+
+        .withdraw-info-page.active {
+
+            display: flex;
+
+        }
+
+
+        @keyframes withdrawFadeIn {
+
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+
+        }
+
+
+        /* =========================================
+           MAIN CARD
+        ========================================= */
+
+        .withdraw-info-container {
+
+            position: relative;
+
+            width: 100%;
+            max-width: 430px;
+
+            padding: 32px 24px 26px;
+
+            border-radius: 28px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(22,35,61,.98),
+                    rgba(10,20,38,.98)
+                );
+
+            border:
+                1px solid
+                rgba(245,197,66,.20);
+
+            box-shadow:
+                0 25px 80px
+                rgba(0,0,0,.65),
+
+                0 0 45px
+                rgba(245,197,66,.08);
+
+            text-align: center;
+
+            transform:
+                translateY(12px)
+                scale(.98);
+
+            animation:
+                withdrawCardIn
+                .3s
+                ease
+                forwards;
+        }
+
+
+        @keyframes withdrawCardIn {
+
+            to {
+
+                transform:
+                    translateY(0)
+                    scale(1);
+
+            }
+
+        }
+
+
+        /* =========================================
+           CLOSE BUTTON
+        ========================================= */
+
+        .withdraw-close {
+
+            position: absolute;
+
+            top: 16px;
+            right: 16px;
+
+            width: 42px;
+            height: 42px;
+
+            border-radius: 50%;
+
+            border:
+                1px solid
+                rgba(255,255,255,.10);
+
+            background:
+                rgba(255,255,255,.06);
+
+            color: #aeb8cb;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 18px;
+
+            cursor: pointer;
+
+            transition:
+                .25s ease;
+        }
+
+
+        .withdraw-close:hover {
+
+            color: #fff;
+
+            background:
+                rgba(255,255,255,.12);
+
+            transform:
+                rotate(90deg);
+        }
+
+
+        /* =========================================
+           LOGO
+        ========================================= */
+
+        .withdraw-logo {
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 10px;
+
+            margin-bottom: 30px;
+        }
+
+
+        .withdraw-logo-icon {
+
+            width: 42px;
+            height: 42px;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffe88a,
+                    #f5c542,
+                    #c98c00
+                );
+
+            color: #111827;
+
+            font-size: 20px;
+
+            box-shadow:
+                0 0 25px
+                rgba(245,197,66,.25);
+        }
+
+
+        .withdraw-logo-text {
+
+            font-size: 22px;
+
+            font-weight: 800;
+
+            letter-spacing: .3px;
+
+            color: #fff;
+        }
+
+
+        /* =========================================
+           HERO ICON
+        ========================================= */
+
+        .withdraw-hero-icon {
+
+            position: relative;
+
+            width: 105px;
+            height: 105px;
+
+            margin:
+                0 auto 24px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        .withdraw-icon-glow {
+
+            position: absolute;
+
+            inset: 0;
+
+            border-radius: 50%;
+
+            background:
+                rgba(245,197,66,.12);
+
+            filter:
+                blur(15px);
+        }
+
+
+        .withdraw-icon-circle {
+
+            position: relative;
+
+            width: 82px;
+            height: 82px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #273957,
+                    #14233d
+                );
+
+            border:
+                1px solid
+                rgba(245,197,66,.35);
+
+            color: #f5c542;
+
+            font-size: 32px;
+
+            box-shadow:
+                inset 0 1px 0
+                rgba(255,255,255,.08),
+
+                0 0 35px
+                rgba(245,197,66,.14);
+        }
+
+
+        /* =========================================
+           TITLE
+        ========================================= */
+
+        .withdraw-info-container h1 {
+
+            margin: 0 0 16px;
+
+            color: #fff;
+
+            font-size: 26px;
+
+            line-height: 1.25;
+
+            font-weight: 800;
+
+            letter-spacing: -.3px;
+        }
+
+
+        /* =========================================
+           DESCRIPTION
+        ========================================= */
+
+        .withdraw-description {
+
+            margin: 0 auto 12px;
+
+            max-width: 360px;
+
+            color: #aeb9cd;
+
+            font-size: 15px;
+
+            line-height: 1.65;
+        }
+
+
+        .withdraw-description.secondary {
+
+            color: #c5ccda;
+
+            margin-bottom: 24px;
+        }
+
+
+        .withdraw-description strong {
+
+            color: #f5c542;
+
+        }
+
+
+        /* =========================================
+           MAIN ACCOUNT BUTTON
+        ========================================= */
+
+        .withdraw-main-btn {
+
+            width: 100%;
+
+            min-height: 56px;
+
+            border: none;
+
+            border-radius: 16px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 12px;
+
+            padding: 0 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffe88a 0%,
+                    #f5c542 48%,
+                    #d79600 100%
+                );
+
+            color: #111827;
+
+            font-size: 17px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 8px 25px
+                rgba(245,197,66,.20),
+
+                inset 0 1px 0
+                rgba(255,255,255,.55);
+
+            transition:
+                .25s ease;
+        }
+
+
+        .withdraw-main-btn:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 12px 32px
+                rgba(245,197,66,.32),
+
+                inset 0 1px 0
+                rgba(255,255,255,.6);
+        }
+
+
+        .withdraw-main-btn:active {
+
+            transform:
+                translateY(0)
+                scale(.98);
+        }
+
+
+        .withdraw-main-btn i {
+
+            font-size: 15px;
+
+            transition:
+                transform .25s ease;
+        }
+
+
+        .withdraw-main-btn:hover i {
+
+            transform:
+                translateX(4px);
+        }
+
+
+        /* =========================================
+           SECURITY NOTE
+        ========================================= */
+
+        .withdraw-security {
+
+            margin-top: 20px;
+
+            padding: 13px 15px;
+
+            border-radius: 13px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 8px;
+
+            background:
+                rgba(255,255,255,.035);
+
+            border:
+                1px solid
+                rgba(255,255,255,.06);
+
+            color: #8491a8;
+
+            font-size: 12px;
+        }
+
+
+        .withdraw-security i {
+
+            color: #f5c542;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================================
+           SMALL SCREEN
+        ========================================= */
+
+        @media (max-width: 380px) {
+
+            .withdraw-info-page {
+
+                padding: 14px;
+
+            }
+
+
+            .withdraw-info-container {
+
+                padding:
+                    28px 18px 22px;
+
+                border-radius: 24px;
+            }
+
+
+            .withdraw-info-container h1 {
+
+                font-size: 23px;
+
+            }
+
+
+            .withdraw-description {
+
+                font-size: 14px;
+
+            }
+
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
 <div class="container">
 
-<!-- ========= HEADER ========= -->
+
+<!-- ==========================================
+     HEADER
+========================================== -->
 
 <header class="assets-header">
 
-    <button class="back-btn"
-        onclick="window.location.href='dashboard.html'">
+    <button
+        class="back-btn"
+        onclick="window.location.href='dashboard.html'"
+    >
 
         <i class="fa-solid fa-arrow-left"></i>
 
     </button>
 
+
     <h2>Assets</h2>
+
 
     <div class="header-icons">
 
@@ -38,7 +587,10 @@
 
 </header>
 
-<!-- ========= TOTAL ASSETS ========= -->
+
+<!-- ==========================================
+     TOTAL ASSETS
+========================================== -->
 
 <section class="assets-card">
 
@@ -46,11 +598,16 @@
 
         <span>Total Assets (USD)</span>
 
-        <i class="fa-regular fa-eye" id="assetEye"></i>
+        <i
+            class="fa-regular fa-eye"
+            id="assetEye"
+        ></i>
 
     </div>
 
+
     <h1 id="assetBalance">$0.00</h1>
+
 
     <div class="assets-info">
 
@@ -58,9 +615,12 @@
 
             <small>Available</small>
 
-            <strong id="availableBalance">$0.00</strong>
+            <strong id="availableBalance">
+                $0.00
+            </strong>
 
         </div>
+
 
         <div>
 
@@ -74,7 +634,10 @@
 
 </section>
 
-<!-- ========= ACCOUNT SUMMARY ========= -->
+
+<!-- ==========================================
+     ACCOUNT SUMMARY
+========================================== -->
 
 <section class="account-summary">
 
@@ -94,6 +657,7 @@
 
     </div>
 
+
     <div class="summary-item">
 
         <div>
@@ -109,6 +673,7 @@
         </strong>
 
     </div>
+
 
     <div class="summary-item">
 
@@ -127,32 +692,63 @@
     </div>
 
 </section>
-<!-- ========= QUICK ACTION ========= -->
+
+
+<!-- ==========================================
+     QUICK ACTION
+========================================== -->
 
 <section class="asset-actions">
 
-    <button class="asset-btn deposit-btn">
+
+    <button
+        type="button"
+        class="asset-btn deposit-btn"
+    >
+
         <i class="fa-solid fa-circle-down"></i>
+
         <span>Deposit</span>
+
     </button>
 
-    <button class="asset-btn withdraw-btn">
+
+    <button
+        type="button"
+        class="asset-btn withdraw-btn"
+        id="assetsWithdrawButton"
+    >
+
         <i class="fa-solid fa-circle-up"></i>
+
         <span>Withdraw</span>
+
     </button>
 
-    <a href="transfer.html" class="asset-btn transfer-btn">
-    <i class="fa-solid fa-right-left"></i>
-    <span>Transfer</span>
-</a>
+
+    <a
+        href="transfer.html"
+        class="asset-btn transfer-btn"
+    >
+
+        <i class="fa-solid fa-right-left"></i>
+
+        <span>Transfer</span>
+
+    </a>
+
 
 </section>
 
-<!-- ========= MY ASSETS ========= -->
+
+<!-- ==========================================
+     MY ASSETS
+========================================== -->
 
 <section class="asset-list">
 
     <h3>My Assets</h3>
+
 
     <div class="asset-item">
 
@@ -170,6 +766,7 @@
 
         </div>
 
+
         <div class="coin-balance">
 
             <strong>$0.00</strong>
@@ -177,6 +774,7 @@
         </div>
 
     </div>
+
 
     <div class="asset-item">
 
@@ -194,6 +792,7 @@
 
         </div>
 
+
         <div class="coin-balance">
 
             <strong>0.000000</strong>
@@ -201,6 +800,7 @@
         </div>
 
     </div>
+
 
     <div class="asset-item">
 
@@ -218,6 +818,7 @@
 
         </div>
 
+
         <div class="coin-balance">
 
             <strong>0.000000</strong>
@@ -228,11 +829,15 @@
 
 </section>
 
-<!-- ========= HISTORY ========= -->
+
+<!-- ==========================================
+     HISTORY
+========================================== -->
 
 <section class="history-box">
 
     <h3>History</h3>
+
 
     <div class="empty-history">
 
@@ -243,112 +848,146 @@
     </div>
 
 </section>
-<!-- ========= BOTTOM NAVIGATION ========= -->
+
+
+<!-- ==========================================
+     BOTTOM NAVIGATION
+========================================== -->
 
 <nav class="bottom-nav">
 
+
     <a href="dashboard.html">
+
         <i class="fa-solid fa-house"></i>
+
         <span>Home</span>
+
     </a>
+
 
     <a href="market.html">
+
         <i class="fa-solid fa-chart-line"></i>
+
         <span>Markets</span>
+
     </a>
+
 
     <a href="trade.html">
+
         <i class="fa-solid fa-arrow-right-arrow-left"></i>
+
         <span>Trade</span>
+
     </a>
 
-    <a href="assets.html" class="active">
+
+    <a
+        href="assets.html"
+        class="active"
+    >
+
         <i class="fa-solid fa-wallet"></i>
+
         <span>Assets</span>
+
     </a>
+
 
     <a href="mine.html">
+
         <i class="fa-solid fa-user"></i>
+
         <span>Mine</span>
+
     </a>
+
 
 </nav>
 
 </div>
 
-<!-- Tawk.to -->
-<script type="text/javascript">
-var Tawk_API = Tawk_API || {};
-var Tawk_LoadStart = new Date();
 
-(function(){
-    var s1 = document.createElement("script");
-    var s0 = document.getElementsByTagName("script")[0];
-
-    s1.async = true;
-    s1.src = "https://embed.tawk.to/6a71003c2d507b1d4a9fad4c/1jv4mhrhb";
-    s1.charset = "UTF-8";
-    s1.setAttribute("crossorigin", "*");
-
-    s0.parentNode.insertBefore(s1, s0);
-})();
-</script>    
-    
-<script src="support.js"></script>
-<script src="balance.js"></script>
-<script src="assets.js"></script>
 <!-- ==========================================
      WITHDRAWAL INFORMATION INTERFACE
+     HIDDEN UNTIL WITHDRAW BUTTON IS CLICKED
 ========================================== -->
 
-<div id="withdrawInfoPage" class="withdraw-info-page">
+<div
+    id="withdrawInfoPage"
+    class="withdraw-info-page"
+    aria-hidden="true"
+>
+
 
     <div class="withdraw-info-container">
 
-        <!-- Close Button -->
+
+        <!-- CLOSE -->
+
         <button
             type="button"
             class="withdraw-close"
             id="withdrawClose"
+            aria-label="Close"
         >
+
             <i class="fa-solid fa-xmark"></i>
+
         </button>
 
 
-        <!-- Logo -->
+        <!-- LOGO -->
+
         <div class="withdraw-logo">
 
             <div class="withdraw-logo-icon">
+
                 <i class="fa-solid fa-shield-halved"></i>
+
             </div>
 
+
             <div class="withdraw-logo-text">
+
                 CptMarkets
+
             </div>
 
         </div>
 
 
-        <!-- Main Icon -->
+        <!-- HERO -->
+
         <div class="withdraw-hero-icon">
 
             <div class="withdraw-icon-glow"></div>
 
+
             <div class="withdraw-icon-circle">
+
                 <i class="fa-solid fa-arrow-up-from-bracket"></i>
+
             </div>
 
         </div>
 
 
-        <!-- Title -->
+        <!-- TITLE -->
+
         <h1>
+
             Withdrawal Available<br>
+
             on Main Account
+
         </h1>
 
 
-        <!-- Description -->
+        <!-- DESCRIPTION -->
+
         <p class="withdraw-description">
 
             For security and account management purposes,
@@ -360,14 +999,16 @@ var Tawk_LoadStart = new Date();
 
         <p class="withdraw-description secondary">
 
-            Please use the <strong>Withdraw</strong> option
-            on the main account page to continue your
-            withdrawal request.
+            Please use the
+            <strong>Withdraw</strong>
+            option on the main account page to continue
+            your withdrawal request.
 
         </p>
 
 
-        <!-- Action -->
+        <!-- MAIN ACCOUNT BUTTON -->
+
         <button
             type="button"
             class="withdraw-main-btn"
@@ -383,7 +1024,8 @@ var Tawk_LoadStart = new Date();
         </button>
 
 
-        <!-- Security Note -->
+        <!-- SECURITY -->
+
         <div class="withdraw-security">
 
             <i class="fa-solid fa-shield-halved"></i>
@@ -394,8 +1036,266 @@ var Tawk_LoadStart = new Date();
 
         </div>
 
+
     </div>
 
 </div>
+
+
+<!-- ==========================================
+     TAWK.TO
+========================================== -->
+
+<script type="text/javascript">
+
+var Tawk_API = Tawk_API || {};
+
+var Tawk_LoadStart = new Date();
+
+
+(function(){
+
+    var s1 =
+        document.createElement("script");
+
+    var s0 =
+        document.getElementsByTagName("script")[0];
+
+
+    s1.async = true;
+
+    s1.src =
+        "https://embed.tawk.to/6a71003c2d507b1d4a9fad4c/1jv4mhrhb";
+
+    s1.charset = "UTF-8";
+
+    s1.setAttribute(
+        "crossorigin",
+        "*"
+    );
+
+
+    s0.parentNode.insertBefore(
+        s1,
+        s0
+    );
+
+})();
+
+</script>
+
+
+<!-- ==========================================
+     EXISTING JS FILES
+========================================== -->
+
+<script src="support.js"></script>
+
+<script src="balance.js"></script>
+
+<script src="assets.js"></script>
+
+
+<!-- ==========================================
+     WITHDRAWAL INTERFACE CONNECTION
+========================================== -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        const withdrawButton =
+            document.getElementById(
+                "assetsWithdrawButton"
+            );
+
+
+        const withdrawPage =
+            document.getElementById(
+                "withdrawInfoPage"
+            );
+
+
+        const closeButton =
+            document.getElementById(
+                "withdrawClose"
+            );
+
+
+        const mainAccountButton =
+            document.getElementById(
+                "withdrawMainAccount"
+            );
+
+
+        /* ======================================
+           OPEN WITHDRAW INTERFACE
+        ====================================== */
+
+        if (
+            withdrawButton &&
+            withdrawPage
+        ) {
+
+            withdrawButton.addEventListener(
+                "click",
+                function (event) {
+
+                    event.preventDefault();
+
+                    event.stopPropagation();
+
+
+                    withdrawPage.classList.add(
+                        "active"
+                    );
+
+
+                    withdrawPage.setAttribute(
+                        "aria-hidden",
+                        "false"
+                    );
+
+
+                    document.body.style.overflow =
+                        "hidden";
+
+                }
+            );
+
+        }
+
+
+        /* ======================================
+           CLOSE
+        ====================================== */
+
+        if (closeButton) {
+
+            closeButton.addEventListener(
+                "click",
+                function () {
+
+                    withdrawPage.classList.remove(
+                        "active"
+                    );
+
+
+                    withdrawPage.setAttribute(
+                        "aria-hidden",
+                        "true"
+                    );
+
+
+                    document.body.style.overflow =
+                        "";
+
+                }
+            );
+
+        }
+
+
+        /* ======================================
+           GO TO MAIN ACCOUNT
+        ====================================== */
+
+        if (mainAccountButton) {
+
+            mainAccountButton.addEventListener(
+                "click",
+                function () {
+
+                    window.location.href =
+                        "dashboard.html";
+
+                }
+            );
+
+        }
+
+
+        /* ======================================
+           CLOSE BY BACKDROP
+        ====================================== */
+
+        if (withdrawPage) {
+
+            withdrawPage.addEventListener(
+                "click",
+                function (event) {
+
+                    if (
+                        event.target ===
+                        withdrawPage
+                    ) {
+
+                        withdrawPage.classList.remove(
+                            "active"
+                        );
+
+
+                        withdrawPage.setAttribute(
+                            "aria-hidden",
+                            "true"
+                        );
+
+
+                        document.body.style.overflow =
+                            "";
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        /* ======================================
+           ESC KEY
+        ====================================== */
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key === "Escape" &&
+                    withdrawPage &&
+                    withdrawPage.classList.contains(
+                        "active"
+                    )
+                ) {
+
+                    withdrawPage.classList.remove(
+                        "active"
+                    );
+
+
+                    withdrawPage.setAttribute(
+                        "aria-hidden",
+                        "true"
+                    );
+
+
+                    document.body.style.overflow =
+                        "";
+
+                }
+
+            }
+        );
+
+    }
+);
+
+</script>
+
+
 </body>
+
 </html>
