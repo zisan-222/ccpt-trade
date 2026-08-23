@@ -1,24 +1,22 @@
 /* =========================================================
    CPTMARKETS — TRADE PROFESSIONAL
-   MOBILE FIXED VERSION
+   FINAL CLEAN MOBILE VERSION
    ========================================================= */
 
 :root{
-    --trade-bg:#020912;
-    --trade-bg-2:#041525;
-    --trade-panel:#061b2e;
-    --trade-panel-2:#08243b;
+    --bg:#020912;
+    --bg2:#031525;
+    --panel:#071f34;
+    --panel2:#092c47;
 
     --gold:#ffc400;
-    --gold-light:#ffe27a;
+    --gold-light:#ffe06a;
 
     --text:#f5f7fa;
     --muted:#8da2b8;
 
-    --green:#00dc88;
+    --green:#00df88;
     --red:#ff3158;
-
-    --border:rgba(255,196,0,.12);
 }
 
 
@@ -27,7 +25,7 @@
    ========================================================= */
 
 *{
-    box-sizing:border-box;
+    box-sizing:border-box !important;
     margin:0;
     padding:0;
 
@@ -37,26 +35,32 @@
 }
 
 html{
-    width:100%;
-    min-width:0;
-    margin:0;
-    padding:0;
+    width:100% !important;
+    min-width:0 !important;
+    max-width:100% !important;
 
-    background:#020912;
+    margin:0 !important;
+    padding:0 !important;
 
-    overflow-x:hidden;
+    overflow-x:hidden !important;
+
+    background:var(--bg);
 
     -webkit-text-size-adjust:100%;
     text-size-adjust:100%;
 }
 
 body{
-    width:100%;
-    min-width:0;
-    min-height:100vh;
+    width:100% !important;
+    min-width:0 !important;
+    max-width:100% !important;
+    min-height:100vh !important;
 
-    margin:0;
-    padding:0;
+    margin:0 !important;
+    padding:0 0 90px 0 !important;
+
+    overflow-x:hidden !important;
+    overflow-y:auto !important;
 
     background:
         linear-gradient(
@@ -64,7 +68,7 @@ body{
             #020912 0%,
             #031321 50%,
             #020912 100%
-        );
+        ) !important;
 
     color:var(--text);
 
@@ -74,11 +78,6 @@ body{
         Roboto,
         Arial,
         sans-serif;
-
-    overflow-x:hidden;
-    overflow-y:auto;
-
-    -webkit-overflow-scrolling:touch;
 }
 
 
@@ -86,9 +85,7 @@ body{
    MAIN PAGE
    ========================================================= */
 
-.trade-container,
-.trade-page,
-.container{
+.trade-page{
     width:100% !important;
     max-width:480px !important;
     min-width:0 !important;
@@ -96,7 +93,9 @@ body{
     margin:0 auto !important;
     padding:0 !important;
 
-    position:relative;
+    position:relative !important;
+
+    overflow-x:hidden !important;
 }
 
 
@@ -104,13 +103,18 @@ body{
    HEADER
    ========================================================= */
 
-header,
-.trade-header,
-.top-header{
+.trade-header{
     width:100% !important;
+    max-width:100% !important;
 
-    min-height:76px !important;
-    height:auto !important;
+    height:68px !important;
+    min-height:68px !important;
+
+    padding:8px 12px !important;
+
+    display:flex !important;
+    align-items:center !important;
+    justify-content:space-between !important;
 
     background:
         linear-gradient(
@@ -119,51 +123,32 @@ header,
             #041321
         ) !important;
 
-    border-bottom:
-        1px solid rgba(255,196,0,.08) !important;
-}
+    border-bottom:1px solid rgba(255,196,0,.08) !important;
 
-header h1,
-.trade-header h1,
-.pair-name{
-    color:#fff !important;
-
-    font-size:22px !important;
-    line-height:1.15 !important;
-
-    font-weight:750 !important;
-
-    white-space:nowrap;
-}
-
-.pair-subtitle,
-.pair-box small,
-header small{
-    color:var(--muted) !important;
+    box-shadow:0 5px 18px rgba(0,0,0,.22) !important;
 }
 
 
-/* =========================================================
-   HEADER BUTTONS
-   ========================================================= */
+/* Back button */
 
-header button,
-.header button,
-.header-icon,
-.icon-btn,
-.trade-header button{
-    width:42px !important;
-    height:42px !important;
+.trade-header .back-btn{
+    width:40px !important;
+    height:40px !important;
 
-    min-width:42px !important;
-    min-height:42px !important;
+    min-width:40px !important;
+    min-height:40px !important;
 
     padding:0 !important;
 
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+
     border-radius:50% !important;
 
-    border:
-        1px solid rgba(255,196,0,.16) !important;
+    color:var(--gold) !important;
+
+    text-decoration:none !important;
 
     background:
         linear-gradient(
@@ -172,47 +157,138 @@ header button,
             #07192c
         ) !important;
 
-    color:var(--gold) !important;
+    border:1px solid rgba(255,196,0,.16) !important;
+}
+
+
+/* Pair */
+
+.trade-header .pair-box{
+    margin:0 !important;
+    padding:0 !important;
+
+    text-align:center !important;
+}
+
+.trade-header .pair-box h1{
+    margin:0 !important;
+
+    color:#fff !important;
+
+    font-size:22px !important;
+    line-height:25px !important;
+
+    font-weight:800 !important;
+
+    white-space:nowrap !important;
+}
+
+.trade-header .pair-box p{
+    margin:2px 0 0 !important;
+
+    color:var(--muted) !important;
+
+    font-size:11px !important;
+    line-height:14px !important;
+}
+
+
+/* Header icons */
+
+.trade-header .header-icons{
+    display:flex !important;
+    align-items:center !important;
+
+    gap:7px !important;
+}
+
+.trade-header .header-icons button{
+    width:40px !important;
+    height:40px !important;
+
+    min-width:40px !important;
+    min-height:40px !important;
+
+    padding:0 !important;
 
     display:flex !important;
     align-items:center !important;
     justify-content:center !important;
+
+    border-radius:50% !important;
+
+    background:
+        linear-gradient(
+            145deg,
+            #102c48,
+            #07192c
+        ) !important;
+
+    border:1px solid rgba(255,196,0,.16) !important;
+
+    color:var(--gold) !important;
 }
 
 
 /* =========================================================
-   PRICE AREA
-   IMPORTANT MOBILE SIZE FIX
+   PRICE
    ========================================================= */
 
+.price-box{
+    width:100% !important;
+
+    margin:0 !important;
+    padding:18px 14px 14px !important;
+
+    text-align:center !important;
+}
+
+.price-box h2,
 #livePrice{
+    margin:0 0 8px !important;
+
     color:var(--gold) !important;
 
-    font-weight:800 !important;
+    font-size:42px !important;
+    line-height:1 !important;
 
-    font-size:46px !important;
-    line-height:1.05 !important;
+    font-weight:800 !important;
 
     letter-spacing:-1px !important;
 
     text-shadow:
-        0 0 18px rgba(255,196,0,.18);
+        0 0 18px rgba(255,196,0,.18) !important;
 }
 
+.price-box #changeBox,
+.price-box .change{
+    display:inline-flex !important;
 
-/* =========================================================
-   CHANGE BOX
-   ========================================================= */
+    align-items:center !important;
+    justify-content:center !important;
 
-#changeBox,
-.change{
-    border-radius:11px !important;
+    min-height:34px !important;
+
+    padding:6px 13px !important;
+
+    border-radius:10px !important;
+
+    font-size:14px !important;
+    line-height:18px !important;
 
     font-weight:750 !important;
-
-    border:
-        1px solid rgba(255,255,255,.08) !important;
 }
+
+.price-box p{
+    margin:6px 0 0 !important;
+
+    color:var(--muted) !important;
+
+    font-size:12px !important;
+}
+
+
+/* Green / Red */
 
 .change.green,
 .green{
@@ -240,11 +316,16 @@ header button,
 
 
 /* =========================================================
-   INDICATORS
+   INDICATOR BAR
    ========================================================= */
 
 .indicator-bar{
     width:100% !important;
+    max-width:100% !important;
+
+    height:54px !important;
+
+    padding:8px 10px !important;
 
     display:flex !important;
     align-items:center !important;
@@ -254,29 +335,32 @@ header button,
     overflow-x:auto !important;
     overflow-y:hidden !important;
 
-    padding:
-        10px !important;
+    scrollbar-width:none !important;
 
-    scrollbar-width:none;
+    background:#031525 !important;
+
+    border-top:1px solid rgba(255,196,0,.05) !important;
+    border-bottom:1px solid rgba(255,196,0,.05) !important;
 }
 
 .indicator-bar::-webkit-scrollbar{
-    display:none;
+    display:none !important;
 }
 
 .indicator-bar button{
     flex:0 0 auto !important;
 
     width:auto !important;
-    min-width:52px !important;
-    min-height:40px !important;
+    min-width:50px !important;
+
+    height:38px !important;
+    min-height:38px !important;
 
     padding:0 10px !important;
 
-    border:
-        1px solid rgba(255,196,0,.10) !important;
+    border-radius:12px !important;
 
-    border-radius:13px !important;
+    border:1px solid rgba(255,196,0,.10) !important;
 
     background:
         linear-gradient(
@@ -287,9 +371,10 @@ header button,
 
     color:#aebed0 !important;
 
+    font-size:12px !important;
     font-weight:650 !important;
 
-    white-space:nowrap;
+    white-space:nowrap !important;
 }
 
 .indicator-bar button.active{
@@ -309,64 +394,39 @@ header button,
 
 
 /* =========================================================
-   CHART OUTER CONTAINER
+   CHART
    ========================================================= */
 
-.chart-section,
-.chart-wrapper,
-.chart-area,
-.chart-container,
-.chart-box,
-.tradingview-widget-container{
-
+.chart-card{
     width:100% !important;
     max-width:100% !important;
-    min-width:0 !important;
 
     margin:0 !important;
-
     padding:0 !important;
-
-    border:0 !important;
-
-    background:transparent !important;
 
     overflow:hidden !important;
+
+    background:#020507 !important;
 }
 
-
-/* =========================================================
-   TRADINGVIEW
-   ========================================================= */
-
 #tvchart{
-
-    display:block !important;
-
     width:100% !important;
     max-width:100% !important;
 
-    height:300px !important;
-    min-height:300px !important;
-    max-height:300px !important;
+    height:290px !important;
+    min-height:290px !important;
+    max-height:290px !important;
 
     margin:0 !important;
     padding:0 !important;
 
-    position:relative !important;
-
     border:0 !important;
-    border-radius:16px !important;
+    border-radius:0 !important;
 
     background:#020507 !important;
 
     overflow:hidden !important;
 }
-
-
-/*
-   TradingView generated container
-*/
 
 #tvchart > div{
     width:100% !important;
@@ -381,16 +441,10 @@ header button,
 
     border:0 !important;
 
-    background:#020507 !important;
+    overflow:hidden !important;
 }
 
-
-/*
-   TradingView iframe
-*/
-
 #tvchart iframe{
-
     display:block !important;
 
     width:100% !important;
@@ -408,11 +462,6 @@ header button,
     background:#020507 !important;
 }
 
-
-/* =========================================================
-   REMOVE EXTRA CHART SPACE
-   ========================================================= */
-
 #tvchart::before,
 #tvchart::after{
     display:none !important;
@@ -425,50 +474,46 @@ header button,
    ========================================================= */
 
 .timeframe{
-
     width:100% !important;
+    max-width:100% !important;
+
+    min-height:58px !important;
+
+    padding:9px 10px !important;
 
     display:flex !important;
     align-items:center !important;
 
-    gap:8px !important;
+    gap:7px !important;
 
     overflow-x:auto !important;
     overflow-y:hidden !important;
 
-    padding:
-        10px !important;
+    scrollbar-width:none !important;
 
     background:#031525 !important;
 
-    border-top:
-        1px solid rgba(255,196,0,.05) !important;
-
-    border-bottom:
-        1px solid rgba(255,196,0,.05) !important;
-
-    scrollbar-width:none;
+    border-top:1px solid rgba(255,196,0,.05) !important;
+    border-bottom:1px solid rgba(255,196,0,.05) !important;
 }
 
 .timeframe::-webkit-scrollbar{
-    display:none;
+    display:none !important;
 }
 
 .timeframe button{
-
     flex:1 1 0 !important;
 
-    width:auto !important;
+    min-width:48px !important;
 
-    min-width:52px !important;
-    min-height:40px !important;
+    height:38px !important;
+    min-height:38px !important;
 
-    padding:0 10px !important;
+    padding:0 7px !important;
 
-    border:
-        1px solid rgba(255,196,0,.10) !important;
+    border-radius:11px !important;
 
-    border-radius:13px !important;
+    border:1px solid rgba(255,196,0,.10) !important;
 
     background:
         linear-gradient(
@@ -479,13 +524,11 @@ header button,
 
     color:#aebed0 !important;
 
+    font-size:12px !important;
     font-weight:650 !important;
-
-    white-space:nowrap;
 }
 
 .timeframe button.active{
-
     background:
         linear-gradient(
             135deg,
@@ -505,19 +548,11 @@ header button,
    TRADE PANEL
    ========================================================= */
 
-.trade-panel,
-.order-panel,
-.trading-panel{
-
+.trade-panel{
     width:calc(100% - 20px) !important;
 
-    max-width:none !important;
-
-    margin:
-        14px 10px !important;
-
-    padding:
-        16px !important;
+    margin:10px !important;
+    padding:14px !important;
 
     background:
         linear-gradient(
@@ -526,27 +561,23 @@ header button,
             #03121f
         ) !important;
 
-    border:
-        1px solid rgba(255,196,0,.12) !important;
+    border:1px solid rgba(255,196,0,.12) !important;
 
     border-radius:18px !important;
 
     box-shadow:
-        0 12px 30px rgba(0,0,0,.28);
-
-    position:relative;
+        0 10px 28px rgba(0,0,0,.28) !important;
 
     overflow:visible !important;
 }
 
-.leverage-title,
-.trade-panel h3,
-.order-panel h3{
+.trade-panel h3{
+    margin:0 0 11px !important;
+
     color:#fff !important;
 
+    font-size:17px !important;
     font-weight:750 !important;
-
-    margin-bottom:12px !important;
 }
 
 
@@ -555,30 +586,28 @@ header button,
    ========================================================= */
 
 .leverage-grid{
-
     width:100% !important;
 
     display:grid !important;
 
     grid-template-columns:
-        repeat(5,1fr) !important;
+        repeat(5,minmax(0,1fr)) !important;
 
-    gap:7px !important;
+    gap:6px !important;
 }
 
 .leverage-grid button{
-
     width:100% !important;
-
     min-width:0 !important;
-    min-height:40px !important;
 
-    padding:6px 3px !important;
+    height:38px !important;
+    min-height:38px !important;
 
-    border:
-        1px solid rgba(255,196,0,.08) !important;
+    padding:0 2px !important;
 
-    border-radius:12px !important;
+    border-radius:10px !important;
+
+    border:1px solid rgba(255,196,0,.08) !important;
 
     background:
         linear-gradient(
@@ -589,11 +618,10 @@ header button,
 
     color:#aebed0 !important;
 
-    font-size:12px !important;
+    font-size:11px !important;
 }
 
 .leverage-grid button.active{
-
     background:
         linear-gradient(
             135deg,
@@ -610,39 +638,30 @@ header button,
 
 
 /* =========================================================
-   AMOUNT / LOT MODE
+   MODE SWITCH
    ========================================================= */
 
-.trade-mode,
-.mode-switch,
-.amount-mode{
-
+.mode-switch{
     width:100% !important;
 
     display:flex !important;
-    align-items:stretch !important;
 
     gap:8px !important;
 
-    margin-top:12px !important;
+    margin:12px 0 !important;
 }
 
-.trade-mode button,
-.mode-switch button,
-.amount-mode button{
-
+.mode-switch button{
     flex:1 1 0 !important;
 
     width:50% !important;
 
+    height:42px !important;
     min-height:42px !important;
 
-    padding:0 10px !important;
+    border-radius:12px !important;
 
-    border:
-        1px solid rgba(255,196,0,.10) !important;
-
-    border-radius:13px !important;
+    border:1px solid rgba(255,196,0,.10) !important;
 
     background:#092c47 !important;
 
@@ -651,10 +670,7 @@ header button,
     font-weight:700 !important;
 }
 
-.trade-mode button.active,
-.mode-switch button.active,
-.amount-mode button.active{
-
+.mode-switch button.active{
     background:
         linear-gradient(
             135deg,
@@ -669,21 +685,38 @@ header button,
 
 
 /* =========================================================
+   LABELS
+   ========================================================= */
+
+.trade-panel label{
+    display:block !important;
+
+    margin:7px 0 5px !important;
+
+    color:#91a7bc !important;
+
+    font-size:12px !important;
+    font-weight:550 !important;
+}
+
+
+/* =========================================================
    INPUTS
    ========================================================= */
 
-input,
-select{
-
+.trade-panel input,
+.trade-panel select,
+.trade-modal input,
+.trade-modal select{
     width:100% !important;
     max-width:100% !important;
 
     min-width:0 !important;
 
-    min-height:48px !important;
+    height:44px !important;
+    min-height:44px !important;
 
-    padding:
-        0 14px !important;
+    padding:0 12px !important;
 
     color:#fff !important;
 
@@ -694,14 +727,13 @@ select{
             #07223a
         ) !important;
 
-    border:
-        1px solid rgba(255,196,0,.10) !important;
+    border:1px solid rgba(255,196,0,.10) !important;
 
-    border-radius:13px !important;
+    border-radius:12px !important;
 
     outline:none !important;
 
-    font-size:15px !important;
+    font-size:14px !important;
 
     -webkit-appearance:none;
     appearance:none;
@@ -713,26 +745,50 @@ input::placeholder{
 
 
 /* =========================================================
-   LABELS
+   TP / SL
    ========================================================= */
 
-label,
-.input-label,
-.form-label{
-    color:#91a7bc !important;
+.tp-sl{
+    width:100% !important;
 
-    font-weight:550 !important;
+    display:grid !important;
+
+    grid-template-columns:
+        repeat(2,minmax(0,1fr)) !important;
+
+    gap:8px !important;
+
+    margin-top:8px !important;
+}
+
+.tp-sl > div{
+    min-width:0 !important;
 }
 
 
 /* =========================================================
-   INFO BOX
+   SUMMARY
    ========================================================= */
 
-.info-box,
-.stat-box,
-.value-box,
-.calculation-box{
+.summary{
+    width:100% !important;
+
+    display:grid !important;
+
+    grid-template-columns:
+        repeat(2,minmax(0,1fr)) !important;
+
+    gap:7px !important;
+
+    margin-top:11px !important;
+}
+
+.summary > div{
+    min-width:0 !important;
+
+    padding:10px !important;
+
+    border-radius:11px !important;
 
     background:
         linear-gradient(
@@ -741,51 +797,80 @@ label,
             #071d31
         ) !important;
 
-    border:
-        1px solid rgba(255,196,0,.08) !important;
-
-    border-radius:13px !important;
-
-    color:#fff !important;
+    border:1px solid rgba(255,196,0,.08) !important;
 }
 
-.info-box strong,
-.stat-box strong,
-.value-box strong,
-.calculation-box strong{
+.summary span{
+    display:block !important;
+
+    color:#91a7bc !important;
+
+    font-size:10px !important;
+}
+
+.summary strong{
+    display:block !important;
+
+    margin-top:4px !important;
+
     color:var(--gold) !important;
+
+    font-size:13px !important;
 }
 
 
 /* =========================================================
    LONG / SHORT
-   IMPORTANT FIX
    ========================================================= */
 
-.long-btn,
-button.long,
-.long,
-#longBtn{
+.trade-buttons{
+    width:100% !important;
 
     display:flex !important;
+    flex-direction:row !important;
+
+    align-items:stretch !important;
+
+    gap:9px !important;
+
+    margin-top:14px !important;
+    margin-bottom:4px !important;
+
+    position:relative !important;
+
+    z-index:10 !important;
+}
+
+.trade-buttons .long-btn,
+.trade-buttons .short-btn{
+    display:flex !important;
+
+    flex:1 1 0 !important;
+
+    width:50% !important;
+    min-width:0 !important;
+
+    height:52px !important;
+    min-height:52px !important;
+
+    margin:0 !important;
+    padding:0 !important;
 
     align-items:center !important;
     justify-content:center !important;
 
-    text-align:center !important;
+    border-radius:14px !important;
+
+    font-size:16px !important;
+    font-weight:800 !important;
 
     visibility:visible !important;
     opacity:1 !important;
 
-    width:100% !important;
+    box-sizing:border-box !important;
+}
 
-    min-width:0 !important;
-    min-height:54px !important;
-
-    padding:0 12px !important;
-
-    margin:0 !important;
-
+.trade-buttons .long-btn{
     background:
         linear-gradient(
             135deg,
@@ -795,44 +880,10 @@ button.long,
 
     color:#001a10 !important;
 
-    border:
-        1px solid rgba(0,255,160,.28) !important;
-
-    border-radius:14px !important;
-
-    font-size:17px !important;
-    line-height:1 !important;
-
-    font-weight:800 !important;
-
-    white-space:nowrap !important;
+    border:1px solid rgba(0,255,160,.28) !important;
 }
 
-
-.short-btn,
-button.short,
-.short,
-#shortBtn{
-
-    display:flex !important;
-
-    align-items:center !important;
-    justify-content:center !important;
-
-    text-align:center !important;
-
-    visibility:visible !important;
-    opacity:1 !important;
-
-    width:100% !important;
-
-    min-width:0 !important;
-    min-height:54px !important;
-
-    padding:0 12px !important;
-
-    margin:0 !important;
-
+.trade-buttons .short-btn{
     background:
         linear-gradient(
             135deg,
@@ -842,71 +893,213 @@ button.short,
 
     color:#fff !important;
 
-    border:
-        1px solid rgba(255,70,100,.30) !important;
-
-    border-radius:14px !important;
-
-    font-size:17px !important;
-    line-height:1 !important;
-
-    font-weight:800 !important;
-
-    white-space:nowrap !important;
+    border:1px solid rgba(255,70,100,.30) !important;
 }
 
 
 /* =========================================================
-   LONG / SHORT PARENT
+   TRADE MODAL
    ========================================================= */
 
-.long-short,
-.trade-actions,
-.action-buttons,
-.order-buttons{
+.trade-modal{
+    display:none;
 
-    width:100% !important;
+    position:fixed !important;
 
+    inset:0 !important;
+
+    z-index:999990 !important;
+
+    padding:20px !important;
+
+    align-items:center !important;
+    justify-content:center !important;
+
+    background:rgba(0,0,0,.72) !important;
+}
+
+.trade-modal.show,
+.trade-modal.active{
     display:flex !important;
+}
 
-    flex-direction:row !important;
+.trade-modal-box{
+    width:100% !important;
+    max-width:420px !important;
 
-    align-items:stretch !important;
-
-    justify-content:stretch !important;
-
-    gap:10px !important;
-
-    margin-top:14px !important;
-
-    margin-bottom:20px !important;
+    padding:20px !important;
 
     position:relative !important;
 
-    z-index:5 !important;
+    border-radius:18px !important;
+
+    background:
+        linear-gradient(
+            145deg,
+            #071f34,
+            #03121f
+        ) !important;
+
+    border:1px solid rgba(255,196,0,.14) !important;
+
+    box-shadow:0 20px 50px rgba(0,0,0,.5) !important;
 }
 
-.long-short button,
-.trade-actions button,
-.action-buttons button,
-.order-buttons button{
+.trade-modal-box h2{
+    color:#fff !important;
 
-    flex:1 1 0 !important;
+    margin-bottom:12px !important;
+}
 
-    width:50% !important;
+.modal-close{
+    position:absolute !important;
 
-    min-width:0 !important;
+    top:10px !important;
+    right:10px !important;
+
+    width:36px !important;
+    height:36px !important;
+
+    border:0 !important;
+    border-radius:50% !important;
+
+    background:#092c47 !important;
+
+    color:#fff !important;
+
+    font-size:24px !important;
+}
+
+.confirm-trade-btn{
+    width:100% !important;
+
+    height:48px !important;
+
+    margin-top:14px !important;
+
+    border:0 !important;
+    border-radius:13px !important;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffc400,
+            #ffe06a
+        ) !important;
+
+    color:#10151b !important;
+
+    font-weight:800 !important;
+}
+
+
+/* =========================================================
+   OPEN TRADE CARD
+   ========================================================= */
+
+.open-trade-card{
+    width:calc(100% - 20px) !important;
+
+    margin:10px !important;
+    padding:15px !important;
+
+    border-radius:18px !important;
+
+    background:
+        linear-gradient(
+            145deg,
+            #071f34,
+            #03121f
+        ) !important;
+
+    border:1px solid rgba(255,196,0,.12) !important;
+}
+
+.open-trade-header{
+    display:flex !important;
+
+    align-items:center !important;
+    justify-content:space-between !important;
+
+    margin-bottom:12px !important;
+}
+
+.open-trade-header h3{
+    color:#fff !important;
+}
+
+#positionSide{
+    padding:5px 9px !important;
+
+    border-radius:8px !important;
+
+    background:#00dc88 !important;
+
+    color:#001b11 !important;
+
+    font-size:11px !important;
+    font-weight:800 !important;
+}
+
+.open-trade-info{
+    display:grid !important;
+
+    grid-template-columns:
+        repeat(2,minmax(0,1fr)) !important;
+
+    gap:8px !important;
+}
+
+.open-trade-info > div{
+    padding:10px !important;
+
+    border-radius:10px !important;
+
+    background:#092c47 !important;
+}
+
+.open-trade-info span{
+    display:block !important;
+
+    color:#91a7bc !important;
+
+    font-size:10px !important;
+}
+
+.open-trade-info strong{
+    display:block !important;
+
+    margin-top:4px !important;
+
+    color:#fff !important;
+
+    font-size:13px !important;
+}
+
+.close-trade-btn{
+    width:100% !important;
+
+    height:46px !important;
+
+    margin-top:12px !important;
+
+    border:0 !important;
+    border-radius:12px !important;
+
+    background:#ff3158 !important;
+
+    color:#fff !important;
+
+    font-weight:800 !important;
 }
 
 
 /* =========================================================
    BOTTOM NAVIGATION
+   IMPORTANT — FORCE ALL 5 HTML LINKS
    ========================================================= */
 
-.bottom-nav,
-.bottom-navigation,
 nav.bottom-nav{
-
     position:fixed !important;
 
     left:0 !important;
@@ -914,108 +1107,200 @@ nav.bottom-nav{
     bottom:0 !important;
 
     width:100% !important;
+    max-width:none !important;
 
-    max-width:480px !important;
+    height:76px !important;
+    min-height:76px !important;
 
-    height:72px !important;
-    min-height:72px !important;
+    margin:0 !important;
+    padding:5px 2px !important;
 
-    margin:0 auto !important;
+    display:grid !important;
 
-    padding:
-        6px 8px
-        calc(6px + env(safe-area-inset-bottom))
-        8px !important;
-
-    display:flex !important;
+    grid-template-columns:
+        repeat(5,minmax(0,1fr)) !important;
 
     align-items:stretch !important;
-    justify-content:space-around !important;
-
-    z-index:2147483647 !important;
 
     background:
         linear-gradient(
             180deg,
-            rgba(4,18,30,.98),
-            rgba(2,10,17,1)
+            #061827,
+            #020b14
         ) !important;
 
-    border-top:
-        1px solid rgba(255,196,0,.10) !important;
+    border-top:1px solid rgba(255,196,0,.12) !important;
 
     box-shadow:
         0 -10px 30px rgba(0,0,0,.45) !important;
+
+    z-index:2147483647 !important;
+
+    overflow:visible !important;
 }
 
 
-/* Navigation items */
+/* ---------------------------------------------------------
+   ALL 5 LINKS
+   --------------------------------------------------------- */
 
-.bottom-nav > *,
-.bottom-navigation > *,
-nav.bottom-nav > *{
-
-    flex:1 1 0 !important;
-
-    min-width:0 !important;
+nav.bottom-nav > a,
+nav.bottom-nav > a:nth-child(1),
+nav.bottom-nav > a:nth-child(2),
+nav.bottom-nav > a:nth-child(3),
+nav.bottom-nav > a:nth-child(4),
+nav.bottom-nav > a:nth-child(5){
 
     display:flex !important;
+
+    visibility:visible !important;
+    opacity:1 !important;
+
+    position:relative !important;
+
+    width:100% !important;
+    min-width:0 !important;
+    max-width:none !important;
+
+    height:66px !important;
+
+    margin:0 !important;
+    padding:4px 1px !important;
+
+    flex:none !important;
 
     flex-direction:column !important;
 
     align-items:center !important;
     justify-content:center !important;
 
-    text-align:center !important;
+    gap:3px !important;
+
+    overflow:visible !important;
+
+    text-decoration:none !important;
+
+    color:#8da2b8 !important;
+
+    transform:none !important;
 }
 
 
-/* Icons */
+/* ---------------------------------------------------------
+   NAV ICONS
+   --------------------------------------------------------- */
 
-.bottom-nav i,
-.bottom-navigation i,
-nav.bottom-nav i{
+nav.bottom-nav > a > i{
+    display:block !important;
 
-    color:#8095aa !important;
+    visibility:visible !important;
+    opacity:1 !important;
+
+    width:auto !important;
+    height:auto !important;
+
+    margin:0 !important;
+    padding:0 !important;
+
+    color:#8da2b8 !important;
+
+    font-size:20px !important;
+
+    line-height:22px !important;
+}
+
+
+/* ---------------------------------------------------------
+   NAV TEXT
+   --------------------------------------------------------- */
+
+nav.bottom-nav > a > span{
+    display:block !important;
+
+    visibility:visible !important;
+    opacity:1 !important;
+
+    position:static !important;
+
+    width:auto !important;
+
+    margin:0 !important;
+    padding:0 !important;
+
+    color:#8da2b8 !important;
+
+    font-size:10px !important;
+    line-height:13px !important;
+
+    white-space:nowrap !important;
+}
+
+
+/* ---------------------------------------------------------
+   CENTER TRADE BUTTON
+   --------------------------------------------------------- */
+
+nav.bottom-nav > a.trade-btn{
+    display:flex !important;
+
+    width:100% !important;
+    height:66px !important;
+
+    margin:0 !important;
+    padding:4px 1px !important;
+
+    background:transparent !important;
+
+    border-radius:0 !important;
+
+    box-shadow:none !important;
+
+    transform:none !important;
+}
+
+nav.bottom-nav > a.trade-btn > i{
+    display:flex !important;
+
+    align-items:center !important;
+    justify-content:center !important;
+
+    width:44px !important;
+    height:44px !important;
+
+    margin:0 !important;
+
+    border-radius:50% !important;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffc400,
+            #ffe06a
+        ) !important;
+
+    color:#07111c !important;
 
     font-size:19px !important;
 
-    display:block !important;
+    box-shadow:
+        0 4px 16px rgba(255,196,0,.30) !important;
+}
 
-    margin-bottom:3px !important;
+nav.bottom-nav > a.trade-btn > span{
+    display:none !important;
 }
 
 
-/* Text */
+/* ---------------------------------------------------------
+   ACTIVE TRADE PAGE
+   --------------------------------------------------------- */
 
-.bottom-nav span,
-.bottom-nav p,
-.bottom-navigation span,
-.bottom-navigation p{
-
-    color:#7f94a8 !important;
-
-    font-size:11px !important;
-
-    line-height:1.1 !important;
-
-    margin:0 !important;
+nav.bottom-nav > a[href="trade.html"]{
+    color:#ffc400 !important;
 }
 
-
-/* Active */
-
-.bottom-nav .active i,
-.bottom-navigation .active i,
-nav.bottom-nav .active i{
-    color:var(--gold) !important;
-}
-
-.bottom-nav .active span,
-.bottom-nav .active p,
-.bottom-navigation .active span,
-.bottom-navigation .active p{
-    color:var(--gold) !important;
+nav.bottom-nav > a[href="trade.html"] i{
+    color:#07111c !important;
 }
 
 
@@ -1024,15 +1309,14 @@ nav.bottom-nav .active i{
    ========================================================= */
 
 button{
-
     font-family:inherit !important;
+
+    cursor:pointer;
 
     -webkit-user-select:none;
     user-select:none;
 
     touch-action:manipulation;
-
-    cursor:pointer;
 }
 
 button:active{
@@ -1049,171 +1333,91 @@ button:active{
     html,
     body{
         width:100% !important;
-        min-width:0 !important;
-
         max-width:100% !important;
 
         overflow-x:hidden !important;
     }
 
+    body{
+        padding-bottom:
+            calc(82px + env(safe-area-inset-bottom)) !important;
+    }
 
-    .trade-container,
-    .trade-page,
-    .container{
-
+    .trade-page{
         width:100% !important;
-
         max-width:480px !important;
-
-        min-width:0 !important;
-
-        margin:0 auto !important;
     }
 
-
-    /* -------------------------
-       MOBILE PRICE
-       ------------------------- */
-
+    .price-box h2,
     #livePrice{
-
         font-size:
-            clamp(38px, 12vw, 52px) !important;
-
-        line-height:1 !important;
-
-        letter-spacing:-1px !important;
+            clamp(38px,11vw,44px) !important;
     }
-
-
-    /* -------------------------
-       MOBILE CHART
-       ------------------------- */
 
     #tvchart{
-
-        width:100% !important;
-
-        height:300px !important;
-        min-height:300px !important;
-        max-height:300px !important;
-
-        border-radius:16px !important;
+        height:290px !important;
+        min-height:290px !important;
+        max-height:290px !important;
     }
-
-
-    #tvchart > div{
-
-        height:100% !important;
-        min-height:0 !important;
-        max-height:100% !important;
-    }
-
 
     #tvchart iframe{
-
-        width:100% !important;
-
-        height:100% !important;
-        min-height:0 !important;
-        max-height:100% !important;
+        height:290px !important;
+        min-height:290px !important;
+        max-height:290px !important;
     }
 
+    nav.bottom-nav{
+        height:
+            calc(76px + env(safe-area-inset-bottom)) !important;
 
-    /* -------------------------
-       PANEL
-       ------------------------- */
+        min-height:
+            calc(76px + env(safe-area-inset-bottom)) !important;
 
-    .trade-panel,
-    .order-panel,
-    .trading-panel{
-
-        width:
-            calc(100% - 20px) !important;
-
-        margin-left:10px !important;
-        margin-right:10px !important;
-
-        padding:14px !important;
+        padding:
+            5px 2px env(safe-area-inset-bottom) !important;
     }
 
-
-    /* -------------------------
-       LEVERAGE
-       ------------------------- */
-
-    .leverage-grid{
-        gap:6px !important;
-    }
-
-
-    /* -------------------------
-       LONG SHORT
-       ------------------------- */
-
-    .long-short,
-    .trade-actions,
-    .action-buttons,
-    .order-buttons{
-
-        display:flex !important;
-
-        flex-direction:row !important;
-
-        align-items:stretch !important;
-
-        gap:8px !important;
-
-        margin-bottom:18px !important;
-    }
-
-
-    .long-btn,
-    .short-btn,
-    #longBtn,
-    #shortBtn{
-
-        display:flex !important;
-
-        align-items:center !important;
-        justify-content:center !important;
-
-        min-height:54px !important;
-
-        width:50% !important;
-
-        font-size:16px !important;
-    }
-
-
-    /* -------------------------
-       BOTTOM NAV SPACE
-       ------------------------- */
-
-    body{
-
-        padding-bottom:
-            82px !important;
+    nav.bottom-nav > a,
+    nav.bottom-nav > a:nth-child(1),
+    nav.bottom-nav > a:nth-child(2),
+    nav.bottom-nav > a:nth-child(3),
+    nav.bottom-nav > a:nth-child(4),
+    nav.bottom-nav > a:nth-child(5){
+        height:66px !important;
     }
 }
 
 
 /* =========================================================
-   SCROLLBAR
+   SMALL PHONE
    ========================================================= */
 
-::-webkit-scrollbar{
-    width:4px;
-    height:4px;
-}
+@media(max-width:380px){
 
-::-webkit-scrollbar-track{
-    background:#020912;
-}
+    .price-box h2,
+    #livePrice{
+        font-size:39px !important;
+    }
 
-::-webkit-scrollbar-thumb{
-    background:#7c6200;
-    border-radius:10px;
+    #tvchart{
+        height:270px !important;
+        min-height:270px !important;
+        max-height:270px !important;
+    }
+
+    #tvchart iframe{
+        height:270px !important;
+        min-height:270px !important;
+        max-height:270px !important;
+    }
+
+    nav.bottom-nav > a > i{
+        font-size:18px !important;
+    }
+
+    nav.bottom-nav > a > span{
+        font-size:9px !important;
+    }
 }
 
 
@@ -1224,7 +1428,6 @@ button:active{
 button:focus-visible,
 input:focus-visible,
 select:focus-visible{
-
     outline:
         2px solid rgba(255,196,0,.75) !important;
 
@@ -1241,1077 +1444,8 @@ select:focus-visible{
     *,
     *::before,
     *::after{
-
         animation-duration:.01ms !important;
-
         animation-iteration-count:1 !important;
-
         transition-duration:.01ms !important;
     }
-}
-/* =========================================================
-   CPTMARKETS — FINAL TRADE PAGE OVERRIDE
-   MOBILE LAYOUT + BOTTOM NAV + LONG/SHORT
-   ========================================================= */
-
-/* ---------- BODY / PAGE ---------- */
-
-html,
-body{
-    width:100% !important;
-    max-width:100% !important;
-
-    margin:0 !important;
-    padding:0 !important;
-
-    overflow-x:hidden !important;
-
-    -webkit-text-size-adjust:100% !important;
-    text-size-adjust:100% !important;
-}
-
-body{
-    min-height:100vh !important;
-    padding-bottom:90px !important;
-
-    background:#020912 !important;
-
-    display:block !important;
-}
-
-.trade-page{
-    width:100% !important;
-    max-width:480px !important;
-
-    margin:0 auto !important;
-    padding:0 !important;
-
-    overflow-x:hidden !important;
-}
-
-
-/* =========================================================
-   HEADER — STOP THE LARGE / ZOOMED LOOK
-   ========================================================= */
-
-.trade-header,
-header.trade-header{
-
-    width:100% !important;
-
-    min-height:68px !important;
-    height:68px !important;
-
-    padding:8px 12px !important;
-
-    display:flex !important;
-    align-items:center !important;
-    justify-content:space-between !important;
-
-    box-sizing:border-box !important;
-}
-
-.trade-header .pair-box,
-.trade-header .pair-box h1,
-.trade-header .pair-box p{
-
-    margin:0 !important;
-}
-
-.trade-header .pair-box h1{
-
-    font-size:24px !important;
-    line-height:28px !important;
-
-    font-weight:800 !important;
-
-    text-align:center !important;
-}
-
-.trade-header .pair-box p{
-
-    font-size:12px !important;
-    line-height:16px !important;
-
-    text-align:center !important;
-}
-
-.trade-header .back-btn{
-
-    width:40px !important;
-    height:40px !important;
-
-    min-width:40px !important;
-
-    display:flex !important;
-    align-items:center !important;
-    justify-content:center !important;
-
-    padding:0 !important;
-}
-
-.trade-header .header-icons{
-
-    display:flex !important;
-    align-items:center !important;
-
-    gap:8px !important;
-}
-
-.trade-header .header-icons button{
-
-    width:40px !important;
-    height:40px !important;
-
-    min-width:40px !important;
-    min-height:40px !important;
-
-    padding:0 !important;
-}
-
-
-/* =========================================================
-   PRICE — REDUCE THE HUGE / ZOOMED TEXT
-   ========================================================= */
-
-.price-box{
-
-    width:100% !important;
-
-    margin:0 !important;
-
-    padding:22px 14px 18px !important;
-
-    box-sizing:border-box !important;
-}
-
-.price-box h2,
-#livePrice{
-
-    margin:0 0 10px 0 !important;
-
-    font-size:46px !important;
-    line-height:1.05 !important;
-
-    font-weight:800 !important;
-
-    letter-spacing:-1px !important;
-}
-
-.price-box .change,
-#changeBox{
-
-    display:inline-flex !important;
-
-    align-items:center !important;
-    justify-content:center !important;
-
-    min-height:38px !important;
-
-    padding:7px 14px !important;
-
-    font-size:16px !important;
-    line-height:20px !important;
-}
-
-.price-box p{
-
-    margin:8px 0 0 !important;
-
-    font-size:14px !important;
-    line-height:18px !important;
-}
-
-
-/* =========================================================
-   INDICATOR BAR
-   ========================================================= */
-
-.indicator-bar{
-
-    width:100% !important;
-
-    height:54px !important;
-
-    padding:8px 10px !important;
-
-    display:flex !important;
-    align-items:center !important;
-
-    gap:7px !important;
-
-    overflow-x:auto !important;
-    overflow-y:hidden !important;
-
-    box-sizing:border-box !important;
-}
-
-.indicator-bar button{
-
-    flex:0 0 auto !important;
-
-    width:auto !important;
-    min-width:52px !important;
-
-    height:38px !important;
-    min-height:38px !important;
-
-    padding:0 10px !important;
-
-    font-size:13px !important;
-}
-
-
-/* =========================================================
-   CHART — NO EXTRA WIDTH / NO SIDE BLACK SPACE
-   ========================================================= */
-
-.chart-card{
-
-    width:100% !important;
-    max-width:100% !important;
-
-    margin:0 !important;
-    padding:0 !important;
-
-    border:0 !important;
-
-    overflow:hidden !important;
-
-    box-sizing:border-box !important;
-
-    background:#020507 !important;
-}
-
-#tvchart{
-
-    width:100% !important;
-    max-width:100% !important;
-
-    height:300px !important;
-    min-height:300px !important;
-    max-height:300px !important;
-
-    margin:0 !important;
-    padding:0 !important;
-
-    border:0 !important;
-    border-radius:0 !important;
-
-    overflow:hidden !important;
-
-    box-sizing:border-box !important;
-}
-
-#tvchart > div{
-
-    width:100% !important;
-    max-width:100% !important;
-
-    height:100% !important;
-
-    margin:0 !important;
-    padding:0 !important;
-
-    overflow:hidden !important;
-}
-
-#tvchart iframe{
-
-    display:block !important;
-
-    width:100% !important;
-    max-width:100% !important;
-
-    height:300px !important;
-    min-height:300px !important;
-
-    margin:0 !important;
-    padding:0 !important;
-
-    border:0 !important;
-}
-
-
-/* =========================================================
-   TIMEFRAME
-   ========================================================= */
-
-.timeframe{
-
-    width:100% !important;
-
-    min-height:60px !important;
-
-    padding:10px !important;
-
-    display:flex !important;
-    align-items:center !important;
-
-    gap:8px !important;
-
-    overflow-x:auto !important;
-    overflow-y:hidden !important;
-
-    box-sizing:border-box !important;
-}
-
-.timeframe button{
-
-    flex:1 1 0 !important;
-
-    min-width:52px !important;
-
-    height:40px !important;
-    min-height:40px !important;
-
-    padding:0 8px !important;
-
-    font-size:13px !important;
-}
-
-
-/* =========================================================
-   TRADE PANEL
-   ========================================================= */
-
-.trade-panel{
-
-    width:calc(100% - 20px) !important;
-
-    margin:10px !important;
-
-    padding:14px !important;
-
-    box-sizing:border-box !important;
-
-    border-radius:18px !important;
-}
-
-
-/* =========================================================
-   LEVERAGE GRID
-   ========================================================= */
-
-.leverage-grid{
-
-    width:100% !important;
-
-    display:grid !important;
-
-    grid-template-columns:repeat(5,minmax(0,1fr)) !important;
-
-    gap:6px !important;
-}
-
-.leverage-grid button{
-
-    width:100% !important;
-
-    min-width:0 !important;
-
-    height:40px !important;
-    min-height:40px !important;
-
-    padding:0 2px !important;
-
-    font-size:11px !important;
-}
-
-
-/* =========================================================
-   BY AMOUNT / BY LOTS
-   ========================================================= */
-
-.mode-switch{
-
-    width:100% !important;
-
-    display:flex !important;
-
-    gap:8px !important;
-
-    margin:12px 0 !important;
-}
-
-.mode-switch button{
-
-    flex:1 !important;
-
-    width:50% !important;
-
-    min-width:0 !important;
-
-    height:42px !important;
-    min-height:42px !important;
-}
-
-
-/* =========================================================
-   INPUTS
-   ========================================================= */
-
-.trade-panel input{
-
-    width:100% !important;
-
-    min-height:44px !important;
-
-    height:44px !important;
-
-    padding:0 12px !important;
-
-    font-size:14px !important;
-
-    box-sizing:border-box !important;
-}
-
-.tp-sl{
-
-    width:100% !important;
-
-    display:grid !important;
-
-    grid-template-columns:1fr 1fr !important;
-
-    gap:8px !important;
-
-    margin-top:10px !important;
-}
-
-.tp-sl > div{
-
-    min-width:0 !important;
-}
-
-
-/* =========================================================
-   SUMMARY
-   ========================================================= */
-
-.summary{
-
-    width:100% !important;
-
-    display:grid !important;
-
-    grid-template-columns:1fr 1fr !important;
-
-    gap:8px !important;
-
-    margin-top:12px !important;
-}
-
-.summary > div{
-
-    min-width:0 !important;
-
-    padding:12px !important;
-
-    box-sizing:border-box !important;
-}
-
-.summary span{
-
-    display:block !important;
-
-    font-size:11px !important;
-}
-
-.summary strong{
-
-    display:block !important;
-
-    margin-top:5px !important;
-
-    font-size:14px !important;
-}
-
-
-/* =========================================================
-   LONG / SHORT — THIS IS THE IMPORTANT FIX
-   ========================================================= */
-
-.trade-buttons{
-
-    width:100% !important;
-
-    display:flex !important;
-
-    flex-direction:row !important;
-
-    align-items:stretch !important;
-
-    gap:10px !important;
-
-    margin-top:14px !important;
-
-    margin-bottom:4px !important;
-
-    box-sizing:border-box !important;
-}
-
-.trade-buttons .long-btn,
-.trade-buttons .short-btn{
-
-    display:flex !important;
-
-    flex:1 1 0 !important;
-
-    width:50% !important;
-
-    min-width:0 !important;
-
-    height:52px !important;
-    min-height:52px !important;
-
-    margin:0 !important;
-
-    padding:0 !important;
-
-    align-items:center !important;
-    justify-content:center !important;
-
-    box-sizing:border-box !important;
-
-    border-radius:14px !important;
-
-    font-size:16px !important;
-    font-weight:800 !important;
-
-    visibility:visible !important;
-    opacity:1 !important;
-}
-
-.trade-buttons .long-btn{
-
-    background:
-        linear-gradient(
-            135deg,
-            #00df88,
-            #00b96d
-        ) !important;
-
-    color:#001a10 !important;
-}
-
-.trade-buttons .short-btn{
-
-    background:
-        linear-gradient(
-            135deg,
-            #ff3158,
-            #e91443
-        ) !important;
-
-    color:#fff !important;
-}
-
-
-/* =========================================================
-   BOTTOM NAVIGATION — FORCE ALL 5 ITEMS
-   ========================================================= */
-
-.bottom-nav{
-
-    position:fixed !important;
-
-    left:50% !important;
-    right:auto !important;
-
-    bottom:0 !important;
-
-    transform:translateX(-50%) !important;
-
-    width:100% !important;
-
-    max-width:480px !important;
-
-    height:72px !important;
-
-    margin:0 !important;
-    padding:0 !important;
-
-    display:grid !important;
-
-    grid-template-columns:
-        repeat(5,minmax(0,1fr)) !important;
-
-    align-items:center !important;
-    justify-items:center !important;
-
-    gap:0 !important;
-
-    background:
-        linear-gradient(
-            180deg,
-            #061827,
-            #020b14
-        ) !important;
-
-    border-top:
-        1px solid rgba(255,196,0,.12) !important;
-
-    z-index:999999 !important;
-
-    overflow:visible !important;
-}
-
-
-/* Every navigation link */
-
-.bottom-nav a{
-
-    position:relative !important;
-
-    width:100% !important;
-    height:72px !important;
-
-    min-width:0 !important;
-
-    margin:0 !important;
-    padding:5px 2px !important;
-
-    display:flex !important;
-
-    flex-direction:column !important;
-
-    align-items:center !important;
-    justify-content:center !important;
-
-    gap:3px !important;
-
-    visibility:visible !important;
-    opacity:1 !important;
-
-    overflow:visible !important;
-
-    text-decoration:none !important;
-
-    color:#8da2b8 !important;
-
-    box-sizing:border-box !important;
-}
-
-
-/* Icons */
-
-.bottom-nav a i{
-
-    display:block !important;
-
-    width:auto !important;
-    height:auto !important;
-
-    margin:0 !important;
-    padding:0 !important;
-
-    font-size:20px !important;
-
-    line-height:22px !important;
-
-    visibility:visible !important;
-    opacity:1 !important;
-
-    color:#8da2b8 !important;
-}
-
-
-/* Text */
-
-.bottom-nav a span{
-
-    display:block !important;
-
-    width:auto !important;
-
-    margin:0 !important;
-    padding:0 !important;
-
-    font-size:10px !important;
-
-    line-height:14px !important;
-
-    white-space:nowrap !important;
-
-    visibility:visible !important;
-    opacity:1 !important;
-
-    color:#8da2b8 !important;
-}
-
-
-/* Active navigation */
-
-.bottom-nav a.active,
-.bottom-nav a.active i,
-.bottom-nav a.active span{
-
-    color:#ffc400 !important;
-}
-
-
-/* Center Trade button */
-
-.bottom-nav a.trade-btn{
-
-    width:54px !important;
-    height:54px !important;
-
-    min-width:54px !important;
-
-    margin-top:-22px !important;
-
-    padding:0 !important;
-
-    border-radius:50% !important;
-
-    display:flex !important;
-
-    align-items:center !important;
-    justify-content:center !important;
-
-    background:
-        linear-gradient(
-            135deg,
-            #ffc400,
-            #ffe06a
-        ) !important;
-
-    color:#10151b !important;
-
-    box-shadow:
-        0 5px 20px rgba(255,196,0,.35) !important;
-
-    z-index:1000000 !important;
-}
-
-.bottom-nav a.trade-btn i{
-
-    display:block !important;
-
-    margin:0 !important;
-
-    font-size:23px !important;
-
-    color:#10151b !important;
-}
-
-.bottom-nav a.trade-btn span{
-
-    display:none !important;
-}
-
-
-/* =========================================================
-   MOBILE FINAL
-   ========================================================= */
-
-@media(max-width:600px){
-
-    body{
-        padding-bottom:82px !important;
-    }
-
-    .trade-page{
-        width:100% !important;
-        max-width:480px !important;
-    }
-
-    .price-box h2,
-    #livePrice{
-        font-size:44px !important;
-    }
-
-    #tvchart,
-    #tvchart iframe{
-        height:290px !important;
-        min-height:290px !important;
-        max-height:290px !important;
-    }
-
-    .bottom-nav{
-        height:72px !important;
-    }
-
-    .bottom-nav a{
-        height:72px !important;
-    }
-}
-
-
-/* =========================================================
-   SMALL PHONES
-   ========================================================= */
-
-@media(max-width:380px){
-
-    .price-box h2,
-    #livePrice{
-        font-size:40px !important;
-    }
-
-    #tvchart,
-    #tvchart iframe{
-        height:270px !important;
-        min-height:270px !important;
-        max-height:270px !important;
-    }
-
-    .bottom-nav a i{
-        font-size:18px !important;
-    }
-
-    .bottom-nav a span{
-        font-size:9px !important;
-    }
-}
-
-/* =========================================================
-   CPTMARKETS — FORCE 5 BUTTON BOTTOM NAVIGATION
-   ========================================================= */
-
-nav.bottom-nav{
-    position:fixed !important;
-
-    left:0 !important;
-    right:0 !important;
-    bottom:0 !important;
-
-    width:100vw !important;
-    max-width:none !important;
-
-    height:76px !important;
-    min-height:76px !important;
-
-    margin:0 !important;
-    padding:6px 4px 4px !important;
-
-    display:flex !important;
-    flex-direction:row !important;
-
-    align-items:stretch !important;
-    justify-content:space-between !important;
-
-    overflow:visible !important;
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(4,20,34,.98),
-            rgba(2,10,18,.99)
-        ) !important;
-
-    border-top:1px solid rgba(255,196,0,.12) !important;
-
-    z-index:999999 !important;
-}
-
-
-/* FORCE ALL 5 LINKS TO SHOW */
-
-nav.bottom-nav > a{
-    display:flex !important;
-
-    visibility:visible !important;
-    opacity:1 !important;
-
-    position:relative !important;
-
-    flex:1 1 20% !important;
-
-    width:20% !important;
-    min-width:0 !important;
-    max-width:none !important;
-
-    height:66px !important;
-
-    margin:0 !important;
-    padding:5px 2px !important;
-
-    flex-direction:column !important;
-
-    align-items:center !important;
-    justify-content:center !important;
-
-    gap:4px !important;
-
-    color:#8da2b8 !important;
-
-    text-decoration:none !important;
-
-    transform:none !important;
-
-    overflow:visible !important;
-}
-
-
-/* FORCE EACH INDIVIDUAL BUTTON */
-
-nav.bottom-nav > a:nth-child(1),
-nav.bottom-nav > a:nth-child(2),
-nav.bottom-nav > a:nth-child(3),
-nav.bottom-nav > a:nth-child(4),
-nav.bottom-nav > a:nth-child(5){
-
-    display:flex !important;
-    visibility:visible !important;
-    opacity:1 !important;
-
-    flex:1 1 20% !important;
-
-    width:20% !important;
-}
-
-
-/* ICON */
-
-nav.bottom-nav > a i{
-    display:block !important;
-
-    visibility:visible !important;
-    opacity:1 !important;
-
-    width:auto !important;
-    height:auto !important;
-
-    margin:0 !important;
-
-    font-size:21px !important;
-
-    color:#8da2b8 !important;
-}
-
-
-/* TEXT */
-
-nav.bottom-nav > a span{
-    display:block !important;
-
-    visibility:visible !important;
-    opacity:1 !important;
-
-    position:static !important;
-
-    width:auto !important;
-
-    margin:0 !important;
-    padding:0 !important;
-
-    font-size:11px !important;
-    line-height:15px !important;
-
-    color:#8da2b8 !important;
-
-    white-space:nowrap !important;
-}
-
-
-/* TRADE BUTTON */
-
-nav.bottom-nav > a.trade-btn{
-    display:flex !important;
-
-    visibility:visible !important;
-    opacity:1 !important;
-
-    flex:1 1 20% !important;
-
-    width:20% !important;
-
-    border-radius:0 !important;
-
-    background:transparent !important;
-}
-
-
-/* TRADE BUTTON ICON */
-
-nav.bottom-nav > a.trade-btn i{
-    display:flex !important;
-
-    align-items:center !important;
-    justify-content:center !important;
-
-    width:42px !important;
-    height:42px !important;
-
-    border-radius:50% !important;
-
-    background:
-        linear-gradient(
-            135deg,
-            #ffc400,
-            #ffdb4d
-        ) !important;
-
-    color:#07111c !important;
-
-    font-size:18px !important;
-}
-
-
-/* ACTIVE / CURRENT PAGE */
-
-nav.bottom-nav > a[href="trade.html"]{
-    color:#ffc400 !important;
-}
-
-nav.bottom-nav > a[href="trade.html"] i{
-    color:#07111c !important;
-}
-
-
-/* OTHER ICONS */
-
-nav.bottom-nav > a[href="dashboard.html"] i,
-nav.bottom-nav > a[href="markets.html"] i,
-nav.bottom-nav > a[href="assets.html"] i,
-nav.bottom-nav > a[href="mine.html"] i{
-
-    color:#8da2b8 !important;
-}
-
-
-/* MOBILE */
-
-@media(max-width:600px){
-
-    nav.bottom-nav{
-        width:100vw !important;
-        max-width:none !important;
-
-        height:74px !important;
-        min-height:74px !important;
-
-        padding:
-            5px 2px
-            calc(4px + env(safe-area-inset-bottom))
-            !important;
-    }
-
-    nav.bottom-nav > a{
-        flex:1 1 20% !important;
-        width:20% !important;
-
-        height:64px !important;
-    }
-
-    nav.bottom-nav > a i{
-        font-size:20px !important;
-    }
-
-    nav.bottom-nav > a span{
-        font-size:10px !important;
-    }
-}
-
-
-/* PREVENT OLD CSS FROM HIDING NAV ITEMS */
-
-nav.bottom-nav a[style],
-nav.bottom-nav > a[style]{
-    display:flex !important;
-    visibility:visible !important;
-    opacity:1 !important;
 }
