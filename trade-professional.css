@@ -1,6 +1,6 @@
 /* =========================================================
    CPTMARKETS — TRADE PROFESSIONAL
-   FINAL CLEAN MOBILE VERSION
+   FINAL MOBILE PROFESSIONAL VERSION
    ========================================================= */
 
 :root{
@@ -28,7 +28,6 @@
     box-sizing:border-box !important;
     margin:0;
     padding:0;
-
     -webkit-tap-highlight-color:transparent;
     -webkit-text-size-adjust:100%;
     text-size-adjust:100%;
@@ -38,16 +37,10 @@ html{
     width:100% !important;
     min-width:0 !important;
     max-width:100% !important;
-
     margin:0 !important;
     padding:0 !important;
-
     overflow-x:hidden !important;
-
     background:var(--bg);
-
-    -webkit-text-size-adjust:100%;
-    text-size-adjust:100%;
 }
 
 body{
@@ -57,7 +50,11 @@ body{
     min-height:100vh !important;
 
     margin:0 !important;
-    padding:0 0 90px 0 !important;
+
+    /*
+     * Bottom navigation-এর জন্য জায়গা রাখা হয়েছে।
+     */
+    padding:0 0 86px 0 !important;
 
     overflow-x:hidden !important;
     overflow-y:auto !important;
@@ -105,8 +102,6 @@ body{
 
 .trade-header{
     width:100% !important;
-    max-width:100% !important;
-
     height:68px !important;
     min-height:68px !important;
 
@@ -128,17 +123,10 @@ body{
     box-shadow:0 5px 18px rgba(0,0,0,.22) !important;
 }
 
-
-/* Back button */
-
 .trade-header .back-btn{
     width:40px !important;
     height:40px !important;
-
     min-width:40px !important;
-    min-height:40px !important;
-
-    padding:0 !important;
 
     display:flex !important;
     align-items:center !important;
@@ -147,7 +135,6 @@ body{
     border-radius:50% !important;
 
     color:var(--gold) !important;
-
     text-decoration:none !important;
 
     background:
@@ -160,13 +147,9 @@ body{
     border:1px solid rgba(255,196,0,.16) !important;
 }
 
-
-/* Pair */
-
 .trade-header .pair-box{
     margin:0 !important;
     padding:0 !important;
-
     text-align:center !important;
 }
 
@@ -177,7 +160,6 @@ body{
 
     font-size:22px !important;
     line-height:25px !important;
-
     font-weight:800 !important;
 
     white-space:nowrap !important;
@@ -189,31 +171,24 @@ body{
     color:var(--muted) !important;
 
     font-size:11px !important;
-    line-height:14px !important;
 }
-
-
-/* Header icons */
 
 .trade-header .header-icons{
     display:flex !important;
     align-items:center !important;
-
-    gap:7px !important;
+    gap:8px !important;
 }
 
 .trade-header .header-icons button{
-    width:40px !important;
-    height:40px !important;
-
-    min-width:40px !important;
-    min-height:40px !important;
-
-    padding:0 !important;
+    width:42px !important;
+    height:42px !important;
+    min-width:42px !important;
 
     display:flex !important;
     align-items:center !important;
     justify-content:center !important;
+
+    padding:0 !important;
 
     border-radius:50% !important;
 
@@ -227,6 +202,8 @@ body{
     border:1px solid rgba(255,196,0,.16) !important;
 
     color:var(--gold) !important;
+
+    font-size:16px !important;
 }
 
 
@@ -253,7 +230,6 @@ body{
     line-height:1 !important;
 
     font-weight:800 !important;
-
     letter-spacing:-1px !important;
 
     text-shadow:
@@ -283,12 +259,8 @@ body{
     margin:6px 0 0 !important;
 
     color:var(--muted) !important;
-
     font-size:12px !important;
 }
-
-
-/* Green / Red */
 
 .change.green,
 .green{
@@ -317,15 +289,15 @@ body{
 
 /* =========================================================
    INDICATOR BAR
+   TOP BUTTONS — SLIGHTLY LARGER
    ========================================================= */
 
 .indicator-bar{
     width:100% !important;
-    max-width:100% !important;
+    height:56px !important;
+    min-height:56px !important;
 
-    height:54px !important;
-
-    padding:8px 10px !important;
+    padding:8px 9px !important;
 
     display:flex !important;
     align-items:center !important;
@@ -348,17 +320,17 @@ body{
 }
 
 .indicator-bar button{
-    flex:0 0 auto !important;
+    flex:1 1 0 !important;
 
     width:auto !important;
-    min-width:50px !important;
+    min-width:0 !important;
 
-    height:38px !important;
-    min-height:38px !important;
+    height:40px !important;
+    min-height:40px !important;
 
-    padding:0 10px !important;
+    padding:0 11px !important;
 
-    border-radius:12px !important;
+    border-radius:11px !important;
 
     border:1px solid rgba(255,196,0,.10) !important;
 
@@ -372,7 +344,7 @@ body{
     color:#aebed0 !important;
 
     font-size:12px !important;
-    font-weight:650 !important;
+    font-weight:700 !important;
 
     white-space:nowrap !important;
 }
@@ -399,7 +371,7 @@ body{
 
 .chart-card{
     width:100% !important;
-    max-width:100% !important;
+    height:270px !important;
 
     margin:0 !important;
     padding:0 !important;
@@ -407,15 +379,16 @@ body{
     overflow:hidden !important;
 
     background:#020507 !important;
+
+    line-height:0 !important;
 }
 
 #tvchart{
     width:100% !important;
-    max-width:100% !important;
 
-    height:290px !important;
-    min-height:290px !important;
-    max-height:290px !important;
+    height:270px !important;
+    min-height:270px !important;
+    max-height:270px !important;
 
     margin:0 !important;
     padding:0 !important;
@@ -426,13 +399,14 @@ body{
     background:#020507 !important;
 
     overflow:hidden !important;
+
+    line-height:0 !important;
 }
 
 #tvchart > div{
     width:100% !important;
-    max-width:100% !important;
-
     height:100% !important;
+
     min-height:0 !important;
     max-height:100% !important;
 
@@ -448,9 +422,8 @@ body{
     display:block !important;
 
     width:100% !important;
-    max-width:100% !important;
-
     height:100% !important;
+
     min-height:0 !important;
     max-height:100% !important;
 
@@ -475,11 +448,10 @@ body{
 
 .timeframe{
     width:100% !important;
-    max-width:100% !important;
+    min-height:56px !important;
+    height:56px !important;
 
-    min-height:58px !important;
-
-    padding:9px 10px !important;
+    padding:8px 9px !important;
 
     display:flex !important;
     align-items:center !important;
@@ -504,10 +476,10 @@ body{
 .timeframe button{
     flex:1 1 0 !important;
 
-    min-width:48px !important;
+    min-width:0 !important;
 
-    height:38px !important;
-    min-height:38px !important;
+    height:40px !important;
+    min-height:40px !important;
 
     padding:0 7px !important;
 
@@ -525,7 +497,7 @@ body{
     color:#aebed0 !important;
 
     font-size:12px !important;
-    font-weight:650 !important;
+    font-weight:700 !important;
 }
 
 .timeframe button.active{
@@ -567,8 +539,6 @@ body{
 
     box-shadow:
         0 10px 28px rgba(0,0,0,.28) !important;
-
-    overflow:visible !important;
 }
 
 .trade-panel h3{
@@ -685,7 +655,7 @@ body{
 
 
 /* =========================================================
-   LABELS
+   LABELS / INPUTS
    ========================================================= */
 
 .trade-panel label{
@@ -699,18 +669,12 @@ body{
     font-weight:550 !important;
 }
 
-
-/* =========================================================
-   INPUTS
-   ========================================================= */
-
 .trade-panel input,
 .trade-panel select,
 .trade-modal input,
 .trade-modal select{
     width:100% !important;
     max-width:100% !important;
-
     min-width:0 !important;
 
     height:44px !important;
@@ -734,9 +698,6 @@ body{
     outline:none !important;
 
     font-size:14px !important;
-
-    -webkit-appearance:none;
-    appearance:none;
 }
 
 input::placeholder{
@@ -827,9 +788,6 @@ input::placeholder{
     width:100% !important;
 
     display:flex !important;
-    flex-direction:row !important;
-
-    align-items:stretch !important;
 
     gap:9px !important;
 
@@ -866,8 +824,6 @@ input::placeholder{
 
     visibility:visible !important;
     opacity:1 !important;
-
-    box-sizing:border-box !important;
 }
 
 .trade-buttons .long-btn{
@@ -902,7 +858,7 @@ input::placeholder{
    ========================================================= */
 
 .trade-modal{
-    display:none;
+    display:none !important;
 
     position:fixed !important;
 
@@ -947,7 +903,6 @@ input::placeholder{
 
 .trade-modal-box h2{
     color:#fff !important;
-
     margin-bottom:12px !important;
 }
 
@@ -1096,7 +1051,7 @@ input::placeholder{
 
 /* =========================================================
    BOTTOM NAVIGATION
-   IMPORTANT — FORCE ALL 5 HTML LINKS
+   FIXED — ALL 5 BUTTONS
    ========================================================= */
 
 nav.bottom-nav{
@@ -1106,19 +1061,23 @@ nav.bottom-nav{
     right:0 !important;
     bottom:0 !important;
 
-    width:100% !important;
+    width:100vw !important;
     max-width:none !important;
+    min-width:0 !important;
 
     height:76px !important;
     min-height:76px !important;
 
     margin:0 !important;
-    padding:5px 2px !important;
+
+    padding:5px 3px !important;
 
     display:grid !important;
 
     grid-template-columns:
-        repeat(5,minmax(0,1fr)) !important;
+        repeat(5, minmax(0, 1fr)) !important;
+
+    grid-template-rows:1fr !important;
 
     align-items:stretch !important;
 
@@ -1140,17 +1099,9 @@ nav.bottom-nav{
 }
 
 
-/* ---------------------------------------------------------
-   ALL 5 LINKS
-   --------------------------------------------------------- */
+/* ALL 5 LINKS */
 
-nav.bottom-nav > a,
-nav.bottom-nav > a:nth-child(1),
-nav.bottom-nav > a:nth-child(2),
-nav.bottom-nav > a:nth-child(3),
-nav.bottom-nav > a:nth-child(4),
-nav.bottom-nav > a:nth-child(5){
-
+nav.bottom-nav > a{
     display:flex !important;
 
     visibility:visible !important;
@@ -1165,7 +1116,7 @@ nav.bottom-nav > a:nth-child(5){
     height:66px !important;
 
     margin:0 !important;
-    padding:4px 1px !important;
+    padding:4px 0 !important;
 
     flex:none !important;
 
@@ -1186,18 +1137,19 @@ nav.bottom-nav > a:nth-child(5){
 }
 
 
-/* ---------------------------------------------------------
-   NAV ICONS
-   --------------------------------------------------------- */
+/* NAV ICON */
 
 nav.bottom-nav > a > i{
-    display:block !important;
+    display:flex !important;
 
     visibility:visible !important;
     opacity:1 !important;
 
+    align-items:center !important;
+    justify-content:center !important;
+
     width:auto !important;
-    height:auto !important;
+    height:22px !important;
 
     margin:0 !important;
     padding:0 !important;
@@ -1205,14 +1157,11 @@ nav.bottom-nav > a > i{
     color:#8da2b8 !important;
 
     font-size:20px !important;
-
     line-height:22px !important;
 }
 
 
-/* ---------------------------------------------------------
-   NAV TEXT
-   --------------------------------------------------------- */
+/* NAV TEXT */
 
 nav.bottom-nav > a > span{
     display:block !important;
@@ -1236,9 +1185,7 @@ nav.bottom-nav > a > span{
 }
 
 
-/* ---------------------------------------------------------
-   CENTER TRADE BUTTON
-   --------------------------------------------------------- */
+/* CENTER TRADE BUTTON */
 
 nav.bottom-nav > a.trade-btn{
     display:flex !important;
@@ -1247,7 +1194,7 @@ nav.bottom-nav > a.trade-btn{
     height:66px !important;
 
     margin:0 !important;
-    padding:4px 1px !important;
+    padding:4px 0 !important;
 
     background:transparent !important;
 
@@ -1291,9 +1238,7 @@ nav.bottom-nav > a.trade-btn > span{
 }
 
 
-/* ---------------------------------------------------------
-   ACTIVE TRADE PAGE
-   --------------------------------------------------------- */
+/* ACTIVE TRADE */
 
 nav.bottom-nav > a[href="trade.html"]{
     color:#ffc400 !important;
@@ -1334,7 +1279,6 @@ button:active{
     body{
         width:100% !important;
         max-width:100% !important;
-
         overflow-x:hidden !important;
     }
 
@@ -1354,16 +1298,24 @@ button:active{
             clamp(38px,11vw,44px) !important;
     }
 
+    /*
+     * Chart এখন 270px।
+     * JS-এর 320px inline height-এর উপর
+     * CSS-এর এই value apply করার জন্য
+     * !important রাখা হয়েছে।
+     */
+
+    .chart-card,
     #tvchart{
-        height:290px !important;
-        min-height:290px !important;
-        max-height:290px !important;
+        height:270px !important;
+        min-height:270px !important;
+        max-height:270px !important;
     }
 
     #tvchart iframe{
-        height:290px !important;
-        min-height:290px !important;
-        max-height:290px !important;
+        height:270px !important;
+        min-height:270px !important;
+        max-height:270px !important;
     }
 
     nav.bottom-nav{
@@ -1374,15 +1326,10 @@ button:active{
             calc(76px + env(safe-area-inset-bottom)) !important;
 
         padding:
-            5px 2px env(safe-area-inset-bottom) !important;
+            5px 3px env(safe-area-inset-bottom) !important;
     }
 
-    nav.bottom-nav > a,
-    nav.bottom-nav > a:nth-child(1),
-    nav.bottom-nav > a:nth-child(2),
-    nav.bottom-nav > a:nth-child(3),
-    nav.bottom-nav > a:nth-child(4),
-    nav.bottom-nav > a:nth-child(5){
+    nav.bottom-nav > a{
         height:66px !important;
     }
 }
@@ -1399,16 +1346,17 @@ button:active{
         font-size:39px !important;
     }
 
+    .chart-card,
     #tvchart{
-        height:270px !important;
-        min-height:270px !important;
-        max-height:270px !important;
+        height:250px !important;
+        min-height:250px !important;
+        max-height:250px !important;
     }
 
     #tvchart iframe{
-        height:270px !important;
-        min-height:270px !important;
-        max-height:270px !important;
+        height:250px !important;
+        min-height:250px !important;
+        max-height:250px !important;
     }
 
     nav.bottom-nav > a > i{
