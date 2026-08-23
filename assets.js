@@ -156,32 +156,6 @@ if (depositBtn) {
 
 
 /* ==========================================
-   WITHDRAW BUTTON
-========================================== */
-
-const withdrawBtn = document.querySelector(".withdraw-btn");
-
-if (withdrawBtn) {
-
-    withdrawBtn.addEventListener("click", function (e) {
-
-        e.preventDefault();
-
-        if (getBalance() <= 0) {
-
-            alert("Insufficient account balance.");
-
-            return;
-
-        }
-
-        alert("Withdraw page will be added in the next step.");
-
-    });
-
-}
-
-/* ==========================================
    UPDATE BALANCE
 ========================================== */
 
