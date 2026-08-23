@@ -22,7 +22,7 @@
                 type="button"
                 class="back-btn"
                 onclick="history.back()"
-                aria-label="Go Back"
+                aria-label="Back"
             >
                 <span>‹</span>
             </button>
@@ -34,14 +34,14 @@
         </header>
 
 
-        <!-- ================= MAIN ================= -->
+        <!-- ================= MAIN CONTENT ================= -->
 
         <main class="transfer-content">
 
             <section class="transfer-card">
 
-                <!-- CARD GLOW -->
-                <div class="card-glow"></div>
+                <!-- subtle top light -->
+                <div class="card-light"></div>
 
 
                 <!-- ================= TITLE ================= -->
@@ -65,14 +65,14 @@
                 </div>
 
 
-                <!-- ================= ACCOUNT AREA ================= -->
+                <!-- ================= ACCOUNTS ================= -->
 
                 <div
                     class="accounts-area"
                     id="accountsArea"
                 >
 
-                    <!-- FUNDING -->
+                    <!-- FUNDING ACCOUNT -->
 
                     <div
                         class="account-slot funding-slot"
@@ -85,7 +85,7 @@
 
                         <div class="account-box">
 
-                            <div class="account-icon funding-icon">
+                            <div class="account-icon">
                                 <span>💼</span>
                             </div>
 
@@ -110,7 +110,7 @@
                     </div>
 
 
-                    <!-- ================= SWAP ================= -->
+                    <!-- ================= SWITCH ================= -->
 
                     <div class="switch-area">
 
@@ -136,7 +136,7 @@
                     </div>
 
 
-                    <!-- TRADING -->
+                    <!-- TRADING ACCOUNT -->
 
                     <div
                         class="account-slot trading-slot"
@@ -149,7 +149,7 @@
 
                         <div class="account-box">
 
-                            <div class="account-icon trading-icon">
+                            <div class="account-icon">
                                 <span>📈</span>
                             </div>
 
@@ -239,6 +239,7 @@
                     class="transfer-direction"
                     id="transferDirection"
                 >
+
                     <span class="direction-dot"></span>
 
                     <span>
@@ -252,10 +253,11 @@
                     <span>
                         Trading Account
                     </span>
+
                 </div>
 
 
-                <!-- ================= SUBMIT ================= -->
+                <!-- ================= CONFIRM ================= -->
 
                 <button
                     type="button"
@@ -266,8 +268,15 @@
                     <span class="button-shine"></span>
 
                     <span class="button-content">
-                        <span>Confirm Transfer</span>
-                        <span class="button-arrow">→</span>
+
+                        <span>
+                            Confirm Transfer
+                        </span>
+
+                        <span class="button-arrow">
+                            →
+                        </span>
+
                     </span>
 
                 </button>
@@ -289,13 +298,13 @@
             <section class="transfer-info">
 
                 <div class="info-icon">
-                    <span>i</span>
+                    <span>✓</span>
                 </div>
 
                 <div class="info-text">
 
                     <strong>
-                        Transfer Information
+                        Secure Transfer
                     </strong>
 
                     <p>
@@ -312,10 +321,105 @@
     </div>
 
 
-    <!-- BALANCE SYSTEM -->
-    <script src="balance.js"></script>
+    <!-- ==================================================
+         CUSTOMER SERVICE MODAL
+    ================================================== -->
 
-    <!-- TRANSFER SYSTEM -->
+    <div
+        class="support-overlay"
+        id="supportOverlay"
+        aria-hidden="true"
+    >
+
+        <div
+            class="support-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="supportTitle"
+        >
+
+            <!-- close -->
+
+            <button
+                type="button"
+                class="support-close"
+                id="supportClose"
+                aria-label="Close"
+            >
+                ×
+            </button>
+
+
+            <!-- icon -->
+
+            <div class="support-icon-wrap">
+
+                <div class="support-icon">
+
+                    <span>♧</span>
+
+                </div>
+
+                <span class="support-spark spark-one"></span>
+                <span class="support-spark spark-two"></span>
+                <span class="support-spark spark-three"></span>
+
+            </div>
+
+
+            <!-- title -->
+
+            <div class="support-heading">
+
+                <span>
+                    Please Contact
+                </span>
+
+                <strong id="supportTitle">
+                    Customer Service
+                </strong>
+
+            </div>
+
+
+            <!-- description -->
+
+            <p class="support-description">
+                For security reasons, this action requires
+                assistance from our customer support team.
+            </p>
+
+
+            <!-- button -->
+
+            <button
+                type="button"
+                class="support-button"
+                id="supportButton"
+            >
+
+                <span class="support-button-icon">
+                    ●
+                </span>
+
+                <span>
+                    Contact Support
+                </span>
+
+                <span class="support-button-arrow">
+                    →
+                </span>
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= SCRIPTS ================= -->
+
+    <script src="balance.js"></script>
     <script src="transfer.js"></script>
 
 </body>
