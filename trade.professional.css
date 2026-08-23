@@ -1,136 +1,71 @@
 /* =========================================================
-   TRADE PROFESSIONAL UI
-   Premium Mobile Trading Terminal
+   CPTMARKETS - PROFESSIONAL TRADE UI
+   CHART / TRADE AREA ONLY
+   BOTTOM NAVIGATION INTENTIONALLY UNTOUCHED
    ========================================================= */
-
-:root {
-    --trade-bg: #06142b;
-    --trade-bg-2: #081a36;
-    --panel: #0c1d38;
-    --panel-2: #102746;
-    --panel-3: #152e54;
-
-    --border: rgba(120, 160, 220, 0.16);
-    --border-light: rgba(160, 190, 240, 0.24);
-
-    --text: #f4f7ff;
-    --text-soft: #aebbd2;
-    --text-muted: #7183a3;
-
-    --gold: #ffc400;
-    --gold-light: #ffd84d;
-    --gold-dark: #e6a900;
-
-    --green: #00d978;
-    --green-dark: #00a95d;
-
-    --red: #ff3856;
-    --red-dark: #d91f3d;
-
-    --cyan: #11d8ff;
-    --blue: #347cff;
-
-    --radius: 18px;
-    --radius-small: 12px;
-
-    --nav-height: 76px;
-}
 
 
 /* =========================================================
-   GLOBAL RESET
+   GLOBAL
    ========================================================= */
 
-* {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-}
-
-html,
-body {
-    width: 100%;
-    min-height: 100%;
-    margin: 0;
-    padding: 0;
-    background:
-        radial-gradient(circle at 50% -10%, rgba(28, 80, 150, 0.22), transparent 40%),
-        linear-gradient(180deg, #06152d 0%, #041126 100%);
-    color: var(--text);
-    font-family:
-        Inter,
-        "Segoe UI",
-        Roboto,
-        Arial,
-        sans-serif;
-}
-
-body {
-    overflow-x: hidden;
-    padding-bottom: calc(var(--nav-height) + 12px);
-}
-
-
-/* =========================================================
-   MAIN TRADE PAGE
-   ========================================================= */
-
-.trade-page,
-.trade-container,
-.trading-page,
-.trade-screen {
+.trade-page {
     width: 100%;
     min-height: 100vh;
+
+    margin: 0;
+    padding: 0;
+
     background:
         radial-gradient(
-            circle at 85% 25%,
-            rgba(255, 145, 50, 0.035),
-            transparent 30%
+            circle at 50% 12%,
+            rgba(20, 70, 130, 0.22),
+            transparent 34%
         ),
         linear-gradient(
             180deg,
-            #07172f 0%,
-            #06152d 48%,
-            #041125 100%
+            #061a35 0%,
+            #06172f 48%,
+            #041227 100%
         );
+
+    color: #f5f7ff;
+
+    overflow-x: hidden;
 }
 
 
 /* =========================================================
-   TOP HEADER
+   HEADER
    ========================================================= */
 
-.trade-header,
-.trading-header,
-.chart-header {
-    position: relative;
-    z-index: 20;
-
+.trade-header {
     width: 100%;
-    min-height: 78px;
+    height: 68px;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    padding: 14px 18px;
+    padding: 8px 16px;
 
     background:
         linear-gradient(
             180deg,
-            rgba(11, 27, 53, 0.98),
-            rgba(7, 20, 40, 0.96)
+            #091d39,
+            #07172e
         );
 
-    border-bottom: 1px solid rgba(120, 160, 220, 0.12);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+    border-bottom: 1px solid rgba(130, 170, 220, 0.12);
+
+    box-sizing: border-box;
+
+    position: relative;
+    z-index: 20;
 }
 
 
-/* Back button */
-
-.back-btn,
-.trade-back,
-button.back {
+.trade-header .back-btn {
     width: 40px;
     height: 40px;
 
@@ -138,60 +73,65 @@ button.back {
     align-items: center;
     justify-content: center;
 
-    border: 0;
     border-radius: 50%;
 
-    background: rgba(30, 55, 92, 0.55);
-    color: #ffffff;
+    color: #e9f0fc;
 
-    font-size: 22px;
+    background:
+        linear-gradient(
+            145deg,
+            #193961,
+            #112947
+        );
 
-    cursor: pointer;
+    border: 1px solid rgba(150, 190, 235, 0.14);
 
-    transition:
-        transform 0.2s ease,
-        background 0.2s ease;
-}
-
-.back-btn:active,
-.trade-back:active,
-button.back:active {
-    transform: scale(0.92);
-    background: rgba(255, 196, 0, 0.25);
+    box-shadow:
+        0 5px 14px rgba(0,0,0,0.18);
 }
 
 
-/* Symbol */
-
-.symbol,
-.trade-symbol,
-.market-symbol {
+.pair-box {
     flex: 1;
 
     text-align: center;
 
-    color: #f5f8ff;
-
-    font-size: 20px;
-    font-weight: 750;
-
-    letter-spacing: 0.4px;
+    margin: 0 10px;
 }
 
 
-/* Header action buttons */
+.pair-box h1 {
+    margin: 0;
 
-.header-actions,
-.trade-header-actions {
+    font-size: 19px;
+
+    font-weight: 800;
+
+    color: #f4f7ff;
+}
+
+
+.pair-box p {
+    margin: 3px 0 0;
+
+    font-size: 11px;
+
+    color: #8295b5;
+}
+
+
+.header-icons {
     display: flex;
+
+    gap: 8px;
+
     align-items: center;
-    gap: 10px;
 }
 
-.header-actions button,
-.trade-header-actions button {
-    width: 42px;
-    height: 42px;
+
+.header-icons button {
+    width: 40px;
+    height: 40px;
 
     display: flex;
     align-items: center;
@@ -199,266 +139,318 @@ button.back:active {
 
     border-radius: 50%;
 
-    border: 1px solid rgba(140, 180, 230, 0.18);
+    color: #e9f1ff;
 
     background:
         linear-gradient(
             145deg,
-            rgba(37, 65, 105, 0.9),
-            rgba(18, 39, 72, 0.9)
+            #19385f,
+            #112947
         );
 
-    color: #dce8ff;
-
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.06),
-        0 5px 15px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(150,190,235,0.14);
 }
 
 
 /* =========================================================
-   PRICE SECTION
+   PRICE
    ========================================================= */
 
-.price-section,
-.market-price {
-    padding: 18px 20px 14px;
+.price-box {
+    width: 100%;
+
+    padding: 15px 20px 13px;
+
+    box-sizing: border-box;
 
     background:
         linear-gradient(
             180deg,
-            rgba(10, 27, 52, 0.98),
-            rgba(7, 21, 42, 0.98)
+            #081b36,
+            #06172f
         );
 }
 
-.current-price,
-.price-value {
-    color: #00dca1;
 
-    font-size: 32px;
-    line-height: 1.1;
+.price-box h2 {
+    display: inline-block;
+
+    margin: 0;
+
+    font-size: 36px;
+
+    line-height: 1;
 
     font-weight: 800;
 
-    letter-spacing: -0.7px;
+    letter-spacing: -1px;
+
+    color: #09d5f3;
 
     text-shadow:
-        0 0 18px rgba(0, 220, 161, 0.12);
+        0 0 22px rgba(0,210,245,0.12);
 }
 
-.price-change,
-.change-percent {
+
+.price-box .change {
     display: inline-flex;
 
+    align-items: center;
+    justify-content: center;
+
+    height: 40px;
+
     margin-left: 8px;
-    padding: 8px 13px;
 
-    border-radius: 9px;
+    padding: 0 14px;
 
-    background: linear-gradient(
-        135deg,
-        #00d98a,
-        #00bd77
-    );
+    border-radius: 11px;
 
     color: #ffffff;
 
+    background:
+        linear-gradient(
+            145deg,
+            #00dc89,
+            #00c876
+        );
+
     font-size: 14px;
-    font-weight: 750;
+
+    font-weight: 800;
 
     box-shadow:
-        0 5px 18px rgba(0, 217, 138, 0.18);
-}
-
-.price-subtitle,
-.market-name {
-    margin-top: 5px;
-
-    color: #8da0bf;
-
-    font-size: 13px;
+        0 7px 20px rgba(0,210,130,0.16);
 }
 
 
-/* =========================================================
-   CHART AREA
-   ========================================================= */
+.price-box p {
+    margin: 6px 0 0;
 
-.chart-wrapper,
-.chart-container,
-.trading-chart {
-    position: relative;
+    font-size: 14px;
 
-    width: 100%;
-
-    min-height: 390px;
-    height: 42vh;
-
-    max-height: 560px;
-
-    overflow: hidden;
-
-    background:
-        radial-gradient(
-            circle at 72% 48%,
-            rgba(255, 60, 30, 0.055),
-            transparent 32%
-        ),
-        linear-gradient(
-            90deg,
-            rgba(4, 18, 36, 0.98),
-            rgba(7, 18, 31, 0.98)
-        );
-
-    border-top: 1px solid rgba(255, 255, 255, 0.03);
-    border-bottom: 1px solid rgba(130, 170, 220, 0.13);
-}
-
-
-/* Chart grid */
-
-.chart-wrapper::before,
-.chart-container::before,
-.trading-chart::before {
-    content: "";
-
-    position: absolute;
-    inset: 0;
-
-    pointer-events: none;
-
-    background-image:
-        linear-gradient(
-            rgba(90, 130, 180, 0.075) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(90, 130, 180, 0.075) 1px,
-            transparent 1px
-        );
-
-    background-size:
-        100% 58px,
-        76px 100%;
-
-    opacity: 0.55;
-}
-
-
-/* Chart canvas */
-
-.chart-wrapper canvas,
-.chart-container canvas,
-.trading-chart canvas,
-#chart,
-#tradingChart {
-    width: 100% !important;
-    height: 100% !important;
-
-    display: block;
-
-    position: relative;
-    z-index: 2;
+    color: #9aabc4;
 }
 
 
 /* =========================================================
-   INDICATOR BUTTONS
+   INDICATORS
    ========================================================= */
 
 .indicators,
-.chart-indicators,
-.indicator-tabs {
-    position: absolute;
-
-    top: 10px;
-    left: 10px;
-
-    z-index: 8;
+.indicator-tabs,
+.chart-indicators {
+    width: 100%;
 
     display: flex;
-    gap: 7px;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 9px 12px;
+
+    box-sizing: border-box;
 
     overflow-x: auto;
 
-    max-width: calc(100% - 20px);
-
     scrollbar-width: none;
+
+    background:
+        #06172f;
 }
 
+
 .indicators::-webkit-scrollbar,
-.chart-indicators::-webkit-scrollbar,
-.indicator-tabs::-webkit-scrollbar {
+.indicator-tabs::-webkit-scrollbar,
+.chart-indicators::-webkit-scrollbar {
     display: none;
 }
 
+
 .indicators button,
-.chart-indicators button,
-.indicator-tabs button {
-    flex-shrink: 0;
+.indicator-tabs button,
+.chart-indicators button {
+    flex: 0 0 auto;
 
-    height: 31px;
+    height: 40px;
 
-    padding: 0 11px;
+    padding: 0 17px;
 
-    border-radius: 15px;
+    border-radius: 20px;
 
-    border: 1px solid rgba(125, 160, 210, 0.22);
-
-    background:
-        rgba(12, 25, 48, 0.78);
-
-    color: #91a2bd;
-
-    font-size: 11px;
-    font-weight: 700;
-
-    backdrop-filter: blur(10px);
-}
-
-.indicators button.active,
-.chart-indicators button.active,
-.indicator-tabs button.active {
-    color: #ffffff;
-
-    border-color: rgba(255, 196, 0, 0.75);
+    border: 1px solid rgba(105,145,205,0.12);
 
     background:
         linear-gradient(
-            135deg,
-            #ffc400,
-            #f1ae00
+            145deg,
+            #18365f,
+            #122b50
         );
 
+    color: #d5dfef;
+
+    font-size: 14px;
+
+    font-weight: 650;
+
     box-shadow:
-        0 0 14px rgba(255, 196, 0, 0.18);
+        inset 0 1px 0 rgba(255,255,255,0.03);
+}
+
+
+.indicators button.active,
+.indicator-tabs button.active,
+.chart-indicators button.active {
+    color: #101010;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffd93c,
+            #ffba00
+        );
+
+    border-color: #ffe36b;
+
+    box-shadow:
+        0 6px 18px rgba(255,193,0,0.20);
 }
 
 
 /* =========================================================
-   TIMEFRAME BUTTONS
+   REAL TRADINGVIEW / CHART AREA
+   ========================================================= */
+
+/*
+   IMPORTANT:
+   This section deliberately removes the large empty
+   container seen in the previous version.
+*/
+
+
+.chart-box,
+.chart-container,
+.trading-chart,
+.chart-wrapper,
+#chart-container,
+#tradingview-chart,
+.tradingview-widget-container,
+.tv-chart-container {
+
+    width: 100% !important;
+
+    height: 410px !important;
+
+    min-height: 0 !important;
+
+    margin: 0 !important;
+
+    padding: 0 !important;
+
+    box-sizing: border-box;
+
+    overflow: hidden !important;
+
+    position: relative;
+
+    background:
+        #07101d !important;
+
+    border: 0 !important;
+
+    border-radius: 0 !important;
+
+    box-shadow: none !important;
+}
+
+
+/* TradingView iframe */
+
+.tradingview-widget-container iframe,
+.tv-chart-container iframe,
+.chart-container iframe,
+.chart-box iframe {
+
+    width: 100% !important;
+
+    height: 100% !important;
+
+    min-height: 0 !important;
+
+    border: 0 !important;
+
+    display: block !important;
+}
+
+
+/* Canvas */
+
+.chart-box canvas,
+.chart-container canvas,
+.trading-chart canvas,
+.chart-wrapper canvas,
+#chart-container canvas,
+#tradingview-chart canvas {
+
+    width: 100% !important;
+
+    height: 100% !important;
+
+    max-width: 100% !important;
+
+    display: block !important;
+}
+
+
+/* =========================================================
+   CHART FRAME
+   ========================================================= */
+
+.chart-box,
+.chart-container,
+.trading-chart,
+.chart-wrapper,
+#chart-container,
+#tradingview-chart {
+
+    border-top:
+        1px solid rgba(90,130,185,0.10) !important;
+
+    border-bottom:
+        1px solid rgba(90,130,185,0.10) !important;
+}
+
+
+/* =========================================================
+   TIMEFRAME
    ========================================================= */
 
 .timeframes,
 .timeframe-tabs,
 .chart-timeframes {
+
     width: 100%;
 
     display: flex;
+
     gap: 9px;
 
-    padding: 12px 15px;
+    padding: 11px 14px;
+
+    box-sizing: border-box;
 
     overflow-x: auto;
 
-    background: #07172e;
-
-    border-bottom: 1px solid rgba(130, 170, 220, 0.12);
-
     scrollbar-width: none;
+
+    background:
+        #06172f;
+
+    border-bottom:
+        1px solid rgba(105,145,205,0.10);
 }
+
 
 .timeframes::-webkit-scrollbar,
 .timeframe-tabs::-webkit-scrollbar,
@@ -466,64 +458,58 @@ button.back:active {
     display: none;
 }
 
+
 .timeframes button,
 .timeframe-tabs button,
 .chart-timeframes button {
+
     flex: 0 0 auto;
 
     min-width: 58px;
-    height: 43px;
 
-    padding: 0 15px;
+    height: 42px;
+
+    padding: 0 14px;
 
     border-radius: 14px;
 
-    border: 1px solid rgba(100, 145, 205, 0.18);
+    border: 1px solid rgba(110,155,215,0.13);
 
     background:
         linear-gradient(
             145deg,
-            #183762,
-            #11294b
+            #1a3964,
+            #132d52
         );
 
-    color: #dbe5f6;
+    color: #dbe4f4;
 
     font-size: 14px;
+
     font-weight: 700;
 
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.04),
-        0 5px 12px rgba(0, 0, 0, 0.14);
-
-    transition:
-        transform 0.18s ease,
-        background 0.18s ease;
+        inset 0 1px 0 rgba(255,255,255,0.03);
 }
 
-.timeframes button:active,
-.timeframe-tabs button:active,
-.chart-timeframes button:active {
-    transform: scale(0.96);
-}
 
 .timeframes button.active,
 .timeframe-tabs button.active,
 .chart-timeframes button.active {
-    color: #111827;
 
-    border-color: #ffd23c;
+    color: #111111;
 
     background:
         linear-gradient(
             145deg,
-            #ffd62f,
-            #ffb900
+            #ffdc43,
+            #ffbd00
         );
 
+    border-color: #ffe36c;
+
     box-shadow:
-        0 5px 18px rgba(255, 196, 0, 0.20),
-        inset 0 1px 0 rgba(255, 255, 255, 0.45);
+        0 7px 18px rgba(255,190,0,0.20);
 }
 
 
@@ -534,175 +520,148 @@ button.back:active {
 .trade-panel,
 .order-panel,
 .trading-panel {
-    position: relative;
 
-    width: calc(100% - 28px);
+    width: calc(100% - 20px);
 
-    margin: 14px auto 18px;
+    margin: 13px auto 18px;
 
-    padding: 18px;
+    padding: 17px;
+
+    box-sizing: border-box;
 
     border-radius: 21px;
 
     background:
         linear-gradient(
             145deg,
-            rgba(15, 35, 67, 0.98),
-            rgba(9, 27, 53, 0.98)
+            #102b4e,
+            #0b213e 55%,
+            #091c36
         );
 
-    border: 1px solid rgba(120, 165, 225, 0.13);
+    border:
+        1px solid rgba(110,155,215,0.14);
 
     box-shadow:
-        0 20px 50px rgba(0, 0, 0, 0.30),
-        inset 0 1px 0 rgba(255, 255, 255, 0.035);
+        0 20px 45px rgba(0,0,0,0.28),
+        inset 0 1px 0 rgba(255,255,255,0.04);
 }
 
-
-/* subtle panel glow */
-
-.trade-panel::before,
-.order-panel::before,
-.trading-panel::before {
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    left: 10%;
-    right: 10%;
-
-    height: 1px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(255, 255, 255, 0.12),
-            transparent
-        );
-
-    pointer-events: none;
-}
-
-
-/* =========================================================
-   LEVERAGE TITLE
-   ========================================================= */
 
 .trade-panel h2,
 .order-panel h2,
-.trading-panel h2,
-.leverage-title {
-    margin: 0 0 15px;
+.trading-panel h2 {
 
-    color: #f5f7fd;
+    margin: 0 0 14px;
 
-    font-size: 18px;
-    font-weight: 750;
+    color: #f3f7ff;
+
+    font-size: 20px;
+
+    font-weight: 800;
 }
 
 
 /* =========================================================
-   LEVERAGE BUTTON GRID
+   LEVERAGE
    ========================================================= */
 
 .leverage-grid,
 .leverage-buttons {
+
     display: grid;
 
     grid-template-columns:
-        repeat(5, minmax(0, 1fr));
+        repeat(5, 1fr);
 
-    gap: 9px;
+    gap: 8px;
 
     margin-bottom: 17px;
 }
 
+
 .leverage-grid button,
 .leverage-buttons button {
-    min-height: 48px;
+
+    min-height: 47px;
 
     border-radius: 13px;
 
-    border: 1px solid rgba(100, 145, 205, 0.18);
+    border:
+        1px solid rgba(100,150,215,0.16);
 
     background:
         linear-gradient(
             145deg,
-            #1a3865,
-            #132b4f
+            #1a3d69,
+            #143155
         );
 
-    color: #eef4ff;
+    color: #e9f1fc;
 
-    font-size: 14px;
-    font-weight: 700;
+    font-size: 13px;
+
+    font-weight: 750;
 
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.04),
-        0 5px 12px rgba(0, 0, 0, 0.13);
-
-    transition:
-        all 0.2s ease;
+        inset 0 1px 0 rgba(255,255,255,0.04);
 }
 
-.leverage-grid button:hover,
-.leverage-buttons button:hover {
-    transform: translateY(-1px);
-
-    border-color: rgba(255, 196, 0, 0.35);
-}
 
 .leverage-grid button.active,
 .leverage-grid button.selected,
 .leverage-buttons button.active,
 .leverage-buttons button.selected {
-    color: #111111;
 
-    border-color: #ffe06a;
+    color: #111111;
 
     background:
         linear-gradient(
             145deg,
-            #ffe36b 0%,
-            #ffc400 48%,
-            #efa900 100%
+            #ffe36a,
+            #ffc000
         );
 
+    border-color: #ffe16b;
+
     box-shadow:
-        0 0 20px rgba(255, 196, 0, 0.20),
-        inset 0 1px 0 rgba(255, 255, 255, 0.65);
+        0 0 20px rgba(255,195,0,0.22),
+        inset 0 1px 0 rgba(255,255,255,0.55);
 }
 
 
 /* =========================================================
-   BY AMOUNT / BY LOTS
+   AMOUNT / LOTS
    ========================================================= */
 
 .order-type,
 .trade-type,
 .amount-lot-tabs {
+
     display: grid;
 
     grid-template-columns: 1fr 1fr;
 
-    gap: 8px;
-
-    margin-bottom: 20px;
+    gap: 6px;
 
     padding: 4px;
 
+    margin-bottom: 19px;
+
     border-radius: 16px;
 
-    background: #0a1a34;
+    background:
+        #091b35;
 
-    border: 1px solid rgba(110, 150, 205, 0.11);
+    border:
+        1px solid rgba(100,145,205,0.08);
 }
+
 
 .order-type button,
 .trade-type button,
 .amount-lot-tabs button {
+
     height: 48px;
 
     border: 0;
@@ -711,562 +670,261 @@ button.back:active {
 
     background: transparent;
 
-    color: #d4def0;
+    color: #d9e3f3;
 
     font-size: 15px;
-    font-weight: 700;
 
-    transition: all 0.2s ease;
+    font-weight: 700;
 }
+
 
 .order-type button.active,
 .trade-type button.active,
 .amount-lot-tabs button.active {
-    color: #121212;
+
+    color: #111111;
 
     background:
         linear-gradient(
             145deg,
-            #ffe168,
+            #ffe267,
             #ffc000
         );
 
     box-shadow:
-        0 5px 16px rgba(255, 196, 0, 0.20);
+        0 5px 17px rgba(255,195,0,0.20);
 }
 
 
 /* =========================================================
-   FORM LABELS
+   LABEL
    ========================================================= */
 
 .trade-panel label,
 .order-panel label,
-.trading-panel label,
-.input-label {
+.trading-panel label {
+
     display: block;
 
-    margin-bottom: 8px;
+    margin-bottom: 7px;
 
-    color: #aebbd2;
+    color: #aebed8;
 
     font-size: 14px;
+
     font-weight: 550;
 }
 
 
 /* =========================================================
-   INPUTS
+   INPUT
    ========================================================= */
 
 .trade-panel input,
 .order-panel input,
-.trading-panel input,
-.trade-input,
-.order-input {
+.trading-panel input {
+
     width: 100%;
 
     height: 58px;
 
-    padding: 0 18px;
+    padding: 0 17px;
 
-    margin-bottom: 16px;
+    margin-bottom: 15px;
+
+    box-sizing: border-box;
 
     border-radius: 15px;
 
-    outline: none;
+    border:
+        1px solid rgba(105,150,215,0.15);
 
-    border: 1px solid rgba(105, 150, 215, 0.16);
+    outline: none;
 
     background:
         linear-gradient(
             145deg,
-            #18345d,
-            #142d50
+            #173c68,
+            #143158
         );
 
-    color: #f4f7ff;
+    color: #ffffff;
 
     font-size: 17px;
+
     font-weight: 600;
-
-    box-shadow:
-        inset 0 1px 8px rgba(0, 0, 0, 0.08);
-
-    transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
 }
+
 
 .trade-panel input::placeholder,
 .order-panel input::placeholder,
 .trading-panel input::placeholder {
-    color: #7788a6;
-}
 
-.trade-panel input:focus,
-.order-panel input:focus,
-.trading-panel input:focus {
-    border-color: rgba(255, 196, 0, 0.60);
-
-    box-shadow:
-        0 0 0 3px rgba(255, 196, 0, 0.08),
-        inset 0 1px 8px rgba(0, 0, 0, 0.08);
+    color: #8194b1;
 }
 
 
 /* =========================================================
-   TP / SL SIDE BY SIDE
+   TP / SL
    ========================================================= */
 
 .tp-sl,
 .tp-sl-row,
 .stop-target-row {
+
     display: grid;
 
     grid-template-columns: 1fr 1fr;
 
-    gap: 12px;
-}
-
-.tp-sl input,
-.tp-sl-row input,
-.stop-target-row input {
-    width: 100%;
+    gap: 11px;
 }
 
 
 /* =========================================================
-   TRADE INFORMATION CARDS
+   INFO BOXES
    ========================================================= */
 
 .trade-info,
 .order-summary,
 .trade-summary {
+
     display: grid;
 
     grid-template-columns: 1fr 1fr;
 
-    gap: 10px;
+    gap: 9px;
 
-    margin-top: 5px;
-    margin-bottom: 18px;
+    margin: 2px 0 17px;
 }
+
 
 .trade-info-card,
 .info-card,
 .summary-card {
-    min-height: 82px;
 
-    padding: 13px 15px;
+    min-height: 78px;
+
+    padding: 12px 14px;
+
+    box-sizing: border-box;
 
     border-radius: 15px;
-
-    border: 1px solid rgba(110, 155, 215, 0.10);
 
     background:
         linear-gradient(
             145deg,
-            #192f54,
-            #142b4d
+            #1a3359,
+            #142c4e
         );
 
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.025);
+    border:
+        1px solid rgba(105,150,215,0.09);
 }
+
 
 .trade-info-card span,
 .info-card span,
 .summary-card span {
+
     display: block;
 
     margin-bottom: 7px;
 
-    color: #91a4c4;
+    color: #91a6c6;
 
     font-size: 12px;
 }
 
+
 .trade-info-card strong,
 .info-card strong,
 .summary-card strong {
+
     display: block;
 
     color: #ffffff;
 
     font-size: 17px;
-    font-weight: 750;
+
+    font-weight: 800;
 }
 
 
 /* =========================================================
-   COMPACT SUMMARY STYLE
-   ========================================================= */
-
-.compact-summary,
-.trade-calculation {
-    padding: 15px 17px;
-
-    margin-top: 3px;
-    margin-bottom: 17px;
-
-    border-radius: 16px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #182e52,
-            #132846
-        );
-
-    border: 1px solid rgba(120, 160, 215, 0.10);
-}
-
-.compact-summary > div,
-.trade-calculation > div {
-    display: flex;
-
-    justify-content: space-between;
-    align-items: center;
-
-    min-height: 24px;
-
-    color: #9fb0c9;
-
-    font-size: 13px;
-}
-
-.compact-summary strong,
-.trade-calculation strong {
-    color: #f2f5fb;
-
-    font-size: 14px;
-}
-
-
-/* =========================================================
-   LONG / SHORT BUTTONS
+   LONG / SHORT
    ========================================================= */
 
 .trade-actions,
 .order-actions,
 .long-short-buttons {
+
     display: grid;
 
     grid-template-columns: 1fr 1fr;
 
-    gap: 12px;
+    gap: 11px;
 
-    margin-top: 7px;
+    margin-top: 5px;
 }
+
 
 .long-btn,
 .long,
 button.long,
 .buy-btn {
-    min-height: 61px;
+
+    min-height: 60px;
 
     border: 0;
+
     border-radius: 17px;
 
     color: #ffffff;
 
     font-size: 18px;
-    font-weight: 800;
 
-    cursor: pointer;
+    font-weight: 800;
 
     background:
         linear-gradient(
             145deg,
-            #00e58b,
-            #00bd6f
+            #00e890,
+            #00bd72
         );
 
-    border: 1px solid rgba(255, 255, 255, 0.16);
-
     box-shadow:
-        0 10px 25px rgba(0, 217, 132, 0.18),
-        inset 0 1px 0 rgba(255, 255, 255, 0.30);
-
-    transition:
-        transform 0.18s ease,
-        filter 0.18s ease;
+        0 9px 25px rgba(0,215,130,0.18),
+        inset 0 1px 0 rgba(255,255,255,0.30);
 }
+
 
 .short-btn,
 .short,
 button.short,
 .sell-btn {
-    min-height: 61px;
+
+    min-height: 60px;
 
     border: 0;
+
     border-radius: 17px;
 
     color: #ffffff;
 
     font-size: 18px;
-    font-weight: 800;
 
-    cursor: pointer;
+    font-weight: 800;
 
     background:
         linear-gradient(
             145deg,
-            #ff3f5c,
-            #ed2445
+            #ff3f5d,
+            #ef2044
         );
 
-    border: 1px solid rgba(255, 255, 255, 0.16);
-
     box-shadow:
-        0 10px 25px rgba(255, 45, 78, 0.18),
-        inset 0 1px 0 rgba(255, 255, 255, 0.25);
-
-    transition:
-        transform 0.18s ease,
-        filter 0.18s ease;
-}
-
-.long-btn:active,
-.long:active,
-button.long:active,
-.buy-btn:active,
-.short-btn:active,
-.short:active,
-button.short:active,
-.sell-btn:active {
-    transform: scale(0.97);
-    filter: brightness(0.94);
-}
-
-
-/* =========================================================
-   PROFESSIONAL GLOW
-   ========================================================= */
-
-.long-btn::after,
-.short-btn::after,
-.long::after,
-.short::after {
-    content: "";
-
-    position: absolute;
-
-    inset: 0;
-
-    border-radius: inherit;
-
-    pointer-events: none;
-
-    background:
-        linear-gradient(
-            110deg,
-            transparent 20%,
-            rgba(255, 255, 255, 0.12) 48%,
-            transparent 70%
-        );
-
-    opacity: 0.5;
-}
-
-
-/* =========================================================
-   FIXED BOTTOM NAVIGATION
-   ========================================================= */
-
-.bottom-nav,
-.bottom-navigation,
-.trade-bottom-nav,
-.mobile-bottom-nav {
-    position: fixed;
-
-    z-index: 9999;
-
-    left: 0;
-    right: 0;
-    bottom: 0;
-
-    width: 100%;
-
-    height: var(--nav-height);
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(5, 1fr);
-
-    align-items: center;
-
-    padding:
-        7px 7px
-        calc(7px + env(safe-area-inset-bottom));
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(8, 23, 45, 0.97),
-            rgba(4, 15, 31, 0.99)
-        );
-
-    border-top: 1px solid rgba(100, 150, 215, 0.16);
-
-    box-shadow:
-        0 -12px 35px rgba(0, 0, 0, 0.28);
-
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-}
-
-
-/* Navigation items */
-
-.bottom-nav a,
-.bottom-nav button,
-.bottom-navigation a,
-.bottom-navigation button,
-.trade-bottom-nav a,
-.trade-bottom-nav button,
-.mobile-bottom-nav a,
-.mobile-bottom-nav button {
-    position: relative;
-
-    height: 62px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 4px;
-
-    border: 0;
-
-    background: transparent;
-
-    color: #7f90ad;
-
-    text-decoration: none;
-
-    font-size: 11px;
-    font-weight: 600;
-
-    cursor: pointer;
-}
-
-
-/* Icons */
-
-.bottom-nav svg,
-.bottom-navigation svg,
-.trade-bottom-nav svg,
-.mobile-bottom-nav svg {
-    width: 23px;
-    height: 23px;
-
-    stroke-width: 1.9;
-}
-
-
-/* Active navigation */
-
-.bottom-nav a.active,
-.bottom-nav button.active,
-.bottom-navigation a.active,
-.bottom-navigation button.active,
-.trade-bottom-nav a.active,
-.trade-bottom-nav button.active,
-.mobile-bottom-nav a.active,
-.mobile-bottom-nav button.active {
-    color: #f4f7ff;
-}
-
-
-/* Active line */
-
-.bottom-nav a.active::after,
-.bottom-nav button.active::after,
-.bottom-navigation a.active::after,
-.bottom-navigation button.active::after {
-    content: "";
-
-    position: absolute;
-
-    bottom: 2px;
-
-    width: 22px;
-    height: 3px;
-
-    border-radius: 10px;
-
-    background: #ffc400;
-
-    box-shadow:
-        0 0 10px rgba(255, 196, 0, 0.45);
-}
-
-
-/* =========================================================
-   CENTER TRADE BUTTON
-   ========================================================= */
-
-.bottom-nav .trade-btn,
-.bottom-navigation .trade-btn,
-.trade-bottom-nav .trade-btn,
-.mobile-bottom-nav .trade-btn,
-.bottom-nav a.trade,
-.bottom-navigation a.trade {
-    position: relative;
-
-    margin-top: -31px;
-
-    width: 66px;
-    height: 66px;
-
-    justify-self: center;
-
-    border-radius: 50%;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    background:
-        radial-gradient(
-            circle at 35% 30%,
-            #ffe56a,
-            #ffc400 48%,
-            #e7a500 100%
-        );
-
-    color: #172033;
-
-    border: 4px solid #091a35;
-
-    box-shadow:
-        0 0 0 1px rgba(255, 214, 70, 0.55),
-        0 7px 25px rgba(255, 190, 0, 0.38),
-        inset 0 2px 3px rgba(255, 255, 255, 0.55);
-
-    font-size: 24px;
-}
-
-
-/* Center button icon */
-
-.bottom-nav .trade-btn svg,
-.bottom-navigation .trade-btn svg,
-.trade-bottom-nav .trade-btn svg,
-.mobile-bottom-nav .trade-btn svg {
-    width: 27px;
-    height: 27px;
-
-    stroke: #1b263b;
-
-    stroke-width: 2.2;
+        0 9px 25px rgba(255,40,75,0.20),
+        inset 0 1px 0 rgba(255,255,255,0.30);
 }
 
 
@@ -1276,230 +934,149 @@ button.short:active,
 
 @media (max-width: 600px) {
 
-    .trade-header,
-    .trading-header,
-    .chart-header {
-        min-height: 72px;
-        padding: 12px 15px;
+    .trade-header {
+        height: 65px;
+
+        padding: 8px 14px;
     }
 
-    .current-price,
-    .price-value {
-        font-size: 30px;
+
+    .price-box {
+        padding:
+            14px 18px 11px;
     }
 
-    .chart-wrapper,
+
+    .price-box h2 {
+        font-size: 34px;
+    }
+
+
+    .indicators,
+    .indicator-tabs,
+    .chart-indicators {
+        padding:
+            8px 10px;
+    }
+
+
+    .indicators button,
+    .indicator-tabs button,
+    .chart-indicators button {
+        height: 38px;
+
+        padding: 0 15px;
+
+        font-size: 13px;
+    }
+
+
+    /*
+       Main mobile chart.
+       This removes the huge blank area.
+    */
+
+    .chart-box,
     .chart-container,
-    .trading-chart {
-        height: 42vh;
-        min-height: 350px;
+    .trading-chart,
+    .chart-wrapper,
+    #chart-container,
+    #tradingview-chart,
+    .tradingview-widget-container,
+    .tv-chart-container {
+
+        height: 405px !important;
+
+        min-height: 405px !important;
+
+        max-height: 405px !important;
     }
+
 
     .trade-panel,
     .order-panel,
     .trading-panel {
+
         width: calc(100% - 20px);
 
         padding: 15px;
 
-        border-radius: 19px;
-
         margin-top: 12px;
+
+        border-radius: 20px;
     }
+
 
     .leverage-grid,
     .leverage-buttons {
         gap: 7px;
     }
 
+
     .leverage-grid button,
     .leverage-buttons button {
-        min-height: 46px;
 
-        font-size: 13px;
+        min-height: 45px;
 
-        border-radius: 12px;
-    }
-
-    .trade-panel input,
-    .order-panel input,
-    .trading-panel input {
-        height: 55px;
-
-        font-size: 16px;
-    }
-
-    .long-btn,
-    .short-btn,
-    .long,
-    .short,
-    .buy-btn,
-    .sell-btn {
-        min-height: 58px;
-
-        font-size: 17px;
+        font-size: 12.5px;
     }
 }
 
 
 /* =========================================================
-   SMALL PHONES
+   SMALL MOBILE
    ========================================================= */
 
 @media (max-width: 390px) {
 
-    .chart-wrapper,
-    .chart-container,
-    .trading-chart {
-        height: 39vh;
-        min-height: 320px;
+    .price-box h2 {
+        font-size: 31px;
     }
+
+
+    .chart-box,
+    .chart-container,
+    .trading-chart,
+    .chart-wrapper,
+    #chart-container,
+    #tradingview-chart,
+    .tradingview-widget-container,
+    .tv-chart-container {
+
+        height: 380px !important;
+
+        min-height: 380px !important;
+
+        max-height: 380px !important;
+    }
+
 
     .trade-panel,
     .order-panel,
     .trading-panel {
+
         padding: 13px;
     }
 
+
     .leverage-grid,
     .leverage-buttons {
-        gap: 6px;
+
+        gap: 5px;
     }
+
 
     .leverage-grid button,
     .leverage-buttons button {
-        min-height: 43px;
 
-        font-size: 12px;
-    }
+        min-height: 42px;
 
-    .timeframes button,
-    .timeframe-tabs button,
-    .chart-timeframes button {
-        min-width: 53px;
-        height: 40px;
-
-        padding: 0 12px;
-
-        font-size: 13px;
-    }
-
-    .bottom-nav,
-    .bottom-navigation,
-    .trade-bottom-nav,
-    .mobile-bottom-nav {
-        height: 72px;
+        font-size: 11.5px;
     }
 }
 
 
 /* =========================================================
-   LARGE SCREENS
+   IMPORTANT
+   NO BOTTOM NAVIGATION CSS BELOW THIS LINE
    ========================================================= */
-
-@media (min-width: 768px) {
-
-    .trade-page,
-    .trade-container,
-    .trading-page,
-    .trade-screen {
-        max-width: 560px;
-
-        margin: 0 auto;
-
-        min-height: 100vh;
-
-        box-shadow:
-            0 0 70px rgba(0, 0, 0, 0.30);
-    }
-
-    .bottom-nav,
-    .bottom-navigation,
-    .trade-bottom-nav,
-    .mobile-bottom-nav {
-        left: 50%;
-
-        right: auto;
-
-        width: 560px;
-
-        transform: translateX(-50%);
-    }
-}
-
-
-/* =========================================================
-   SCROLLBAR
-   ========================================================= */
-
-::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
-}
-
-::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-    background: rgba(120, 150, 195, 0.25);
-
-    border-radius: 20px;
-}
-
-
-/* =========================================================
-   SELECTION
-   ========================================================= */
-
-::selection {
-    background: rgba(255, 196, 0, 0.30);
-
-    color: #ffffff;
-}
-
-
-/* =========================================================
-   DISABLED STATES
-   ========================================================= */
-
-button:disabled,
-input:disabled {
-    opacity: 0.45;
-
-    cursor: not-allowed;
-
-    filter: grayscale(0.25);
-}
-
-
-/* =========================================================
-   TOUCH FEEDBACK
-   ========================================================= */
-
-button,
-a {
-    -webkit-user-select: none;
-    user-select: none;
-}
-
-button:active {
-    transition: none;
-}
-
-
-/* =========================================================
-   SAFE AREA
-   ========================================================= */
-
-@supports (padding-bottom: env(safe-area-inset-bottom)) {
-
-    body {
-        padding-bottom:
-            calc(
-                var(--nav-height)
-                + env(safe-area-inset-bottom)
-                + 10px
-            );
-    }
-}
