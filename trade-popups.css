@@ -1,625 +1,272 @@
-/* =========================================================
-   CPTMARKETS TRADE POPUPS
-   Professional Mobile Popup System
-   ========================================================= */
+/* CPTMARKETS - TRADE POPUPS
+   Replacement CSS for the current trade.html
+*/
 
-
-/* =========================================================
-   POPUP OVERLAY
-   ========================================================= */
-
-.cpt-popup-overlay {
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(3, 7, 15, 0.72);
-    backdrop-filter: blur(7px);
-    -webkit-backdrop-filter: blur(7px);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 20px;
-    box-sizing: border-box;
-
-    z-index: 99999;
-
-    opacity: 0;
-    visibility: hidden;
-
-    transition:
-        opacity 0.22s ease,
-        visibility 0.22s ease;
+.trade-popup-overlay{
+    position:fixed!important;
+    inset:0!important;
+    width:100%!important;
+    height:100%!important;
+    box-sizing:border-box!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    padding:16px!important;
+    background:rgba(2,6,15,.78)!important;
+    backdrop-filter:blur(8px)!important;
+    -webkit-backdrop-filter:blur(8px)!important;
+    z-index:999999!important;
+    opacity:0!important;
+    visibility:hidden!important;
+    pointer-events:none!important;
+    transition:opacity .22s ease,visibility .22s ease!important;
 }
 
-
-/* =========================================================
-   SHOW POPUP
-   ========================================================= */
-
-.cpt-popup-overlay.show {
-    opacity: 1;
-    visibility: visible;
+.trade-popup-overlay.show{
+    opacity:1!important;
+    visibility:visible!important;
+    pointer-events:auto!important;
 }
 
-
-/* =========================================================
-   POPUP BOX
-   ========================================================= */
-
-.cpt-popup {
-    width: min(100%, 390px);
-
-    background:
-        linear-gradient(
-            180deg,
-            #111827 0%,
-            #0b1220 100%
-        );
-
-    border: 1px solid rgba(148, 163, 184, 0.16);
-
-    border-radius: 20px;
-
-    padding: 22px;
-
-    box-sizing: border-box;
-
-    box-shadow:
-        0 25px 70px rgba(0, 0, 0, 0.55),
-        0 0 0 1px rgba(255, 255, 255, 0.025);
-
-    transform:
-        translateY(18px)
-        scale(0.97);
-
-    transition:
-        transform 0.25s ease;
-
-    color: #f8fafc;
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+.trade-popup-overlay .trade-popup{
+    position:relative!important;
+    width:100%!important;
+    max-width:390px!important;
+    max-height:calc(100vh - 32px)!important;
+    overflow-y:auto!important;
+    box-sizing:border-box!important;
+    padding:22px!important;
+    border-radius:20px!important;
+    border:1px solid rgba(148,163,184,.18)!important;
+    background:linear-gradient(180deg,#111827 0%,#0b1220 100%)!important;
+    color:#f8fafc!important;
+    box-shadow:0 25px 70px rgba(0,0,0,.60),0 0 35px rgba(14,165,233,.08)!important;
+    transform:translateY(18px) scale(.97)!important;
+    transition:transform .25s ease!important;
+    font-family:Arial,Helvetica,sans-serif!important;
 }
 
-
-.cpt-popup-overlay.show .cpt-popup {
-    transform:
-        translateY(0)
-        scale(1);
+.trade-popup-overlay.show .trade-popup{
+    transform:translateY(0) scale(1)!important;
 }
 
-
-/* =========================================================
-   POPUP HEADER
-   ========================================================= */
-
-.cpt-popup-header {
-    display: flex;
-    align-items: center;
-    gap: 13px;
-
-    margin-bottom: 18px;
+.trade-popup .trade-popup-close{
+    position:absolute!important;
+    top:12px!important;
+    right:12px!important;
+    width:34px!important;
+    height:34px!important;
+    padding:0!important;
+    border:1px solid rgba(255,255,255,.08)!important;
+    border-radius:50%!important;
+    background:rgba(255,255,255,.06)!important;
+    color:#cbd5e1!important;
+    font-size:22px!important;
+    line-height:1!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    cursor:pointer!important;
 }
 
-
-/* =========================================================
-   ICON
-   ========================================================= */
-
-.cpt-popup-icon {
-    width: 46px;
-    height: 46px;
-
-    flex: 0 0 46px;
-
-    border-radius: 14px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: rgba(56, 189, 248, 0.10);
-
-    border: 1px solid rgba(56, 189, 248, 0.18);
-
-    color: #38bdf8;
-
-    font-size: 20px;
+.trade-popup-icon{
+    width:48px!important;
+    height:48px!important;
+    margin:0 auto 12px!important;
+    border-radius:14px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    background:rgba(56,189,248,.10)!important;
+    border:1px solid rgba(56,189,248,.18)!important;
+    color:#38bdf8!important;
+    font-size:20px!important;
 }
 
-
-/* =========================================================
-   TITLE
-   ========================================================= */
-
-.cpt-popup-title {
-    margin: 0;
-
-    font-size: 18px;
-    font-weight: 700;
-
-    line-height: 1.3;
-
-    color: #f8fafc;
+.success-icon{
+    background:rgba(34,197,94,.10)!important;
+    border-color:rgba(34,197,94,.18)!important;
+    color:#22c55e!important;
 }
 
-
-/* =========================================================
-   SUBTITLE
-   ========================================================= */
-
-.cpt-popup-subtitle {
-    margin: 4px 0 0;
-
-    font-size: 12px;
-
-    color: #8fa1b7;
-
-    line-height: 1.4;
+.close-icon{
+    background:rgba(56,189,248,.10)!important;
+    border-color:rgba(56,189,248,.18)!important;
+    color:#38bdf8!important;
 }
 
-
-/* =========================================================
-   POPUP MESSAGE
-   ========================================================= */
-
-.cpt-popup-message {
-    margin: 0 0 18px;
-
-    font-size: 14px;
-
-    line-height: 1.65;
-
-    color: #cbd5e1;
+.trade-popup-brand{
+    margin-bottom:6px!important;
+    text-align:center!important;
+    font-size:12px!important;
+    font-weight:600!important;
+    color:#7dd3fc!important;
+    letter-spacing:.4px!important;
 }
 
-
-/* =========================================================
-   TRADE INFORMATION
-   ========================================================= */
-
-.cpt-popup-info {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-    gap: 10px;
-
-    margin-bottom: 18px;
+.trade-popup h2{
+    margin:0 0 12px!important;
+    text-align:center!important;
+    font-size:21px!important;
+    line-height:1.3!important;
+    font-weight:800!important;
+    color:#f8fafc!important;
 }
 
-
-.cpt-popup-info-item {
-    padding: 13px;
-
-    background: rgba(255, 255, 255, 0.035);
-
-    border: 1px solid rgba(148, 163, 184, 0.10);
-
-    border-radius: 12px;
-
-    min-width: 0;
+.trade-popup .trade-popup-message{
+    margin:0 0 17px!important;
+    text-align:center!important;
+    font-size:14px!important;
+    line-height:1.6!important;
+    color:#cbd5e1!important;
 }
 
-
-.cpt-popup-info-label {
-    display: block;
-
-    margin-bottom: 6px;
-
-    font-size: 11px;
-
-    color: #7f91a8;
-
-    text-transform: uppercase;
-
-    letter-spacing: 0.4px;
+.trade-popup-info,
+.trade-popup-result{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:9px!important;
+    margin-bottom:17px!important;
 }
 
-
-.cpt-popup-info-value {
-    display: block;
-
-    font-size: 15px;
-
-    font-weight: 700;
-
-    color: #f1f5f9;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-
-    white-space: nowrap;
+.trade-popup-info>div,
+.trade-popup-result>div{
+    min-width:0!important;
+    padding:12px!important;
+    box-sizing:border-box!important;
+    border-radius:12px!important;
+    background:rgba(255,255,255,.035)!important;
+    border:1px solid rgba(148,163,184,.10)!important;
 }
 
-
-/* =========================================================
-   ATTENTION / WARNING BOX
-   NOTE:
-   এখানে সরাসরি "Loss" বা নিষেধাজ্ঞার ভাষা ব্যবহার করা হয়নি।
-   ========================================================= */
-
-.cpt-popup-warning {
-    display: flex;
-
-    gap: 10px;
-
-    padding: 12px 13px;
-
-    margin-bottom: 18px;
-
-    border-radius: 12px;
-
-    background:
-        rgba(245, 158, 11, 0.07);
-
-    border:
-        1px solid rgba(245, 158, 11, 0.16);
-
-    color: #cbd5e1;
-
-    font-size: 12px;
-
-    line-height: 1.55;
+.trade-popup-info span,
+.trade-popup-result span{
+    display:block!important;
+    margin-bottom:5px!important;
+    font-size:10px!important;
+    color:#7f91a8!important;
+    text-transform:uppercase!important;
+    letter-spacing:.35px!important;
 }
 
-
-.cpt-popup-warning-icon {
-    flex: 0 0 auto;
-
-    color: #f59e0b;
-
-    font-size: 14px;
-
-    margin-top: 2px;
+.trade-popup-info strong,
+.trade-popup-result strong{
+    display:block!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+    font-size:14px!important;
+    font-weight:700!important;
+    color:#f1f5f9!important;
 }
 
-
-/* =========================================================
-   SUCCESS RESULT
-   ========================================================= */
-
-.cpt-popup-result {
-    text-align: center;
-
-    padding: 14px;
-
-    margin-bottom: 18px;
-
-    border-radius: 13px;
-
-    background:
-        rgba(34, 197, 94, 0.07);
-
-    border:
-        1px solid rgba(34, 197, 94, 0.15);
+.trade-popup .trade-popup-warning{
+    margin:0 0 17px!important;
+    padding:11px 12px!important;
+    border-radius:11px!important;
+    background:rgba(245,158,11,.07)!important;
+    border:1px solid rgba(245,158,11,.16)!important;
+    text-align:center!important;
+    color:#cbd5e1!important;
+    font-size:12px!important;
+    line-height:1.55!important;
 }
 
-
-.cpt-popup-result-label {
-    display: block;
-
-    margin-bottom: 5px;
-
-    font-size: 11px;
-
-    color: #8fa1b7;
-
-    text-transform: uppercase;
-
-    letter-spacing: 0.5px;
+.trade-popup-actions{
+    display:flex!important;
+    gap:10px!important;
+    width:100%!important;
 }
 
-
-.cpt-popup-result-value {
-    display: block;
-
-    font-size: 23px;
-
-    font-weight: 800;
-
-    color: #22c55e;
+.trade-popup-actions button{
+    flex:1!important;
+    min-height:46px!important;
+    padding:0 14px!important;
+    border-radius:12px!important;
+    font-size:14px!important;
+    font-weight:700!important;
+    cursor:pointer!important;
+    border:1px solid transparent!important;
 }
 
-
-/* =========================================================
-   NEUTRAL RESULT
-   ========================================================= */
-
-.cpt-popup-result.neutral {
-    background:
-        rgba(56, 189, 248, 0.06);
-
-    border-color:
-        rgba(56, 189, 248, 0.14);
+.trade-popup-secondary{
+    background:rgba(255,255,255,.055)!important;
+    border-color:rgba(148,163,184,.14)!important;
+    color:#cbd5e1!important;
 }
 
-
-.cpt-popup-result.neutral
-.cpt-popup-result-value {
-    color: #38bdf8;
+.trade-popup-primary{
+    background:#2563eb!important;
+    color:#fff!important;
+    border-color:rgba(96,165,250,.25)!important;
 }
 
-
-/* =========================================================
-   BUTTON AREA
-   ========================================================= */
-
-.cpt-popup-actions {
-    display: flex;
-
-    gap: 10px;
-
-    width: 100%;
+.trade-popup-primary:active,
+.trade-popup-secondary:active{
+    transform:scale(.97)!important;
 }
 
-
-.cpt-popup-btn {
-    flex: 1;
-
-    min-height: 46px;
-
-    border: 0;
-
-    border-radius: 12px;
-
-    padding: 0 15px;
-
-    font-size: 14px;
-
-    font-weight: 700;
-
-    cursor: pointer;
-
-    transition:
-        transform 0.15s ease,
-        opacity 0.15s ease,
-        background 0.15s ease;
-
-    -webkit-tap-highlight-color:
-        transparent;
+.trade-popup .full-width{
+    width:100%!important;
+    min-height:46px!important;
+    border:0!important;
+    border-radius:12px!important;
+    background:#2563eb!important;
+    color:#fff!important;
+    font-size:14px!important;
+    font-weight:700!important;
+    cursor:pointer!important;
 }
 
-
-.cpt-popup-btn:active {
-    transform: scale(0.97);
+.trade-popup.success-popup .trade-popup-result{
+    background:rgba(34,197,94,.06)!important;
+    border-radius:13px!important;
+    padding:10px!important;
 }
 
-
-/* =========================================================
-   SECONDARY BUTTON
-   ========================================================= */
-
-.cpt-popup-btn.secondary {
-    background:
-        rgba(255, 255, 255, 0.055);
-
-    border:
-        1px solid rgba(148, 163, 184, 0.14);
-
-    color: #cbd5e1;
+.trade-popup.close-success-popup .trade-popup-result{
+    background:rgba(56,189,248,.06)!important;
+    border-radius:13px!important;
+    padding:10px!important;
 }
 
-
-.cpt-popup-btn.secondary:hover {
-    background:
-        rgba(255, 255, 255, 0.08);
+/* Chart container size only; candles still require TradingView JS initialization. */
+.chart-card{
+    width:100%!important;
+    box-sizing:border-box!important;
+    overflow:hidden!important;
 }
 
-
-/* =========================================================
-   PRIMARY BUTTON
-   ========================================================= */
-
-.cpt-popup-btn.primary {
-    background:
-        #2563eb;
-
-    color: #ffffff;
+#tvchart{
+    width:100%!important;
+    min-width:0!important;
+    height:420px!important;
+    overflow:hidden!important;
 }
 
-
-.cpt-popup-btn.primary:hover {
-    background:
-        #1d4ed8;
-}
-
-
-/* =========================================================
-   LONG BUTTON
-   ========================================================= */
-
-.cpt-popup-btn.long {
-    background:
-        #16a34a;
-
-    color: #ffffff;
-}
-
-
-/* =========================================================
-   SHORT BUTTON
-   ========================================================= */
-
-.cpt-popup-btn.short {
-    background:
-        #dc2626;
-
-    color: #ffffff;
-}
-
-
-/* =========================================================
-   CLOSE BUTTON
-   ========================================================= */
-
-.cpt-popup-close {
-    position: absolute;
-
-    top: 14px;
-    right: 14px;
-
-    width: 32px;
-    height: 32px;
-
-    border: 0;
-
-    border-radius: 50%;
-
-    background:
-        rgba(255, 255, 255, 0.05);
-
-    color: #94a3b8;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    cursor: pointer;
-
-    font-size: 16px;
-}
-
-
-/* =========================================================
-   LOADING
-   ========================================================= */
-
-.cpt-popup-loading {
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 9px;
-
-    color: #94a3b8;
-
-    font-size: 13px;
-
-    padding: 12px 0;
-}
-
-
-.cpt-popup-spinner {
-    width: 17px;
-    height: 17px;
-
-    border-radius: 50%;
-
-    border:
-        2px solid rgba(255, 255, 255, 0.12);
-
-    border-top-color:
-        #38bdf8;
-
-    animation:
-        cptPopupSpin 0.8s linear infinite;
-}
-
-
-@keyframes cptPopupSpin {
-
-    to {
-        transform: rotate(360deg);
+@media (max-width:600px){
+    .trade-popup-overlay{padding:12px!important}
+    .trade-popup-overlay .trade-popup{
+        max-width:390px!important;
+        max-height:calc(100vh - 24px)!important;
+        padding:19px!important;
+        border-radius:18px!important;
     }
-
+    .trade-popup h2{font-size:19px!important}
+    .trade-popup .trade-popup-message{font-size:13px!important}
+    .trade-popup-actions{gap:8px!important}
+    .trade-popup-actions button{
+        min-height:45px!important;
+        font-size:13px!important;
+    }
+    #tvchart{height:420px!important}
 }
 
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 600px) {
-
-    .cpt-popup-overlay {
-        padding: 14px;
-    }
-
-
-    .cpt-popup {
-        width: 100%;
-
-        max-width: 390px;
-
-        padding: 19px;
-
-        border-radius: 18px;
-    }
-
-
-    .cpt-popup-title {
-        font-size: 17px;
-    }
-
-
-    .cpt-popup-message {
-        font-size: 13px;
-
-        line-height: 1.6;
-    }
-
-
-    .cpt-popup-info-item {
-        padding: 11px;
-    }
-
-
-    .cpt-popup-info-value {
-        font-size: 14px;
-    }
-
-
-    .cpt-popup-btn {
-        min-height: 45px;
-
-        font-size: 13px;
-    }
-
-}
-
-
-/* =========================================================
-   VERY SMALL MOBILE
-   ========================================================= */
-
-@media (max-width: 360px) {
-
-    .cpt-popup {
-        padding: 16px;
-    }
-
-
-    .cpt-popup-header {
-        gap: 10px;
-    }
-
-
-    .cpt-popup-icon {
-        width: 40px;
-        height: 40px;
-
-        flex-basis: 40px;
-
-        border-radius: 12px;
-    }
-
-
-    .cpt-popup-info {
-        gap: 7px;
-    }
-
-
-    .cpt-popup-actions {
-        gap: 7px;
-    }
-
+@media (max-width:360px){
+    .trade-popup-overlay .trade-popup{padding:16px!important}
+    .trade-popup-info,
+    .trade-popup-result{gap:7px!important}
+    .trade-popup-info>div,
+    .trade-popup-result>div{padding:10px!important}
+    .trade-popup-actions{gap:7px!important}
 }
