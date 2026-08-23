@@ -1,0 +1,732 @@
+/* =========================================================
+   CPTMARKETS
+   PROFESSIONAL TRADE POPUPS
+   ========================================================= */
+
+
+/* =========================================================
+   POPUP OVERLAY
+   ========================================================= */
+
+.cpt-popup-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 99999;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(1, 7, 18, 0.82);
+
+    backdrop-filter:
+        blur(10px);
+
+    -webkit-backdrop-filter:
+        blur(10px);
+
+}
+
+
+/* =========================================================
+   SHOW POPUP
+   ========================================================= */
+
+.cpt-popup-overlay.active {
+
+    display: flex;
+
+    animation:
+        cptPopupFadeIn
+        0.22s ease forwards;
+
+}
+
+
+/* =========================================================
+   POPUP BOX
+   ========================================================= */
+
+.cpt-popup {
+
+    width: 100%;
+
+    max-width: 390px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #0b1629 0%,
+            #07101f 100%
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,0.08);
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 25px 70px
+        rgba(0,0,0,0.65),
+
+        0 0 0 1px
+        rgba(255,255,255,0.02);
+
+    overflow: hidden;
+
+    transform:
+        translateY(18px)
+        scale(0.97);
+
+    animation:
+        cptPopupScale
+        0.25s
+        cubic-bezier(.2,.8,.2,1)
+        forwards;
+
+}
+
+
+/* =========================================================
+   POPUP HEADER
+   ========================================================= */
+
+.cpt-popup-header {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 68px;
+
+    padding: 0 55px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,0.06);
+
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.cpt-popup-brand {
+
+    margin: 0;
+
+    color: #f4f7fb;
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.4px;
+
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+   ========================================================= */
+
+.cpt-popup-close {
+
+    position: absolute;
+
+    right: 16px;
+
+    top: 50%;
+
+    width: 36px;
+
+    height: 36px;
+
+    transform:
+        translateY(-50%);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,0.06);
+
+    color: #8fa2ba;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    transition:
+        0.2s ease;
+
+}
+
+
+.cpt-popup-close:hover {
+
+    background:
+        rgba(255,255,255,0.10);
+
+    color: #ffffff;
+
+}
+
+
+/* =========================================================
+   POPUP CONTENT
+   ========================================================= */
+
+.cpt-popup-content {
+
+    padding: 26px 22px 22px;
+
+}
+
+
+/* =========================================================
+   SIDE ICON
+   ========================================================= */
+
+.cpt-popup-icon {
+
+    width: 58px;
+
+    height: 58px;
+
+    margin:
+        0 auto 17px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 18px;
+
+    font-size: 24px;
+
+    font-weight: 700;
+
+}
+
+
+/* LONG */
+
+.cpt-popup-icon.long {
+
+    background:
+        rgba(22,199,132,0.12);
+
+    border:
+        1px solid
+        rgba(22,199,132,0.20);
+
+    color: #16c784;
+
+}
+
+
+/* SHORT */
+
+.cpt-popup-icon.short {
+
+    background:
+        rgba(234,57,67,0.12);
+
+    border:
+        1px solid
+        rgba(234,57,67,0.20);
+
+    color: #ea3943;
+
+}
+
+
+/* SUCCESS */
+
+.cpt-popup-icon.success {
+
+    background:
+        rgba(22,199,132,0.12);
+
+    border:
+        1px solid
+        rgba(22,199,132,0.20);
+
+    color: #16c784;
+
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.cpt-popup-title {
+
+    margin: 0;
+
+    text-align: center;
+
+    color: #f5f7fb;
+
+    font-size: 21px;
+
+    line-height: 1.3;
+
+    font-weight: 700;
+
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.cpt-popup-description {
+
+    margin:
+        9px auto 22px;
+
+    max-width: 300px;
+
+    text-align: center;
+
+    color: #8fa2ba;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+}
+
+
+/* =========================================================
+   TRADE DETAILS
+   ========================================================= */
+
+.cpt-trade-details {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 0;
+
+    margin-bottom: 22px;
+
+    padding: 4px 15px;
+
+    background:
+        rgba(255,255,255,0.025);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.055);
+
+    border-radius: 16px;
+
+}
+
+
+/* =========================================================
+   DETAIL ROW
+   ========================================================= */
+
+.cpt-trade-detail {
+
+    min-height: 48px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,0.055);
+
+}
+
+
+.cpt-trade-detail:last-child {
+
+    border-bottom: none;
+
+}
+
+
+/* LABEL */
+
+.cpt-trade-detail-label {
+
+    color: #7f93ad;
+
+    font-size: 13px;
+
+}
+
+
+/* VALUE */
+
+.cpt-trade-detail-value {
+
+    color: #e8edf5;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    text-align: right;
+
+}
+
+
+/* =========================================================
+   LONG VALUE
+   ========================================================= */
+
+.cpt-trade-detail-value.long {
+
+    color: #16c784;
+
+}
+
+
+/* =========================================================
+   SHORT VALUE
+   ========================================================= */
+
+.cpt-trade-detail-value.short {
+
+    color: #ea3943;
+
+}
+
+
+/* =========================================================
+   PROFIT / LOSS
+   ========================================================= */
+
+.cpt-trade-detail-value.profit {
+
+    color: #16c784;
+
+    font-size: 16px;
+
+}
+
+
+.cpt-trade-detail-value.loss {
+
+    color: #ea3943;
+
+    font-size: 16px;
+
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+   ========================================================= */
+
+.cpt-popup-actions {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 11px;
+
+}
+
+
+/* =========================================================
+   BASE BUTTON
+   ========================================================= */
+
+.cpt-popup-btn {
+
+    height: 50px;
+
+    border: none;
+
+    border-radius: 13px;
+
+    font-family:
+        inherit;
+
+    font-size: 14px;
+
+    font-weight: 650;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        opacity 0.15s ease,
+        background 0.15s ease;
+
+}
+
+
+.cpt-popup-btn:active {
+
+    transform:
+        scale(0.97);
+
+}
+
+
+/* =========================================================
+   CANCEL
+   ========================================================= */
+
+.cpt-popup-btn.cancel {
+
+    background:
+        rgba(255,255,255,0.055);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.07);
+
+    color: #aebbd0;
+
+}
+
+
+/* =========================================================
+   CONFIRM
+   ========================================================= */
+
+.cpt-popup-btn.confirm {
+
+    background:
+        #16c784;
+
+    color: #03140d;
+
+    box-shadow:
+        0 7px 22px
+        rgba(22,199,132,0.18);
+
+}
+
+
+/* =========================================================
+   DONE BUTTON
+   ========================================================= */
+
+.cpt-popup-btn.done {
+
+    grid-column:
+        1 / -1;
+
+    background:
+        #16c784;
+
+    color: #03140d;
+
+    box-shadow:
+        0 7px 22px
+        rgba(22,199,132,0.18);
+
+}
+
+
+/* =========================================================
+   POPUP FOOTER
+   ========================================================= */
+
+.cpt-popup-footer {
+
+    margin-top: 14px;
+
+    text-align: center;
+
+    color: #596b82;
+
+    font-size: 11px;
+
+}
+
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes cptPopupFadeIn {
+
+    from {
+
+        opacity: 0;
+
+    }
+
+    to {
+
+        opacity: 1;
+
+    }
+
+}
+
+
+@keyframes cptPopupScale {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(18px)
+            scale(0.97);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .cpt-popup-overlay {
+
+        padding:
+            16px;
+
+    }
+
+
+    .cpt-popup {
+
+        max-width:
+            100%;
+
+        border-radius:
+            20px;
+
+    }
+
+
+    .cpt-popup-header {
+
+        min-height:
+            64px;
+
+    }
+
+
+    .cpt-popup-content {
+
+        padding:
+            23px 18px 19px;
+
+    }
+
+
+    .cpt-popup-title {
+
+        font-size:
+            20px;
+
+    }
+
+
+    .cpt-popup-description {
+
+        font-size:
+            12.5px;
+
+    }
+
+
+    .cpt-trade-detail {
+
+        min-height:
+            46px;
+
+    }
+
+
+    .cpt-popup-btn {
+
+        height:
+            48px;
+
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL DEVICES
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+    .cpt-popup-content {
+
+        padding:
+            20px 15px 16px;
+
+    }
+
+
+    .cpt-trade-details {
+
+        padding:
+            3px 12px;
+
+    }
+
+
+    .cpt-popup-title {
+
+        font-size:
+            18px;
+
+    }
+
+}
