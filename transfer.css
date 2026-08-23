@@ -1,6 +1,6 @@
 /* ==========================================
    CPTMARKETS
-   TRANSFER PREMIUM DARK UI
+   TRANSFER — PREMIUM DARK UI
 ========================================== */
 
 * {
@@ -11,26 +11,21 @@
 
 html {
     min-height: 100%;
-    background: #030303;
+    background: #000000;
 }
 
 body {
     min-height: 100vh;
+    background: #000000;
+    color: #ffffff;
+
     font-family:
         Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
         Arial,
-        Helvetica,
         sans-serif;
-
-    background:
-        radial-gradient(
-            circle at 50% -10%,
-            rgba(255, 194, 28, 0.055),
-            transparent 34%
-        ),
-        #030303;
-
-    color: #ffffff;
 
     overflow-x: hidden;
 }
@@ -44,15 +39,9 @@ body {
     width: 100%;
     max-width: 760px;
     min-height: 100vh;
-
     margin: 0 auto;
 
-    background:
-        linear-gradient(
-            180deg,
-            #050505 0%,
-            #030303 100%
-        );
+    background: #000000;
 }
 
 
@@ -61,7 +50,7 @@ body {
 ========================================== */
 
 .transfer-header {
-    height: 78px;
+    height: 76px;
 
     display: flex;
     align-items: center;
@@ -69,16 +58,12 @@ body {
 
     padding: 0 22px;
 
-    background:
-        rgba(5, 5, 5, 0.92);
-
-    border-bottom: 1px solid rgba(255, 255, 255, 0.055);
-
     position: relative;
-    z-index: 20;
+    z-index: 10;
 
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
+    background: #000000;
+
+    border-bottom: 1px solid #171717;
 }
 
 .transfer-header h1 {
@@ -89,16 +74,16 @@ body {
 
     transform: translate(-50%, -50%);
 
+    color: #f5f5f5;
+
     font-size: 23px;
-    font-weight: 750;
+    font-weight: 700;
 
     letter-spacing: -0.4px;
-
-    white-space: nowrap;
 }
 
 .header-space {
-    width: 46px;
+    width: 44px;
 }
 
 
@@ -107,50 +92,42 @@ body {
 ========================================== */
 
 .back-btn {
-    width: 46px;
-    height: 46px;
-
-    border: 1px solid rgba(255, 255, 255, 0.08);
-
-    border-radius: 50%;
+    width: 44px;
+    height: 44px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    background:
-        linear-gradient(
-            145deg,
-            #202020,
-            #111111
-        );
+    border: 1px solid #262626;
+    border-radius: 50%;
+
+    background: #111111;
 
     color: #ffffff;
 
     cursor: pointer;
 
     box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.06),
-        0 8px 24px rgba(0,0,0,0.35);
+        inset 0 1px 0 rgba(255,255,255,0.04),
+        0 8px 20px rgba(0,0,0,0.5);
 
     transition:
-        transform 0.2s ease,
+        transform 0.18s ease,
         border-color 0.2s ease,
-        box-shadow 0.2s ease;
+        background 0.2s ease;
 }
 
 .back-btn span {
-    font-size: 35px;
+    font-size: 34px;
     line-height: 1;
 
-    margin-top: -3px;
+    margin-top: -4px;
 }
 
 .back-btn:hover {
-    border-color: rgba(255,194,28,0.35);
-
-    box-shadow:
-        0 0 18px rgba(255,194,28,0.12);
+    background: #151515;
+    border-color: #3b3b3b;
 }
 
 .back-btn:active {
@@ -163,7 +140,7 @@ body {
 ========================================== */
 
 .transfer-content {
-    padding: 28px 20px 50px;
+    padding: 25px 20px 45px;
 }
 
 
@@ -176,46 +153,45 @@ body {
 
     overflow: hidden;
 
+    padding: 27px;
+
+    border-radius: 25px;
+
     background:
         linear-gradient(
             145deg,
-            #171717 0%,
-            #101010 55%,
-            #0d0d0d 100%
+            #111111 0%,
+            #0b0b0b 55%,
+            #080808 100%
         );
 
-    border: 1px solid rgba(255,255,255,0.075);
-
-    border-radius: 28px;
-
-    padding: 27px;
+    border: 1px solid #242424;
 
     box-shadow:
-        0 25px 70px rgba(0,0,0,0.65),
-        inset 0 1px 0 rgba(255,255,255,0.035);
+        0 20px 55px rgba(0,0,0,0.72),
+        inset 0 1px 0 rgba(255,255,255,0.025);
 }
 
 
 /* ==========================================
-   CARD GLOW
+   CARD LIGHT
 ========================================== */
 
-.card-glow {
+.card-light {
     position: absolute;
 
-    width: 260px;
-    height: 260px;
+    width: 240px;
+    height: 160px;
 
-    top: -170px;
+    top: -120px;
     left: 50%;
 
     transform: translateX(-50%);
 
     background:
         radial-gradient(
-            circle,
-            rgba(255,194,28,0.12) 0%,
-            rgba(255,194,28,0.035) 35%,
+            ellipse,
+            rgba(255,190,20,0.065),
             transparent 70%
         );
 
@@ -234,14 +210,14 @@ body {
     display: flex;
     align-items: center;
 
-    gap: 15px;
+    gap: 14px;
 
-    margin-bottom: 31px;
+    margin-bottom: 29px;
 }
 
 .title-icon {
-    width: 55px;
-    height: 55px;
+    width: 48px;
+    height: 48px;
 
     flex-shrink: 0;
 
@@ -249,50 +225,42 @@ body {
     align-items: center;
     justify-content: center;
 
-    border-radius: 18px;
+    border-radius: 14px;
 
-    background:
-        linear-gradient(
-            145deg,
-            #ffd34d,
-            #ffb300
-        );
+    background: #171717;
 
-    color: #080808;
+    border: 1px solid rgba(255,193,7,0.35);
 
-    font-size: 30px;
-    font-weight: 800;
+    color: #ffc107;
+
+    font-size: 25px;
+    font-weight: 700;
 
     box-shadow:
-        0 0 0 1px rgba(255,255,255,0.12),
-        0 0 25px rgba(255,194,28,0.22),
-        0 9px 24px rgba(0,0,0,0.35);
-}
-
-.title-icon span {
-    transform: translateY(-1px);
+        0 0 16px rgba(255,193,7,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.04);
 }
 
 .card-title h2 {
-    font-size: 22px;
-    font-weight: 750;
+    color: #f1f1f1;
 
-    letter-spacing: -0.4px;
+    font-size: 21px;
+    font-weight: 700;
+
+    letter-spacing: -0.35px;
 
     margin-bottom: 5px;
 }
 
 .card-title p {
-    color: #8e8e8e;
+    color: #707070;
 
-    font-size: 13px;
-
-    line-height: 1.4;
+    font-size: 12px;
 }
 
 
 /* ==========================================
-   ACCOUNT AREA
+   ACCOUNTS
 ========================================== */
 
 .accounts-area {
@@ -301,31 +269,25 @@ body {
     display: flex;
     flex-direction: column;
 
-    z-index: 3;
+    z-index: 2;
 }
-
-
-/* ==========================================
-   ACCOUNT SLOT
-========================================== */
 
 .account-slot {
     position: relative;
 
     transition:
-        order 0.5s ease,
-        transform 0.5s cubic-bezier(.2,.8,.2,1),
-        opacity 0.3s ease;
+        transform 0.45s ease,
+        opacity 0.35s ease;
 }
 
 .field-label {
     display: block;
 
-    margin-bottom: 9px;
+    margin-bottom: 8px;
 
-    color: #a6a6a6;
+    color: #898989;
 
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
 }
 
@@ -335,40 +297,36 @@ body {
 ========================================== */
 
 .account-box {
-    min-height: 82px;
+    min-height: 70px;
 
     display: flex;
     align-items: center;
 
-    padding: 13px 16px;
+    padding: 10px 14px;
 
-    border-radius: 19px;
+    border-radius: 16px;
 
-    background:
-        linear-gradient(
-            145deg,
-            #222222,
-            #171717
-        );
+    background: #111111;
 
-    border: 1px solid rgba(255,255,255,0.075);
+    border: 1px solid #282828;
 
     box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.035),
-        0 12px 30px rgba(0,0,0,0.30);
+        inset 0 1px 0 rgba(255,255,255,0.025),
+        0 8px 20px rgba(0,0,0,0.32);
 
     transition:
-        border-color 0.25s ease,
-        box-shadow 0.25s ease,
-        transform 0.25s ease;
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .account-box:hover {
-    border-color: rgba(255,194,28,0.22);
+    background: #141414;
+
+    border-color: #3a3a3a;
 
     box-shadow:
-        0 0 25px rgba(255,194,28,0.06),
-        inset 0 1px 0 rgba(255,255,255,0.04);
+        0 0 18px rgba(255,193,7,0.045);
 }
 
 
@@ -377,8 +335,8 @@ body {
 ========================================== */
 
 .account-icon {
-    width: 50px;
-    height: 50px;
+    width: 39px;
+    height: 39px;
 
     flex-shrink: 0;
 
@@ -386,56 +344,60 @@ body {
     align-items: center;
     justify-content: center;
 
-    margin-right: 14px;
+    margin-right: 12px;
 
-    border-radius: 16px;
+    border-radius: 11px;
 
-    background:
-        linear-gradient(
-            145deg,
-            #ffd43f,
-            #ffb000
-        );
+    background: #191919;
 
-    color: #111111;
+    border: 1px solid rgba(255,193,7,0.30);
 
-    font-size: 24px;
+    font-size: 18px;
 
     box-shadow:
-        0 0 18px rgba(255,194,28,0.15),
-        inset 0 1px 0 rgba(255,255,255,0.2);
+        0 0 12px rgba(255,193,7,0.055);
 }
 
+.account-icon span {
+    filter: grayscale(0.1);
+}
+
+
+/* ==========================================
+   ACCOUNT TEXT
+========================================== */
+
 .account-info {
+    min-width: 0;
+
     display: flex;
     flex-direction: column;
 
-    gap: 5px;
-
-    min-width: 0;
+    gap: 4px;
 }
 
 .account-info strong {
-    color: #f6f6f6;
+    color: #e9e9e9;
 
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 15px;
+    font-weight: 650;
 
-    letter-spacing: -0.15px;
+    letter-spacing: -0.1px;
 }
 
 .account-info span {
-    color: #858585;
+    color: #686868;
 
-    font-size: 12px;
+    font-size: 11px;
+    font-weight: 450;
 }
 
 .account-arrow {
     margin-left: auto;
 
-    color: #666666;
+    color: #555555;
 
-    font-size: 28px;
+    font-size: 25px;
     font-weight: 300;
 
     transition:
@@ -444,40 +406,36 @@ body {
 }
 
 .account-box:hover .account-arrow {
-    color: #ffc21c;
-    transform: translateX(3px);
+    color: #a8a8a8;
+    transform: translateX(2px);
 }
 
 
 /* ==========================================
-   SWITCH AREA
+   SWITCH
 ========================================== */
 
 .switch-area {
-    height: 54px;
+    height: 52px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
     position: relative;
-
-    z-index: 10;
+    z-index: 5;
 }
 
-
-/* horizontal glow line */
-
 .switch-line {
-    height: 1px;
-
     width: 34%;
+
+    height: 1px;
 
     background:
         linear-gradient(
             90deg,
             transparent,
-            rgba(255,194,28,0.12),
+            #242424,
             transparent
         );
 }
@@ -490,70 +448,63 @@ body {
 .switch-btn {
     position: relative;
 
-    width: 54px;
-    height: 54px;
+    width: 49px;
+    height: 49px;
 
     flex-shrink: 0;
 
-    margin: 0 9px;
-
-    border-radius: 50%;
-
-    border: 2px solid rgba(255,194,28,0.65);
-
-    background:
-        radial-gradient(
-            circle at 35% 25%,
-            #ffe17b 0%,
-            #ffc21c 35%,
-            #e79d00 100%
-        );
-
-    color: #080808;
+    margin: 0 8px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
+    border-radius: 50%;
+
+    border: 1px solid rgba(255,193,7,0.65);
+
+    background: #0d0d0d;
+
+    color: #ffc107;
+
     cursor: pointer;
 
     box-shadow:
-        0 0 0 5px rgba(255,194,28,0.035),
-        0 0 18px rgba(255,194,28,0.28),
-        0 0 45px rgba(255,194,28,0.12),
-        inset 0 2px 2px rgba(255,255,255,0.35),
-        inset 0 -4px 8px rgba(120,70,0,0.18);
+        0 0 0 4px rgba(255,193,7,0.035),
+        0 0 18px rgba(255,193,7,0.13),
+        inset 0 1px 0 rgba(255,255,255,0.05);
 
     transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
 }
 
 .switch-icon {
     position: relative;
-    z-index: 3;
+    z-index: 2;
 
-    font-size: 25px;
-    font-weight: 900;
+    font-size: 22px;
+    font-weight: 700;
 
     line-height: 1;
 
     transition:
-        transform 0.5s cubic-bezier(.2,.8,.2,1);
+        transform 0.45s ease;
 }
 
 .switch-btn:hover {
-    transform: scale(1.07);
+    background: #121212;
+
+    transform: scale(1.06);
 
     box-shadow:
-        0 0 0 6px rgba(255,194,28,0.055),
-        0 0 25px rgba(255,194,28,0.45),
-        0 0 60px rgba(255,194,28,0.18),
-        inset 0 2px 2px rgba(255,255,255,0.4);
+        0 0 0 5px rgba(255,193,7,0.045),
+        0 0 24px rgba(255,193,7,0.20);
 }
 
 .switch-btn:active {
-    transform: scale(0.90);
+    transform: scale(0.91);
 }
 
 
@@ -568,7 +519,7 @@ body {
 
     border-radius: 50%;
 
-    border: 2px solid rgba(255,194,28,0.75);
+    border: 1px solid #ffc107;
 
     opacity: 0;
 
@@ -586,44 +537,41 @@ body {
 @keyframes switchRipple {
 
     0% {
-        transform: scale(0.95);
-        opacity: 0.8;
+        transform: scale(0.9);
+        opacity: 0.65;
     }
 
     100% {
-        transform: scale(1.8);
+        transform: scale(1.75);
         opacity: 0;
     }
-
 }
 
 
 /* ==========================================
-   SWAP ANIMATION
+   ACCOUNT SWAP
 ========================================== */
 
 .accounts-area.is-swapping .account-slot {
-    animation:
-        accountSwap 0.5s cubic-bezier(.2,.8,.2,1);
+    animation: accountSwap 0.5s ease;
 }
 
 @keyframes accountSwap {
 
     0% {
-        opacity: 0.55;
-        transform: translateY(0) scale(0.985);
+        opacity: 0.65;
+        transform: translateY(0);
     }
 
     45% {
-        opacity: 0.7;
-        transform: translateY(-5px) scale(0.99);
+        opacity: 0.8;
+        transform: translateY(-3px);
     }
 
     100% {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: translateY(0);
     }
-
 }
 
 
@@ -633,91 +581,77 @@ body {
 
 .amount-group {
     position: relative;
-
     z-index: 2;
 
-    margin-top: 26px;
+    margin-top: 25px;
 }
 
 .amount-group label {
     display: block;
 
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 
-    color: #a6a6a6;
+    color: #898989;
 
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
 }
 
 .amount-box {
-    height: 68px;
+    height: 64px;
 
     display: flex;
     align-items: center;
 
-    padding: 0 18px;
+    padding: 0 16px;
 
-    border-radius: 19px;
+    border-radius: 16px;
 
-    background:
-        linear-gradient(
-            145deg,
-            #222222,
-            #171717
-        );
+    background: #101010;
 
-    border: 1px solid rgba(255,255,255,0.075);
-
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.035),
-        0 10px 25px rgba(0,0,0,0.25);
+    border: 1px solid #292929;
 
     transition:
-        border-color 0.25s ease,
-        box-shadow 0.25s ease;
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .amount-box:focus-within {
-    border-color: rgba(255,194,28,0.55);
+    border-color: rgba(255,193,7,0.50);
 
     box-shadow:
-        0 0 0 3px rgba(255,194,28,0.06),
-        0 0 25px rgba(255,194,28,0.08);
+        0 0 0 3px rgba(255,193,7,0.045),
+        0 0 18px rgba(255,193,7,0.07);
 }
 
 .currency {
-    color: #ffc21c;
+    margin-right: 10px;
 
-    font-size: 28px;
-    font-weight: 700;
+    color: #ffc107;
 
-    margin-right: 11px;
-
-    text-shadow:
-        0 0 12px rgba(255,194,28,0.25);
+    font-size: 27px;
+    font-weight: 600;
 }
 
 .amount-box input {
     flex: 1;
 
     width: 100%;
+    min-width: 0;
 
     border: 0;
     outline: 0;
 
     background: transparent;
 
-    color: #ffffff;
+    color: #eeeeee;
 
-    font-size: 23px;
-    font-weight: 600;
-
-    min-width: 0;
+    font-size: 22px;
+    font-weight: 500;
 }
 
 .amount-box input::placeholder {
-    color: #565656;
+    color: #555555;
 }
 
 .amount-box input::-webkit-outer-spin-button,
@@ -732,12 +666,12 @@ body {
 }
 
 .currency-code {
-    color: #7f7f7f;
+    color: #666666;
 
-    font-size: 13px;
-    font-weight: 700;
+    font-size: 12px;
+    font-weight: 600;
 
-    letter-spacing: 0.5px;
+    letter-spacing: 0.4px;
 }
 
 
@@ -746,16 +680,13 @@ body {
 ========================================== */
 
 .balance-info {
-    position: relative;
-    z-index: 2;
-
-    min-height: 58px;
+    min-height: 56px;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    padding: 14px 3px 12px;
+    padding: 13px 2px 10px;
 }
 
 .balance-label {
@@ -764,64 +695,57 @@ body {
 
     gap: 8px;
 
-    color: #888888;
+    color: #767676;
 
-    font-size: 13px;
+    font-size: 12px;
 }
 
 .balance-dot {
-    width: 7px;
-    height: 7px;
+    width: 6px;
+    height: 6px;
 
     border-radius: 50%;
 
-    background: #ffc21c;
+    background: #ffc107;
 
     box-shadow:
-        0 0 8px rgba(255,194,28,0.55);
+        0 0 7px rgba(255,193,7,0.5);
 }
 
 .balance-info strong {
-    color: #f7f7f7;
+    color: #eeeeee;
 
-    font-size: 17px;
-    font-weight: 750;
-
-    letter-spacing: -0.2px;
+    font-size: 16px;
+    font-weight: 700;
 }
 
 
 /* ==========================================
-   TRANSFER DIRECTION
+   DIRECTION
 ========================================== */
 
 .transfer-direction {
-    position: relative;
+    min-height: 35px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    flex-wrap: wrap;
-
-    gap: 6px;
-
-    min-height: 36px;
+    gap: 7px;
 
     margin-bottom: 13px;
+    padding: 7px 10px;
 
-    padding: 8px 12px;
+    border-radius: 10px;
 
-    border-radius: 12px;
+    background: #0c0c0c;
 
-    background: rgba(255,194,28,0.035);
+    border: 1px solid #202020;
 
-    border: 1px solid rgba(255,194,28,0.07);
+    color: #6f6f6f;
 
-    color: #888888;
-
-    font-size: 11px;
-    font-weight: 600;
+    font-size: 10px;
+    font-weight: 500;
 }
 
 .direction-dot {
@@ -830,21 +754,21 @@ body {
 
     border-radius: 50%;
 
-    background: #ffc21c;
+    background: #ffc107;
 
     box-shadow:
-        0 0 7px rgba(255,194,28,0.6);
+        0 0 6px rgba(255,193,7,0.5);
 }
 
 .direction-arrow {
-    color: #ffc21c;
+    color: #ffc107;
 
-    font-size: 15px;
+    font-size: 14px;
 }
 
 
 /* ==========================================
-   SUBMIT BUTTON
+   CONFIRM BUTTON
 ========================================== */
 
 .submit-transfer {
@@ -853,52 +777,46 @@ body {
     overflow: hidden;
 
     width: 100%;
-    height: 59px;
+    height: 57px;
 
-    border: 1px solid rgba(255,224,120,0.55);
+    border: 1px solid rgba(255,210,70,0.55);
 
-    border-radius: 18px;
+    border-radius: 16px;
 
     background:
         linear-gradient(
             135deg,
-            #ffd64d 0%,
-            #ffc21c 45%,
-            #f0aa00 100%
+            #ffc928,
+            #e9a900
         );
 
-    color: #080808;
+    color: #070707;
 
-    font-size: 17px;
-    font-weight: 800;
+    font-size: 16px;
+    font-weight: 750;
 
     cursor: pointer;
 
     box-shadow:
-        0 0 0 1px rgba(255,194,28,0.08),
-        0 0 24px rgba(255,194,28,0.18),
-        0 12px 30px rgba(0,0,0,0.35),
-        inset 0 2px 1px rgba(255,255,255,0.35);
+        0 0 20px rgba(255,193,7,0.12),
+        0 10px 25px rgba(0,0,0,0.45),
+        inset 0 1px 0 rgba(255,255,255,0.30);
 
     transition:
-        transform 0.2s ease,
-        box-shadow 0.25s ease;
+        transform 0.18s ease,
+        box-shadow 0.22s ease;
 }
 
 .submit-transfer:hover {
     box-shadow:
-        0 0 0 1px rgba(255,224,120,0.25),
-        0 0 32px rgba(255,194,28,0.34),
-        0 15px 35px rgba(0,0,0,0.42),
-        inset 0 2px 1px rgba(255,255,255,0.4);
+        0 0 27px rgba(255,193,7,0.22),
+        0 13px 30px rgba(0,0,0,0.50),
+        inset 0 1px 0 rgba(255,255,255,0.35);
 }
 
 .submit-transfer:active {
     transform: scale(0.975);
 }
-
-
-/* button content */
 
 .button-content {
     position: relative;
@@ -908,22 +826,23 @@ body {
     align-items: center;
     justify-content: center;
 
-    gap: 12px;
+    gap: 11px;
 }
 
 .button-arrow {
-    font-size: 20px;
+    font-size: 19px;
 
-    transition:
-        transform 0.2s ease;
+    transition: transform 0.2s ease;
 }
 
 .submit-transfer:hover .button-arrow {
-    transform: translateX(4px);
+    transform: translateX(3px);
 }
 
 
-/* button shine */
+/* ==========================================
+   BUTTON SHINE
+========================================== */
 
 .button-shine {
     position: absolute;
@@ -931,20 +850,18 @@ body {
     top: 0;
     left: -120%;
 
-    width: 70%;
+    width: 60%;
     height: 100%;
 
     background:
         linear-gradient(
             90deg,
             transparent,
-            rgba(255,255,255,0.35),
+            rgba(255,255,255,0.25),
             transparent
         );
 
     transform: skewX(-20deg);
-
-    pointer-events: none;
 }
 
 .submit-transfer:hover .button-shine {
@@ -960,7 +877,6 @@ body {
     100% {
         left: 150%;
     }
-
 }
 
 
@@ -969,23 +885,21 @@ body {
 ========================================== */
 
 .transfer-message {
-    position: relative;
+    margin-top: 14px;
 
-    margin-top: 15px;
+    padding: 12px;
 
-    padding: 13px 15px;
+    border-radius: 12px;
 
-    border-radius: 13px;
+    background: #111111;
+
+    border: 1px solid #252525;
+
+    color: #bdbdbd;
 
     text-align: center;
 
-    font-size: 13px;
-
-    line-height: 1.5;
-
-    background: #191919;
-
-    border: 1px solid #292929;
+    font-size: 12px;
 }
 
 
@@ -997,30 +911,25 @@ body {
     display: flex;
     align-items: flex-start;
 
-    gap: 13px;
+    gap: 12px;
 
-    margin-top: 18px;
+    margin-top: 17px;
 
-    padding: 19px;
+    padding: 17px;
 
-    border-radius: 20px;
+    border-radius: 18px;
 
-    background:
-        linear-gradient(
-            145deg,
-            #131313,
-            #0d0d0d
-        );
+    background: #090909;
 
-    border: 1px solid rgba(255,255,255,0.055);
+    border: 1px solid #1d1d1d;
 
     box-shadow:
-        0 15px 35px rgba(0,0,0,0.30);
+        0 12px 30px rgba(0,0,0,0.35);
 }
 
 .info-icon {
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
 
     flex-shrink: 0;
 
@@ -1028,48 +937,396 @@ body {
     align-items: center;
     justify-content: center;
 
-    border-radius: 50%;
+    border-radius: 10px;
 
-    background: #222222;
+    background: #121212;
 
-    color: #ffc21c;
+    border: 1px solid #292929;
 
-    font-size: 16px;
-    font-weight: 800;
+    color: #ffc107;
 
-    box-shadow:
-        0 0 15px rgba(255,194,28,0.08);
+    font-size: 14px;
 }
 
 .info-text strong {
     display: block;
 
-    margin-bottom: 5px;
+    margin-bottom: 4px;
 
-    color: #e9e9e9;
+    color: #dcdcdc;
 
-    font-size: 14px;
-    font-weight: 700;
+    font-size: 13px;
+    font-weight: 650;
 }
 
 .info-text p {
-    color: #747474;
+    color: #626262;
 
-    font-size: 12px;
+    font-size: 11px;
 
-    line-height: 1.55;
+    line-height: 1.5;
+}
+
+
+/* ==================================================
+   CUSTOMER SERVICE OVERLAY
+================================================== */
+
+.support-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(0,0,0,0.78);
+
+    backdrop-filter: blur(9px);
+    -webkit-backdrop-filter: blur(9px);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity 0.25s ease,
+        visibility 0.25s ease;
+}
+
+.support-overlay.active {
+    opacity: 1;
+    visibility: visible;
 }
 
 
 /* ==========================================
-   MOBILE
+   MODAL
 ========================================== */
+
+.support-modal {
+    position: relative;
+
+    width: 100%;
+    max-width: 370px;
+
+    padding: 31px 25px 25px;
+
+    text-align: center;
+
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #171717,
+            #0c0c0c
+        );
+
+    border: 1px solid rgba(255,193,7,0.28);
+
+    box-shadow:
+        0 30px 90px rgba(0,0,0,0.90),
+        0 0 40px rgba(255,193,7,0.07),
+        inset 0 1px 0 rgba(255,255,255,0.045);
+
+    transform:
+        translateY(20px)
+        scale(0.94);
+
+    opacity: 0;
+
+    transition:
+        transform 0.32s cubic-bezier(.2,.8,.2,1),
+        opacity 0.25s ease;
+}
+
+.support-overlay.active .support-modal {
+    transform:
+        translateY(0)
+        scale(1);
+
+    opacity: 1;
+}
+
+
+/* ==========================================
+   MODAL CLOSE
+========================================== */
+
+.support-close {
+    position: absolute;
+
+    top: 13px;
+    right: 15px;
+
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 0;
+    border-radius: 50%;
+
+    background: #202020;
+
+    color: #8c8c8c;
+
+    font-size: 24px;
+    font-weight: 300;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.support-close:hover {
+    background: #292929;
+    color: #ffffff;
+
+    transform: rotate(90deg);
+}
+
+
+/* ==========================================
+   SUPPORT ICON
+========================================== */
+
+.support-icon-wrap {
+    position: relative;
+
+    width: 86px;
+    height: 86px;
+
+    margin: 4px auto 21px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.support-icon {
+    width: 74px;
+    height: 74px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            #1d1d1d,
+            #111111
+        );
+
+    border: 1px solid rgba(255,193,7,0.25);
+
+    color: #ffc107;
+
+    font-size: 34px;
+
+    box-shadow:
+        0 0 25px rgba(255,193,7,0.10),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+
+/* ==========================================
+   MODAL SPARKS
+========================================== */
+
+.support-spark {
+    position: absolute;
+
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: #ffc107;
+
+    box-shadow:
+        0 0 8px rgba(255,193,7,0.65);
+
+    animation: sparkFloat 2.5s infinite ease-in-out;
+}
+
+.spark-one {
+    top: 15px;
+    right: 0;
+}
+
+.spark-two {
+    left: 2px;
+    top: 38px;
+
+    width: 4px;
+    height: 4px;
+
+    animation-delay: 0.5s;
+}
+
+.spark-three {
+    right: 11px;
+    bottom: 9px;
+
+    width: 4px;
+    height: 4px;
+
+    animation-delay: 1s;
+}
+
+@keyframes sparkFloat {
+
+    0%,
+    100% {
+        opacity: 0.35;
+        transform: translateY(0);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(-5px);
+    }
+}
+
+
+/* ==========================================
+   MODAL HEADING
+========================================== */
+
+.support-heading {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+
+    margin-bottom: 13px;
+}
+
+.support-heading span {
+    color: #eeeeee;
+
+    font-size: 21px;
+    font-weight: 600;
+}
+
+.support-heading strong {
+    color: #ffc107;
+
+    font-size: 23px;
+    font-weight: 750;
+
+    text-shadow:
+        0 0 15px rgba(255,193,7,0.12);
+}
+
+
+/* ==========================================
+   MODAL DESCRIPTION
+========================================== */
+
+.support-description {
+    max-width: 285px;
+
+    margin: 0 auto 23px;
+
+    color: #858585;
+
+    font-size: 12px;
+
+    line-height: 1.65;
+}
+
+
+/* ==========================================
+   SUPPORT BUTTON
+========================================== */
+
+.support-button {
+    width: 100%;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    border: 1px solid rgba(255,193,7,0.45);
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffc928,
+            #e8a900
+        );
+
+    color: #080808;
+
+    font-size: 14px;
+    font-weight: 750;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 0 20px rgba(255,193,7,0.13),
+        inset 0 1px 0 rgba(255,255,255,0.25);
+
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.2s ease;
+}
+
+.support-button:hover {
+    box-shadow:
+        0 0 28px rgba(255,193,7,0.23);
+}
+
+.support-button:active {
+    transform: scale(0.97);
+}
+
+.support-button-icon {
+    font-size: 9px;
+}
+
+.support-button-arrow {
+    margin-left: 3px;
+
+    font-size: 18px;
+
+    transition: transform 0.2s ease;
+}
+
+.support-button:hover .support-button-arrow {
+    transform: translateX(3px);
+}
+
+
+/* ==================================================
+   MOBILE
+================================================== */
 
 @media (max-width: 480px) {
 
     .transfer-header {
         height: 72px;
-
         padding: 0 16px;
     }
 
@@ -1078,136 +1335,153 @@ body {
     }
 
     .back-btn {
-        width: 43px;
-        height: 43px;
+        width: 42px;
+        height: 42px;
     }
 
     .header-space {
-        width: 43px;
+        width: 42px;
     }
 
     .transfer-content {
-        padding: 18px 14px 38px;
+        padding: 17px 14px 36px;
     }
 
     .transfer-card {
-        padding: 20px 17px;
-
-        border-radius: 24px;
+        padding: 21px 17px;
+        border-radius: 23px;
     }
 
     .card-title {
         gap: 12px;
-
-        margin-bottom: 26px;
+        margin-bottom: 25px;
     }
 
     .title-icon {
-        width: 50px;
-        height: 50px;
+        width: 45px;
+        height: 45px;
 
-        border-radius: 16px;
+        border-radius: 12px;
 
-        font-size: 27px;
-    }
-
-    .card-title h2 {
-        font-size: 20px;
-    }
-
-    .card-title p {
-        font-size: 12px;
-    }
-
-    .account-box {
-        min-height: 76px;
-
-        padding: 11px 13px;
-
-        border-radius: 17px;
-    }
-
-    .account-icon {
-        width: 46px;
-        height: 46px;
-
-        margin-right: 12px;
-
-        border-radius: 14px;
-    }
-
-    .account-info strong {
-        font-size: 15px;
-    }
-
-    .account-info span {
-        font-size: 11px;
-    }
-
-    .switch-area {
-        height: 52px;
-    }
-
-    .switch-btn {
-        width: 50px;
-        height: 50px;
-
-        margin: 0 7px;
-    }
-
-    .switch-icon {
         font-size: 23px;
     }
 
-    .amount-box {
-        height: 64px;
-
-        border-radius: 17px;
+    .card-title h2 {
+        font-size: 19px;
     }
 
-    .submit-transfer {
-        height: 57px;
-
-        border-radius: 17px;
-    }
-
-    .transfer-info {
-        padding: 17px;
-
-        border-radius: 18px;
-    }
-
-}
-
-
-/* ==========================================
-   VERY SMALL DEVICES
-========================================== */
-
-@media (max-width: 360px) {
-
-    .transfer-card {
-        padding: 18px 14px;
+    .card-title p {
+        font-size: 11px;
     }
 
     .account-box {
-        padding-left: 10px;
-        padding-right: 10px;
+        min-height: 67px;
+
+        padding: 9px 12px;
+
+        border-radius: 15px;
     }
 
     .account-icon {
-        width: 43px;
-        height: 43px;
+        width: 37px;
+        height: 37px;
 
-        margin-right: 10px;
+        margin-right: 11px;
+
+        border-radius: 10px;
+
+        font-size: 17px;
     }
 
     .account-info strong {
         font-size: 14px;
     }
 
-    .transfer-direction {
+    .account-info span {
         font-size: 10px;
+    }
+
+    .account-arrow {
+        font-size: 23px;
+    }
+
+    .switch-area {
+        height: 49px;
+    }
+
+    .switch-btn {
+        width: 46px;
+        height: 46px;
+    }
+
+    .switch-icon {
+        font-size: 21px;
+    }
+
+    .amount-box {
+        height: 61px;
+    }
+
+    .amount-box input {
+        font-size: 21px;
+    }
+
+    .submit-transfer {
+        height: 55px;
+        border-radius: 15px;
+    }
+
+    .transfer-info {
+        padding: 15px;
+        border-radius: 16px;
+    }
+
+    .support-modal {
+        max-width: 350px;
+
+        padding:
+            28px
+            20px
+            21px;
+    }
+
+    .support-heading span {
+        font-size: 19px;
+    }
+
+    .support-heading strong {
+        font-size: 21px;
+    }
+}
+
+
+/* ==========================================
+   VERY SMALL SCREEN
+========================================== */
+
+@media (max-width: 360px) {
+
+    .transfer-card {
+        padding: 18px 13px;
+    }
+
+    .account-box {
+        padding-left: 9px;
+        padding-right: 9px;
+    }
+
+    .account-icon {
+        width: 35px;
+        height: 35px;
+        margin-right: 9px;
+    }
+
+    .account-info strong {
+        font-size: 13px;
+    }
+
+    .transfer-direction {
+        font-size: 9px;
     }
 
 }
