@@ -1,444 +1,398 @@
 /* =========================================================
-   CPTMARKETS
-   PROFESSIONAL TRADE POPUPS
+   CPTMARKETS TRADE POPUPS
+   trade-popups.js
    ========================================================= */
 
+(function () {
 
-/* =========================================================
-   CREATE POPUP CONTAINER
-   ========================================================= */
-
-function createCptPopup() {
-
-    if (
-        document.getElementById(
-            "cptTradePopup"
-        )
-    ) {
-
-        return;
-
-    }
+    "use strict";
 
 
-    const popup =
-        document.createElement("div");
+    /* =====================================================
+       ELEMENTS
+       ===================================================== */
 
-    popup.id =
-        "cptTradePopup";
+    const overlay =
+        document.getElementById("tradePopupOverlay");
 
-    popup.className =
-        "cpt-popup-overlay";
+    const confirmPopup =
+        document.getElementById("tradeConfirmPopup");
 
+    const openedPopup =
+        document.getElementById("tradeOpenedPopup");
 
-    popup.innerHTML = `
-
-        <div class="cpt-popup">
-
-            <div class="cpt-popup-header">
-
-                <h3
-                    class="cpt-popup-brand"
-                >
-                    CPT MARKETS
-                </h3>
-
-                <button
-                    type="button"
-                    class="cpt-popup-close"
-                    id="cptPopupClose"
-                    aria-label="Close"
-                >
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-
-            </div>
+    const closedPopup =
+        document.getElementById("tradeClosedPopup");
 
 
-            <div
-                class="cpt-popup-content"
-                id="cptPopupContent"
-            >
-            </div>
+    const closeBtn =
+        document.getElementById("tradePopupClose");
 
-        </div>
+    const cancelBtn =
+        document.getElementById("tradePopupCancel");
 
-    `;
+    const confirmBtn =
+        document.getElementById("tradePopupConfirm");
 
+    const openedOkBtn =
+        document.getElementById("tradeOpenedOk");
 
-    document.body.appendChild(
-        popup
-    );
-
-
-    const closeButton =
-        document.getElementById(
-            "cptPopupClose"
-        );
+    const closedOkBtn =
+        document.getElementById("tradeClosedOk");
 
 
-    if (closeButton) {
+    /* =====================================================
+       HIDE ALL POPUPS
+       ===================================================== */
 
-        closeButton.addEventListener(
-            "click",
-            function () {
+    function hideAllPopups() {
 
-                closeCptPopup();
+        if (overlay) {
 
-            }
-        );
-
-    }
-
-
-    popup.addEventListener(
-        "click",
-        function (event) {
-
-            if (
-                event.target === popup
-            ) {
-
-                closeCptPopup();
-
-            }
+            overlay.classList.remove("active");
 
         }
-    );
 
-}
+        if (confirmPopup) {
 
+            confirmPopup.classList.remove("active");
 
-/* =========================================================
-   OPEN POPUP
-   ========================================================= */
+        }
 
-function openCptPopup(
-    content
-) {
+        if (openedPopup) {
 
-    createCptPopup();
+            openedPopup.classList.remove("active");
 
+        }
 
-    const popup =
-        document.getElementById(
-            "cptTradePopup"
-        );
+        if (closedPopup) {
 
+            closedPopup.classList.remove("active");
 
-    const contentBox =
-        document.getElementById(
-            "cptPopupContent"
-        );
+        }
+
+    }
 
 
-    if (
-        !popup ||
-        !contentBox
+    /* =====================================================
+       OPEN CONFIRM POPUP
+       ===================================================== */
+
+    function showTradeConfirmPopup(
+        side,
+        currentPrice,
+        amount,
+        leverage
     ) {
 
-        return;
+        if (!overlay || !confirmPopup) {
+
+            return;
+
+        }
+
+
+        const sideBox =
+            document.getElementById(
+                "confirmTradeSide"
+            );
+
+
+        const priceBox =
+            document.getElementById(
+                "confirmTradePrice"
+            );
+
+
+        const amountBox =
+            document.getElementById(
+                "confirmTradeAmount"
+            );
+
+
+        const leverageBox =
+            document.getElementById(
+                "confirmTradeLeverage"
+            );
+
+
+        const title =
+            document.getElementById(
+                "tradeConfirmTitle"
+            );
+
+
+        if (sideBox) {
+
+            sideBox.innerText =
+                side || "TRADE";
+
+        }
+
+
+        if (priceBox) {
+
+            priceBox.innerText =
+                Number(
+                    currentPrice || 0
+                ).toFixed(2);
+
+        }
+
+
+        if (amountBox) {
+
+            amountBox.innerText =
+                "$" +
+                Number(
+                    amount || 0
+                ).toFixed(2);
+
+        }
+
+
+        if (leverageBox) {
+
+            leverageBox.innerText =
+                Number(
+                    leverage || 100
+                ) +
+                "x";
+
+        }
+
+
+        if (title) {
+
+            title.innerText =
+                "Confirm " +
+                (side || "Trade");
+
+        }
+
+
+        overlay.classList.add("active");
+
+        confirmPopup.classList.add("active");
 
     }
 
 
-    contentBox.innerHTML =
-        content;
+    /* =====================================================
+       OPEN SUCCESS POPUP
+       ===================================================== */
+
+    function showTradeOpenedPopup(
+        side,
+        entryPrice,
+        amount
+    ) {
+
+        if (!overlay || !openedPopup) {
+
+            return;
+
+        }
 
 
-    popup.classList.add(
-        "active"
-    );
+        const sideBox =
+            document.getElementById(
+                "openedTradeSide"
+            );
 
 
-    document.body.style.overflow =
-        "hidden";
-
-}
-
-
-/* =========================================================
-   CLOSE POPUP
-   ========================================================= */
-
-function closeCptPopup() {
-
-    const popup =
-        document.getElementById(
-            "cptTradePopup"
-        );
+        const priceBox =
+            document.getElementById(
+                "openedTradePrice"
+            );
 
 
-    if (!popup) {
+        const amountBox =
+            document.getElementById(
+                "openedTradeAmount"
+            );
 
-        return;
+
+        if (sideBox) {
+
+            sideBox.innerText =
+                side || "TRADE";
+
+        }
+
+
+        if (priceBox) {
+
+            priceBox.innerText =
+                Number(
+                    entryPrice || 0
+                ).toFixed(2);
+
+        }
+
+
+        if (amountBox) {
+
+            amountBox.innerText =
+                "$" +
+                Number(
+                    amount || 0
+                ).toFixed(2);
+
+        }
+
+
+        overlay.classList.add("active");
+
+        openedPopup.classList.add("active");
 
     }
 
 
-    popup.classList.remove(
-        "active"
-    );
+    /* =====================================================
+       OPEN CLOSE SUCCESS POPUP
+       ===================================================== */
 
+    function showTradeClosedPopup(
+        closePrice,
+        totalProfitLoss
+    ) {
 
-    document.body.style.overflow =
-        "";
+        if (!overlay || !closedPopup) {
 
-}
+            return;
 
+        }
 
-/* =========================================================
-   FORMAT MONEY
-   ========================================================= */
 
-function cptFormatMoney(
-    value
-) {
+        const priceBox =
+            document.getElementById(
+                "closedTradePrice"
+            );
 
-    const number =
-        Number(value) || 0;
 
+        const profitBox =
+            document.getElementById(
+                "closedTradeProfit"
+            );
 
-    return (
-        "$" +
-        number.toFixed(2)
-    );
 
-}
+        const finalPL =
+            Number(
+                totalProfitLoss || 0
+            );
 
 
-/* =========================================================
-   OPEN TRADE CONFIRMATION
-   ========================================================= */
+        if (priceBox) {
 
-function showTradeConfirmationPopup(
-    side,
-    entryPrice,
-    amount,
-    leverage,
-    onConfirm
-) {
+            priceBox.innerText =
+                Number(
+                    closePrice || 0
+                ).toFixed(2);
 
-    const sideUpper =
-        String(side)
-            .toUpperCase();
+        }
 
 
-    const isLong =
-        sideUpper === "LONG";
+        if (profitBox) {
 
+            profitBox.innerText =
+                (
+                    finalPL >= 0
+                        ? "+"
+                        : ""
+                ) +
+                "$" +
+                finalPL.toFixed(2);
 
-    const iconClass =
-        isLong
-            ? "long"
-            : "short";
 
+            profitBox.classList.remove(
+                "profit",
+                "loss"
+            );
 
-    const icon =
-        isLong
-            ? "fa-arrow-trend-up"
-            : "fa-arrow-trend-down";
 
+            profitBox.classList.add(
+                finalPL >= 0
+                    ? "profit"
+                    : "loss"
+            );
 
-    const valueClass =
-        isLong
-            ? "long"
-            : "short";
+        }
 
 
-    openCptPopup(`
+        overlay.classList.add("active");
 
-        <div class="
-            cpt-popup-icon
-            ${iconClass}
-        ">
+        closedPopup.classList.add("active");
 
-            <i
-                class="fa-solid ${icon}"
-            ></i>
+    }
 
-        </div>
 
+    /* =====================================================
+       CLOSE POPUP
+       ===================================================== */
 
-        <h2
-            class="cpt-popup-title"
-        >
-            Open ${sideUpper} Position
-        </h2>
+    function closePopup() {
 
+        hideAllPopups();
 
-        <p
-            class="cpt-popup-description"
-        >
-            Confirm your ${sideUpper}
-            trade details and proceed.
-        </p>
+    }
 
 
-        <div
-            class="cpt-trade-details"
-        >
-
-            <div
-                class="cpt-trade-detail"
-            >
-
-                <span
-                    class="cpt-trade-detail-label"
-                >
-                    Position
-                </span>
-
-                <span
-                    class="
-                        cpt-trade-detail-value
-                        ${valueClass}
-                    "
-                >
-                    ${sideUpper}
-                </span>
-
-            </div>
-
-
-            <div
-                class="cpt-trade-detail"
-            >
-
-                <span
-                    class="cpt-trade-detail-label"
-                >
-                    Entry Price
-                </span>
-
-                <span
-                    class="
-                        cpt-trade-detail-value
-                    "
-                >
-                    ${cptFormatMoney(entryPrice)}
-                </span>
-
-            </div>
-
-
-            <div
-                class="cpt-trade-detail"
-            >
-
-                <span
-                    class="cpt-trade-detail-label"
-                >
-                    Amount
-                </span>
-
-                <span
-                    class="
-                        cpt-trade-detail-value
-                    "
-                >
-                    ${cptFormatMoney(amount)}
-                </span>
-
-            </div>
-
-
-            <div
-                class="cpt-trade-detail"
-            >
-
-                <span
-                    class="cpt-trade-detail-label"
-                >
-                    Leverage
-                </span>
-
-                <span
-                    class="
-                        cpt-trade-detail-value
-                    "
-                >
-                    ${Number(leverage) || 0}x
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <div
-            class="cpt-popup-actions"
-        >
-
-            <button
-                type="button"
-                class="
-                    cpt-popup-btn
-                    cancel
-                "
-                id="cptCancelTrade"
-            >
-                Cancel
-            </button>
-
-
-            <button
-                type="button"
-                class="
-                    cpt-popup-btn
-                    confirm
-                "
-                id="cptConfirmTrade"
-            >
-                Confirm ${sideUpper}
-            </button>
-
-        </div>
-
-    `);
-
-
-    const cancel =
-        document.getElementById(
-            "cptCancelTrade"
-        );
-
-
-    const confirm =
-        document.getElementById(
-            "cptConfirmTrade"
-        );
-
-
-    if (cancel) {
-
-        cancel.addEventListener(
+    if (closeBtn) {
+
+        closeBtn.addEventListener(
             "click",
-            function () {
-
-                closeCptPopup();
-
-            }
+            closePopup
         );
 
     }
 
 
-    if (confirm) {
+    if (cancelBtn) {
 
-        confirm.addEventListener(
+        cancelBtn.addEventListener(
             "click",
-            function () {
+            closePopup
+        );
 
-                closeCptPopup();
+    }
 
+
+    if (openedOkBtn) {
+
+        openedOkBtn.addEventListener(
+            "click",
+            closePopup
+        );
+
+    }
+
+
+    if (closedOkBtn) {
+
+        closedOkBtn.addEventListener(
+            "click",
+            closePopup
+        );
+
+    }
+
+
+    /* =====================================================
+       PREVENT BACKGROUND CLICK
+       ===================================================== */
+
+    if (overlay) {
+
+        overlay.addEventListener(
+            "click",
+            function (event) {
 
                 if (
-                    typeof onConfirm ===
-                    "function"
+                    event.target === overlay
                 ) {
 
-                    onConfirm();
+                    closePopup();
 
                 }
 
@@ -447,357 +401,46 @@ function showTradeConfirmationPopup(
 
     }
 
-}
 
+    /* =====================================================
+       ESC KEY
+       ===================================================== */
 
-/* =========================================================
-   TRADE OPENED SUCCESS
-   ========================================================= */
+    document.addEventListener(
+        "keydown",
+        function (event) {
 
-function showTradeOpenedPopup(
-    side,
-    entryPrice,
-    amount,
-    leverage
-) {
+            if (
+                event.key === "Escape"
+            ) {
 
-    const sideUpper =
-        String(side)
-            .toUpperCase();
-
-
-    const isLong =
-        sideUpper === "LONG";
-
-
-    const icon =
-        isLong
-            ? "fa-arrow-trend-up"
-            : "fa-arrow-trend-down";
-
-
-    openCptPopup(`
-
-        <div class="
-            cpt-popup-icon
-            success
-        ">
-
-            <i
-                class="
-                    fa-solid
-                    ${icon}
-                "
-            ></i>
-
-        </div>
-
-
-        <h2
-            class="cpt-popup-title"
-        >
-            Trade Opened Successfully
-        </h2>
-
-
-        <p
-            class="cpt-popup-description"
-        >
-            Your ${sideUpper}
-            position is now active.
-        </p>
-
-
-        <div
-            class="cpt-trade-details"
-        >
-
-            <div
-                class="cpt-trade-detail"
-            >
-
-                <span
-                    class="cpt-trade-detail-label"
-                >
-                    Position
-                </span>
-
-                <span
-                    class="
-                        cpt-trade-detail-value
-                        ${isLong ? "long" : "short"}
-                    "
-                >
-                    ${sideUpper}
-                </span>
-
-            </div>
-
-
-            <div
-                class="cpt-trade-detail"
-            >
-
-                <span
-                    class="cpt-trade-detail-label"
-                >
-                    Entry Price
-                </span>
-
-                <span
-                    class="cpt-trade-detail-value"
-                >
-                    ${cptFormatMoney(entryPrice)}
-                </span>
-
-            </div>
-
-
-            <div
-                class="cpt-trade-detail"
-            >
-
-                <span
-                    class="cpt-trade-detail-label"
-                >
-                    Amount
-                </span>
-
-                <span
-                    class="cpt-trade-detail-value"
-                >
-                    ${cptFormatMoney(amount)}
-                </span>
-
-            </div>
-
-
-            <div
-                class="cpt-trade-detail"
-            >
-
-                <span
-                    class="cpt-trade-detail-label"
-                >
-                    Leverage
-                </span>
-
-                <span
-                    class="cpt-trade-detail-value"
-                >
-                    ${Number(leverage) || 0}x
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <div
-            class="cpt-popup-actions"
-        >
-
-            <button
-                type="button"
-                class="
-                    cpt-popup-btn
-                    done
-                "
-                id="cptTradeOpenedDone"
-            >
-                Done
-            </button>
-
-        </div>
-
-    `);
-
-
-    const done =
-        document.getElementById(
-            "cptTradeOpenedDone"
-        );
-
-
-    if (done) {
-
-        done.addEventListener(
-            "click",
-            function () {
-
-                closeCptPopup();
+                closePopup();
 
             }
-        );
 
-    }
-
-}
+        }
+    );
 
 
-/* =========================================================
-   TRADE CLOSED SUCCESS
-   ========================================================= */
+    /* =====================================================
+       GLOBAL API
+       ===================================================== */
 
-function showTradeClosedPopup(
-    closePrice,
-    totalProfitLoss
-) {
+    window.CptTradePopups = {
 
-    const profitLoss =
-        Number(
-            totalProfitLoss
-        ) || 0;
+        showConfirm:
+            showTradeConfirmPopup,
 
+        showOpened:
+            showTradeOpenedPopup,
 
-    const resultClass =
-        profitLoss >= 0
-            ? "profit"
-            : "loss";
+        showClosed:
+            showTradeClosedPopup,
 
+        close:
+            closePopup
 
-    const resultSign =
-        profitLoss >= 0
-            ? "+"
-            : "";
+    };
 
 
-    openCptPopup(`
-
-        <div
-            class="
-                cpt-popup-icon
-                success
-            "
-        >
-
-            <i
-                class="
-                    fa-solid
-                    fa-check
-                "
-            ></i>
-
-        </div>
-
-
-        <h2
-            class="cpt-popup-title"
-        >
-            Trade Closed Successfully
-        </h2>
-
-
-        <p
-            class="cpt-popup-description"
-        >
-            Your trade has been completed.
-        </p>
-
-
-        <div
-            class="cpt-trade-details"
-        >
-
-            <div
-                class="cpt-trade-detail"
-            >
-
-                <span
-                    class="cpt-trade-detail-label"
-                >
-                    Close Price
-                </span>
-
-                <span
-                    class="
-                        cpt-trade-detail-value
-                    "
-                >
-                    ${cptFormatMoney(closePrice)}
-                </span>
-
-            </div>
-
-
-            <div
-                class="cpt-trade-detail"
-            >
-
-                <span
-                    class="cpt-trade-detail-label"
-                >
-                    Total Profit/Loss
-                </span>
-
-                <span
-                    class="
-                        cpt-trade-detail-value
-                        ${resultClass}
-                    "
-                >
-                    ${resultSign}${cptFormatMoney(profitLoss)}
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <div
-            class="cpt-popup-actions"
-        >
-
-            <button
-                type="button"
-                class="
-                    cpt-popup-btn
-                    done
-                "
-                id="cptTradeClosedDone"
-            >
-                Done
-            </button>
-
-        </div>
-
-    `);
-
-
-    const done =
-        document.getElementById(
-            "cptTradeClosedDone"
-        );
-
-
-    if (done) {
-
-        done.addEventListener(
-            "click",
-            function () {
-
-                closeCptPopup();
-
-            }
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   GLOBAL ACCESS
-   ========================================================= */
-
-window.showTradeConfirmationPopup =
-    showTradeConfirmationPopup;
-
-window.showTradeOpenedPopup =
-    showTradeOpenedPopup;
-
-window.showTradeClosedPopup =
-    showTradeClosedPopup;
-
-window.closeCptPopup =
-    closeCptPopup;
+})();
