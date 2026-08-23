@@ -1,11 +1,6 @@
 /* =========================================================
    CPTMARKETS — TRADE PROFESSIONAL
-   FINAL MOBILE TRADING UI
-   ========================================================= */
-
-
-/* =========================================================
-   ROOT
+   MOBILE FIXED VERSION
    ========================================================= */
 
 :root{
@@ -16,7 +11,6 @@
 
     --gold:#ffc400;
     --gold-light:#ffe27a;
-    --gold-dark:#d99f00;
 
     --text:#f5f7fa;
     --muted:#8da2b8;
@@ -25,9 +19,6 @@
     --red:#ff3158;
 
     --border:rgba(255,196,0,.12);
-    --soft-border:rgba(255,255,255,.07);
-
-    --radius:16px;
 }
 
 
@@ -36,9 +27,9 @@
    ========================================================= */
 
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
 
     -webkit-tap-highlight-color:transparent;
     -webkit-text-size-adjust:100%;
@@ -47,8 +38,7 @@
 
 html{
     width:100%;
-    min-width:100%;
-
+    min-width:0;
     margin:0;
     padding:0;
 
@@ -88,29 +78,25 @@ body{
     overflow-x:hidden;
     overflow-y:auto;
 
-    touch-action:pan-y;
+    -webkit-overflow-scrolling:touch;
 }
 
 
 /* =========================================================
-   MAIN CONTAINER
+   MAIN PAGE
    ========================================================= */
 
 .trade-container,
 .trade-page,
 .container{
-
     width:100% !important;
     max-width:480px !important;
-
     min-width:0 !important;
 
     margin:0 auto !important;
     padding:0 !important;
 
     position:relative;
-
-    overflow-x:hidden;
 }
 
 
@@ -121,10 +107,10 @@ body{
 header,
 .trade-header,
 .top-header{
-
     width:100% !important;
 
-    min-height:76px;
+    min-height:76px !important;
+    height:auto !important;
 
     background:
         linear-gradient(
@@ -134,19 +120,18 @@ header,
         ) !important;
 
     border-bottom:
-        1px solid rgba(255,196,0,.08);
-
-    box-shadow:
-        0 6px 20px rgba(0,0,0,.25);
+        1px solid rgba(255,196,0,.08) !important;
 }
 
 header h1,
 .trade-header h1,
 .pair-name{
-
     color:#fff !important;
 
-    font-weight:750;
+    font-size:22px !important;
+    line-height:1.15 !important;
+
+    font-weight:750 !important;
 
     white-space:nowrap;
 }
@@ -154,7 +139,6 @@ header h1,
 .pair-subtitle,
 .pair-box small,
 header small{
-
     color:var(--muted) !important;
 }
 
@@ -168,12 +152,13 @@ header button,
 .header-icon,
 .icon-btn,
 .trade-header button{
-
     width:42px !important;
     height:42px !important;
 
     min-width:42px !important;
     min-height:42px !important;
+
+    padding:0 !important;
 
     border-radius:50% !important;
 
@@ -188,18 +173,27 @@ header button,
         ) !important;
 
     color:var(--gold) !important;
+
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
 }
 
 
 /* =========================================================
    PRICE AREA
+   IMPORTANT MOBILE SIZE FIX
    ========================================================= */
 
 #livePrice{
-
     color:var(--gold) !important;
 
     font-weight:800 !important;
+
+    font-size:46px !important;
+    line-height:1.05 !important;
+
+    letter-spacing:-1px !important;
 
     text-shadow:
         0 0 18px rgba(255,196,0,.18);
@@ -212,18 +206,16 @@ header button,
 
 #changeBox,
 .change{
-
     border-radius:11px !important;
 
-    font-weight:750;
+    font-weight:750 !important;
 
     border:
-        1px solid rgba(255,255,255,.08);
+        1px solid rgba(255,255,255,.08) !important;
 }
 
 .change.green,
 .green{
-
     background:
         linear-gradient(
             135deg,
@@ -236,7 +228,6 @@ header button,
 
 .change.red,
 .red{
-
     background:
         linear-gradient(
             135deg,
@@ -249,22 +240,22 @@ header button,
 
 
 /* =========================================================
-   INDICATOR BAR
+   INDICATORS
    ========================================================= */
 
 .indicator-bar{
-
     width:100% !important;
 
     display:flex !important;
+    align-items:center !important;
 
     gap:7px !important;
 
     overflow-x:auto !important;
     overflow-y:hidden !important;
 
-    padding-left:10px !important;
-    padding-right:10px !important;
+    padding:
+        10px !important;
 
     scrollbar-width:none;
 }
@@ -274,12 +265,13 @@ header button,
 }
 
 .indicator-bar button{
-
     flex:0 0 auto !important;
 
-    min-width:52px;
+    width:auto !important;
+    min-width:52px !important;
+    min-height:40px !important;
 
-    min-height:40px;
+    padding:0 10px !important;
 
     border:
         1px solid rgba(255,196,0,.10) !important;
@@ -295,11 +287,12 @@ header button,
 
     color:#aebed0 !important;
 
-    font-weight:650;
+    font-weight:650 !important;
+
+    white-space:nowrap;
 }
 
 .indicator-bar button.active{
-
     background:
         linear-gradient(
             135deg,
@@ -311,107 +304,12 @@ header button,
 
     border-color:#ffd84c !important;
 
-    font-weight:800;
+    font-weight:800 !important;
 }
 
 
 /* =========================================================
-   TRADINGVIEW CHART
-   IMPORTANT:
-   DO NOT FORCE INNER DIV HEIGHT
-   ========================================================= */
-
-#tvchart{
-
-    display:block !important;
-
-    width:100% !important;
-
-    max-width:100% !important;
-
-    height:360px !important;
-    min-height:360px !important;
-    max-height:360px !important;
-
-    margin:0 !important;
-    padding:0 !important;
-
-    position:relative !important;
-
-    left:auto !important;
-    right:auto !important;
-
-    border:none !important;
-    border-radius:16px !important;
-
-    background:#020507 !important;
-
-    overflow:hidden !important;
-
-    box-shadow:none !important;
-}
-
-
-/* =========================================================
-   TRADINGVIEW WRAPPER
-   ========================================================= */
-
-/*
-   IMPORTANT:
-   এখানে আর #tvchart > div {height:100%}
-   ব্যবহার করা হচ্ছে না।
-*/
-
-#tvchart > div{
-
-    width:100% !important;
-
-    max-width:100% !important;
-
-    margin:0 !important;
-    padding:0 !important;
-
-    border:0 !important;
-
-    background:#020507 !important;
-}
-
-
-/* iframe */
-
-#tvchart iframe{
-
-    display:block !important;
-
-    width:100% !important;
-
-    max-width:100% !important;
-
-    height:360px !important;
-    min-height:360px !important;
-
-    margin:0 !important;
-    padding:0 !important;
-
-    border:0 !important;
-
-    background:#020507 !important;
-}
-
-
-/* Remove pseudo elements */
-
-#tvchart::before,
-#tvchart::after{
-
-    display:none !important;
-
-    content:none !important;
-}
-
-
-/* =========================================================
-   CHART PARENT
+   CHART OUTER CONTAINER
    ========================================================= */
 
 .chart-section,
@@ -422,22 +320,103 @@ header button,
 .tradingview-widget-container{
 
     width:100% !important;
-
     max-width:100% !important;
-
     min-width:0 !important;
 
     margin:0 !important;
 
-    padding-left:0 !important;
-    padding-right:0 !important;
+    padding:0 !important;
 
-    border-left:0 !important;
-    border-right:0 !important;
+    border:0 !important;
 
     background:transparent !important;
 
     overflow:hidden !important;
+}
+
+
+/* =========================================================
+   TRADINGVIEW
+   ========================================================= */
+
+#tvchart{
+
+    display:block !important;
+
+    width:100% !important;
+    max-width:100% !important;
+
+    height:300px !important;
+    min-height:300px !important;
+    max-height:300px !important;
+
+    margin:0 !important;
+    padding:0 !important;
+
+    position:relative !important;
+
+    border:0 !important;
+    border-radius:16px !important;
+
+    background:#020507 !important;
+
+    overflow:hidden !important;
+}
+
+
+/*
+   TradingView generated container
+*/
+
+#tvchart > div{
+    width:100% !important;
+    max-width:100% !important;
+
+    height:100% !important;
+    min-height:0 !important;
+    max-height:100% !important;
+
+    margin:0 !important;
+    padding:0 !important;
+
+    border:0 !important;
+
+    background:#020507 !important;
+}
+
+
+/*
+   TradingView iframe
+*/
+
+#tvchart iframe{
+
+    display:block !important;
+
+    width:100% !important;
+    max-width:100% !important;
+
+    height:100% !important;
+    min-height:0 !important;
+    max-height:100% !important;
+
+    margin:0 !important;
+    padding:0 !important;
+
+    border:0 !important;
+
+    background:#020507 !important;
+}
+
+
+/* =========================================================
+   REMOVE EXTRA CHART SPACE
+   ========================================================= */
+
+#tvchart::before,
+#tvchart::after{
+    display:none !important;
+    content:none !important;
 }
 
 
@@ -450,22 +429,23 @@ header button,
     width:100% !important;
 
     display:flex !important;
+    align-items:center !important;
 
     gap:8px !important;
 
     overflow-x:auto !important;
     overflow-y:hidden !important;
 
-    padding:12px 10px !important;
+    padding:
+        10px !important;
 
-    background:
-        #031525 !important;
+    background:#031525 !important;
 
     border-top:
-        1px solid rgba(255,196,0,.05);
+        1px solid rgba(255,196,0,.05) !important;
 
     border-bottom:
-        1px solid rgba(255,196,0,.05);
+        1px solid rgba(255,196,0,.05) !important;
 
     scrollbar-width:none;
 }
@@ -478,9 +458,12 @@ header button,
 
     flex:1 1 0 !important;
 
-    min-width:52px !important;
+    width:auto !important;
 
+    min-width:52px !important;
     min-height:40px !important;
+
+    padding:0 10px !important;
 
     border:
         1px solid rgba(255,196,0,.10) !important;
@@ -496,7 +479,9 @@ header button,
 
     color:#aebed0 !important;
 
-    font-weight:650;
+    font-weight:650 !important;
+
+    white-space:nowrap;
 }
 
 .timeframe button.active{
@@ -512,7 +497,7 @@ header button,
 
     border-color:#ffd84c !important;
 
-    font-weight:800;
+    font-weight:800 !important;
 }
 
 
@@ -528,9 +513,11 @@ header button,
 
     max-width:none !important;
 
-    margin:14px 10px !important;
+    margin:
+        14px 10px !important;
 
-    padding:16px !important;
+    padding:
+        16px !important;
 
     background:
         linear-gradient(
@@ -546,17 +533,20 @@ header button,
 
     box-shadow:
         0 12px 30px rgba(0,0,0,.28);
+
+    position:relative;
+
+    overflow:visible !important;
 }
 
 .leverage-title,
 .trade-panel h3,
 .order-panel h3{
-
     color:#fff !important;
 
-    font-weight:750;
+    font-weight:750 !important;
 
-    margin-bottom:12px;
+    margin-bottom:12px !important;
 }
 
 
@@ -581,7 +571,6 @@ header button,
     width:100% !important;
 
     min-width:0 !important;
-
     min-height:40px !important;
 
     padding:6px 3px !important;
@@ -616,12 +605,12 @@ header button,
 
     border-color:#ffd84c !important;
 
-    font-weight:800;
+    font-weight:800 !important;
 }
 
 
 /* =========================================================
-   AMOUNT / LOTS
+   AMOUNT / LOT MODE
    ========================================================= */
 
 .trade-mode,
@@ -631,31 +620,35 @@ header button,
     width:100% !important;
 
     display:flex !important;
+    align-items:stretch !important;
 
     gap:8px !important;
 
-    margin-top:12px;
+    margin-top:12px !important;
 }
 
 .trade-mode button,
 .mode-switch button,
 .amount-mode button{
 
-    flex:1 !important;
+    flex:1 1 0 !important;
+
+    width:50% !important;
 
     min-height:42px !important;
+
+    padding:0 10px !important;
 
     border:
         1px solid rgba(255,196,0,.10) !important;
 
     border-radius:13px !important;
 
-    background:
-        #092c47 !important;
+    background:#092c47 !important;
 
     color:#aebed0 !important;
 
-    font-weight:700;
+    font-weight:700 !important;
 }
 
 .trade-mode button.active,
@@ -682,9 +675,15 @@ header button,
 input,
 select{
 
-    width:100%;
+    width:100% !important;
+    max-width:100% !important;
 
-    max-width:100%;
+    min-width:0 !important;
+
+    min-height:48px !important;
+
+    padding:
+        0 14px !important;
 
     color:#fff !important;
 
@@ -702,7 +701,7 @@ select{
 
     outline:none !important;
 
-    font-size:15px;
+    font-size:15px !important;
 
     -webkit-appearance:none;
     appearance:none;
@@ -720,15 +719,14 @@ input::placeholder{
 label,
 .input-label,
 .form-label{
-
     color:#91a7bc !important;
 
-    font-weight:550;
+    font-weight:550 !important;
 }
 
 
 /* =========================================================
-   INFO BOXES
+   INFO BOX
    ========================================================= */
 
 .info-box,
@@ -755,13 +753,13 @@ label,
 .stat-box strong,
 .value-box strong,
 .calculation-box strong{
-
     color:var(--gold) !important;
 }
 
 
 /* =========================================================
    LONG / SHORT
+   IMPORTANT FIX
    ========================================================= */
 
 .long-btn,
@@ -771,13 +769,22 @@ button.long,
 
     display:flex !important;
 
-    visibility:visible !important;
+    align-items:center !important;
+    justify-content:center !important;
 
+    text-align:center !important;
+
+    visibility:visible !important;
     opacity:1 !important;
 
     width:100% !important;
 
-    min-height:52px !important;
+    min-width:0 !important;
+    min-height:54px !important;
+
+    padding:0 12px !important;
+
+    margin:0 !important;
 
     background:
         linear-gradient(
@@ -793,9 +800,12 @@ button.long,
 
     border-radius:14px !important;
 
-    font-size:16px !important;
+    font-size:17px !important;
+    line-height:1 !important;
 
     font-weight:800 !important;
+
+    white-space:nowrap !important;
 }
 
 
@@ -806,13 +816,22 @@ button.short,
 
     display:flex !important;
 
-    visibility:visible !important;
+    align-items:center !important;
+    justify-content:center !important;
 
+    text-align:center !important;
+
+    visibility:visible !important;
     opacity:1 !important;
 
     width:100% !important;
 
-    min-height:52px !important;
+    min-width:0 !important;
+    min-height:54px !important;
+
+    padding:0 12px !important;
+
+    margin:0 !important;
 
     background:
         linear-gradient(
@@ -828,13 +847,18 @@ button.short,
 
     border-radius:14px !important;
 
-    font-size:16px !important;
+    font-size:17px !important;
+    line-height:1 !important;
 
     font-weight:800 !important;
+
+    white-space:nowrap !important;
 }
 
 
-/* Parent of Long/Short */
+/* =========================================================
+   LONG / SHORT PARENT
+   ========================================================= */
 
 .long-short,
 .trade-actions,
@@ -845,11 +869,21 @@ button.short,
 
     display:flex !important;
 
+    flex-direction:row !important;
+
+    align-items:stretch !important;
+
+    justify-content:stretch !important;
+
     gap:10px !important;
 
     margin-top:14px !important;
 
     margin-bottom:20px !important;
+
+    position:relative !important;
+
+    z-index:5 !important;
 }
 
 .long-short button,
@@ -857,14 +891,16 @@ button.short,
 .action-buttons button,
 .order-buttons button{
 
-    flex:1 !important;
+    flex:1 1 0 !important;
+
+    width:50% !important;
 
     min-width:0 !important;
 }
 
 
 /* =========================================================
-   BOTTOM NAV
+   BOTTOM NAVIGATION
    ========================================================= */
 
 .bottom-nav,
@@ -881,37 +917,76 @@ nav.bottom-nav{
 
     max-width:480px !important;
 
+    height:72px !important;
+    min-height:72px !important;
+
     margin:0 auto !important;
 
-    z-index:99999 !important;
+    padding:
+        6px 8px
+        calc(6px + env(safe-area-inset-bottom))
+        8px !important;
+
+    display:flex !important;
+
+    align-items:stretch !important;
+    justify-content:space-around !important;
+
+    z-index:2147483647 !important;
 
     background:
         linear-gradient(
             180deg,
-            rgba(4,18,30,.97),
-            rgba(2,10,17,.99)
+            rgba(4,18,30,.98),
+            rgba(2,10,17,1)
         ) !important;
 
     border-top:
         1px solid rgba(255,196,0,.10) !important;
 
     box-shadow:
-        0 -10px 30px rgba(0,0,0,.30);
+        0 -10px 30px rgba(0,0,0,.45) !important;
 }
+
+
+/* Navigation items */
+
+.bottom-nav > *,
+.bottom-navigation > *,
+nav.bottom-nav > *{
+
+    flex:1 1 0 !important;
+
+    min-width:0 !important;
+
+    display:flex !important;
+
+    flex-direction:column !important;
+
+    align-items:center !important;
+    justify-content:center !important;
+
+    text-align:center !important;
+}
+
+
+/* Icons */
 
 .bottom-nav i,
 .bottom-navigation i,
 nav.bottom-nav i{
 
     color:#8095aa !important;
+
+    font-size:19px !important;
+
+    display:block !important;
+
+    margin-bottom:3px !important;
 }
 
-.bottom-nav .active i,
-.bottom-navigation .active i,
-nav.bottom-nav .active i{
 
-    color:var(--gold) !important;
-}
+/* Text */
 
 .bottom-nav span,
 .bottom-nav p,
@@ -919,13 +994,27 @@ nav.bottom-nav .active i{
 .bottom-navigation p{
 
     color:#7f94a8 !important;
+
+    font-size:11px !important;
+
+    line-height:1.1 !important;
+
+    margin:0 !important;
+}
+
+
+/* Active */
+
+.bottom-nav .active i,
+.bottom-navigation .active i,
+nav.bottom-nav .active i{
+    color:var(--gold) !important;
 }
 
 .bottom-nav .active span,
 .bottom-nav .active p,
 .bottom-navigation .active span,
 .bottom-navigation .active p{
-
     color:var(--gold) !important;
 }
 
@@ -936,12 +1025,14 @@ nav.bottom-nav .active i{
 
 button{
 
-    font-family:inherit;
+    font-family:inherit !important;
 
     -webkit-user-select:none;
     user-select:none;
 
     touch-action:manipulation;
+
+    cursor:pointer;
 }
 
 button:active{
@@ -955,14 +1046,16 @@ button:active{
 
 @media(max-width:600px){
 
+    html,
     body{
-
         width:100% !important;
-
         min-width:0 !important;
+
+        max-width:100% !important;
 
         overflow-x:hidden !important;
     }
+
 
     .trade-container,
     .trade-page,
@@ -974,11 +1067,28 @@ button:active{
 
         min-width:0 !important;
 
-        overflow-x:hidden !important;
+        margin:0 auto !important;
     }
 
 
-    /* Smaller mobile chart */
+    /* -------------------------
+       MOBILE PRICE
+       ------------------------- */
+
+    #livePrice{
+
+        font-size:
+            clamp(38px, 12vw, 52px) !important;
+
+        line-height:1 !important;
+
+        letter-spacing:-1px !important;
+    }
+
+
+    /* -------------------------
+       MOBILE CHART
+       ------------------------- */
 
     #tvchart{
 
@@ -988,43 +1098,38 @@ button:active{
         min-height:300px !important;
         max-height:300px !important;
 
-        border-radius:0 !important;
+        border-radius:16px !important;
     }
+
+
+    #tvchart > div{
+
+        height:100% !important;
+        min-height:0 !important;
+        max-height:100% !important;
+    }
+
 
     #tvchart iframe{
 
         width:100% !important;
 
-        height:300px !important;
-        min-height:300px !important;
+        height:100% !important;
+        min-height:0 !important;
+        max-height:100% !important;
     }
 
 
-    /* Indicator */
-
-    .indicator-bar{
-
-        padding-top:10px !important;
-        padding-bottom:10px !important;
-    }
-
-
-    /* Timeframe */
-
-    .timeframe{
-
-        padding-top:10px !important;
-        padding-bottom:10px !important;
-    }
-
-
-    /* Panel */
+    /* -------------------------
+       PANEL
+       ------------------------- */
 
     .trade-panel,
     .order-panel,
     .trading-panel{
 
-        width:calc(100% - 20px) !important;
+        width:
+            calc(100% - 20px) !important;
 
         margin-left:10px !important;
         margin-right:10px !important;
@@ -1033,15 +1138,18 @@ button:active{
     }
 
 
-    /* Leverage */
+    /* -------------------------
+       LEVERAGE
+       ------------------------- */
 
     .leverage-grid{
-
         gap:6px !important;
     }
 
 
-    /* Long / Short */
+    /* -------------------------
+       LONG SHORT
+       ------------------------- */
 
     .long-short,
     .trade-actions,
@@ -1052,7 +1160,11 @@ button:active{
 
         flex-direction:row !important;
 
+        align-items:stretch !important;
+
         gap:8px !important;
+
+        margin-bottom:18px !important;
     }
 
 
@@ -1061,15 +1173,27 @@ button:active{
     #longBtn,
     #shortBtn{
 
-        min-height:50px !important;
+        display:flex !important;
+
+        align-items:center !important;
+        justify-content:center !important;
+
+        min-height:54px !important;
+
+        width:50% !important;
+
+        font-size:16px !important;
     }
 
 
-    /* Bottom space */
+    /* -------------------------
+       BOTTOM NAV SPACE
+       ------------------------- */
 
     body{
 
-        padding-bottom:90px !important;
+        padding-bottom:
+            82px !important;
     }
 }
 
@@ -1094,7 +1218,7 @@ button:active{
 
 
 /* =========================================================
-   ACCESSIBILITY
+   FOCUS
    ========================================================= */
 
 button:focus-visible,
