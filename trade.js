@@ -108,7 +108,7 @@ const amountInput =
 
 
 /* =========================================================
-   MOBILE CHART HEIGHT
+   PROFESSIONAL FULL SCREEN CHART HEIGHT
    ========================================================= */
 
 function fixMobileChartHeight() {
@@ -116,66 +116,82 @@ function fixMobileChartHeight() {
     const chart =
         document.getElementById("tvchart");
 
-    if (!chart) {
+    const chartCard =
+        document.querySelector(".chart-card");
+
+    if (!chart || !chartCard) {
         return;
     }
 
-
     /*
-     * 420px chart was too tall for mobile.
-     *
-     * 320px gives enough room for candles
-     * while keeping leverage / amount /
-     * LONG-SHORT controls reachable.
+     * Keep chart and its parent exactly
+     * the same height.
      */
+
+    let chartHeight;
 
     if (window.innerWidth <= 600) {
 
-        chart.style.setProperty(
-            "height",
-            "320px",
-            "important"
-        );
-
-        chart.style.setProperty(
-            "min-height",
-            "320px",
-            "important"
-        );
-
-        chart.style.setProperty(
-            "max-height",
-            "320px",
-            "important"
-        );
+        chartHeight =
+            Math.min(
+                Math.max(
+                    window.innerHeight * 0.48,
+                    360
+                ),
+                480
+            );
 
     } else {
 
-        chart.style.setProperty(
-            "height",
-            "360px",
-            "important"
-        );
-
-        chart.style.setProperty(
-            "min-height",
-            "360px",
-            "important"
-        );
-
-        chart.style.setProperty(
-            "max-height",
-            "360px",
-            "important"
-        );
+        chartHeight = 480;
 
     }
 
+    chartCard.style.setProperty(
+        "height",
+        chartHeight + "px",
+        "important"
+    );
+
+    chartCard.style.setProperty(
+        "min-height",
+        chartHeight + "px",
+        "important"
+    );
+
+    chartCard.style.setProperty(
+        "max-height",
+        chartHeight + "px",
+        "important"
+    );
+
+    chart.style.setProperty(
+        "width",
+        "100%",
+        "important"
+    );
+
+    chart.style.setProperty(
+        "height",
+        chartHeight + "px",
+        "important"
+    );
+
+    chart.style.setProperty(
+        "min-height",
+        chartHeight + "px",
+        "important"
+    );
+
+    chart.style.setProperty(
+        "max-height",
+        chartHeight + "px",
+        "important"
+    );
+
 }
 
-
 fixMobileChartHeight();
-
 
 window.addEventListener(
     "resize",
@@ -769,17 +785,13 @@ if (amountInput) {
 
 
 /* =========================================================
-   TRADINGVIEW
-   MOBILE SAFE VERSION
+   TRADINGVIEW — PROFESSIONAL MOBILE CHART
    ========================================================= */
 
 function initializeTradingView() {
 
     const chart =
-        document.getElementById(
-            "tvchart"
-        );
-
+        document.getElementById("tvchart");
 
     if (!chart) {
 
@@ -790,7 +802,6 @@ function initializeTradingView() {
         return;
 
     }
-
 
     if (
         typeof TradingView ===
@@ -805,10 +816,11 @@ function initializeTradingView() {
 
     }
 
-
     /*
-     * Remove accidental horizontal overflow.
+     * Make sure the container is completely clean.
      */
+
+    chart.innerHTML = "";
 
     chart.style.setProperty(
         "width",
@@ -823,21 +835,26 @@ function initializeTradingView() {
     );
 
     chart.style.setProperty(
-        "margin-left",
+        "margin",
         "0",
         "important"
     );
 
     chart.style.setProperty(
-        "margin-right",
+        "padding",
         "0",
+        "important"
+    );
+
+    chart.style.setProperty(
+        "overflow",
+        "hidden",
         "important"
     );
 
 
     /*
-     * Mobile chart = 320px
-     * Desktop chart = 360px
+     * Chart and card must have identical height.
      */
 
     fixMobileChartHeight();
@@ -847,30 +864,78 @@ function initializeTradingView() {
 
         new TradingView.widget({
 
+            /*
+             * FULL SIZE
+             */
+
             autosize: true,
+
+            width: "100%",
+
+            height: "100%",
+
+
+            /*
+             * GOLD / USD
+             */
 
             symbol:
                 "OANDA:XAUUSD",
 
+
+            /*
+             * 1 minute candles
+             */
+
             interval:
                 "1",
+
 
             timezone:
                 "Etc/UTC",
 
+
+            /*
+             * PROFESSIONAL DARK THEME
+             */
+
             theme:
                 "dark",
+
 
             style:
                 "1",
 
+
             locale:
                 "en",
 
+
+            /*
+             * Dark chart background
+             */
+
+            backgroundColor:
+                "#02070E",
+
+
+            gridColor:
+                "rgba(75, 104, 135, 0.18)",
+
+
             toolbar_bg:
-                "#05080d",
+                "#02070E",
+
+
+            /*
+             * Remove unnecessary
+             * TradingView controls.
+             */
 
             enable_publishing:
+                false,
+
+            save_image:
                 false,
 
             hide_top_toolbar:
@@ -879,34 +944,12 @@ function initializeTradingView() {
             hide_legend:
                 true,
 
-            save_image:
-                false,
-
-            container_id:
-                "tvchart",
-
 
             /*
-             * Keep candles compact.
+             * Remove extra TradingView
+             * toolbars so candle area
+             * gets maximum space.
              */
-
-            time_scale: {
-
-                right_bar_stays_on_scroll:
-                    true,
-
-                bar_spacing:
-                    5,
-
-                min_bar_spacing:
-                    1
-
-            },
-
-
-            right_bar_stays_on_scroll:
-                true,
-
 
             disabled_features: [
 
@@ -926,7 +969,13 @@ function initializeTradingView() {
 
                 "header_indicators",
 
-                "timeframes_toolbar"
+                "timeframes_toolbar",
+
+                "control_bar",
+
+                "display_market_status",
+
+                "border_around_the_chart"
 
             ],
 
@@ -935,10 +984,35 @@ function initializeTradingView() {
 
                 "hide_left_toolbar_by_default"
 
-            ]
+            ],
+
+
+            /*
+             * Candle spacing
+             */
+
+            time_scale: {
+
+                right_bar_stays_on_scroll:
+                    true,
+
+                bar_spacing:
+                    7,
+
+                min_bar_spacing:
+                    2
+
+            },
+
+
+            right_bar_stays_on_scroll:
+                true,
+
+
+            container_id:
+                "tvchart"
 
         });
-
 
     } catch (error) {
 
@@ -950,39 +1024,6 @@ function initializeTradingView() {
     }
 
 }
-
-
-/*
- * Wait until DOM and TradingView
- * are ready.
- */
-
-if (
-    document.readyState ===
-    "loading"
-) {
-
-    document.addEventListener(
-        "DOMContentLoaded",
-        function () {
-
-            setTimeout(
-                initializeTradingView,
-                150
-            );
-
-        }
-    );
-
-} else {
-
-    setTimeout(
-        initializeTradingView,
-        150
-    );
-
-}
-
 
 /* =========================================================
    OPEN LONG
