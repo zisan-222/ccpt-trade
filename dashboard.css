@@ -1,6 +1,6 @@
 /* ===================================
    CPTMARKETS DASHBOARD
-   dashboard.css - Part 1
+   dashboard.css - Replacement
 =================================== */
 
 *{
@@ -13,7 +13,7 @@ body{
     background:#111111;
     color:#ffffff;
     font-family:Arial,Helvetica,sans-serif;
-    padding-bottom:120px;
+    padding-bottom:80px;
 }
 
 .container{
@@ -109,6 +109,7 @@ body{
     color:#dddddd;
     font-size:15px;
 }
+
 /* ======================
    ASSET CARD
 ====================== */
@@ -235,12 +236,13 @@ body{
     text-align:center;
     line-height:20px;
 }
+
 /* ======================
    HOT MARKETS
 ====================== */
 
 .market-card{
-    margin:20px 15px 25px;
+    margin:20px 15px 0;
     background:#1c1c1c;
     border-radius:20px;
     padding:20px;
@@ -307,6 +309,7 @@ body{
     color:#ff4d4f;
     font-weight:700;
 }
+
 /* ======================
    BOTTOM NAVIGATION
 ====================== */
@@ -380,13 +383,15 @@ body{
 
 .trade-btn span{
     display:none;
-}/* ======================
+}
+
+/* ======================
    FINAL FIXES
 ====================== */
 
-/* Bottom space so content doesn't hide behind navigation */
+/* Keep only the space required for the fixed bottom navigation */
 .market-card{
-    margin-bottom:120px;
+    margin-bottom:0;
 }
 
 /* Button hover */
