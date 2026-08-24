@@ -1,6 +1,7 @@
 // ==========================================
 // CPTMARKETS LOGIN
 // Firebase Authentication
+// Professional Popup System
 // ==========================================
 
 import { auth, db } from "./firebase/firebase-config.js";
@@ -156,15 +157,56 @@ if (loginForm) {
             // CHECK EMPTY FIELDS
             // ==================================
 
-            if (!username || !password) {
+            if (!username && !password) {
 
-                alert(
-                    "Please enter Username and Password."
+                showCPTPopup(
+                    "error",
+                    "Login Required",
+                    "Please enter your Username and Password.",
+                    null,
+                    "Try Again"
                 );
 
                 return;
 
             }
+
+
+            if (!username) {
+
+                showCPTPopup(
+                    "error",
+                    "Username Required",
+                    "Please enter your Username.",
+                    null,
+                    "Try Again"
+                );
+
+                document
+                    .getElementById("username")
+                    .focus();
+
+                return;
+
+            }
+
+
+            if (!password) {
+
+                showCPTPopup(
+                    "error",
+                    "Password Required",
+                    "Please enter your Password.",
+                    null,
+                    "Try Again"
+                );
+
+                passwordInput.focus();
+
+                return;
+
+            }
+
 
 
             // ==================================
@@ -216,8 +258,12 @@ if (loginForm) {
 
                 if (!userDoc.exists()) {
 
-                    alert(
-                        "User account data was not found."
+                    showCPTPopup(
+                        "error",
+                        "Account Data Not Found",
+                        "Your authentication was successful, but your account data could not be found.",
+                        null,
+                        "Try Again"
                     );
 
                     return;
@@ -261,17 +307,28 @@ if (loginForm) {
                 // LOGIN SUCCESS
                 // ==================================
 
-                alert(
-                    "Login Success"
+                showCPTPopup(
+                    "success",
+                    "Login Successful!",
+                    "Welcome back, " +
+                    (
+                        userData.username ||
+                        username
+                    ) +
+                    ". You have successfully signed in.",
+                    null,
+                    "Continue",
+                    function () {
+
+                        // ==================================
+                        // GO TO DASHBOARD
+                        // ==================================
+
+                        window.location.href =
+                            "dashboard.html";
+
+                    }
                 );
-
-
-                // ==================================
-                // GO TO DASHBOARD
-                // ==================================
-
-                window.location.href =
-                    "dashboard.html";
 
 
             } catch (error) {
@@ -291,8 +348,12 @@ if (loginForm) {
                     "auth/invalid-credential"
                 ) {
 
-                    alert(
-                        "Wrong Username or Password."
+                    showCPTPopup(
+                        "error",
+                        "Incorrect Login Details",
+                        "The Username or Password you entered is incorrect. Please check your details and try again.",
+                        null,
+                        "Try Again"
                     );
 
                 }
@@ -302,8 +363,12 @@ if (loginForm) {
                     "auth/user-not-found"
                 ) {
 
-                    alert(
-                        "Username not found."
+                    showCPTPopup(
+                        "error",
+                        "Username Not Found",
+                        "No account was found with this Username. Please check your Username or create a new account.",
+                        null,
+                        "Try Again"
                     );
 
                 }
@@ -313,17 +378,55 @@ if (loginForm) {
                     "auth/wrong-password"
                 ) {
 
-                    alert(
-                        "Wrong Password."
+                    showCPTPopup(
+                        "error",
+                        "Incorrect Password",
+                        "The Password you entered is incorrect. Please try again.",
+                        null,
+                        "Try Again"
+                    );
+
+                }
+
+                else if (
+                    error.code ===
+                    "auth/invalid-email"
+                ) {
+
+                    showCPTPopup(
+                        "error",
+                        "Invalid Username",
+                        "Please enter a valid Username.",
+                        null,
+                        "Try Again"
+                    );
+
+                }
+
+                else if (
+                    error.code ===
+                    "auth/too-many-requests"
+                ) {
+
+                    showCPTPopup(
+                        "error",
+                        "Too Many Attempts",
+                        "Too many unsuccessful login attempts. Please wait a moment and try again.",
+                        null,
+                        "Try Again"
                     );
 
                 }
 
                 else {
 
-                    alert(
-                        "Login failed: "
-                        + error.message
+                    showCPTPopup(
+                        "error",
+                        "Login Failed",
+                        error.message ||
+                        "Unable to sign in. Please try again.",
+                        null,
+                        "Try Again"
                     );
 
                 }
