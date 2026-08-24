@@ -1,0 +1,1254 @@
+/* =========================================================
+   CPT MARKETS - PREMIUM LOGIN
+   ONLY LOGIN PAGE DESIGN
+   EXISTING JS / FIREBASE IS NOT TOUCHED
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 50% 10%,
+            #063d68 0%,
+            #022747 28%,
+            #011426 58%,
+            #000912 100%
+        );
+
+    color: #ffffff;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   MAIN PAGE
+========================================================= */
+
+.login-page {
+
+    width: 100%;
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 8px 14px;
+
+    position: relative;
+
+    background:
+
+        radial-gradient(
+            ellipse at 50% 20%,
+            rgba(0, 112, 195, 0.22),
+            transparent 55%
+        );
+}
+
+
+/* =========================================================
+   LOGIN CARD
+========================================================= */
+
+.login-card {
+
+    width: min(100%, 760px);
+
+    min-height: calc(100vh - 16px);
+
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius: 30px;
+
+    border: 1px solid
+        rgba(69, 142, 198, 0.38);
+
+    background:
+
+        linear-gradient(
+            180deg,
+            rgba(2, 28, 50, 0.97),
+            rgba(1, 10, 20, 0.99)
+        );
+
+    box-shadow:
+
+        0 0 50px
+        rgba(0, 94, 170, 0.20),
+
+        inset 0 0 80px
+        rgba(0, 92, 165, 0.08);
+
+    padding:
+
+        25px
+        28px
+        70px;
+}
+
+
+/* =========================================================
+   TOP BLUE GLOW
+========================================================= */
+
+.login-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 700px;
+
+    height: 700px;
+
+    left: 50%;
+
+    top: -350px;
+
+    transform: translateX(-50%);
+
+    border-radius: 50%;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(0, 119, 211, 0.24),
+            rgba(0, 80, 145, 0.09) 45%,
+            transparent 72%
+        );
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   LANGUAGE BUTTON
+========================================================= */
+
+.language-btn {
+
+    position: absolute;
+
+    right: 15px;
+
+    top: 15px;
+
+    width: 72px;
+
+    height: 64px;
+
+    border-radius: 50%;
+
+    border: 1px solid
+        rgba(112, 169, 215, 0.38);
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(10, 42, 70, 0.96),
+            rgba(2, 17, 31, 0.98)
+        );
+
+    font-size: 31px;
+
+    cursor: pointer;
+
+    z-index: 30;
+
+    box-shadow:
+
+        0 0 20px
+        rgba(0, 98, 175, 0.15);
+
+    transition: 0.2s ease;
+}
+
+.language-btn:hover {
+
+    transform: translateY(-2px);
+
+    border-color:
+        rgba(255, 198, 50, 0.65);
+}
+
+
+/* =========================================================
+   MARKET ART
+========================================================= */
+
+.market-art {
+
+    position: absolute;
+
+    top: 45px;
+
+    left: 50%;
+
+    width: 650px;
+
+    height: 650px;
+
+    transform: translateX(-50%);
+
+    z-index: 1;
+
+    pointer-events: none;
+}
+
+
+/* BIG CIRCLE */
+
+.market-circle {
+
+    position: absolute;
+
+    width: 610px;
+
+    height: 610px;
+
+    left: 50%;
+
+    top: 10px;
+
+    transform: translateX(-50%);
+
+    border-radius: 50%;
+
+    border: 1px solid
+        rgba(111, 183, 235, 0.82);
+
+    background:
+
+        radial-gradient(
+            circle at 50% 42%,
+            rgba(11, 73, 119, 0.42),
+            rgba(2, 27, 49, 0.38) 48%,
+            rgba(0, 9, 19, 0.08) 74%,
+            transparent 75%
+        );
+
+    box-shadow:
+
+        0 0 35px
+        rgba(0, 111, 198, 0.15),
+
+        inset 0 0 70px
+        rgba(0, 121, 215, 0.12);
+}
+
+
+/* =========================================================
+   DOTS
+========================================================= */
+
+.market-dots {
+
+    position: absolute;
+
+    top: 170px;
+
+    left: 50%;
+
+    width: 490px;
+
+    height: 230px;
+
+    transform: translateX(-50%);
+
+    opacity: 0.65;
+
+    background-image:
+
+        radial-gradient(
+            circle,
+            rgba(11, 134, 227, 0.9) 1.4px,
+            transparent 1.8px
+        );
+
+    background-size: 13px 13px;
+
+    mask-image:
+
+        radial-gradient(
+            ellipse,
+            black 10%,
+            transparent 73%
+        );
+
+    -webkit-mask-image:
+
+        radial-gradient(
+            ellipse,
+            black 10%,
+            transparent 73%
+        );
+}
+
+
+/* =========================================================
+   MARKET BARS
+========================================================= */
+
+.chart-bars {
+
+    position: absolute;
+
+    top: 185px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 620px;
+
+    height: 220px;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-around;
+
+    opacity: 0.22;
+}
+
+.chart-bars span {
+
+    display: block;
+
+    width: 4px;
+
+    background:
+
+        linear-gradient(
+            to top,
+            transparent,
+            rgba(88, 170, 225, 0.85)
+        );
+
+    box-shadow:
+
+        0 0 12px
+        rgba(33, 144, 221, 0.45);
+}
+
+.chart-bars span:nth-child(1) {
+    height: 70px;
+}
+
+.chart-bars span:nth-child(2) {
+    height: 130px;
+}
+
+.chart-bars span:nth-child(3) {
+    height: 180px;
+}
+
+.chart-bars span:nth-child(4) {
+    height: 110px;
+}
+
+.chart-bars span:nth-child(5) {
+    height: 200px;
+}
+
+.chart-bars span:nth-child(6) {
+    height: 150px;
+}
+
+.chart-bars span:nth-child(7) {
+    height: 190px;
+}
+
+.chart-bars span:nth-child(8) {
+    height: 135px;
+}
+
+.chart-bars span:nth-child(9) {
+    height: 175px;
+}
+
+.chart-bars span:nth-child(10) {
+    height: 95px;
+}
+
+
+/* =========================================================
+   GOLD CHART LINES
+========================================================= */
+
+.chart-line {
+
+    position: absolute;
+
+    left: -80px;
+
+    width: 820px;
+
+    height: 2px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(242, 190, 55, 0.52),
+            transparent
+        );
+
+    opacity: 0.5;
+}
+
+.chart-line-one {
+
+    top: 260px;
+
+    transform: rotate(17deg);
+}
+
+.chart-line-two {
+
+    top: 320px;
+
+    transform: rotate(-13deg);
+}
+
+.chart-line-three {
+
+    top: 365px;
+
+    transform: rotate(8deg);
+}
+
+
+/* =========================================================
+   BRAND AREA
+========================================================= */
+
+.brand-area {
+
+    position: relative;
+
+    z-index: 10;
+
+    text-align: center;
+
+    padding-top: 58px;
+
+    margin-bottom: 42px;
+}
+
+
+/* =========================================================
+   CPT LOGO
+========================================================= */
+
+.cpt-logo {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    margin-bottom: 8px;
+}
+
+.cpt-logo-circle {
+
+    position: relative;
+
+    width: 82px;
+
+    height: 82px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border:
+
+        5px solid #f5bd35;
+
+    border-right-color:
+        transparent;
+
+    transform: rotate(-25deg);
+
+    box-shadow:
+
+        0 0 18px
+        rgba(255, 190, 45, 0.25);
+}
+
+.cpt-logo-circle span {
+
+    color: #f5c03b;
+
+    font-size: 25px;
+
+    font-weight: 800;
+
+    transform: rotate(25deg);
+}
+
+.cpt-logo-circle i {
+
+    position: absolute;
+
+    right: -4px;
+
+    top: -4px;
+
+    color: #f5c03b;
+
+    font-size: 18px;
+
+    transform: rotate(25deg);
+}
+
+.markets-text {
+
+    margin-top: 4px;
+
+    font-size: 16px;
+
+    letter-spacing: 4px;
+
+    font-weight: 600;
+}
+
+.uk-text {
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+    color: #bdc9d8;
+}
+
+
+/* =========================================================
+   MAIN BRAND NAME
+========================================================= */
+
+.brand-area h1 {
+
+    margin-top: 18px;
+
+    font-size: clamp(
+        48px,
+        8vw,
+        72px
+    );
+
+    line-height: 1;
+
+    font-weight: 800;
+
+    letter-spacing: -2px;
+
+    color: #ffd83f;
+
+    text-shadow:
+
+        0 0 8px
+        rgba(255, 215, 60, 0.9),
+
+        0 0 25px
+        rgba(255, 179, 20, 0.40),
+
+        0 4px 2px
+        rgba(0, 0, 0, 0.5);
+}
+
+
+/* =========================================================
+   GIFT
+========================================================= */
+
+.gift-title {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 13px;
+
+    margin-top: 18px;
+
+    color: #e8edf5;
+
+    font-size: 23px;
+
+    letter-spacing: 7px;
+
+    font-weight: 400;
+}
+
+.gift-title span {
+
+    width: 55px;
+
+    height: 1px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            #d6a82c
+        );
+}
+
+.gift-title span:last-child {
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #d6a82c,
+            transparent
+        );
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.login-form {
+
+    position: relative;
+
+    z-index: 20;
+
+    width: 100%;
+}
+
+.form-group {
+
+    margin-bottom: 27px;
+}
+
+.form-group label {
+
+    display: block;
+
+    margin-bottom: 14px;
+
+    color: #f0f3f8;
+
+    font-size: 26px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.input-box {
+
+    width: 100%;
+
+    height: 100px;
+
+    display: flex;
+
+    align-items: center;
+
+    position: relative;
+
+    border-radius: 28px;
+
+    border: 1px solid
+        rgba(71, 141, 196, 0.43);
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(5, 32, 55, 0.94),
+            rgba(2, 16, 30, 0.98)
+        );
+
+    box-shadow:
+
+        inset 0 0 25px
+        rgba(0, 94, 164, 0.10),
+
+        0 7px 25px
+        rgba(0, 0, 0, 0.22);
+
+    transition: 0.25s ease;
+}
+
+.input-box:focus-within {
+
+    border-color:
+        rgba(64, 153, 221, 0.80);
+
+    box-shadow:
+
+        0 0 0 2px
+        rgba(24, 123, 195, 0.12),
+
+        inset 0 0 30px
+        rgba(0, 105, 185, 0.13);
+}
+
+.input-icon {
+
+    width: 82px;
+
+    text-align: center;
+
+    color: #8da4c9;
+
+    font-size: 30px;
+}
+
+.input-box input {
+
+    flex: 1;
+
+    width: 100%;
+
+    height: 100%;
+
+    min-width: 0;
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    color: #edf4ff;
+
+    font-size: 27px;
+
+    padding-right: 15px;
+}
+
+.input-box input::placeholder {
+
+    color: #7186a9;
+
+    opacity: 1;
+}
+
+
+/* =========================================================
+   PASSWORD TOGGLE
+========================================================= */
+
+.password-toggle {
+
+    width: 70px;
+
+    padding-right: 20px;
+
+    color: #849ac0;
+
+    font-size: 29px;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.password-toggle:hover {
+
+    color: #f6c62e;
+}
+
+
+/* =========================================================
+   LOGIN BUTTON
+========================================================= */
+
+.login-btn {
+
+    width: 100%;
+
+    height: 100px;
+
+    margin-top: 4px;
+
+    border: 1px solid
+        rgba(255, 235, 148, 0.75);
+
+    border-radius: 29px;
+
+    background:
+
+        linear-gradient(
+            100deg,
+            #ffe58d 0%,
+            #ffd21d 30%,
+            #f4b900 60%,
+            #c98100 100%
+        );
+
+    color: #090909;
+
+    font-size: 31px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+
+        0 8px 24px
+        rgba(235, 170, 0, 0.32),
+
+        0 0 30px
+        rgba(255, 196, 25, 0.18),
+
+        inset 0 2px 0
+        rgba(255, 255, 255, 0.48);
+
+    transition: 0.2s ease;
+}
+
+.login-btn:hover {
+
+    transform: translateY(-2px);
+
+    filter: brightness(1.06);
+
+    box-shadow:
+
+        0 12px 30px
+        rgba(235, 170, 0, 0.42),
+
+        0 0 40px
+        rgba(255, 196, 25, 0.25);
+}
+
+.login-btn:active {
+
+    transform: translateY(1px);
+}
+
+
+/* =========================================================
+   BOTTOM LINKS
+========================================================= */
+
+.bottom-links {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 30px;
+
+    padding: 34px 70px 0;
+}
+
+.bottom-links a {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 11px;
+
+    min-height: 55px;
+
+    color: #f2b82c;
+
+    text-decoration: none;
+
+    font-size: 20px;
+
+    font-weight: 600;
+
+    transition: 0.2s ease;
+}
+
+.bottom-links a i {
+
+    color: #f5bd22;
+
+    font-size: 25px;
+
+    text-shadow:
+
+        0 0 10px
+        rgba(255, 190, 25, 0.35);
+}
+
+.bottom-links a:hover {
+
+    color: #ffe27a;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   BOTTOM DECORATION
+========================================================= */
+
+.bottom-market {
+
+    position: absolute;
+
+    left: 0;
+
+    right: 0;
+
+    bottom: 0;
+
+    height: 145px;
+
+    pointer-events: none;
+
+    opacity: 0.45;
+}
+
+.bottom-chart {
+
+    position: absolute;
+
+    left: 25px;
+
+    right: 25px;
+
+    bottom: 0;
+
+    height: 125px;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-between;
+}
+
+.bottom-chart span {
+
+    width: 45px;
+
+    border:
+
+        1px solid
+        rgba(47, 132, 201, 0.38);
+
+    border-bottom: none;
+
+    border-radius:
+        25px 25px 0 0;
+
+    background:
+
+        linear-gradient(
+            180deg,
+            rgba(30, 110, 170, 0.15),
+            rgba(4, 30, 53, 0.03)
+        );
+}
+
+.bottom-chart span:nth-child(1) {
+    height: 55px;
+}
+
+.bottom-chart span:nth-child(2) {
+    height: 85px;
+}
+
+.bottom-chart span:nth-child(3) {
+    height: 105px;
+}
+
+.bottom-chart span:nth-child(4) {
+    height: 65px;
+}
+
+.bottom-chart span:nth-child(5) {
+    height: 110px;
+}
+
+.bottom-chart span:nth-child(6) {
+    height: 80px;
+}
+
+.bottom-glow {
+
+    position: absolute;
+
+    bottom: 0;
+
+    left: 0;
+
+    right: 0;
+
+    height: 65px;
+
+    background:
+
+        radial-gradient(
+            ellipse at center bottom,
+            rgba(0, 99, 174, 0.18),
+            transparent 70%
+        );
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .login-page {
+
+        padding: 7px;
+
+        align-items: stretch;
+    }
+
+    .login-card {
+
+        width: 100%;
+
+        min-height:
+            calc(100vh - 14px);
+
+        border-radius: 27px;
+
+        padding:
+            20px
+            18px
+            50px;
+    }
+
+    .language-btn {
+
+        width: 65px;
+
+        height: 65px;
+
+        top: 14px;
+
+        right: 14px;
+
+        font-size: 29px;
+    }
+
+    .market-art {
+
+        top: 50px;
+
+        width: 540px;
+
+        height: 540px;
+    }
+
+    .market-circle {
+
+        width: 510px;
+
+        height: 510px;
+    }
+
+    .market-dots {
+
+        width: 400px;
+
+        top: 160px;
+    }
+
+    .chart-bars {
+
+        width: 510px;
+
+        height: 200px;
+    }
+
+    .brand-area {
+
+        padding-top: 65px;
+
+        margin-bottom: 36px;
+    }
+
+    .cpt-logo-circle {
+
+        width: 70px;
+
+        height: 70px;
+    }
+
+    .brand-area h1 {
+
+        font-size:
+            clamp(
+                43px,
+                12vw,
+                60px
+            );
+    }
+
+    .gift-title {
+
+        font-size: 18px;
+
+        letter-spacing: 6px;
+    }
+
+    .form-group label {
+
+        font-size: 23px;
+    }
+
+    .input-box {
+
+        height: 84px;
+
+        border-radius: 25px;
+    }
+
+    .input-icon {
+
+        width: 67px;
+
+        font-size: 27px;
+    }
+
+    .input-box input {
+
+        font-size: 22px;
+    }
+
+    .password-toggle {
+
+        width: 58px;
+
+        padding-right: 15px;
+
+        font-size: 25px;
+    }
+
+    .login-btn {
+
+        height: 84px;
+
+        border-radius: 25px;
+
+        font-size: 25px;
+    }
+
+    .bottom-links {
+
+        padding:
+            28px
+            0
+            0;
+
+        gap: 10px;
+    }
+
+    .bottom-links a {
+
+        flex: 1;
+
+        min-height: 54px;
+
+        padding: 0 8px;
+
+        border-radius: 17px;
+
+        border: 1px solid
+            rgba(70, 124, 172, 0.18);
+
+        background:
+            rgba(5, 30, 52, 0.55);
+
+        font-size: 15px;
+
+        gap: 7px;
+    }
+
+    .bottom-links a i {
+
+        font-size: 20px;
+    }
+
+    .bottom-chart span {
+
+        width: 25px;
+    }
+}
+
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .login-card {
+
+        padding-left: 14px;
+
+        padding-right: 14px;
+    }
+
+    .brand-area h1 {
+
+        font-size: 39px;
+    }
+
+    .bottom-links a {
+
+        font-size: 13px;
+    }
+
+    .bottom-links a i {
+
+        font-size: 18px;
+    }
+}
