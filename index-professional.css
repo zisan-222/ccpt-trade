@@ -1,8 +1,7 @@
 /* =========================================================
-   CPTMARKETS
-   INDEX PROFESSIONAL — PREMIUM DARK LOGIN
-   Version 2.0
-   Designed from the dark premium reference
+   CPTMARKETS — PREMIUM DARK LOGIN
+   index-professional.css
+   Designed to match the supplied CPTMarkets reference
    ========================================================= */
 
 
@@ -16,22 +15,16 @@
     box-sizing: border-box;
 }
 
-html {
+html,
+body {
     width: 100%;
     min-height: 100%;
     margin: 0;
     padding: 0;
-    background: #03070d;
+    background: #020710;
 }
 
 body {
-    width: 100%;
-    min-height: 100vh;
-    min-height: 100dvh;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-
     font-family:
         Inter,
         "Segoe UI",
@@ -40,19 +33,8 @@ body {
         sans-serif;
 
     color: #eef3fb;
-
-    background:
-        radial-gradient(
-            circle at 50% 12%,
-            rgba(18, 57, 92, 0.22),
-            transparent 42%
-        ),
-        linear-gradient(
-            180deg,
-            #030912 0%,
-            #02070d 52%,
-            #01040a 100%
-        );
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
 }
 
 
@@ -61,34 +43,31 @@ body {
    ========================================================= */
 
 .login-page {
-    width: 100% !important;
-    min-height: 100vh !important;
-    min-height: 100dvh !important;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
 
-    margin: 0 !important;
-    padding: 20px 14px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+    padding: 20px 14px;
 
-    position: relative !important;
-    overflow: hidden !important;
-
+    position: relative;
     isolation: isolate;
 
     background:
         radial-gradient(
-            ellipse at 50% 8%,
-            rgba(16, 61, 96, 0.24),
-            transparent 48%
+            circle at 50% 8%,
+            rgba(8, 69, 116, 0.42),
+            transparent 47%
         ),
         linear-gradient(
             180deg,
-            #020914 0%,
-            #02070d 60%,
-            #01050a 100%
-        ) !important;
+            #061c32 0%,
+            #031321 45%,
+            #01060d 100%
+        );
 }
 
 
@@ -97,50 +76,76 @@ body {
    ========================================================= */
 
 .login-card {
-    width: min(100%, 680px) !important;
+    width: min(100%, 690px);
+    min-height: calc(100vh - 40px);
+    min-height: calc(100dvh - 40px);
 
-    min-height: calc(100vh - 40px) !important;
-    min-height: calc(100dvh - 40px) !important;
-
-    position: relative !important;
-    overflow: hidden !important;
-
+    position: relative;
+    overflow: hidden;
     isolation: isolate;
 
-    padding: 28px 40px 40px !important;
-
-    border-radius: 30px !important;
-
-    border: 1px solid rgba(55, 112, 158, 0.32) !important;
+    border-radius: 30px;
+    border: 1px solid rgba(50, 113, 161, 0.42);
 
     background:
         radial-gradient(
-            ellipse at 50% 15%,
-            rgba(12, 52, 85, 0.38),
-            transparent 48%
+            ellipse at 50% 12%,
+            rgba(7, 56, 96, 0.78),
+            transparent 43%
         ),
         linear-gradient(
             180deg,
-            rgba(5, 18, 31, 0.98),
-            rgba(2, 8, 15, 0.99)
-        ) !important;
+            rgba(3, 29, 50, 0.98),
+            rgba(1, 9, 18, 0.995)
+        );
 
     box-shadow:
-        0 30px 90px rgba(0, 0, 0, 0.65),
-        inset 0 0 80px rgba(10, 68, 108, 0.055) !important;
+        0 25px 80px rgba(0, 0, 0, 0.72),
+        0 0 55px rgba(0, 77, 135, 0.12),
+        inset 0 0 70px rgba(0, 91, 150, 0.08);
 }
 
 
-/* thin premium top light */
+/* Soft blue top light */
+
+.login-card::before {
+    content: "";
+
+    position: absolute;
+    z-index: -5;
+
+    width: 760px;
+    height: 760px;
+
+    left: 50%;
+    top: -160px;
+
+    transform: translateX(-50%);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(11, 74, 124, 0.30) 0%,
+            rgba(4, 45, 78, 0.18) 42%,
+            transparent 72%
+        );
+
+    pointer-events: none;
+}
+
+
+/* Top gold highlight */
 
 .login-card::after {
     content: "";
 
     position: absolute;
 
+    left: 15%;
+    right: 15%;
     top: 0;
-    left: 12%;
-    right: 12%;
 
     height: 1px;
 
@@ -148,15 +153,13 @@ body {
         linear-gradient(
             90deg,
             transparent,
-            rgba(92, 156, 205, 0.55),
+            rgba(255, 211, 69, 0.70),
             transparent
         );
 
-    opacity: 0.55;
+    opacity: 0.7;
 
     pointer-events: none;
-
-    z-index: 100;
 }
 
 
@@ -165,42 +168,40 @@ body {
    ========================================================= */
 
 .language-btn {
-    position: absolute !important;
+    position: absolute;
 
-    top: 14px !important;
-    right: 14px !important;
+    top: 13px;
+    right: 13px;
 
-    width: 58px !important;
-    height: 58px !important;
+    width: 58px;
+    height: 58px;
 
-    padding: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+    padding: 0;
 
-    border-radius: 50% !important;
-
-    border: 1px solid rgba(91, 140, 180, 0.36) !important;
+    border-radius: 50%;
+    border: 1px solid rgba(83, 143, 190, 0.48);
 
     background:
         radial-gradient(
-            circle at 35% 30%,
-            rgba(31, 66, 96, 0.65),
-            rgba(4, 13, 23, 0.95)
-        ) !important;
+            circle at 35% 25%,
+            rgba(29, 73, 108, 0.85),
+            rgba(2, 17, 30, 0.98) 72%
+        );
 
     box-shadow:
-        0 8px 25px rgba(0, 0, 0, 0.42),
-        inset 0 0 20px rgba(50, 120, 170, 0.08) !important;
+        0 8px 22px rgba(0, 0, 0, 0.42),
+        inset 0 0 20px rgba(70, 143, 194, 0.10);
 
-    font-size: 27px !important;
-
-    line-height: 1 !important;
+    font-size: 27px;
+    line-height: 1;
 
     cursor: pointer;
 
-    z-index: 100 !important;
+    z-index: 100;
 
     transition:
         transform 0.2s ease,
@@ -211,46 +212,44 @@ body {
 .language-btn:hover {
     transform: scale(1.04);
 
-    border-color: rgba(107, 170, 214, 0.6) !important;
+    border-color: rgba(100, 174, 226, 0.70);
 
     box-shadow:
-        0 8px 28px rgba(0, 0, 0, 0.5),
-        0 0 20px rgba(25, 117, 181, 0.12);
+        0 8px 25px rgba(0, 0, 0, 0.48),
+        0 0 18px rgba(24, 129, 205, 0.16);
 }
 
 
 /* =========================================================
-   MARKET BACKGROUND
+   LARGE CIRCULAR MARKET BACKGROUND
    ========================================================= */
 
 .market-background {
-    position: absolute !important;
+    position: absolute;
 
-    width: 610px !important;
-    height: 610px !important;
+    z-index: 1;
 
-    left: 50% !important;
-    top: 28px !important;
+    width: 660px;
+    height: 660px;
 
-    transform: translateX(-50%) !important;
+    left: 50%;
+    top: 32px;
 
-    pointer-events: none !important;
+    transform: translateX(-50%);
 
-    z-index: 1 !important;
-
-    opacity: 0.9;
+    pointer-events: none;
 }
 
 
-/* BIG OUTER CIRCLE */
+/* Main circle */
 
 .market-background::before {
     content: "";
 
     position: absolute;
 
-    width: 570px !important;
-    height: 570px !important;
+    width: 585px;
+    height: 585px;
 
     left: 50%;
     top: 0;
@@ -259,46 +258,73 @@ body {
 
     border-radius: 50%;
 
-    border:
-        1px solid rgba(82, 153, 204, 0.62) !important;
+    border: 1px solid rgba(104, 178, 227, 0.78);
 
     background:
         radial-gradient(
             circle at 50% 42%,
-            rgba(13, 55, 91, 0.40),
-            rgba(3, 19, 34, 0.25) 48%,
-            rgba(2, 9, 17, 0.04) 72%,
-            transparent 76%
+            rgba(13, 75, 122, 0.48) 0%,
+            rgba(7, 49, 84, 0.38) 35%,
+            rgba(2, 27, 48, 0.62) 62%,
+            rgba(1, 13, 25, 0.78) 76%
         );
 
     box-shadow:
-        0 0 35px rgba(0, 104, 176, 0.07),
-        inset 0 0 65px rgba(0, 100, 172, 0.08);
+        0 0 32px rgba(0, 112, 190, 0.12),
+        inset 0 0 75px rgba(0, 102, 177, 0.15),
+        inset 0 -50px 90px rgba(0, 0, 0, 0.32);
 }
 
 
-/* INNER CIRCLE */
+/* Inner circle */
 
 .market-background::after {
     content: "";
 
     position: absolute;
 
-    width: 475px !important;
-    height: 475px !important;
+    width: 500px;
+    height: 500px;
 
     left: 50%;
-    top: 46px;
+    top: 38px;
 
     transform: translateX(-50%);
 
     border-radius: 50%;
 
-    border:
-        1px solid rgba(66, 130, 175, 0.22) !important;
+    border: 1px solid rgba(63, 139, 190, 0.23);
 
     box-shadow:
-        inset 0 0 60px rgba(0, 80, 140, 0.08);
+        inset 0 0 40px rgba(0, 111, 189, 0.08);
+}
+
+
+/* =========================================================
+   INNER BLUE GLOW
+   ========================================================= */
+
+.circle-glow {
+    position: absolute;
+
+    width: 430px;
+    height: 430px;
+
+    left: 50%;
+    top: 72px;
+
+    transform: translateX(-50%);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0, 106, 183, 0.16),
+            transparent 68%
+        );
+
+    filter: blur(8px);
 }
 
 
@@ -307,169 +333,141 @@ body {
    ========================================================= */
 
 .market-dots {
-    position: absolute !important;
+    position: absolute;
 
-    width: 430px !important;
-    height: 230px !important;
+    width: 500px;
+    height: 250px;
 
-    left: 50% !important;
-    top: 125px !important;
+    left: 50%;
+    top: 153px;
 
-    transform: translateX(-50%) !important;
+    transform: translateX(-50%);
 
-    opacity: 0.55 !important;
+    opacity: 0.75;
 
     background-image:
         radial-gradient(
             circle,
-            rgba(24, 128, 205, 0.85) 1.2px,
+            rgba(10, 129, 216, 0.88) 1.4px,
             transparent 1.8px
-        ) !important;
+        );
 
-    background-size: 10px 10px !important;
+    background-size: 11px 11px;
 
     -webkit-mask-image:
         radial-gradient(
             ellipse at center,
             #000 0%,
-            #000 43%,
-            rgba(0,0,0,0.65) 62%,
-            transparent 78%
+            #000 45%,
+            rgba(0,0,0,.72) 61%,
+            transparent 77%
         );
 
     mask-image:
         radial-gradient(
             ellipse at center,
             #000 0%,
-            #000 43%,
-            rgba(0,0,0,0.65) 62%,
-            transparent 78%
+            #000 45%,
+            rgba(0,0,0,.72) 61%,
+            transparent 77%
         );
 }
 
 
 /* =========================================================
-   MARKET BARS
+   MARKET VERTICAL BARS
    ========================================================= */
 
 .market-bars {
-    position: absolute !important;
+    position: absolute;
 
-    width: 500px !important;
-    height: 220px !important;
+    width: 570px;
+    height: 245px;
 
-    left: 50% !important;
-    top: 155px !important;
+    left: 50%;
+    top: 175px;
 
-    transform: translateX(-50%) !important;
+    transform: translateX(-50%);
 
-    display: flex !important;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
 
-    align-items: flex-end !important;
-    justify-content: space-between !important;
+    padding: 0 22px;
 
-    padding: 0 22px !important;
-
-    opacity: 0.17 !important;
+    opacity: 0.25;
 }
 
 .market-bars span {
     display: block;
 
-    width: 2px !important;
+    width: 3px;
 
     background:
         linear-gradient(
             to top,
             transparent,
-            rgba(56, 140, 198, 0.65),
-            rgba(70, 165, 218, 0.95)
-        ) !important;
+            rgba(42, 131, 190, 0.55),
+            rgba(77, 171, 224, 0.92)
+        );
 
     box-shadow:
-        0 0 8px rgba(31, 132, 206, 0.25);
+        0 0 10px rgba(29, 131, 209, 0.40);
 }
 
-.market-bars span:nth-child(1) { height: 80px; }
-.market-bars span:nth-child(2) { height: 120px; }
-.market-bars span:nth-child(3) { height: 95px; }
-.market-bars span:nth-child(4) { height: 155px; }
-.market-bars span:nth-child(5) { height: 125px; }
-.market-bars span:nth-child(6) { height: 180px; }
-.market-bars span:nth-child(7) { height: 145px; }
-.market-bars span:nth-child(8) { height: 195px; }
-.market-bars span:nth-child(9) { height: 135px; }
-.market-bars span:nth-child(10) { height: 165px; }
-.market-bars span:nth-child(11) { height: 115px; }
-.market-bars span:nth-child(12) { height: 85px; }
+.market-bars span:nth-child(1)  { height: 90px; }
+.market-bars span:nth-child(2)  { height: 140px; }
+.market-bars span:nth-child(3)  { height: 112px; }
+.market-bars span:nth-child(4)  { height: 180px; }
+.market-bars span:nth-child(5)  { height: 138px; }
+.market-bars span:nth-child(6)  { height: 202px; }
+.market-bars span:nth-child(7)  { height: 166px; }
+.market-bars span:nth-child(8)  { height: 218px; }
+.market-bars span:nth-child(9)  { height: 146px; }
+.market-bars span:nth-child(10) { height: 188px; }
+.market-bars span:nth-child(11) { height: 130px; }
+.market-bars span:nth-child(12) { height: 100px; }
 
 
 /* =========================================================
-   MARKET LINES
+   GOLD MARKET LINES
    ========================================================= */
 
 .market-lines {
-    position: absolute !important;
+    position: absolute;
 
-    left: -30px !important;
+    left: -35px;
 
-    width: 670px !important;
+    width: 730px;
+    height: 1px;
 
-    height: 1px !important;
+    transform-origin: center;
 
     background:
         linear-gradient(
             90deg,
             transparent,
-            rgba(190, 154, 49, 0.24),
-            rgba(190, 154, 49, 0.08),
+            rgba(244, 193, 47, 0.50) 43%,
+            rgba(244, 193, 47, 0.13) 72%,
             transparent
-        ) !important;
+        );
 
-    opacity: 0.45 !important;
+    opacity: 0.60;
 }
 
 .line-1 {
-    top: 220px !important;
-    transform: rotate(14deg) !important;
+    top: 215px;
+    transform: rotate(15deg);
 }
 
 .line-2 {
-    top: 275px !important;
-    transform: rotate(-10deg) !important;
+    top: 276px;
+    transform: rotate(-11deg);
 }
 
 .line-3 {
-    top: 325px !important;
-    transform: rotate(7deg) !important;
-}
-
-
-/* =========================================================
-   CIRCLE GLOW
-   ========================================================= */
-
-.circle-glow {
-    position: absolute !important;
-
-    width: 430px !important;
-    height: 430px !important;
-
-    left: 50% !important;
-    top: 65px !important;
-
-    transform: translateX(-50%) !important;
-
-    border-radius: 50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(18, 90, 145, 0.10),
-            transparent 68%
-        ) !important;
-
-    filter: blur(8px);
+    top: 332px;
+    transform: rotate(8deg);
 }
 
 
@@ -478,17 +476,15 @@ body {
    ========================================================= */
 
 .brand-area {
-    position: relative !important;
+    position: relative;
 
-    z-index: 10 !important;
-
-    width: 100%;
+    z-index: 10;
 
     text-align: center;
 
-    padding-top: 52px !important;
+    padding-top: 70px;
 
-    margin-bottom: 31px !important;
+    margin-bottom: 34px;
 }
 
 
@@ -497,100 +493,102 @@ body {
    ========================================================= */
 
 .brand-logo {
-    display: inline-flex !important;
+    display: inline-flex;
 
-    flex-direction: column !important;
+    flex-direction: column;
 
-    align-items: center !important;
+    align-items: center;
 
     filter:
         drop-shadow(
-            0 0 10px rgba(236, 183, 42, 0.08)
-        ) !important;
-
-    transform: scale(0.82);
+            0 0 7px rgba(247, 193, 57, 0.16)
+        );
 }
 
 
-/* logo circle */
+/* Logo ring */
 
 .logo-ring {
-    position: relative !important;
+    position: relative;
 
-    width: 67px !important;
-    height: 67px !important;
+    width: 65px;
+    height: 65px;
 
-    display: flex !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    align-items: center !important;
-    justify-content: center !important;
+    border-radius: 50%;
 
-    border-radius: 50% !important;
+    border: 3px solid #e9b839;
 
-    border:
-        3px solid #dcae3d !important;
+    border-right-color: transparent;
 
-    border-right-color: transparent !important;
+    border-bottom-color: #c98e27;
 
-    border-bottom-color: #9f7625 !important;
-
-    transform: rotate(-22deg);
+    transform: rotate(-23deg);
 
     box-shadow:
-        0 0 14px rgba(230, 174, 44, 0.10) !important;
+        0 0 15px rgba(255, 192, 44, 0.16);
 }
 
+
+/* CPT text */
+
 .logo-ring span {
-    transform: rotate(22deg);
+    transform: rotate(23deg);
 
-    color: #e6c05a !important;
+    color: #f2c44b;
 
-    font-size: 19px !important;
+    font-size: 19px;
 
-    font-weight: 700 !important;
+    font-weight: 800;
 
     letter-spacing: -1px;
 }
 
+
+/* Arrow */
+
 .logo-ring i {
     position: absolute;
 
-    right: -3px;
-    top: -5px;
+    right: -2px;
+    top: -6px;
 
-    color: #e0b53e !important;
+    color: #eebc42;
 
-    font-size: 14px !important;
+    font-size: 14px;
 
-    transform: rotate(22deg);
+    transform: rotate(23deg);
 }
 
 
 /* MARKETS */
 
 .logo-markets {
-    margin-top: 4px !important;
+    margin-top: 5px;
 
-    color: #e4e9f0 !important;
+    color: #e8edf4;
 
-    font-size: 12px !important;
+    font-size: 12px;
 
-    letter-spacing: 3.5px !important;
+    letter-spacing: 3.5px;
 
-    font-weight: 500 !important;
+    font-weight: 500;
 }
 
 
 /* UK */
 
 .logo-uk {
-    margin-top: 1px !important;
+    margin-top: 1px;
 
-    color: #76869b !important;
+    color: #8998aa;
 
-    font-size: 8px !important;
+    font-size: 8px;
 
-    letter-spacing: 2.5px !important;
+    letter-spacing: 2.5px;
 }
 
 
@@ -599,25 +597,29 @@ body {
    ========================================================= */
 
 .brand-area h1 {
-    margin: 4px 0 0 !important;
+    margin: 15px 0 0;
 
-    color: #e8c55a !important;
+    color: #ffd84b;
 
-    font-size:
-        clamp(42px, 7vw, 58px) !important;
+    font-size: clamp(
+        45px,
+        8.2vw,
+        64px
+    );
 
-    line-height: 1 !important;
+    line-height: 1;
 
-    font-weight: 700 !important;
+    font-weight: 800;
 
-    letter-spacing: -2.6px !important;
+    letter-spacing: -3px;
 
     white-space: nowrap;
 
     text-shadow:
-        0 0 5px rgba(255, 218, 92, 0.58),
-        0 0 16px rgba(237, 177, 27, 0.22),
-        0 3px 3px rgba(0, 0, 0, 0.65) !important;
+        0 0 4px rgba(255, 221, 72, 0.96),
+        0 0 12px rgba(255, 193, 25, 0.72),
+        0 0 26px rgba(255, 170, 0, 0.24),
+        0 3px 2px rgba(0, 0, 0, 0.52);
 }
 
 
@@ -626,46 +628,45 @@ body {
    ========================================================= */
 
 .gift-title {
-    display: flex !important;
+    display: flex;
 
-    align-items: center !important;
-    justify-content: center !important;
+    align-items: center;
+    justify-content: center;
 
-    gap: 13px !important;
+    gap: 12px;
 
-    margin-top: 13px !important;
+    margin-top: 14px;
 
-    color: #dce3eb !important;
+    color: #e1e7ee;
 
-    font-size: 20px !important;
+    font-size: 21px;
 
-    letter-spacing: 7px !important;
+    letter-spacing: 8px;
 
-    font-weight: 400 !important;
+    font-weight: 400;
 }
 
 .gift-title span {
     display: block;
 
-    width: 52px !important;
-
-    height: 1px !important;
+    width: 56px;
+    height: 1px;
 
     background:
         linear-gradient(
             90deg,
             transparent,
-            rgba(211, 168, 65, 0.62)
-        ) !important;
+            rgba(211, 164, 48, 0.85)
+        );
 }
 
 .gift-title span:last-child {
     background:
         linear-gradient(
             90deg,
-            rgba(211, 168, 65, 0.62),
+            rgba(211, 164, 48, 0.85),
             transparent
-        ) !important;
+        );
 }
 
 
@@ -674,13 +675,11 @@ body {
    ========================================================= */
 
 .login-form {
-    position: relative !important;
+    position: relative;
 
-    z-index: 30 !important;
+    z-index: 30;
 
-    width: 100% !important;
-
-    max-width: 100% !important;
+    width: 100%;
 }
 
 
@@ -689,25 +688,31 @@ body {
    ========================================================= */
 
 .form-group {
-    margin-bottom: 24px !important;
+    margin-bottom: 26px;
 }
 
+
+/* Labels */
+
 .form-group label {
-    display: block !important;
+    display: block;
 
     margin:
-        0 0 10px 0 !important;
+        0
+        0
+        13px
+        1px;
 
-    color: #e8edf5 !important;
+    color: #edf2f8;
 
-    font-size: 19px !important;
+    font-size: 22px;
 
-    line-height: 1.2 !important;
+    line-height: 1.15;
 
-    font-weight: 600 !important;
+    font-weight: 600;
 
     text-shadow:
-        0 2px 5px rgba(0,0,0,0.5);
+        0 2px 7px rgba(0,0,0,0.40);
 }
 
 
@@ -716,33 +721,36 @@ body {
    ========================================================= */
 
 .input-box {
-    width: 100% !important;
+    width: 100%;
+    height: 88px;
 
-    height: 64px !important;
+    display: flex;
+    align-items: center;
 
-    display: flex !important;
+    position: relative;
 
-    align-items: center !important;
+    overflow: hidden;
 
-    position: relative !important;
-
-    overflow: hidden !important;
-
-    border-radius: 22px !important;
+    border-radius: 25px;
 
     border:
-        1px solid rgba(86, 122, 157, 0.34) !important;
+        1px solid rgba(
+            77,
+            129,
+            173,
+            0.32
+        );
 
     background:
         linear-gradient(
             180deg,
-            rgba(7, 20, 34, 0.74),
-            rgba(2, 9, 17, 0.91)
-        ) !important;
+            rgba(4, 23, 43, 0.76),
+            rgba(2, 10, 23, 0.92)
+        );
 
     box-shadow:
-        inset 0 0 20px rgba(21, 86, 126, 0.035),
-        0 7px 20px rgba(0, 0, 0, 0.18) !important;
+        inset 0 0 25px rgba(0, 93, 163, 0.05),
+        0 8px 24px rgba(0,0,0,0.20);
 
     transition:
         border-color 0.2s ease,
@@ -750,7 +758,7 @@ body {
 }
 
 
-/* input shine */
+/* Input light */
 
 .input-box::after {
     content: "";
@@ -763,53 +771,53 @@ body {
 
     background:
         linear-gradient(
-            110deg,
-            rgba(91, 142, 182, 0.035),
-            transparent 30%,
-            transparent 70%,
-            rgba(54, 106, 145, 0.025)
+            115deg,
+            rgba(78, 147, 197, 0.045),
+            transparent 34%,
+            transparent 72%,
+            rgba(26, 88, 132, 0.035)
         );
 
     pointer-events: none;
 }
 
 
-/* focus */
+/* Focus */
 
 .input-box:focus-within {
     border-color:
-        rgba(68, 137, 190, 0.52) !important;
+        rgba(54, 140, 204, 0.55);
 
     box-shadow:
-        0 0 0 1px rgba(35, 105, 158, 0.08),
-        0 0 22px rgba(19, 102, 161, 0.08),
-        inset 0 0 22px rgba(12, 86, 135, 0.05) !important;
+        0 0 0 1px rgba(22, 112, 181, 0.08),
+        0 0 22px rgba(0, 105, 184, 0.09),
+        inset 0 0 28px rgba(0, 101, 179, 0.06);
 }
 
 
 /* =========================================================
-   INPUT ICON
+   INPUT ICONS
    ========================================================= */
 
 .input-icon {
-    width: 67px !important;
+    width: 72px;
+    flex: 0 0 72px;
 
-    flex: 0 0 67px !important;
+    display: flex;
 
-    display: flex !important;
+    align-items: center;
+    justify-content: center;
 
-    align-items: center !important;
-    justify-content: center !important;
+    color: #8d9fba;
 
-    color: #8398b4 !important;
-
-    font-size: 23px !important;
-
-    text-shadow: none !important;
+    font-size: 28px;
 
     position: relative;
 
     z-index: 2;
+
+    text-shadow:
+        0 0 7px rgba(120, 151, 185, 0.12);
 }
 
 
@@ -818,28 +826,29 @@ body {
    ========================================================= */
 
 .input-box input {
-    width: 100% !important;
+    width: 100%;
+    height: 100%;
 
-    height: 100% !important;
-
-    flex: 1 !important;
+    flex: 1;
 
     min-width: 0;
 
-    border: 0 !important;
+    border: 0;
+    outline: 0;
 
-    outline: 0 !important;
+    background: transparent;
 
-    background: transparent !important;
+    color: #edf3fa;
 
-    color: #e9eef5 !important;
+    font-size: 25px;
 
-    font-size: 20px !important;
-
-    font-weight: 400 !important;
+    font-weight: 400;
 
     padding:
-        0 10px 0 0 !important;
+        0
+        14px
+        0
+        0;
 
     position: relative;
 
@@ -847,55 +856,54 @@ body {
 }
 
 .input-box input::placeholder {
-    color: #7588a3 !important;
+    color: #8191aa;
 
-    opacity: 1 !important;
+    opacity: 1;
 }
 
 
 /* =========================================================
-   PASSWORD TOGGLE
+   PASSWORD EYE
    ========================================================= */
 
 .password-toggle {
-    width: 57px !important;
+    width: 65px;
+    height: 100%;
 
-    height: 100% !important;
+    flex: 0 0 65px;
 
-    flex: 0 0 57px !important;
+    display: flex;
 
-    display: flex !important;
+    align-items: center;
+    justify-content: center;
 
-    align-items: center !important;
+    color: #8192ad;
 
-    justify-content: center !important;
-
-    color: #8094af !important;
-
-    font-size: 21px !important;
+    font-size: 27px;
 
     cursor: pointer;
 
-    background: transparent !important;
+    background: transparent;
 
-    border: 0 !important;
-
-    text-shadow: none !important;
+    border: 0;
 
     position: relative;
 
-    z-index: 4;
+    z-index: 5;
 
     transition:
-        color 0.2s ease,
-        transform 0.2s ease;
+        color 0.18s ease,
+        filter 0.18s ease;
 }
 
 .password-toggle:hover,
 .password-toggle:focus {
-    color: #d6b03f !important;
+    color: #b5c3d6;
 
-    transform: scale(1.05);
+    filter:
+        drop-shadow(
+            0 0 7px rgba(130, 156, 186, 0.25)
+        );
 
     outline: none;
 }
@@ -906,40 +914,44 @@ body {
    ========================================================= */
 
 .login-btn {
-    width: 100% !important;
+    width: 100%;
+    height: 88px;
 
-    height: 66px !important;
-
-    margin-top: 7px !important;
+    margin-top: 7px;
 
     border:
-        1px solid rgba(255, 231, 150, 0.55) !important;
+        1px solid rgba(
+            255,
+            233,
+            154,
+            0.70
+        );
 
-    border-radius: 21px !important;
+    border-radius: 25px;
 
     background:
         linear-gradient(
             100deg,
-            #ffe99b 0%,
-            #ffd226 30%,
-            #e9a900 72%,
-            #a96c00 100%
-        ) !important;
+            #fff0a7 0%,
+            #ffdc39 20%,
+            #ffc400 52%,
+            #c98700 100%
+        );
 
-    color: #15130d !important;
+    color: #17130a;
 
-    font-family: inherit !important;
+    font-family: inherit;
 
-    font-size: 25px !important;
+    font-size: 28px;
 
-    font-weight: 700 !important;
+    font-weight: 700;
 
     cursor: pointer;
 
     box-shadow:
-        0 9px 28px rgba(222, 157, 0, 0.22),
-        0 0 30px rgba(244, 187, 21, 0.10),
-        inset 0 1px 0 rgba(255, 255, 255, 0.58) !important;
+        0 10px 30px rgba(225, 163, 0, 0.30),
+        0 0 34px rgba(255, 190, 0, 0.16),
+        inset 0 2px 0 rgba(255,255,255,0.58);
 
     transition:
         transform 0.18s ease,
@@ -948,13 +960,14 @@ body {
 }
 
 .login-btn:hover {
-    filter: brightness(1.04);
+    filter: brightness(1.045);
 
     transform: translateY(-1px);
 
     box-shadow:
-        0 12px 30px rgba(222, 157, 0, 0.28),
-        0 0 34px rgba(244, 187, 21, 0.14) !important;
+        0 13px 34px rgba(225, 163, 0, 0.36),
+        0 0 40px rgba(255, 190, 0, 0.22),
+        inset 0 2px 0 rgba(255,255,255,0.62);
 }
 
 .login-btn:active {
@@ -963,103 +976,108 @@ body {
 
 
 /* =========================================================
-   LOGIN LINKS
+   BOTTOM LINKS
    ========================================================= */
 
 .login-links {
-    width: 100% !important;
+    width: 100%;
 
-    display: flex !important;
+    display: flex;
 
-    align-items: center !important;
+    align-items: center;
 
-    justify-content: space-between !important;
+    justify-content: space-between;
 
-    gap: 20px !important;
+    gap: 20px;
 
     padding:
-        24px 8px 0 !important;
+        25px
+        10px
+        0;
 }
 
-
-/* individual link */
-
 .login-link {
-    min-height: 35px !important;
+    min-height: 42px;
 
-    display: inline-flex !important;
+    display: inline-flex;
 
-    align-items: center !important;
+    align-items: center;
+    justify-content: center;
 
-    justify-content: center !important;
+    gap: 9px;
 
-    gap: 8px !important;
+    padding:
+        3px
+        6px;
 
-    padding: 3px 5px !important;
+    border: 0;
 
-    border: 0 !important;
+    border-radius: 10px;
 
-    border-radius: 8px !important;
+    background: transparent;
 
-    background: transparent !important;
+    color: #e9ae24;
 
-    color: #d5a92f !important;
+    text-decoration: none;
 
-    text-decoration: none !important;
+    font-size: 16px;
 
-    font-size: 15px !important;
-
-    font-weight: 600 !important;
+    font-weight: 600;
 
     white-space: nowrap;
 
     text-shadow:
-        0 0 8px rgba(219, 168, 28, 0.08);
+        0 0 9px rgba(255, 185, 0, 0.10);
 
     transition:
+        transform 0.18s ease,
         color 0.18s ease,
-        transform 0.18s ease;
+        filter 0.18s ease;
 }
 
 .login-link i {
-    color: #d9ad35 !important;
+    color: #eeb92d;
 
-    font-size: 18px !important;
+    font-size: 20px;
 
     text-shadow:
-        0 0 8px rgba(221, 170, 32, 0.16) !important;
+        0 0 7px rgba(255, 193, 0, 0.30);
 }
 
 .login-link:hover {
-    color: #f0ca5a !important;
-
     transform: translateY(-1px);
-}
 
-.login-link:hover i {
-    color: #efc44c !important;
+    color: #ffd55b;
+
+    filter:
+        drop-shadow(
+            0 0 7px rgba(255, 190, 0, 0.14)
+        );
 }
 
 
 /* =========================================================
-   BOTTOM MARKET ART
+   BOTTOM MARKET GRAPHIC
    ========================================================= */
 
 .bottom-market {
-    position: absolute !important;
+    position: absolute;
 
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
+    left: 0;
+    right: 0;
+    bottom: 0;
 
-    height: 150px !important;
+    height: 165px;
 
     pointer-events: none;
 
-    opacity: 0.32 !important;
+    opacity: 0.43;
 
-    z-index: 2 !important;
+    z-index: 2;
 }
+
+
+/* Bottom wave */
 
 .bottom-line {
     position: absolute;
@@ -1067,7 +1085,7 @@ body {
     left: 0;
     right: 0;
 
-    bottom: 52px;
+    bottom: 53px;
 
     height: 1px;
 
@@ -1075,10 +1093,13 @@ body {
         linear-gradient(
             90deg,
             transparent,
-            rgba(44, 112, 161, 0.45),
+            rgba(39, 124, 191, 0.72),
             transparent
         );
 }
+
+
+/* Bottom bars */
 
 .bottom-bars {
     position: absolute;
@@ -1088,7 +1109,7 @@ body {
 
     bottom: 0;
 
-    height: 120px;
+    height: 128px;
 
     display: flex;
 
@@ -1100,55 +1121,66 @@ body {
 .bottom-bars span {
     display: block;
 
-    width: 38px;
+    width: 42px;
 
     border:
-        1px solid rgba(50, 115, 162, 0.17);
+        1px solid rgba(
+            52,
+            129,
+            190,
+            0.23
+        );
 
     border-bottom: none;
 
     background:
         linear-gradient(
             180deg,
-            rgba(27, 92, 138, 0.09),
-            rgba(2, 20, 34, 0.025)
+            rgba(23, 95, 151, 0.13),
+            rgba(3, 28, 49, 0.03)
         );
 
-    border-radius: 20px 20px 0 0;
+    border-radius:
+        23px
+        23px
+        0
+        0;
 }
 
 .bottom-bars span:nth-child(1) {
-    height: 45px;
+    height: 55px;
 }
 
 .bottom-bars span:nth-child(2) {
-    width: 52px;
-    height: 68px;
+    width: 60px;
+    height: 80px;
+    border-radius: 50% 50% 0 0;
 }
 
 .bottom-bars span:nth-child(3) {
-    width: 28px;
-    height: 92px;
+    width: 30px;
+    height: 106px;
 }
 
 .bottom-bars span:nth-child(4) {
-    width: 65px;
-    height: 58px;
+    width: 80px;
+    height: 64px;
+    border-radius: 50% 50% 0 0;
 }
 
 .bottom-bars span:nth-child(5) {
-    width: 40px;
-    height: 103px;
+    width: 44px;
+    height: 114px;
 }
 
 .bottom-bars span:nth-child(6) {
-    width: 58px;
-    height: 70px;
+    width: 70px;
+    height: 76px;
 }
 
 .bottom-bars span:nth-child(7) {
-    width: 34px;
-    height: 112px;
+    width: 36px;
+    height: 125px;
 }
 
 
@@ -1159,377 +1191,341 @@ body {
 @media (max-width: 600px) {
 
     .login-page {
-        min-height: 100dvh !important;
+        min-height: 100dvh;
 
         padding:
-            20px 14px !important;
+            20px
+            13px;
 
-        align-items: stretch !important;
+        align-items: stretch;
     }
 
     .login-card {
-        width: 100% !important;
+        width: 100%;
 
         min-height:
-            calc(100dvh - 40px) !important;
+            calc(100dvh - 40px);
 
-        padding:
-            20px 24px 35px !important;
-
-        border-radius: 28px !important;
+        border-radius: 28px;
     }
 
     .language-btn {
-        width: 56px !important;
-        height: 56px !important;
+        top: 12px;
+        right: 12px;
 
-        top: 13px !important;
-        right: 13px !important;
+        width: 58px;
+        height: 58px;
 
-        font-size: 26px !important;
+        font-size: 27px;
     }
 
     .market-background {
-        width: 590px !important;
-        height: 590px !important;
+        width: 650px;
+        height: 650px;
 
-        top: 25px !important;
+        top: 31px;
     }
 
     .market-background::before {
-        width: 550px !important;
-        height: 550px !important;
+        width: 585px;
+        height: 585px;
     }
 
     .market-background::after {
-        width: 455px !important;
-        height: 455px !important;
+        width: 500px;
+        height: 500px;
 
-        top: 43px !important;
+        top: 38px;
     }
 
     .market-dots {
-        width: 420px !important;
-        height: 220px !important;
+        width: 500px;
+        height: 250px;
 
-        top: 120px !important;
+        top: 153px;
     }
 
     .market-bars {
-        width: 480px !important;
-        height: 210px !important;
+        width: 570px;
+        height: 245px;
 
-        top: 150px !important;
+        top: 175px;
     }
 
     .brand-area {
-        padding-top: 50px !important;
+        padding-top: 70px;
 
-        margin-bottom: 28px !important;
-    }
-
-    .brand-logo {
-        transform: scale(0.78) !important;
+        margin-bottom: 32px;
     }
 
     .brand-area h1 {
         font-size:
-            clamp(41px, 10vw, 55px) !important;
+            clamp(
+                43px,
+                11vw,
+                64px
+            );
 
-        letter-spacing: -2.5px !important;
+        letter-spacing: -3px;
     }
 
     .gift-title {
-        margin-top: 12px !important;
+        font-size: 20px;
 
-        font-size: 19px !important;
-
-        letter-spacing: 7px !important;
+        letter-spacing: 7px;
     }
 
     .form-group {
-        margin-bottom: 23px !important;
+        margin-bottom: 25px;
     }
 
     .form-group label {
-        font-size: 18px !important;
+        font-size: 21px;
 
-        margin-bottom: 9px !important;
+        margin-bottom: 12px;
     }
 
     .input-box {
-        height: 63px !important;
+        height: 88px;
 
-        border-radius: 20px !important;
+        border-radius: 24px;
     }
 
     .input-icon {
-        width: 64px !important;
+        width: 70px;
+        flex-basis: 70px;
 
-        flex-basis: 64px !important;
-
-        font-size: 21px !important;
+        font-size: 27px;
     }
 
     .input-box input {
-        font-size: 19px !important;
+        font-size: 23px;
     }
 
     .password-toggle {
-        width: 54px !important;
+        width: 64px;
+        flex-basis: 64px;
 
-        flex-basis: 54px !important;
-
-        font-size: 20px !important;
+        font-size: 26px;
     }
 
     .login-btn {
-        height: 65px !important;
+        height: 88px;
 
-        border-radius: 20px !important;
+        border-radius: 24px;
 
-        font-size: 24px !important;
+        font-size: 27px;
     }
 
     .login-links {
-        padding-top: 22px !important;
+        padding:
+            24px
+            5px
+            0;
 
-        gap: 12px !important;
+        gap: 12px;
     }
 
     .login-link {
-        font-size: 14px !important;
+        font-size: 16px;
 
-        gap: 7px !important;
+        gap: 8px;
     }
 
     .login-link i {
-        font-size: 17px !important;
+        font-size: 20px;
     }
 
     .bottom-market {
-        height: 145px !important;
+        height: 165px;
+    }
+
+    .bottom-bars {
+        left: 22px;
+        right: 22px;
     }
 }
 
 
 /* =========================================================
-   SMALL MOBILE — 430px
+   MOBILE — 430px
    ========================================================= */
 
 @media (max-width: 430px) {
 
     .login-page {
         padding:
-            12px 9px !important;
+            14px
+            9px;
     }
 
     .login-card {
         min-height:
-            calc(100dvh - 24px) !important;
+            calc(100dvh - 28px);
 
-        padding:
-            18px 20px 30px !important;
-
-        border-radius: 27px !important;
+        border-radius: 27px;
     }
 
     .language-btn {
-        width: 52px !important;
-        height: 52px !important;
+        width: 56px;
+        height: 56px;
 
-        font-size: 24px !important;
-
-        top: 11px !important;
-        right: 11px !important;
-    }
-
-    .market-background {
-        width: 540px !important;
-        height: 540px !important;
-
-        top: 23px !important;
-    }
-
-    .market-background::before {
-        width: 510px !important;
-        height: 510px !important;
-    }
-
-    .market-background::after {
-        width: 420px !important;
-        height: 420px !important;
+        font-size: 26px;
     }
 
     .brand-area {
-        padding-top: 48px !important;
+        padding-top: 67px;
 
-        margin-bottom: 26px !important;
+        margin-bottom: 28px;
     }
 
     .brand-logo {
-        transform: scale(0.73) !important;
+        transform: scale(0.93);
     }
 
     .brand-area h1 {
-        font-size: 40px !important;
+        font-size: 45px;
 
-        letter-spacing: -2.3px !important;
+        letter-spacing: -2.7px;
     }
 
     .gift-title {
-        font-size: 18px !important;
+        font-size: 19px;
 
-        letter-spacing: 6px !important;
-
-        gap: 10px !important;
-    }
-
-    .gift-title span {
-        width: 43px !important;
+        letter-spacing: 6px;
     }
 
     .form-group label {
-        font-size: 17px !important;
+        font-size: 21px;
     }
 
     .input-box {
-        height: 61px !important;
-
-        border-radius: 19px !important;
+        height: 86px;
     }
 
     .input-icon {
-        width: 59px !important;
-
-        flex-basis: 59px !important;
-
-        font-size: 20px !important;
+        width: 68px;
+        flex-basis: 68px;
     }
 
     .input-box input {
-        font-size: 18px !important;
+        font-size: 21px;
     }
 
     .password-toggle {
-        width: 50px !important;
-
-        flex-basis: 50px !important;
-
-        font-size: 19px !important;
+        width: 61px;
+        flex-basis: 61px;
     }
 
     .login-btn {
-        height: 63px !important;
+        height: 86px;
 
-        font-size: 23px !important;
-
-        border-radius: 19px !important;
+        font-size: 26px;
     }
 
     .login-links {
-        padding:
-            20px 2px 0 !important;
+        gap: 8px;
+
+        padding-left: 1px;
+        padding-right: 1px;
     }
 
     .login-link {
-        font-size: 13px !important;
+        font-size: 15px;
 
-        gap: 6px !important;
+        gap: 7px;
     }
 
     .login-link i {
-        font-size: 16px !important;
+        font-size: 19px;
+    }
+
+    .bottom-market {
+        height: 145px;
+    }
+
+    .bottom-bars {
+        left: 15px;
+        right: 15px;
     }
 }
 
 
 /* =========================================================
-   VERY SMALL SCREEN — 360px
+   SMALL MOBILE — 360px
    ========================================================= */
 
 @media (max-width: 360px) {
 
     .login-card {
-        padding-left: 16px !important;
-        padding-right: 16px !important;
+        padding-left: 16px;
+        padding-right: 16px;
     }
 
     .language-btn {
-        width: 49px !important;
-        height: 49px !important;
+        width: 53px;
+        height: 53px;
 
-        font-size: 22px !important;
+        font-size: 24px;
     }
 
     .brand-area {
-        padding-top: 46px !important;
+        padding-top: 65px;
     }
 
     .brand-area h1 {
-        font-size: 36px !important;
+        font-size: 40px;
+
+        letter-spacing: -2.4px;
     }
 
     .gift-title {
-        font-size: 16px !important;
+        font-size: 17px;
 
-        letter-spacing: 5px !important;
+        letter-spacing: 5px;
     }
 
     .form-group label {
-        font-size: 16px !important;
+        font-size: 20px;
     }
 
     .input-box {
-        height: 58px !important;
+        height: 81px;
+
+        border-radius: 22px;
     }
 
     .input-icon {
-        width: 54px !important;
+        width: 62px;
+        flex-basis: 62px;
 
-        flex-basis: 54px !important;
-
-        font-size: 19px !important;
+        font-size: 25px;
     }
 
     .input-box input {
-        font-size: 17px !important;
+        font-size: 19px;
     }
 
     .password-toggle {
-        width: 46px !important;
+        width: 56px;
+        flex-basis: 56px;
 
-        flex-basis: 46px !important;
-
-        font-size: 18px !important;
+        font-size: 24px;
     }
 
     .login-btn {
-        height: 60px !important;
+        height: 81px;
 
-        font-size: 21px !important;
+        border-radius: 22px;
+
+        font-size: 23px;
     }
 
     .login-link {
-        font-size: 12px !important;
+        font-size: 13px;
     }
 
     .login-link i {
-        font-size: 15px !important;
-    }
-}
-
-
-/* =========================================================
-   REDUCE MOTION
-   ========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-    *,
-    *::before,
-    *::after {
-        animation: none !important;
-        transition: none !important;
+        font-size: 17px;
     }
 }
