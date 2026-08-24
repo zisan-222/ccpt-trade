@@ -1375,61 +1375,58 @@ if (
 /* =========================================================  
    OPEN LONG  
    ========================================================= */  
-  
-if (longButton) {
+  if (longButton) {
 
     longButton.addEventListener(
         "click",
         function () {
 
-            cptShowTradeConfirmation(
-                "LONG",
-                price,
-                selectedLeverage,
-                function () {
+            if (
+                selectedSide &&
+                entryPrice &&
+                tradeAmountValue
+            ) {
+                alert(
+                    "You already have an open trade. Close it before opening another trade."
+                );
+                return;
+            }
 
-                    openTradeModal(
-                        "LONG"
-                    );
-
-                }
-            );
+            openTradeModal("LONG");
 
         }
     );
 
-} 
-  
+}
   
 /* =========================================================  
    OPEN SHORT  
    ========================================================= */  
-  
 if (shortButton) {
 
     shortButton.addEventListener(
         "click",
         function () {
 
-            cptShowTradeConfirmation(
-                "SHORT",
-                price,
-                selectedLeverage,
-                function () {
+            if (
+                selectedSide &&
+                entryPrice &&
+                tradeAmountValue
+            ) {
+                alert(
+                    "You already have an open trade. Close it before opening another trade."
+                );
+                return;
+            }
 
-                    openTradeModal(
-                        "SHORT"
-                    );
-
-                }
-            );
+            openTradeModal("SHORT");
 
         }
     );
 
-}  
-  
-  
+}
+
+
 /* =========================================================  
    OPEN TRADE MODAL  
    ========================================================= */  
@@ -2491,12 +2488,27 @@ async function closeCurrentTrade() {
         );  
   
   
-      cptShowTradeClosed(
-    closedSide,
-    entryPrice,
-    closePrice,
-    finalProfitLoss
-);
+      if (typeof window.cptShowTradeClosed === "function") {
+
+    window.cptShowTradeClosed(
+        closedSide,
+        entryPrice,
+        closePrice,
+        finalProfitLoss
+    );
+
+} else {
+
+    alert(
+        closedSide +
+        " trade closed successfully.\n\n" +
+        "P/L: " +
+        (finalProfitLoss >= 0 ? "+" : "") +
+        "$" +
+        finalProfitLoss.toFixed(2)
+    );
+
+}
   
   
         console.log(  
