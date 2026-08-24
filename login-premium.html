@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <title>CptMarkets - Login</title>
+
+    <link rel="stylesheet" href="login-premium.css">
+
+    <!-- Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+</head>
+
+<body>
+
+    <div class="login-page">
+
+        <!-- Main Glass Container -->
+        <div class="login-card">
+
+            <!-- Language -->
+            <button class="language-btn" type="button" aria-label="Language">
+                🇬🇧
+            </button>
+
+            <!-- Decorative Background -->
+            <div class="market-background">
+
+                <div class="market-lines line-1"></div>
+                <div class="market-lines line-2"></div>
+                <div class="market-lines line-3"></div>
+
+                <div class="market-bars">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <div class="market-dots"></div>
+
+                <div class="circle-glow"></div>
+            </div>
+
+
+            <!-- Logo -->
+            <div class="brand-area">
+
+                <div class="brand-logo">
+                    <div class="logo-ring">
+                        <span>CPT</span>
+                        <i class="fa-solid fa-arrow-up-right"></i>
+                    </div>
+
+                    <div class="logo-markets">
+                        MARKETS
+                    </div>
+
+                    <div class="logo-uk">
+                        UK
+                    </div>
+                </div>
+
+                <h1>CptMarkets</h1>
+
+                <div class="gift-title">
+                    <span></span>
+                    GIFT
+                    <span></span>
+                </div>
+
+            </div>
+
+
+            <!-- Login Form -->
+            <form id="premiumLoginForm" class="login-form">
+
+                <!-- Username -->
+                <div class="form-group">
+
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <div class="input-box">
+
+                        <i class="fa-regular fa-user input-icon"></i>
+
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            placeholder="Username"
+                            autocomplete="username"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Password -->
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <div class="input-box">
+
+                        <i class="fa-solid fa-lock input-icon"></i>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            id="passwordToggle"
+                            aria-label="Show password"
+                        >
+                            <i class="fa-regular fa-eye-slash"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Login Button -->
+                <button
+                    type="submit"
+                    class="login-btn"
+                    id="loginButton"
+                >
+                    <span>Go to Sign In</span>
+                </button>
+
+
+                <!-- Bottom Links -->
+                <div class="login-links">
+
+                    <a href="register.html" class="login-link">
+                        <i class="fa-regular fa-user"></i>
+                        <span>Create Account</span>
+                    </a>
+
+                    <a href="#" class="login-link" id="forgotPassword">
+                        <i class="fa-solid fa-lock"></i>
+                        <span>Forgot Password?</span>
+                    </a>
+
+                </div>
+
+            </form>
+
+
+            <!-- Bottom Decorative Area -->
+            <div class="bottom-market">
+
+                <div class="bottom-bars">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <div class="bottom-line"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+        /*
+         * PASSWORD SHOW / HIDE
+         */
+        const passwordInput = document.getElementById("password");
+        const passwordToggle = document.getElementById("passwordToggle");
+
+        passwordToggle.addEventListener("click", function () {
+
+            const icon = this.querySelector("i");
+
+            if (passwordInput.type === "password") {
+
+                passwordInput.type = "text";
+
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+
+                this.setAttribute("aria-label", "Hide password");
+
+            } else {
+
+                passwordInput.type = "password";
+
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+
+                this.setAttribute("aria-label", "Show password");
+            }
+
+        });
+
+
+        /*
+         * LOGIN CONNECTION
+         *
+         * এখানে আপনার existing Firebase/login function
+         * পরে connect করা হবে।
+         */
+
+        const loginForm = document.getElementById("premiumLoginForm");
+
+        loginForm.addEventListener("submit", function (event) {
+
+            event.preventDefault();
+
+            const username =
+                document.getElementById("username").value.trim();
+
+            const password =
+                document.getElementById("password").value;
+
+            if (!username || !password) {
+                return;
+            }
+
+            /*
+             * IMPORTANT:
+             *
+             * আপনার পুরোনো authentication system
+             * এখানে connect করা হবে।
+             *
+             * এখন কোনো existing login logic পরিবর্তন করা হচ্ছে না।
+             */
+
+            console.log("Login:", username);
+
+        });
+
+
+        /*
+         * FORGOT PASSWORD
+         *
+         * আপনার existing forgot-password page/function
+         * এখানে পরে বসানো যাবে।
+         */
+
+        document
+            .getElementById("forgotPassword")
+            .addEventListener("click", function (event) {
+
+                event.preventDefault();
+
+                console.log("Forgot password");
+
+            });
+    </script>
+
+</body>
+</html>
