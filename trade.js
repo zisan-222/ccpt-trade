@@ -2,7 +2,25 @@
    CPTMARKETS TRADE
    trade.js
    FINAL MOBILE + TRADINGVIEW + TRADE SYSTEM
-   CONNECTED WITH trade-popup.js
+
+   CONNECTED WITH:
+   - balance.js
+   - firebase
+   - trade-popup.js
+
+   TRADE FLOW:
+
+   LONG / SHORT
+        ↓
+   CPT Confirmation Popup
+        ↓
+   Continue
+        ↓
+   Balance Deduction
+        ↓
+   Active Trade
+        ↓
+   Trade Opened Popup
    ========================================================= */
 
 
@@ -13,7 +31,9 @@
 (function fixMobileViewport() {
 
     let viewport =
-        document.querySelector('meta[name="viewport"]');
+        document.querySelector(
+            'meta[name="viewport"]'
+        );
 
     if (!viewport) {
 
@@ -23,7 +43,10 @@
         viewport.name =
             "viewport";
 
-        document.head.appendChild(viewport);
+        document.head.appendChild(
+            viewport
+        );
+
     }
 
     viewport.setAttribute(
@@ -64,10 +87,14 @@ let tradeFirebaseUser = null;
    ========================================================= */
 
 const livePrice =
-    document.getElementById("livePrice");
+    document.getElementById(
+        "livePrice"
+    );
 
 const changeBox =
-    document.getElementById("changeBox");
+    document.getElementById(
+        "changeBox"
+    );
 
 
 /* =========================================================
@@ -86,26 +113,13 @@ const shortButton =
 
 
 /* =========================================================
-   TRADE MODAL ELEMENTS
+   MAIN AMOUNT INPUT
    ========================================================= */
 
-const tradeModal =
-    document.getElementById("tradeModal");
-
-const modalPrice =
-    document.getElementById("modalPrice");
-
-const modalTitle =
-    document.getElementById("modalTitle");
-
-const confirmTradeBtn =
-    document.getElementById("confirmTradeBtn");
-
-const modalClose =
-    document.getElementById("modalClose");
-
 const amountInput =
-    document.getElementById("amount");
+    document.getElementById(
+        "amount"
+    );
 
 
 /* =========================================================
@@ -115,14 +129,22 @@ const amountInput =
 function fixMobileChartHeight() {
 
     const chart =
-        document.getElementById("tvchart");
+        document.getElementById(
+            "tvchart"
+        );
 
     const card =
-        document.querySelector(".chart-card");
+        document.querySelector(
+            ".chart-card"
+        );
+
 
     if (!chart) {
+
         return;
+
     }
+
 
     const height =
         window.innerWidth <= 600
@@ -412,13 +434,33 @@ function saveActiveTrade() {
 
 function clearActiveTrade() {
 
-    localStorage.removeItem("selectedSide");
-    localStorage.removeItem("entryPrice");
-    localStorage.removeItem("tradeAmountValue");
-    localStorage.removeItem("currentTradeId");
-    localStorage.removeItem("currentTradePrice");
-    localStorage.removeItem("tradeLeverage");
-    localStorage.removeItem("currentTradeUID");
+    localStorage.removeItem(
+        "selectedSide"
+    );
+
+    localStorage.removeItem(
+        "entryPrice"
+    );
+
+    localStorage.removeItem(
+        "tradeAmountValue"
+    );
+
+    localStorage.removeItem(
+        "currentTradeId"
+    );
+
+    localStorage.removeItem(
+        "currentTradePrice"
+    );
+
+    localStorage.removeItem(
+        "tradeLeverage"
+    );
+
+    localStorage.removeItem(
+        "currentTradeUID"
+    );
 
 }
 
@@ -1328,6 +1370,7 @@ if (
 
 /* =========================================================
    OPEN LONG
+   DIRECT CPT POPUP
    ========================================================= */
 
 if (longButton) {
@@ -1336,22 +1379,7 @@ if (longButton) {
         "click",
         function () {
 
-            if (
-                selectedSide &&
-                entryPrice &&
-                tradeAmountValue
-            ) {
-
-                alert(
-                    "You already have an open trade. Close it before opening another trade."
-                );
-
-                return;
-
-            }
-
-
-            openTradeModal(
+            startPopupTrade(
                 "LONG"
             );
 
@@ -1363,6 +1391,7 @@ if (longButton) {
 
 /* =========================================================
    OPEN SHORT
+   DIRECT CPT POPUP
    ========================================================= */
 
 if (shortButton) {
@@ -1371,22 +1400,7 @@ if (shortButton) {
         "click",
         function () {
 
-            if (
-                selectedSide &&
-                entryPrice &&
-                tradeAmountValue
-            ) {
-
-                alert(
-                    "You already have an open trade. Close it before opening another trade."
-                );
-
-                return;
-
-            }
-
-
-            openTradeModal(
+            startPopupTrade(
                 "SHORT"
             );
 
@@ -1397,12 +1411,14 @@ if (shortButton) {
 
 
 /* =========================================================
-   OPEN TRADE MODAL
+   START POPUP TRADE
    ========================================================= */
 
-function openTradeModal(
-    side
-) {
+function startPopupTrade(side) {
+
+    /* ---------------------------------------------
+       Prevent second active trade
+       --------------------------------------------- */
 
     if (
         selectedSide &&
@@ -1419,151 +1435,9 @@ function openTradeModal(
     }
 
 
-    selectedSide =
-        side;
-
-    entryPrice =
-        price;
-
-
-    if (modalTitle) {
-
-        modalTitle.innerText =
-            "Open " + side;
-
-    }
-
-
-    if (modalPrice) {
-
-        modalPrice.innerText =
-            entryPrice.toFixed(2);
-
-    }
-
-
-    const orderAmount =
-        document.getElementById(
-            "orderAmount"
-        );
-
-
-    if (
-        orderAmount &&
-        amountInput
-    ) {
-
-        orderAmount.value =
-            amountInput.value || "";
-
-    }
-
-
-    if (tradeModal) {
-
-        tradeModal.style.display =
-            "flex";
-
-    }
-
-}
-
-
-/* =========================================================
-   CANCEL TRADE MODAL
-   ========================================================= */
-
-function cancelTradeModal() {
-
-    if (tradeModal) {
-
-        tradeModal.style.display =
-            "none";
-
-    }
-
-    selectedSide =
-        null;
-
-    entryPrice =
-        null;
-
-}
-
-
-/* =========================================================
-   CLOSE MODAL
-   ========================================================= */
-
-if (modalClose) {
-
-    modalClose.addEventListener(
-        "click",
-        cancelTradeModal
-    );
-
-}
-
-
-if (tradeModal) {
-
-    tradeModal.addEventListener(
-        "click",
-        function (event) {
-
-            if (
-                event.target ===
-                tradeModal
-            ) {
-
-                cancelTradeModal();
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   CONFIRM TRADE BUTTON
-   ========================================================= */
-
-if (confirmTradeBtn) {
-
-    confirmTradeBtn.addEventListener(
-        "click",
-        async function () {
-
-            await confirmTrade();
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   CONFIRM TRADE
-   CONNECTED TO trade-popup.js
-   ========================================================= */
-
-async function confirmTrade() {
-
-    if (
-        !selectedSide ||
-        !entryPrice
-    ) {
-
-        alert(
-            "Please select LONG or SHORT."
-        );
-
-        return;
-
-    }
-
+    /* ---------------------------------------------
+       Login check
+       --------------------------------------------- */
 
     if (!tradeFirebaseUser) {
 
@@ -1576,53 +1450,12 @@ async function confirmTrade() {
     }
 
 
-    const orderAmountInput =
-        document.getElementById(
-            "orderAmount"
-        );
-
-
-    let orderAmount =
-        Number(
-            orderAmountInput
-                ? orderAmountInput.value
-                : 0
-        );
-
-
-    if (
-        !orderAmount ||
-        orderAmount <= 0
-    ) {
-
-        orderAmount =
-            Number(
-                amountInput
-                    ? amountInput.value
-                    : 0
-            );
-
-    }
-
-
-    if (
-        !Number.isFinite(orderAmount) ||
-        orderAmount <= 0
-    ) {
-
-        alert(
-            "Please enter a valid amount."
-        );
-
-        return;
-
-    }
-
+    /* ---------------------------------------------
+       Balance functions check
+       --------------------------------------------- */
 
     if (
         typeof window.hasEnoughBalance !==
-        "function" ||
-        typeof window.subtractBalance !==
         "function"
     ) {
 
@@ -1635,9 +1468,39 @@ async function confirmTrade() {
     }
 
 
+    /* ---------------------------------------------
+       Get amount from main trade panel
+       --------------------------------------------- */
+
+    const amount =
+        Number(
+            amountInput
+                ? amountInput.value
+                : 0
+        );
+
+
+    if (
+        !Number.isFinite(amount) ||
+        amount <= 0
+    ) {
+
+        alert(
+            "Please enter a valid amount."
+        );
+
+        return;
+
+    }
+
+
+    /* ---------------------------------------------
+       Check available balance
+       --------------------------------------------- */
+
     if (
         !window.hasEnoughBalance(
-            orderAmount
+            amount
         )
     ) {
 
@@ -1650,38 +1513,41 @@ async function confirmTrade() {
     }
 
 
-    /*
-     * =====================================================
-     * IMPORTANT
-     *
-     * এখানে আর সাথে সাথে balance deduct করা হচ্ছে না।
-     *
-     * আগে trade-popup.js এর confirmation popup দেখানো হবে।
-     * User "Continue" চাপলেই completeTradeOpen() চলবে।
-     * =====================================================
-     */
+    /* ---------------------------------------------
+       Capture trade values
+       BEFORE popup
+       --------------------------------------------- */
 
     const confirmationSide =
-        selectedSide;
+        side;
+
 
     const confirmationPrice =
-        Number(entryPrice);
+        Number(price);
+
+
+    const confirmationAmount =
+        Number(
+            amount.toFixed(2)
+        );
+
 
     const confirmationLeverage =
         Number(selectedLeverage);
 
-    const confirmationAmount =
-        Number(orderAmount.toFixed(2));
 
-
-    /*
-     * Make sure trade-popup.js is loaded.
-     */
+    /* ---------------------------------------------
+       Check CPT popup system
+       --------------------------------------------- */
 
     if (
         typeof window.cptShowTradeConfirmation !==
         "function"
     ) {
+
+        console.error(
+            "CPT Trade Popup function is not available."
+        );
 
         alert(
             "Trade confirmation popup is not loaded. Please check trade-popup.js."
@@ -1692,9 +1558,9 @@ async function confirmTrade() {
     }
 
 
-    /*
-     * Show CPT Markets confirmation popup.
-     */
+    /* ---------------------------------------------
+       SHOW CPT CONFIRMATION POPUP
+       --------------------------------------------- */
 
     window.cptShowTradeConfirmation(
 
@@ -1707,10 +1573,15 @@ async function confirmTrade() {
         function () {
 
             completeTradeOpen(
+
                 confirmationSide,
+
                 confirmationPrice,
+
                 confirmationAmount,
+
                 confirmationLeverage
+
             );
 
         }
@@ -1722,7 +1593,7 @@ async function confirmTrade() {
 
 /* =========================================================
    COMPLETE TRADE OPEN
-   This runs ONLY after popup Continue
+   Runs ONLY after popup Continue
    ========================================================= */
 
 async function completeTradeOpen(
@@ -1732,9 +1603,9 @@ async function completeTradeOpen(
     confirmationLeverage
 ) {
 
-    /*
-     * Re-check login before actually opening.
-     */
+    /* ---------------------------------------------
+       Re-check login
+       --------------------------------------------- */
 
     if (!tradeFirebaseUser) {
 
@@ -1747,9 +1618,9 @@ async function completeTradeOpen(
     }
 
 
-    /*
-     * Re-check balance before deduction.
-     */
+    /* ---------------------------------------------
+       Re-check balance system
+       --------------------------------------------- */
 
     if (
         typeof window.hasEnoughBalance !==
@@ -1767,6 +1638,10 @@ async function completeTradeOpen(
     }
 
 
+    /* ---------------------------------------------
+       Re-check balance
+       --------------------------------------------- */
+
     if (
         !window.hasEnoughBalance(
             confirmationAmount
@@ -1782,15 +1657,35 @@ async function completeTradeOpen(
     }
 
 
-    /*
-     * Deduct balance ONLY after user
-     * presses Continue.
-     */
+    /* ---------------------------------------------
+       Deduct balance
+       ONLY NOW
+       --------------------------------------------- */
 
-    const deducted =
-        await window.subtractBalance(
-            confirmationAmount
+    let deducted = false;
+
+
+    try {
+
+        deducted =
+            await window.subtractBalance(
+                confirmationAmount
+            );
+
+    } catch (error) {
+
+        console.error(
+            "Balance deduction failed:",
+            error
         );
+
+        alert(
+            "Unable to deduct balance. Please try again."
+        );
+
+        return;
+
+    }
 
 
     if (!deducted) {
@@ -1804,58 +1699,81 @@ async function completeTradeOpen(
     }
 
 
-    /*
-     * Set final trade state.
-     */
+    /* ---------------------------------------------
+       Final trade state
+       --------------------------------------------- */
 
     selectedSide =
         confirmationSide;
 
+
     entryPrice =
-        Number(confirmationPrice);
+        Number(
+            confirmationPrice
+        );
+
 
     tradeAmountValue =
-        Number(confirmationAmount.toFixed(2));
+        Number(
+            confirmationAmount.toFixed(2)
+        );
+
 
     selectedLeverage =
-        Number(confirmationLeverage);
+        Number(
+            confirmationLeverage
+        );
+
 
     currentTradeId =
         createTradeId();
+
 
     currentTradeUID =
         tradeFirebaseUser.uid;
 
 
-    /*
-     * Save active trade.
-     */
+    /* ---------------------------------------------
+       Save active trade
+       --------------------------------------------- */
 
     saveActiveTrade();
 
 
-    /*
-     * Update UI.
-     */
+    /* ---------------------------------------------
+       Update active trade UI
+       --------------------------------------------- */
 
     updateOpenTradeUI();
 
 
-    /*
-     * Close old trade modal.
-     */
+    /* ---------------------------------------------
+       Refresh balance UI
+       --------------------------------------------- */
 
-    if (tradeModal) {
+    if (
+        typeof window.reloadBalance ===
+        "function"
+    ) {
 
-        tradeModal.style.display =
-            "none";
+        window.reloadBalance();
 
     }
 
 
-    /*
-     * Show success popup.
-     */
+    if (
+        typeof window.refreshBalance ===
+        "function"
+    ) {
+
+        window.refreshBalance();
+
+    }
+
+
+    /* ---------------------------------------------
+       SHOW SUCCESS POPUP
+       --------------------------------------------- */
 
     if (
         typeof window.cptShowTradeOpened ===
@@ -1876,10 +1794,6 @@ async function completeTradeOpen(
 
     } else {
 
-        /*
-         * Fallback only if popup JS is missing.
-         */
-
         alert(
             selectedSide +
             " trade opened successfully."
@@ -1889,7 +1803,7 @@ async function completeTradeOpen(
 
 
     console.log(
-        "Trade opened successfully:",
+        "CPT Markets trade opened successfully:",
         {
 
             tradeId:
@@ -2685,7 +2599,6 @@ async function closeCurrentTrade() {
 
         /* =================================================
            CLOSE NOTIFICATION
-           Connected with trade-popup.js
            ================================================= */
 
         if (
@@ -2694,10 +2607,15 @@ async function closeCurrentTrade() {
         ) {
 
             window.cptShowTradeClosed(
+
                 notificationSide,
+
                 notificationEntry,
+
                 notificationClose,
+
                 notificationPL
+
             );
 
         } else {
