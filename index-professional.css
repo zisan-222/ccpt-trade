@@ -1,12 +1,12 @@
 /* =========================================================
-   CPTMARKETS — PREMIUM DARK LOGIN
-   index-professional.css
-   Designed to match the supplied CPTMarkets reference
+   CPTMARKETS — PREMIUM DARK LOGIN UI
+   File: index-professional.css
+   Works with the supplied index.html
    ========================================================= */
 
 
 /* =========================================================
-   GLOBAL RESET
+   RESET
    ========================================================= */
 
 *,
@@ -15,16 +15,19 @@
     box-sizing: border-box;
 }
 
-html,
-body {
+html {
     width: 100%;
     min-height: 100%;
-    margin: 0;
-    padding: 0;
-    background: #020710;
+    background: #010611;
 }
 
 body {
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    margin: 0;
+    padding: 0;
+
     font-family:
         Inter,
         "Segoe UI",
@@ -32,14 +35,18 @@ body {
         Arial,
         sans-serif;
 
-    color: #eef3fb;
+    color: #eef4fb;
+    background: #010611;
+
     overflow-x: hidden;
+
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
 }
 
 
 /* =========================================================
-   MAIN PAGE
+   PAGE BACKGROUND
    ========================================================= */
 
 .login-page {
@@ -48,24 +55,25 @@ body {
     min-height: 100dvh;
 
     display: flex;
-    justify-content: center;
     align-items: center;
-
-    padding: 20px 14px;
+    justify-content: center;
 
     position: relative;
     isolation: isolate;
 
+    padding: 16px;
+
     background:
         radial-gradient(
-            circle at 50% 8%,
-            rgba(8, 69, 116, 0.42),
-            transparent 47%
+            circle at 50% 0%,
+            rgba(11, 67, 111, 0.48) 0%,
+            rgba(5, 38, 69, 0.24) 25%,
+            transparent 55%
         ),
         linear-gradient(
             180deg,
-            #061c32 0%,
-            #031321 45%,
+            #06203a 0%,
+            #031525 42%,
             #01060d 100%
         );
 }
@@ -77,36 +85,40 @@ body {
 
 .login-card {
     width: min(100%, 690px);
-    min-height: calc(100vh - 40px);
-    min-height: calc(100dvh - 40px);
+    min-height: calc(100vh - 32px);
+    min-height: calc(100dvh - 32px);
 
     position: relative;
-    overflow: hidden;
     isolation: isolate;
+    overflow: hidden;
 
-    border-radius: 30px;
-    border: 1px solid rgba(50, 113, 161, 0.42);
+    padding:
+        0 38px
+        36px;
+
+    border-radius: 31px;
+
+    border: 1px solid rgba(61, 119, 161, 0.46);
 
     background:
         radial-gradient(
-            ellipse at 50% 12%,
-            rgba(7, 56, 96, 0.78),
-            transparent 43%
+            ellipse at 50% 7%,
+            rgba(8, 62, 104, 0.78) 0%,
+            rgba(3, 30, 51, 0.90) 34%,
+            rgba(1, 11, 20, 0.985) 72%
         ),
-        linear-gradient(
-            180deg,
-            rgba(3, 29, 50, 0.98),
-            rgba(1, 9, 18, 0.995)
-        );
+        #020a13;
 
     box-shadow:
-        0 25px 80px rgba(0, 0, 0, 0.72),
-        0 0 55px rgba(0, 77, 135, 0.12),
-        inset 0 0 70px rgba(0, 91, 150, 0.08);
+        0 28px 80px rgba(0, 0, 0, 0.76),
+        0 0 55px rgba(0, 81, 140, 0.14),
+        inset 0 0 80px rgba(0, 93, 153, 0.08);
 }
 
 
-/* Soft blue top light */
+/* =========================================================
+   CARD TOP LIGHT
+   ========================================================= */
 
 .login-card::before {
     content: "";
@@ -117,8 +129,8 @@ body {
     width: 760px;
     height: 760px;
 
+    top: -260px;
     left: 50%;
-    top: -160px;
 
     transform: translateX(-50%);
 
@@ -127,8 +139,8 @@ body {
     background:
         radial-gradient(
             circle,
-            rgba(11, 74, 124, 0.30) 0%,
-            rgba(4, 45, 78, 0.18) 42%,
+            rgba(13, 83, 139, 0.28) 0%,
+            rgba(5, 51, 88, 0.16) 42%,
             transparent 72%
         );
 
@@ -136,16 +148,18 @@ body {
 }
 
 
-/* Top gold highlight */
+/* =========================================================
+   TOP GOLD HAIRLINE
+   ========================================================= */
 
 .login-card::after {
     content: "";
 
     position: absolute;
 
-    left: 15%;
-    right: 15%;
     top: 0;
+    left: 12%;
+    right: 12%;
 
     height: 1px;
 
@@ -153,11 +167,9 @@ body {
         linear-gradient(
             90deg,
             transparent,
-            rgba(255, 211, 69, 0.70),
+            rgba(255, 215, 75, 0.72),
             transparent
         );
-
-    opacity: 0.7;
 
     pointer-events: none;
 }
@@ -170,11 +182,11 @@ body {
 .language-btn {
     position: absolute;
 
-    top: 13px;
-    right: 13px;
+    top: 14px;
+    right: 14px;
 
-    width: 58px;
-    height: 58px;
+    width: 56px;
+    height: 56px;
 
     display: flex;
     align-items: center;
@@ -183,25 +195,27 @@ body {
     padding: 0;
 
     border-radius: 50%;
-    border: 1px solid rgba(83, 143, 190, 0.48);
+    border: 1px solid rgba(92, 150, 195, 0.52);
 
     background:
         radial-gradient(
             circle at 35% 25%,
-            rgba(29, 73, 108, 0.85),
+            rgba(31, 73, 105, 0.92),
             rgba(2, 17, 30, 0.98) 72%
         );
 
-    box-shadow:
-        0 8px 22px rgba(0, 0, 0, 0.42),
-        inset 0 0 20px rgba(70, 143, 194, 0.10);
+    color: #fff;
 
-    font-size: 27px;
+    font-size: 25px;
     line-height: 1;
 
     cursor: pointer;
 
     z-index: 100;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.44),
+        inset 0 0 20px rgba(72, 144, 196, 0.10);
 
     transition:
         transform 0.2s ease,
@@ -210,18 +224,19 @@ body {
 }
 
 .language-btn:hover {
-    transform: scale(1.04);
+    transform: scale(1.045);
 
-    border-color: rgba(100, 174, 226, 0.70);
+    border-color:
+        rgba(111, 181, 231, 0.78);
 
     box-shadow:
-        0 8px 25px rgba(0, 0, 0, 0.48),
-        0 0 18px rgba(24, 129, 205, 0.16);
+        0 10px 28px rgba(0, 0, 0, 0.50),
+        0 0 20px rgba(20, 128, 207, 0.15);
 }
 
 
 /* =========================================================
-   LARGE CIRCULAR MARKET BACKGROUND
+   LARGE MARKET CIRCLE
    ========================================================= */
 
 .market-background {
@@ -232,8 +247,8 @@ body {
     width: 660px;
     height: 660px;
 
+    top: 25px;
     left: 50%;
-    top: 32px;
 
     transform: translateX(-50%);
 
@@ -241,38 +256,38 @@ body {
 }
 
 
-/* Main circle */
+/* Outer circle */
 
 .market-background::before {
     content: "";
 
     position: absolute;
 
-    width: 585px;
-    height: 585px;
+    width: 590px;
+    height: 590px;
 
-    left: 50%;
     top: 0;
+    left: 50%;
 
     transform: translateX(-50%);
 
     border-radius: 50%;
 
-    border: 1px solid rgba(104, 178, 227, 0.78);
+    border: 1px solid rgba(93, 170, 220, 0.72);
 
     background:
         radial-gradient(
-            circle at 50% 42%,
-            rgba(13, 75, 122, 0.48) 0%,
-            rgba(7, 49, 84, 0.38) 35%,
-            rgba(2, 27, 48, 0.62) 62%,
-            rgba(1, 13, 25, 0.78) 76%
+            circle at 50% 38%,
+            rgba(13, 78, 127, 0.50) 0%,
+            rgba(6, 49, 83, 0.38) 36%,
+            rgba(2, 26, 45, 0.56) 61%,
+            rgba(1, 12, 22, 0.80) 79%
         );
 
     box-shadow:
-        0 0 32px rgba(0, 112, 190, 0.12),
-        inset 0 0 75px rgba(0, 102, 177, 0.15),
-        inset 0 -50px 90px rgba(0, 0, 0, 0.32);
+        0 0 35px rgba(0, 112, 190, 0.12),
+        inset 0 0 80px rgba(0, 106, 179, 0.13),
+        inset 0 -55px 90px rgba(0, 0, 0, 0.34);
 }
 
 
@@ -286,32 +301,32 @@ body {
     width: 500px;
     height: 500px;
 
+    top: 43px;
     left: 50%;
-    top: 38px;
 
     transform: translateX(-50%);
 
     border-radius: 50%;
 
-    border: 1px solid rgba(63, 139, 190, 0.23);
+    border: 1px solid rgba(73, 149, 198, 0.23);
 
     box-shadow:
-        inset 0 0 40px rgba(0, 111, 189, 0.08);
+        inset 0 0 45px rgba(0, 105, 179, 0.08);
 }
 
 
 /* =========================================================
-   INNER BLUE GLOW
+   CIRCLE GLOW
    ========================================================= */
 
 .circle-glow {
     position: absolute;
 
-    width: 430px;
-    height: 430px;
+    width: 450px;
+    height: 450px;
 
-    left: 50%;
     top: 72px;
+    left: 50%;
 
     transform: translateX(-50%);
 
@@ -320,8 +335,8 @@ body {
     background:
         radial-gradient(
             circle,
-            rgba(0, 106, 183, 0.16),
-            transparent 68%
+            rgba(0, 111, 190, 0.18),
+            transparent 69%
         );
 
     filter: blur(8px);
@@ -335,21 +350,21 @@ body {
 .market-dots {
     position: absolute;
 
-    width: 500px;
-    height: 250px;
+    width: 510px;
+    height: 270px;
 
+    top: 155px;
     left: 50%;
-    top: 153px;
 
     transform: translateX(-50%);
 
-    opacity: 0.75;
+    opacity: 0.72;
 
     background-image:
         radial-gradient(
             circle,
-            rgba(10, 129, 216, 0.88) 1.4px,
-            transparent 1.8px
+            rgba(19, 135, 218, 0.88) 1.35px,
+            transparent 1.9px
         );
 
     background-size: 11px 11px;
@@ -358,24 +373,24 @@ body {
         radial-gradient(
             ellipse at center,
             #000 0%,
-            #000 45%,
-            rgba(0,0,0,.72) 61%,
-            transparent 77%
+            #000 42%,
+            rgba(0, 0, 0, 0.72) 61%,
+            transparent 78%
         );
 
     mask-image:
         radial-gradient(
             ellipse at center,
             #000 0%,
-            #000 45%,
-            rgba(0,0,0,.72) 61%,
-            transparent 77%
+            #000 42%,
+            rgba(0, 0, 0, 0.72) 61%,
+            transparent 78%
         );
 }
 
 
 /* =========================================================
-   MARKET VERTICAL BARS
+   MARKET BARS
    ========================================================= */
 
 .market-bars {
@@ -384,8 +399,8 @@ body {
     width: 570px;
     height: 245px;
 
+    top: 174px;
     left: 50%;
-    top: 175px;
 
     transform: translateX(-50%);
 
@@ -395,7 +410,7 @@ body {
 
     padding: 0 22px;
 
-    opacity: 0.25;
+    opacity: 0.24;
 }
 
 .market-bars span {
@@ -407,26 +422,26 @@ body {
         linear-gradient(
             to top,
             transparent,
-            rgba(42, 131, 190, 0.55),
-            rgba(77, 171, 224, 0.92)
+            rgba(36, 128, 190, 0.55),
+            rgba(79, 171, 224, 0.95)
         );
 
     box-shadow:
-        0 0 10px rgba(29, 131, 209, 0.40);
+        0 0 10px rgba(29, 131, 209, 0.38);
 }
 
-.market-bars span:nth-child(1)  { height: 90px; }
-.market-bars span:nth-child(2)  { height: 140px; }
-.market-bars span:nth-child(3)  { height: 112px; }
-.market-bars span:nth-child(4)  { height: 180px; }
-.market-bars span:nth-child(5)  { height: 138px; }
-.market-bars span:nth-child(6)  { height: 202px; }
-.market-bars span:nth-child(7)  { height: 166px; }
-.market-bars span:nth-child(8)  { height: 218px; }
-.market-bars span:nth-child(9)  { height: 146px; }
-.market-bars span:nth-child(10) { height: 188px; }
-.market-bars span:nth-child(11) { height: 130px; }
-.market-bars span:nth-child(12) { height: 100px; }
+.market-bars span:nth-child(1)  { height: 82px; }
+.market-bars span:nth-child(2)  { height: 132px; }
+.market-bars span:nth-child(3)  { height: 104px; }
+.market-bars span:nth-child(4)  { height: 176px; }
+.market-bars span:nth-child(5)  { height: 135px; }
+.market-bars span:nth-child(6)  { height: 200px; }
+.market-bars span:nth-child(7)  { height: 163px; }
+.market-bars span:nth-child(8)  { height: 215px; }
+.market-bars span:nth-child(9)  { height: 142px; }
+.market-bars span:nth-child(10) { height: 184px; }
+.market-bars span:nth-child(11) { height: 126px; }
+.market-bars span:nth-child(12) { height: 94px; }
 
 
 /* =========================================================
@@ -447,16 +462,16 @@ body {
         linear-gradient(
             90deg,
             transparent,
-            rgba(244, 193, 47, 0.50) 43%,
-            rgba(244, 193, 47, 0.13) 72%,
+            rgba(247, 198, 49, 0.48) 42%,
+            rgba(247, 198, 49, 0.14) 72%,
             transparent
         );
 
-    opacity: 0.60;
+    opacity: 0.58;
 }
 
 .line-1 {
-    top: 215px;
+    top: 213px;
     transform: rotate(15deg);
 }
 
@@ -466,13 +481,13 @@ body {
 }
 
 .line-3 {
-    top: 332px;
+    top: 334px;
     transform: rotate(8deg);
 }
 
 
 /* =========================================================
-   BRAND AREA
+   BRAND
    ========================================================= */
 
 .brand-area {
@@ -484,35 +499,31 @@ body {
 
     padding-top: 70px;
 
-    margin-bottom: 34px;
+    margin-bottom: 30px;
 }
 
 
 /* =========================================================
-   CPT LOGO
+   CPT ROUND LOGO
    ========================================================= */
 
 .brand-logo {
     display: inline-flex;
 
     flex-direction: column;
-
     align-items: center;
 
     filter:
         drop-shadow(
-            0 0 7px rgba(247, 193, 57, 0.16)
+            0 0 7px rgba(247, 193, 57, 0.15)
         );
 }
-
-
-/* Logo ring */
 
 .logo-ring {
     position: relative;
 
-    width: 65px;
-    height: 65px;
+    width: 64px;
+    height: 64px;
 
     display: flex;
     align-items: center;
@@ -523,32 +534,25 @@ body {
     border: 3px solid #e9b839;
 
     border-right-color: transparent;
-
-    border-bottom-color: #c98e27;
+    border-bottom-color: #c88e27;
 
     transform: rotate(-23deg);
 
     box-shadow:
-        0 0 15px rgba(255, 192, 44, 0.16);
+        0 0 16px rgba(255, 192, 44, 0.16);
 }
-
-
-/* CPT text */
 
 .logo-ring span {
     transform: rotate(23deg);
 
-    color: #f2c44b;
+    color: #f3c64d;
 
-    font-size: 19px;
+    font-size: 18px;
 
     font-weight: 800;
 
     letter-spacing: -1px;
 }
-
-
-/* Arrow */
 
 .logo-ring i {
     position: absolute;
@@ -556,35 +560,29 @@ body {
     right: -2px;
     top: -6px;
 
-    color: #eebc42;
+    color: #efbd42;
 
-    font-size: 14px;
+    font-size: 13px;
 
     transform: rotate(23deg);
 }
-
-
-/* MARKETS */
 
 .logo-markets {
     margin-top: 5px;
 
     color: #e8edf4;
 
-    font-size: 12px;
-
-    letter-spacing: 3.5px;
+    font-size: 11px;
 
     font-weight: 500;
+
+    letter-spacing: 3.5px;
 }
-
-
-/* UK */
 
 .logo-uk {
     margin-top: 1px;
 
-    color: #8998aa;
+    color: #8797aa;
 
     font-size: 8px;
 
@@ -597,15 +595,12 @@ body {
    ========================================================= */
 
 .brand-area h1 {
-    margin: 15px 0 0;
+    margin: 14px 0 0;
 
     color: #ffd84b;
 
-    font-size: clamp(
-        45px,
-        8.2vw,
-        64px
-    );
+    font-size:
+        clamp(43px, 8vw, 64px);
 
     line-height: 1;
 
@@ -618,7 +613,7 @@ body {
     text-shadow:
         0 0 4px rgba(255, 221, 72, 0.96),
         0 0 12px rgba(255, 193, 25, 0.72),
-        0 0 26px rgba(255, 170, 0, 0.24),
+        0 0 26px rgba(255, 170, 0, 0.22),
         0 3px 2px rgba(0, 0, 0, 0.52);
 }
 
@@ -633,17 +628,17 @@ body {
     align-items: center;
     justify-content: center;
 
-    gap: 12px;
+    gap: 11px;
 
-    margin-top: 14px;
+    margin-top: 13px;
 
-    color: #e1e7ee;
+    color: #e0e6ed;
 
-    font-size: 21px;
-
-    letter-spacing: 8px;
+    font-size: 20px;
 
     font-weight: 400;
+
+    letter-spacing: 8px;
 }
 
 .gift-title span {
@@ -656,7 +651,7 @@ body {
         linear-gradient(
             90deg,
             transparent,
-            rgba(211, 164, 48, 0.85)
+            rgba(213, 165, 48, 0.84)
         );
 }
 
@@ -664,7 +659,7 @@ body {
     background:
         linear-gradient(
             90deg,
-            rgba(211, 164, 48, 0.85),
+            rgba(213, 165, 48, 0.84),
             transparent
         );
 }
@@ -688,31 +683,30 @@ body {
    ========================================================= */
 
 .form-group {
-    margin-bottom: 26px;
+    margin-bottom: 24px;
 }
 
 
-/* Labels */
+/* =========================================================
+   LABEL
+   ========================================================= */
 
 .form-group label {
     display: block;
 
     margin:
-        0
-        0
-        13px
-        1px;
+        0 0 11px 1px;
 
     color: #edf2f8;
 
-    font-size: 22px;
+    font-size: 21px;
 
-    line-height: 1.15;
+    line-height: 1.2;
 
     font-weight: 600;
 
     text-shadow:
-        0 2px 7px rgba(0,0,0,0.40);
+        0 2px 7px rgba(0, 0, 0, 0.42);
 }
 
 
@@ -722,7 +716,7 @@ body {
 
 .input-box {
     width: 100%;
-    height: 88px;
+    height: 82px;
 
     display: flex;
     align-items: center;
@@ -731,40 +725,31 @@ body {
 
     overflow: hidden;
 
-    border-radius: 25px;
+    border-radius: 23px;
 
     border:
-        1px solid rgba(
-            77,
-            129,
-            173,
-            0.32
-        );
+        1px solid rgba(77, 129, 173, 0.34);
 
     background:
         linear-gradient(
             180deg,
-            rgba(4, 23, 43, 0.76),
-            rgba(2, 10, 23, 0.92)
+            rgba(4, 25, 45, 0.78),
+            rgba(2, 10, 22, 0.94)
         );
 
     box-shadow:
         inset 0 0 25px rgba(0, 93, 163, 0.05),
-        0 8px 24px rgba(0,0,0,0.20);
+        0 8px 24px rgba(0, 0, 0, 0.20);
 
     transition:
         border-color 0.2s ease,
         box-shadow 0.2s ease;
 }
 
-
-/* Input light */
-
 .input-box::after {
     content: "";
 
     position: absolute;
-
     inset: 0;
 
     border-radius: inherit;
@@ -781,40 +766,35 @@ body {
     pointer-events: none;
 }
 
-
-/* Focus */
-
 .input-box:focus-within {
     border-color:
-        rgba(54, 140, 204, 0.55);
+        rgba(54, 140, 204, 0.58);
 
     box-shadow:
         0 0 0 1px rgba(22, 112, 181, 0.08),
-        0 0 22px rgba(0, 105, 184, 0.09),
+        0 0 22px rgba(0, 105, 184, 0.10),
         inset 0 0 28px rgba(0, 101, 179, 0.06);
 }
 
 
 /* =========================================================
-   INPUT ICONS
+   INPUT ICON
    ========================================================= */
 
 .input-icon {
-    width: 72px;
-    flex: 0 0 72px;
+    width: 68px;
+    flex: 0 0 68px;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
-    color: #8d9fba;
-
-    font-size: 28px;
-
     position: relative;
-
     z-index: 2;
+
+    color: #91a2ba;
+
+    font-size: 26px;
 
     text-shadow:
         0 0 7px rgba(120, 151, 185, 0.12);
@@ -830,7 +810,6 @@ body {
     height: 100%;
 
     flex: 1;
-
     min-width: 0;
 
     border: 0;
@@ -840,56 +819,51 @@ body {
 
     color: #edf3fa;
 
-    font-size: 25px;
+    font-family: inherit;
+
+    font-size: 22px;
 
     font-weight: 400;
 
     padding:
-        0
-        14px
-        0
-        0;
+        0 12px 0 0;
 
     position: relative;
-
     z-index: 2;
 }
 
 .input-box input::placeholder {
     color: #8191aa;
-
     opacity: 1;
 }
 
 
 /* =========================================================
-   PASSWORD EYE
+   PASSWORD TOGGLE
    ========================================================= */
 
 .password-toggle {
-    width: 65px;
+    width: 62px;
     height: 100%;
 
-    flex: 0 0 65px;
+    flex: 0 0 62px;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
-    color: #8192ad;
+    position: relative;
+    z-index: 5;
 
-    font-size: 27px;
+    color: #8293ad;
+
+    font-size: 25px;
 
     cursor: pointer;
 
     background: transparent;
 
     border: 0;
-
-    position: relative;
-
-    z-index: 5;
 
     transition:
         color 0.18s ease,
@@ -898,7 +872,7 @@ body {
 
 .password-toggle:hover,
 .password-toggle:focus {
-    color: #b5c3d6;
+    color: #b8c5d7;
 
     filter:
         drop-shadow(
@@ -915,26 +889,21 @@ body {
 
 .login-btn {
     width: 100%;
-    height: 88px;
+    height: 82px;
 
-    margin-top: 7px;
+    margin-top: 5px;
 
     border:
-        1px solid rgba(
-            255,
-            233,
-            154,
-            0.70
-        );
+        1px solid rgba(255, 233, 154, 0.72);
 
-    border-radius: 25px;
+    border-radius: 23px;
 
     background:
         linear-gradient(
             100deg,
             #fff0a7 0%,
             #ffdc39 20%,
-            #ffc400 52%,
+            #ffc400 53%,
             #c98700 100%
         );
 
@@ -942,16 +911,16 @@ body {
 
     font-family: inherit;
 
-    font-size: 28px;
+    font-size: 26px;
 
     font-weight: 700;
 
     cursor: pointer;
 
     box-shadow:
-        0 10px 30px rgba(225, 163, 0, 0.30),
-        0 0 34px rgba(255, 190, 0, 0.16),
-        inset 0 2px 0 rgba(255,255,255,0.58);
+        0 10px 30px rgba(225, 163, 0, 0.29),
+        0 0 34px rgba(255, 190, 0, 0.15),
+        inset 0 2px 0 rgba(255, 255, 255, 0.58);
 
     transition:
         transform 0.18s ease,
@@ -967,7 +936,7 @@ body {
     box-shadow:
         0 13px 34px rgba(225, 163, 0, 0.36),
         0 0 40px rgba(255, 190, 0, 0.22),
-        inset 0 2px 0 rgba(255,255,255,0.62);
+        inset 0 2px 0 rgba(255, 255, 255, 0.62);
 }
 
 .login-btn:active {
@@ -985,33 +954,31 @@ body {
     display: flex;
 
     align-items: center;
-
     justify-content: space-between;
 
-    gap: 20px;
+    gap: 18px;
 
     padding:
-        25px
-        10px
+        22px
+        5px
         0;
 }
 
 .login-link {
-    min-height: 42px;
+    min-height: 40px;
 
     display: inline-flex;
 
     align-items: center;
     justify-content: center;
 
-    gap: 9px;
+    gap: 8px;
 
     padding:
         3px
-        6px;
+        5px;
 
     border: 0;
-
     border-radius: 10px;
 
     background: transparent;
@@ -1020,7 +987,7 @@ body {
 
     text-decoration: none;
 
-    font-size: 16px;
+    font-size: 15px;
 
     font-weight: 600;
 
@@ -1038,7 +1005,7 @@ body {
 .login-link i {
     color: #eeb92d;
 
-    font-size: 20px;
+    font-size: 18px;
 
     text-shadow:
         0 0 7px rgba(255, 193, 0, 0.30);
@@ -1067,17 +1034,14 @@ body {
     right: 0;
     bottom: 0;
 
-    height: 165px;
+    height: 155px;
 
     pointer-events: none;
 
-    opacity: 0.43;
+    opacity: 0.40;
 
     z-index: 2;
 }
-
-
-/* Bottom wave */
 
 .bottom-line {
     position: absolute;
@@ -1085,7 +1049,7 @@ body {
     left: 0;
     right: 0;
 
-    bottom: 53px;
+    bottom: 51px;
 
     height: 1px;
 
@@ -1098,9 +1062,6 @@ body {
         );
 }
 
-
-/* Bottom bars */
-
 .bottom-bars {
     position: absolute;
 
@@ -1109,27 +1070,21 @@ body {
 
     bottom: 0;
 
-    height: 128px;
+    height: 120px;
 
     display: flex;
 
     align-items: flex-end;
-
     justify-content: space-between;
 }
 
 .bottom-bars span {
     display: block;
 
-    width: 42px;
+    width: 40px;
 
     border:
-        1px solid rgba(
-            52,
-            129,
-            190,
-            0.23
-        );
+        1px solid rgba(52, 129, 190, 0.23);
 
     border-bottom: none;
 
@@ -1141,70 +1096,77 @@ body {
         );
 
     border-radius:
-        23px
-        23px
+        22px
+        22px
         0
         0;
 }
 
 .bottom-bars span:nth-child(1) {
-    height: 55px;
+    height: 52px;
 }
 
 .bottom-bars span:nth-child(2) {
-    width: 60px;
-    height: 80px;
-    border-radius: 50% 50% 0 0;
+    width: 56px;
+    height: 76px;
+
+    border-radius:
+        50%
+        50%
+        0
+        0;
 }
 
 .bottom-bars span:nth-child(3) {
-    width: 30px;
-    height: 106px;
+    width: 29px;
+    height: 101px;
 }
 
 .bottom-bars span:nth-child(4) {
-    width: 80px;
-    height: 64px;
-    border-radius: 50% 50% 0 0;
+    width: 76px;
+    height: 61px;
+
+    border-radius:
+        50%
+        50%
+        0
+        0;
 }
 
 .bottom-bars span:nth-child(5) {
-    width: 44px;
-    height: 114px;
+    width: 42px;
+    height: 110px;
 }
 
 .bottom-bars span:nth-child(6) {
-    width: 70px;
-    height: 76px;
+    width: 66px;
+    height: 73px;
 }
 
 .bottom-bars span:nth-child(7) {
-    width: 36px;
-    height: 125px;
+    width: 34px;
+    height: 121px;
 }
 
 
 /* =========================================================
-   MOBILE — 600px
+   TABLET / MOBILE
    ========================================================= */
 
 @media (max-width: 600px) {
 
     .login-page {
         min-height: 100dvh;
-
-        padding:
-            20px
-            13px;
-
+        padding: 12px;
         align-items: stretch;
     }
 
     .login-card {
         width: 100%;
+        min-height: calc(100dvh - 24px);
 
-        min-height:
-            calc(100dvh - 40px);
+        padding-left: 25px;
+        padding-right: 25px;
 
         border-radius: 28px;
     }
@@ -1213,199 +1175,51 @@ body {
         top: 12px;
         right: 12px;
 
-        width: 58px;
-        height: 58px;
+        width: 55px;
+        height: 55px;
 
-        font-size: 27px;
+        font-size: 25px;
     }
 
     .market-background {
-        width: 650px;
-        height: 650px;
-
-        top: 31px;
-    }
-
-    .market-background::before {
-        width: 585px;
-        height: 585px;
-    }
-
-    .market-background::after {
-        width: 500px;
-        height: 500px;
-
-        top: 38px;
-    }
-
-    .market-dots {
-        width: 500px;
-        height: 250px;
-
-        top: 153px;
-    }
-
-    .market-bars {
-        width: 570px;
-        height: 245px;
-
-        top: 175px;
-    }
-
-    .brand-area {
-        padding-top: 70px;
-
-        margin-bottom: 32px;
-    }
-
-    .brand-area h1 {
-        font-size:
-            clamp(
-                43px,
-                11vw,
-                64px
-            );
-
-        letter-spacing: -3px;
-    }
-
-    .gift-title {
-        font-size: 20px;
-
-        letter-spacing: 7px;
-    }
-
-    .form-group {
-        margin-bottom: 25px;
-    }
-
-    .form-group label {
-        font-size: 21px;
-
-        margin-bottom: 12px;
-    }
-
-    .input-box {
-        height: 88px;
-
-        border-radius: 24px;
-    }
-
-    .input-icon {
-        width: 70px;
-        flex-basis: 70px;
-
-        font-size: 27px;
-    }
-
-    .input-box input {
-        font-size: 23px;
-    }
-
-    .password-toggle {
-        width: 64px;
-        flex-basis: 64px;
-
-        font-size: 26px;
-    }
-
-    .login-btn {
-        height: 88px;
-
-        border-radius: 24px;
-
-        font-size: 27px;
-    }
-
-    .login-links {
-        padding:
-            24px
-            5px
-            0;
-
-        gap: 12px;
-    }
-
-    .login-link {
-        font-size: 16px;
-
-        gap: 8px;
-    }
-
-    .login-link i {
-        font-size: 20px;
-    }
-
-    .bottom-market {
-        height: 165px;
-    }
-
-    .bottom-bars {
-        left: 22px;
-        right: 22px;
-    }
-}
-
-
-/* =========================================================
-   MOBILE — 430px
-   ========================================================= */
-
-@media (max-width: 430px) {
-
-    .login-page {
-        padding:
-            14px
-            9px;
-    }
-
-    .login-card {
-        min-height:
-            calc(100dvh - 28px);
-
-        border-radius: 27px;
-    }
-
-    .language-btn {
-        width: 56px;
-        height: 56px;
-
-        font-size: 26px;
+        top: 25px;
     }
 
     .brand-area {
         padding-top: 67px;
-
         margin-bottom: 28px;
     }
 
-    .brand-logo {
-        transform: scale(0.93);
-    }
-
     .brand-area h1 {
-        font-size: 45px;
+        font-size:
+            clamp(42px, 11vw, 62px);
 
-        letter-spacing: -2.7px;
+        letter-spacing: -2.8px;
     }
 
     .gift-title {
         font-size: 19px;
+        letter-spacing: 7px;
+    }
 
-        letter-spacing: 6px;
+    .form-group {
+        margin-bottom: 23px;
     }
 
     .form-group label {
-        font-size: 21px;
+        font-size: 20px;
+        margin-bottom: 11px;
     }
 
     .input-box {
-        height: 86px;
+        height: 82px;
+        border-radius: 23px;
     }
 
     .input-icon {
-        width: 68px;
-        flex-basis: 68px;
+        width: 66px;
+        flex-basis: 66px;
+        font-size: 25px;
     }
 
     .input-box input {
@@ -1415,51 +1229,52 @@ body {
     .password-toggle {
         width: 61px;
         flex-basis: 61px;
+        font-size: 24px;
     }
 
     .login-btn {
-        height: 86px;
-
-        font-size: 26px;
+        height: 82px;
+        border-radius: 23px;
+        font-size: 25px;
     }
 
     .login-links {
-        gap: 8px;
-
-        padding-left: 1px;
-        padding-right: 1px;
+        padding-top: 21px;
+        gap: 10px;
     }
 
     .login-link {
-        font-size: 15px;
-
+        font-size: 14px;
         gap: 7px;
     }
 
     .login-link i {
-        font-size: 19px;
+        font-size: 18px;
     }
 
     .bottom-market {
-        height: 145px;
-    }
-
-    .bottom-bars {
-        left: 15px;
-        right: 15px;
+        height: 155px;
     }
 }
 
 
 /* =========================================================
-   SMALL MOBILE — 360px
+   SMALL MOBILE
    ========================================================= */
 
-@media (max-width: 360px) {
+@media (max-width: 430px) {
+
+    .login-page {
+        padding: 8px;
+    }
 
     .login-card {
-        padding-left: 16px;
-        padding-right: 16px;
+        min-height: calc(100dvh - 16px);
+
+        padding-left: 18px;
+        padding-right: 18px;
+
+        border-radius: 26px;
     }
 
     .language-btn {
@@ -1470,62 +1285,185 @@ body {
     }
 
     .brand-area {
-        padding-top: 65px;
+        padding-top: 64px;
+        margin-bottom: 26px;
+    }
+
+    .brand-logo {
+        transform: scale(0.94);
     }
 
     .brand-area h1 {
-        font-size: 40px;
-
-        letter-spacing: -2.4px;
+        font-size: 43px;
+        letter-spacing: -2.5px;
     }
 
     .gift-title {
-        font-size: 17px;
+        font-size: 18px;
+        letter-spacing: 6px;
+    }
 
-        letter-spacing: 5px;
+    .gift-title span {
+        width: 45px;
     }
 
     .form-group label {
-        font-size: 20px;
+        font-size: 19px;
     }
 
     .input-box {
-        height: 81px;
-
-        border-radius: 22px;
+        height: 78px;
+        border-radius: 21px;
     }
 
     .input-icon {
         width: 62px;
         flex-basis: 62px;
-
-        font-size: 25px;
-    }
-
-    .input-box input {
-        font-size: 19px;
-    }
-
-    .password-toggle {
-        width: 56px;
-        flex-basis: 56px;
-
         font-size: 24px;
     }
 
-    .login-btn {
-        height: 81px;
+    .input-box input {
+        font-size: 20px;
+    }
 
-        border-radius: 22px;
-
+    .password-toggle {
+        width: 58px;
+        flex-basis: 58px;
         font-size: 23px;
+    }
+
+    .login-btn {
+        height: 78px;
+        border-radius: 21px;
+        font-size: 24px;
+    }
+
+    .login-links {
+        padding-left: 0;
+        padding-right: 0;
+        gap: 5px;
     }
 
     .login-link {
         font-size: 13px;
+        gap: 6px;
     }
 
     .login-link i {
         font-size: 17px;
+    }
+
+    .bottom-market {
+        height: 135px;
+    }
+
+    .bottom-bars {
+        left: 14px;
+        right: 14px;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL DEVICES
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+    .login-card {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .language-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 22px;
+    }
+
+    .brand-area {
+        padding-top: 61px;
+    }
+
+    .brand-area h1 {
+        font-size: 39px;
+        letter-spacing: -2.2px;
+    }
+
+    .gift-title {
+        font-size: 16px;
+        letter-spacing: 5px;
+    }
+
+    .gift-title span {
+        width: 36px;
+    }
+
+    .form-group label {
+        font-size: 18px;
+    }
+
+    .input-box {
+        height: 74px;
+        border-radius: 20px;
+    }
+
+    .input-icon {
+        width: 58px;
+        flex-basis: 58px;
+        font-size: 22px;
+    }
+
+    .input-box input {
+        font-size: 18px;
+    }
+
+    .password-toggle {
+        width: 53px;
+        flex-basis: 53px;
+        font-size: 22px;
+    }
+
+    .login-btn {
+        height: 74px;
+        border-radius: 20px;
+        font-size: 22px;
+    }
+
+    .login-link {
+        font-size: 12px;
+    }
+
+    .login-link i {
+        font-size: 16px;
+    }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+.password-toggle:focus-visible {
+    outline: 2px solid rgba(255, 213, 73, 0.85);
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+        animation: none !important;
     }
 }
