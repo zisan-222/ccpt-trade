@@ -2,6 +2,7 @@
    CPTMARKETS TRADE
    trade.js
    FINAL MOBILE + TRADINGVIEW + TRADE SYSTEM
+   CONNECTED WITH trade-popup.js
    ========================================================= */
 
 
@@ -109,8 +110,6 @@ const amountInput =
 
 /* =========================================================
    CHART HEIGHT
-   IMPORTANT:
-   Only ONE fixMobileChartHeight function exists.
    ========================================================= */
 
 function fixMobileChartHeight() {
@@ -237,6 +236,7 @@ function fixMobileChartHeight() {
             "border-box",
             "important"
         );
+
     }
 
 }
@@ -1059,14 +1059,6 @@ async function initializeTradingView() {
         );
 
 
-        /*
-         * IMPORTANT:
-         * Use actual container width.
-         * Do NOT use window.innerWidth.
-         * This prevents horizontal overflow
-         * and black space on mobile.
-         */
-
         const width =
             chart.clientWidth || 320;
 
@@ -1226,11 +1218,6 @@ async function initializeTradingView() {
 
             });
 
-
-        /*
-         * Re-check size after TradingView
-         * iframe has rendered.
-         */
 
         setTimeout(
             function () {
@@ -1559,6 +1546,7 @@ if (confirmTradeBtn) {
 
 /* =========================================================
    CONFIRM TRADE
+   CONNECTED TO trade-popup.js
    ========================================================= */
 
 async function confirmTrade() {
@@ -1662,9 +1650,146 @@ async function confirmTrade() {
     }
 
 
+    /*
+     * =====================================================
+     * IMPORTANT
+     *
+     * এখানে আর সাথে সাথে balance deduct করা হচ্ছে না।
+     *
+     * আগে trade-popup.js এর confirmation popup দেখানো হবে।
+     * User "Continue" চাপলেই completeTradeOpen() চলবে।
+     * =====================================================
+     */
+
+    const confirmationSide =
+        selectedSide;
+
+    const confirmationPrice =
+        Number(entryPrice);
+
+    const confirmationLeverage =
+        Number(selectedLeverage);
+
+    const confirmationAmount =
+        Number(orderAmount.toFixed(2));
+
+
+    /*
+     * Make sure trade-popup.js is loaded.
+     */
+
+    if (
+        typeof window.cptShowTradeConfirmation !==
+        "function"
+    ) {
+
+        alert(
+            "Trade confirmation popup is not loaded. Please check trade-popup.js."
+        );
+
+        return;
+
+    }
+
+
+    /*
+     * Show CPT Markets confirmation popup.
+     */
+
+    window.cptShowTradeConfirmation(
+
+        confirmationSide,
+
+        confirmationPrice,
+
+        confirmationLeverage,
+
+        function () {
+
+            completeTradeOpen(
+                confirmationSide,
+                confirmationPrice,
+                confirmationAmount,
+                confirmationLeverage
+            );
+
+        }
+
+    );
+
+}
+
+
+/* =========================================================
+   COMPLETE TRADE OPEN
+   This runs ONLY after popup Continue
+   ========================================================= */
+
+async function completeTradeOpen(
+    confirmationSide,
+    confirmationPrice,
+    confirmationAmount,
+    confirmationLeverage
+) {
+
+    /*
+     * Re-check login before actually opening.
+     */
+
+    if (!tradeFirebaseUser) {
+
+        alert(
+            "User session expired. Please login again."
+        );
+
+        return;
+
+    }
+
+
+    /*
+     * Re-check balance before deduction.
+     */
+
+    if (
+        typeof window.hasEnoughBalance !==
+        "function" ||
+        typeof window.subtractBalance !==
+        "function"
+    ) {
+
+        alert(
+            "Balance system is not ready. Please reload the page."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        !window.hasEnoughBalance(
+            confirmationAmount
+        )
+    ) {
+
+        alert(
+            "Insufficient balance."
+        );
+
+        return;
+
+    }
+
+
+    /*
+     * Deduct balance ONLY after user
+     * presses Continue.
+     */
+
     const deducted =
         await window.subtractBalance(
-            orderAmount
+            confirmationAmount
         );
 
 
@@ -1679,22 +1804,46 @@ async function confirmTrade() {
     }
 
 
-    currentTradeId =
-        createTradeId();
+    /*
+     * Set final trade state.
+     */
+
+    selectedSide =
+        confirmationSide;
+
+    entryPrice =
+        Number(confirmationPrice);
 
     tradeAmountValue =
-        Number(
-            orderAmount.toFixed(2)
-        );
+        Number(confirmationAmount.toFixed(2));
+
+    selectedLeverage =
+        Number(confirmationLeverage);
+
+    currentTradeId =
+        createTradeId();
 
     currentTradeUID =
         tradeFirebaseUser.uid;
 
 
+    /*
+     * Save active trade.
+     */
+
     saveActiveTrade();
+
+
+    /*
+     * Update UI.
+     */
 
     updateOpenTradeUI();
 
+
+    /*
+     * Close old trade modal.
+     */
 
     if (tradeModal) {
 
@@ -1704,14 +1853,43 @@ async function confirmTrade() {
     }
 
 
-    alert(
-        selectedSide +
-        " trade opened successfully."
-    );
+    /*
+     * Show success popup.
+     */
+
+    if (
+        typeof window.cptShowTradeOpened ===
+        "function"
+    ) {
+
+        window.cptShowTradeOpened(
+
+            selectedSide,
+
+            entryPrice,
+
+            tradeAmountValue,
+
+            selectedLeverage
+
+        );
+
+    } else {
+
+        /*
+         * Fallback only if popup JS is missing.
+         */
+
+        alert(
+            selectedSide +
+            " trade opened successfully."
+        );
+
+    }
 
 
     console.log(
-        "Trade opened:",
+        "Trade opened successfully:",
         {
 
             tradeId:
@@ -2507,6 +2685,7 @@ async function closeCurrentTrade() {
 
         /* =================================================
            CLOSE NOTIFICATION
+           Connected with trade-popup.js
            ================================================= */
 
         if (
