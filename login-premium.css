@@ -1,6 +1,7 @@
 /* =========================================================
-   CPTMARKETS PREMIUM LOGIN
-   FINAL MOBILE DESIGN
+   CPTMARKETS PREMIUM DARK LOGIN
+   Compact / Premium Mobile Design
+   Compatible with existing index.html + script.js
    ========================================================= */
 
 * {
@@ -16,7 +17,7 @@ body {
 }
 
 html {
-    background: #020914;
+    background: #03070d;
 }
 
 body {
@@ -27,14 +28,19 @@ body {
         Arial,
         sans-serif;
 
-    color: #fff;
+    color: #ffffff;
+
     background:
         radial-gradient(
-            circle at 50% 0%,
-            #07365b 0%,
-            #03213a 25%,
-            #011326 55%,
-            #010913 100%
+            circle at 50% 10%,
+            rgba(10, 70, 108, 0.38),
+            transparent 42%
+        ),
+        linear-gradient(
+            180deg,
+            #06131f 0%,
+            #020a12 55%,
+            #010408 100%
         );
 
     overflow-x: hidden;
@@ -42,7 +48,7 @@ body {
 
 
 /* =========================================================
-   PAGE
+   LOGIN PAGE
    ========================================================= */
 
 .login-page {
@@ -51,25 +57,14 @@ body {
     min-height: 100dvh;
 
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 
-    padding: 10px;
+    padding: 14px;
 
     position: relative;
 
-    background:
-        radial-gradient(
-            ellipse at 50% 18%,
-            rgba(0, 112, 192, 0.20),
-            transparent 48%
-        ),
-        linear-gradient(
-            180deg,
-            #03233d 0%,
-            #011426 45%,
-            #010913 100%
-        );
+    overflow: hidden;
 }
 
 
@@ -78,36 +73,37 @@ body {
    ========================================================= */
 
 .login-card {
-    width: min(100%, 760px);
-    min-height: calc(100vh - 20px);
-    min-height: calc(100dvh - 20px);
+    width: min(100%, 500px);
+
+    min-height: 690px;
 
     position: relative;
 
     overflow: hidden;
 
-    border-radius: 31px;
+    border-radius: 28px;
 
-    border: 1px solid rgba(72, 151, 214, 0.34);
+    border: 1px solid rgba(89, 146, 184, 0.28);
 
     background:
         linear-gradient(
             180deg,
-            rgba(4, 31, 55, 0.96) 0%,
-            rgba(2, 20, 37, 0.98) 50%,
-            rgba(1, 10, 20, 0.99) 100%
+            rgba(7, 27, 43, 0.98) 0%,
+            rgba(3, 15, 25, 0.99) 55%,
+            rgba(1, 7, 13, 1) 100%
         );
 
     box-shadow:
-        0 0 45px rgba(0, 99, 174, 0.15),
-        inset 0 0 60px rgba(0, 100, 180, 0.055);
+        0 35px 80px rgba(0, 0, 0, 0.68),
+        0 0 50px rgba(0, 103, 170, 0.09),
+        inset 0 1px 0 rgba(255, 255, 255, 0.035);
 
-    padding: 25px 28px 40px;
+    padding: 27px 32px 32px;
 }
 
 
 /* =========================================================
-   LARGE BLUE GLOW
+   TOP BLUE GLOW
    ========================================================= */
 
 .login-card::before {
@@ -115,11 +111,11 @@ body {
 
     position: absolute;
 
-    width: 680px;
-    height: 680px;
+    width: 560px;
+    height: 560px;
 
+    top: -300px;
     left: 50%;
-    top: -95px;
 
     transform: translateX(-50%);
 
@@ -128,11 +124,42 @@ body {
     background:
         radial-gradient(
             circle,
-            rgba(9, 111, 191, 0.27) 0%,
-            rgba(4, 78, 137, 0.15) 40%,
-            rgba(0, 45, 83, 0.05) 62%,
-            transparent 75%
+            rgba(0, 132, 214, 0.22) 0%,
+            rgba(0, 84, 145, 0.10) 42%,
+            transparent 73%
         );
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   GOLD TOP LIGHT
+   ========================================================= */
+
+.login-card::after {
+    content: "";
+
+    position: absolute;
+
+    width: 190px;
+    height: 1px;
+
+    top: 0;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 211, 66, 0.75),
+            transparent
+        );
+
+    box-shadow:
+        0 0 18px rgba(255, 194, 30, 0.28);
 
     pointer-events: none;
 }
@@ -145,11 +172,11 @@ body {
 .language-btn {
     position: absolute;
 
-    top: 16px;
-    right: 16px;
+    top: 17px;
+    right: 17px;
 
-    width: 72px;
-    height: 64px;
+    width: 47px;
+    height: 47px;
 
     display: flex;
     align-items: center;
@@ -157,24 +184,31 @@ body {
 
     border-radius: 50%;
 
-    border: 1px solid rgba(113, 165, 215, 0.42);
+    border: 1px solid rgba(255, 255, 255, 0.16);
 
     background:
-        radial-gradient(
-            circle,
-            rgba(22, 56, 89, 0.95),
-            rgba(3, 20, 38, 0.98)
-        );
+        rgba(14, 29, 43, 0.92);
 
     box-shadow:
-        0 5px 20px rgba(0, 0, 0, 0.35),
-        inset 0 0 18px rgba(62, 139, 203, 0.08);
+        0 8px 22px rgba(0, 0, 0, 0.30),
+        inset 0 0 15px rgba(255, 255, 255, 0.025);
 
-    font-size: 32px;
+    font-size: 22px;
 
     cursor: pointer;
 
     z-index: 50;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.language-btn:hover {
+    transform: translateY(-2px);
+
+    border-color:
+        rgba(255, 205, 55, 0.48);
 }
 
 
@@ -185,10 +219,10 @@ body {
 .market-background {
     position: absolute;
 
-    width: 670px;
-    height: 670px;
+    width: 510px;
+    height: 510px;
 
-    top: 28px;
+    top: 45px;
     left: 50%;
 
     transform: translateX(-50%);
@@ -196,41 +230,43 @@ body {
     pointer-events: none;
 
     z-index: 1;
+
+    opacity: 0.70;
 }
 
 
-/* Main circular artwork */
+/* =========================================================
+   MARKET CIRCLE
+   ========================================================= */
 
 .market-background::before {
     content: "";
 
     position: absolute;
 
-    width: 620px;
-    height: 620px;
+    width: 440px;
+    height: 440px;
 
-    top: 12px;
+    top: 0;
     left: 50%;
 
     transform: translateX(-50%);
 
     border-radius: 50%;
 
-    border: 1.5px solid rgba(131, 198, 244, 0.85);
+    border: 1px solid rgba(95, 163, 207, 0.27);
 
     background:
         radial-gradient(
-            circle at 50% 42%,
-            rgba(14, 72, 119, 0.46) 0%,
-            rgba(6, 43, 74, 0.39) 36%,
-            rgba(2, 23, 43, 0.38) 62%,
-            rgba(1, 12, 24, 0.15) 74%,
-            transparent 75%
+            circle at 50% 43%,
+            rgba(11, 65, 104, 0.23),
+            rgba(3, 24, 42, 0.10) 52%,
+            transparent 73%
         );
 
     box-shadow:
-        0 0 30px rgba(0, 119, 205, 0.13),
-        inset 0 0 85px rgba(0, 113, 202, 0.12);
+        0 0 50px rgba(0, 106, 175, 0.08),
+        inset 0 0 70px rgba(0, 117, 193, 0.07);
 }
 
 
@@ -241,30 +277,30 @@ body {
 .market-dots {
     position: absolute;
 
-    width: 480px;
-    height: 250px;
+    width: 350px;
+    height: 190px;
 
-    top: 165px;
+    top: 112px;
     left: 50%;
 
     transform: translateX(-50%);
 
-    opacity: 0.85;
+    opacity: 0.34;
 
     background-image:
         radial-gradient(
             circle,
-            rgba(16, 130, 220, 0.92) 1.5px,
-            transparent 2px
+            rgba(67, 158, 220, 0.85) 1px,
+            transparent 1.6px
         );
 
-    background-size: 12px 12px;
+    background-size: 10px 10px;
 
     -webkit-mask-image:
         radial-gradient(
             ellipse,
             #000 5%,
-            #000 40%,
+            #000 38%,
             transparent 75%
         );
 
@@ -272,7 +308,7 @@ body {
         radial-gradient(
             ellipse,
             #000 5%,
-            #000 40%,
+            #000 38%,
             transparent 75%
         );
 }
@@ -285,23 +321,24 @@ body {
 .market-bars {
     position: absolute;
 
-    width: 620px;
-    height: 220px;
+    width: 410px;
+    height: 190px;
 
-    top: 180px;
+    top: 128px;
     left: 50%;
 
     transform: translateX(-50%);
 
     display: flex;
-    align-items: flex-end;
-    justify-content: space-around;
 
-    opacity: 0.28;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    opacity: 0.17;
 }
 
 .market-bars span {
-    width: 4px;
+    width: 3px;
 
     display: block;
 
@@ -309,59 +346,55 @@ body {
         linear-gradient(
             to top,
             transparent,
-            rgba(84, 165, 224, 0.85)
+            rgba(81, 169, 228, 0.85)
         );
 
     box-shadow:
-        0 0 12px rgba(30, 138, 221, 0.5);
+        0 0 10px rgba(20, 126, 204, 0.4);
 }
 
 .market-bars span:nth-child(1) {
-    height: 85px;
+    height: 65px;
 }
 
 .market-bars span:nth-child(2) {
-    height: 145px;
+    height: 105px;
 }
 
 .market-bars span:nth-child(3) {
-    height: 110px;
+    height: 80px;
 }
 
 .market-bars span:nth-child(4) {
-    height: 180px;
+    height: 145px;
 }
 
 .market-bars span:nth-child(5) {
-    height: 135px;
+    height: 115px;
 }
 
 .market-bars span:nth-child(6) {
-    height: 195px;
-}
-
-.market-bars span:nth-child(7) {
     height: 155px;
 }
 
-.market-bars span:nth-child(8) {
-    height: 205px;
-}
-
-.market-bars span:nth-child(9) {
-    height: 135px;
-}
-
-.market-bars span:nth-child(10) {
-    height: 175px;
-}
-
-.market-bars span:nth-child(11) {
+.market-bars span:nth-child(7) {
     height: 125px;
 }
 
-.market-bars span:nth-child(12) {
-    height: 90px;
+.market-bars span:nth-child(8) {
+    height: 170px;
+}
+
+.market-bars span:nth-child(9) {
+    height: 110px;
+}
+
+.market-bars span:nth-child(10) {
+    height: 145px;
+}
+
+.market-bars span:nth-child(11) {
+    height: 100px;
 }
 
 
@@ -372,39 +405,38 @@ body {
 .market-lines {
     position: absolute;
 
-    left: -70px;
+    left: -50px;
 
-    width: 800px;
-    height: 2px;
+    width: 610px;
+    height: 1px;
+
+    transform-origin: center;
 
     background:
         linear-gradient(
             90deg,
-            transparent 0%,
-            rgba(236, 186, 55, 0.05) 10%,
-            rgba(245, 198, 61, 0.55) 45%,
-            rgba(245, 198, 61, 0.12) 70%,
-            transparent 100%
+            transparent,
+            rgba(243, 190, 45, 0.42),
+            rgba(243, 190, 45, 0.08),
+            transparent
         );
 
-    opacity: 0.55;
-
-    transform-origin: center;
+    opacity: 0.30;
 }
 
 .line-1 {
-    top: 255px;
-    transform: rotate(17deg);
+    top: 195px;
+    transform: rotate(15deg);
 }
 
 .line-2 {
-    top: 300px;
-    transform: rotate(-13deg);
+    top: 240px;
+    transform: rotate(-11deg);
 }
 
 .line-3 {
-    top: 340px;
-    transform: rotate(10deg);
+    top: 275px;
+    transform: rotate(8deg);
 }
 
 
@@ -419,95 +451,18 @@ body {
 
     text-align: center;
 
-    padding-top: 64px;
+    padding-top: 57px;
 
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 
 /* =========================================================
-   CPT LOGO
+   OLD LOGO HIDDEN
    ========================================================= */
 
 .brand-logo {
-    display: inline-flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    margin-bottom: 11px;
-}
-
-
-/* Logo circle */
-
-.logo-ring {
-    position: relative;
-
-    width: 74px;
-    height: 74px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    border: 5px solid #f5c447;
-
-    border-right-color: transparent;
-    border-bottom-color: #dca52c;
-
-    transform: rotate(-24deg);
-
-    box-shadow:
-        0 0 12px rgba(255, 199, 51, 0.25);
-}
-
-.logo-ring span {
-    transform: rotate(24deg);
-
-    color: #f6c543;
-
-    font-size: 23px;
-    font-weight: 800;
-}
-
-.logo-ring i {
-    position: absolute;
-
-    right: -4px;
-    top: -6px;
-
-    color: #f6c543;
-
-    font-size: 17px;
-
-    transform: rotate(24deg);
-}
-
-
-/* MARKETS */
-
-.logo-markets {
-    margin-top: 5px;
-
-    color: #f5f7fa;
-
-    font-size: 15px;
-
-    letter-spacing: 4px;
-
-    font-weight: 500;
-}
-
-.logo-uk {
-    color: #bfc8d5;
-
-    font-size: 10px;
-
-    letter-spacing: 3px;
+    display: none;
 }
 
 
@@ -516,22 +471,23 @@ body {
    ========================================================= */
 
 .brand-area h1 {
-    margin-top: 17px;
+    margin: 0;
 
     position: relative;
 
-    font-size: clamp(46px, 7vw, 70px);
+    font-size: clamp(43px, 9vw, 58px);
+
+    line-height: 1;
 
     font-weight: 800;
 
     letter-spacing: -2.5px;
 
-    color: #ffd43e;
+    color: #ffd13b;
 
     text-shadow:
-        0 0 5px rgba(255, 218, 69, 0.9),
-        0 0 17px rgba(255, 186, 25, 0.65),
-        0 3px 2px rgba(0, 0, 0, 0.5);
+        0 0 8px rgba(255, 203, 43, 0.48),
+        0 0 25px rgba(255, 184, 25, 0.15);
 }
 
 
@@ -545,28 +501,30 @@ body {
     align-items: center;
     justify-content: center;
 
-    gap: 12px;
+    gap: 10px;
 
-    margin-top: 15px;
+    margin-top: 16px;
 
-    color: #edf1f7;
+    color: #8fa2b7;
 
-    font-size: 21px;
+    font-size: 14px;
 
-    letter-spacing: 5px;
+    letter-spacing: 7px;
 
-    font-weight: 400;
+    font-weight: 500;
 }
 
 .gift-title span {
-    width: 58px;
+    display: block;
+
+    width: 48px;
     height: 1px;
 
     background:
         linear-gradient(
             90deg,
             transparent,
-            #c9992d
+            rgba(207, 158, 37, 0.55)
         );
 }
 
@@ -574,7 +532,7 @@ body {
     background:
         linear-gradient(
             90deg,
-            #c9992d,
+            rgba(207, 158, 37, 0.55),
             transparent
         );
 }
@@ -598,29 +556,31 @@ body {
    ========================================================= */
 
 .form-group {
-    margin-bottom: 26px;
+    margin-bottom: 19px;
 }
 
 .form-group label {
     display: block;
 
-    margin: 0 0 13px 1px;
+    margin: 0 0 8px 2px;
 
-    color: #eef2f8;
+    color: #dce5ef;
 
-    font-size: 25px;
+    font-size: 15px;
 
     font-weight: 600;
+
+    letter-spacing: 0.2px;
 }
 
 
 /* =========================================================
-   INPUT
+   INPUT BOX
    ========================================================= */
 
 .input-box {
     width: 100%;
-    height: 98px;
+    height: 62px;
 
     display: flex;
     align-items: center;
@@ -629,29 +589,34 @@ body {
 
     overflow: hidden;
 
-    border-radius: 29px;
+    border-radius: 16px;
 
-    border: 1px solid rgba(73, 151, 211, 0.40);
+    border: 1px solid rgba(66, 133, 174, 0.30);
 
     background:
         linear-gradient(
             180deg,
-            rgba(5, 35, 61, 0.91),
-            rgba(2, 21, 39, 0.96)
+            rgba(8, 35, 55, 0.88),
+            rgba(4, 20, 34, 0.94)
         );
 
     box-shadow:
-        inset 0 0 30px rgba(0, 111, 196, 0.08),
-        0 5px 18px rgba(0, 0, 0, 0.18);
+        inset 0 0 22px rgba(0, 111, 190, 0.055),
+        0 8px 20px rgba(0, 0, 0, 0.18);
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .input-box:focus-within {
-    border-color: rgba(49, 145, 220, 0.85);
+    border-color:
+        rgba(57, 151, 216, 0.68);
 
     box-shadow:
-        0 0 0 2px rgba(24, 116, 187, 0.10),
-        0 0 22px rgba(0, 110, 196, 0.12),
-        inset 0 0 30px rgba(0, 112, 200, 0.10);
+        0 0 0 2px rgba(32, 125, 191, 0.08),
+        0 0 22px rgba(0, 108, 184, 0.10),
+        inset 0 0 22px rgba(0, 112, 190, 0.08);
 }
 
 
@@ -660,18 +625,20 @@ body {
    ========================================================= */
 
 .input-icon {
-    width: 82px;
+    width: 56px;
 
-    flex: 0 0 82px;
+    flex: 0 0 56px;
 
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    color: #f3c000;
+    color: #f4c126;
 
-    font-size: 30px;
+    font-size: 19px;
 
     text-shadow:
-        0 0 10px rgba(255, 196, 0, 0.22);
+        0 0 10px rgba(255, 193, 25, 0.18);
 }
 
 
@@ -692,17 +659,17 @@ body {
 
     background: transparent;
 
-    color: #f2f6ff;
+    color: #f4f7fb;
 
-    font-size: 26px;
+    font-size: 16px;
 
     font-weight: 400;
 
-    padding: 0 18px 0 0;
+    padding: 0 12px 0 0;
 }
 
 .input-box input::placeholder {
-    color: #8296b6;
+    color: #6f8299;
 
     opacity: 1;
 }
@@ -710,70 +677,79 @@ body {
 
 /* =========================================================
    PASSWORD TOGGLE
+   Existing script.js uses #togglePassword
    ========================================================= */
 
 .password-toggle {
-    width: 72px;
+    width: 54px;
     height: 100%;
 
-    flex: 0 0 72px;
+    flex: 0 0 54px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border: none;
+    color: #eebc25;
 
-    outline: none;
-
-    background: transparent;
-
-    color: #f2c000;
-
-    font-size: 28px;
+    font-size: 18px;
 
     cursor: pointer;
 
+    outline: none;
+
     text-shadow:
-        0 0 10px rgba(255, 194, 0, 0.2);
+        0 0 9px rgba(255, 192, 28, 0.18);
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.password-toggle:hover {
+    color: #ffd84d;
+
+    transform: scale(1.05);
 }
 
 
 /* =========================================================
-   SIGN IN BUTTON
+   LOGIN BUTTON
    ========================================================= */
 
 .login-btn {
     width: 100%;
-    height: 98px;
+    height: 64px;
 
-    margin-top: 4px;
+    margin-top: 7px;
 
-    border: 1px solid rgba(255, 232, 140, 0.72);
+    border: 1px solid rgba(255, 228, 123, 0.60);
 
-    border-radius: 29px;
+    border-radius: 16px;
 
     background:
         linear-gradient(
-            100deg,
-            #ffe895 0%,
-            #ffd52c 25%,
-            #ffc400 53%,
-            #d58b00 100%
+            105deg,
+            #eeb522 0%,
+            #ffd33e 38%,
+            #ffc414 68%,
+            #d8940b 100%
         );
 
-    color: #090909;
+    color: #090b0d;
 
-    font-size: 30px;
+    font-size: 17px;
 
-    font-weight: 700;
+    font-weight: 750;
+
+    letter-spacing: 0.2px;
 
     cursor: pointer;
 
     box-shadow:
-        0 8px 23px rgba(229, 163, 0, 0.30),
-        0 0 28px rgba(255, 196, 21, 0.18),
-        inset 0 2px 0 rgba(255, 255, 255, 0.50);
+        0 10px 25px rgba(218, 157, 0, 0.20),
+        0 0 25px rgba(255, 192, 18, 0.10),
+        inset 0 1px 0 rgba(255, 255, 255, 0.55);
 
     transition:
         transform 0.18s ease,
@@ -787,8 +763,8 @@ body {
     transform: translateY(-2px);
 
     box-shadow:
-        0 12px 30px rgba(229, 163, 0, 0.38),
-        0 0 35px rgba(255, 196, 21, 0.24);
+        0 13px 30px rgba(218, 157, 0, 0.28),
+        0 0 32px rgba(255, 192, 18, 0.16);
 }
 
 .login-btn:active {
@@ -806,38 +782,36 @@ body {
     align-items: center;
     justify-content: space-between;
 
-    gap: 18px;
+    gap: 12px;
 
-    padding: 32px 4px 0;
+    padding: 21px 0 0;
 }
 
 .login-link {
-    min-height: 55px;
+    min-height: 45px;
+
+    flex: 1;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    gap: 10px;
+    gap: 8px;
 
-    padding: 0 20px;
+    padding: 0 10px;
 
-    border: 1px solid rgba(60, 117, 166, 0.20);
+    border: 1px solid rgba(69, 116, 147, 0.17);
 
-    border-radius: 16px;
+    border-radius: 13px;
 
     background:
-        linear-gradient(
-            180deg,
-            rgba(6, 34, 59, 0.50),
-            rgba(2, 19, 34, 0.50)
-        );
+        rgba(7, 24, 38, 0.52);
 
-    color: #f2bb25;
+    color: #d6ad38;
 
     text-decoration: none;
 
-    font-size: 19px;
+    font-size: 13px;
 
     font-weight: 600;
 
@@ -848,21 +822,19 @@ body {
 }
 
 .login-link i {
-    color: #f4bf00;
+    color: #e8b923;
 
-    font-size: 23px;
-
-    text-shadow:
-        0 0 10px rgba(255, 190, 0, 0.25);
+    font-size: 15px;
 }
 
 .login-link:hover {
     transform: translateY(-2px);
 
-    border-color: rgba(244, 190, 30, 0.40);
+    border-color:
+        rgba(229, 180, 43, 0.35);
 
     background:
-        rgba(12, 42, 69, 0.65);
+        rgba(12, 37, 57, 0.70);
 }
 
 
@@ -877,15 +849,12 @@ body {
     right: 0;
     bottom: 0;
 
-    height: 170px;
+    height: 100px;
 
     pointer-events: none;
 
-    opacity: 0.55;
+    opacity: 0.27;
 }
-
-
-/* Horizontal line */
 
 .bottom-line {
     position: absolute;
@@ -893,7 +862,7 @@ body {
     left: 0;
     right: 0;
 
-    bottom: 55px;
+    bottom: 36px;
 
     height: 1px;
 
@@ -901,22 +870,19 @@ body {
         linear-gradient(
             90deg,
             transparent,
-            rgba(32, 127, 201, 0.72),
+            rgba(43, 131, 194, 0.65),
             transparent
         );
 }
 
-
-/* Bottom shapes */
-
 .bottom-bars {
     position: absolute;
 
-    left: 25px;
-    right: 25px;
+    left: 18px;
+    right: 18px;
     bottom: 0;
 
-    height: 130px;
+    height: 78px;
 
     display: flex;
 
@@ -927,61 +893,66 @@ body {
 .bottom-bars span {
     display: block;
 
-    width: 43px;
+    width: 30px;
 
-    border: 1px solid rgba(54, 133, 199, 0.30);
+    border: 1px solid rgba(55, 132, 194, 0.22);
 
     border-bottom: none;
 
     background:
         linear-gradient(
             180deg,
-            rgba(25, 102, 164, 0.16),
-            rgba(4, 33, 56, 0.04)
+            rgba(23, 96, 153, 0.13),
+            transparent
         );
 
-    border-radius: 25px 25px 0 0;
+    border-radius: 12px 12px 0 0;
 }
 
 .bottom-bars span:nth-child(1) {
-    height: 55px;
+    height: 32px;
 }
 
 .bottom-bars span:nth-child(2) {
-    width: 62px;
-    height: 82px;
-    border-radius: 50% 50% 0 0;
+    height: 48px;
 }
 
 .bottom-bars span:nth-child(3) {
-    width: 31px;
-    height: 105px;
+    height: 62px;
 }
 
 .bottom-bars span:nth-child(4) {
-    width: 82px;
-    height: 65px;
-    border-radius: 50% 50% 0 0;
+    height: 40px;
 }
 
 .bottom-bars span:nth-child(5) {
-    width: 44px;
-    height: 115px;
+    height: 68px;
 }
 
 .bottom-bars span:nth-child(6) {
-    width: 72px;
-    height: 75px;
+    height: 52px;
 }
 
 .bottom-bars span:nth-child(7) {
-    width: 36px;
-    height: 125px;
+    height: 72px;
 }
 
 
 /* =========================================================
-   MOBILE — MAIN TARGET
+   DESKTOP
+   ========================================================= */
+
+@media (min-width: 601px) {
+
+    .login-card {
+        width: 500px;
+        min-height: 690px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
    ========================================================= */
 
 @media (max-width: 600px) {
@@ -989,351 +960,295 @@ body {
     .login-page {
         min-height: 100dvh;
 
-        padding: 7px;
+        padding: 8px;
 
-        align-items: stretch;
+        align-items: center;
     }
 
     .login-card {
         width: 100%;
 
-        min-height: calc(100dvh - 14px);
-
-        border-radius: 27px;
+        min-height: 0;
 
         padding:
-            20px
-            20px
-            45px;
+            21px
+            19px
+            29px;
+
+        border-radius: 24px;
     }
-
-
-    /* Language */
 
     .language-btn {
-        top: 14px;
-        right: 14px;
+        top: 13px;
+        right: 13px;
 
-        width: 66px;
-        height: 66px;
+        width: 43px;
+        height: 43px;
 
-        font-size: 31px;
-
-        background:
-            #f4f5f8;
-
-        border-color:
-            rgba(255, 255, 255, 0.55);
-
-        box-shadow:
-            0 4px 15px rgba(0, 0, 0, 0.25);
+        font-size: 21px;
     }
 
-
-    /* Artwork */
-
     .market-background {
-        width: 520px;
-        height: 520px;
+        width: 430px;
+        height: 430px;
 
-        top: 75px;
+        top: 42px;
+
+        opacity: 0.55;
     }
 
     .market-background::before {
-        width: 500px;
-        height: 500px;
+        width: 370px;
+        height: 370px;
     }
 
     .market-dots {
-        width: 390px;
-        height: 210px;
+        width: 300px;
+        height: 165px;
 
-        top: 145px;
+        top: 100px;
     }
 
     .market-bars {
-        width: 500px;
-        height: 200px;
+        width: 340px;
+        height: 165px;
 
-        top: 160px;
+        top: 112px;
     }
 
-
-    /* Brand */
+    .market-lines {
+        width: 510px;
+    }
 
     .brand-area {
-        padding-top: 80px;
+        padding-top: 57px;
 
-        margin-bottom: 42px;
+        margin-bottom: 27px;
     }
-
-    .brand-logo {
-        display: none;
-    }
-
-    /*
-       Mobile reference image uses
-       a clean CPT Markets text logo.
-    */
 
     .brand-area h1 {
-        margin-top: 20px;
-
         font-size:
-            clamp(45px, 12.5vw, 62px);
+            clamp(39px, 12vw, 52px);
 
-        letter-spacing: -2.5px;
-
-        white-space: nowrap;
-    }
-
-    .brand-area h1::first-letter {
-        color: #ffc400;
+        letter-spacing: -2px;
     }
 
     .gift-title {
-        margin-top: 19px;
+        margin-top: 13px;
 
-        font-size: 21px;
+        font-size: 12px;
 
-        letter-spacing: 10px;
-
-        color: #91a7c2;
+        letter-spacing: 6px;
     }
 
     .gift-title span {
-        display: none;
+        width: 35px;
     }
 
-
-    /* Form */
-
     .form-group {
-        margin-bottom: 26px;
+        margin-bottom: 17px;
     }
 
     .form-group label {
-        margin-bottom: 12px;
+        margin-bottom: 7px;
 
-        font-size: 23px;
-
-        font-weight: 500;
+        font-size: 14px;
     }
 
-
-    /* Inputs */
-
     .input-box {
-        height: 92px;
+        height: 57px;
 
-        border-radius: 27px;
-
-        background:
-            linear-gradient(
-                180deg,
-                rgba(5, 50, 83, 0.94),
-                rgba(4, 38, 67, 0.96)
-            );
-
-        border-color:
-            rgba(50, 135, 193, 0.42);
+        border-radius: 14px;
     }
 
     .input-icon {
-        width: 77px;
+        width: 51px;
 
-        flex-basis: 77px;
+        flex-basis: 51px;
 
-        font-size: 29px;
-
-        color: #ffc400;
+        font-size: 18px;
     }
 
     .input-box input {
-        font-size: 22px;
-
-        padding-right: 10px;
+        font-size: 15px;
     }
 
     .password-toggle {
-        width: 64px;
+        width: 49px;
 
-        flex-basis: 64px;
+        flex-basis: 49px;
 
-        font-size: 27px;
-
-        color: #ffc400;
+        font-size: 17px;
     }
 
-
-    /* Button */
-
     .login-btn {
-        height: 91px;
+        height: 59px;
 
         margin-top: 5px;
 
-        border-radius: 27px;
+        border-radius: 14px;
 
-        font-size: 27px;
-
-        background:
-            linear-gradient(
-                105deg,
-                #ffc400 0%,
-                #ffd000 50%,
-                #ffbd00 100%
-            );
-
-        box-shadow:
-            0 9px 27px rgba(255, 184, 0, 0.26);
+        font-size: 16px;
     }
 
-
-    /* Bottom links */
-
     .login-links {
-        padding: 30px 0 0;
+        padding-top: 18px;
 
-        gap: 12px;
+        gap: 8px;
     }
 
     .login-link {
-        flex: 1;
+        min-height: 43px;
 
-        min-height: 58px;
+        border-radius: 12px;
 
-        padding: 0 9px;
+        font-size: 12px;
 
-        border-radius: 16px;
-
-        font-size: 15px;
-
-        white-space: nowrap;
-
-        color: #b9a0ff;
+        gap: 6px;
     }
 
     .login-link i {
-        font-size: 21px;
-
-        color: #b68cff;
+        font-size: 14px;
     }
-
-    .login-link:last-child {
-        color: #73a4ff;
-    }
-
-    .login-link:last-child i {
-        color: #6e9cff;
-    }
-
-
-    /* Bottom graphics */
 
     .bottom-market {
-        height: 125px;
-
-        opacity: 0.42;
+        height: 82px;
     }
 
     .bottom-bars {
-        left: 12px;
-        right: 12px;
+        left: 10px;
+        right: 10px;
 
-        height: 100px;
+        height: 62px;
     }
 
     .bottom-bars span {
-        width: 28px !important;
+        width: 22px;
     }
 
     .bottom-line {
-        bottom: 42px;
+        bottom: 28px;
     }
 }
 
 
 /* =========================================================
-   SMALL MOBILE
+   SMALL PHONE
    ========================================================= */
 
 @media (max-width: 390px) {
 
+    .login-page {
+        padding: 6px;
+    }
+
     .login-card {
-        padding-left: 16px;
-        padding-right: 16px;
+        padding:
+            18px
+            15px
+            26px;
+
+        border-radius: 22px;
     }
 
     .language-btn {
-        width: 58px;
-        height: 58px;
+        top: 11px;
+        right: 11px;
 
-        font-size: 27px;
+        width: 39px;
+        height: 39px;
+
+        font-size: 18px;
     }
 
     .brand-area {
-        padding-top: 74px;
+        padding-top: 54px;
+
+        margin-bottom: 24px;
     }
 
     .brand-area h1 {
-        font-size: 41px;
+        font-size: 36px;
+
+        letter-spacing: -1.8px;
     }
 
     .gift-title {
-        font-size: 18px;
-        letter-spacing: 8px;
+        font-size: 10px;
+
+        letter-spacing: 5px;
     }
 
     .form-group label {
-        font-size: 21px;
+        font-size: 13px;
     }
 
     .input-box {
-        height: 82px;
+        height: 53px;
     }
 
     .input-icon {
-        width: 67px;
-        flex-basis: 67px;
+        width: 46px;
+
+        flex-basis: 46px;
     }
 
     .input-box input {
-        font-size: 20px;
+        font-size: 14px;
     }
 
     .password-toggle {
-        width: 56px;
-        flex-basis: 56px;
+        width: 44px;
+
+        flex-basis: 44px;
     }
 
     .login-btn {
-        height: 82px;
+        height: 55px;
 
-        font-size: 24px;
+        font-size: 15px;
     }
 
     .login-link {
+        min-height: 40px;
+
+        font-size: 11px;
+    }
+
+    .login-link i {
         font-size: 13px;
     }
 }
 
 
 /* =========================================================
-   VERY SMALL SCREEN
+   VERY SMALL PHONE
    ========================================================= */
 
 @media (max-width: 340px) {
 
+    .login-card {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
     .brand-area h1 {
-        font-size: 37px;
+        font-size: 33px;
+    }
+
+    .gift-title {
+        font-size: 9px;
+        letter-spacing: 4px;
     }
 
     .login-links {
-        gap: 7px;
+        gap: 5px;
     }
 
     .login-link {
-        font-size: 12px;
+        font-size: 10px;
+
+        padding-left: 4px;
+        padding-right: 4px;
     }
 }
