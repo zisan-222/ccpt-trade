@@ -1,8 +1,9 @@
 /* =========================================================
    CPT MARKETS
    PROFESSIONAL TRADE POPUP SYSTEM
+   trade-popup.js
+   FINAL REPLACEMENT
    ========================================================= */
-
 
 (function () {
 
@@ -10,21 +11,26 @@
 
 
     /* =====================================================
-       CREATE POPUP HTML
+       POPUP HTML
        ===================================================== */
 
     const popupHTML = `
 
-        <!-- ================================================
-             CONFIRMATION POPUP
-             ================================================ -->
+        <!-- =================================================
+             TRADE CONFIRMATION POPUP
+             ================================================= -->
 
         <div
             id="cptConfirmPopup"
             class="cpt-popup-overlay"
+            aria-hidden="true"
         >
 
-            <div class="cpt-popup">
+            <div
+                class="cpt-popup"
+                role="dialog"
+                aria-modal="true"
+            >
 
                 <div class="cpt-popup-icon">
                     ⇅
@@ -142,16 +148,21 @@
         </div>
 
 
-        <!-- ================================================
-             TRADE OPEN SUCCESS POPUP
-             ================================================ -->
+        <!-- =================================================
+             TRADE OPENED SUCCESS POPUP
+             ================================================= -->
 
         <div
             id="cptOpenSuccessPopup"
             class="cpt-popup-overlay"
+            aria-hidden="true"
         >
 
-            <div class="cpt-popup cpt-popup-success">
+            <div
+                class="cpt-popup cpt-popup-success"
+                role="dialog"
+                aria-modal="true"
+            >
 
                 <div class="cpt-popup-icon">
                     ✓
@@ -255,16 +266,21 @@
         </div>
 
 
-        <!-- ================================================
-             TRADE CLOSE SUCCESS POPUP
-             ================================================ -->
+        <!-- =================================================
+             TRADE CLOSED SUCCESS POPUP
+             ================================================= -->
 
         <div
             id="cptCloseSuccessPopup"
             class="cpt-popup-overlay"
+            aria-hidden="true"
         >
 
-            <div class="cpt-popup cpt-popup-success">
+            <div
+                class="cpt-popup cpt-popup-success"
+                role="dialog"
+                aria-modal="true"
+            >
 
                 <div class="cpt-popup-icon">
                     ✓
@@ -371,27 +387,12 @@
 
 
     /* =====================================================
-       INSERT POPUPS
+       STATE
        ===================================================== */
 
-    function createPopups() {
+    let confirmCallback = null;
 
-        if (
-            document.getElementById(
-                "cptConfirmPopup"
-            )
-        ) {
-
-            return;
-
-        }
-
-        document.body.insertAdjacentHTML(
-            "beforeend",
-            popupHTML
-        );
-
-    }
+    let successCloseTimer = null;
 
 
     /* =====================================================
@@ -406,18 +407,113 @@
 
 
     /* =====================================================
+       CREATE POPUPS
+       ===================================================== */
+
+    function createPopups() {
+
+        /*
+         * Prevent duplicate popup creation.
+         */
+
+        if (
+            document.getElementById(
+                "cptConfirmPopup"
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        if (!document.body) {
+
+            return;
+
+        }
+
+
+        document.body.insertAdjacentHTML(
+            "beforeend",
+            popupHTML
+        );
+
+    }
+
+
+    /* =====================================================
        OPEN POPUP
        ===================================================== */
 
     function openPopup(id) {
 
-        const popup = $(id);
+        createPopups();
 
-        if (!popup) return;
 
-        popup.classList.add("active");
+        const popup =
+            $(id);
 
-        document.body.style.overflow = "hidden";
+
+        if (!popup) {
+
+            console.error(
+                "CPT popup not found:",
+                id
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * Close other CPT popups first.
+         */
+
+        document
+            .querySelectorAll(
+                ".cpt-popup-overlay.active"
+            )
+            .forEach(
+                function (item) {
+
+                    if (
+                        item.id !== id
+                    ) {
+
+                        item.classList.remove(
+                            "active"
+                        );
+
+                        item.setAttribute(
+                            "aria-hidden",
+                            "true"
+                        );
+
+                    }
+
+                }
+            );
+
+
+        popup.classList.add(
+            "active"
+        );
+
+
+        popup.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+
+        /*
+         * Lock page scrolling.
+         */
+
+        document.body.style.overflow =
+            "hidden";
 
     }
 
@@ -428,240 +524,785 @@
 
     function closePopup(id) {
 
-        const popup = $(id);
+        const popup =
+            $(id);
 
-        if (!popup) return;
 
-        popup.classList.remove("active");
+        if (!popup) {
 
-        document.body.style.overflow = "";
+            return;
+
+        }
+
+
+        popup.classList.remove(
+            "active"
+        );
+
+
+        popup.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+
+        /*
+         * Only unlock scrolling when
+         * no CPT popup remains open.
+         */
+
+        const activePopup =
+            document.querySelector(
+                ".cpt-popup-overlay.active"
+            );
+
+
+        if (!activePopup) {
+
+            document.body.style.overflow =
+                "";
+
+        }
 
     }
 
 
     /* =====================================================
-       CONFIRM TRADE POPUP
+       CLOSE ALL POPUPS
        ===================================================== */
 
-    window.cptShowTradeConfirmation = function (
-        side,
-        marketPrice,
-        leverage,
-        callback
-    ) {
+    function closeAllPopups() {
 
-        createPopups();
+        document
+            .querySelectorAll(
+                ".cpt-popup-overlay.active"
+            )
+            .forEach(
+                function (popup) {
 
+                    popup.classList.remove(
+                        "active"
+                    );
 
-        $("cptConfirmTitle").innerText =
-            "Confirm " + side + " Trade";
+                    popup.setAttribute(
+                        "aria-hidden",
+                        "true"
+                    );
 
-
-        $("cptConfirmText").innerText =
-            "Are you sure you want to open this " +
-            side +
-            " position?";
-
-
-        $("cptConfirmSide").innerText =
-            side;
-
-
-        $("cptConfirmPrice").innerText =
-            Number(marketPrice).toFixed(2);
-
-
-        $("cptConfirmLeverage").innerText =
-            Number(leverage) + "x";
-
-
-        const continueButton =
-            $("cptConfirmContinue");
-
-
-        continueButton.onclick = function () {
-
-            closePopup(
-                "cptConfirmPopup"
+                }
             );
 
 
+        document.body.style.overflow =
+            "";
+
+    }
+
+
+    /* =====================================================
+       CONFIRMATION POPUP
+       ===================================================== */
+
+    window.cptShowTradeConfirmation =
+        function (
+            side,
+            marketPrice,
+            leverage,
+            callback
+        ) {
+
+            createPopups();
+
+
+            /*
+             * Safety check.
+             */
+
+            const title =
+                $("cptConfirmTitle");
+
+            const text =
+                $("cptConfirmText");
+
+            const confirmSide =
+                $("cptConfirmSide");
+
+            const confirmPrice =
+                $("cptConfirmPrice");
+
+            const confirmLeverage =
+                $("cptConfirmLeverage");
+
+            const continueButton =
+                $("cptConfirmContinue");
+
+            const cancelButton =
+                $("cptConfirmCancel");
+
+
             if (
-                typeof callback ===
-                "function"
+                !title ||
+                !text ||
+                !confirmSide ||
+                !confirmPrice ||
+                !confirmLeverage ||
+                !continueButton ||
+                !cancelButton
             ) {
 
-                callback();
+                console.error(
+                    "CPT Markets confirmation popup could not be initialized."
+                );
+
+                return;
 
             }
+
+
+            /*
+             * Store callback.
+             */
+
+            confirmCallback =
+                typeof callback === "function"
+                    ? callback
+                    : null;
+
+
+            /*
+             * Fill popup.
+             */
+
+            const safeSide =
+                String(
+                    side || "LONG"
+                ).toUpperCase();
+
+
+            const safePrice =
+                Number(
+                    marketPrice
+                );
+
+
+            const safeLeverage =
+                Number(
+                    leverage
+                );
+
+
+            title.innerText =
+                "Confirm " +
+                safeSide +
+                " Trade";
+
+
+            text.innerText =
+                "Are you sure you want to open this " +
+                safeSide +
+                " position?";
+
+
+            confirmSide.innerText =
+                safeSide;
+
+
+            confirmPrice.innerText =
+                Number.isFinite(
+                    safePrice
+                )
+                    ? safePrice.toFixed(2)
+                    : "0.00";
+
+
+            confirmLeverage.innerText =
+                Number.isFinite(
+                    safeLeverage
+                )
+                    ? safeLeverage + "x"
+                    : "0x";
+
+
+            /*
+             * Reset buttons.
+             */
+
+            continueButton.disabled =
+                false;
+
+            cancelButton.disabled =
+                false;
+
+
+            continueButton.style.pointerEvents =
+                "auto";
+
+            cancelButton.style.pointerEvents =
+                "auto";
+
+
+            /*
+             * Continue button.
+             *
+             * IMPORTANT:
+             * The actual trade is opened only
+             * after Continue is pressed.
+             */
+
+            continueButton.onclick =
+                function (event) {
+
+                    if (event) {
+
+                        event.preventDefault();
+
+                        event.stopPropagation();
+
+                    }
+
+
+                    if (
+                        continueButton.disabled
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    continueButton.disabled =
+                        true;
+
+
+                    continueButton.style.pointerEvents =
+                        "none";
+
+
+                    const callbackToRun =
+                        confirmCallback;
+
+
+                    confirmCallback =
+                        null;
+
+
+                    closePopup(
+                        "cptConfirmPopup"
+                    );
+
+
+                    if (
+                        typeof callbackToRun ===
+                        "function"
+                    ) {
+
+                        setTimeout(
+                            function () {
+
+                                try {
+
+                                    callbackToRun();
+
+                                } catch (error) {
+
+                                    console.error(
+                                        "CPT trade confirmation callback error:",
+                                        error
+                                    );
+
+                                }
+
+                            },
+                            50
+                        );
+
+                    }
+
+                };
+
+
+            /*
+             * Cancel button.
+             */
+
+            cancelButton.onclick =
+                function (event) {
+
+                    if (event) {
+
+                        event.preventDefault();
+
+                        event.stopPropagation();
+
+                    }
+
+
+                    confirmCallback =
+                        null;
+
+
+                    closePopup(
+                        "cptConfirmPopup"
+                    );
+
+                };
+
+
+            /*
+             * Show popup.
+             */
+
+            openPopup(
+                "cptConfirmPopup"
+            );
 
         };
 
 
-        $("cptConfirmCancel").onclick =
-            function () {
+    /* =====================================================
+       TRADE OPEN SUCCESS POPUP
+       ===================================================== */
 
-                closePopup(
-                    "cptConfirmPopup"
+    window.cptShowTradeOpened =
+        function (
+            side,
+            entryPrice,
+            amount,
+            leverage
+        ) {
+
+            createPopups();
+
+
+            const successSide =
+                $("cptSuccessSide");
+
+            const successEntry =
+                $("cptSuccessEntry");
+
+            const successAmount =
+                $("cptSuccessAmount");
+
+            const successLeverage =
+                $("cptSuccessLeverage");
+
+
+            if (
+                !successSide ||
+                !successEntry ||
+                !successAmount ||
+                !successLeverage
+            ) {
+
+                console.error(
+                    "CPT Markets open-success popup could not be initialized."
                 );
 
-            };
+                return;
+
+            }
 
 
-        openPopup(
-            "cptConfirmPopup"
-        );
+            successSide.innerText =
+                String(
+                    side || "LONG"
+                ).toUpperCase();
 
-    };
+
+            const safeEntry =
+                Number(
+                    entryPrice
+                );
+
+
+            const safeAmount =
+                Number(
+                    amount
+                );
+
+
+            const safeLeverage =
+                Number(
+                    leverage
+                );
+
+
+            successEntry.innerText =
+                Number.isFinite(
+                    safeEntry
+                )
+                    ? safeEntry.toFixed(2)
+                    : "0.00";
+
+
+            successAmount.innerText =
+                "$" +
+                (
+                    Number.isFinite(
+                        safeAmount
+                    )
+                        ? safeAmount.toFixed(2)
+                        : "0.00"
+                );
+
+
+            successLeverage.innerText =
+                (
+                    Number.isFinite(
+                        safeLeverage
+                    )
+                        ? safeLeverage
+                        : 0
+                ) +
+                "x";
+
+
+            /*
+             * Clear previous timer.
+             */
+
+            if (
+                successCloseTimer
+            ) {
+
+                clearTimeout(
+                    successCloseTimer
+                );
+
+                successCloseTimer =
+                    null;
+
+            }
+
+
+            openPopup(
+                "cptOpenSuccessPopup"
+            );
+
+
+            /*
+             * Auto close.
+             */
+
+            successCloseTimer =
+                setTimeout(
+                    function () {
+
+                        closePopup(
+                            "cptOpenSuccessPopup"
+                        );
+
+                        successCloseTimer =
+                            null;
+
+                    },
+                    1800
+                );
+
+        };
 
 
     /* =====================================================
-       OPEN SUCCESS POPUP
+       TRADE CLOSE SUCCESS POPUP
        ===================================================== */
 
-    window.cptShowTradeOpened = function (
-        side,
-        entryPrice,
-        amount,
-        leverage
-    ) {
+    window.cptShowTradeClosed =
+        function (
+            side,
+            entryPrice,
+            closePrice,
+            profitLoss
+        ) {
 
-        createPopups();
-
-
-        $("cptSuccessSide").innerText =
-            side;
+            createPopups();
 
 
-        $("cptSuccessEntry").innerText =
-            Number(entryPrice).toFixed(2);
+            const closeSide =
+                $("cptCloseSide");
+
+            const closeEntry =
+                $("cptCloseEntry");
+
+            const closePriceBox =
+                $("cptClosePrice");
+
+            const closePL =
+                $("cptClosePL");
 
 
-        $("cptSuccessAmount").innerText =
-            "$" +
-            Number(amount).toFixed(2);
+            if (
+                !closeSide ||
+                !closeEntry ||
+                !closePriceBox ||
+                !closePL
+            ) {
 
-
-        $("cptSuccessLeverage").innerText =
-            Number(leverage) + "x";
-
-
-        openPopup(
-            "cptOpenSuccessPopup"
-        );
-
-
-        /*
-         * Automatically close after
-         * approximately 1.8 seconds.
-         */
-
-        setTimeout(
-            function () {
-
-                closePopup(
-                    "cptOpenSuccessPopup"
+                console.error(
+                    "CPT Markets close-success popup could not be initialized."
                 );
 
-            },
-            1800
-        );
+                return;
 
-    };
+            }
 
 
-    /* =====================================================
-       CLOSE SUCCESS POPUP
-       ===================================================== */
-
-    window.cptShowTradeClosed = function (
-        side,
-        entryPrice,
-        closePrice,
-        profitLoss
-    ) {
-
-        createPopups();
+            closeSide.innerText =
+                String(
+                    side || "LONG"
+                ).toUpperCase();
 
 
-        $("cptCloseSide").innerText =
-            side;
+            const safeEntry =
+                Number(
+                    entryPrice
+                );
 
 
-        $("cptCloseEntry").innerText =
-            Number(entryPrice).toFixed(2);
+            const safeClosePrice =
+                Number(
+                    closePrice
+                );
 
 
-        $("cptClosePrice").innerText =
-            Number(closePrice).toFixed(2);
+            const safePL =
+                Number(
+                    profitLoss
+                );
 
 
-        const pl =
-            Number(profitLoss);
+            closeEntry.innerText =
+                Number.isFinite(
+                    safeEntry
+                )
+                    ? safeEntry.toFixed(2)
+                    : "0.00";
 
 
-        $("cptClosePL").innerText =
-            (pl >= 0 ? "+" : "-") +
-            "$" +
-            Math.abs(pl).toFixed(2);
+            closePriceBox.innerText =
+                Number.isFinite(
+                    safeClosePrice
+                )
+                    ? safeClosePrice.toFixed(2)
+                    : "0.00";
 
 
-        $("cptClosePL").className =
-            "cpt-popup-value " +
-            (
-                pl >= 0
+            const finalPL =
+                Number.isFinite(
+                    safePL
+                )
+                    ? safePL
+                    : 0;
+
+
+            closePL.innerText =
+                (
+                    finalPL >= 0
+                        ? "+"
+                        : "-"
+                ) +
+                "$" +
+                Math.abs(
+                    finalPL
+                ).toFixed(2);
+
+
+            /*
+             * Remove old result classes.
+             */
+
+            closePL.classList.remove(
+                "cpt-result-profit",
+                "cpt-result-loss"
+            );
+
+
+            closePL.classList.add(
+                finalPL >= 0
                     ? "cpt-result-profit"
                     : "cpt-result-loss"
             );
 
 
-        openPopup(
-            "cptCloseSuccessPopup"
-        );
+            openPopup(
+                "cptCloseSuccessPopup"
+            );
 
-    };
+        };
 
 
     /* =====================================================
-       DONE BUTTON
+       BUTTON EVENTS
        ===================================================== */
 
-    document.addEventListener(
-        "click",
-        function (event) {
+    function setupButtonEvents() {
 
-            if (
-                event.target &&
-                event.target.id ===
-                "cptCloseSuccessOK"
-            ) {
+        const openOK =
+            $("cptOpenSuccessOK");
 
-                closePopup(
-                    "cptCloseSuccessPopup"
-                );
-
-            }
+        const closeOK =
+            $("cptCloseSuccessOK");
 
 
-            if (
-                event.target &&
-                event.target.id ===
-                "cptOpenSuccessOK"
-            ) {
+        if (openOK) {
 
-                closePopup(
-                    "cptOpenSuccessPopup"
-                );
+            openOK.onclick =
+                function (event) {
 
-            }
+                    event.preventDefault();
+
+                    event.stopPropagation();
+
+                    closePopup(
+                        "cptOpenSuccessPopup"
+                    );
+
+                };
 
         }
-    );
+
+
+        if (closeOK) {
+
+            closeOK.onclick =
+                function (event) {
+
+                    event.preventDefault();
+
+                    event.stopPropagation();
+
+                    closePopup(
+                        "cptCloseSuccessPopup"
+                    );
+
+                };
+
+        }
+
+    }
+
+
+    /* =====================================================
+       BACKDROP CLICK
+       ===================================================== */
+
+    function setupBackdropEvents() {
+
+        document.addEventListener(
+            "click",
+            function (event) {
+
+                const target =
+                    event.target;
+
+
+                if (
+                    !target ||
+                    !target.classList ||
+                    !target.classList.contains(
+                        "cpt-popup-overlay"
+                    )
+                ) {
+
+                    return;
+
+                }
+
+
+                /*
+                 * Do not close confirmation popup
+                 * accidentally by tapping outside.
+                 *
+                 * This keeps the trade confirmation
+                 * professional and deliberate.
+                 */
+
+                if (
+                    target.id ===
+                    "cptConfirmPopup"
+                ) {
+
+                    return;
+
+                }
+
+
+                closePopup(
+                    target.id
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       ESC KEY
+       ===================================================== */
+
+    function setupKeyboardEvents() {
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key !==
+                    "Escape"
+                ) {
+
+                    return;
+
+                }
+
+
+                const confirmPopup =
+                    $("cptConfirmPopup");
+
+
+                if (
+                    confirmPopup &&
+                    confirmPopup.classList.contains(
+                        "active"
+                    )
+                ) {
+
+                    confirmCallback =
+                        null;
+
+                    closePopup(
+                        "cptConfirmPopup"
+                    );
+
+                    return;
+
+                }
+
+
+                closeAllPopups();
+
+            }
+        );
+
+    }
 
 
     /* =====================================================
        INITIALIZE
        ===================================================== */
+
+    function initialize() {
+
+        createPopups();
+
+        setupButtonEvents();
+
+        setupBackdropEvents();
+
+        setupKeyboardEvents();
+
+    }
+
 
     if (
         document.readyState ===
@@ -670,12 +1311,15 @@
 
         document.addEventListener(
             "DOMContentLoaded",
-            createPopups
+            initialize,
+            {
+                once: true
+            }
         );
 
     } else {
 
-        createPopups();
+        initialize();
 
     }
 
