@@ -1,397 +1,371 @@
 /* =========================================================
-   CPTMARKETS — PREMIUM DARK & GOLD LOGIN UI
+   CPTMARKETS — ALL-IN-ONE MASTER CSS (NO OTHER CSS NEEDED)
    File: index-professional.css
    ========================================================= */
 
-/* RESET & GLOBAL BASE */
+/* COMPLETE RESET & BASE STYLES */
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 html, body {
-    width: 100%;
-    min-height: 100vh;
-    min-height: 100dvh;
-    background: #01060e;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    color: #ffffff;
-    overflow-x: hidden;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    background: #01060e !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+    color: #ffffff !important;
+    overflow-x: hidden !important;
     -webkit-font-smoothing: antialiased;
 }
 
-/* FULLSCREEN WRAPPER */
+/* FULLSCREEN PAGE WRAPPER */
 .login-page {
-    width: 100%;
-    min-height: 100vh;
-    min-height: 100dvh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    padding: 16px;
-    background: radial-gradient(circle at 50% 10%, #061e36 0%, #020914 55%, #01050c 100%);
+    width: 100% !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative !important;
+    padding: 16px !important;
+    background: radial-gradient(circle at 50% 10%, #061e36 0%, #020914 55%, #01050c 100%) !important;
 }
 
-/* MAIN CARD CONTAINER */
+/* CARD CONTAINER */
 .login-card {
-    width: 100%;
-    max-width: 440px;
-    min-height: calc(100vh - 32px);
-    min-height: calc(100dvh - 32px);
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(180deg, #071c33 0%, #020a17 40%, #010610 100%);
-    padding: 24px 24px 36px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border-radius: 28px;
-    border: 1px solid rgba(56, 137, 219, 0.25);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(10, 65, 120, 0.15);
+    width: 100% !important;
+    max-width: 440px !important;
+    min-height: calc(100vh - 32px) !important;
+    min-height: calc(100dvh - 32px) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    background: linear-gradient(180deg, #071c33 0%, #020a17 40%, #010610 100%) !important;
+    padding: 24px 24px 36px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    border-radius: 28px !important;
+    border: 1px solid rgba(56, 137, 219, 0.25) !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(10, 65, 120, 0.15) !important;
 }
 
 @media (min-width: 480px) {
     .login-card {
-        min-height: 780px;
-        height: auto;
-        margin: 20px 0;
+        min-height: 780px !important;
+        height: auto !important;
+        margin: 20px 0 !important;
     }
 }
 
 /* LANGUAGE BUTTON */
 .language-btn {
-    position: absolute;
-    top: 18px;
-    right: 18px;
-    z-index: 50;
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(8px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    transition: transform 0.2s ease, border-color 0.2s ease;
-}
-
-.language-btn:hover {
-    transform: scale(1.05);
-    border-color: rgba(226, 176, 55, 0.6);
+    position: absolute !important;
+    top: 18px !important;
+    right: 18px !important;
+    z-index: 50 !important;
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 50% !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    backdrop-filter: blur(8px) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 20px !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    outline: none !important;
 }
 
 /* BACKGROUND GRAPHICS & GLOW */
 .market-background {
-    position: absolute;
-    top: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 380px;
-    height: 380px;
-    pointer-events: none;
-    z-index: 1;
+    position: absolute !important;
+    top: -20px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 380px !important;
+    height: 380px !important;
+    pointer-events: none !important;
+    z-index: 1 !important;
 }
 
 .circle-ring {
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    border: 1px solid rgba(56, 137, 219, 0.35);
-    box-shadow: inset 0 0 35px rgba(22, 98, 175, 0.25), 0 0 30px rgba(18, 91, 164, 0.2);
+    position: absolute !important;
+    inset: 0 !important;
+    border-radius: 50% !important;
+    border: 1px solid rgba(56, 137, 219, 0.35) !important;
+    box-shadow: inset 0 0 35px rgba(22, 98, 175, 0.25), 0 0 30px rgba(18, 91, 164, 0.2) !important;
 }
 
 .circle-glow {
-    position: absolute;
-    inset: 20px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(16, 78, 139, 0.45) 0%, rgba(5, 30, 58, 0.2) 60%, transparent 75%);
+    position: absolute !important;
+    inset: 20px !important;
+    border-radius: 50% !important;
+    background: radial-gradient(circle, rgba(16, 78, 139, 0.45) 0%, rgba(5, 30, 58, 0.2) 60%, transparent 75%) !important;
 }
 
 .market-dots {
-    position: absolute;
-    inset: 40px;
-    border-radius: 50%;
-    opacity: 0.55;
-    background-image: radial-gradient(rgba(56, 150, 235, 0.75) 1.2px, transparent 1.2px);
-    background-size: 10px 10px;
-    -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 30%, transparent 70%);
-    mask-image: radial-gradient(circle, rgba(0,0,0,1) 30%, transparent 70%);
+    position: absolute !important;
+    inset: 40px !important;
+    border-radius: 50% !important;
+    opacity: 0.55 !important;
+    background-image: radial-gradient(rgba(56, 150, 235, 0.75) 1.2px, transparent 1.2px) !important;
+    background-size: 10px 10px !important;
+    -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 30%, transparent 70%) !important;
+    mask-image: radial-gradient(circle, rgba(0,0,0,1) 30%, transparent 70%) !important;
 }
 
 .market-chart-wave {
-    position: absolute;
-    width: 100%;
-    height: 100px;
-    top: 45%;
-    left: 0;
-    opacity: 0.25;
-    background: repeating-linear-gradient(90deg, transparent, transparent 12px, rgba(94, 177, 255, 0.5) 12px, rgba(94, 177, 255, 0.5) 13px);
-    -webkit-mask-image: linear-gradient(180deg, transparent, #000, transparent);
-    mask-image: linear-gradient(180deg, transparent, #000, transparent);
+    position: absolute !important;
+    width: 100% !important;
+    height: 100px !important;
+    top: 45% !important;
+    left: 0 !important;
+    opacity: 0.25 !important;
+    background: repeating-linear-gradient(90deg, transparent, transparent 12px, rgba(94, 177, 255, 0.5) 12px, rgba(94, 177, 255, 0.5) 13px) !important;
+    -webkit-mask-image: linear-gradient(180deg, transparent, #000, transparent) !important;
+    mask-image: linear-gradient(180deg, transparent, #000, transparent) !important;
 }
 
-/* BRAND & LOGO DESIGN */
+/* BRAND LOGO BADGE */
 .brand-area {
-    position: relative;
-    z-index: 10;
-    text-align: center;
-    margin-top: 35px;
-    margin-bottom: 25px;
+    position: relative !important;
+    z-index: 10 !important;
+    text-align: center !important;
+    margin-top: 35px !important;
+    margin-bottom: 25px !important;
 }
 
 .brand-logo-container {
-    display: inline-block;
-    position: relative;
-    margin-bottom: 6px;
+    display: inline-block !important;
+    position: relative !important;
+    margin-bottom: 6px !important;
 }
 
 .logo-ring-badge {
-    width: 62px;
-    height: 62px;
-    border-radius: 50%;
-    border: 2px solid #e2b037;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    box-shadow: 0 0 18px rgba(226, 176, 55, 0.35);
-    background: rgba(4, 21, 41, 0.7);
-    position: relative;
+    width: 62px !important;
+    height: 62px !important;
+    border-radius: 50% !important;
+    border: 2px solid #e2b037 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 auto !important;
+    box-shadow: 0 0 18px rgba(226, 176, 55, 0.35) !important;
+    background: rgba(4, 21, 41, 0.7) !important;
+    position: relative !important;
 }
 
 .logo-ring-badge::after {
-    content: '▲';
-    position: absolute;
-    top: 6px;
-    right: 7px;
-    color: #e2b037;
-    font-size: 8px;
-    transform: rotate(45deg);
+    content: '▲' !important;
+    position: absolute !important;
+    top: 6px !important;
+    right: 7px !important;
+    color: #e2b037 !important;
+    font-size: 8px !important;
+    transform: rotate(45deg) !important;
 }
 
 .logo-cpt-text {
-    color: #e2b037;
-    font-weight: 800;
-    font-size: 15px;
-    line-height: 1;
-    letter-spacing: -0.5px;
+    color: #e2b037 !important;
+    font-weight: 800 !important;
+    font-size: 15px !important;
+    line-height: 1 !important;
+    letter-spacing: -0.5px !important;
 }
 
 .logo-markets-text {
-    color: #ffffff;
-    font-size: 6px;
-    letter-spacing: 0.8px;
-    margin-top: 2px;
-    font-weight: 600;
+    color: #ffffff !important;
+    font-size: 6px !important;
+    letter-spacing: 0.8px !important;
+    margin-top: 2px !important;
+    font-weight: 600 !important;
 }
 
 .logo-uk-text {
-    color: #7b8b9a;
-    font-size: 5px;
-    letter-spacing: 0.5px;
+    color: #7b8b9a !important;
+    font-size: 5px !important;
+    letter-spacing: 0.5px !important;
 }
 
 .brand-area h1 {
-    font-size: 36px;
-    font-weight: 800;
-    background: linear-gradient(180deg, #fff7cd 0%, #e2b037 60%, #997116 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin: 10px 0 4px 0;
-    letter-spacing: -0.5px;
-    filter: drop-shadow(0 2px 8px rgba(226, 176, 55, 0.25));
+    font-size: 36px !important;
+    font-weight: 800 !important;
+    background: linear-gradient(180deg, #fff7cd 0%, #e2b037 60%, #997116 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    margin: 10px 0 4px 0 !important;
+    letter-spacing: -0.5px !important;
 }
 
 .gift-title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    color: #d1dbe5;
-    font-size: 14px;
-    letter-spacing: 5px;
-    font-weight: 500;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 12px !important;
+    color: #d1dbe5 !important;
+    font-size: 14px !important;
+    letter-spacing: 5px !important;
+    font-weight: 500 !important;
 }
 
 .gift-title span {
-    display: block;
-    width: 35px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(226, 176, 55, 0.7));
+    display: block !important;
+    width: 35px !important;
+    height: 1px !important;
+    background: linear-gradient(90deg, transparent, rgba(226, 176, 55, 0.7)) !important;
 }
 
 .gift-title span:last-child {
-    background: linear-gradient(90deg, rgba(226, 176, 55, 0.7), transparent);
+    background: linear-gradient(90deg, rgba(226, 176, 55, 0.7), transparent) !important;
 }
 
-/* LOGIN FORM STYLES */
+/* FORM FIELDS */
 .login-form {
-    position: relative;
-    z-index: 10;
-    width: 100%;
+    position: relative !important;
+    z-index: 10 !important;
+    width: 100% !important;
 }
 
 .form-group {
-    margin-bottom: 22px;
+    margin-bottom: 22px !important;
 }
 
 .form-group label {
-    display: block;
-    margin-bottom: 8px;
-    color: #ffffff;
-    font-size: 15px;
-    font-weight: 600;
+    display: block !important;
+    margin-bottom: 8px !important;
+    color: #ffffff !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
 }
 
 .input-box {
-    width: 100%;
-    height: 56px;
-    border-radius: 16px;
-    border: 1px solid rgba(56, 117, 179, 0.4);
-    background: rgba(3, 19, 38, 0.75);
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-    transition: border-color 0.25 ease, box-shadow 0.25s ease;
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 100% !important;
+    height: 56px !important;
+    border-radius: 16px !important;
+    border: 1px solid rgba(56, 117, 179, 0.4) !important;
+    background: rgba(3, 19, 38, 0.75) !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 0 16px !important;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5) !important;
 }
 
 .input-box:focus-within {
-    border-color: #2979ff;
-    box-shadow: 0 0 14px rgba(41, 121, 255, 0.35), inset 0 0 10px rgba(0, 0, 0, 0.5);
+    border-color: #2979ff !important;
+    box-shadow: 0 0 14px rgba(41, 121, 255, 0.35), inset 0 0 10px rgba(0, 0, 0, 0.5) !important;
 }
 
 .input-icon {
-    color: #62778e;
-    font-size: 18px;
-    width: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    color: #62778e !important;
+    font-size: 18px !important;
+    width: 30px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
 }
 
 .input-box input {
-    flex: 1;
-    height: 100%;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: #ffffff;
-    font-size: 16px;
+    flex: 1 !important;
+    height: 100% !important;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    color: #ffffff !important;
+    font-size: 16px !important;
 }
 
 .input-box input::placeholder {
-    color: #4b5d73;
+    color: #4b5d73 !important;
 }
 
 .password-toggle {
-    color: #62778e;
-    font-size: 18px;
-    cursor: pointer;
-    padding: 4px;
-    transition: color 0.2s ease;
-}
-
-.password-toggle:hover {
-    color: #e2b037;
+    color: #62778e !important;
+    font-size: 18px !important;
+    cursor: pointer !important;
+    padding: 4px !important;
 }
 
 /* SIGN IN GOLDEN BUTTON */
 .login-btn {
-    width: 100%;
-    height: 56px;
-    margin-top: 10px;
-    border: none;
-    border-radius: 16px;
-    background: linear-gradient(180deg, #ffe578 0%, #d49a16 50%, #a67300 100%);
-    color: #050d1a;
-    font-size: 18px;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 6px 20px rgba(212, 154, 22, 0.35);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    width: 100% !important;
+    height: 56px !important;
+    margin-top: 10px !important;
+    border: none !important;
+    border-radius: 16px !important;
+    background: linear-gradient(180deg, #ffe578 0%, #d49a16 50%, #a67300 100%) !important;
+    color: #050d1a !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    box-shadow: 0 6px 20px rgba(212, 154, 22, 0.35) !important;
+    outline: none !important;
 }
 
-.login-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 8px 24px rgba(212, 154, 22, 0.45);
-}
-
-.login-btn:active {
-    transform: translateY(1px);
-    box-shadow: 0 2px 10px rgba(212, 154, 22, 0.2);
-}
-
-/* NAVIGATION LINKS */
+/* LINKS */
 .login-links {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 22px;
-    padding: 0 4px;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin-top: 22px !important;
+    padding: 0 4px !important;
 }
 
 .login-link {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: #e2b037;
-    text-decoration: none;
-    font-size: 13.5px;
-    font-weight: 600;
-    transition: opacity 0.2s ease;
-}
-
-.login-link:hover {
-    opacity: 0.85;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    color: #e2b037 !important;
+    text-decoration: none !important;
+    font-size: 13.5px !important;
+    font-weight: 600 !important;
 }
 
 .login-link i {
-    font-size: 14px;
-    color: #e2b037;
+    font-size: 14px !important;
+    color: #e2b037 !important;
 }
 
 /* BOTTOM GRAPHICS */
 .bottom-market {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 65px;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 1;
-    opacity: 0.35;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 65px !important;
+    pointer-events: none !important;
+    overflow: hidden !important;
+    z-index: 1 !important;
+    opacity: 0.35 !important;
 }
 
 .bottom-bars {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-around;
-    padding: 0 10px;
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    justify-content: space-around !important;
+    padding: 0 10px !important;
 }
 
 .bottom-bars span {
-    display: block;
-    background: rgba(35, 110, 185, 0.2);
-    border: 1px solid rgba(56, 137, 219, 0.3);
-    border-bottom: none;
+    display: block !important;
+    background: rgba(35, 110, 185, 0.2) !important;
+    border: 1px solid rgba(56, 137, 219, 0.3) !important;
+    border-bottom: none !important;
 }
 
-.bottom-bars span:nth-child(1) { width: 30px; height: 35px; border-radius: 4px 4px 0 0; }
-.bottom-bars span:nth-child(2) { width: 45px; height: 50px; border-radius: 50% 50% 0 0; }
-.bottom-bars span:nth-child(3) { width: 20px; height: 65px; border-radius: 3px 3px 0 0; }
-.bottom-bars span:nth-child(4) { width: 60px; height: 40px; border-radius: 40% 40% 0 0; }
-.bottom-bars span:nth-child(5) { width: 35px; height: 58px; border-radius: 4px 4px 0 0; }
-.bottom-bars span:nth-child(6) { width: 40px; height: 45px; border-radius: 50% 50% 0 0; }
+.bottom-bars span:nth-child(1) { width: 30px !important; height: 35px !important; border-radius: 4px 4px 0 0 !important; }
+.bottom-bars span:nth-child(2) { width: 45px !important; height: 50px !important; border-radius: 50% 50% 0 0 !important; }
+.bottom-bars span:nth-child(3) { width: 20px !important; height: 65px !important; border-radius: 3px 3px 0 0 !important; }
+.bottom-bars span:nth-child(4) { width: 60px !important; height: 40px !important; border-radius: 40% 40% 0 0 !important; }
+.bottom-bars span:nth-child(5) { width: 35px !important; height: 58px !important; border-radius: 4px 4px 0 0 !important; }
+.bottom-bars span:nth-child(6) { width: 40px !important; height: 45px !important; border-radius: 50% 50% 0 0 !important; }
