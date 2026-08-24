@@ -1,0 +1,1071 @@
+/* =========================================================
+   CPTMARKETS PREMIUM LOGIN
+   Standalone Login Page
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family:
+        Inter,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 50% 15%,
+            #07355d 0%,
+            #031b32 30%,
+            #010b17 65%,
+            #00060d 100%
+        );
+
+    color: #ffffff;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.login-page {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 8px 14px;
+
+    position: relative;
+
+    background:
+        radial-gradient(
+            ellipse at center top,
+            rgba(0, 109, 193, 0.30),
+            transparent 55%
+        );
+}
+
+
+/* =========================================================
+   MAIN CARD
+   ========================================================= */
+
+.login-card {
+    width: min(100%, 760px);
+    min-height: calc(100vh - 16px);
+
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius: 30px;
+
+    border: 1px solid rgba(77, 151, 209, 0.42);
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(4, 30, 54, 0.96),
+            rgba(1, 10, 21, 0.985)
+        );
+
+    box-shadow:
+        0 0 35px rgba(0, 117, 210, 0.15),
+        inset 0 0 45px rgba(0, 89, 160, 0.08);
+
+    padding: 28px 28px 50px;
+}
+
+
+/* =========================================================
+   OUTER BLUE GLOW
+   ========================================================= */
+
+.login-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: -160px;
+    left: 50%;
+
+    width: 650px;
+    height: 650px;
+
+    transform: translateX(-50%);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0, 116, 211, 0.27),
+            rgba(0, 116, 211, 0.08) 45%,
+            transparent 70%
+        );
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   LANGUAGE BUTTON
+   ========================================================= */
+
+.language-btn {
+    position: absolute;
+
+    top: 15px;
+    right: 15px;
+
+    width: 72px;
+    height: 64px;
+
+    border-radius: 32px;
+
+    border: 1px solid rgba(104, 164, 218, 0.35);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(15, 49, 82, 0.9),
+            rgba(3, 17, 32, 0.95)
+        );
+
+    box-shadow:
+        inset 0 0 18px rgba(0, 107, 196, 0.10),
+        0 5px 20px rgba(0, 0, 0, 0.25);
+
+    font-size: 31px;
+
+    cursor: pointer;
+
+    z-index: 20;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.language-btn:hover {
+    transform: translateY(-2px);
+
+    border-color:
+        rgba(255, 196, 54, 0.65);
+}
+
+
+/* =========================================================
+   MARKET BACKGROUND
+   ========================================================= */
+
+.market-background {
+    position: absolute;
+
+    top: 35px;
+    left: 50%;
+
+    width: 650px;
+    height: 650px;
+
+    transform: translateX(-50%);
+
+    pointer-events: none;
+
+    z-index: 1;
+}
+
+
+/* Large glass circle */
+
+.market-background::before {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top: 15px;
+
+    width: 610px;
+    height: 610px;
+
+    transform: translateX(-50%);
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(127, 190, 238, 0.8);
+
+    background:
+        radial-gradient(
+            circle at 50% 40%,
+            rgba(12, 59, 98, 0.40),
+            rgba(3, 22, 41, 0.40) 50%,
+            rgba(1, 10, 21, 0.10) 75%,
+            transparent 76%
+        );
+
+    box-shadow:
+        0 0 45px rgba(0, 103, 185, 0.18),
+        inset 0 0 80px rgba(0, 126, 220, 0.10);
+}
+
+
+/* =========================================================
+   BLUE DOT PATTERN
+   ========================================================= */
+
+.market-dots {
+    position: absolute;
+
+    left: 50%;
+    top: 170px;
+
+    width: 470px;
+    height: 220px;
+
+    transform: translateX(-50%);
+
+    opacity: 0.72;
+
+    background-image:
+        radial-gradient(
+            circle,
+            rgba(15, 133, 226, 0.8) 1.5px,
+            transparent 1.8px
+        );
+
+    background-size: 13px 13px;
+
+    mask-image:
+        radial-gradient(
+            ellipse,
+            black 15%,
+            transparent 72%
+        );
+
+    -webkit-mask-image:
+        radial-gradient(
+            ellipse,
+            black 15%,
+            transparent 72%
+        );
+}
+
+
+/* =========================================================
+   MARKET BARS
+   ========================================================= */
+
+.market-bars {
+    position: absolute;
+
+    left: 50%;
+    top: 180px;
+
+    width: 600px;
+    height: 210px;
+
+    transform: translateX(-50%);
+
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: space-around;
+
+    opacity: 0.25;
+}
+
+.market-bars span {
+    display: block;
+
+    width: 4px;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(55, 141, 210, 0.05),
+            rgba(94, 171, 229, 0.8)
+        );
+
+    box-shadow:
+        0 0 12px rgba(44, 145, 224, 0.45);
+}
+
+.market-bars span:nth-child(1) {
+    height: 75px;
+}
+
+.market-bars span:nth-child(2) {
+    height: 115px;
+}
+
+.market-bars span:nth-child(3) {
+    height: 160px;
+}
+
+.market-bars span:nth-child(4) {
+    height: 105px;
+}
+
+.market-bars span:nth-child(5) {
+    height: 180px;
+}
+
+.market-bars span:nth-child(6) {
+    height: 130px;
+}
+
+.market-bars span:nth-child(7) {
+    height: 195px;
+}
+
+.market-bars span:nth-child(8) {
+    height: 145px;
+}
+
+.market-bars span:nth-child(9) {
+    height: 170px;
+}
+
+.market-bars span:nth-child(10) {
+    height: 125px;
+}
+
+.market-bars span:nth-child(11) {
+    height: 155px;
+}
+
+.market-bars span:nth-child(12) {
+    height: 90px;
+}
+
+
+/* =========================================================
+   DECORATIVE MARKET LINES
+   ========================================================= */
+
+.market-lines {
+    position: absolute;
+
+    width: 760px;
+    height: 2px;
+
+    left: -80px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 206, 69, 0.48),
+            transparent
+        );
+
+    transform-origin: center;
+
+    opacity: 0.55;
+}
+
+.line-1 {
+    top: 260px;
+    transform: rotate(16deg);
+}
+
+.line-2 {
+    top: 300px;
+    transform: rotate(-12deg);
+}
+
+.line-3 {
+    top: 340px;
+    transform: rotate(9deg);
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.brand-area {
+    position: relative;
+
+    z-index: 5;
+
+    text-align: center;
+
+    padding-top: 64px;
+
+    margin-bottom: 45px;
+}
+
+
+/* Logo */
+
+.brand-logo {
+    display: inline-flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    margin-bottom: 15px;
+}
+
+.logo-ring {
+    position: relative;
+
+    width: 78px;
+    height: 78px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    border: 5px solid #f4bf3e;
+
+    border-right-color: transparent;
+
+    transform: rotate(-25deg);
+
+    box-shadow:
+        0 0 18px rgba(255, 192, 50, 0.22);
+}
+
+.logo-ring span {
+    transform: rotate(25deg);
+
+    color: #f6c343;
+
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.logo-ring i {
+    position: absolute;
+
+    right: -3px;
+    top: -5px;
+
+    color: #f6c343;
+
+    font-size: 19px;
+
+    transform: rotate(25deg);
+}
+
+.logo-markets {
+    margin-top: 5px;
+
+    font-size: 16px;
+
+    letter-spacing: 4px;
+
+    color: #f4f5f8;
+
+    font-weight: 500;
+}
+
+.logo-uk {
+    font-size: 11px;
+
+    letter-spacing: 3px;
+
+    color: #cbd2dc;
+
+    margin-top: 1px;
+}
+
+
+/* Main brand */
+
+.brand-area h1 {
+    position: relative;
+
+    margin-top: 20px;
+
+    font-size: clamp(45px, 7vw, 70px);
+
+    font-weight: 800;
+
+    letter-spacing: -2px;
+
+    color: #ffd84d;
+
+    text-shadow:
+        0 0 7px rgba(255, 215, 69, 0.75),
+        0 0 20px rgba(255, 181, 25, 0.45),
+        0 4px 2px rgba(0, 0, 0, 0.5);
+}
+
+
+/* Gift */
+
+.gift-title {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-top: 18px;
+
+    color: #f3f5fa;
+
+    font-size: 23px;
+
+    letter-spacing: 4px;
+
+    font-weight: 400;
+}
+
+.gift-title span {
+    width: 55px;
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #d6a72d
+        );
+}
+
+.gift-title span:last-child {
+    background:
+        linear-gradient(
+            90deg,
+            #d6a72d,
+            transparent
+        );
+}
+
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.login-form {
+    position: relative;
+
+    z-index: 10;
+
+    width: 100%;
+}
+
+
+/* Group */
+
+.form-group {
+    margin-bottom: 27px;
+}
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 15px;
+
+    color: #f1f3f8;
+
+    font-size: 26px;
+
+    font-weight: 700;
+}
+
+
+/* Input */
+
+.input-box {
+    width: 100%;
+    height: 100px;
+
+    display: flex;
+
+    align-items: center;
+
+    position: relative;
+
+    border-radius: 29px;
+
+    border: 1px solid rgba(111, 145, 184, 0.38);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(5, 22, 42, 0.90),
+            rgba(2, 13, 27, 0.97)
+        );
+
+    box-shadow:
+        inset 0 0 20px rgba(0, 71, 131, 0.08),
+        0 7px 22px rgba(0, 0, 0, 0.18);
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.input-box:focus-within {
+    border-color:
+        rgba(83, 153, 217, 0.75);
+
+    box-shadow:
+        0 0 0 2px rgba(35, 119, 190, 0.12),
+        inset 0 0 25px rgba(0, 91, 168, 0.12);
+}
+
+.input-icon {
+    width: 86px;
+
+    text-align: center;
+
+    color: #8ca3c9;
+
+    font-size: 31px;
+}
+
+.input-box input {
+    flex: 1;
+
+    min-width: 0;
+
+    height: 100%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: #eaf1ff;
+
+    font-size: 27px;
+
+    padding-right: 20px;
+}
+
+.input-box input::placeholder {
+    color: #7183a5;
+
+    opacity: 1;
+}
+
+
+/* Password toggle */
+
+.password-toggle {
+    width: 70px;
+    height: 100%;
+
+    border: none;
+
+    background: transparent;
+
+    color: #8397bb;
+
+    font-size: 29px;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   LOGIN BUTTON
+   ========================================================= */
+
+.login-btn {
+    width: 100%;
+    height: 100px;
+
+    margin-top: 5px;
+
+    border: 1px solid rgba(255, 230, 135, 0.65);
+
+    border-radius: 29px;
+
+    background:
+        linear-gradient(
+            100deg,
+            #ffe58c 0%,
+            #ffd21d 27%,
+            #f5b900 57%,
+            #c98500 100%
+        );
+
+    color: #090909;
+
+    font-size: 31px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 20px rgba(235, 169, 0, 0.28),
+        0 0 25px rgba(255, 199, 31, 0.20),
+        inset 0 2px 0 rgba(255, 255, 255, 0.45),
+        inset 0 -5px 10px rgba(139, 86, 0, 0.15);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        filter 0.2s ease;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+
+    filter: brightness(1.05);
+
+    box-shadow:
+        0 12px 30px rgba(235, 169, 0, 0.38),
+        0 0 35px rgba(255, 199, 31, 0.25);
+}
+
+.login-btn:active {
+    transform: translateY(1px);
+}
+
+
+/* =========================================================
+   BOTTOM LINKS
+   ========================================================= */
+
+.login-links {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 34px 72px 0;
+}
+
+.login-link {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    color: #f3b923;
+
+    text-decoration: none;
+
+    font-size: 21px;
+
+    font-weight: 600;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.login-link i {
+    font-size: 26px;
+
+    color: #f4b900;
+
+    text-shadow:
+        0 0 10px rgba(255, 190, 26, 0.35);
+}
+
+.login-link:hover {
+    color: #ffe27a;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   BOTTOM MARKET DECORATION
+   ========================================================= */
+
+.bottom-market {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 150px;
+
+    pointer-events: none;
+
+    opacity: 0.45;
+}
+
+.bottom-line {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    bottom: 55px;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(39, 130, 204, 0.8),
+            transparent
+        );
+}
+
+.bottom-bars {
+    position: absolute;
+
+    bottom: 0;
+
+    left: 25px;
+    right: 25px;
+
+    height: 125px;
+
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.bottom-bars span {
+    width: 45px;
+
+    border: 1px solid rgba(49, 132, 201, 0.35);
+
+    border-bottom: none;
+
+    border-radius: 25px 25px 0 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(26, 104, 165, 0.15),
+            rgba(6, 40, 69, 0.04)
+        );
+}
+
+.bottom-bars span:nth-child(1) {
+    height: 50px;
+}
+
+.bottom-bars span:nth-child(2) {
+    height: 80px;
+
+    width: 60px;
+
+    border-radius: 50% 50% 0 0;
+}
+
+.bottom-bars span:nth-child(3) {
+    height: 100px;
+
+    width: 30px;
+}
+
+.bottom-bars span:nth-child(4) {
+    height: 60px;
+
+    width: 80px;
+
+    border-radius: 50% 50% 0 0;
+}
+
+.bottom-bars span:nth-child(5) {
+    height: 110px;
+
+    width: 42px;
+}
+
+.bottom-bars span:nth-child(6) {
+    height: 70px;
+
+    width: 75px;
+}
+
+.bottom-bars span:nth-child(7) {
+    height: 120px;
+
+    width: 35px;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .login-page {
+        padding: 8px;
+        align-items: stretch;
+    }
+
+    .login-card {
+        width: 100%;
+        min-height: calc(100vh - 16px);
+
+        border-radius: 25px;
+
+        padding:
+            20px
+            20px
+            40px;
+    }
+
+    .language-btn {
+        width: 62px;
+        height: 54px;
+
+        font-size: 27px;
+
+        top: 12px;
+        right: 12px;
+    }
+
+    .market-background {
+        top: 40px;
+
+        width: 520px;
+        height: 520px;
+    }
+
+    .market-background::before {
+        width: 500px;
+        height: 500px;
+    }
+
+    .market-dots {
+        width: 390px;
+        top: 160px;
+    }
+
+    .market-bars {
+        width: 500px;
+    }
+
+    .brand-area {
+        padding-top: 58px;
+
+        margin-bottom: 35px;
+    }
+
+    .logo-ring {
+        width: 68px;
+        height: 68px;
+    }
+
+    .brand-area h1 {
+        font-size: clamp(40px, 12vw, 58px);
+
+        letter-spacing: -2px;
+    }
+
+    .gift-title {
+        font-size: 18px;
+    }
+
+    .form-group {
+        margin-bottom: 24px;
+    }
+
+    .form-group label {
+        font-size: 22px;
+
+        margin-bottom: 12px;
+    }
+
+    .input-box {
+        height: 82px;
+
+        border-radius: 25px;
+    }
+
+    .input-icon {
+        width: 68px;
+
+        font-size: 27px;
+    }
+
+    .input-box input {
+        font-size: 22px;
+    }
+
+    .password-toggle {
+        width: 58px;
+
+        font-size: 25px;
+    }
+
+    .login-btn {
+        height: 82px;
+
+        border-radius: 25px;
+
+        font-size: 25px;
+    }
+
+    .login-links {
+        padding: 28px 5px 0;
+
+        gap: 15px;
+    }
+
+    .login-link {
+        font-size: 16px;
+
+        gap: 7px;
+    }
+
+    .login-link i {
+        font-size: 21px;
+    }
+
+    .bottom-bars span {
+        width: 25px !important;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL DEVICES
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    .login-card {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .brand-area h1 {
+        font-size: 38px;
+    }
+
+    .login-links {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .login-link {
+        font-size: 14px;
+    }
+}
