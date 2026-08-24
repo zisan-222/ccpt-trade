@@ -1,310 +1,1350 @@
 /* =========================================================
-   CPTMarkets - Professional Login Theme
-   File: index-professional.css
-
-   IMPORTANT:
-   This file keeps the existing style.css design and
-   upgrades it with a darker, cleaner and more professional
-   appearance.
+   CPTMARKETS — INDEX PROFESSIONAL V2
+   Premium Login Page
    ========================================================= */
+
+:root {
+    --bg-main: #010711;
+    --bg-deep: #020f1d;
+    --blue: #087cc1;
+    --blue-light: #35b7ff;
+    --gold: #ffc400;
+    --gold-light: #ffe477;
+    --gold-dark: #d88b00;
+    --text: #f5f8fc;
+    --muted: #8498ae;
+    --radius: 28px;
+}
 
 
 /* =========================================================
-   1. LOAD YOUR ORIGINAL CSS
+   RESET
    ========================================================= */
 
-@import url("style.css");
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
 
-
-/* =========================================================
-   2. DARK PROFESSIONAL BACKGROUND
-   ========================================================= */
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+}
 
 html {
-    background: #020812 !important;
+    background: var(--bg-main);
 }
 
 body {
-    background:
-        radial-gradient(
-            circle at 50% 0%,
-            rgba(0, 78, 150, 0.18),
-            transparent 38%
-        ),
-        radial-gradient(
-            circle at 10% 90%,
-            rgba(255, 196, 0, 0.035),
-            transparent 28%
-        ),
-        linear-gradient(
-            145deg,
-            #061a30 0%,
-            #031326 45%,
-            #010812 100%
-        ) !important;
+    font-family:
+        Inter,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
 
-    color: #f5f7fb !important;
+    color: var(--text);
+    background: var(--bg-main);
+
+    overflow-x: hidden;
+
+    -webkit-font-smoothing: antialiased;
 }
 
 
 /* =========================================================
-   3. BACKGROUND EFFECT
+   LOGIN PAGE
    ========================================================= */
 
-.background {
-    background:
-        radial-gradient(
-            circle at 50% 20%,
-            rgba(0, 90, 180, 0.10),
-            transparent 40%
-        ),
-        linear-gradient(
-            180deg,
-            rgba(0, 8, 18, 0.12),
-            rgba(0, 0, 0, 0.25)
-        ) !important;
-}
+.login-page {
 
-
-/* =========================================================
-   4. LOGIN CONTAINER
-   ========================================================= */
-
-.login-container {
     position: relative;
-    z-index: 2;
-}
 
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
 
-/* =========================================================
-   5. LOGIN CARD
-   ========================================================= */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-.login-card {
-    background:
-        linear-gradient(
-            145deg,
-            rgba(7, 30, 55, 0.96),
-            rgba(2, 15, 30, 0.98)
-        ) !important;
+    padding: 18px;
 
-    border: 1px solid rgba(120, 175, 225, 0.16) !important;
-
-    border-radius: 30px !important;
-
-    box-shadow:
-        0 30px 75px rgba(0, 0, 0, 0.50),
-        inset 0 1px 0 rgba(255, 255, 255, 0.025) !important;
-
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-}
-
-
-/* =========================================================
-   6. LANGUAGE BUTTON
-   ========================================================= */
-
-.language {
-    border-radius: 50% !important;
-
-    border: 1px solid rgba(255, 255, 255, 0.16) !important;
-
-    background: rgba(255, 255, 255, 0.96) !important;
-
-    box-shadow:
-        0 10px 25px rgba(0, 0, 0, 0.28) !important;
-
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease !important;
-
-    cursor: pointer;
-}
-
-.language:hover {
-    transform: translateY(-2px) scale(1.03);
-
-    box-shadow:
-        0 15px 32px rgba(0, 0, 0, 0.35) !important;
-}
-
-
-/* =========================================================
-   7. LOGO
-   ========================================================= */
-
-.logo-area h1 {
-    letter-spacing: -1.5px;
-}
-
-.logo-area h1 .gold {
-    color: #ffc400 !important;
-
-    text-shadow:
-        0 0 8px rgba(255, 196, 0, 0.65),
-        0 0 25px rgba(255, 196, 0, 0.22);
-}
-
-.logo-area h1 .white {
-    color: #f8fafc !important;
-}
-
-.logo-area p {
-    color: #9eafc5 !important;
-
-    letter-spacing: 0.45em;
-}
-
-
-/* =========================================================
-   8. FORM LABELS
-   ========================================================= */
-
-.form-group label {
-    color: #f1f5f9 !important;
-
-    font-weight: 600;
-}
-
-
-/* =========================================================
-   9. INPUT BOX
-   ========================================================= */
-
-.input-box {
-    position: relative;
-}
-
-
-/* Username / Password input */
-
-.input-box input {
-    background:
-        linear-gradient(
-            180deg,
-            rgba(10, 48, 84, 0.96),
-            rgba(6, 35, 62, 0.98)
-        ) !important;
-
-    color: #f7faff !important;
-
-    border: 1px solid rgba(120, 174, 224, 0.18) !important;
-
-    border-radius: 18px !important;
-
-    outline: none !important;
-
-    transition:
-        border-color 0.22s ease,
-        box-shadow 0.22s ease,
-        background 0.22s ease,
-        transform 0.22s ease !important;
-}
-
-
-/* Placeholder */
-
-.input-box input::placeholder {
-    color: #8398b4 !important;
-}
-
-
-/* Input focus */
-
-.input-box input:focus {
-    border-color: rgba(255, 196, 0, 0.70) !important;
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(13, 57, 98, 0.98),
-            rgba(8, 43, 77, 0.98)
-        ) !important;
-
-    box-shadow:
-        0 0 0 4px rgba(255, 196, 0, 0.07),
-        0 10px 28px rgba(0, 0, 0, 0.18) !important;
-}
-
-
-/* =========================================================
-   10. USERNAME / PASSWORD ICON
-   ========================================================= */
-
-.input-box > i:first-child {
-    color: #ffc400 !important;
-
-    transition:
-        transform 0.2s ease,
-        color 0.2s ease !important;
-}
-
-
-/* =========================================================
-   11. PASSWORD EYE ICON
-   ========================================================= */
-
-#togglePassword {
-    color: #ffc400 !important;
-
-    cursor: pointer;
-
-    transition:
-        transform 0.2s ease,
-        color 0.2s ease !important;
-}
-
-#togglePassword:hover {
-    color: #ffdc3d !important;
-
-    transform:
-        translateY(-50%)
-        scale(1.08) !important;
-}
-
-
-/* =========================================================
-   12. MAIN SIGN IN BUTTON
-   ========================================================= */
-
-.login-btn {
-    position: relative;
+    isolation: isolate;
 
     overflow: hidden;
 
-    border: 0 !important;
+    background:
 
-    border-radius: 18px !important;
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(0, 117, 190, .42),
+            transparent 43%
+        ),
+
+        radial-gradient(
+            circle at 0% 70%,
+            rgba(0, 80, 140, .20),
+            transparent 35%
+        ),
+
+        radial-gradient(
+            circle at 100% 80%,
+            rgba(255, 190, 0, .06),
+            transparent 32%
+        ),
+
+        linear-gradient(
+            180deg,
+            #032945 0%,
+            #02182b 45%,
+            #010812 100%
+        );
+}
+
+
+/* =========================================================
+   BACKGROUND GRID
+   ========================================================= */
+
+.login-page::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: -50%;
+
+    z-index: -5;
+
+    opacity: .16;
+
+    background-image:
+
+        linear-gradient(
+            rgba(49, 148, 207, .25) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(49, 148, 207, .25) 1px,
+            transparent 1px
+        );
+
+    background-size: 55px 55px;
+
+    transform:
+        perspective(700px)
+        rotateX(62deg)
+        translateY(150px);
+
+    animation:
+        marketGridMove 18s linear infinite;
+}
+
+@keyframes marketGridMove {
+
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 0 55px;
+    }
+}
+
+
+/* =========================================================
+   BACKGROUND GLOW
+   ========================================================= */
+
+.login-page::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 520px;
+    height: 520px;
+
+    left: 50%;
+    top: 45%;
+
+    transform:
+        translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0, 112, 190, .16),
+            transparent 68%
+        );
+
+    filter: blur(15px);
+
+    pointer-events: none;
+
+    z-index: -4;
+
+    animation:
+        ambientPulse 6s ease-in-out infinite;
+}
+
+@keyframes ambientPulse {
+
+    0%,
+    100% {
+        opacity: .65;
+        transform:
+            translate(-50%, -50%)
+            scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform:
+            translate(-50%, -50%)
+            scale(1.08);
+    }
+}
+
+
+/* =========================================================
+   MAIN LOGIN CARD
+   ========================================================= */
+
+.login-card {
+
+    position: relative;
+
+    width: min(100%, 690px);
+
+    min-height:
+        calc(100vh - 36px);
+
+    min-height:
+        calc(100dvh - 36px);
+
+    overflow: hidden;
+
+    isolation: isolate;
+
+    border-radius: 32px;
+
+    border:
+        1px solid
+        rgba(84, 165, 218, .34);
+
+    background:
+
+        radial-gradient(
+            ellipse at 50% 5%,
+            rgba(8, 74, 119, .48),
+            transparent 45%
+        ),
+
+        linear-gradient(
+            180deg,
+            rgba(3, 35, 59, .96),
+            rgba(1, 11, 21, .985)
+        );
+
+    box-shadow:
+
+        0 30px 90px
+        rgba(0, 0, 0, .62),
+
+        0 0 70px
+        rgba(0, 103, 179, .12),
+
+        inset 0 1px 0
+        rgba(255, 255, 255, .045),
+
+        inset 0 0 80px
+        rgba(0, 92, 160, .07);
+
+    padding:
+        24px 26px 38px;
+
+    animation:
+        cardEnter .7s ease both;
+}
+
+@keyframes cardEnter {
+
+    from {
+        opacity: 0;
+        transform:
+            translateY(18px)
+            scale(.985);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* Top gold line */
+
+.login-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    left: 12%;
+    right: 12%;
+
+    height: 1px;
 
     background:
         linear-gradient(
-            135deg,
-            #ffbd00 0%,
-            #ffd21a 48%,
-            #ffc000 100%
-        ) !important;
-
-    color: #07111d !important;
-
-    font-weight: 800 !important;
+            90deg,
+            transparent,
+            rgba(255, 207, 55, .9),
+            transparent
+        );
 
     box-shadow:
-        0 13px 30px rgba(255, 190, 0, 0.23),
-        inset 0 1px 0 rgba(255, 255, 255, 0.45) !important;
+        0 0 18px
+        rgba(255, 194, 0, .55);
+
+    opacity: .8;
+
+    z-index: 50;
+}
+
+
+/* Inner glass light */
+
+.login-card::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    border-radius: inherit;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            125deg,
+            rgba(255, 255, 255, .035),
+            transparent 22%,
+            transparent 76%,
+            rgba(0, 119, 199, .045)
+        );
+
+    z-index: 1;
+}
+
+
+/* =========================================================
+   LANGUAGE BUTTON
+   ========================================================= */
+
+.language-btn {
+
+    position: absolute;
+
+    top: 18px;
+    right: 18px;
+
+    z-index: 100;
+
+    width: 64px;
+    height: 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(79, 164, 218, .46);
+
+    background:
+
+        radial-gradient(
+            circle at 35% 25%,
+            rgba(28, 83, 121, .9),
+            rgba(1, 18, 31, .96)
+        );
+
+    box-shadow:
+
+        0 10px 25px
+        rgba(0, 0, 0, .38),
+
+        inset 0 0 20px
+        rgba(48, 145, 207, .10);
+
+    font-size: 30px;
 
     cursor: pointer;
 
     transition:
-        transform 0.20s ease,
-        box-shadow 0.20s ease,
-        filter 0.20s ease !important;
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+.language-btn:hover {
+
+    transform:
+        translateY(-2px)
+        scale(1.04);
+
+    border-color:
+        rgba(255, 200, 45, .65);
+
+    box-shadow:
+
+        0 12px 28px
+        rgba(0, 0, 0, .45),
+
+        0 0 22px
+        rgba(255, 190, 0, .14);
+}
+
+
+/* =========================================================
+   MARKET BACKGROUND
+   ========================================================= */
+
+.market-background {
+
+    position: absolute;
+
+    z-index: 2;
+
+    width: 690px;
+    height: 690px;
+
+    left: 50%;
+    top: 18px;
+
+    transform:
+        translateX(-50%);
+
+    pointer-events: none;
+
+    opacity: .92;
+}
+
+
+/* Main circle */
+
+.market-background::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 610px;
+    height: 610px;
+
+    left: 50%;
+    top: 0;
+
+    transform:
+        translateX(-50%);
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(74, 169, 225, .62);
+
+    background:
+
+        radial-gradient(
+            circle at 50% 30%,
+            rgba(12, 82, 135, .36),
+            rgba(3, 42, 71, .18) 42%,
+            transparent 70%
+        );
+
+    box-shadow:
+
+        0 0 40px
+        rgba(0, 120, 205, .10),
+
+        inset 0 0 80px
+        rgba(0, 105, 183, .10);
+}
+
+
+/* Inner circle */
+
+.market-background::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 525px;
+    height: 525px;
+
+    left: 50%;
+    top: 40px;
+
+    transform:
+        translateX(-50%);
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(58, 143, 198, .22);
+}
+
+
+/* =========================================================
+   MARKET DOTS
+   ========================================================= */
+
+.market-dots {
+
+    position: absolute;
+
+    width: 520px;
+    height: 280px;
+
+    left: 50%;
+    top: 160px;
+
+    transform:
+        translateX(-50%);
+
+    opacity: .66;
+
+    background-image:
+
+        radial-gradient(
+            circle,
+            rgba(15, 135, 226, .85) 1.4px,
+            transparent 2px
+        );
+
+    background-size: 11px 11px;
+
+    mask-image:
+        radial-gradient(
+            ellipse at center,
+            #000 0%,
+            #000 40%,
+            rgba(0, 0, 0, .72) 57%,
+            transparent 77%
+        );
+
+    -webkit-mask-image:
+        radial-gradient(
+            ellipse at center,
+            #000 0%,
+            #000 40%,
+            rgba(0, 0, 0, .72) 57%,
+            transparent 77%
+        );
+
+    animation:
+        dotsGlow 5s ease-in-out infinite;
+}
+
+@keyframes dotsGlow {
+
+    0%,
+    100% {
+        opacity: .48;
+    }
+
+    50% {
+        opacity: .78;
+    }
+}
+
+
+/* =========================================================
+   MARKET BARS
+   ========================================================= */
+
+.market-bars {
+
+    position: absolute;
+
+    width: 590px;
+    height: 250px;
+
+    left: 50%;
+    top: 182px;
+
+    transform:
+        translateX(-50%);
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-between;
+
+    padding: 0 20px;
+
+    opacity: .24;
+}
+
+.market-bars span {
+
+    width: 3px;
+
+    display: block;
+
+    background:
+
+        linear-gradient(
+            to top,
+            transparent,
+            rgba(58, 154, 216, .72) 42%,
+            rgba(97, 194, 244, .98)
+        );
+
+    box-shadow:
+        0 0 12px
+        rgba(25, 142, 222, .45);
+
+    border-radius:
+        5px 5px 0 0;
+}
+
+.market-bars span:nth-child(1) {
+    height: 92px;
+}
+
+.market-bars span:nth-child(2) {
+    height: 145px;
+}
+
+.market-bars span:nth-child(3) {
+    height: 115px;
+}
+
+.market-bars span:nth-child(4) {
+    height: 180px;
+}
+
+.market-bars span:nth-child(5) {
+    height: 140px;
+}
+
+.market-bars span:nth-child(6) {
+    height: 202px;
+}
+
+.market-bars span:nth-child(7) {
+    height: 165px;
+}
+
+.market-bars span:nth-child(8) {
+    height: 220px;
+}
+
+.market-bars span:nth-child(9) {
+    height: 148px;
+}
+
+.market-bars span:nth-child(10) {
+    height: 190px;
+}
+
+.market-bars span:nth-child(11) {
+    height: 132px;
+}
+
+.market-bars span:nth-child(12) {
+    height: 105px;
+}
+
+
+/* =========================================================
+   MARKET TREND LINES
+   ========================================================= */
+
+.market-lines {
+
+    position: absolute;
+
+    left: -60px;
+
+    width: 810px;
+    height: 1px;
+
+    transform-origin: center;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 202, 54, .46) 42%,
+            rgba(255, 202, 54, .12) 72%,
+            transparent
+        );
+
+    opacity: .45;
+}
+
+.line-1 {
+    top: 215px;
+    transform: rotate(15deg);
+}
+
+.line-2 {
+    top: 275px;
+    transform: rotate(-11deg);
+}
+
+.line-3 {
+    top: 330px;
+    transform: rotate(8deg);
+}
+
+
+/* =========================================================
+   CIRCLE GLOW
+   ========================================================= */
+
+.circle-glow {
+
+    position: absolute;
+
+    width: 460px;
+    height: 460px;
+
+    left: 50%;
+    top: 75px;
+
+    transform:
+        translateX(-50%);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0, 117, 201, .13),
+            transparent 68%
+        );
+
+    filter: blur(8px);
+}
+
+
+/* =========================================================
+   BRAND AREA
+   ========================================================= */
+
+.brand-area {
+
+    position: relative;
+
+    z-index: 20;
+
+    text-align: center;
+
+    padding-top: 65px;
+
+    margin-bottom: 34px;
+
+    animation:
+        brandEnter .8s .1s ease both;
+}
+
+@keyframes brandEnter {
+
+    from {
+        opacity: 0;
+        transform:
+            translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+.logo-ring {
+
+    position: relative;
+
+    width: 82px;
+    height: 82px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: auto;
+
+    border-radius: 50%;
+
+    border:
+        4px solid
+        var(--gold);
+
+    border-right-color: transparent;
+
+    border-bottom-color:
+        var(--gold-dark);
+
+    transform:
+        rotate(-24deg);
+
+    box-shadow:
+
+        0 0 18px
+        rgba(255, 195, 0, .24),
+
+        inset 0 0 12px
+        rgba(255, 195, 0, .08);
+
+    animation:
+        logoFloat 4s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+
+    0%,
+    100% {
+        transform:
+            rotate(-24deg)
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            rotate(-24deg)
+            translateY(-3px);
+    }
+}
+
+.logo-ring span {
+
+    transform:
+        rotate(24deg);
+
+    color:
+        var(--gold-light);
+
+    font-size: 22px;
+
+    font-weight: 850;
+
+    letter-spacing: -1px;
+
+    text-shadow:
+        0 0 8px
+        rgba(255, 201, 0, .35);
+}
+
+.logo-ring i {
+
+    position: absolute;
+
+    right: -4px;
+    top: -7px;
+
+    color:
+        var(--gold-light);
+
+    font-size: 17px;
+
+    transform:
+        rotate(24deg);
+}
+
+.logo-markets {
+
+    margin-top: 8px;
+
+    color: #eef3f8;
+
+    font-size: 14px;
+
+    letter-spacing: 5px;
+
+    font-weight: 500;
+}
+
+.logo-uk {
+
+    margin-top: 2px;
+
+    color: #7f91a6;
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+}
+
+
+/* =========================================================
+   CPTMARKETS TITLE
+   ========================================================= */
+
+.brand-area h1 {
+
+    margin:
+        17px 0 0;
+
+    color:
+        #ffd43b;
+
+    font-size:
+        clamp(48px, 8.4vw, 68px);
+
+    line-height: 1;
+
+    font-weight: 850;
+
+    letter-spacing: -3px;
+
+    white-space: nowrap;
+
+    text-shadow:
+
+        0 0 5px
+        rgba(255, 215, 55, .98),
+
+        0 0 15px
+        rgba(255, 191, 20, .68),
+
+        0 0 32px
+        rgba(255, 173, 0, .20),
+
+        0 4px 3px
+        rgba(0, 0, 0, .52);
+}
+
+
+/* =========================================================
+   GIFT TITLE
+   ========================================================= */
+
+.gift-title {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 13px;
+
+    margin-top: 16px;
+
+    color: #e6ebf1;
+
+    font-size: 22px;
+
+    letter-spacing: 8px;
+
+    font-weight: 400;
+}
+
+.gift-title span {
+
+    display: block;
+
+    width: 65px;
+    height: 1px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(230, 177, 43, .95)
+        );
+}
+
+.gift-title span:last-child {
+
+    background:
+
+        linear-gradient(
+            90deg,
+            rgba(230, 177, 43, .95),
+            transparent
+        );
+}
+
+
+/* =========================================================
+   LOGIN FORM
+   ========================================================= */
+
+.login-form {
+
+    position: relative;
+
+    z-index: 30;
+
+    width: 100%;
+}
+
+
+/* =========================================================
+   FORM GROUP
+   ========================================================= */
+
+.form-group {
+
+    margin-bottom: 25px;
+
+    animation:
+        formEnter .6s ease both;
+}
+
+.form-group:nth-child(2) {
+    animation-delay: .08s;
+}
+
+@keyframes formEnter {
+
+    from {
+        opacity: 0;
+        transform:
+            translateY(9px);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0);
+    }
+}
+
+.form-group label {
+
+    display: block;
+
+    margin:
+        0 0 12px 2px;
+
+    color:
+        #f2f5fa;
+
+    font-size: 23px;
+
+    line-height: 1.2;
+
+    font-weight: 600;
+
+    text-shadow:
+        0 2px 7px
+        rgba(0, 0, 0, .4);
+}
+
+
+/* =========================================================
+   INPUT BOX
+   ========================================================= */
+
+.input-box {
+
+    position: relative;
+
+    width: 100%;
+    height: 88px;
+
+    display: flex;
+    align-items: center;
+
+    overflow: hidden;
+
+    border-radius:
+        var(--radius);
+
+    border:
+        1px solid
+        rgba(70, 145, 197, .34);
+
+    background:
+
+        linear-gradient(
+            180deg,
+            rgba(5, 34, 57, .76),
+            rgba(1, 13, 27, .94)
+        );
+
+    box-shadow:
+
+        inset 0 0 28px
+        rgba(0, 96, 166, .055),
+
+        0 9px 25px
+        rgba(0, 0, 0, .20);
+
+    transition:
+
+        border-color .25s ease,
+        box-shadow .25s ease,
+        transform .25s ease;
+}
+
+.input-box:hover {
+
+    border-color:
+        rgba(75, 153, 207, .52);
+}
+
+.input-box:focus-within {
+
+    border-color:
+        rgba(40, 158, 226, .72);
+
+    box-shadow:
+
+        0 0 0 1px
+        rgba(29, 132, 207, .10),
+
+        0 0 28px
+        rgba(0, 120, 205, .14),
+
+        inset 0 0 30px
+        rgba(0, 110, 190, .09);
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* =========================================================
+   INPUT ICON
+   ========================================================= */
+
+.input-icon {
+
+    width: 76px;
+
+    flex:
+        0 0 76px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color:
+        #f7c000;
+
+    font-size: 28px;
+
+    position: relative;
+
+    z-index: 3;
+
+    text-shadow:
+
+        0 0 9px
+        rgba(255, 194, 0, .43),
+
+        0 0 18px
+        rgba(255, 185, 0, .14);
+}
+
+
+/* =========================================================
+   INPUT FIELD
+   ========================================================= */
+
+.input-box input {
+
+    width: 100%;
+    height: 100%;
+
+    flex: 1;
+
+    min-width: 0;
+
+    border: none;
+    outline: none;
+
+    background:
+        transparent;
+
+    color:
+        #f0f5fb;
+
+    font-size: 24px;
+
+    font-weight: 400;
+
+    padding:
+        0 14px 0 0;
+
+    position: relative;
+
+    z-index: 3;
+}
+
+.input-box input::placeholder {
+
+    color:
+        #788da5;
+
+    opacity: 1;
+}
+
+
+/* =========================================================
+   PASSWORD TOGGLE
+   ========================================================= */
+
+.password-toggle {
+
+    width: 70px;
+    height: 100%;
+
+    flex:
+        0 0 70px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color:
+        #8799b1;
+
+    font-size: 27px;
+
+    cursor: pointer;
+
+    background:
+        transparent;
+
+    border: none;
+
+    position: relative;
+
+    z-index: 5;
+
+    transition:
+
+        color .2s ease,
+        transform .2s ease,
+        filter .2s ease;
+}
+
+.password-toggle:hover,
+.password-toggle:focus {
+
+    color:
+        var(--gold);
+
+    transform:
+        scale(1.05);
+
+    filter:
+        drop-shadow(
+            0 0 8px
+            rgba(255, 194, 0, .38)
+        );
+
+    outline: none;
+}
+
+
+/* =========================================================
+   LOGIN BUTTON
+   ========================================================= */
+
+.login-btn {
+
+    position: relative;
+
+    width: 100%;
+    height: 90px;
+
+    margin-top: 8px;
+
+    overflow: hidden;
+
+    border-radius: 27px;
+
+    border:
+        1px solid
+        rgba(255, 237, 153, .80);
+
+    background:
+
+        linear-gradient(
+            100deg,
+            #fff1a6 0%,
+            #ffdc38 25%,
+            #ffc400 56%,
+            #df9700 100%
+        );
+
+    color:
+        #11100c;
+
+    font-family:
+        inherit;
+
+    font-size: 29px;
+
+    font-weight: 750;
+
+    cursor: pointer;
+
+    box-shadow:
+
+        0 12px 30px
+        rgba(229, 164, 0, .30),
+
+        0 0 38px
+        rgba(255, 192, 0, .15),
+
+        inset 0 2px 0
+        rgba(255, 255, 255, .58);
+
+    transition:
+
+        transform .2s ease,
+        filter .2s ease,
+        box-shadow .2s ease;
 }
 
 
 /* Button shine */
 
 .login-btn::before {
+
     content: "";
 
     position: absolute;
@@ -312,389 +1352,709 @@ body {
     top: 0;
     left: -120%;
 
-    width: 75%;
+    width: 70%;
     height: 100%;
 
-    transform: skewX(-23deg);
+    transform:
+        skewX(-22deg);
 
     background:
+
         linear-gradient(
             90deg,
             transparent,
-            rgba(255, 255, 255, 0.38),
+            rgba(255, 255, 255, .45),
             transparent
         );
 
-    transition: left 0.55s ease;
-}
-
-
-/* Button hover */
-
-.login-btn:hover {
-    transform: translateY(-2px);
-
-    filter: brightness(1.04);
-
-    box-shadow:
-        0 18px 38px rgba(255, 190, 0, 0.31),
-        inset 0 1px 0 rgba(255, 255, 255, 0.50) !important;
+    transition:
+        left .7s ease;
 }
 
 .login-btn:hover::before {
-    left: 135%;
+
+    left: 150%;
 }
 
+.login-btn:hover {
 
-/* Button click */
+    filter:
+        brightness(1.06);
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+
+        0 16px 36px
+        rgba(229, 164, 0, .38),
+
+        0 0 45px
+        rgba(255, 192, 0, .22);
+}
 
 .login-btn:active {
-    transform: scale(0.985);
+
+    transform:
+        translateY(1px)
+        scale(.995);
 }
 
 
 /* =========================================================
-   13. BOTTOM LINKS
+   LOGIN LINKS
    ========================================================= */
 
-.bottom-links {
-    gap: 10px !important;
+.login-links {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-around;
+
+    gap: 20px;
+
+    padding:
+        25px 5px 0;
 }
 
+.login-link {
 
-/* Create Account + Forgot Password */
+    min-height: 46px;
 
-.bottom-links a {
     display: inline-flex;
 
     align-items: center;
-
     justify-content: center;
 
-    gap: 7px;
+    gap: 10px;
 
-    min-height: 42px;
+    padding:
+        5px 10px;
 
-    padding: 8px 13px !important;
+    border: none;
 
-    border-radius: 13px !important;
+    border-radius: 12px;
 
-    border: 1px solid rgba(255, 255, 255, 0.055) !important;
+    background:
+        transparent;
 
-    background: rgba(255, 255, 255, 0.025) !important;
+    color:
+        #efbd2c;
 
-    text-decoration: none !important;
+    text-decoration:
+        none;
 
-    font-weight: 650 !important;
+    font-size: 18px;
+
+    font-weight: 600;
+
+    white-space:
+        nowrap;
 
     transition:
-        transform 0.20s ease,
-        background 0.20s ease,
-        border-color 0.20s ease,
-        color 0.20s ease !important;
+
+        color .2s ease,
+        transform .2s ease,
+        filter .2s ease;
 }
 
+.login-link i {
 
-/* Create Account */
+    color:
+        #f5c000;
 
-.bottom-links a:first-child {
-    color: #c09aff !important;
+    font-size: 22px;
+
+    text-shadow:
+
+        0 0 8px
+        rgba(255, 194, 0, .43);
 }
 
+.login-link:hover {
 
-/* Forgot Password */
+    color:
+        #ffe073;
 
-.bottom-links a:last-child {
-    color: #719bff !important;
-}
+    transform:
+        translateY(-2px);
 
-
-/* Link hover */
-
-.bottom-links a:hover {
-    transform: translateY(-2px);
-
-    color: #ffffff !important;
-
-    background: rgba(255, 255, 255, 0.065) !important;
-
-    border-color:
-        rgba(255, 196, 0, 0.18) !important;
-}
-
-
-/* Link icons */
-
-.bottom-links a i {
-    transition:
-        transform 0.20s ease;
-}
-
-.bottom-links a:hover i {
-    transform: scale(1.10);
+    filter:
+        drop-shadow(
+            0 0 8px
+            rgba(255, 190, 0, .20)
+        );
 }
 
 
 /* =========================================================
-   14. FOCUS ACCESSIBILITY
+   BOTTOM MARKET ART
    ========================================================= */
 
-input:focus-visible,
-button:focus-visible,
-a:focus-visible,
-#togglePassword:focus-visible {
-    outline:
-        2px solid rgba(255, 196, 0, 0.80) !important;
+.bottom-market {
 
-    outline-offset: 3px;
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 170px;
+
+    pointer-events: none;
+
+    opacity: .42;
+
+    z-index: 3;
+}
+
+.bottom-line {
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    bottom: 54px;
+
+    height: 1px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(33, 123, 193, .72),
+            transparent
+        );
+}
+
+.bottom-bars {
+
+    position: absolute;
+
+    left: 28px;
+    right: 28px;
+
+    bottom: 0;
+
+    height: 130px;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-between;
+}
+
+.bottom-bars span {
+
+    display: block;
+
+    width: 42px;
+
+    border:
+        1px solid
+        rgba(53, 130, 192, .24);
+
+    border-bottom: none;
+
+    background:
+
+        linear-gradient(
+            180deg,
+            rgba(23, 95, 151, .16),
+            rgba(3, 28, 49, .03)
+        );
+
+    border-radius:
+        23px 23px 0 0;
+}
+
+.bottom-bars span:nth-child(1) {
+    height: 55px;
+}
+
+.bottom-bars span:nth-child(2) {
+    width: 60px;
+    height: 80px;
+}
+
+.bottom-bars span:nth-child(3) {
+    width: 30px;
+    height: 106px;
+}
+
+.bottom-bars span:nth-child(4) {
+    width: 80px;
+    height: 64px;
+}
+
+.bottom-bars span:nth-child(5) {
+    width: 44px;
+    height: 114px;
+}
+
+.bottom-bars span:nth-child(6) {
+    width: 70px;
+    height: 76px;
+}
+
+.bottom-bars span:nth-child(7) {
+    width: 36px;
+    height: 125px;
 }
 
 
 /* =========================================================
-   15. MOBILE VERSION
+   MOBILE
    ========================================================= */
 
 @media (max-width: 600px) {
 
-    body {
-        background:
-            radial-gradient(
-                circle at 50% 8%,
-                rgba(0, 78, 150, 0.17),
-                transparent 38%
-            ),
-            linear-gradient(
-                145deg,
-                #061a30,
-                #031326 50%,
-                #010812
-            ) !important;
-    }
+    .login-page {
 
-
-    .login-card {
-        border-radius: 27px !important;
-    }
-
-
-    .input-box input {
-        border-radius: 17px !important;
-    }
-
-
-    .login-btn {
-        border-radius: 17px !important;
-    }
-
-
-    .bottom-links a {
-        border-radius: 12px !important;
+        min-height:
+            100dvh;
 
         padding:
-            7px 9px !important;
+            14px 10px;
 
-        font-size: 13px;
+        align-items:
+            stretch;
     }
-}
-
-
-/* =========================================================
-   16. VERY SMALL PHONES
-   ========================================================= */
-
-@media (max-width: 380px) {
 
     .login-card {
-        border-radius: 25px !important;
+
+        width:
+            100%;
+
+        min-height:
+            calc(100dvh - 28px);
+
+        border-radius:
+            30px;
+
+        padding:
+            20px 23px 38px;
     }
 
+    .language-btn {
 
-    .bottom-links {
-        gap: 7px !important;
+        top:
+            13px;
+
+        right:
+            13px;
+
+        width:
+            62px;
+
+        height:
+            62px;
+
+        font-size:
+            29px;
     }
 
+    .market-background {
 
-    .bottom-links a {
-        width: 100%;
+        width:
+            650px;
+
+        height:
+            650px;
+
+        top:
+            25px;
     }
-}
 
+    .market-background::before {
 
-/* =========================================================
-   FINAL INPUT BOX FIX
-   Removes the unwanted inner border/line
-   ========================================================= */
+        width:
+            590px;
 
-/* The OUTER box becomes the actual input button */
-.input-box {
-    position: relative !important;
+        height:
+            590px;
+    }
 
-    width: 100% !important;
-    height: 60px !important;
+    .market-background::after {
 
-    display: flex !important;
-    align-items: center !important;
+        width:
+            510px;
 
-    border-radius: 18px !important;
+        height:
+            510px;
+    }
 
-    border: 1px solid rgba(120, 174, 224, 0.20) !important;
+    .market-dots {
 
-    background:
-        linear-gradient(
-            180deg,
-            rgba(10, 48, 84, 0.96),
-            rgba(6, 35, 62, 0.98)
-        ) !important;
+        width:
+            500px;
 
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.035),
-        0 8px 22px rgba(0,0,0,0.12) !important;
+        height:
+            255px;
 
-    overflow: hidden !important;
+        top:
+            150px;
+    }
 
-    transition:
-        border-color 0.22s ease,
-        box-shadow 0.22s ease,
-        background 0.22s ease !important;
-}
+    .market-bars {
 
+        width:
+            570px;
 
-/* Remove the SECOND box/border from the actual input */
-.input-box input {
-    width: 100% !important;
-    height: 100% !important;
+        height:
+            250px;
 
-    margin: 0 !important;
+        top:
+            175px;
+    }
 
-    padding: 0 52px !important;
+    .brand-area {
 
-    border: none !important;
-    outline: none !important;
+        padding-top:
+            67px;
 
-    border-radius: 0 !important;
+        margin-bottom:
+            31px;
+    }
 
-    background: transparent !important;
+    .brand-area h1 {
 
-    box-shadow: none !important;
+        font-size:
+            clamp(45px, 11vw, 66px);
 
-    color: #f5f8fc !important;
+        letter-spacing:
+            -3px;
+    }
 
-    font-size: 16px !important;
-}
+    .gift-title {
 
+        font-size:
+            20px;
 
-/* Remove the inner line when input is focused */
-.input-box input:focus {
-    border: none !important;
-    outline: none !important;
+        letter-spacing:
+            7px;
+    }
 
-    box-shadow: none !important;
+    .form-group label {
 
-    background: transparent !important;
-}
-
-
-/* Professional focus effect on the WHOLE box */
-.input-box:focus-within {
-    border-color: rgba(255, 196, 0, 0.65) !important;
-
-    box-shadow:
-        0 0 0 3px rgba(255, 196, 0, 0.07),
-        0 10px 28px rgba(0,0,0,0.18) !important;
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(13, 57, 98, 0.98),
-            rgba(8, 43, 77, 0.98)
-        ) !important;
-}
-
-
-/* Username / Password icons */
-.input-box > i:first-child {
-    position: absolute !important;
-
-    left: 18px !important;
-
-    top: 50% !important;
-
-    transform: translateY(-50%) !important;
-
-    z-index: 3 !important;
-
-    color: #ffc400 !important;
-
-    font-size: 20px !important;
-
-    pointer-events: none !important;
-}
-
-
-/* Password eye */
-#togglePassword {
-    position: absolute !important;
-
-    right: 16px !important;
-
-    top: 50% !important;
-
-    transform: translateY(-50%) !important;
-
-    z-index: 4 !important;
-
-    color: #ffc400 !important;
-
-    cursor: pointer !important;
-
-    font-size: 20px !important;
-
-    padding: 5px !important;
-}
-
-
-/* Mobile */
-@media (max-width: 600px) {
+        font-size:
+            23px;
+    }
 
     .input-box {
-        height: 58px !important;
 
-        border-radius: 17px !important;
+        height:
+            88px;
+    }
+
+    .input-icon {
+
+        width:
+            72px;
+
+        flex-basis:
+            72px;
+
+        font-size:
+            28px;
     }
 
     .input-box input {
-        font-size: 15px !important;
 
-        padding-left: 51px !important;
-        padding-right: 50px !important;
+        font-size:
+            22px;
+    }
+
+    .password-toggle {
+
+        width:
+            64px;
+
+        flex-basis:
+            64px;
+
+        font-size:
+            27px;
+    }
+
+    .login-btn {
+
+        height:
+            88px;
+
+        font-size:
+            27px;
+    }
+
+    .login-links {
+
+        padding-top:
+            24px;
+
+        gap:
+            10px;
+    }
+
+    .login-link {
+
+        font-size:
+            16px;
+
+        gap:
+            8px;
+    }
+
+    .login-link i {
+
+        font-size:
+            20px;
     }
 }
 
+
 /* =========================================================
-   Chrome Autofill Fix
-   Keeps Username & Password dark
+   SMALL PHONES
    ========================================================= */
 
-.input-box input:-webkit-autofill,
-.input-box input:-webkit-autofill:hover,
-.input-box input:-webkit-autofill:focus,
-.input-box input:-webkit-autofill:active {
-    -webkit-text-fill-color: #f7faff !important;
+@media (max-width: 390px) {
 
-    -webkit-box-shadow:
-        0 0 0 1000px #082f54 inset !important;
+    .login-page {
 
-    box-shadow:
-        0 0 0 1000px #082f54 inset !important;
+        padding:
+            10px 7px;
+    }
 
-    background-color: #082f54 !important;
+    .login-card {
 
-    border: none !important;
+        min-height:
+            calc(100dvh - 20px);
 
-    transition:
-        background-color 9999s ease-in-out 0s !important;
+        padding-left:
+            17px;
+
+        padding-right:
+            17px;
+
+        border-radius:
+            27px;
+    }
+
+    .language-btn {
+
+        width:
+            58px;
+
+        height:
+            58px;
+
+        font-size:
+            27px;
+    }
+
+    .brand-area {
+
+        padding-top:
+            63px;
+
+        margin-bottom:
+            27px;
+    }
+
+    .brand-logo {
+
+        transform:
+            scale(.92);
+    }
+
+    .brand-area h1 {
+
+        font-size:
+            41px;
+
+        letter-spacing:
+            -2.4px;
+    }
+
+    .gift-title {
+
+        font-size:
+            18px;
+
+        letter-spacing:
+            6px;
+
+        gap:
+            10px;
+    }
+
+    .gift-title span {
+
+        width:
+            48px;
+    }
+
+    .form-group label {
+
+        font-size:
+            21px;
+    }
+
+    .input-box {
+
+        height:
+            82px;
+
+        border-radius:
+            23px;
+    }
+
+    .input-icon {
+
+        width:
+            64px;
+
+        flex-basis:
+            64px;
+
+        font-size:
+            26px;
+    }
+
+    .input-box input {
+
+        font-size:
+            19px;
+    }
+
+    .password-toggle {
+
+        width:
+            57px;
+
+        flex-basis:
+            57px;
+
+        font-size:
+            25px;
+    }
+
+    .login-btn {
+
+        height:
+            82px;
+
+        border-radius:
+            24px;
+
+        font-size:
+            24px;
+    }
+
+    .login-links {
+
+        padding-top:
+            21px;
+
+        gap:
+            5px;
+    }
+
+    .login-link {
+
+        font-size:
+            13px;
+
+        padding:
+            4px 5px;
+    }
+
+    .login-link i {
+
+        font-size:
+            17px;
+    }
+
+    .bottom-market {
+
+        height:
+            145px;
+    }
+
+    .bottom-bars {
+
+        left:
+            14px;
+
+        right:
+            14px;
+    }
 }
 
+
 /* =========================================================
-   END OF CPTMARKETS PROFESSIONAL THEME
+   VERY SMALL DEVICES
    ========================================================= */
+
+@media (max-width: 340px) {
+
+    .brand-area h1 {
+
+        font-size:
+            37px;
+    }
+
+    .gift-title {
+
+        font-size:
+            16px;
+
+        letter-spacing:
+            5px;
+    }
+
+    .form-group label {
+
+        font-size:
+            20px;
+    }
+
+    .login-link {
+
+        font-size:
+            12px;
+    }
+
+    .login-link i {
+
+        font-size:
+            16px;
+    }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+        animation-duration:
+            .01ms !important;
+
+        animation-iteration-count:
+            1 !important;
+
+        transition-duration:
+            .01ms !important;
+    }
+}
