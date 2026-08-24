@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <title>CPTMarkets - Login</title>
 
-    <!-- Existing website styles: preserved -->
+    <!-- Website CSS -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="index-professional.css">
     <link rel="stylesheet" href="popup.css">
@@ -14,819 +15,175 @@
     <!-- Font Awesome -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-    <!-- Premium login styling is embedded below so this page no longer depends
-         on login-premium.html. The external login-premium.css is intentionally
-         not loaded, preventing old/conflicting rules from overriding this design. -->
-
-    <style>
-    /* =========================================================
-       CPTMARKETS — PREMIUM DARK MARKET LOGIN
-       Self-contained visual layer for index.html
-       Existing IDs/classes used by script.js are preserved.
-       ========================================================= */
-
-    *, *::before, *::after { box-sizing: border-box; }
-
-    html, body {
-        width: 100%;
-        min-height: 100%;
-        margin: 0;
-        padding: 0;
-        background: #010711;
-    }
-
-    body {
-        font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
-        color: #f3f6fb;
-        overflow-x: hidden;
-    }
-
-    .login-page {
-        width: 100%;
-        min-height: 100vh;
-        min-height: 100dvh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px 14px;
-        position: relative;
-        isolation: isolate;
-        background:
-            radial-gradient(ellipse at 50% 2%, rgba(8,76,125,.34), transparent 48%),
-            linear-gradient(180deg, #032642 0%, #01172a 45%, #010811 100%);
-    }
-
-    .login-card {
-        width: min(100%, 690px);
-        min-height: calc(100vh - 40px);
-        min-height: calc(100dvh - 40px);
-        position: relative;
-        overflow: hidden;
-        isolation: isolate;
-        border: 1px solid rgba(65,132,180,.38);
-        border-radius: 31px;
-        padding: 24px 24px 34px;
-        background:
-            radial-gradient(ellipse at 50% 13%, rgba(10,63,103,.76), transparent 48%),
-            linear-gradient(180deg, rgba(2,30,52,.97), rgba(1,11,22,.995));
-        box-shadow:
-            0 20px 70px rgba(0,0,0,.58),
-            0 0 44px rgba(0,102,177,.13),
-            inset 0 0 60px rgba(0,91,157,.08);
-    }
-
-    .login-card::before {
-        content: "";
-        position: absolute;
-        width: 760px;
-        height: 760px;
-        left: 50%;
-        top: -135px;
-        transform: translateX(-50%);
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: -2;
-        background: radial-gradient(circle,
-            rgba(7,86,146,.40) 0%,
-            rgba(4,60,104,.24) 40%,
-            rgba(2,32,57,.10) 61%,
-            transparent 73%);
-    }
-
-    .login-card::after {
-        content: "";
-        position: absolute;
-        left: 15%;
-        right: 15%;
-        top: 0;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(255,207,59,.72), transparent);
-        opacity: .65;
-        pointer-events: none;
-        z-index: 50;
-    }
-
-    /* Language */
-    .language-btn {
-        position: absolute;
-        top: 14px;
-        right: 14px;
-        z-index: 100;
-        width: 66px;
-        height: 66px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid rgba(92,157,204,.48);
-        border-radius: 50%;
-        background: radial-gradient(circle at 35% 28%, #173b5d, #021421 72%);
-        box-shadow: 0 8px 20px rgba(0,0,0,.35), inset 0 0 18px rgba(68,147,204,.10);
-        font-size: 31px;
-        line-height: 1;
-        cursor: pointer;
-    }
-
-    /* Large glowing circular market background */
-    .market-background {
-        position: absolute;
-        z-index: 1;
-        width: 660px;
-        height: 660px;
-        left: 50%;
-        top: 31px;
-        transform: translateX(-50%);
-        pointer-events: none;
-    }
-
-    .market-background::before {
-        content: "";
-        position: absolute;
-        width: 590px;
-        height: 590px;
-        left: 50%;
-        top: 0;
-        transform: translateX(-50%);
-        border-radius: 50%;
-        border: 1.25px solid rgba(108,181,228,.76);
-        background:
-            radial-gradient(circle at 50% 31%,
-                rgba(13,78,127,.47) 0%,
-                rgba(5,48,82,.34) 34%,
-                rgba(2,28,49,.39) 61%,
-                rgba(1,14,27,.16) 74%,
-                transparent 76%);
-        box-shadow:
-            0 0 34px rgba(0,122,208,.12),
-            inset 0 0 72px rgba(0,105,183,.14),
-            inset 0 -35px 90px rgba(0,0,0,.28);
-    }
-
-    .market-background::after {
-        content: "";
-        position: absolute;
-        width: 510px;
-        height: 510px;
-        left: 50%;
-        top: 40px;
-        transform: translateX(-50%);
-        border-radius: 50%;
-        border: 1px solid rgba(61,142,195,.23);
-        box-shadow: 0 0 22px rgba(0,112,194,.06);
-    }
-
-    .circle-glow {
-        position: absolute;
-        width: 450px;
-        height: 450px;
-        left: 50%;
-        top: 76px;
-        transform: translateX(-50%);
-        border-radius: 50%;
-        background: radial-gradient(circle, rgba(0,109,185,.13), transparent 68%);
-        filter: blur(8px);
-    }
-
-    .market-dots {
-        position: absolute;
-        width: 500px;
-        height: 260px;
-        left: 50%;
-        top: 150px;
-        transform: translateX(-50%);
-        opacity: .78;
-        background-image: radial-gradient(circle, rgba(14,130,218,.90) 1.55px, transparent 1.9px);
-        background-size: 11px 11px;
-        -webkit-mask-image: radial-gradient(ellipse at center, #000 0%, #000 45%, rgba(0,0,0,.72) 60%, transparent 76%);
-        mask-image: radial-gradient(ellipse at center, #000 0%, #000 45%, rgba(0,0,0,.72) 60%, transparent 76%);
-    }
-
-    .market-bars {
-        position: absolute;
-        width: 570px;
-        height: 250px;
-        left: 50%;
-        top: 174px;
-        transform: translateX(-50%);
-        display: flex;
-        align-items: flex-end;
-        justify-content: space-between;
-        padding: 0 24px;
-        opacity: .27;
-    }
-
-    .market-bars span {
-        display: block;
-        width: 3px;
-        background: linear-gradient(to top, transparent, rgba(67,157,216,.72) 45%, rgba(78,174,229,.96));
-        box-shadow: 0 0 11px rgba(28,137,218,.45);
-    }
-
-    .market-bars span:nth-child(1){height:92px}
-    .market-bars span:nth-child(2){height:145px}
-    .market-bars span:nth-child(3){height:115px}
-    .market-bars span:nth-child(4){height:182px}
-    .market-bars span:nth-child(5){height:140px}
-    .market-bars span:nth-child(6){height:202px}
-    .market-bars span:nth-child(7){height:166px}
-    .market-bars span:nth-child(8){height:220px}
-    .market-bars span:nth-child(9){height:148px}
-    .market-bars span:nth-child(10){height:190px}
-    .market-bars span:nth-child(11){height:132px}
-    .market-bars span:nth-child(12){height:102px}
-
-    .market-lines {
-        position: absolute;
-        left: -35px;
-        width: 730px;
-        height: 1px;
-        transform-origin: center;
-        background: linear-gradient(90deg, transparent, rgba(245,199,60,.48) 44%, rgba(245,199,60,.13) 70%, transparent);
-        opacity: .56;
-    }
-    .line-1{top:214px;transform:rotate(15deg)}
-    .line-2{top:274px;transform:rotate(-11deg)}
-    .line-3{top:330px;transform:rotate(8deg)}
-
-    /* Brand */
-    .brand-area {
-        position: relative;
-        z-index: 10;
-        text-align: center;
-        padding-top: 66px;
-        margin-bottom: 32px;
-    }
-
-    .brand-logo {
-        display: inline-flex;
-        flex-direction: column;
-        align-items: center;
-        filter: drop-shadow(0 0 8px rgba(247,190,44,.13));
-    }
-
-    .logo-ring {
-        position: relative;
-        width: 78px;
-        height: 78px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        border: 4px solid #f2bf3d;
-        border-right-color: transparent;
-        border-bottom-color: #d99d27;
-        transform: rotate(-22deg);
-        box-shadow: 0 0 15px rgba(255,194,52,.20);
-    }
-
-    .logo-ring span {
-        transform: rotate(22deg);
-        color: #f4c544;
-        font-size: 22px;
-        font-weight: 800;
-        letter-spacing: -1px;
-    }
-
-    .logo-ring i {
-        position: absolute;
-        right: -3px;
-        top: -6px;
-        color: #f4c544;
-        font-size: 17px;
-        transform: rotate(22deg);
-    }
-
-    .logo-markets {
-        margin-top: 6px;
-        color: #eef2f7;
-        font-size: 14px;
-        letter-spacing: 4px;
-        font-weight: 500;
-    }
-
-    .logo-uk {
-        margin-top: 2px;
-        color: #8e9daf;
-        font-size: 9px;
-        letter-spacing: 3px;
-    }
-
-    .brand-area h1 {
-        margin: 16px 0 0;
-        color: #ffd43b;
-        font-size: clamp(48px, 8.5vw, 68px);
-        line-height: 1;
-        font-weight: 800;
-        letter-spacing: -3px;
-        white-space: nowrap;
-        text-shadow:
-            0 0 5px rgba(255,216,60,.96),
-            0 0 15px rgba(255,191,20,.68),
-            0 0 30px rgba(255,173,0,.20),
-            0 3px 2px rgba(0,0,0,.50);
-    }
-
-    .gift-title {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 13px;
-        margin-top: 15px;
-        color: #e5e9ef;
-        font-size: 22px;
-        letter-spacing: 8px;
-        font-weight: 400;
-    }
-
-    .gift-title span {
-        display: block;
-        width: 58px;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(211,163,45,.88));
-    }
-    .gift-title span:last-child {
-        background: linear-gradient(90deg, rgba(211,163,45,.88), transparent);
-    }
-
-    /* Form */
-    .login-form {
-        position: relative;
-        z-index: 30;
-        width: 100%;
-    }
-
-    .form-group { margin-bottom: 25px; }
-
-    .form-group label {
-        display: block;
-        margin: 0 0 13px 1px;
-        color: #f0f3f8;
-        font-size: 24px;
-        line-height: 1.15;
-        font-weight: 600;
-        text-shadow: 0 2px 7px rgba(0,0,0,.40);
-    }
-
-    .input-box {
-        width: 100%;
-        height: 92px;
-        display: flex;
-        align-items: center;
-        position: relative;
-        overflow: hidden;
-        border-radius: 26px;
-        border: 1px solid rgba(76,137,183,.38);
-        background: linear-gradient(180deg, rgba(4,27,48,.76), rgba(1,13,28,.90));
-        box-shadow: inset 0 0 25px rgba(0,98,172,.06), 0 8px 24px rgba(0,0,0,.20);
-    }
-
-    .input-box::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: inherit;
-        background: linear-gradient(115deg, rgba(70,144,198,.06), transparent 32%, transparent 70%, rgba(24,92,137,.04));
-        pointer-events: none;
-    }
-
-    .input-box:focus-within {
-        border-color: rgba(57,151,218,.66);
-        box-shadow: 0 0 0 1px rgba(26,121,192,.10), 0 0 24px rgba(0,111,193,.10), inset 0 0 28px rgba(0,106,187,.08);
-    }
-
-    .input-icon {
-        width: 78px;
-        flex: 0 0 78px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #f6c000;
-        font-size: 29px;
-        text-shadow: 0 0 9px rgba(255,194,0,.42), 0 0 18px rgba(255,185,0,.14);
-        position: relative;
-        z-index: 2;
-    }
-
-    .input-box input {
-        width: 100%;
-        height: 100%;
-        flex: 1;
-        min-width: 0;
-        border: 0;
-        outline: 0;
-        background: transparent;
-        color: #eef3fb;
-        font-size: 26px;
-        font-weight: 400;
-        padding: 0 16px 0 0;
-        position: relative;
-        z-index: 2;
-    }
-
-    .input-box input::placeholder { color: #7f91ac; opacity: 1; }
-
-    .password-toggle {
-        width: 70px;
-        height: 100%;
-        flex: 0 0 70px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #8fa0ba;
-        font-size: 28px;
-        cursor: pointer;
-        background: transparent;
-        border: 0;
-        text-shadow: 0 0 10px rgba(145,166,193,.18);
-        position: relative;
-        z-index: 4;
-        transition: color .18s ease, filter .18s ease;
-    }
-
-    .password-toggle:hover,
-    .password-toggle:focus {
-        color: #f4c000;
-        filter: drop-shadow(0 0 8px rgba(255,195,0,.30));
-        outline: none;
-    }
-
-    .login-btn {
-        width: 100%;
-        height: 92px;
-        margin-top: 7px;
-        border: 1px solid rgba(255,232,147,.72);
-        border-radius: 27px;
-        background: linear-gradient(102deg, #fff0a7 0%, #ffd92d 23%, #ffc400 53%, #d48b00 100%);
-        color: #11100c;
-        font-family: inherit;
-        font-size: 29px;
-        font-weight: 700;
-        cursor: pointer;
-        box-shadow:
-            0 10px 28px rgba(229,164,0,.30),
-            0 0 34px rgba(255,192,0,.17),
-            inset 0 2px 0 rgba(255,255,255,.56);
-        transition: transform .18s ease, filter .18s ease, box-shadow .18s ease;
-    }
-
-    .login-btn:hover {
-        filter: brightness(1.055);
-        transform: translateY(-1px);
-        box-shadow: 0 13px 32px rgba(229,164,0,.38), 0 0 38px rgba(255,192,0,.23);
-    }
-
-    .login-btn:active { transform: translateY(1px); }
-
-    .login-links {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        gap: 26px;
-        padding: 27px 6px 0;
-    }
-
-    .login-link {
-        min-height: 46px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 11px;
-        padding: 4px 10px;
-        border: 0;
-        border-radius: 12px;
-        background: transparent;
-        color: #efbd2c;
-        text-decoration: none;
-        font-size: 18px;
-        font-weight: 600;
-        white-space: nowrap;
-        text-shadow: 0 0 10px rgba(255,190,0,.14);
-        transition: transform .18s ease, color .18s ease, filter .18s ease;
-    }
-
-    .login-link i {
-        color: #f5c000;
-        font-size: 22px;
-        text-shadow: 0 0 8px rgba(255,194,0,.45), 0 0 17px rgba(255,177,0,.18);
-    }
-
-    .login-link:hover {
-        transform: translateY(-1px);
-        color: #ffd95b;
-        filter: drop-shadow(0 0 8px rgba(255,190,0,.16));
-    }
-
-    /* Bottom market artwork */
-    .bottom-market {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: 165px;
-        pointer-events: none;
-        opacity: .42;
-        z-index: 2;
-    }
-
-    .bottom-line {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 53px;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(33,123,193,.72), transparent);
-    }
-
-    .bottom-bars {
-        position: absolute;
-        left: 28px;
-        right: 28px;
-        bottom: 0;
-        height: 128px;
-        display: flex;
-        align-items: flex-end;
-        justify-content: space-between;
-    }
-
-    .bottom-bars span {
-        display: block;
-        width: 42px;
-        border: 1px solid rgba(53,130,192,.24);
-        border-bottom: none;
-        background: linear-gradient(180deg, rgba(23,95,151,.14), rgba(3,28,49,.04));
-        border-radius: 23px 23px 0 0;
-    }
-
-    .bottom-bars span:nth-child(1){height:55px}
-    .bottom-bars span:nth-child(2){width:60px;height:80px;border-radius:50% 50% 0 0}
-    .bottom-bars span:nth-child(3){width:30px;height:106px}
-    .bottom-bars span:nth-child(4){width:80px;height:64px;border-radius:50% 50% 0 0}
-    .bottom-bars span:nth-child(5){width:44px;height:114px}
-    .bottom-bars span:nth-child(6){width:70px;height:76px}
-    .bottom-bars span:nth-child(7){width:36px;height:125px}
-
-    /* Mobile */
-    @media (max-width: 600px) {
-        .login-page {
-            min-height: 100dvh;
-            padding: 20px 13px;
-            align-items: stretch;
-        }
-
-        .login-card {
-            width: 100%;
-            min-height: calc(100dvh - 40px);
-            border-radius: 30px;
-            padding: 20px 24px 38px;
-        }
-
-        .language-btn {
-            top: 13px;
-            right: 13px;
-            width: 66px;
-            height: 66px;
-            font-size: 31px;
-        }
-
-        .market-background {
-            width: 650px;
-            height: 650px;
-            top: 31px;
-        }
-
-        .market-background::before { width: 590px; height: 590px; }
-        .market-background::after { width: 510px; height: 510px; top: 40px; }
-
-        .market-dots { width: 500px; height: 255px; top: 151px; }
-        .market-bars { width: 570px; height: 250px; top: 175px; }
-
-        .brand-area {
-            padding-top: 68px;
-            margin-bottom: 32px;
-        }
-
-        .brand-area h1 {
-            margin-top: 16px;
-            font-size: clamp(48px, 11.2vw, 68px);
-            letter-spacing: -3px;
-        }
-
-        .gift-title {
-            margin-top: 15px;
-            font-size: 21px;
-            letter-spacing: 8px;
-        }
-
-        .form-group { margin-bottom: 25px; }
-        .form-group label { margin-bottom: 13px; font-size: 24px; }
-
-        .input-box { height: 92px; border-radius: 26px; }
-        .input-icon { width: 78px; flex-basis: 78px; font-size: 29px; }
-        .input-box input { font-size: 23px; padding-right: 10px; }
-        .password-toggle { width: 70px; flex-basis: 70px; font-size: 28px; }
-
-        .login-btn { height: 92px; margin-top: 7px; border-radius: 27px; font-size: 29px; }
-
-        .login-links { padding: 27px 2px 0; gap: 18px; }
-        .login-link { min-height: 46px; padding: 4px 7px; font-size: 18px; gap: 10px; }
-        .login-link i { font-size: 22px; }
-
-        .bottom-market { height: 165px; }
-        .bottom-bars { left: 22px; right: 22px; }
-    }
-
-    @media (max-width: 430px) {
-        .login-page { padding: 14px 9px; }
-        .login-card {
-            min-height: calc(100dvh - 28px);
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-
-        .language-btn { width: 62px; height: 62px; font-size: 29px; }
-
-        .brand-area { padding-top: 67px; margin-bottom: 29px; }
-        .brand-logo { transform: scale(.93); }
-        .brand-area h1 { font-size: 46px; letter-spacing: -2.7px; }
-        .gift-title { font-size: 20px; letter-spacing: 7px; }
-
-        .form-group label { font-size: 23px; }
-        .input-box { height: 88px; }
-        .input-icon { width: 72px; flex-basis: 72px; }
-        .input-box input { font-size: 21px; }
-        .password-toggle { width: 64px; flex-basis: 64px; }
-        .login-btn { height: 88px; font-size: 27px; }
-
-        .login-links { gap: 10px; }
-        .login-link { font-size: 16px; gap: 8px; }
-        .login-link i { font-size: 20px; }
-
-        .bottom-market { height: 145px; }
-        .bottom-bars { left: 15px; right: 15px; }
-    }
-
-    @media (max-width: 360px) {
-        .login-card { padding-left: 16px; padding-right: 16px; }
-        .language-btn { width: 58px; height: 58px; font-size: 27px; }
-        .brand-area { padding-top: 65px; }
-        .brand-area h1 { font-size: 40px; letter-spacing: -2.4px; }
-        .gift-title { font-size: 18px; letter-spacing: 6px; }
-        .form-group label { font-size: 21px; }
-        .input-box { height: 82px; }
-        .input-icon { width: 65px; flex-basis: 65px; font-size: 27px; }
-        .input-box input { font-size: 19px; }
-        .password-toggle { width: 57px; flex-basis: 57px; font-size: 26px; }
-        .login-btn { height: 82px; font-size: 24px; }
-        .login-link { font-size: 13px; }
-        .login-link i { font-size: 18px; }
-    }
-    </style>
 </head>
 
 <body>
 
-    <!-- =====================================================
-         SINGLE LOGIN PAGE
-         Merged from index.html + login-premium.html
-         ===================================================== -->
+<div class="login-page">
 
-    <div class="login-page">
+    <div class="login-card">
 
-        <div class="login-card">
+        <!-- Language -->
+        <button class="language-btn" type="button" aria-label="Language">
+            🇬🇧
+        </button>
 
-            <button class="language-btn" type="button" aria-label="Language">
-                🇬🇧
+        <!-- Background Design -->
+        <div class="market-background">
+
+            <div class="market-lines line-1"></div>
+            <div class="market-lines line-2"></div>
+            <div class="market-lines line-3"></div>
+
+            <div class="market-bars">
+                <span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span>
+            </div>
+
+            <div class="market-dots"></div>
+            <div class="circle-glow"></div>
+
+        </div>
+
+        <!-- Logo -->
+        <div class="brand-area">
+
+            <div class="brand-logo">
+
+                <div class="logo-ring">
+                    <span>CPT</span>
+                    <i class="fa-solid fa-arrow-up-right"></i>
+                </div>
+
+                <div class="logo-markets">MARKETS</div>
+                <div class="logo-uk">UK</div>
+
+            </div>
+
+            <h1>CptMarkets</h1>
+
+            <div class="gift-title">
+                <span></span>
+                GIFT
+                <span></span>
+            </div>
+
+        </div>
+
+        <!-- Login Form -->
+        <form id="loginForm" class="login-form">
+
+            <div class="form-group">
+
+                <label for="username">Username</label>
+
+                <div class="input-box">
+
+                    <div class="input-icon">
+                        <i class="fa-regular fa-user"></i>
+                    </div>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Username"
+                        autocomplete="username"
+                        required>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="password">Password</label>
+
+                <div class="input-box">
+
+                    <div class="input-icon">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Password"
+                        autocomplete="current-password"
+                        required>
+
+                    <i class="fa-regular fa-eye
+                              password-toggle"
+                       id="togglePassword"
+                       role="button"
+                       tabindex="0"></i>
+
+                </div>
+
+            </div>
+
+
+            <button type="submit"
+                    class="login-btn">
+
+                Go to Sign In
+
             </button>
 
-            <!-- Decorative market background -->
-            <div class="market-background" aria-hidden="true">
 
-                <div class="market-lines line-1"></div>
-                <div class="market-lines line-2"></div>
-                <div class="market-lines line-3"></div>
+            <div class="login-links">
 
-                <div class="market-bars">
-                    <span></span><span></span><span></span><span></span>
-                    <span></span><span></span><span></span><span></span>
-                    <span></span><span></span><span></span><span></span>
-                </div>
+                <a href="register.html"
+                   class="login-link">
 
-                <div class="market-dots"></div>
-                <div class="circle-glow"></div>
+                    <i class="fa-solid fa-user-plus"></i>
 
-            </div>
+                    Create Account
 
-            <!-- Brand -->
-            <div class="brand-area">
+                </a>
 
-                <div class="brand-logo">
-                    <div class="logo-ring">
-                        <span>CPT</span>
-                        <i class="fa-solid fa-arrow-up-right"></i>
-                    </div>
 
-                    <div class="logo-markets">MARKETS</div>
-                    <div class="logo-uk">UK</div>
-                </div>
+                <a href="#"
+                   id="forgotPassword"
+                   class="login-link">
 
-                <h1>CptMarkets</h1>
+                    <i class="fa-solid fa-lock"></i>
 
-                <div class="gift-title">
-                    <span></span>
-                    GIFT
-                    <span></span>
-                </div>
+                    Forgot Password?
+
+                </a>
 
             </div>
 
-            <!-- Existing login form: IDs preserved for script.js -->
-            <form id="loginForm" class="login-form">
+        </form>
 
-                <div class="form-group">
-                    <label for="username">Username</label>
 
-                    <div class="input-box">
-                        <div class="input-icon">
-                            <i class="fa-regular fa-user"></i>
-                        </div>
+        <!-- Bottom Design -->
 
-                        <input
-                            type="text"
-                            id="username"
-                            name="username"
-                            placeholder="Username"
-                            autocomplete="username"
-                            required>
-                    </div>
-                </div>
+        <div class="bottom-market">
 
-                <div class="form-group">
-                    <label for="password">Password</label>
+            <div class="bottom-line"></div>
 
-                    <div class="input-box">
+            <div class="bottom-bars">
 
-                        <div class="input-icon">
-                            <i class="fa-solid fa-lock"></i>
-                        </div>
-
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            placeholder="Password"
-                            autocomplete="current-password"
-                            required>
-
-                        <!-- IMPORTANT: script.js-compatible ID/class -->
-                        <i
-                            class="fa-regular fa-eye password-toggle"
-                            id="togglePassword"
-                            role="button"
-                            tabindex="0"
-                            aria-label="Show password"></i>
-
-                    </div>
-                </div>
-
-                <button type="submit" class="login-btn">
-                    Go to Sign In
-                </button>
-
-                <div class="login-links">
-
-                    <a href="register.html" class="login-link">
-                        <i class="fa-solid fa-user-plus"></i>
-                        <span>Create Account</span>
-                    </a>
-
-                    <a href="#" class="login-link" id="forgotPassword">
-                        <i class="fa-solid fa-lock"></i>
-                        <span>Forgot Password?</span>
-                    </a>
-
-                </div>
-
-            </form>
-
-            <!-- Bottom market artwork -->
-            <div class="bottom-market" aria-hidden="true">
-
-                <div class="bottom-line"></div>
-
-                <div class="bottom-bars">
-                    <span></span><span></span><span></span><span></span>
-                    <span></span><span></span><span></span>
-                </div>
+                <span></span><span></span><span></span>
+                <span></span><span></span><span></span>
+                <span></span>
 
             </div>
 
         </div>
+
     </div>
 
-    <!-- Existing systems preserved -->
-    <script src="popup.js"></script>
-    <script type="module" src="script.js"></script>
+</div>
+
+<!-- Existing JS (unchanged) -->
+<script src="popup.js"></script>
+<script type="module" src="script.js"></script>
 
 </body>
 </html>
