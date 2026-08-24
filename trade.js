@@ -12,7 +12,9 @@
 
    LONG / SHORT
         ↓
-   CPT Confirmation Popup
+   Validation
+        ↓
+   CPT Professional Confirmation Popup
         ↓
    Continue
         ↓
@@ -123,6 +125,188 @@ const amountInput =
 
 
 /* =========================================================
+   PROFESSIONAL VALIDATION POPUP
+   ========================================================= */
+
+function createTradeNoticePopup() {
+
+    if (
+        document.getElementById(
+            "cptTradeNoticePopup"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    const html = `
+
+        <div
+            id="cptTradeNoticePopup"
+            class="cpt-popup-overlay"
+        >
+
+            <div class="cpt-popup cpt-popup-success">
+
+                <div
+                    id="cptTradeNoticeIcon"
+                    class="cpt-popup-icon"
+                >
+                    !
+                </div>
+
+                <div class="cpt-popup-brand">
+                    CPT Markets
+                </div>
+
+                <h2
+                    id="cptTradeNoticeTitle"
+                    class="cpt-popup-title"
+                >
+                    Notice
+                </h2>
+
+                <p
+                    id="cptTradeNoticeText"
+                    class="cpt-popup-subtitle cpt-popup-success-message"
+                >
+                    Please check your trade details.
+                </p>
+
+                <div class="cpt-popup-actions">
+
+                    <button
+                        id="cptTradeNoticeOK"
+                        class="cpt-popup-btn cpt-popup-confirm cpt-popup-single-btn"
+                        type="button"
+                    >
+                        OK
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    document.body.insertAdjacentHTML(
+        "beforeend",
+        html
+    );
+
+
+    const okButton =
+        document.getElementById(
+            "cptTradeNoticeOK"
+        );
+
+
+    if (okButton) {
+
+        okButton.onclick =
+            function () {
+
+                closeTradeNoticePopup();
+
+            };
+
+    }
+
+}
+
+
+/* =========================================================
+   OPEN PROFESSIONAL NOTICE
+   ========================================================= */
+
+function showTradeNotice(
+    title,
+    message
+) {
+
+    createTradeNoticePopup();
+
+
+    const titleElement =
+        document.getElementById(
+            "cptTradeNoticeTitle"
+        );
+
+    const textElement =
+        document.getElementById(
+            "cptTradeNoticeText"
+        );
+
+    const popup =
+        document.getElementById(
+            "cptTradeNoticePopup"
+        );
+
+
+    if (titleElement) {
+
+        titleElement.innerText =
+            title;
+
+    }
+
+
+    if (textElement) {
+
+        textElement.innerText =
+            message;
+
+    }
+
+
+    if (popup) {
+
+        popup.classList.add(
+            "active"
+        );
+
+    }
+
+
+    document.body.style.overflow =
+        "hidden";
+
+}
+
+
+/* =========================================================
+   CLOSE PROFESSIONAL NOTICE
+   ========================================================= */
+
+function closeTradeNoticePopup() {
+
+    const popup =
+        document.getElementById(
+            "cptTradeNoticePopup"
+        );
+
+
+    if (popup) {
+
+        popup.classList.remove(
+            "active"
+        );
+
+    }
+
+
+    document.body.style.overflow =
+        "";
+
+}
+
+
+/* =========================================================
    CHART HEIGHT
    ========================================================= */
 
@@ -151,10 +335,6 @@ function fixMobileChartHeight() {
             ? 360
             : 430;
 
-
-    /* -----------------------------
-       CHART
-       ----------------------------- */
 
     chart.style.setProperty(
         "width",
@@ -198,10 +378,6 @@ function fixMobileChartHeight() {
         "important"
     );
 
-
-    /* -----------------------------
-       CHART CARD
-       ----------------------------- */
 
     if (card) {
 
@@ -264,12 +440,8 @@ function fixMobileChartHeight() {
 }
 
 
-/* Initial chart sizing */
-
 fixMobileChartHeight();
 
-
-/* Resize */
 
 window.addEventListener(
     "resize",
@@ -1370,7 +1542,6 @@ if (
 
 /* =========================================================
    OPEN LONG
-   DIRECT CPT POPUP
    ========================================================= */
 
 if (longButton) {
@@ -1391,7 +1562,6 @@ if (longButton) {
 
 /* =========================================================
    OPEN SHORT
-   DIRECT CPT POPUP
    ========================================================= */
 
 if (shortButton) {
@@ -1426,8 +1596,9 @@ function startPopupTrade(side) {
         tradeAmountValue
     ) {
 
-        alert(
-            "You already have an open trade. Close it before opening another trade."
+        showTradeNotice(
+            "Trade Already Open",
+            "You already have an open trade. Please close your current position before opening another trade."
         );
 
         return;
@@ -1441,7 +1612,8 @@ function startPopupTrade(side) {
 
     if (!tradeFirebaseUser) {
 
-        alert(
+        showTradeNotice(
+            "Login Required",
             "Please login before opening a trade."
         );
 
@@ -1459,8 +1631,9 @@ function startPopupTrade(side) {
         "function"
     ) {
 
-        alert(
-            "Balance system is not ready. Please reload the page."
+        showTradeNotice(
+            "Balance System Unavailable",
+            "The balance system is not ready. Please reload the page and try again."
         );
 
         return;
@@ -1469,7 +1642,7 @@ function startPopupTrade(side) {
 
 
     /* ---------------------------------------------
-       Get amount from main trade panel
+       Get amount
        --------------------------------------------- */
 
     const amount =
@@ -1480,13 +1653,18 @@ function startPopupTrade(side) {
         );
 
 
+    /* ---------------------------------------------
+       VALID AMOUNT CHECK
+       --------------------------------------------- */
+
     if (
         !Number.isFinite(amount) ||
         amount <= 0
     ) {
 
-        alert(
-            "Please enter a valid amount."
+        showTradeNotice(
+            "Amount Required",
+            "Please enter a valid trading amount before opening a position."
         );
 
         return;
@@ -1495,7 +1673,7 @@ function startPopupTrade(side) {
 
 
     /* ---------------------------------------------
-       Check available balance
+       BALANCE CHECK
        --------------------------------------------- */
 
     if (
@@ -1504,8 +1682,9 @@ function startPopupTrade(side) {
         )
     ) {
 
-        alert(
-            "Insufficient balance."
+        showTradeNotice(
+            "Insufficient Balance",
+            "Your available balance is not sufficient for this trade. Please enter a lower amount or add funds to your account."
         );
 
         return;
@@ -1515,7 +1694,7 @@ function startPopupTrade(side) {
 
     /* ---------------------------------------------
        Capture trade values
-       BEFORE popup
+       BEFORE confirmation popup
        --------------------------------------------- */
 
     const confirmationSide =
@@ -1537,7 +1716,7 @@ function startPopupTrade(side) {
 
 
     /* ---------------------------------------------
-       Check CPT popup system
+       CPT POPUP CHECK
        --------------------------------------------- */
 
     if (
@@ -1549,8 +1728,10 @@ function startPopupTrade(side) {
             "CPT Trade Popup function is not available."
         );
 
-        alert(
-            "Trade confirmation popup is not loaded. Please check trade-popup.js."
+
+        showTradeNotice(
+            "Trade System Unavailable",
+            "The trade confirmation system is not loaded. Please reload the page and try again."
         );
 
         return;
@@ -1559,7 +1740,7 @@ function startPopupTrade(side) {
 
 
     /* ---------------------------------------------
-       SHOW CPT CONFIRMATION POPUP
+       PROFESSIONAL CPT CONFIRMATION POPUP
        --------------------------------------------- */
 
     window.cptShowTradeConfirmation(
@@ -1609,8 +1790,9 @@ async function completeTradeOpen(
 
     if (!tradeFirebaseUser) {
 
-        alert(
-            "User session expired. Please login again."
+        showTradeNotice(
+            "Session Expired",
+            "Your login session has expired. Please login again before opening the trade."
         );
 
         return;
@@ -1629,8 +1811,9 @@ async function completeTradeOpen(
         "function"
     ) {
 
-        alert(
-            "Balance system is not ready. Please reload the page."
+        showTradeNotice(
+            "Balance System Unavailable",
+            "The balance system is not ready. Please reload the page and try again."
         );
 
         return;
@@ -1648,8 +1831,9 @@ async function completeTradeOpen(
         )
     ) {
 
-        alert(
-            "Insufficient balance."
+        showTradeNotice(
+            "Insufficient Balance",
+            "Your available balance is no longer sufficient for this trade."
         );
 
         return;
@@ -1659,7 +1843,7 @@ async function completeTradeOpen(
 
     /* ---------------------------------------------
        Deduct balance
-       ONLY NOW
+       ONLY AFTER CONFIRMATION
        --------------------------------------------- */
 
     let deducted = false;
@@ -1679,8 +1863,10 @@ async function completeTradeOpen(
             error
         );
 
-        alert(
-            "Unable to deduct balance. Please try again."
+
+        showTradeNotice(
+            "Trade Could Not Be Opened",
+            "We were unable to process the balance deduction. Please try again."
         );
 
         return;
@@ -1690,8 +1876,9 @@ async function completeTradeOpen(
 
     if (!deducted) {
 
-        alert(
-            "Unable to deduct balance. Please try again."
+        showTradeNotice(
+            "Trade Could Not Be Opened",
+            "We were unable to process the balance deduction. Please try again."
         );
 
         return;
@@ -1700,7 +1887,7 @@ async function completeTradeOpen(
 
 
     /* ---------------------------------------------
-       Final trade state
+       FINAL TRADE STATE
        --------------------------------------------- */
 
     selectedSide =
@@ -1734,21 +1921,21 @@ async function completeTradeOpen(
 
 
     /* ---------------------------------------------
-       Save active trade
+       SAVE ACTIVE TRADE
        --------------------------------------------- */
 
     saveActiveTrade();
 
 
     /* ---------------------------------------------
-       Update active trade UI
+       UPDATE ACTIVE TRADE UI
        --------------------------------------------- */
 
     updateOpenTradeUI();
 
 
     /* ---------------------------------------------
-       Refresh balance UI
+       REFRESH BALANCE UI
        --------------------------------------------- */
 
     if (
@@ -1794,7 +1981,8 @@ async function completeTradeOpen(
 
     } else {
 
-        alert(
+        showTradeNotice(
+            "Trade Opened",
             selectedSide +
             " trade opened successfully."
         );
@@ -2114,8 +2302,9 @@ async function closeCurrentTrade() {
         !currentTradeId
     ) {
 
-        alert(
-            "No open trade."
+        showTradeNotice(
+            "No Open Trade",
+            "There is currently no active trade to close."
         );
 
         return;
@@ -2125,8 +2314,9 @@ async function closeCurrentTrade() {
 
     if (!tradeFirebaseUser) {
 
-        alert(
-            "User session not ready."
+        showTradeNotice(
+            "Session Not Ready",
+            "Your user session is not ready. Please login again."
         );
 
         return;
@@ -2136,8 +2326,9 @@ async function closeCurrentTrade() {
 
     if (!tradeDB) {
 
-        alert(
-            "Database is not ready."
+        showTradeNotice(
+            "Database Not Ready",
+            "The trading database is not ready. Please try again."
         );
 
         return;
@@ -2251,8 +2442,9 @@ async function closeCurrentTrade() {
             returnAmount < 0
         ) {
 
-            alert(
-                "Invalid trade result."
+            showTradeNotice(
+                "Invalid Trade Result",
+                "The calculated trade result is invalid and could not be processed."
             );
 
             return;
@@ -2620,10 +2812,10 @@ async function closeCurrentTrade() {
 
         } else {
 
-            alert(
+            showTradeNotice(
+                "Trade Closed",
                 notificationSide +
-                " trade closed successfully.\n\n" +
-                "P/L: " +
+                " trade closed successfully. P/L: " +
                 (
                     notificationPL >= 0
                         ? "+"
@@ -2670,9 +2862,9 @@ async function closeCurrentTrade() {
         );
 
 
-        alert(
-            "Trade could not be closed.\n\n" +
-            error.message
+        showTradeNotice(
+            "Trade Could Not Be Closed",
+            "The trade could not be closed at this time. Please try again."
         );
 
     }
