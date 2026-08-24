@@ -1,40 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0,
-                   maximum-scale=1.0, user-scalable=no">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <meta
+        name="theme-color"
+        content="#020710"
+    >
 
     <title>CPTMarkets - Login</title>
 
-    <!-- Main Website CSS -->
-    <link rel="stylesheet" href="style.css">
+    <!-- =====================================================
+         MAIN WEBSITE STYLE
+         ===================================================== -->
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
-    <!-- Professional Login CSS -->
-    <link rel="stylesheet" href="index-professional.css">
+    <!-- =====================================================
+         PROFESSIONAL LOGIN STYLE
+         ===================================================== -->
+    <link
+        rel="stylesheet"
+        href="index-professional.css"
+    >
 
-    <!-- Popup CSS -->
-    <link rel="stylesheet" href="popup.css">
+    <!-- =====================================================
+         POPUP STYLE
+         ===================================================== -->
+    <link
+        rel="stylesheet"
+        href="popup.css"
+    >
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- =====================================================
+         FONT AWESOME
+         ===================================================== -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
 </head>
 
 
 <body>
 
     <!-- =====================================================
-         CPTMARKETS LOGIN PAGE
+         PAGE
          ===================================================== -->
 
     <main class="login-page">
 
-        <section class="login-card">
+        <!-- =================================================
+             LOGIN CARD
+             ================================================= -->
 
+        <section class="login-card">
 
             <!-- =================================================
                  LANGUAGE BUTTON
@@ -43,20 +70,21 @@
             <button
                 class="language-btn"
                 type="button"
-                aria-label="Language">
-
+                aria-label="Language"
+                title="Language"
+            >
                 🇬🇧
-
             </button>
 
 
             <!-- =================================================
-                 CIRCULAR MARKET BACKGROUND
+                 BACKGROUND MARKET GRAPHIC
                  ================================================= -->
 
             <div
                 class="market-background"
-                aria-hidden="true">
+                aria-hidden="true"
+            >
 
                 <div class="market-lines line-1"></div>
 
@@ -71,12 +99,10 @@
                     <span></span>
                     <span></span>
                     <span></span>
-
                     <span></span>
                     <span></span>
                     <span></span>
                     <span></span>
-
                     <span></span>
                     <span></span>
                     <span></span>
@@ -100,26 +126,22 @@
 
                 <div class="brand-logo">
 
-
-                    <!-- CPT Circular Logo -->
-
                     <div class="logo-ring">
 
                         <span>CPT</span>
 
-                        <i class="fa-solid fa-arrow-up-right"></i>
+                        <i
+                            class="fa-solid fa-arrow-up-right"
+                            aria-hidden="true"
+                        ></i>
 
                     </div>
 
-
-                    <!-- Markets -->
 
                     <div class="logo-markets">
                         MARKETS
                     </div>
 
-
-                    <!-- UK -->
 
                     <div class="logo-uk">
                         UK
@@ -128,14 +150,10 @@
                 </div>
 
 
-                <!-- Main Brand Name -->
-
                 <h1>
                     CptMarkets
                 </h1>
 
-
-                <!-- Gift -->
 
                 <div class="gift-title">
 
@@ -152,18 +170,17 @@
 
             <!-- =================================================
                  LOGIN FORM
-                 IMPORTANT IDs PRESERVED FOR script.js
                  ================================================= -->
 
             <form
                 id="loginForm"
                 class="login-form"
-                autocomplete="on">
+                novalidate
+            >
 
-
-                <!-- =================================================
+                <!-- =============================================
                      USERNAME
-                     ================================================= -->
+                     ============================================= -->
 
                 <div class="form-group">
 
@@ -174,10 +191,10 @@
 
                     <div class="input-box">
 
-
                         <div
                             class="input-icon"
-                            aria-hidden="true">
+                            aria-hidden="true"
+                        >
 
                             <i class="fa-regular fa-user"></i>
 
@@ -190,17 +207,19 @@
                             name="username"
                             placeholder="Username"
                             autocomplete="username"
-                            required>
-
+                            autocapitalize="none"
+                            spellcheck="false"
+                            required
+                        >
 
                     </div>
 
                 </div>
 
 
-                <!-- =================================================
+                <!-- =============================================
                      PASSWORD
-                     ================================================= -->
+                     ============================================= -->
 
                 <div class="form-group">
 
@@ -211,10 +230,10 @@
 
                     <div class="input-box">
 
-
                         <div
                             class="input-icon"
-                            aria-hidden="true">
+                            aria-hidden="true"
+                        >
 
                             <i class="fa-solid fa-lock"></i>
 
@@ -227,57 +246,60 @@
                             name="password"
                             placeholder="Password"
                             autocomplete="current-password"
-                            required>
+                            required
+                        >
 
-
-                        <!-- Password Toggle
-                             ID preserved for script.js -->
 
                         <button
                             type="button"
                             class="password-toggle"
                             id="togglePassword"
-                            aria-label="Show password">
+                            aria-label="Show password"
+                            title="Show password"
+                        >
 
-                            <i class="fa-regular fa-eye"></i>
+                            <i
+                                class="fa-regular fa-eye"
+                                aria-hidden="true"
+                            ></i>
 
                         </button>
-
 
                     </div>
 
                 </div>
 
 
-                <!-- =================================================
-                     LOGIN BUTTON
-                     ================================================= -->
+                <!-- =============================================
+                     SIGN IN BUTTON
+                     ============================================= -->
 
                 <button
                     type="submit"
-                    class="login-btn">
-
-                    <span>
-                        Go to Sign In
-                    </span>
-
+                    class="login-btn"
+                >
+                    Go to Sign In
                 </button>
 
 
-                <!-- =================================================
+                <!-- =============================================
                      ACCOUNT LINKS
-                     ================================================= -->
+                     ============================================= -->
 
-                <div class="login-links">
-
-
-                    <!-- Create Account -->
+                <nav
+                    class="login-links"
+                    aria-label="Account options"
+                >
 
                     <a
                         href="register.html"
-                        class="login-link">
+                        class="login-link"
+                    >
 
-                        <i class="fa-solid fa-user-plus"></i>
+                        <i
+                            class="fa-solid fa-user-plus"
+                            aria-hidden="true"
+                        ></i>
 
                         <span>
                             Create Account
@@ -286,14 +308,16 @@
                     </a>
 
 
-                    <!-- Forgot Password -->
-
                     <a
                         href="#"
                         id="forgotPassword"
-                        class="login-link">
+                        class="login-link"
+                    >
 
-                        <i class="fa-solid fa-lock"></i>
+                        <i
+                            class="fa-solid fa-lock"
+                            aria-hidden="true"
+                        ></i>
 
                         <span>
                             Forgot Password?
@@ -301,8 +325,7 @@
 
                     </a>
 
-
-                </div>
+                </nav>
 
             </form>
 
@@ -313,8 +336,8 @@
 
             <div
                 class="bottom-market"
-                aria-hidden="true">
-
+                aria-hidden="true"
+            >
 
                 <div class="bottom-line"></div>
 
@@ -333,24 +356,26 @@
 
             </div>
 
-
         </section>
 
     </main>
 
 
     <!-- =====================================================
-         EXISTING JAVASCRIPT
+         POPUP JAVASCRIPT
          ===================================================== -->
 
     <script src="popup.js"></script>
 
+
+    <!-- =====================================================
+         LOGIN / FIREBASE JAVASCRIPT
+         ===================================================== -->
+
     <script
         type="module"
-        src="script.js">
-    </script>
-
+        src="script.js"
+    ></script>
 
 </body>
-
 </html>
