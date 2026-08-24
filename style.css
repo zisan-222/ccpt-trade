@@ -1,169 +1,294 @@
-/* ===========================
-   CPTMarkets Login UI
-   Part 1
-=========================== */
+/* =========================================================
+   CPTMARKETS
+   style.css
+   Base / Compatibility CSS
+   ========================================================= */
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,Helvetica,sans-serif;
+
+/* =========================================================
+   GLOBAL RESET
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }
 
-body{
-    background:#020d20;
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    overflow-x:hidden;
-    color:#fff;
+html {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
-.background{
-    position:fixed;
-    inset:0;
-    background:linear-gradient(180deg,#031c3f 0%,#020d20 100%);
-    z-index:-2;
+body {
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    margin: 0;
+    padding: 0;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: #020d20;
+    color: #ffffff;
+
+    overflow-x: hidden;
+
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
 }
 
-.background::before{
-    content:"";
-    position:absolute;
-    width:500px;
-    height:500px;
-    border-radius:50%;
-    background:rgba(0,120,255,.12);
-    top:-180px;
-    left:50%;
-    transform:translateX(-50%);
-    filter:blur(20px);
+
+/* =========================================================
+   BUTTON RESET
+   ========================================================= */
+
+button,
+input {
+    font-family: inherit;
 }
 
-.login-container{
-    width:100%;
-    display:flex;
-    justify-content:center;
-    padding:40px 20px;
+button {
+    border: 0;
+    outline: none;
 }
 
-.login-card{
-    width:100%;
-    max-width:420px;
-    background:#06162f;
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:30px;
-    padding:35px 25px;
-    position:relative;
-    box-shadow:0 0 40px rgba(0,120,255,.15);
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+    outline: 2px solid rgba(255, 200, 55, 0.75);
+    outline-offset: 2px;
 }
 
-.language{
-    position:absolute;
-    right:20px;
-    top:20px;
-    width:50px;
-    height:50px;
-    border-radius:50%;
-    background:#fff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:28px;
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+a {
+    color: inherit;
 }
 
-.logo-area{
-    text-align:center;
-    margin:50px 0 40px;
+
+/* =========================================================
+   LOGIN PAGE COMPATIBILITY
+   ========================================================= */
+
+.login-page {
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 0;
+    padding: 20px;
+
+    overflow: hidden;
 }
 
-.logo-area h1{
-    font-size:54px;
-    font-weight:800;
+
+/* =========================================================
+   LOGIN CARD COMPATIBILITY
+   ========================================================= */
+
+.login-card {
+    position: relative;
+
+    width: 100%;
+    max-width: 690px;
+
+    margin: 0;
+    padding: 0;
+
+    overflow: hidden;
 }
 
-.logo-area .gold{
-    color:#ffc400;
-    text-shadow:0 0 12px rgba(255,196,0,.5);
+
+/* =========================================================
+   FORM COMPATIBILITY
+   ========================================================= */
+
+.login-form {
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
-.logo-area .white{
-    color:#fff;
+.form-group {
+    width: 100%;
 }
 
-.logo-area p{
-    margin-top:12px;
-    letter-spacing:8px;
-    color:#aeb8d0;
-    font-size:18px;
+.form-group label {
+    cursor: default;
 }
 
-.form-group{
-    margin-bottom:22px;
+
+/* =========================================================
+   INPUT COMPATIBILITY
+   ========================================================= */
+
+.input-box {
+    width: 100%;
 }
 
-.form-group label{
-    display:block;
-    margin-bottom:10px;
-    font-size:18px;
-    font-weight:600;
-}
-.input-box{
-    width:100%;
-    height:56px;
-    background:#0b2448;
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:14px;
-    display:flex;
-    align-items:center;
-    padding:0 16px;
+.input-box input {
+    min-width: 0;
 }
 
-.input-box i{
-    color:#ffc400;
-    font-size:18px;
+.input-box input:focus {
+    outline: none;
 }
 
-.input-box input{
-    flex:1;
-    background:transparent;
-    border:none;
-    outline:none;
-    color:#fff;
-    font-size:16px;
-    padding:0 12px;
+
+/* =========================================================
+   PASSWORD TOGGLE
+   ========================================================= */
+
+.password-toggle {
+    user-select: none;
+    -webkit-user-select: none;
 }
 
-.input-box input::placeholder{
-    color:#95a6c7;
+
+/* =========================================================
+   LOGIN BUTTON
+   ========================================================= */
+
+.login-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+
+    font-family: inherit;
+
+    cursor: pointer;
+
+    -webkit-tap-highlight-color: transparent;
 }
 
-#togglePassword{
-    cursor:pointer;
+
+/* =========================================================
+   LOGIN LINKS
+   ========================================================= */
+
+.login-links {
+    width: 100%;
 }
 
-.login-btn{
-    width:100%;
-    height:56px;
-    border:none;
-    border-radius:14px;
-    margin-top:18px;
-    background:linear-gradient(90deg,#f8c400,#ffdb4d);
-    color:#111;
-    font-size:18px;
-    font-weight:700;
-    cursor:pointer;
-    transition:.3s;
+.login-link {
+    cursor: pointer;
+
+    -webkit-tap-highlight-color: transparent;
 }
 
-.login-btn:hover{
-    transform:translateY(-2px);
-    box-shadow:0 10px 20px rgba(255,196,0,.35);
+
+/* =========================================================
+   LANGUAGE BUTTON
+   ========================================================= */
+
+.language-btn {
+    font-family: inherit;
+
+    cursor: pointer;
+
+    -webkit-tap-highlight-color: transparent;
 }
 
-.bottom-links{
-    margin-top:25px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap
+
+/* =========================================================
+   BACKGROUND DESIGN ELEMENTS
+   ========================================================= */
+
+.market-background,
+.circle-glow,
+.market-dots,
+.market-bars,
+.market-lines,
+.bottom-market,
+.bottom-line,
+.bottom-bars {
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   FONT AWESOME SAFETY
+   ========================================================= */
+
+.fa,
+.fas,
+.far,
+.fal,
+.fab,
+.fa-solid,
+.fa-regular,
+.fa-brands {
+    line-height: 1;
+}
+
+
+/* =========================================================
+   MOBILE SAFETY
+   ========================================================= */
+
+img,
+svg,
+video {
+    max-width: 100%;
+}
+
+
+/* =========================================================
+   SMALL DEVICES
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .login-page {
+        padding: 14px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL DEVICES
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+    .login-page {
+        padding: 10px;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCE MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+}
