@@ -14,6 +14,13 @@
 
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="register-premium.css">
+
+<!-- ==========================================
+     PROFESSIONAL POPUP CSS
+========================================== -->
+
+<link rel="stylesheet" href="popup.css">
+
 <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
@@ -187,6 +194,14 @@ Go to Sign In
 
 
 <!-- ==========================================
+     PROFESSIONAL POPUP SYSTEM
+========================================== -->
+
+<script src="popup.js"></script>
+
+
+
+<!-- ==========================================
      FIREBASE REGISTRATION
 ========================================== -->
 
@@ -298,8 +313,12 @@ registerForm.addEventListener(
 
         if (!username) {
 
-            alert(
-                "Please enter a username."
+            showCPTPopup(
+                "error",
+                "Username Required",
+                "Please enter a username to create your account.",
+                null,
+                "Try Again"
             );
 
             usernameInput.focus();
@@ -328,8 +347,12 @@ registerForm.addEventListener(
             )
         ) {
 
-            alert(
-                "Username must be 3-20 characters and can contain only letters, numbers, and underscore."
+            showCPTPopup(
+                "error",
+                "Invalid Username",
+                "Username must be 3-20 characters and can contain only letters, numbers, and underscore.",
+                null,
+                "Try Again"
             );
 
             usernameInput.focus();
@@ -343,8 +366,12 @@ registerForm.addEventListener(
             password.length < 6
         ) {
 
-            alert(
-                "Password must be at least 6 characters."
+            showCPTPopup(
+                "error",
+                "Weak Password",
+                "Password must be at least 6 characters.",
+                null,
+                "Try Again"
             );
 
             passwordInput.focus();
@@ -359,8 +386,12 @@ registerForm.addEventListener(
             confirmPassword
         ) {
 
-            alert(
-                "Passwords do not match!"
+            showCPTPopup(
+                "error",
+                "Password Mismatch",
+                "Passwords do not match. Please enter the same password in both fields.",
+                null,
+                "Try Again"
             );
 
             confirmPasswordInput.focus();
@@ -534,28 +565,27 @@ registerForm.addEventListener(
 
 
             /* ==================================
-               SUCCESS
+               PROFESSIONAL SUCCESS POPUP
             ================================== */
 
-            alert(
-                "Registration Successful!\n\nYour User ID: " +
-                userId
+            showCPTPopup(
+                "success",
+                "Account Created!",
+                "Your account has been created successfully.",
+                userId,
+                "Continue",
+                function () {
+
+                    /*
+                     * Registration সফল হওয়ার পর
+                     * Continue চাপলে Dashboard খুলবে।
+                     */
+
+                    window.location.href =
+                        "dashboard.html";
+
+                }
             );
-
-
-            /*
-             * ==================================
-             * DIRECT DASHBOARD REDIRECT
-             * ==================================
-             *
-             * Registration সফল হলে আর Login
-             * page-এ যাবে না।
-             *
-             * সরাসরি Dashboard খুলবে।
-             */
-
-            window.location.href =
-                "dashboard.html";
 
 
         } catch (error) {
@@ -611,7 +641,7 @@ registerForm.addEventListener(
 
 
             /* ==================================
-               ERROR MESSAGE
+               PROFESSIONAL ERROR POPUPS
             ================================== */
 
             if (
@@ -619,8 +649,12 @@ registerForm.addEventListener(
                 "auth/email-already-in-use"
             ) {
 
-                alert(
-                    "This username is already registered. Please choose another username."
+                showCPTPopup(
+                    "error",
+                    "Username Already Exists",
+                    "This username is already registered. Please choose another username.",
+                    null,
+                    "Try Again"
                 );
 
             }
@@ -630,8 +664,12 @@ registerForm.addEventListener(
                 "auth/invalid-email"
             ) {
 
-                alert(
-                    "Invalid username format."
+                showCPTPopup(
+                    "error",
+                    "Invalid Username",
+                    "The username format is invalid. Please enter a valid username.",
+                    null,
+                    "Try Again"
                 );
 
             }
@@ -641,8 +679,12 @@ registerForm.addEventListener(
                 "auth/weak-password"
             ) {
 
-                alert(
-                    "Password is too weak. Use at least 6 characters."
+                showCPTPopup(
+                    "error",
+                    "Weak Password",
+                    "Password is too weak. Please use at least 6 characters.",
+                    null,
+                    "Try Again"
                 );
 
             }
@@ -654,20 +696,25 @@ registerForm.addEventListener(
                 "firestore/permission-denied"
             ) {
 
-                alert(
-                    "Account could not be saved because Firestore permission was denied."
+                showCPTPopup(
+                    "error",
+                    "Registration Failed",
+                    "Account could not be saved because Firestore permission was denied.",
+                    null,
+                    "Try Again"
                 );
 
             }
 
             else {
 
-                alert(
-                    "Registration failed: " +
-                    (
-                        error.message ||
-                        "Unknown error"
-                    )
+                showCPTPopup(
+                    "error",
+                    "Registration Failed",
+                    error.message ||
+                    "Unknown error",
+                    null,
+                    "Try Again"
                 );
 
             }
@@ -695,7 +742,14 @@ registerForm.addEventListener(
 
 
 </script>
+
+
+<!-- ==========================================
+     PASSWORD TOGGLE
+========================================== -->
+
 <script src="password-toggle.js"></script>
+
 </body>
 
 </html>
