@@ -1,189 +1,405 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <title>CPTMarkets - Login</title>
 
-    <!-- Website CSS -->
+
+    <!-- =====================================================
+         WEBSITE CSS
+         ===================================================== -->
+
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="index-professional.css">
+
+    <!-- Main Login Design -->
+    <link rel="stylesheet" href="index-professional.css?v=2">
+
+    <!-- Popup Design -->
     <link rel="stylesheet" href="popup.css">
 
-    <!-- Font Awesome -->
+
+    <!-- =====================================================
+         FONT AWESOME
+         ===================================================== -->
+
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 </head>
+
 
 <body>
 
-<div class="login-page">
 
-    <div class="login-card">
+    <!-- =====================================================
+         LOGIN PAGE
+         ===================================================== -->
 
-        <!-- Language -->
-        <button class="language-btn" type="button" aria-label="Language">
-            🇬🇧
-        </button>
-
-        <!-- Background Design -->
-        <div class="market-background">
-
-            <div class="market-lines line-1"></div>
-            <div class="market-lines line-2"></div>
-            <div class="market-lines line-3"></div>
-
-            <div class="market-bars">
-                <span></span><span></span><span></span><span></span>
-                <span></span><span></span><span></span><span></span>
-                <span></span><span></span><span></span><span></span>
-            </div>
-
-            <div class="market-dots"></div>
-            <div class="circle-glow"></div>
-
-        </div>
-
-        <!-- Logo -->
-        <div class="brand-area">
-
-            <div class="brand-logo">
-
-                <div class="logo-ring">
-                    <span>CPT</span>
-                    <i class="fa-solid fa-arrow-up-right"></i>
-                </div>
-
-                <div class="logo-markets">MARKETS</div>
-                <div class="logo-uk">UK</div>
-
-            </div>
-
-            <h1>CptMarkets</h1>
-
-            <div class="gift-title">
-                <span></span>
-                GIFT
-                <span></span>
-            </div>
-
-        </div>
-
-        <!-- Login Form -->
-        <form id="loginForm" class="login-form">
-
-            <div class="form-group">
-
-                <label for="username">Username</label>
-
-                <div class="input-box">
-
-                    <div class="input-icon">
-                        <i class="fa-regular fa-user"></i>
-                    </div>
-
-                    <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        placeholder="Username"
-                        autocomplete="username"
-                        required>
-
-                </div>
-
-            </div>
+    <div class="login-page">
 
 
-            <div class="form-group">
+        <!-- =================================================
+             LOGIN CARD
+             ================================================= -->
 
-                <label for="password">Password</label>
-
-                <div class="input-box">
-
-                    <div class="input-icon">
-                        <i class="fa-solid fa-lock"></i>
-                    </div>
-
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        placeholder="Password"
-                        autocomplete="current-password"
-                        required>
-
-                    <i class="fa-regular fa-eye
-                              password-toggle"
-                       id="togglePassword"
-                       role="button"
-                       tabindex="0"></i>
-
-                </div>
-
-            </div>
+        <div class="login-card">
 
 
-            <button type="submit"
-                    class="login-btn">
+            <!-- =================================================
+                 LANGUAGE BUTTON
+                 ================================================= -->
 
-                Go to Sign In
+            <button
+                class="language-btn"
+                type="button"
+                aria-label="Language">
+
+                🇬🇧
 
             </button>
 
 
-            <div class="login-links">
 
-                <a href="register.html"
-                   class="login-link">
+            <!-- =================================================
+                 MARKET BACKGROUND
+                 ================================================= -->
 
-                    <i class="fa-solid fa-user-plus"></i>
-
-                    Create Account
-
-                </a>
+            <div
+                class="market-background"
+                aria-hidden="true">
 
 
-                <a href="#"
-                   id="forgotPassword"
-                   class="login-link">
+                <!-- Decorative Lines -->
 
-                    <i class="fa-solid fa-lock"></i>
+                <div class="market-lines line-1"></div>
 
-                    Forgot Password?
+                <div class="market-lines line-2"></div>
 
-                </a>
+                <div class="market-lines line-3"></div>
+
+
+
+                <!-- Market Bars -->
+
+                <div class="market-bars">
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </div>
+
+
+
+                <!-- Market Dots -->
+
+                <div class="market-dots"></div>
+
+
+                <!-- Circle Glow -->
+
+                <div class="circle-glow"></div>
+
 
             </div>
 
-        </form>
 
 
-        <!-- Bottom Design -->
+            <!-- =================================================
+                 BRAND / LOGO
+                 ================================================= -->
 
-        <div class="bottom-market">
+            <div class="brand-area">
 
-            <div class="bottom-line"></div>
 
-            <div class="bottom-bars">
+                <div class="brand-logo">
 
-                <span></span><span></span><span></span>
-                <span></span><span></span><span></span>
-                <span></span>
+
+                    <!-- CPT Circle Logo -->
+
+                    <div class="logo-ring">
+
+                        <span>CPT</span>
+
+                        <i
+                            class="fa-solid fa-arrow-up-right"
+                            aria-hidden="true">
+                        </i>
+
+                    </div>
+
+
+                    <!-- Markets -->
+
+                    <div class="logo-markets">
+                        MARKETS
+                    </div>
+
+
+                    <!-- UK -->
+
+                    <div class="logo-uk">
+                        UK
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- Main Brand Name -->
+
+                <h1>
+                    CptMarkets
+                </h1>
+
+
+
+                <!-- GIFT -->
+
+                <div class="gift-title">
+
+                    <span></span>
+
+                    GIFT
+
+                    <span></span>
+
+                </div>
+
 
             </div>
+
+
+
+            <!-- =================================================
+                 LOGIN FORM
+                 ================================================= -->
+
+            <form
+                id="loginForm"
+                class="login-form">
+
+
+                <!-- =================================================
+                     USERNAME
+                     ================================================= -->
+
+                <div class="form-group">
+
+
+                    <label for="username">
+                        Username
+                    </label>
+
+
+                    <div class="input-box">
+
+
+                        <div
+                            class="input-icon"
+                            aria-hidden="true">
+
+                            <i class="fa-regular fa-user"></i>
+
+                        </div>
+
+
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            placeholder="Username"
+                            autocomplete="username"
+                            required>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     PASSWORD
+                     ================================================= -->
+
+                <div class="form-group">
+
+
+                    <label for="password">
+                        Password
+                    </label>
+
+
+                    <div class="input-box">
+
+
+                        <div
+                            class="input-icon"
+                            aria-hidden="true">
+
+                            <i class="fa-solid fa-lock"></i>
+
+                        </div>
+
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Password"
+                            autocomplete="current-password"
+                            required>
+
+
+                        <!-- Password Show / Hide -->
+
+                        <i
+                            class="fa-regular fa-eye password-toggle"
+                            id="togglePassword"
+                            role="button"
+                            tabindex="0"
+                            aria-label="Show password">
+                        </i>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     LOGIN BUTTON
+                     ================================================= -->
+
+                <button
+                    type="submit"
+                    class="login-btn">
+
+                    Go to Sign In
+
+                </button>
+
+
+
+                <!-- =================================================
+                     LOGIN LINKS
+                     ================================================= -->
+
+                <div class="login-links">
+
+
+                    <!-- Create Account -->
+
+                    <a
+                        href="register.html"
+                        class="login-link">
+
+                        <i
+                            class="fa-solid fa-user-plus"
+                            aria-hidden="true">
+                        </i>
+
+                        <span>
+                            Create Account
+                        </span>
+
+                    </a>
+
+
+
+                    <!-- Forgot Password -->
+
+                    <a
+                        href="#"
+                        id="forgotPassword"
+                        class="login-link">
+
+                        <i
+                            class="fa-solid fa-lock"
+                            aria-hidden="true">
+                        </i>
+
+                        <span>
+                            Forgot Password?
+                        </span>
+
+                    </a>
+
+
+                </div>
+
+
+            </form>
+
+
+
+            <!-- =================================================
+                 BOTTOM MARKET DESIGN
+                 ================================================= -->
+
+            <div
+                class="bottom-market"
+                aria-hidden="true">
+
+
+                <div class="bottom-line"></div>
+
+
+                <div class="bottom-bars">
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </div>
+
+
+            </div>
+
 
         </div>
 
+
     </div>
 
-</div>
 
-<!-- Existing JS (unchanged) -->
-<script src="popup.js"></script>
-<script type="module" src="script.js"></script>
+
+    <!-- =====================================================
+         JAVASCRIPT
+         ===================================================== -->
+
+    <script src="popup.js"></script>
+
+    <script
+        type="module"
+        src="script.js">
+    </script>
+
 
 </body>
+
 </html>
