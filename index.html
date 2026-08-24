@@ -4,150 +4,266 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
 
 <title>CPTMarkets - Login</title>
 
-<link rel="stylesheet" href="style.css">
+<!-- NEW LOGIN DESIGN -->
+<link rel="stylesheet" href="login-premium.css">
 
-<link rel="stylesheet" href="index-professional.css">
-
-<!-- ==========================================
-     PROFESSIONAL POPUP CSS
-========================================== -->
-
+<!-- EXISTING POPUP -->
 <link rel="stylesheet" href="popup.css">
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<!-- FONT AWESOME -->
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+>
 
 </head>
 
 <body>
 
-<div class="background"></div>
+<div class="login-page">
 
-<div class="login-container">
+    <div class="login-card">
 
-<div class="login-card">
+        <!-- =========================
+             LANGUAGE
+        ========================== -->
 
-<div class="language">
-🇬🇧
+        <button
+            class="language-btn"
+            type="button"
+            aria-label="Language"
+        >
+            🇬🇧
+        </button>
+
+
+        <!-- =========================
+             MARKET BACKGROUND
+        ========================== -->
+
+        <div class="market-art">
+
+            <div class="market-circle"></div>
+
+            <div class="market-dots"></div>
+
+            <div class="chart-line chart-line-one"></div>
+
+            <div class="chart-line chart-line-two"></div>
+
+            <div class="chart-line chart-line-three"></div>
+
+            <div class="chart-bars">
+
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             BRAND
+        ========================== -->
+
+        <div class="brand-area">
+
+            <div class="cpt-logo">
+
+                <div class="cpt-logo-circle">
+
+                    <span>CPT</span>
+
+                    <i class="fa-solid fa-arrow-up-right"></i>
+
+                </div>
+
+                <div class="markets-text">
+                    MARKETS
+                </div>
+
+                <div class="uk-text">
+                    UK
+                </div>
+
+            </div>
+
+
+            <h1>
+                CptMarkets
+            </h1>
+
+
+            <div class="gift-title">
+
+                <span></span>
+
+                GIFT
+
+                <span></span>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             EXISTING LOGIN FORM
+        ========================== -->
+
+        <form id="loginForm" class="login-form">
+
+
+            <!-- USERNAME -->
+
+            <div class="form-group">
+
+                <label for="username">
+                    Username
+                </label>
+
+                <div class="input-box">
+
+                    <i class="fa-regular fa-user input-icon"></i>
+
+                    <input
+                        type="text"
+                        id="username"
+                        placeholder="Username"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <div class="input-box">
+
+                    <i class="fa-solid fa-lock input-icon"></i>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <!-- EXISTING ID PRESERVED -->
+                    <i
+                        class="fa-regular fa-eye password-toggle"
+                        id="togglePassword"
+                    ></i>
+
+                </div>
+
+            </div>
+
+
+            <!-- LOGIN BUTTON -->
+
+            <button
+                type="submit"
+                class="login-btn"
+            >
+                <span>Go to Sign In</span>
+            </button>
+
+
+            <!-- BOTTOM LINKS -->
+
+            <div class="bottom-links">
+
+                <a href="register.html">
+
+                    <i class="fa-solid fa-user-plus"></i>
+
+                    <span>
+                        Create Account
+                    </span>
+
+                </a>
+
+
+                <a href="#">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    <span>
+                        Forgot Password?
+                    </span>
+
+                </a>
+
+            </div>
+
+        </form>
+
+
+        <!-- =========================
+             BOTTOM MARKET DESIGN
+        ========================== -->
+
+        <div class="bottom-market">
+
+            <div class="bottom-chart">
+
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </div>
+
+            <div class="bottom-glow"></div>
+
+        </div>
+
+    </div>
+
 </div>
 
-<div class="logo-area">
 
-<h1>
-
-<span class="gold">
-CPT
-</span>
-
-<span class="white">
-Markets
-</span>
-
-</h1>
-
-<p>G I F T P</p>
-
-</div>
-
-<form id="loginForm">
-
-<div class="form-group">
-
-<label>
-Username
-</label>
-
-<div class="input-box">
-
-<i class="fa-regular fa-user"></i>
-
-<input
-type="text"
-id="username"
-placeholder="Username"
-required>
-
-</div>
-
-</div>
-
-<div class="form-group">
-
-<label>
-Password
-</label>
-
-<div class="input-box">
-
-<i class="fa-solid fa-lock"></i>
-
-<input
-type="password"
-id="password"
-placeholder="Password"
-required>
-
-<i
-class="fa-regular fa-eye"
-id="togglePassword">
-</i>
-
-</div>
-
-</div>
-
-<button
-type="submit"
-class="login-btn">
-
-Go to Sign In
-
-</button>
-
-<div class="bottom-links">
-
-<a href="register.html">
-
-<i class="fa-solid fa-user-plus"></i>
-
-Create Account
-
-</a>
-
-<a href="#">
-
-<i class="fa-solid fa-lock"></i>
-
-Forgot Password?
-
-</a>
-
-</div>
-
-</form>
-
-</div>
-
-</div>
-
-
-<!-- ==========================================
-     PROFESSIONAL POPUP SYSTEM
-========================================== -->
+<!-- =========================
+     EXISTING POPUP SYSTEM
+========================== -->
 
 <script src="popup.js"></script>
 
 
-<!-- ==========================================
+<!-- =========================
      EXISTING LOGIN SYSTEM
-========================================== -->
+========================== -->
 
 <script type="module" src="script.js"></script>
-
 
 </body>
 </html>
