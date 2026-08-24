@@ -1,381 +1,485 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CPTMarkets - Login</title>
+  
+  <!-- Existing website styles: preserved -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="index-professional.css">
+  <link rel="stylesheet" href="popup.css">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    >
+  <style>
+    /* =========================================================
+       CPTMARKETS — EXACT UI DESIGN MATCH (PERFECT MOBILE RESPONSIVE)
+       ========================================================= */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    <meta
-        name="theme-color"
-        content="#020710"
-    >
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: #01060e;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
 
-    <title>CPTMarkets - Login</title>
+    /* Fullscreen Wrapper */
+    .login-page {
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #01050c;
+    }
 
-    <!-- =====================================================
-         MAIN WEBSITE STYLE
-         ===================================================== -->
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+    /* App Container Mocking Phone Screen */
+    .login-card {
+      width: 100%;
+      max-width: 440px;
+      min-height: 100vh;
+      min-height: 100dvh;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, #06182c 0%, #020914 40%, #01050c 100%);
+      padding: 20px 24px 30px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+    }
 
-    <!-- =====================================================
-         PROFESSIONAL LOGIN STYLE
-         ===================================================== -->
-    <link
-        rel="stylesheet"
-        href="index-professional.css"
-    >
+    @media (min-width: 480px) {
+      .login-card {
+        min-height: 840px;
+        height: auto;
+        border-radius: 28px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        margin: 20px 0;
+      }
+    }
 
-    <!-- =====================================================
-         POPUP STYLE
-         ===================================================== -->
-    <link
-        rel="stylesheet"
-        href="popup.css"
-    >
+    /* Language Button Top Right */
+    .language-btn {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      z-index: 50;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
 
-    <!-- =====================================================
-         FONT AWESOME
-         ===================================================== -->
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    >
+    /* Circular Background Glow & Dots Wave */
+    .market-background {
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 380px;
+      height: 380px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .circle-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1px solid rgba(56, 137, 219, 0.35);
+      box-shadow: inset 0 0 35px rgba(22, 98, 175, 0.25), 0 0 30px rgba(18, 91, 164, 0.2);
+    }
+
+    .circle-glow {
+      position: absolute;
+      inset: 20px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(16, 78, 139, 0.45) 0%, rgba(5, 30, 58, 0.2) 60%, transparent 75%);
+    }
+
+    .market-dots {
+      position: absolute;
+      inset: 40px;
+      border-radius: 50%;
+      opacity: 0.6;
+      background-image: radial-gradient(rgba(56, 150, 235, 0.75) 1.2px, transparent 1.2px);
+      background-size: 10px 10px;
+      -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 30%, transparent 70%);
+      mask-image: radial-gradient(circle, rgba(0,0,0,1) 30%, transparent 70%);
+    }
+
+    .market-chart-wave {
+      position: absolute;
+      width: 100%;
+      height: 100px;
+      top: 45%;
+      left: 0;
+      opacity: 0.25;
+      background: repeating-linear-gradient(90deg, transparent, transparent 12px, rgba(94, 177, 255, 0.5) 12px, rgba(94, 177, 255, 0.5) 13px);
+      -webkit-mask-image: linear-gradient(180deg, transparent, #000, transparent);
+      mask-image: linear-gradient(180deg, transparent, #000, transparent);
+    }
+
+    /* Brand Logo Area */
+    .brand-area {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      margin-top: 45px;
+      margin-bottom: 30px;
+    }
+
+    .brand-logo-container {
+      display: inline-block;
+      position: relative;
+      margin-bottom: 5px;
+    }
+
+    .logo-ring-badge {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      border: 2px solid #e2b037;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      box-shadow: 0 0 15px rgba(226, 176, 55, 0.3);
+      background: rgba(4, 21, 41, 0.6);
+      position: relative;
+    }
+
+    .logo-ring-badge::after {
+      content: '▲';
+      position: absolute;
+      top: 6px;
+      right: 7px;
+      color: #e2b037;
+      font-size: 8px;
+      transform: rotate(45deg);
+    }
+
+    .logo-cpt-text {
+      color: #e2b037;
+      font-weight: 800;
+      font-size: 14px;
+      line-height: 1;
+      letter-spacing: -0.5px;
+    }
+
+    .logo-markets-text {
+      color: #ffffff;
+      font-size: 5px;
+      letter-spacing: 0.8px;
+      margin-top: 2px;
+      font-weight: 600;
+    }
+
+    .logo-uk-text {
+      color: #7b8b9a;
+      font-size: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-area h1 {
+      font-size: 34px;
+      font-weight: 800;
+      background: linear-gradient(180deg, #fff7cd 0%, #e2b037 60%, #997116 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 8px 0 2px 0;
+      letter-spacing: -0.5px;
+      text-shadow: 0 2px 10px rgba(226, 176, 55, 0.2);
+    }
+
+    .gift-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: #d1dbe5;
+      font-size: 13px;
+      letter-spacing: 4px;
+      font-weight: 500;
+    }
+
+    .gift-title span {
+      display: block;
+      width: 30px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(226, 176, 55, 0.6));
+    }
+
+    .gift-title span:last-child {
+      background: linear-gradient(90deg, rgba(226, 176, 55, 0.6), transparent);
+    }
+
+    /* Form Design */
+    .login-form {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .input-box {
+      width: 100%;
+      height: 52px;
+      border-radius: 14px;
+      border: 1px solid rgba(56, 117, 179, 0.4);
+      background: rgba(3, 19, 38, 0.7);
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      transition: all 0.3s ease;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .input-box:focus-within {
+      border-color: #2979ff;
+      box-shadow: 0 0 12px rgba(41, 121, 255, 0.35), inset 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .input-icon {
+      color: #62778e;
+      font-size: 17px;
+      width: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .input-box input {
+      flex: 1;
+      height: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #ffffff;
+      font-size: 15px;
+    }
+
+    .input-box input::placeholder {
+      color: #4b5d73;
+    }
+
+    .password-toggle {
+      color: #62778e;
+      font-size: 17px;
+      cursor: pointer;
+      padding: 4px;
+      transition: color 0.2s ease;
+    }
+
+    .password-toggle:hover {
+      color: #e2b037;
+    }
+
+    /* Sign In Golden Button */
+    .login-btn {
+      width: 100%;
+      height: 52px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #ffe578 0%, #d49a16 50%, #a67300 100%);
+      color: #050d1a;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(212, 154, 22, 0.35);
+      transition: all 0.2s ease;
+    }
+
+    .login-btn:active {
+      transform: scale(0.98);
+      box-shadow: 0 2px 10px rgba(212, 154, 22, 0.2);
+    }
+
+    /* Navigation Links */
+    .login-links {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 22px;
+      padding: 0 4px;
+    }
+
+    .login-link {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #e2b037;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition: opacity 0.2s ease;
+    }
+
+    .login-link:hover {
+      opacity: 0.85;
+    }
+
+    .login-link i {
+      font-size: 14px;
+      color: #e2b037;
+    }
+
+    /* Bottom Decorative City Silhouette Wave */
+    .bottom-market {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+      opacity: 0.35;
+    }
+
+    .bottom-bars {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-around;
+      padding: 0 10px;
+    }
+
+    .bottom-bars span {
+      display: block;
+      background: rgba(35, 110, 185, 0.2);
+      border: 1px solid rgba(56, 137, 219, 0.3);
+      border-bottom: none;
+    }
+
+    .bottom-bars span:nth-child(1) { width: 30px; height: 35px; border-radius: 4px 4px 0 0; }
+    .bottom-bars span:nth-child(2) { width: 45px; height: 50px; border-radius: 50% 50% 0 0; }
+    .bottom-bars span:nth-child(3) { width: 20px; height: 65px; border-radius: 3px 3px 0 0; }
+    .bottom-bars span:nth-child(4) { width: 60px; height: 40px; border-radius: 40% 40% 0 0; }
+    .bottom-bars span:nth-child(5) { width: 35px; height: 58px; border-radius: 4px 4px 0 0; }
+    .bottom-bars span:nth-child(6) { width: 40px; height: 45px; border-radius: 50% 50% 0 0; }
+  </style>
 </head>
-
-
 <body>
 
-    <!-- =====================================================
-         PAGE
-         ===================================================== -->
+  <div class="login-page">
+    <div class="login-card">
+      
+      <!-- Language Button Top Right -->
+      <button class="language-btn" type="button" aria-label="Language">
+        🇬🇧
+      </button>
 
-    <main class="login-page">
+      <!-- Decorative Glowing Circular Market Background -->
+      <div class="market-background" aria-hidden="true">
+        <div class="circle-ring"></div>
+        <div class="circle-glow"></div>
+        <div class="market-dots"></div>
+        <div class="market-chart-wave"></div>
+      </div>
 
-        <!-- =================================================
-             LOGIN CARD
-             ================================================= -->
+      <!-- Brand Logo Section -->
+      <div class="brand-area">
+        <div class="brand-logo-container">
+          <div class="logo-ring-badge">
+            <span class="logo-cpt-text">CPT</span>
+            <span class="logo-markets-text">MARKETS</span>
+            <span class="logo-uk-text">UK</span>
+          </div>
+        </div>
+        <h1>CptMarkets</h1>
+        <div class="gift-title">
+          <span></span> GIFT <span></span>
+        </div>
+      </div>
 
-        <section class="login-card">
-
-            <!-- =================================================
-                 LANGUAGE BUTTON
-                 ================================================= -->
-
-            <button
-                class="language-btn"
-                type="button"
-                aria-label="Language"
-                title="Language"
-            >
-                🇬🇧
-            </button>
-
-
-            <!-- =================================================
-                 BACKGROUND MARKET GRAPHIC
-                 ================================================= -->
-
-            <div
-                class="market-background"
-                aria-hidden="true"
-            >
-
-                <div class="market-lines line-1"></div>
-
-                <div class="market-lines line-2"></div>
-
-                <div class="market-lines line-3"></div>
-
-
-                <div class="market-bars">
-
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-
-                </div>
-
-
-                <div class="market-dots"></div>
-
-                <div class="circle-glow"></div>
-
+      <!-- Login Form: All IDs & Attributes Preserved for script.js -->
+      <form id="loginForm" class="login-form">
+        
+        <div class="form-group">
+          <label for="username">Username</label>
+          <div class="input-box">
+            <div class="input-icon">
+              <i class="fa-regular fa-user"></i>
             </div>
-
-
-            <!-- =================================================
-                 BRAND / LOGO
-                 ================================================= -->
-
-            <header class="brand-area">
-
-                <div class="brand-logo">
-
-                    <div class="logo-ring">
-
-                        <span>CPT</span>
-
-                        <i
-                            class="fa-solid fa-arrow-up-right"
-                            aria-hidden="true"
-                        ></i>
-
-                    </div>
-
-
-                    <div class="logo-markets">
-                        MARKETS
-                    </div>
-
-
-                    <div class="logo-uk">
-                        UK
-                    </div>
-
-                </div>
-
-
-                <h1>
-                    CptMarkets
-                </h1>
-
-
-                <div class="gift-title">
-
-                    <span></span>
-
-                    <strong>GIFT</strong>
-
-                    <span></span>
-
-                </div>
-
-            </header>
-
-
-            <!-- =================================================
-                 LOGIN FORM
-                 ================================================= -->
-
-            <form
-                id="loginForm"
-                class="login-form"
-                novalidate
-            >
-
-                <!-- =============================================
-                     USERNAME
-                     ============================================= -->
-
-                <div class="form-group">
-
-                    <label for="username">
-                        Username
-                    </label>
-
-
-                    <div class="input-box">
-
-                        <div
-                            class="input-icon"
-                            aria-hidden="true"
-                        >
-
-                            <i class="fa-regular fa-user"></i>
-
-                        </div>
-
-
-                        <input
-                            type="text"
-                            id="username"
-                            name="username"
-                            placeholder="Username"
-                            autocomplete="username"
-                            autocapitalize="none"
-                            spellcheck="false"
-                            required
-                        >
-
-                    </div>
-
-                </div>
-
-
-                <!-- =============================================
-                     PASSWORD
-                     ============================================= -->
-
-                <div class="form-group">
-
-                    <label for="password">
-                        Password
-                    </label>
-
-
-                    <div class="input-box">
-
-                        <div
-                            class="input-icon"
-                            aria-hidden="true"
-                        >
-
-                            <i class="fa-solid fa-lock"></i>
-
-                        </div>
-
-
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            placeholder="Password"
-                            autocomplete="current-password"
-                            required
-                        >
-
-
-                        <button
-                            type="button"
-                            class="password-toggle"
-                            id="togglePassword"
-                            aria-label="Show password"
-                            title="Show password"
-                        >
-
-                            <i
-                                class="fa-regular fa-eye"
-                                aria-hidden="true"
-                            ></i>
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <!-- =============================================
-                     SIGN IN BUTTON
-                     ============================================= -->
-
-                <button
-                    type="submit"
-                    class="login-btn"
-                >
-                    Go to Sign In
-                </button>
-
-
-                <!-- =============================================
-                     ACCOUNT LINKS
-                     ============================================= -->
-
-                <nav
-                    class="login-links"
-                    aria-label="Account options"
-                >
-
-                    <a
-                        href="register.html"
-                        class="login-link"
-                    >
-
-                        <i
-                            class="fa-solid fa-user-plus"
-                            aria-hidden="true"
-                        ></i>
-
-                        <span>
-                            Create Account
-                        </span>
-
-                    </a>
-
-
-                    <a
-                        href="#"
-                        id="forgotPassword"
-                        class="login-link"
-                    >
-
-                        <i
-                            class="fa-solid fa-lock"
-                            aria-hidden="true"
-                        ></i>
-
-                        <span>
-                            Forgot Password?
-                        </span>
-
-                    </a>
-
-                </nav>
-
-            </form>
-
-
-            <!-- =================================================
-                 BOTTOM MARKET GRAPHIC
-                 ================================================= -->
-
-            <div
-                class="bottom-market"
-                aria-hidden="true"
-            >
-
-                <div class="bottom-line"></div>
-
-
-                <div class="bottom-bars">
-
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-
-                </div>
-
+            <input type="text" id="username" name="username" placeholder="Username" autocomplete="username" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-box">
+            <div class="input-icon">
+              <i class="fa-solid fa-lock"></i>
             </div>
+            <input type="password" id="password" name="password" placeholder="Password" autocomplete="current-password" required>
+            <!-- script.js compatible ID and classes -->
+            <i class="fa-regular fa-eye-slash password-toggle" id="togglePassword" role="button" tabindex="0" aria-label="Show password"></i>
+          </div>
+        </div>
 
-        </section>
+        <button type="submit" class="login-btn">
+          Go to Sign In
+        </button>
 
-    </main>
+        <div class="login-links">
+          <a href="register.html" class="login-link">
+            <i class="fa-solid fa-user-plus"></i>
+            <span>Create Account</span>
+          </a>
+          <a href="#" class="login-link" id="forgotPassword">
+            <i class="fa-solid fa-lock"></i>
+            <span>Forgot Password?</span>
+          </a>
+        </div>
 
+      </form>
 
-    <!-- =====================================================
-         POPUP JAVASCRIPT
-         ===================================================== -->
+      <!-- Bottom Market Silhouette Artwork -->
+      <div class="bottom-market" aria-hidden="true">
+        <div class="bottom-bars">
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
 
-    <script src="popup.js"></script>
+    </div>
+  </div>
 
-
-    <!-- =====================================================
-         LOGIN / FIREBASE JAVASCRIPT
-         ===================================================== -->
-
-    <script
-        type="module"
-        src="script.js"
-    ></script>
+  <!-- Existing system scripts preserved -->
+  <script src="popup.js"></script>
+  <script type="module" src="script.js"></script>
 
 </body>
 </html>
