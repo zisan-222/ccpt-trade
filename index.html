@@ -11,21 +11,36 @@
     <title>CPTMarkets - Login</title>
 
 
-    <!-- EXISTING CSS -->
+    <!-- =====================================================
+         EXISTING WEBSITE CSS
+         DO NOT REMOVE
+    ====================================================== -->
+
     <link rel="stylesheet" href="style.css">
 
     <link rel="stylesheet" href="index-professional.css">
 
 
-    <!-- PREMIUM LOGIN DESIGN -->
+    <!-- =====================================================
+         NEW PREMIUM LOGIN DESIGN
+         NEW FILE
+    ====================================================== -->
+
     <link rel="stylesheet" href="login-premium.css">
 
 
-    <!-- POPUP CSS -->
+    <!-- =====================================================
+         EXISTING POPUP CSS
+         DO NOT REMOVE
+    ====================================================== -->
+
     <link rel="stylesheet" href="popup.css">
 
 
-    <!-- FONT AWESOME -->
+    <!-- =====================================================
+         FONT AWESOME
+    ====================================================== -->
+
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
@@ -35,21 +50,36 @@
 <body>
 
 
+    <!-- =====================================================
+         PREMIUM LOGIN PAGE
+    ====================================================== -->
+
     <div class="login-page">
+
 
         <div class="login-card">
 
 
-            <!-- LANGUAGE -->
+            <!-- =================================================
+                 LANGUAGE
+            ================================================== -->
 
-            <button class="language-btn" type="button">
+            <button
+                class="language-btn"
+                type="button"
+                aria-label="Language">
+
                 🇬🇧
+
             </button>
 
 
-            <!-- MARKET BACKGROUND -->
+            <!-- =================================================
+                 MARKET BACKGROUND
+            ================================================== -->
 
             <div class="market-background">
+
 
                 <div class="market-dots"></div>
 
@@ -72,18 +102,24 @@
 
 
                 <div class="market-lines line-1"></div>
+
                 <div class="market-lines line-2"></div>
+
                 <div class="market-lines line-3"></div>
+
 
             </div>
 
 
-            <!-- BRAND AREA -->
+            <!-- =================================================
+                 BRAND AREA
+            ================================================== -->
 
             <div class="brand-area">
 
 
                 <div class="brand-logo">
+
 
                     <div class="logo-ring">
 
@@ -95,19 +131,26 @@
 
 
                     <div class="logo-markets">
+
                         MARKETS
+
                     </div>
 
 
                     <div class="logo-uk">
+
                         UK
+
                     </div>
+
 
                 </div>
 
 
                 <h1>
+
                     CptMarkets
+
                 </h1>
 
 
@@ -125,22 +168,32 @@
             </div>
 
 
-            <!-- LOGIN FORM -->
+            <!-- =================================================
+                 EXISTING LOGIN FORM
+                 IMPORTANT IDs ARE PRESERVED FOR script.js
+            ================================================== -->
 
-            <form id="loginForm"
-                  class="login-form">
+            <form
+                id="loginForm"
+                class="login-form">
 
 
-                <!-- USERNAME -->
+                <!-- =================================================
+                     USERNAME
+                ================================================== -->
 
                 <div class="form-group">
 
+
                     <label for="username">
+
                         Username
+
                     </label>
 
 
                     <div class="input-box">
+
 
                         <div class="input-icon">
 
@@ -152,24 +205,34 @@
                         <input
                             type="text"
                             id="username"
+                            name="username"
                             placeholder="Username"
+                            autocomplete="username"
                             required>
 
+
                     </div>
+
 
                 </div>
 
 
-                <!-- PASSWORD -->
+                <!-- =================================================
+                     PASSWORD
+                ================================================== -->
 
                 <div class="form-group">
 
+
                     <label for="password">
+
                         Password
+
                     </label>
 
 
                     <div class="input-box">
+
 
                         <div class="input-icon">
 
@@ -181,26 +244,37 @@
                         <input
                             type="password"
                             id="password"
+                            name="password"
                             placeholder="Password"
+                            autocomplete="current-password"
                             required>
 
 
-                        <button
-                            type="button"
-                            class="password-toggle"
+                        <!--
+                            IMPORTANT:
+                            script.js directly changes
+                            fa-eye / fa-eye-slash on THIS element.
+                        -->
+
+                        <i
+                            class="fa-regular fa-eye password-toggle"
                             id="togglePassword"
+                            role="button"
+                            tabindex="0"
                             aria-label="Show password">
+                        </i>
 
-                            <i class="fa-regular fa-eye"></i>
-
-                        </button>
 
                     </div>
+
 
                 </div>
 
 
-                <!-- LOGIN BUTTON -->
+                <!-- =================================================
+                     LOGIN BUTTON
+                     script.js searches for .login-btn
+                ================================================== -->
 
                 <button
                     type="submit"
@@ -211,7 +285,9 @@
                 </button>
 
 
-                <!-- BOTTOM LINKS -->
+                <!-- =================================================
+                     BOTTOM LINKS
+                ================================================== -->
 
                 <div class="login-links">
 
@@ -220,11 +296,16 @@
                         href="register.html"
                         class="login-link">
 
+
                         <i class="fa-solid fa-user-plus"></i>
 
+
                         <span>
+
                             Create Account
+
                         </span>
+
 
                     </a>
 
@@ -233,11 +314,16 @@
                         href="#"
                         class="login-link">
 
+
                         <i class="fa-solid fa-lock"></i>
 
+
                         <span>
+
                             Forgot Password?
+
                         </span>
+
 
                     </a>
 
@@ -248,9 +334,12 @@
             </form>
 
 
-            <!-- BOTTOM MARKET DECORATION -->
+            <!-- =================================================
+                 BOTTOM MARKET DECORATION
+            ================================================== -->
 
             <div class="bottom-market">
+
 
                 <div class="bottom-line"></div>
 
@@ -267,19 +356,29 @@
 
                 </div>
 
+
             </div>
 
 
         </div>
 
+
     </div>
 
 
-    <!-- EXISTING POPUP SYSTEM -->
+    <!-- =====================================================
+         EXISTING PROFESSIONAL POPUP SYSTEM
+         DO NOT REMOVE
+    ====================================================== -->
+
     <script src="popup.js"></script>
 
 
-    <!-- EXISTING LOGIN / FIREBASE SYSTEM -->
+    <!-- =====================================================
+         EXISTING LOGIN / FIREBASE SYSTEM
+         DO NOT CHANGE
+    ====================================================== -->
+
     <script type="module" src="script.js"></script>
 
 
