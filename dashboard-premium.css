@@ -1,11 +1,10 @@
 /* ==========================================
-   CPTMARKETS 3D PREMIUM DASHBOARD (PERFECT FIT)
+   CPTMARKETS 3D PREMIUM DASHBOARD (FINAL FIX)
    ========================================== */
 
 :root {
   --bg-dark: #070d18;
-  --card-bg: rgba(13, 22, 38, 0.85);
-  --gold-gradient: linear-gradient(135deg, #ffe082 0%, #ffb300 50%, #c77c00 100%);
+  --card-bg: rgba(13, 22, 38, 0.9);
   --glass-border: rgba(255, 255, 255, 0.08);
 }
 
@@ -15,31 +14,33 @@ body {
   font-family: 'Poppins', system-ui, -apple-system, sans-serif;
   margin: 0;
   padding: 0;
-  padding-bottom: 90px;
+  padding-bottom: 85px;
   overflow-x: hidden;
 }
 
-/* Perfect Centered Container like the 1st Screenshot */
+/* Fix Full Width and Remove Side Gaps / Shifting */
 .container {
   width: 100%;
-  max-width: 440px;
-  margin: 0 auto;
-  padding: 12px;
+  max-width: 100%;
+  margin: 0;
+  padding: 12px 16px;
   box-sizing: border-box;
 }
 
-/* ================= 1. HEADER & LOGO ================= */
+/* ================= 1. HEADER & NEW 3D LOGO ================= */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 12px 16px;
-  background: rgba(10, 17, 30, 0.9);
+  background: rgba(10, 17, 30, 0.95);
   backdrop-filter: blur(12px);
   border-radius: 16px;
   border: 1px solid var(--glass-border);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
   margin-bottom: 16px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .logo {
@@ -48,29 +49,31 @@ body {
   gap: 10px;
 }
 
-/* 3D Shield Logo Icon */
+/* New 3D Crypto Globe/Chart Logo Style (Replaced Shield) */
 .logo-icon {
-  width: 38px;
-  height: 38px;
-  background: linear-gradient(145deg, #ffca28, #b78103);
-  border-radius: 10px;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(145deg, #00d2ff, #3a7bd5);
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.6),
-              inset 0 -3px 5px rgba(0, 0, 0, 0.6),
-              0 0 12px rgba(255, 179, 0, 0.4);
+              inset 0 -3px 5px rgba(0, 0, 0, 0.5),
+              0 0 15px rgba(0, 210, 255, 0.5);
 }
 
 .logo-icon i {
-  color: #070d18;
-  font-size: 19px;
+  color: #ffffff;
+  font-size: 20px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
 }
 
+/* Premium Gold-Blue Crypto Market Text */
 .logo span {
   font-size: 20px;
   font-weight: 800;
-  background: linear-gradient(180deg, #fff3c4 0%, #ffd54f 45%, #ffb300 70%, #996500 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #ffe082 50%, #ffb300 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: 0.5px;
@@ -82,8 +85,8 @@ body {
 }
 
 .header-actions i {
-  width: 35px;
-  height: 35px;
+  width: 36px;
+  height: 36px;
   background: linear-gradient(145deg, #132238, #0a1320);
   border-radius: 50%;
   display: flex;
@@ -101,7 +104,7 @@ body {
 .banner {
   width: 100%;
   border-radius: 20px;
-  padding: 22px 18px;
+  padding: 24px 20px;
   background-size: cover;
   background-position: center;
   position: relative;
@@ -127,7 +130,7 @@ body {
 
 .banner-content h1 {
   margin: 0;
-  font-size: 21px;
+  font-size: 22px;
   background: linear-gradient(90deg, #fff, #ffe082);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -145,7 +148,7 @@ body {
   background: var(--card-bg);
   backdrop-filter: blur(16px);
   border-radius: 22px;
-  padding: 18px;
+  padding: 20px;
   border: 1px solid var(--glass-border);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
   margin-bottom: 20px;
@@ -160,7 +163,7 @@ body {
 }
 
 .asset-card h2 {
-  font-size: 34px;
+  font-size: 36px;
   margin: 8px 0;
   font-weight: 700;
   color: #ffffff;
@@ -183,7 +186,7 @@ body {
   color: #00e676;
 }
 
-/* Action Buttons (Restored Full Width) */
+/* Action Buttons */
 .action-buttons {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -217,7 +220,7 @@ body {
               0 6px 14px rgba(0, 0, 0, 0.4);
 }
 
-/* ================= 4. MENU GRID (PREMIUM ICONS) ================= */
+/* ================= 4. MENU GRID ================= */
 .menu-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -234,14 +237,14 @@ body {
 }
 
 .menu-icon {
-  width: 54px;
-  height: 54px;
+  width: 56px;
+  height: 56px;
   background: linear-gradient(145deg, #132238, #08101a);
   border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(0, 180, 255, 0.2);
+  border: 1px solid rgba(0, 180, 255, 0.25);
   box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.12),
               inset 0 -3px 6px rgba(0, 0, 0, 0.8),
               0 6px 14px rgba(0, 0, 0, 0.4);
@@ -340,16 +343,14 @@ body {
   font-size: 12px;
 }
 
-/* ================= 6. BOTTOM NAVIGATION BAR (FIXED CENTER & ALIGNMENT) ================= */
+/* ================= 6. BOTTOM NAVIGATION BAR (FIXED ALIGNMENT & INDIVIDUAL ACTIVE STATE) ================= */
 .bottom-nav {
   position: fixed;
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
   width: 100%;
-  max-width: 440px;
-  height: 65px;
-  background: rgba(8, 14, 26, 0.95);
+  height: 62px;
+  background: rgba(8, 14, 26, 0.96);
   backdrop-filter: blur(20px);
   display: flex;
   justify-content: space-around;
@@ -358,6 +359,7 @@ body {
   box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.7);
   z-index: 1000;
   box-sizing: border-box;
+  padding: 0 10px;
 }
 
 .bottom-nav a {
@@ -366,28 +368,31 @@ body {
   align-items: center;
   gap: 3px;
   text-decoration: none;
-  color: #647890;
+  color: #647890; /* Default Inactive Color */
   font-size: 10px;
+  transition: color 0.2s ease;
 }
 
 .bottom-nav a i {
   font-size: 18px;
 }
 
+/* Strictly Independent Active State: Only the clicked/active button glows gold */
 .bottom-nav a.active {
-  color: #ffc107;
+  color: #ffc107 !important;
 }
 
 .bottom-nav a.active i {
-  filter: drop-shadow(0 0 8px rgba(255, 193, 7, 0.6));
+  color: #ffc107 !important;
+  filter: drop-shadow(0 0 8px rgba(255, 193, 7, 0.7));
 }
 
-/* Central 3D Trade Button */
+/* Central 3D Trade Button (Fixed Positioning inside Bar) */
 .bottom-nav a.trade-btn {
   position: relative;
-  top: -18px;
-  width: 52px;
-  height: 52px;
+  top: -14px;
+  width: 50px;
+  height: 50px;
   background: linear-gradient(145deg, #ffca28 0%, #ff8f00 100%);
   border-radius: 50%;
   display: flex;
@@ -395,12 +400,13 @@ body {
   justify-content: center;
   color: #070d18;
   border: 4px solid #070d18;
-  box-shadow: inset 0 2px 3px rgba(255, 255, 28, 0.8),
+  box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.8),
               inset 0 -3px 4px rgba(120, 60, 0, 0.7),
-              0 0 18px rgba(255, 179, 0, 0.6);
+              0 0 15px rgba(255, 179, 0, 0.6);
 }
 
 .bottom-nav a.trade-btn i {
-  font-size: 20px;
-  color: #070d18;
+  font-size: 18px;
+  color: #070d18 !important;
+  filter: none !important;
 }
