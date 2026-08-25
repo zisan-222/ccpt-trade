@@ -1,387 +1,410 @@
-/* ===================================
-   CPTMARKETS DASHBOARD - PERFECT FIX
-=================================== */
+/* ==========================================
+   CPTMARKETS 3D PREMIUM DASHBOARD (ABSOLUTE FIX)
+   ========================================== */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+:root {
+  --bg-dark: #070d18;
+  --card-bg: rgba(13, 22, 38, 0.92);
+  --glass-border: rgba(255, 255, 255, 0.08);
 }
 
 body {
-    background: #030812; /* Dark theme matching screenshot */
-    color: #ffffff;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    padding-bottom: 90px;
-    overflow-x: hidden;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center; /* Centers dashboard horizontally */
+  background-color: var(--bg-dark);
+  color: #ffffff;
+  font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+  margin: 0;
+  padding: 0;
+  padding-bottom: 90px;
+  overflow-x: hidden;
 }
 
-/* 1. LAYOUT CENTERING FIX (Solves wide screen alignment issue) */
+/* Perfect Full Width Container with Balanced Padding to Prevent Shifting */
 .container {
-    width: 100%;
-    max-width: 480px; /* Mobile responsive frame width */
-    margin: 0 auto;   /* Center aligned */
-    padding: 0;
-    position: relative;
-    box-sizing: border-box;
-    background: #060e1e;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 12px;
+  box-sizing: border-box;
 }
 
-/* ======================
-   HEADER
-====================== */
-
+/* ================= 1. HEADER & 3D LOGO ================= */
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(10, 17, 30, 0.95);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  margin-bottom: 12px;
 }
 
 .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
+/* New 3D Crypto Globe/Chart Logo Style */
 .logo-icon {
-    width: 38px;
-    height: 38px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #00b4db, #0083b0);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(145deg, #00d2ff, #3a7bd5);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.6),
+              inset 0 -3px 5px rgba(0, 0, 0, 0.5),
+              0 0 12px rgba(0, 210, 255, 0.4);
+}
+
+.logo-icon i {
+  color: #ffffff;
+  font-size: 19px;
 }
 
 .logo span {
-    font-size: 20px;
-    font-weight: 700;
-    color: #f5c84c;
+  font-size: 20px;
+  font-weight: 800;
+  background: linear-gradient(180deg, #ffffff 0%, #ffe082 50%, #ffb300 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.5px;
 }
 
 .header-actions {
-    display: flex;
-    gap: 12px;
+  display: flex;
+  gap: 10px;
 }
 
 .header-actions i {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: #101c33;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    color: #7d8ea6;
-    cursor: pointer;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(145deg, #132238, #0a1320);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8fa0b5;
+  font-size: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.1),
+              0 4px 8px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
 }
 
-/* ======================
-   BANNER
-====================== */
-
+/* ================= 2. BANNER (REDUCED EXCESS GAP) ================= */
 .banner {
-    margin: 0 16px;
-    height: 140px;
-    border-radius: 18px;
-    overflow: hidden;
-    background: linear-gradient(135deg, #101f38, #0a1424);
-    position: relative;
-    border: 1px solid #1a2c4e;
+  width: 100%;
+  border-radius: 18px;
+  padding: 18px 16px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  margin-bottom: 12px;
+  box-sizing: border-box;
+}
+
+.banner::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(180deg, rgba(7, 13, 24, 0.2) 0%, rgba(7, 13, 24, 0.85) 100%);
+  z-index: 1;
 }
 
 .banner-content {
-    position: relative;
-    z-index: 2;
-    padding: 20px;
+  position: relative;
+  z-index: 2;
 }
 
 .banner-content h1 {
-    color: #ffffff;
-    font-size: 24px;
-    margin-bottom: 6px;
+  margin: 0;
+  font-size: 20px;
+  background: linear-gradient(90deg, #fff, #ffe082);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .banner-content p {
-    color: #8da0bb;
-    font-size: 13px;
+  margin: 3px 0 0 0;
+  font-size: 11px;
+  color: #a0b2c6;
 }
 
-/* ======================
-   ASSET CARD
-====================== */
-
+/* ================= 3. ASSET CARD & LARGER 3D BUTTONS ================= */
 .asset-card {
-    margin: 16px;
-    background: #0b1526;
-    border-radius: 20px;
-    padding: 20px;
-    border: 1px solid #162744;
+  width: 100%;
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  border-radius: 20px;
+  padding: 18px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5);
+  margin-bottom: 16px;
+  box-sizing: border-box;
 }
 
 .asset-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.asset-header span {
-    color: #8da0bb;
-    font-size: 14px;
-}
-
-.asset-header i {
-    font-size: 20px;
-    color: #f5c84c;
-    cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  color: #8fa3bf;
+  font-size: 13px;
 }
 
 .asset-card h2 {
-    font-size: 38px;
-    margin-bottom: 6px;
-    font-weight: 700;
+  font-size: 34px;
+  margin: 6px 0;
+  font-weight: 700;
+  color: #ffffff;
 }
 
 .asset-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 18px;
-    font-size: 13px;
-    color: #8da0bb;
+  display: flex;
+  gap: 20px;
+  font-size: 12px;
+  color: #7e92ad;
+  margin-bottom: 16px;
 }
 
-.profit {
-    color: #00e676;
-    font-weight: 600;
+.asset-info strong {
+  color: #fff;
+  margin-left: 4px;
 }
 
+.asset-info strong.profit {
+  color: #00e676;
+}
+
+/* Restored Larger & Wider Action Buttons */
 .action-buttons {
-    display: flex;
-    gap: 10px;
-    width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
 }
 
 .action-buttons button {
-    flex: 1;
-    border: none;
-    border-radius: 12px;
-    padding: 12px 0;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: .3s;
+  padding: 13px 0;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
 }
 
 .deposit-btn {
-    background: linear-gradient(135deg, #ffb703, #fb8500);
-    color: #111;
+  background: linear-gradient(180deg, #ffca28 0%, #ff9100 100%);
+  color: #070d18;
+  box-shadow: inset 0 2px 2px rgba(255, 255, 255, 0.6),
+              inset 0 -3px 4px rgba(120, 60, 0, 0.6),
+              0 6px 16px rgba(255, 145, 0, 0.35);
 }
 
-.withdraw-btn,
-.transfer-btn {
-    background: #14233c;
-    color: #ffffff;
-    border: 1px solid #1f355a !important;
+.withdraw-btn, .transfer-btn {
+  background: linear-gradient(180deg, #1b2a40 0%, #0d1726 100%);
+  color: #e2ecf8;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.15),
+              inset 0 -3px 4px rgba(0, 0, 0, 0.7),
+              0 6px 14px rgba(0, 0, 0, 0.4);
 }
 
-/* ======================
-   MENU GRID
-====================== */
-
+/* ================= 4. MENU GRID ================= */
 .menu-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    padding: 0 16px;
-    margin: 12px 0 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
 }
 
 .menu-item {
-    background: #0b1526;
-    border: 1px solid #162744;
-    border-radius: 18px;
-    min-height: 90px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
 }
 
 .menu-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 14px;
-    background: #12213a;
-    color: #00d2ff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    margin-bottom: 8px;
-    border: 1px solid #1c3358;
+  width: 54px;
+  height: 54px;
+  background: linear-gradient(145deg, #132238, #08101a);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 180, 255, 0.25);
+  box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.12),
+              inset 0 -3px 6px rgba(0, 0, 0, 0.8),
+              0 6px 14px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s ease;
+}
+
+.menu-icon i {
+  font-size: 20px;
+  background: linear-gradient(180deg, #ffffff 0%, #80d8ff 50%, #00b0ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 5px rgba(0, 176, 255, 0.5));
 }
 
 .menu-item span {
-    color: #d1dbe8;
-    font-size: 12px;
-    text-align: center;
+  font-size: 11px;
+  color: #9ab0ca;
+  font-weight: 500;
+  text-align: center;
 }
 
-/* ======================
-   HOT MARKETS
-====================== */
-
+/* ================= 5. HOT MARKETS CARD ================= */
 .market-card {
-    margin: 0 16px 20px;
-    background: #0b1526;
-    border-radius: 20px;
-    padding: 18px;
-    border: 1px solid #162744;
+  width: 100%;
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  border-radius: 18px;
+  padding: 16px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+  margin-bottom: 16px;
 }
 
 .market-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .market-title h2 {
-    font-size: 16px;
-    color: #ffffff;
-    font-weight: 700;
+  font-size: 15px;
+  margin: 0;
+  color: #fff;
 }
 
 .market-title a {
-    color: #ffb703;
-    text-decoration: none;
-    font-size: 12px;
+  color: #ffc107;
+  font-size: 12px;
+  text-decoration: none;
 }
 
 .market-item {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr .8fr;
-    align-items: center;
-    padding: 12px 0;
-    border-bottom: 1px solid #14233c;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  align-items: center;
+  padding: 10px 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  cursor: pointer;
 }
 
 .market-item:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .market-item h3 {
-    font-size: 14px;
-    color: #ffffff;
+  margin: 0;
+  font-size: 14px;
+  color: #fff;
 }
 
 .market-item small {
-    color: #6b7c96;
-    font-size: 11px;
+  color: #6c7f96;
+  font-size: 10px;
 }
 
-.price {
-    text-align: right;
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: 600;
+.market-item .price {
+  font-family: monospace;
+  font-size: 13px;
+  color: #e1eaf5;
+  text-align: right;
 }
 
-.up {
-    text-align: right;
-    color: #00e676;
-    font-weight: 700;
-    font-size: 13px;
+.market-item .up {
+  color: #00e676;
+  text-align: right;
+  font-weight: 600;
+  font-size: 12px;
 }
 
-.down {
-    text-align: right;
-    color: #ff5252;
-    font-weight: 700;
-    font-size: 13px;
+.market-item .down {
+  color: #ff5252;
+  text-align: right;
+  font-weight: 600;
+  font-size: 12px;
 }
 
-/* ======================
-   BOTTOM NAVIGATION (STABLE & CORRECT ACTIVE STATE)
-====================== */
-
+/* ================= 6. BOTTOM NAVIGATION BAR (PERFECT CENTER & FIXED ALIGNMENT) ================= */
 .bottom-nav {
-    position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 0;
-    width: 100%;
-    max-width: 480px; /* Aligns with container */
-    height: 70px;
-    background: #07101e;
-    border-top: 1px solid #162744;
-
-    display: grid;
-    grid-template-columns: 1fr 1fr 70px 1fr 1fr;
-    align-items: center;
-    justify-items: center;
-
-    z-index: 9999;
-    box-sizing: border-box;
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  height: 62px;
+  background: rgba(8, 14, 26, 0.96);
+  backdrop-filter: blur(20px);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  box-sizing: border-box;
+  padding: 0 10px;
 }
 
 .bottom-nav a {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    color: #5d6f8a; /* Inactive color */
-    font-size: 11px;
-    gap: 4px;
-    transition: color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  text-decoration: none;
+  color: #647890;
+  font-size: 10px;
+  transition: color 0.2s ease;
 }
 
 .bottom-nav a i {
-    font-size: 18px;
-    color: inherit;
+  font-size: 18px;
 }
 
-/* 2. NEON GREEN ACTIVE STATE FIX */
+/* Independent Active State: Only lights up the exact button with class="active" */
 .bottom-nav a.active {
-    color: #00e676 !important; /* Green active glow like UI */
+  color: #ffc107 !important;
 }
 
 .bottom-nav a.active i {
-    color: #00e676 !important;
+  color: #ffc107 !important;
+  filter: drop-shadow(0 0 8px rgba(255, 193, 7, 0.7));
 }
 
-/* FLOATING TRADE BUTTON */
-.trade-btn {
-    width: 54px;
-    height: 54px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #ffb703, #fb8500);
-    color: #111 !important;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    margin-top: -24px;
-    box-shadow: 0 0 15px rgba(255, 183, 3, 0.4);
-    border: 4px solid #030812;
-    z-index: 10000;
+/* Central 3D Trade Button (Properly Aligned) */
+.bottom-nav a.trade-btn {
+  position: relative;
+  top: -14px;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(145deg, #ffca28 0%, #ff8f00 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #070d18;
+  border: 4px solid #070d18;
+  box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.8),
+              inset 0 -3px 4px rgba(120, 60, 0, 0.7),
+              0 0 15px rgba(255, 179, 0, 0.6);
 }
 
-.trade-btn i {
-    font-size: 22px;
-    color: #111 !important;
+.bottom-nav a.trade-btn i {
+  font-size: 18px;
+  color: #070d18 !important;
+  filter: none !important;
 }
