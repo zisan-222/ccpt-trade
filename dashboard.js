@@ -182,7 +182,59 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
 
-    /* 
+    /* ==========================================
+   BALANCE EYE HIDE / SHOW
+========================================== */
+
+const balanceEye = document.getElementById("balanceEye");
+const balanceElement = document.getElementById("balance");
+
+let balanceVisible = true;
+
+if (balanceEye && balanceElement) {
+
+    balanceEye.addEventListener("click", function () {
+
+        if (balanceVisible) {
+
+            // Hide balance
+            balanceElement.textContent = "â€¢â€¢â€¢â€¢â€¢â€¢";
+
+            balanceEye.classList.remove("fa-eye");
+            balanceEye.classList.add("fa-eye-slash");
+
+            balanceVisible = false;
+
+        } else {
+
+            // Show balance
+            let currentBalance = 0;
+
+            if (typeof getBalance === "function") {
+                currentBalance = getBalance();
+            }
+
+            if (typeof formatUSD === "function") {
+                balanceElement.textContent =
+                    formatUSD(currentBalance);
+            } else {
+                balanceElement.textContent =
+                    "$" + Number(currentBalance).toFixed(2);
+            }
+
+            balanceEye.classList.remove("fa-eye-slash");
+            balanceEye.classList.add("fa-eye");
+
+            balanceVisible = true;
+        }
+
+    });
+
+}
+
+
+
+            
     /* ======================================
        WITHDRAW INTERFACE
     ====================================== */
@@ -242,7 +294,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     id="cptWithdrawBack"
                     class="cpt-back-button"
                 >
-                    ‹
+                    â€¹
                 </button>
 
                 <h1>Withdraw</h1>
@@ -885,28 +937,3 @@ document.addEventListener("DOMContentLoaded", function () {
     );
 
 });
-
-document.addEventListener("DOMContentLoaded", function () {
-    const toggleEye = document.getElementById("toggleEye");
-    const balanceAmount = document.getElementById("balanceAmount");
-    
-    let originalBalance = balanceAmount.innerText;
-    let isHidden = false;
-
-    if (toggleEye && balanceAmount) {
-        toggleEye.addEventListener("click", function () {
-            isHidden = !isHidden;
-            if (isHidden) {
-                balanceAmount.innerText = "••••••";
-                toggleEye.classList.remove("fa-eye");
-                toggleEye.classList.add("fa-eye-slash");
-            } else {
-                balanceAmount.innerText = originalBalance;
-                toggleEye.classList.remove("fa-eye-slash");
-                toggleEye.classList.add("fa-eye");
-            }
-        });
-    }
-});
-
-
