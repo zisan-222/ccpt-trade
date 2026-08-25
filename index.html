@@ -1,104 +1,351 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CPTMarkets - Login</title>
-  
-  <!-- NEW MASTER STYLESHEET -->
-  <link rel="stylesheet" href="app-theme.css">
-  <link rel="stylesheet" href="popup.css">
-  
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <title>CPTMarkets - Login</title>
+
+    <!-- ==========================================
+         CPTMARKETS LOGIN THEME
+         ========================================== -->
+    <link rel="stylesheet" href="index.css">
+
+    <!-- Existing Popup System -->
+    <link rel="stylesheet" href="popup.css">
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
 </head>
+
 <body>
 
-  <div class="login-page">
-    <div class="login-card">
-      
-      <!-- Language Button Top Right -->
-      <button class="language-btn" type="button" aria-label="Language">
-        🇬🇧
-      </button>
+    <!-- ==========================================
+         LOGIN PAGE
+         ========================================== -->
 
-      <!-- Decorative Glowing Circular Market Background -->
-      <div class="market-background" aria-hidden="true">
-        <div class="circle-ring"></div>
-        <div class="circle-glow"></div>
-        <div class="market-dots"></div>
-        <div class="market-chart-wave"></div>
-      </div>
+    <main class="login-page">
 
-      <!-- Brand Logo Section -->
-      <div class="brand-area">
-        <div class="brand-logo-container">
-          <div class="logo-ring-badge">
-            <span class="logo-cpt-text">CPT</span>
-            <span class="logo-markets-text">MARKETS</span>
-            <span class="logo-uk-text">UK</span>
-          </div>
-        </div>
-        <h1>CptMarkets</h1>
-        <div class="gift-title">
-          <span></span> GIFT <span></span>
-        </div>
-      </div>
+        <section class="login-card">
 
-      <!-- Login Form: All IDs & Attributes Preserved for script.js -->
-      <form id="loginForm" class="login-form">
-        
-        <div class="form-group">
-          <label for="username">Username</label>
-          <div class="input-box">
-            <div class="input-icon">
-              <i class="fa-regular fa-user"></i>
+            <!-- ==================================
+                 BACKGROUND MARKET EFFECT
+                 ================================== -->
+
+            <div
+                class="market-background"
+                aria-hidden="true"
+            >
+
+                <div class="market-orbit orbit-one"></div>
+                <div class="market-orbit orbit-two"></div>
+
+                <div class="market-glow"></div>
+
+                <div class="market-dots"></div>
+
+                <div class="market-chart">
+
+                    <span class="chart-line line-one"></span>
+                    <span class="chart-line line-two"></span>
+                    <span class="chart-line line-three"></span>
+
+                </div>
+
+                <div class="market-bars">
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </div>
+
             </div>
-            <input type="text" id="username" name="username" placeholder="Username" autocomplete="username" required>
-          </div>
-        </div>
 
-        <div class="form-group">
-          <label for="password">Password</label>
-          <div class="input-box">
-            <div class="input-icon">
-              <i class="fa-solid fa-lock"></i>
+
+            <!-- ==================================
+                 LANGUAGE BUTTON
+                 ================================== -->
+
+            <button
+                class="language-btn"
+                type="button"
+                aria-label="Language"
+            >
+                🇬🇧
+            </button>
+
+
+            <!-- ==================================
+                 BRAND / LOGO
+                 ================================== -->
+
+            <div class="brand-area">
+
+                <div class="brand-logo">
+
+                    <div class="logo-circle">
+
+                        <div class="logo-arrow">
+                            ↗
+                        </div>
+
+                        <div class="logo-cpt">
+                            CPT
+                        </div>
+
+                    </div>
+
+                    <div class="logo-markets">
+                        MARKETS
+                    </div>
+
+                    <div class="logo-uk">
+                        UK
+                    </div>
+
+                </div>
+
+
+                <h1>
+                    CptMarkets
+                </h1>
+
+
+                <div class="gift-title">
+
+                    <span></span>
+
+                    <strong>GIFT</strong>
+
+                    <span></span>
+
+                </div>
+
             </div>
-            <input type="password" id="password" name="password" placeholder="Password" autocomplete="current-password" required>
-            <i class="fa-regular fa-eye-slash password-toggle" id="togglePassword" role="button" tabindex="0" aria-label="Show password"></i>
-          </div>
-        </div>
 
-        <button type="submit" class="login-btn">
-          Go to Sign In
-        </button>
 
-        <div class="login-links">
-          <a href="register.html" class="login-link">
-            <i class="fa-solid fa-user-plus"></i>
-            <span>Create Account</span>
-          </a>
-          <a href="#" class="login-link" id="forgotPassword">
-            <i class="fa-solid fa-lock"></i>
-            <span>Forgot Password?</span>
-          </a>
-        </div>
+            <!-- ==================================
+                 LOGIN FORM
+                 IMPORTANT:
+                 ALL EXISTING IDs PRESERVED
+                 FOR script.js
+                 ================================== -->
 
-      </form>
+            <form
+                id="loginForm"
+                class="login-form"
+                novalidate
+            >
 
-      <!-- Bottom Market Silhouette Artwork -->
-      <div class="bottom-market" aria-hidden="true">
-        <div class="bottom-bars">
-          <span></span><span></span><span></span><span></span><span></span><span></span>
-        </div>
-      </div>
 
-    </div>
-  </div>
+                <!-- ==================================
+                     USERNAME
+                     ================================== -->
 
-  <!-- System Scripts -->
-  <script src="popup.js"></script>
-  <script type="module" src="script.js"></script>
+                <div class="form-group">
+
+                    <label for="username">
+                        Username
+                    </label>
+
+
+                    <div class="input-box">
+
+                        <div class="input-icon">
+                            <i class="fa-regular fa-user"></i>
+                        </div>
+
+
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            placeholder="Username"
+                            autocomplete="username"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==================================
+                     PASSWORD
+                     ================================== -->
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+
+                    <div class="input-box">
+
+                        <div class="input-icon">
+                            <i class="fa-solid fa-lock"></i>
+                        </div>
+
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+
+                        <!-- IMPORTANT:
+                             ID MUST REMAIN togglePassword
+                             -->
+
+                        <i
+                            class="fa-regular fa-eye-slash password-toggle"
+                            id="togglePassword"
+                            role="button"
+                            tabindex="0"
+                            aria-label="Show password"
+                        ></i>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==================================
+                     LOGIN BUTTON
+                     IMPORTANT:
+                     CLASS MUST REMAIN login-btn
+                     ================================== -->
+
+                <button
+                    type="submit"
+                    class="login-btn"
+                >
+
+                    <span class="button-glow"></span>
+
+                    <span class="button-content">
+                        Go to Sign In
+                    </span>
+
+                </button>
+
+
+                <!-- ==================================
+                     LOGIN LINKS
+                     ================================== -->
+
+                <div class="login-links">
+
+
+                    <!-- CREATE ACCOUNT -->
+
+                    <a
+                        href="register.html"
+                        class="login-link"
+                    >
+
+                        <i class="fa-solid fa-user-plus"></i>
+
+                        <span>
+                            Create Account
+                        </span>
+
+                    </a>
+
+
+                    <!-- FORGOT PASSWORD -->
+
+                    <a
+                        href="#"
+                        class="login-link"
+                        id="forgotPassword"
+                    >
+
+                        <i class="fa-solid fa-lock"></i>
+
+                        <span>
+                            Forgot Password?
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </form>
+
+
+            <!-- ==================================
+                 BOTTOM MARKET CITY / CHART
+                 ================================== -->
+
+            <div
+                class="bottom-market"
+                aria-hidden="true"
+            >
+
+                <div class="bottom-grid"></div>
+
+                <div class="bottom-bars">
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Bottom blue ambient glow -->
+
+            <div class="bottom-glow"></div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ==========================================
+         EXISTING POPUP SYSTEM
+         DO NOT REMOVE
+         ========================================== -->
+
+    <script src="popup.js"></script>
+
+
+    <!-- ==========================================
+         EXISTING FIREBASE LOGIN LOGIC
+         DO NOT CHANGE
+         ========================================== -->
+
+    <script
+        type="module"
+        src="script.js"
+    ></script>
 
 </body>
 </html>
