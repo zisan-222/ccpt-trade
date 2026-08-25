@@ -202,20 +202,9 @@ if (loginForm) {
 
             try {
 
-                /*
-                 * Register system creates an
-                 * internal Firebase email from
-                 * the username.
-                 */
-
                 const email =
                     username.toLowerCase()
                     + "@cptmarkets.local";
-
-
-                /*
-                 * Firebase Login
-                 */
 
                 const userCredential =
                     await signInWithEmailAndPassword(
@@ -224,14 +213,8 @@ if (loginForm) {
                         password
                     );
 
-
                 const firebaseUser =
                     userCredential.user;
-
-
-                // ==================================
-                // GET USER DATA FROM FIRESTORE
-                // ==================================
 
                 const userDoc =
                     await getDoc(
@@ -261,11 +244,6 @@ if (loginForm) {
 
                 const userData =
                     userDoc.data();
-
-
-                // ==================================
-                // SAVE CURRENT USER SESSION
-                // ==================================
 
                 localStorage.setItem(
                     "currentUser",
@@ -308,15 +286,16 @@ if (loginForm) {
                     "Continue",
                     function () {
 
-                        // ==================================
-                        // GO TO DASHBOARD
-                        // ==================================
-
                         window.location.href =
                             "dashboard.html";
 
                     }
                 );
+
+                // পপআপ আসার পর বাটনটি পুনরায় সক্রিয় রাখা যাতে ক্যান্সেল করলেও সমস্যা না হয়
+                if (loginButton) {
+                    loginButton.disabled = false;
+                }
 
 
             } catch (error) {
@@ -325,7 +304,6 @@ if (loginForm) {
                     "Login failed:",
                     error
                 );
-
 
                 // Enable button back on error
                 if (loginButton) {
