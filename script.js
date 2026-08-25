@@ -24,7 +24,7 @@ const passwordInput =
     document.getElementById("password");
 
 const togglePassword =
-    document.getElementById("togglePassword");
+    document.querySelector(".password-toggle") || document.getElementById("togglePassword");
 
 if (togglePassword && passwordInput) {
 
@@ -65,16 +65,11 @@ if (togglePassword && passwordInput) {
 
 
 // ==========================================
-// LOGIN FORM
+// LOGIN FORM & BUTTON
 // ==========================================
 
 const loginForm =
     document.getElementById("loginForm");
-
-
-// ==========================================
-// LOGIN BUTTON
-// ==========================================
 
 const loginButton =
     loginForm
@@ -83,25 +78,24 @@ const loginButton =
 
 
 // ==========================================
-// IMPORTANT
-// Login is allowed ONLY after clicking
-// "Go to Sign In"
+// PREVENT AUTO-SUBMIT FROM BROWSER AUTOFILL
+// Tracks User Action (Click or Press Enter)
 // ==========================================
 
-let loginButtonPressed = false;
-
+let isUserInitiated = false;
 
 if (loginButton) {
+    loginButton.addEventListener("click", function () {
+        isUserInitiated = true;
+    });
+}
 
-    loginButton.addEventListener(
-        "click",
-        function () {
-
-            loginButtonPressed = true;
-
+if (loginForm) {
+    loginForm.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+            isUserInitiated = true;
         }
-    );
-
+    });
 }
 
 
@@ -117,40 +111,30 @@ if (loginForm) {
 
             e.preventDefault();
 
-
             // ==================================
-            // BLOCK AUTO SUBMIT
+            // BLOCK AUTOMATIC BROWSER SUBMIT
             // ==================================
-
-            if (!loginButtonPressed) {
-
-                return;
-
+            if (!isUserInitiated) {
+                return false;
             }
 
-
-            // Reset immediately so another
-            // automatic submit cannot login.
-            loginButtonPressed = false;
+            // Immediately reset after standard trigger
+            isUserInitiated = false;
 
 
             // ==================================
             // GET USERNAME
             // ==================================
 
-            const username =
-                document
-                .getElementById("username")
-                .value
-                .trim();
+            const usernameInput = document.getElementById("username");
+            const username = usernameInput ? usernameInput.value.trim() : "";
 
 
             // ==================================
             // GET PASSWORD
             // ==================================
 
-            const password =
-                passwordInput.value;
+            const password = passwordInput ? passwordInput.value : "";
 
 
             // ==================================
@@ -182,9 +166,7 @@ if (loginForm) {
                     "Try Again"
                 );
 
-                document
-                    .getElementById("username")
-                    .focus();
+                if (usernameInput) usernameInput.focus();
 
                 return;
 
@@ -201,12 +183,17 @@ if (loginForm) {
                     "Try Again"
                 );
 
-                passwordInput.focus();
+                if (passwordInput) passwordInput.focus();
 
                 return;
 
             }
 
+
+            // Disable button during loading
+            if (loginButton) {
+                loginButton.disabled = true;
+            }
 
 
             // ==================================
@@ -266,6 +253,7 @@ if (loginForm) {
                         "Try Again"
                     );
 
+                    if (loginButton) loginButton.disabled = false;
                     return;
 
                 }
@@ -337,6 +325,12 @@ if (loginForm) {
                     "Login failed:",
                     error
                 );
+
+
+                // Enable button back on error
+                if (loginButton) {
+                    loginButton.disabled = false;
+                }
 
 
                 // ==================================
