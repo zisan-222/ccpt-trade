@@ -1,7 +1,3 @@
-/* ==========================================
-   CPT MARKETS - ULTRA 3D DASHBOARD CSS v2.1
-   ========================================== */
-
 :root {
     --primary-gradient: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
     --bg-dark: #0b1120;
@@ -9,22 +5,16 @@
     --border-color: rgba(255, 255, 255, 0.08);
     --text-main: #f8fafc;
     --text-muted: #94a3b8;
-    --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
     --shadow-lg: 0 12px 30px -5px rgba(0, 0, 0, 0.5);
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
     background-color: var(--bg-dark);
     color: var(--text-main);
     font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
 }
 
 .container {
@@ -34,7 +24,6 @@ body {
     padding-bottom: 95px;
 }
 
-/* ================= HEADER ================= */
 .header {
     display: flex;
     justify-content: space-between;
@@ -42,107 +31,66 @@ body {
     padding: 12px 18px;
     background: rgba(11, 17, 32, 0.85);
     backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
     border-bottom: 1px solid var(--border-color);
     position: sticky;
     top: 0;
     z-index: 100;
     border-radius: 14px;
     margin-bottom: 14px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-weight: 700;
-    font-size: 18px;
-    letter-spacing: 0.5px;
-}
+.logo { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 18px; }
+.logo-icon { width: 38px; height: 38px; background: var(--primary-gradient); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; }
+.header-actions { display: flex; gap: 16px; color: var(--text-muted); cursor: pointer; }
 
-.logo-icon {
-    width: 38px;
-    height: 38px;
-    background: var(--primary-gradient);
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-size: 16px;
-}
-
-.header-actions {
-    display: flex;
-    gap: 16px;
-    color: var(--text-muted);
-    font-size: 16px;
-}
-
-.header-actions i {
-    cursor: pointer;
-    transition: color 0.2s;
-    padding: 6px;
-}
-
-.header-actions i:hover {
-    color: var(--text-main);
-}
-
-/* ================= BANNER (Premium 3D Heading & Shifted Right) ================= */
+/* BANNER: Text shifted to top-left (matching your marks) & 3D Candlestick enhancements */
 .banner {
     background-size: cover;
     background-position: center;
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start; /* উপরে শিফট করার জন্য */
     align-items: flex-start;
-    padding: 32px 24px;
+    padding: 20px 20px; /* উপরের ফাঁকা জায়গা মার্জ করার জন্য প্যাডিং কমানো হয়েছে */
     min-height: 180px;
     border-radius: 20px;
     margin-bottom: 16px;
     overflow: hidden;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-lg);
+    filter: contrast(1.1) saturate(1.15); /* ক্যান্ডেলস্টিক ও গ্রাফ আরও স্পষ্ট এবং থ্রিডি করার জন্য */
 }
 
 .banner::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, rgba(11, 17, 32, 0.96) 0%, rgba(11, 17, 32, 0.4) 100%);
+    background: linear-gradient(180deg, rgba(11, 17, 32, 0.85) 0%, rgba(11, 17, 32, 0.3) 100%);
 }
 
 .banner-content {
     position: relative;
     z-index: 1;
-    padding-left: 10px; /* লেখাটি একটু ডানে সরিয়ে নেওয়া হয়েছে */
+    padding-left: 2px;
 }
 
 .banner-content h1 {
-    margin: 0 0 6px 0;
-    font-size: 26px;
+    margin: 0 0 4px 0;
+    font-size: 24px;
     font-weight: 800;
     color: #fbbf24 !important;
-    /* প্রিমিয়াম 3D শ্যাডো এবং গ্লো ইফেক্ট */
-    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8), 
-                 0 0 15px rgba(251, 191, 36, 0.5), 
-                 0 0 30px rgba(251, 191, 36, 0.3);
-    letter-spacing: 0.5px;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.9), 0 0 12px rgba(251, 191, 36, 0.6);
 }
 
 .banner-content p {
     margin: 0;
-    font-size: 13px;
+    font-size: 12px;
     color: var(--text-muted);
     font-weight: 500;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
 }
 
-/* ================= ASSET CARD & 3D BUTTONS ================= */
 .asset-card {
     background: linear-gradient(145deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.95));
     border: 1px solid var(--border-color);
@@ -152,102 +100,20 @@ body {
     margin-bottom: 16px;
 }
 
-.asset-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: var(--text-muted);
-    font-size: 13px;
-}
+.asset-header { display: flex; justify-content: space-between; align-items: center; color: var(--text-muted); font-size: 13px; }
+.asset-card h2 { font-size: 30px; margin: 10px 0; font-weight: 700; }
+.asset-info { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-muted); margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--border-color); }
+.asset-info strong { color: var(--text-main); }
+.profit { color: #10b981 !important; }
 
-.asset-header i {
-    cursor: pointer;
-    transition: color 0.2s;
-}
+.action-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.action-buttons button { border: none; border-radius: 12px; font-weight: 600; font-size: 13px; color: #ffffff; cursor: pointer; padding: 12px 0; display: flex; align-items: center; justify-content: center; gap: 6px; }
+.deposit-btn { background: linear-gradient(135deg, #10b981 0%, #059669 100%); box-shadow: 0 6px 15px rgba(16, 185, 129, 0.35); }
+.withdraw-btn { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); box-shadow: 0 6px 15px rgba(245, 158, 11, 0.35); }
+.transfer-btn { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); box-shadow: 0 6px 15px rgba(139, 92, 246, 0.35); }
 
-.asset-header i:hover {
-    color: var(--text-main);
-}
-
-.asset-card h2 {
-    font-size: 30px;
-    margin: 10px 0;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-}
-
-.asset-info {
-    display: flex;
-    justify-content: space-between;
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-bottom: 18px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.asset-info strong {
-    color: var(--text-main);
-}
-
-.profit {
-    color: #10b981 !important;
-}
-
-/* Action Buttons */
-.action-buttons {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-}
-
-.action-buttons button {
-    border: none;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 13px;
-    color: #ffffff;
-    cursor: pointer;
-    padding: 12px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.deposit-btn {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    box-shadow: 0 6px 15px rgba(16, 185, 129, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.25);
-}
-
-.withdraw-btn {
-    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-    box-shadow: 0 6px 15px rgba(245, 158, 11, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.25);
-}
-
-.transfer-btn {
-    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-    box-shadow: 0 6px 15px rgba(139, 92, 246, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.25);
-}
-
-.action-buttons button:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.1);
-}
-
-.action-buttons button:active {
-    transform: translateY(1px);
-}
-
-/* ================= MENU GRID (Normal colors for withdraw & transfer inside grid) ================= */
-.menu-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin-bottom: 16px;
-}
-
+/* MENU GRID: Uniform Style for All Buttons */
+.menu-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
 .menu-item {
     background: linear-gradient(145deg, #1e293b, #111827);
     border: none;
@@ -255,198 +121,28 @@ body {
     padding: 14px 6px;
     text-align: center;
     color: #cbd5e1;
-    box-shadow: 6px 6px 14px rgba(3, 7, 18, 0.6), 
-                -3px -3px 10px rgba(51, 65, 85, 0.12),
-                inset 0 1px 1px rgba(255, 255, 255, 0.08);
-    transition: all 0.25s ease;
+    box-shadow: 6px 6px 14px rgba(3, 7, 18, 0.6), -3px -3px 10px rgba(51, 65, 85, 0.12);
     cursor: pointer;
-}
-
-.menu-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 8px 8px 18px rgba(3, 7, 18, 0.7), 
-                -4px -4px 12px rgba(51, 65, 85, 0.18),
-                inset 0 1px 2px rgba(255, 255, 255, 0.15);
-    color: #ffffff;
-}
-
-.menu-item:active {
-    transform: translateY(1px);
-}
-
-.menu-icon {
-    font-size: 20px;
-    margin-bottom: 6px;
-    color: #60a5fa;
-}
-
-/* নিচের মেনুর উইথড্র এবং ট্রান্সফারের কালার আগের মতো সাধারণ মেনু আইটেমের মতোই রাখা হলো */
-.withdraw-btn-menu {
-    background: linear-gradient(145deg, #1e293b, #111827) !important;
-}
-
-.transfer-btn-menu {
-    background: linear-gradient(145deg, #1e293b, #111827) !important;
-}
-
-.withdraw-btn-menu .menu-icon {
-    color: #f59e0b;
-}
-
-.transfer-btn-menu .menu-icon {
-    color: #a855f7;
-}
-
-.menu-item span {
-    font-size: 11px;
-    font-weight: 500;
-    display: block;
-}
-
-/* ================= MARKET CARDS ================= */
-.market-card {
-    background: linear-gradient(145deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    padding: 16px;
-    margin-bottom: 16px;
-    box-shadow: var(--shadow-sm);
-}
-
-.market-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-.market-title h2 {
-    font-size: 16px;
-    margin: 0;
-    color: var(--text-main);
-}
-
-.market-title a {
-    font-size: 13px;
-    color: #60a5fa;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.market-title a:hover {
-    text-decoration: underline;
-}
-
-.market-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 12px;
-    margin-bottom: 8px;
-    transition: background 0.2s, transform 0.2s;
-    cursor: pointer;
-}
-
-.market-item:last-child {
-    margin-bottom: 0;
-}
-
-.market-item:hover {
-    background: rgba(30, 41, 59, 0.9);
-    transform: scale(1.01);
-}
-
-.market-item h3 {
-    margin: 0 0 2px 0;
-    font-size: 14px;
-    color: var(--text-main);
-}
-
-.market-item small {
-    color: var(--text-muted);
-    font-size: 11px;
-}
-
-.price {
-    font-weight: 600;
-    font-size: 14px;
-    color: var(--text-main);
-}
-
-.up {
-    color: #10b981;
-    font-weight: 600;
-    font-size: 13px;
-}
-
-.down {
-    color: #ef4444;
-    font-weight: 600;
-    font-size: 13px;
-}
-
-/* ================= BOTTOM NAVIGATION ================= */
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 72px;
-    background: rgba(11, 17, 32, 0.92);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    border-top: 1px solid var(--border-color);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    z-index: 1000;
-    max-width: 480px;
-    margin: 0 auto;
-    box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.3);
-}
-
-.bottom-nav a {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: var(--text-muted);
-    text-decoration: none;
-    font-size: 10px;
-    gap: 4px;
-    transition: color 0.2s;
-}
-
-.bottom-nav a i {
-    font-size: 18px;
-}
-
-.bottom-nav a.active {
-    color: #60a5fa;
-}
-
-.trade-btn {
-    width: 50px;
-    height: 50px;
-    background: var(--primary-gradient);
-    border-radius: 50%;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    color: #fff !important;
-    box-shadow: 0 8px 22px rgba(37, 99, 235, 0.6);
-    margin-top: -18px;
     transition: transform 0.2s;
 }
+.menu-item:hover { transform: translateY(-3px); color: #fff; }
+.menu-icon { font-size: 20px; margin-bottom: 6px; color: #60a5fa; }
+.menu-item span { font-size: 11px; font-weight: 500; display: block; }
 
-.trade-btn:hover {
-    transform: scale(1.08);
-}
+.market-card { background: linear-gradient(145deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9)); border: 1px solid var(--border-color); border-radius: 20px; padding: 16px; margin-bottom: 16px; }
+.market-title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.market-title h2 { font-size: 16px; margin: 0; }
+.market-title a { font-size: 13px; color: #60a5fa; text-decoration: none; }
+.market-item { display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-color); border-radius: 12px; padding: 12px; margin-bottom: 8px; cursor: pointer; }
+.market-item h3 { margin: 0 0 2px 0; font-size: 14px; }
+.market-item small { color: var(--text-muted); font-size: 11px; }
+.price { font-weight: 600; font-size: 14px; }
+.up { color: #10b981; font-weight: 600; font-size: 13px; }
+.down { color: #ef4444; font-weight: 600; font-size: 13px; }
 
-.trade-btn i {
-    font-size: 20px !important;
-}
+.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 72px; background: rgba(11, 17, 32, 0.92); backdrop-filter: blur(18px); border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; align-items: center; z-index: 1000; max-width: 480px; margin: 0 auto; }
+.bottom-nav a { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); text-decoration: none; font-size: 10px; gap: 4px; }
+.bottom-nav a i { font-size: 18px; }
+.bottom-nav a.active { color: #60a5fa; }
+.trade-btn { width: 50px; height: 50px; background: var(--primary-gradient); border-radius: 50%; display: flex !important; align-items: center; justify-content: center; color: #fff !important; box-shadow: 0 8px 22px rgba(37, 99, 235, 0.6); margin-top: -18px; }
+.trade-btn i { font-size: 20px !important; }
