@@ -1,14 +1,15 @@
 /* ==========================================
-   CPT MARKETS - FINAL MATCHED PREMIUM CSS
+   CPT MARKETS - REFINED PREMIUM 3D CSS
    ========================================== */
 
 :root {
-    --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    --primary-gradient: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
     --bg-dark: #0f172a;
     --card-bg: rgba(30, 41, 59, 0.7);
     --border-color: rgba(255, 255, 255, 0.08);
     --text-main: #f8fafc;
     --text-muted: #94a3b8;
+    --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
     --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
 }
 
@@ -16,121 +17,31 @@ body {
     background-color: var(--bg-dark);
     color: var(--text-main);
     font-family: 'Inter', sans-serif;
-    margin: 0;
-    padding-bottom: 90px; /* Prevents content from overlapping with bottom nav */
 }
 
-/* ================= HEADER & CUSTOM TRADING LOGO ================= */
+/* ================= HEADER & BANNER ================= */
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 16px;
-    background: rgba(15, 23, 42, 0.95);
+    background: rgba(15, 23, 42, 0.85);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border-color);
 }
 
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.logo-icon {
+    background: var(--primary-gradient);
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.4);
+    border-radius: 12px;
 }
 
-/* Custom Circular TradingView Style Logo with Candlesticks */
-.logo-icon-custom {
-    width: 38px;
-    height: 38px;
-    background: linear-gradient(145deg, #1e293b, #0f172a);
-    border: 1px solid rgba(59, 130, 246, 0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    border-radius: 50%;
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.1);
-}
-
-.logo-icon-custom .candle {
-    width: 5px;
-    height: 16px;
-    border-radius: 2px;
-    position: relative;
-}
-
-.logo-icon-custom .candle.green {
-    background: #10b981;
-    box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
-}
-
-.logo-icon-custom .candle.red {
-    background: #ef4444;
-    box-shadow: 0 0 6px rgba(239, 68, 68, 0.6);
-    height: 20px;
-}
-
-.logo span {
-    font-size: 19px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    color: #fbbf24;
-}
-
-.header-actions {
-    display: flex;
-    gap: 16px;
-    color: #cbd5e1;
-    font-size: 18px;
-    cursor: pointer;
-}
-
-/* ================= LARGE 3D BANNER & LEFT ALIGNED TEXT ================= */
+/* Banner Fix */
 .banner {
-    position: relative;
     background-size: cover;
     background-position: center;
-    border-radius: 20px;
-    margin: 16px;
-    padding: 28px 20px;
-    min-height: 160px;
-    overflow: hidden;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(59, 130, 246, 0.3);
-}
-
-/* Deep dark gradient overlay keeping text strictly on the left */
-.banner::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, #0f172a 0%, rgba(15, 23, 42, 0.9) 55%, rgba(15, 23, 42, 0.3) 100%);
-    z-index: 1;
-}
-
-.banner-content {
     position: relative;
-    z-index: 2;
-    max-width: 65%;
-    text-align: left;
-}
-
-.banner-content h1 {
-    font-size: 22px;
-    font-weight: 800;
-    color: #fbbf24;
-    margin: 0 0 8px 0;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
-}
-
-.banner-content p {
-    font-size: 12px;
-    color: #94a3b8;
-    margin: 0;
-    line-height: 1.5;
-    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 160px;
 }
 
 /* ================= ASSET CARD & 3D BUTTONS ================= */
@@ -139,10 +50,9 @@ body {
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-lg);
     border-radius: 20px;
-    margin: 16px;
-    padding: 20px;
 }
 
+/* Upper Action Buttons (Deposit, Withdraw, Transfer) untouched/preserved */
 .action-buttons button {
     border: none;
     border-radius: 12px;
@@ -169,22 +79,21 @@ body {
     box-shadow: 0 6px 15px rgba(139, 92, 246, 0.3);
 }
 
-/* ================= MENU GRID (3D RAISED LOOK) ================= */
+/* ================= MENU GRID (PROPER 3D RAISED LOOK) ================= */
 .menu-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 12px;
-    padding: 0 16px;
-    margin-bottom: 20px;
 }
 
 .menu-item {
     background: linear-gradient(145deg, #1e293b, #111827);
-    border: none;
+    border: none; /* No border as requested */
     border-radius: 16px;
-    padding: 14px 6px;
+    padding: 14px 8px;
     text-align: center;
     color: #cbd5e1;
+    /* Soft 3D Raised Effect with Inner Highlight and Deep Shadow */
     box-shadow: 6px 6px 14px rgba(3, 7, 18, 0.6), 
                 -4px -4px 10px rgba(51, 65, 85, 0.15),
                 inset 0 1px 1px rgba(255, 255, 255, 0.08);
@@ -194,113 +103,51 @@ body {
 
 .menu-item:hover {
     transform: translateY(-3px);
+    box-shadow: 8px 8px 18px rgba(3, 7, 18, 0.7), 
+                -5px -5px 12px rgba(51, 65, 85, 0.2),
+                inset 0 1px 2px rgba(255, 255, 255, 0.15);
     color: #ffffff;
+}
+
+.menu-item:active {
+    transform: translateY(1px);
+    /* Pressed Down 3D Effect */
+    box-shadow: inset 3px 3px 6px rgba(3, 7, 18, 0.8), 
+                inset -2px -2px 5px rgba(51, 65, 85, 0.2);
 }
 
 .menu-icon {
     background: transparent;
     font-size: 20px;
     margin-bottom: 6px;
-    color: #60a5fa;
+    color: #60a5fa; /* Professional Soft Blue Icon Color */
 }
 
 .menu-item span {
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
 }
 
 /* ================= MARKET CARDS ================= */
-.market-card {
+.market-card, .market-item {
     background: rgba(30, 41, 59, 0.6);
     border: 1px solid var(--border-color);
     border-radius: 16px;
-    margin: 0 16px 20px 16px;
-    padding: 16px;
-}
-
-.market-item {
-    background: rgba(15, 23, 42, 0.5);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 12px;
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    transition: background 0.2s;
+    box-shadow: var(--shadow-sm);
 }
 
 .market-item:hover {
     background: rgba(30, 41, 59, 0.9);
 }
 
-/* ================= FIXED CENTERED LIVE BOTTOM NAVIGATION ================= */
+/* ================= BOTTOM NAVIGATION ================= */
 .bottom-nav {
-    position: fixed !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 65px !important;
-    background: rgba(15, 23, 42, 0.98) !important;
-    backdrop-filter: blur(20px);
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(15px);
     border-top: 1px solid var(--border-color);
-    display: flex !important;
-    justify-content: space-around !important;
-    align-items: center !important;
-    z-index: 99999 !important;
-    box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.5);
-    box-sizing: border-box;
-    padding: 0 10px;
 }
 
-.bottom-nav a {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    text-decoration: none !important;
-    color: #64748b !important;
-    font-size: 11px;
-    flex: 1;
-    height: 100%;
-    transition: all 0.2s ease;
-}
-
-.bottom-nav a i {
-    font-size: 18px;
-    margin-bottom: 3px;
-    color: #64748b;
-}
-
-/* Live Active State (Glowing & Highlighted for current page) */
-.bottom-nav a.active {
-    color: #fbbf24 !important;
-    font-weight: 700;
-}
-
-.bottom-nav a.active i {
-    color: #3b82f6 !important;
-    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.8));
-}
-
-/* Center Floating Trade Button - Perfectly Aligned */
 .trade-btn {
-    background: var(--primary-gradient) !important;
-    border-radius: 50% !important;
-    width: 48px !important;
-    height: 48px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    color: #ffffff !important;
-    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.6);
-    transform: translateY(-6px); /* Perfectly balanced with the nav bar */
-    border: 3px solid #0f172a;
-}
-
-.trade-btn i {
-    color: #ffffff !important;
-    font-size: 20px !important;
-    margin: 0 !important;
+    background: var(--primary-gradient);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.5);
 }
