@@ -1,5 +1,5 @@
 /* =========================================================
-   CPTMARKETS — COMPLETE REGISTER / CREATE ACCOUNT CSS
+   CPTMARKETS — REGISTER PREMIUM COMPLETE 3D CSS
    ========================================================= */
 
 *,
@@ -19,22 +19,9 @@ html, body {
     overflow-x: hidden;
 }
 
-/* Page Background & Wave Grid */
-.register-page {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px 12px;
-    position: relative;
-    background: #020610;
-    overflow: hidden;
-}
-
-.register-page::before {
-    content: '';
-    position: absolute;
+/* Background & Waves */
+.background {
+    position: fixed;
     inset: 0;
     background: 
         radial-gradient(circle at 50% 20%, rgba(0, 212, 255, 0.2) 0%, transparent 65%),
@@ -45,8 +32,19 @@ html, body {
     z-index: 0;
 }
 
-/* Register Card Container */
-.register-card {
+/* Card Container Layout */
+.login-container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 12px;
+    position: relative;
+    z-index: 5;
+}
+
+.login-card {
     width: 100%;
     max-width: 420px;
     position: relative;
@@ -86,8 +84,8 @@ html, body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
 }
 
-/* 3D Multi-Tone Logo */
-.brand-area {
+/* 3D Multi-Tone Logo System */
+.logo-area {
     position: relative;
     z-index: 10;
     width: 100%;
@@ -100,7 +98,7 @@ html, body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
 }
 
 .logo-circle {
@@ -168,23 +166,24 @@ html, body {
     margin-top: 1px;
 }
 
-.brand-area h1 {
+.logo-area h1 {
     margin: 6px 0 2px;
     font-size: 26px;
     font-weight: 900;
-    background: linear-gradient(180deg, #ffffff 0%, #00d4ff 60%, #0077ff 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+}
+
+.logo-area h1 .gold { color: #ffcb05; }
+.logo-area h1 .white { color: #ffffff; }
+
+.logo-area p {
+    color: #94a3b8;
+    font-size: 12px;
 }
 
 /* Input Fields */
-.register-form {
-    width: 100%;
-}
-
 .form-group {
     margin-bottom: 12px;
+    text-align: left;
 }
 
 .form-group label {
@@ -214,12 +213,12 @@ html, body {
 }
 
 .input-icon {
-    width: 28px;
+    width: 26px;
     color: #00d4ff;
-    font-size: 15px;
+    font-size: 14px;
 }
 
-.input-box input, .input-box select {
+.input-box input {
     width: 100%;
     height: 100%;
     border: none;
@@ -229,11 +228,17 @@ html, body {
     font-size: 14px;
 }
 
+.password-toggle {
+    color: #718096;
+    font-size: 15px;
+    cursor: pointer;
+}
+
 /* 3D Main Register Button */
-.register-btn {
+.login-btn {
     width: 100%;
     height: 48px;
-    margin-top: 10px;
+    margin-top: 12px;
     border: none;
     border-radius: 12px;
     cursor: pointer;
@@ -247,22 +252,22 @@ html, body {
     transition: all 0.15s ease;
 }
 
-.register-btn:hover {
+.login-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 0 #003fa8, 0 10px 22px rgba(0, 240, 255, 0.5);
 }
 
-.register-btn:active {
+.login-btn:active {
     transform: translateY(2px);
     box-shadow: 0 2px 0 #003fa8;
 }
 
-/* Bottom 3D Small Pill Button (Back to Sign In) */
-.back-to-login-container {
+/* Bottom 3D Back to Sign In Button */
+.bottom-links {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 16px;
+    margin-top: 18px;
 }
 
 .back-to-login-btn {
