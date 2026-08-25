@@ -1,5 +1,5 @@
 /* ==========================================
-   CPT MARKETS - COMPLETE DASHBOARD CSS
+   CPT MARKETS - REFINED 3D DASHBOARD CSS
    ========================================== */
 
 :root {
@@ -77,7 +77,7 @@ body {
     cursor: pointer;
 }
 
-/* ================= BANNER ================= */
+/* ================= BANNER (Bigger Size & Yellow Left-aligned Text) ================= */
 .banner {
     background-size: cover;
     background-position: center;
@@ -86,31 +86,34 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    padding: 24px;
-    min-height: 140px;
-    border-radius: 16px;
+    padding: 30px 20px; /* ব্যানার সাইজ বড় করা হয়েছে */
+    min-height: 180px;  /* উচ্চতা বাড়ানো হয়েছে */
+    border-radius: 20px;
     margin-bottom: 16px;
     overflow: hidden;
     border: 1px solid var(--border-color);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
 }
 
 .banner::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.4) 100%);
+    background: linear-gradient(90deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.5) 100%);
 }
 
 .banner-content {
     position: relative;
     z-index: 1;
+    padding-left: 5px;
 }
 
 .banner-content h1 {
-    margin: 0 0 6px 0;
-    font-size: 22px;
-    font-weight: 700;
-    color: #fff;
+    margin: 0 0 8px 0;
+    font-size: 24px;
+    font-weight: 800;
+    color: #fbbf24 !important; /* হলুদ কালার করা হয়েছে */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 .banner-content p {
@@ -161,7 +164,7 @@ body {
     color: #10b981 !important;
 }
 
-/* Action Buttons */
+/* Action Buttons (Deposit, Withdraw, Transfer) */
 .action-buttons {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -202,7 +205,7 @@ body {
     transform: translateY(1px);
 }
 
-/* ================= MENU GRID (3D RAISED LOOK) ================= */
+/* ================= MENU GRID (3D RAISED LOOK & MATCHING BUTTON COLORS) ================= */
 .menu-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -244,7 +247,15 @@ body {
     color: #60a5fa;
 }
 
-/* Specific Menu Items Color Styling */
+/* আপনার নির্দেশমতো উইথড্র এবং ট্রান্সফার বাটনগুলোর ব্যাকগ্রাউন্ড সাধারণ মেনু আইটেমের মতোই রাখা হয়েছে */
+.withdraw-btn-menu {
+    background: linear-gradient(145deg, #1e293b, #111827) !important;
+}
+
+.transfer-btn-menu {
+    background: linear-gradient(145deg, #1e293b, #111827) !important;
+}
+
 .withdraw-btn-menu .menu-icon {
     color: #f59e0b;
 }
