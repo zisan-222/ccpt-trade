@@ -1,5 +1,5 @@
 /* ==========================================
-   CPT MARKETS - ULTIMATE PREMIUM 3D CSS
+   CPT MARKETS - FINAL FIXED PREMIUM CSS
    ========================================== */
 
 :root {
@@ -17,16 +17,16 @@ body {
     color: var(--text-main);
     font-family: 'Inter', sans-serif;
     margin: 0;
-    padding-bottom: 70px;
+    padding-bottom: 90px; /* Prevents content from hiding behind bottom nav */
 }
 
-/* ================= HEADER & PROFESSIONAL LOGO ================= */
+/* ================= HEADER & CUSTOM TRADING LOGO ================= */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 16px;
-    background: rgba(15, 23, 42, 0.9);
+    padding: 14px 16px;
+    background: rgba(15, 23, 42, 0.95);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border-color);
 }
@@ -37,25 +37,43 @@ body {
     gap: 10px;
 }
 
-/* Professional Rounded Trading View Style Logo Icon */
-.logo-icon {
-    width: 36px;
-    height: 36px;
-    background: var(--primary-gradient);
+/* Custom Circular TradingView Style Logo with Candlesticks */
+.logo-icon-custom {
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(145deg, #1e293b, #0f172a);
+    border: 1px solid rgba(59, 130, 246, 0.4);
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 4px;
     border-radius: 50%;
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5), inset 0 2px 3px rgba(255, 255, 255, 0.4);
-    color: #ffffff;
-    font-size: 16px;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+.logo-icon-custom .candle {
+    width: 5px;
+    height: 16px;
+    border-radius: 2px;
+    position: relative;
+}
+
+.logo-icon-custom .candle.green {
+    background: #10b981;
+    box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
+}
+
+.logo-icon-custom .candle.red {
+    background: #ef4444;
+    box-shadow: 0 0 6px rgba(239, 68, 68, 0.6);
+    height: 20px;
 }
 
 .logo span {
-    font-size: 18px;
+    font-size: 19px;
     font-weight: 700;
     letter-spacing: 0.5px;
-    color: #fbbf24; /* Premium Gold Touch */
+    color: #fbbf24;
 }
 
 .header-actions {
@@ -66,20 +84,21 @@ body {
     cursor: pointer;
 }
 
-/* ================= BANNER & CANDLESTICK ENHANCEMENT ================= */
+/* ================= LARGE 3D BANNER & LEFT ALIGNED TEXT ================= */
 .banner {
     position: relative;
     background-size: cover;
     background-position: center;
-    border-radius: 16px;
-    margin: 12px 16px;
-    padding: 20px;
+    border-radius: 20px;
+    margin: 16px;
+    padding: 28px 20px;
+    min-height: 160px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(59, 130, 246, 0.2);
-    border: 1px solid rgba(59, 130, 246, 0.2);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(59, 130, 246, 0.3);
 }
 
-/* Dark gradient overlay to shift text to the side */
+/* Deep dark gradient overlay keeping text strictly on the left */
 .banner::before {
     content: '';
     position: absolute;
@@ -87,30 +106,31 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.7) 60%, transparent 100%);
+    background: linear-gradient(90deg, #0f172a 0%, rgba(15, 23, 42, 0.9) 55%, rgba(15, 23, 42, 0.4) 100%);
     z-index: 1;
 }
 
 .banner-content {
     position: relative;
     z-index: 2;
-    max-width: 70%;
+    max-width: 65%;
     text-align: left;
 }
 
 .banner-content h1 {
-    font-size: 20px;
-    font-weight: 700;
+    font-size: 22px;
+    font-weight: 800;
     color: #fbbf24;
-    margin: 0 0 6px 0;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    margin: 0 0 8px 0;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
 }
 
 .banner-content p {
     font-size: 12px;
     color: #94a3b8;
     margin: 0;
-    line-height: 1.4;
+    line-height: 1.5;
+    font-weight: 500;
 }
 
 /* ================= ASSET CARD & 3D BUTTONS ================= */
@@ -215,58 +235,72 @@ body {
     background: rgba(30, 41, 59, 0.9);
 }
 
-/* ================= ACTIVE BOTTOM NAVIGATION ================= */
+/* ================= FIXED CENTERED BOTTOM NAVIGATION ================= */
 .bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 60px;
-    background: rgba(15, 23, 42, 0.95);
-    backdrop-filter: blur(15px);
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 65px !important;
+    background: rgba(15, 23, 42, 0.98) !important;
+    backdrop-filter: blur(20px);
     border-top: 1px solid var(--border-color);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    z-index: 1000;
+    display: flex !important;
+    justify-content: space-around !important;
+    align-items: center !important;
+    z-index: 99999 !important;
+    box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    padding: 0 10px;
 }
 
 .bottom-nav a {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
-    color: #64748b; /* Inactive / Light Color */
-    font-size: 10px;
-    transition: color 0.2s ease;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
+    color: #64748b !important;
+    font-size: 11px;
+    flex: 1;
+    height: 100%;
+    transition: all 0.2s ease;
 }
 
 .bottom-nav a i {
     font-size: 18px;
-    margin-bottom: 2px;
+    margin-bottom: 3px;
+    color: #64748b;
 }
 
-/* Active Page Highlight (Darker & Bright Glow) */
+/* Active Page State (Darker, Bold & Glowing) */
 .bottom-nav a.active {
-    color: #fbbf24; /* Active Dark/Gold Highlight */
-    font-weight: 600;
+    color: #fbbf24 !important;
+    font-weight: 700;
 }
 
 .bottom-nav a.active i {
-    color: #3b82f6;
-    filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.6));
+    color: #3b82f6 !important;
+    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.8));
 }
 
 /* Center Floating Trade Button */
 .trade-btn {
-    width: 45px;
-    height: 45px;
-    background: var(--primary-gradient);
-    border-radius: 50%;
+    background: var(--primary-gradient) !important;
+    border-radius: 50% !important;
+    width: 48px !important;
+    height: 48px !important;
     display: flex !important;
-    align-items: center;
-    justify-content: center;
+    align-items: center !important;
+    justify-content: center !important;
     color: #ffffff !important;
-    box-shadow: 0 6px 15px rgba(59, 130, 246, 0.5);
-    transform: translateY(-10px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+    transform: translateY(-12px);
+    border: 3px solid #0f172a;
+}
+
+.trade-btn i {
+    color: #ffffff !important;
+    font-size: 20px !important;
+    margin: 0 !important;
 }
