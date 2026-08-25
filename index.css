@@ -1,6 +1,6 @@
 /* =========================================================
-   CPTMARKETS — PREMIUM TRADINGVIEW LIVE CHART BACKDROP
-   Fix: Grid lines completely removed; Pure Trading Candles & Waves
+   CPTMARKETS — AUTHENTIC FULL-SCREEN TRADINGVIEW THEME
+   Features: Clear Full-Screen Candlesticks, Price Waves & Ultra Dark UI
    ========================================================= */
 
 *,
@@ -14,14 +14,14 @@
 html, body {
     width: 100%;
     height: 100%;
-    background: #020713;
+    background: #060d1a;
     color: #ffffff;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     overflow-x: hidden;
 }
 
 /* =========================================================
-   MAIN CONTAINER & REAL TRADINGVIEW FULL BACKDROP
+   FULLPAGE TRADINGVIEW BACKDROP (NO EMPTY BLACK SPACES)
    ========================================================= */
 
 .login-page {
@@ -30,61 +30,66 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 18px 12px;
+    padding: 20px 14px;
     position: relative;
-    background: 
-        radial-gradient(circle at 50% 20%, rgba(0, 212, 255, 0.15) 0%, transparent 60%),
-        radial-gradient(circle at 20% 80%, rgba(8, 153, 129, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(242, 54, 69, 0.08) 0%, transparent 50%),
-        linear-gradient(180deg, #020712 0%, #01040a 100%);
+    background: #040914;
     overflow: hidden;
 }
 
-/* Background Full-Screen Trading Chart Visual */
-.login-page::after {
+/* TradingView Real Chart Lines Background */
+.login-page::before {
     content: '';
     position: absolute;
-    top: 5%;
-    left: -10%;
-    width: 120%;
-    height: 250px;
-    background: radial-gradient(ellipse at center, rgba(0, 212, 255, 0.1) 0%, transparent 75%);
-    border-bottom: 2px solid rgba(0, 212, 255, 0.35);
-    transform: rotate(-3deg);
-    filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.5));
+    inset: 0;
+    background: 
+        /* Main Blue Glow */
+        radial-gradient(circle at 50% 30%, rgba(0, 180, 255, 0.2) 0%, transparent 60%),
+        /* Dynamic SVG Trading Chart Wave Background */
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" preserveAspectRatio="none"><path d="M0,450 Q150,300 300,500 T600,350 T900,480 T1200,250 L1200,800 L0,800 Z" fill="rgba(0,180,255,0.05)" stroke="%2300d4ff" stroke-width="2" opacity="0.6"/></svg>');
+    background-size: cover;
+    background-position: center;
     pointer-events: none;
     z-index: 0;
 }
 
+/* Screen Wide Candlestick Overlay (High Contrast & Clear) */
+.login-page::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="600" viewBox="0 0 1000 600"><g opacity="0.25"><rect x="40" y="200" width="16" height="120" fill="%23089981"/><line x1="48" y1="160" x2="48" y2="360" stroke="%23089981" stroke-width="2"/><rect x="120" y="150" width="16" height="90" fill="%23f23645"/><line x1="128" y1="120" x2="128" y2="280" stroke="%23f23645" stroke-width="2"/><rect x="200" y="280" width="16" height="150" fill="%23089981"/><line x1="208" y1="240" x2="208" y2="460" stroke="%23089981" stroke-width="2"/><rect x="280" y="220" width="16" height="100" fill="%23f23645"/><line x1="288" y1="180" x2="288" y2="350" stroke="%23f23645" stroke-width="2"/><rect x="700" y="180" width="16" height="160" fill="%23089981"/><line x1="708" y1="140" x2="708" y2="380" stroke="%23089981" stroke-width="2"/><rect x="780" y="260" width="16" height="110" fill="%23f23645"/><line x1="788" y1="220" x2="788" y2="400" stroke="%23f23645" stroke-width="2"/><rect x="860" y="140" width="16" height="200" fill="%23089981"/><line x1="868" y1="100" x2="868" y2="380" stroke="%23089981" stroke-width="2"/></g></svg>');
+    background-repeat: repeat-x;
+    background-position: center bottom;
+    pointer-events: none;
+    z-index: 1;
+}
+
 /* =========================================================
-   LOGIN CARD (CLEAN GLASS CONTAINER)
+   LOGIN CARD (PRO GLASS CONTAINER)
    ========================================================= */
 
 .login-card {
     width: 100%;
-    max-width: 420px;
+    max-width: 410px;
     position: relative;
     z-index: 10;
     overflow: hidden;
-    padding: 28px 24px 26px;
+    padding: 30px 24px 28px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    background: linear-gradient(180deg, rgba(6, 20, 38, 0.92) 0%, rgba(2, 9, 20, 0.97) 100%);
+    background: linear-gradient(180deg, rgba(8, 24, 48, 0.92) 0%, rgba(3, 12, 26, 0.97) 100%);
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
-    border: 1px solid rgba(0, 212, 255, 0.3);
-    border-radius: 26px;
+    border: 1px solid rgba(0, 212, 255, 0.35);
+    border-radius: 24px;
     box-shadow: 
-        0 30px 70px rgba(0, 0, 0, 0.95),
+        0 25px 60px rgba(0, 0, 0, 0.9),
         inset 0 1px 2px rgba(255, 255, 255, 0.2),
-        0 0 40px rgba(0, 180, 255, 0.15);
+        0 0 35px rgba(0, 180, 255, 0.2);
 }
 
-/* =========================================================
-   CARD BACKGROUND ELEMENTS
-   ========================================================= */
-
+/* Card Internal Background Adjustments */
 .market-background {
     position: absolute;
     inset: 0;
@@ -93,94 +98,9 @@ html, body {
     overflow: hidden;
 }
 
-/* Remove Grid Dots */
-.market-dots {
-    display: none;
+.market-dots, .bottom-market {
+    display: none !important; /* Hide small inside candles for clean card view */
 }
-
-/* Card Trend Wave Line */
-.market-background::before {
-    content: '';
-    position: absolute;
-    top: 40px;
-    left: -10%;
-    width: 120%;
-    height: 80px;
-    border-bottom: 2px solid rgba(0, 240, 255, 0.35);
-    border-radius: 0 0 40% 60%;
-    filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.6));
-    opacity: 0.6;
-}
-
-/* Bottom Real TradingView Candlesticks Inside Card */
-.bottom-market {
-    display: block !important;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 100px;
-    pointer-events: none;
-    z-index: 1;
-    opacity: 0.45;
-    mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
-    -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
-}
-
-.bottom-bars {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    padding: 0 16px;
-}
-
-.bottom-bars span {
-    display: block;
-    width: 10px;
-    position: relative;
-    border-radius: 2px;
-}
-
-/* Green Bullish Candles */
-.bottom-bars span:nth-child(1),
-.bottom-bars span:nth-child(2),
-.bottom-bars span:nth-child(4),
-.bottom-bars span:nth-child(6),
-.bottom-bars span:nth-child(8) {
-    background: #089981;
-    box-shadow: 0 0 10px rgba(8, 153, 129, 0.8);
-}
-
-/* Red Bearish Candles */
-.bottom-bars span:nth-child(3),
-.bottom-bars span:nth-child(5),
-.bottom-bars span:nth-child(7) {
-    background: #f23645;
-    box-shadow: 0 0 10px rgba(242, 54, 69, 0.8);
-}
-
-/* Candlestick Wicks */
-.bottom-bars span::before {
-    content: '';
-    position: absolute;
-    left: 4px;
-    width: 2px;
-    top: -14px;
-    bottom: -14px;
-    background: inherit;
-    z-index: -1;
-}
-
-.bottom-bars span:nth-child(1) { height: 35px; }
-.bottom-bars span:nth-child(2) { height: 60px; }
-.bottom-bars span:nth-child(3) { height: 42px; }
-.bottom-bars span:nth-child(4) { height: 80px; }
-.bottom-bars span:nth-child(5) { height: 48px; }
-.bottom-bars span:nth-child(6) { height: 90px; }
-.bottom-bars span:nth-child(7) { height: 38px; }
-.bottom-bars span:nth-child(8) { height: 70px; }
 
 /* =========================================================
    LANGUAGE BUTTON
@@ -483,8 +403,4 @@ html, body {
 
 .login-link:hover i {
     color: #00d4ff;
-}
-
-.chart-line, .bottom-glow {
-    display: none;
 }
