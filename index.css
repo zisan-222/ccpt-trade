@@ -1,6 +1,6 @@
 /* =========================================================
-   CPTMARKETS — PRO TRADING PLATFORM THEME (3D CYAN & GOLD)
-   Features: 3D Logo, Electric Cyan Button, Live Chart Grid
+   CPTMARKETS — ULTIMATE TRADINGVIEW DYNAMIC THEME
+   Features: Real TradingView Candles, Grid Lines, Trend Wave
    ========================================================= */
 
 *,
@@ -21,7 +21,7 @@ html, body {
 }
 
 /* =========================================================
-   MAIN CONTAINER & TRADING GRAPH GRID BACKGROUND
+   MAIN CONTAINER & BACKGROUND TRADINGVIEW PATTERN
    ========================================================= */
 
 .login-page {
@@ -31,39 +31,53 @@ html, body {
     justify-content: center;
     align-items: center;
     padding: 18px 12px;
-    background: 
-        radial-gradient(circle at 50% 20%, rgba(0, 212, 255, 0.12) 0%, transparent 60%),
-        radial-gradient(circle at 50% 80%, rgba(0, 102, 255, 0.08) 0%, transparent 70%),
-        linear-gradient(180deg, #020713 0%, #01040a 100%);
     position: relative;
+    /* Trading Dark Canvas */
+    background: 
+        radial-gradient(circle at 50% 30%, rgba(0, 212, 255, 0.12) 0%, transparent 60%),
+        radial-gradient(circle at 50% 80%, rgba(8, 11, 22, 0.95) 0%, #01040a 100%);
+}
+
+/* Page Level Background Chart Grid */
+.login-page::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(rgba(0, 212, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 212, 255, 0.05) 1px, transparent 1px);
+    background-size: 30px 30px;
+    pointer-events: none;
+    z-index: 0;
 }
 
 /* =========================================================
-   LOGIN CARD (PRO TRADING CARD SIZE)
+   LOGIN CARD (TRADINGVIEW PRO GLASS)
    ========================================================= */
 
 .login-card {
     width: 100%;
-    max-width: 430px; /* সুন্দর এবং উপযুক্ত সাইজ */
+    max-width: 420px;
     position: relative;
+    z-index: 10;
     overflow: hidden;
-    padding: 30px 24px 28px;
+    padding: 28px 24px 26px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    background: linear-gradient(180deg, rgba(7, 21, 41, 0.88) 0%, rgba(3, 11, 24, 0.95) 100%);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(0, 212, 255, 0.25);
+    background: linear-gradient(180deg, rgba(8, 22, 42, 0.88) 0%, rgba(3, 11, 24, 0.96) 100%);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(0, 212, 255, 0.28);
     border-radius: 26px;
     box-shadow: 
-        0 25px 60px rgba(0, 0, 0, 0.85),
+        0 25px 60px rgba(0, 0, 0, 0.9),
         inset 0 1px 2px rgba(255, 255, 255, 0.15),
-        0 0 35px rgba(0, 180, 255, 0.12);
+        0 0 35px rgba(0, 180, 255, 0.15);
 }
 
 /* =========================================================
-   TRADING CHART SILHOUETTE & CANDLESTICKS BACKGROUND
+   TRADINGVIEW CANDLESTICKS & GRAPH BACKGROUND INSIDE CARD
    ========================================================= */
 
 .market-background {
@@ -71,33 +85,50 @@ html, body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 220px;
+    height: 100%;
     pointer-events: none;
     z-index: 1;
-    opacity: 0.35;
+    overflow: hidden;
 }
 
+/* TradingView Subtle Grid */
 .market-dots {
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    inset: 0;
     background-image: 
-        linear-gradient(rgba(0, 212, 255, 0.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 212, 255, 0.08) 1px, transparent 1px);
-    background-size: 20px 20px;
-    -webkit-mask-image: radial-gradient(circle at 50% 30%, #000 20%, transparent 80%);
-    mask-image: radial-gradient(circle at 50% 30%, #000 20%, transparent 80%);
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 16px 16px;
+    opacity: 0.8;
 }
 
+/* Trading Chart Trend Wave Line */
+.market-background::before {
+    content: '';
+    position: absolute;
+    top: 35px;
+    left: -20px;
+    width: 120%;
+    height: 100px;
+    border-bottom: 2px solid rgba(0, 240, 255, 0.4);
+    border-radius: 0 0 50% 50%;
+    filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.6));
+    opacity: 0.5;
+}
+
+/* Bottom Real TradingView Candlesticks */
 .bottom-market {
     display: block !important;
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
-    height: 70px;
+    height: 110px;
     pointer-events: none;
     z-index: 1;
-    opacity: 0.25;
+    opacity: 0.35;
+    mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+    -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
 }
 
 .bottom-bars {
@@ -105,27 +136,56 @@ html, body {
     height: 100%;
     display: flex;
     align-items: flex-end;
-    justify-content: space-around;
-    padding: 0 10px;
+    justify-content: space-between;
+    padding: 0 15px;
 }
 
+/* Candlestick Wicks & Bodies */
 .bottom-bars span {
     display: block;
-    width: 7%;
-    background: linear-gradient(180deg, rgba(0, 212, 255, 0.8), rgba(0, 102, 255, 0.1));
-    border-top: 2px solid #00d4ff;
-    border-radius: 2px 2px 0 0;
-    box-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+    width: 10px;
+    position: relative;
+    border-radius: 2px;
 }
 
-.bottom-bars span:nth-child(1) { height: 35%; }
-.bottom-bars span:nth-child(2) { height: 65%; }
-.bottom-bars span:nth-child(3) { height: 45%; }
-.bottom-bars span:nth-child(4) { height: 85%; }
-.bottom-bars span:nth-child(5) { height: 50%; }
-.bottom-bars span:nth-child(6) { height: 75%; }
-.bottom-bars span:nth-child(7) { height: 40%; }
-.bottom-bars span:nth-child(8) { height: 60%; }
+/* Green Bullish Candles */
+.bottom-bars span:nth-child(1),
+.bottom-bars span:nth-child(2),
+.bottom-bars span:nth-child(4),
+.bottom-bars span:nth-child(6),
+.bottom-bars span:nth-child(8) {
+    background: #089981; /* TradingView Green */
+    box-shadow: 0 0 8px rgba(8, 153, 129, 0.6);
+}
+
+/* Red Bearish Candles */
+.bottom-bars span:nth-child(3),
+.bottom-bars span:nth-child(5),
+.bottom-bars span:nth-child(7) {
+    background: #f23645; /* TradingView Red */
+    box-shadow: 0 0 8px rgba(242, 54, 69, 0.6);
+}
+
+/* Candlestick Wicks (Upper & Lower Lines) */
+.bottom-bars span::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    width: 2px;
+    top: -12px;
+    bottom: -12px;
+    background: inherit;
+    z-index: -1;
+}
+
+.bottom-bars span:nth-child(1) { height: 30px; }
+.bottom-bars span:nth-child(2) { height: 55px; }
+.bottom-bars span:nth-child(3) { height: 40px; }
+.bottom-bars span:nth-child(4) { height: 75px; }
+.bottom-bars span:nth-child(5) { height: 45px; }
+.bottom-bars span:nth-child(6) { height: 85px; }
+.bottom-bars span:nth-child(7) { height: 35px; }
+.bottom-bars span:nth-child(8) { height: 65px; }
 
 /* =========================================================
    LANGUAGE BUTTON
@@ -136,17 +196,17 @@ html, body {
     top: 16px;
     right: 16px;
     z-index: 50;
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
-    border: 1px solid rgba(0, 212, 255, 0.3);
-    background: rgba(4, 18, 38, 0.7);
+    border: 1px solid rgba(0, 212, 255, 0.35);
+    background: rgba(4, 18, 38, 0.85);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 19px;
+    font-size: 18px;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     transition: all 0.3s ease;
 }
 
@@ -177,10 +237,9 @@ html, body {
     margin-bottom: 8px;
 }
 
-/* 3D Dynamic Badge Ring */
 .logo-circle {
-    width: 66px;
-    height: 66px;
+    width: 65px;
+    height: 65px;
     border-radius: 50%;
     background: radial-gradient(circle at 35% 35%, #0e294b 0%, #030a16 100%);
     border: 2px solid #ffcb05;
@@ -190,16 +249,9 @@ html, body {
     justify-content: center;
     position: relative;
     box-shadow: 
-        0 8px 20px rgba(0, 0, 0, 0.7),
-        0 0 20px rgba(255, 203, 5, 0.45),
-        inset 0 2px 4px rgba(255, 255, 255, 0.4),
-        inset 0 -3px 8px rgba(0, 0, 0, 0.8);
-    transform: perspective(500px) rotateX(8deg);
-    transition: transform 0.3s ease;
-}
-
-.logo-circle:hover {
-    transform: perspective(500px) rotateX(0deg) scale(1.04);
+        0 8px 20px rgba(0, 0, 0, 0.8),
+        0 0 22px rgba(255, 203, 5, 0.45),
+        inset 0 2px 4px rgba(255, 255, 255, 0.4);
 }
 
 .logo-arrow {
@@ -209,7 +261,6 @@ html, body {
     color: #ffcb05;
     font-size: 11px;
     font-weight: 900;
-    text-shadow: 0 0 5px rgba(255, 203, 5, 0.8);
 }
 
 .logo-cpt {
@@ -217,8 +268,6 @@ html, body {
     font-size: 16px;
     font-weight: 900;
     line-height: 1;
-    letter-spacing: -0.5px;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
 .logo-markets {
@@ -227,13 +276,11 @@ html, body {
     font-weight: 800;
     letter-spacing: 1.8px;
     margin-top: 3px;
-    opacity: 0.95;
 }
 
 .logo-uk {
     color: #7b9bbd;
     font-size: 5.5px;
-    letter-spacing: 1px;
 }
 
 .brand-area h1 {
@@ -288,7 +335,7 @@ html, body {
     display: block;
     margin-bottom: 7px;
     color: #e2e8f0;
-    font-size: 14px;
+    font-size: 13.5px;
     font-weight: 600;
 }
 
@@ -300,7 +347,7 @@ html, body {
     padding: 0 16px;
     border-radius: 15px;
     border: 1px solid rgba(0, 212, 255, 0.22);
-    background: rgba(3, 13, 28, 0.85);
+    background: rgba(3, 13, 28, 0.88);
     box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6);
     transition: all 0.25s ease;
 }
@@ -350,7 +397,7 @@ html, body {
 }
 
 /* =========================================================
-   3D ELECTRIC CYAN SIGN-IN BUTTON (UNIQUE TRADING STYLE)
+   3D ELECTRIC CYAN SIGN-IN BUTTON
    ========================================================= */
 
 .login-btn {
@@ -362,10 +409,9 @@ html, body {
     border-radius: 15px;
     cursor: pointer;
     overflow: hidden;
-    /* Electric Cyan & Neon Blue 3D Gradient */
     background: linear-gradient(135deg, #00f0ff 0%, #0088ff 50%, #0055d4 100%);
     box-shadow: 
-        0 6px 0 #003fa8, /* 3D Depth Layer */
+        0 6px 0 #003fa8,
         0 10px 20px rgba(0, 136, 255, 0.45);
     transition: all 0.15s ease;
 }
@@ -444,7 +490,6 @@ html, body {
     color: #00d4ff;
 }
 
-/* Hide unneeded static shapes */
 .chart-line, .bottom-glow {
     display: none;
 }
