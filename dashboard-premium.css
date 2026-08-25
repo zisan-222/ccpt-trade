@@ -1,813 +1,436 @@
-/* =========================================================
-   CPTMARKETS
-   PREMIUM DASHBOARD THEME
-   dashboard-premium.css
-   FINAL VERSION
-   ========================================================= */
+/* ==========================================
+   CPTMARKETS 3D PREMIUM DASHBOARD STYLES
+   ========================================== */
 
-
-/* =========================
-   GLOBAL BACKGROUND
-   ========================= */
-
-html,
-body {
-    background:
-        radial-gradient(
-            circle at 15% 10%,
-            rgba(38, 86, 150, 0.22),
-            transparent 32%
-        ),
-        radial-gradient(
-            circle at 85% 25%,
-            rgba(0, 140, 255, 0.12),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 50% 85%,
-            rgba(255, 190, 0, 0.07),
-            transparent 35%
-        ),
-        linear-gradient(
-            145deg,
-            #030813 0%,
-            #071326 45%,
-            #020611 100%
-        ) !important;
-
-    color: #f4f7ff;
+:root {
+  --bg-dark: #070d18;
+  --card-bg: rgba(13, 22, 38, 0.75);
+  --gold-primary: linear-gradient(135deg, #ffe082 0%, #ffb300 50%, #c77c00 100%);
+  --gold-glow: 0 0 15px rgba(255, 179, 0, 0.4);
+  --btn-3d-shadow: opacity;
+  --text-gold: #ffc107;
+  --glass-border: rgba(255, 255, 255, 0.08);
 }
 
 body {
-    position: relative;
-    min-height: 100vh;
-    overflow-x: hidden;
+  background-color: var(--bg-dark);
+  color: #ffffff;
+  font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+  margin: 0;
+  padding: 0;
+  padding-bottom: 80px;
 }
 
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-
-    background:
-        radial-gradient(
-            circle at 50% 20%,
-            rgba(65, 130, 220, 0.08),
-            transparent 42%
-        );
-
-    z-index: 0;
-}
-
-main,
-.dashboard-container,
 .container {
-    position: relative;
-    z-index: 1;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 12px;
 }
 
-
-/* =========================
-   HEADER
-   ========================= */
-
-header,
-.dashboard-header,
-.top-header {
-    background:
-        linear-gradient(
-            180deg,
-            rgba(8, 22, 43, 0.96),
-            rgba(3, 10, 22, 0.94)
-        ) !important;
-
-    border-bottom:
-        1px solid rgba(255, 255, 255, 0.08) !important;
-
-    box-shadow:
-        0 8px 30px rgba(0, 0, 0, 0.35) !important;
-
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
+/* ================= 1. HEADER & 3D LOGO ================= */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(10, 17, 30, 0.8);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  margin-bottom: 16px;
 }
 
-
-/* =========================
-   LOGO
-   ========================= */
-
-.logo,
-.brand,
-.brand-name,
-.logo-text,
-header h1 {
-    color: #ffc52b !important;
-
-    text-shadow:
-        0 0 10px rgba(255, 197, 43, 0.20),
-        0 0 25px rgba(255, 197, 43, 0.10);
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-
-/* =========================================================
-   HERO / BANNER
-   ========================================================= */
-
-.hero,
-.hero-card,
-.banner-card {
-    background:
-        linear-gradient(
-            135deg,
-            rgba(5, 27, 58, 0.18),
-            rgba(8, 43, 86, 0.06)
-        ),
-        url("market-bg.svg") center center / cover no-repeat !important;
-
-    border:
-        1px solid rgba(255, 199, 44, 0.20) !important;
-
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.08),
-        0 12px 35px rgba(0, 0, 0, 0.30) !important;
-
-    overflow: hidden;
+/* Glowing 3D Shield Icon */
+.logo-icon {
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(145deg, #ffca28, #b78103);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.6),
+              inset 0 -3px 5px rgba(0, 0, 0, 0.6),
+              0 0 12px rgba(255, 179, 0, 0.5);
 }
 
+.logo-icon i {
+  color: #070d18;
+  font-size: 20px;
+  filter: drop-shadow(0 1px 1px rgba(255,255,255,0.4));
+}
 
-/* =========================================================
-   FINAL BANNER
-   ========================================================= */
+/* 3D Gold Metallic Text */
+.logo span {
+  font-size: 20px;
+  font-weight: 800;
+  background: linear-gradient(180deg, #fff3c4 0%, #ffd54f 45%, #ffb300 70%, #996500 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.5px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+}
 
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.header-actions i {
+  width: 34px;
+  height: 34px;
+  background: linear-gradient(145deg, #132238, #0a1320);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8fa0b5;
+  font-size: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.1),
+              0 4px 8px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.header-actions i:active {
+  transform: scale(0.92);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* ================= 2. BANNER ================= */
 .banner {
-    position: relative !important;
-
-    /*
-       Balance card-à¦à¦° à¦®à¦¤à§‹ screen width alignmentà¥¤
-       à¦¦à§à¦‡ à¦ªà¦¾à¦¶à§‡ à¦¸à§à¦¨à§à¦¦à¦° margin à¦¥à¦¾à¦•à¦¬à§‡à¥¤
-    */
-    width: calc(100% - 52px) !important;
-
-    margin-left: auto !important;
-    margin-right: auto !important;
-
-    box-sizing: border-box !important;
-
-    /*
-       FINAL HEIGHT
-
-       2.10/1-à¦à¦° à¦¬à¦¦à¦²à§‡ fixed responsive height à¦¬à§à¦¯à¦¬à¦¹à¦¾à¦° à¦•à¦°à¦¾ à¦¹à¦šà§à¦›à§‡à¥¤
-       à¦à¦¤à§‡ mobile-à¦ banner à¦†à¦° à¦…à¦¤à¦¿à¦°à¦¿à¦•à§à¦¤ à¦šà§à¦¯à¦¾à¦ªà§à¦Ÿà¦¾ à¦¹à¦¬à§‡ à¦¨à¦¾à¥¤
-    */
-    height: 330px !important;
-
-    min-height: 330px !important;
-    max-height: 330px !important;
-
-    border-radius: 24px !important;
-
-    overflow: hidden !important;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(3, 20, 45, 0.08),
-            rgba(3, 20, 45, 0.02)
-        ),
-        url("market-bg.svg") center center / 100% 100% no-repeat !important;
-
-    border:
-        1px solid rgba(255, 199, 44, 0.25) !important;
-
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.08),
-        0 12px 32px rgba(0, 0, 0, 0.28) !important;
+  border-radius: 20px;
+  padding: 24px 20px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6),
+              inset 0 0 15px rgba(0, 0, 0, 0.5);
+  margin-bottom: 20px;
 }
-
-
-/* =========================================================
-   BANNER DARK OVERLAY
-   ========================================================= */
 
 .banner::before {
-    content: "";
-
-    position: absolute;
-    inset: 0;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(2, 15, 34, 0.24) 0%,
-            rgba(2, 15, 34, 0.06) 50%,
-            rgba(2, 15, 34, 0.08) 100%
-        );
-
-    pointer-events: none;
-
-    z-index: 1;
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(180deg, rgba(7, 13, 24, 0.3) 0%, rgba(7, 13, 24, 0.85) 100%);
+  z-index: 1;
 }
-
-
-/* =========================================================
-   BANNER CONTENT
-   ========================================================= */
 
 .banner-content {
-    position: absolute !important;
-
-    /*
-       Content à¦ªà§à¦°à§‹ banner-à¦à¦° à¦®à¦§à§à¦¯à§‡ à¦¥à¦¾à¦•à¦¬à§‡à¥¤
-       à¦à¦•à¦¦à¦® à¦®à¦¾à¦ à¦¬à¦°à¦¾à¦¬à¦° à¦¨à¦¾ à¦°à§‡à¦–à§‡ à¦à¦•à¦Ÿà§ à¦‰à¦ªà¦°à§‡à¦° à¦¦à¦¿à¦•à§‡ à¦°à¦¾à¦–à¦¾ à¦¹à§Ÿà§‡à¦›à§‡à¥¤
-    */
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-
-    width: 100% !important;
-    height: 100% !important;
-
-    box-sizing: border-box !important;
-
-    padding:
-        38px 30px 25px 30px !important;
-
-    overflow: hidden !important;
-
-    z-index: 2 !important;
+  position: relative;
+  z-index: 2;
 }
 
-
-/* =========================================================
-   BANNER TITLE
-   ========================================================= */
-
-.banner h1 {
-    margin: 0 !important;
-
-    font-size: 30px !important;
-
-    line-height: 1.12 !important;
-
-    color: #ffc72c !important;
-
-    text-shadow:
-        0 2px 12px rgba(0, 0, 0, 0.48),
-        0 0 18px rgba(255, 199, 44, 0.14) !important;
+.banner-content h1 {
+  margin: 0;
+  font-size: 22px;
+  background: linear-gradient(90deg, #fff, #ffe082);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-
-/* =========================================================
-   BANNER SUBTITLE
-   ========================================================= */
-
-.banner p {
-    margin:
-        18px 0 0 0 !important;
-
-    font-size: 16px !important;
-
-    line-height: 1.35 !important;
-
-    max-width: 90% !important;
-
-    color: #eef3fb !important;
-
-    text-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.50) !important;
+.banner-content p {
+  margin: 4px 0 0 0;
+  font-size: 12px;
+  color: #a0b2c6;
 }
 
-
-/* =========================================================
-   TOTAL ASSETS / BALANCE
-   ========================================================= */
-
-.asset-card,
-.assets-card,
-.balance-card,
-.total-assets {
-    background:
-        linear-gradient(
-            145deg,
-            rgba(22, 39, 67, 0.97),
-            rgba(6, 17, 34, 0.98)
-        ) !important;
-
-    border:
-        1px solid rgba(93, 137, 196, 0.24) !important;
-
-    box-shadow:
-        0 18px 45px rgba(0, 0, 0, 0.45),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
-
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
+/* ================= 3. ASSETS CARD & 3D BUTTONS ================= */
+.asset-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  border-radius: 24px;
+  padding: 20px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  margin-bottom: 24px;
 }
 
-
-/* =========================
-   BALANCE
-   ========================= */
-
-#balance,
-.balance,
-.balance-value,
-.asset-value {
-    color: #f7f9ff !important;
-
-    text-shadow:
-        0 0 18px rgba(255, 255, 255, 0.08);
+.asset-header {
+  display: flex;
+  justify-content: space-between;
+  color: #8fa3bf;
+  font-size: 13px;
 }
 
-
-/* =========================================================
-   BUTTONS
-   ========================================================= */
-
-button,
-.btn,
-button[type="button"],
-button[type="submit"] {
-    transition:
-        transform 0.20s ease,
-        box-shadow 0.20s ease,
-        background 0.20s ease,
-        border-color 0.20s ease;
+.asset-card h2 {
+  font-size: 36px;
+  margin: 8px 0;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
-
-/* PRIMARY */
-
-.deposit,
-.deposit-btn,
-.primary-btn {
-    background:
-        linear-gradient(
-            135deg,
-            #ffe27a 0%,
-            #ffc52b 42%,
-            #e99d00 100%
-        ) !important;
-
-    color: #101318 !important;
-
-    border:
-        1px solid rgba(255, 226, 122, 0.75) !important;
-
-    box-shadow:
-        0 8px 25px rgba(255, 190, 20, 0.22),
-        inset 0 1px 0 rgba(255, 255, 255, 0.45) !important;
+.asset-info {
+  display: flex;
+  gap: 20px;
+  font-size: 12px;
+  color: #7e92ad;
+  margin-bottom: 20px;
 }
 
-
-/* SECONDARY */
-
-.withdraw,
-.withdraw-btn,
-.transfer,
-.transfer-btn,
-.secondary-btn {
-    background:
-        linear-gradient(
-            145deg,
-            rgba(42, 66, 104, 0.95),
-            rgba(17, 34, 59, 0.98)
-        ) !important;
-
-    color: #f3f6ff !important;
-
-    border:
-        1px solid rgba(121, 160, 210, 0.28) !important;
-
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.05),
-        0 8px 25px rgba(0, 0, 0, 0.25) !important;
+.asset-info strong {
+  color: #fff;
+  margin-left: 4px;
 }
 
-
-/* HOVER */
-
-button:hover,
-.btn:hover {
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 12px 30px rgba(0, 0, 0, 0.35) !important;
+.asset-info strong.profit {
+  color: #00e676;
 }
 
-button:active,
-.btn:active {
-    transform: scale(0.97);
+/* 3D BUTTONS SYSTEM */
+.action-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
 }
 
-
-/* =========================================================
-   QUICK MENU
-   ========================================================= */
-
-.quick-menu,
-.menu-grid,
-.action-grid {
-    position: relative;
+.action-buttons button {
+  padding: 12px 0;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+  outline: none;
 }
 
-.item,
-.menu-item,
-.action-item,
-.quick-item {
-    background:
-        linear-gradient(
-            145deg,
-            rgba(20, 38, 67, 0.96),
-            rgba(7, 18, 36, 0.98)
-        ) !important;
-
-    border:
-        1px solid rgba(111, 151, 204, 0.25) !important;
-
-    border-radius: 20px !important;
-
-    box-shadow:
-        0 12px 30px rgba(0, 0, 0, 0.35),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
-
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-
-    transition:
-        transform 0.25s ease,
-        border-color 0.25s ease,
-        box-shadow 0.25s ease;
+/* Golden Deposit 3D Button */
+.deposit-btn {
+  background: linear-gradient(180deg, #ffca28 0%, #ff9100 100%);
+  color: #070d18;
+  box-shadow: inset 0 2px 2px rgba(255, 255, 255, 0.6),
+              inset 0 -3px 4px rgba(120, 60, 0, 0.6),
+              0 6px 16px rgba(255, 145, 0, 0.35);
 }
 
-
-/* ICONS */
-
-.item i,
-.menu-item i,
-.action-item i,
-.quick-item i {
-    color: #ffc52b !important;
-
-    text-shadow:
-        0 0 10px rgba(255, 197, 43, 0.22),
-        0 0 22px rgba(255, 197, 43, 0.10);
-
-    transition:
-        transform 0.25s ease,
-        filter 0.25s ease;
+.deposit-btn:active {
+  transform: translateY(2px);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6),
+              0 2px 6px rgba(255, 145, 0, 0.2);
 }
 
-
-/* QUICK HOVER */
-
-.item:hover,
-.menu-item:hover,
-.action-item:hover,
-.quick-item:hover {
-    transform: translateY(-4px);
-
-    border-color:
-        rgba(255, 197, 43, 0.38) !important;
-
-    box-shadow:
-        0 18px 35px rgba(0, 0, 0, 0.45),
-        0 0 20px rgba(255, 197, 43, 0.07) !important;
+/* Dark Glass 3D Buttons */
+.withdraw-btn, .transfer-btn {
+  background: linear-gradient(180deg, #1b2a40 0%, #0d1726 100%);
+  color: #e2ecf8;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.15),
+              inset 0 -3px 4px rgba(0, 0, 0, 0.7),
+              0 6px 14px rgba(0, 0, 0, 0.4);
 }
 
-.item:hover i,
-.menu-item:hover i,
-.action-item:hover i,
-.quick-item:hover i {
-    transform: scale(1.08);
-
-    filter:
-        drop-shadow(
-            0 0 8px rgba(255, 197, 43, 0.45)
-        );
+.withdraw-btn:active, .transfer-btn:active {
+  transform: translateY(2px);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.8),
+              0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-
-/* =========================================================
-   HOT MARKETS
-   ========================================================= */
-
-.hot-market,
-.hot-markets,
-.market-section {
-    background:
-        linear-gradient(
-            145deg,
-            rgba(15, 31, 55, 0.95),
-            rgba(5, 15, 29, 0.98)
-        ) !important;
-
-    border:
-        1px solid rgba(91, 133, 188, 0.22) !important;
-
-    box-shadow:
-        0 15px 40px rgba(0, 0, 0, 0.38),
-        inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
-
-    border-radius: 22px !important;
+/* ================= 4. 3D GLOWING MENU GRID ================= */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 24px;
 }
 
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
 
-/* MARKET CARDS */
+/* Glowing 3D Glass Icon Boxes */
+.menu-icon {
+  width: 58px;
+  height: 58px;
+  background: linear-gradient(145deg, #142338, #09121f);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 215, 0, 0.15);
+  box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.1),
+              inset 0 -3px 6px rgba(0, 0, 0, 0.8),
+              0 6px 16px rgba(0, 0, 0, 0.4);
+  transition: all 0.25 ease;
+}
 
+.menu-icon i {
+  font-size: 22px;
+  /* Glowing Gold Neon Icon Style */
+  background: linear-gradient(180deg, #ffffff 0%, #ffe082 40%, #ffb300 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 6px rgba(255, 179, 0, 0.6));
+}
+
+.menu-item:active .menu-icon {
+  transform: translateY(3px) scale(0.95);
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.9),
+              0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.menu-item span {
+  font-size: 11px;
+  color: #9ab0ca;
+  font-weight: 500;
+}
+
+/* ================= 5. HOT MARKETS CARD ================= */
 .market-card {
-    background:
-        linear-gradient(
-            145deg,
-            rgba(28, 49, 82, 0.90),
-            rgba(9, 22, 42, 0.96)
-        ) !important;
-
-    border:
-        1px solid rgba(106, 145, 194, 0.20) !important;
-
-    box-shadow:
-        0 8px 22px rgba(0, 0, 0, 0.28) !important;
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  border-radius: 20px;
+  padding: 16px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
-
-/* =========================================================
-   PROFIT
-   ========================================================= */
-
-.up,
-.profit,
-.profit-value {
-    color: #00e89a !important;
-
-    text-shadow:
-        0 0 10px rgba(0, 232, 154, 0.15);
+.market-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
 }
 
-
-/* =========================================================
-   BOTTOM NAVIGATION
-   ========================================================= */
-
-.bottom-nav,
-.navbar,
-.bottom-navigation {
-    background:
-        linear-gradient(
-            180deg,
-            rgba(7, 17, 32, 0.92),
-            rgba(2, 8, 17, 0.98)
-        ) !important;
-
-    border-top:
-        1px solid rgba(106, 147, 199, 0.18) !important;
-
-    box-shadow:
-        0 -10px 35px rgba(0, 0, 0, 0.42) !important;
-
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+.market-title h2 {
+  font-size: 15px;
+  margin: 0;
+  color: #fff;
 }
 
-
-/* NAV ITEMS */
-
-.nav-item {
-    color: #8290a8 !important;
-
-    transition:
-        color 0.20s ease,
-        transform 0.20s ease;
+.market-title a {
+  color: #ffc107;
+  font-size: 12px;
+  text-decoration: none;
 }
 
-.nav-item i {
-    transition:
-        transform 0.20s ease,
-        filter 0.20s ease;
+.market-item {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  align-items: center;
+  padding: 12px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  cursor: pointer;
 }
 
-.nav-item.active {
-    color: #ffc52b !important;
-
-    text-shadow:
-        0 0 12px rgba(255, 197, 43, 0.18);
+.market-item:last-child {
+  border-bottom: none;
 }
 
-.nav-item.active i {
-    filter:
-        drop-shadow(
-            0 0 8px rgba(255, 197, 43, 0.35)
-        );
+.market-item h3 {
+  margin: 0;
+  font-size: 14px;
+  color: #fff;
 }
 
-
-/* CENTER TRADE */
-
-.trade i {
-    background:
-        linear-gradient(
-            145deg,
-            #ffe27a,
-            #ffc52b 50%,
-            #eaa000
-        ) !important;
-
-    color: #111 !important;
-
-    box-shadow:
-        0 0 0 5px rgba(255, 197, 43, 0.07),
-        0 0 28px rgba(255, 197, 43, 0.28),
-        inset 0 1px 0 rgba(255, 255, 255, 0.50) !important;
+.market-item small {
+  color: #6c7f96;
+  font-size: 10px;
 }
 
-
-/* =========================================================
-   TEXT
-   ========================================================= */
-
-h1,
-h2,
-h3,
-h4,
-strong {
-    color: #f4f7ff;
+.market-item .price {
+  font-family: monospace;
+  font-size: 13px;
+  color: #e1eaf5;
+  text-align: right;
 }
 
-p,
-span,
-label {
-    color: #aebbd0;
+.market-item .up {
+  color: #00e676;
+  text-align: right;
+  font-weight: 600;
+  font-size: 12px;
 }
 
-
-/* =========================================================
-   SCROLLBAR
-   ========================================================= */
-
-::-webkit-scrollbar {
-    width: 5px;
+.market-item .down {
+  color: #ff5252;
+  text-align: right;
+  font-weight: 600;
+  font-size: 12px;
 }
 
-::-webkit-scrollbar-track {
-    background: #030813;
+/* ================= 6. 3D BOTTOM NAVIGATION BAR ================= */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  height: 65px;
+  background: rgba(8, 14, 26, 0.92);
+  backdrop-filter: blur(20px);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.7);
+  z-index: 1000;
 }
 
-::-webkit-scrollbar-thumb {
-    background:
-        linear-gradient(
-            #274a73,
-            #ffc52b
-        );
-
-    border-radius: 10px;
+.bottom-nav a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  text-decoration: none;
+  color: #647890;
+  font-size: 10px;
+  transition: all 0.2s ease;
 }
 
-
-/* =========================================================
-   MOBILE â€” FINAL
-   ========================================================= */
-
-@media (max-width: 600px) {
-
-    body {
-        background:
-            radial-gradient(
-                circle at 50% 0%,
-                rgba(31, 73, 126, 0.18),
-                transparent 32%
-            ),
-            linear-gradient(
-                145deg,
-                #030813,
-                #071326 55%,
-                #020611
-            ) !important;
-    }
-
-
-    /* =========================
-       FINAL MOBILE BANNER
-       ========================= */
-
-    .banner {
-        width: calc(100% - 52px) !important;
-
-        /*
-           à¦à¦Ÿà¦¾à¦‡ à¦®à§‚à¦² à¦ªà¦°à¦¿à¦¬à¦°à§à¦¤à¦¨à¥¤
-
-           Banner à¦à¦–à¦¨:
-           - à¦†à¦—à§‡à¦° à¦›à§‹à¦Ÿ version-à¦à¦° à¦šà§‡à§Ÿà§‡ à¦²à¦®à§à¦¬à¦¾
-           - Balance card-à¦à¦° à¦•à¦¾à¦›à¦¾à¦•à¦¾à¦›à¦¿ visual height
-           - à¦•à¦¿à¦¨à§à¦¤à§ Balance card-à¦à¦° à¦šà§‡à§Ÿà§‡ à¦›à§‹à¦Ÿ
-        */
-
-        height: 330px !important;
-
-        min-height: 330px !important;
-        max-height: 330px !important;
-
-        aspect-ratio: auto !important;
-
-        margin-left: auto !important;
-        margin-right: auto !important;
-
-        border-radius: 24px !important;
-
-        background-position: center center !important;
-
-        /*
-           à¦ªà§à¦°à§‹ market-bg.svg à¦¦à§‡à¦–à¦¾ à¦¯à¦¾à¦¬à§‡à¥¤
-           à¦à¦¤à§‡ chart à¦…à¦¤à¦¿à¦°à¦¿à¦•à§à¦¤ zoom à¦¹à§Ÿà§‡ text-à¦à¦° à¦“à¦ªà¦° à¦‰à¦ à¦¬à§‡ à¦¨à¦¾à¥¤
-        */
-        background-size: 100% 100% !important;
-
-        overflow: hidden !important;
-    }
-
-
-    /* =========================
-       MOBILE CONTENT
-       ========================= */
-
-    .banner-content {
-        padding:
-            38px 28px 25px 28px !important;
-    }
-
-
-    .banner h1 {
-        font-size: 28px !important;
-
-        line-height: 1.15 !important;
-
-        margin: 0 !important;
-    }
-
-
-    .banner p {
-        font-size: 15px !important;
-
-        line-height: 1.35 !important;
-
-        margin-top: 18px !important;
-
-        max-width: 90% !important;
-    }
-
-
-    /* QUICK MENU */
-
-    .item,
-    .menu-item,
-    .action-item,
-    .quick-item {
-        border-radius: 19px !important;
-    }
-
-
-    button:hover,
-    .btn:hover {
-        transform: none;
-    }
+.bottom-nav a i {
+  font-size: 18px;
 }
 
+.bottom-nav a.active {
+  color: #ffc107;
+}
 
-/* =========================================================
-   VERY SMALL PHONES
-   ========================================================= */
+.bottom-nav a.active i {
+  filter: drop-shadow(0 0 8px rgba(255, 193, 7, 0.6));
+}
 
-@media (max-width: 400px) {
+/* Central Glowing 3D Trade Button */
+.bottom-nav a.trade-btn {
+  position: relative;
+  top: -18px;
+  width: 54px;
+  height: 54px;
+  background: linear-gradient(145deg, #ffca28 0%, #ff8f00 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #070d18;
+  border: 4px solid #070d18;
+  box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.8),
+              inset 0 -3px 4px rgba(120, 60, 0, 0.7),
+              0 0 20px rgba(255, 179, 0, 0.6);
+}
 
-    .banner {
-        width: calc(100% - 40px) !important;
+.bottom-nav a.trade-btn i {
+  font-size: 20px;
+  color: #070d18;
+}
 
-        height: 300px !important;
-
-        min-height: 300px !important;
-        max-height: 300px !important;
-
-        aspect-ratio: auto !important;
-
-        border-radius: 22px !important;
-    }
-
-
-    .banner-content {
-        padding:
-            34px 22px 22px 22px !important;
-    }
-
-
-    .banner h1 {
-        font-size: 26px !important;
-    }
-
-
-    .banner p {
-        font-size: 14px !important;
-
-        margin-top: 16px !important;
-    }
+.bottom-nav a.trade-btn:active {
+  transform: scale(0.92);
 }
