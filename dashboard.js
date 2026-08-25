@@ -182,59 +182,7 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
 
-    /* ==========================================
-   BALANCE EYE HIDE / SHOW
-========================================== */
-
-const balanceEye = document.getElementById("balanceEye");
-const balanceElement = document.getElementById("balance");
-
-let balanceVisible = true;
-
-if (balanceEye && balanceElement) {
-
-    balanceEye.addEventListener("click", function () {
-
-        if (balanceVisible) {
-
-            // Hide balance
-            balanceElement.textContent = "••••••";
-
-            balanceEye.classList.remove("fa-eye");
-            balanceEye.classList.add("fa-eye-slash");
-
-            balanceVisible = false;
-
-        } else {
-
-            // Show balance
-            let currentBalance = 0;
-
-            if (typeof getBalance === "function") {
-                currentBalance = getBalance();
-            }
-
-            if (typeof formatUSD === "function") {
-                balanceElement.textContent =
-                    formatUSD(currentBalance);
-            } else {
-                balanceElement.textContent =
-                    "$" + Number(currentBalance).toFixed(2);
-            }
-
-            balanceEye.classList.remove("fa-eye-slash");
-            balanceEye.classList.add("fa-eye");
-
-            balanceVisible = true;
-        }
-
-    });
-
-}
-
-
-
-            
+    /* 
     /* ======================================
        WITHDRAW INTERFACE
     ====================================== */
