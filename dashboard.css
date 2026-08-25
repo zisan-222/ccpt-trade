@@ -1,5 +1,5 @@
 /* ==========================================
-   CPT MARKETS - ULTRA 3D DASHBOARD CSS v2.0
+   CPT MARKETS - ULTRA 3D DASHBOARD CSS v2.1
    ========================================== */
 
 :root {
@@ -91,7 +91,7 @@ body {
     color: var(--text-main);
 }
 
-/* ================= BANNER ================= */
+/* ================= BANNER (Premium 3D Heading & Shifted Right) ================= */
 .banner {
     background-size: cover;
     background-position: center;
@@ -100,7 +100,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    padding: 32px 22px;
+    padding: 32px 24px;
     min-height: 180px;
     border-radius: 20px;
     margin-bottom: 16px;
@@ -113,20 +113,25 @@ body {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, rgba(11, 17, 32, 0.95) 0%, rgba(11, 17, 32, 0.45) 100%);
+    background: linear-gradient(90deg, rgba(11, 17, 32, 0.96) 0%, rgba(11, 17, 32, 0.4) 100%);
 }
 
 .banner-content {
     position: relative;
     z-index: 1;
+    padding-left: 10px; /* লেখাটি একটু ডানে সরিয়ে নেওয়া হয়েছে */
 }
 
 .banner-content h1 {
     margin: 0 0 6px 0;
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 800;
     color: #fbbf24 !important;
-    text-shadow: 0 2px 8px rgba(251, 191, 36, 0.2);
+    /* প্রিমিয়াম 3D শ্যাডো এবং গ্লো ইফেক্ট */
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8), 
+                 0 0 15px rgba(251, 191, 36, 0.5), 
+                 0 0 30px rgba(251, 191, 36, 0.3);
+    letter-spacing: 0.5px;
 }
 
 .banner-content p {
@@ -134,6 +139,7 @@ body {
     font-size: 13px;
     color: var(--text-muted);
     font-weight: 500;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 /* ================= ASSET CARD & 3D BUTTONS ================= */
@@ -234,7 +240,7 @@ body {
     transform: translateY(1px);
 }
 
-/* ================= MENU GRID (3D RAISED) ================= */
+/* ================= MENU GRID (Normal colors for withdraw & transfer inside grid) ================= */
 .menu-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -266,13 +272,21 @@ body {
 
 .menu-item:active {
     transform: translateY(1px);
-    box-shadow: inset 3px 3px 6px rgba(3, 7, 18, 0.8);
 }
 
 .menu-icon {
     font-size: 20px;
     margin-bottom: 6px;
     color: #60a5fa;
+}
+
+/* নিচের মেনুর উইথড্র এবং ট্রান্সফারের কালার আগের মতো সাধারণ মেনু আইটেমের মতোই রাখা হলো */
+.withdraw-btn-menu {
+    background: linear-gradient(145deg, #1e293b, #111827) !important;
+}
+
+.transfer-btn-menu {
+    background: linear-gradient(145deg, #1e293b, #111827) !important;
 }
 
 .withdraw-btn-menu .menu-icon {
