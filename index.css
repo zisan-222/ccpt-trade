@@ -1,6 +1,6 @@
 /* =========================================================
-   CPTMARKETS — COMPACT PREMIUM CRYPTO DARK THEME
-   Fixes: Compact Height, Pill Buttons, Glowing Golden Theme
+   CPTMARKETS — PRO TRADING PLATFORM THEME (3D CYAN & GOLD)
+   Features: 3D Logo, Electric Cyan Button, Live Chart Grid
    ========================================================= */
 
 *,
@@ -14,14 +14,14 @@
 html, body {
     width: 100%;
     height: 100%;
-    background: #02050b;
+    background: #020713;
     color: #ffffff;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     overflow-x: hidden;
 }
 
 /* =========================================================
-   MAIN CONTAINER & CARD (COMPACT HEIGHT FIX)
+   MAIN CONTAINER & TRADING GRAPH GRID BACKGROUND
    ========================================================= */
 
 .login-page {
@@ -30,30 +30,102 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 16px;
+    padding: 18px 12px;
     background: 
-        radial-gradient(circle at 50% 20%, rgba(10, 35, 65, 0.9) 0%, rgba(2, 5, 11, 0.95) 70%);
+        radial-gradient(circle at 50% 20%, rgba(0, 212, 255, 0.12) 0%, transparent 60%),
+        radial-gradient(circle at 50% 80%, rgba(0, 102, 255, 0.08) 0%, transparent 70%),
+        linear-gradient(180deg, #020713 0%, #01040a 100%);
+    position: relative;
 }
+
+/* =========================================================
+   LOGIN CARD (PRO TRADING CARD SIZE)
+   ========================================================= */
 
 .login-card {
     width: 100%;
-    max-width: 380px; /* ছোট ও পারফেক্ট সাইজ */
+    max-width: 430px; /* সুন্দর এবং উপযুক্ত সাইজ */
     position: relative;
     overflow: hidden;
-    padding: 24px 20px 22px;
+    padding: 30px 24px 28px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    background: linear-gradient(180deg, rgba(8, 22, 42, 0.85) 0%, rgba(3, 10, 22, 0.95) 100%);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(0, 162, 255, 0.25);
-    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(7, 21, 41, 0.88) 0%, rgba(3, 11, 24, 0.95) 100%);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(0, 212, 255, 0.25);
+    border-radius: 26px;
     box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.8),
-        inset 0 1px 1px rgba(255, 255, 255, 0.1),
-        0 0 25px rgba(0, 100, 200, 0.15);
+        0 25px 60px rgba(0, 0, 0, 0.85),
+        inset 0 1px 2px rgba(255, 255, 255, 0.15),
+        0 0 35px rgba(0, 180, 255, 0.12);
 }
+
+/* =========================================================
+   TRADING CHART SILHOUETTE & CANDLESTICKS BACKGROUND
+   ========================================================= */
+
+.market-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 220px;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.35;
+}
+
+.market-dots {
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(0, 212, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 212, 255, 0.08) 1px, transparent 1px);
+    background-size: 20px 20px;
+    -webkit-mask-image: radial-gradient(circle at 50% 30%, #000 20%, transparent 80%);
+    mask-image: radial-gradient(circle at 50% 30%, #000 20%, transparent 80%);
+}
+
+.bottom-market {
+    display: block !important;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 70px;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.25;
+}
+
+.bottom-bars {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    padding: 0 10px;
+}
+
+.bottom-bars span {
+    display: block;
+    width: 7%;
+    background: linear-gradient(180deg, rgba(0, 212, 255, 0.8), rgba(0, 102, 255, 0.1));
+    border-top: 2px solid #00d4ff;
+    border-radius: 2px 2px 0 0;
+    box-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+}
+
+.bottom-bars span:nth-child(1) { height: 35%; }
+.bottom-bars span:nth-child(2) { height: 65%; }
+.bottom-bars span:nth-child(3) { height: 45%; }
+.bottom-bars span:nth-child(4) { height: 85%; }
+.bottom-bars span:nth-child(5) { height: 50%; }
+.bottom-bars span:nth-child(6) { height: 75%; }
+.bottom-bars span:nth-child(7) { height: 40%; }
+.bottom-bars span:nth-child(8) { height: 60%; }
 
 /* =========================================================
    LANGUAGE BUTTON
@@ -61,64 +133,31 @@ html, body {
 
 .language-btn {
     position: absolute;
-    top: 14px;
-    right: 14px;
+    top: 16px;
+    right: 16px;
     z-index: 50;
-    width: 38px;
-    height: 38px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    background: rgba(12, 28, 52, 0.8);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    background: rgba(4, 18, 38, 0.7);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
+    font-size: 19px;
     cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    transition: transform 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
 }
 
 .language-btn:hover {
-    transform: scale(1.05);
+    transform: scale(1.08);
+    border-color: #00d4ff;
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
 }
 
 /* =========================================================
-   CRYPTO CIRCLE & MARKET BACKGROUND
-   ========================================================= */
-
-.market-background {
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 320px;
-    height: 320px;
-    pointer-events: none;
-    z-index: 1;
-}
-
-.market-glow {
-    position: absolute;
-    inset: 30px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(0, 132, 255, 0.18) 0%, transparent 70%);
-}
-
-.market-dots {
-    position: absolute;
-    top: 50px;
-    left: 30px;
-    right: 30px;
-    height: 140px;
-    opacity: 0.3;
-    background-image: radial-gradient(rgba(0, 183, 255, 0.8) 1.2px, transparent 1.2px);
-    background-size: 10px 10px;
-    -webkit-mask-image: radial-gradient(circle, #000 30%, transparent 75%);
-    mask-image: radial-gradient(circle, #000 30%, transparent 75%);
-}
-
-/* =========================================================
-   BRAND & GOLDEN LOGO AREA
+   3D CRYPTO LOGO & BRANDING
    ========================================================= */
 
 .brand-area {
@@ -127,7 +166,7 @@ html, body {
     width: 100%;
     text-align: center;
     margin-top: 5px;
-    margin-bottom: 18px;
+    margin-bottom: 22px;
 }
 
 .brand-logo {
@@ -135,90 +174,104 @@ html, body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-bottom: 4px;
+    margin-bottom: 8px;
 }
 
+/* 3D Dynamic Badge Ring */
 .logo-circle {
-    width: 60px;
-    height: 60px;
+    width: 66px;
+    height: 66px;
     border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #10243e 0%, #040a14 100%);
-    border: 2px solid #ffbe0b;
+    background: radial-gradient(circle at 35% 35%, #0e294b 0%, #030a16 100%);
+    border: 2px solid #ffcb05;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     position: relative;
     box-shadow: 
-        0 0 18px rgba(255, 190, 11, 0.4),
-        inset 0 0 10px rgba(255, 190, 11, 0.2);
+        0 8px 20px rgba(0, 0, 0, 0.7),
+        0 0 20px rgba(255, 203, 5, 0.45),
+        inset 0 2px 4px rgba(255, 255, 255, 0.4),
+        inset 0 -3px 8px rgba(0, 0, 0, 0.8);
+    transform: perspective(500px) rotateX(8deg);
+    transition: transform 0.3s ease;
+}
+
+.logo-circle:hover {
+    transform: perspective(500px) rotateX(0deg) scale(1.04);
 }
 
 .logo-arrow {
     position: absolute;
     top: 5px;
     right: 10px;
-    color: #ffbe0b;
-    font-size: 10px;
-    font-weight: 800;
+    color: #ffcb05;
+    font-size: 11px;
+    font-weight: 900;
+    text-shadow: 0 0 5px rgba(255, 203, 5, 0.8);
 }
 
 .logo-cpt {
-    color: #ffbe0b;
-    font-size: 15px;
+    color: #ffcb05;
+    font-size: 16px;
     font-weight: 900;
     line-height: 1;
+    letter-spacing: -0.5px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
 .logo-markets {
     color: #ffffff;
-    font-size: 6px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
+    font-size: 6.5px;
+    font-weight: 800;
+    letter-spacing: 1.8px;
     margin-top: 3px;
+    opacity: 0.95;
 }
 
 .logo-uk {
-    color: #64748b;
-    font-size: 5px;
+    color: #7b9bbd;
+    font-size: 5.5px;
+    letter-spacing: 1px;
 }
 
 .brand-area h1 {
-    margin: 6px 0 4px;
-    font-size: 30px;
+    margin: 8px 0 4px;
+    font-size: 32px;
     font-weight: 900;
-    letter-spacing: -0.5px;
-    background: linear-gradient(180deg, #ffffff 0%, #ffe066 40%, #ff9e00 100%);
+    letter-spacing: -0.8px;
+    background: linear-gradient(180deg, #ffffff 0%, #00d4ff 60%, #0077ff 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 2px 8px rgba(255, 158, 0, 0.3));
+    filter: drop-shadow(0 2px 10px rgba(0, 212, 255, 0.35));
 }
 
 .gift-title {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    color: #94a3b8;
-    font-size: 11px;
-    letter-spacing: 4px;
-    font-weight: 600;
+    gap: 10px;
+    color: #a0aec0;
+    font-size: 12px;
+    letter-spacing: 5px;
+    font-weight: 700;
 }
 
 .gift-title span {
     display: block;
-    width: 25px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255, 190, 11, 0.6));
+    width: 30px;
+    height: 1.5px;
+    background: linear-gradient(90deg, transparent, #00d4ff);
 }
 
 .gift-title span:last-child {
-    background: linear-gradient(90deg, rgba(255, 190, 11, 0.6), transparent);
+    background: linear-gradient(90deg, #00d4ff, transparent);
 }
 
 /* =========================================================
-   FORM & INPUT FIELDS
+   FORM & INPUT FIELDS DESIGN
    ========================================================= */
 
 .login-form {
@@ -228,44 +281,45 @@ html, body {
 }
 
 .form-group {
-    margin-bottom: 14px;
+    margin-bottom: 16px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 6px;
-    color: #d1d5db;
-    font-size: 13px;
+    margin-bottom: 7px;
+    color: #e2e8f0;
+    font-size: 14px;
     font-weight: 600;
 }
 
 .input-box {
     width: 100%;
-    height: 50px;
+    height: 52px;
     display: flex;
     align-items: center;
-    padding: 0 14px;
-    border-radius: 14px;
-    border: 1px solid rgba(0, 150, 255, 0.2);
-    background: rgba(5, 15, 30, 0.85);
-    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
-    transition: all 0.25 ease;
+    padding: 0 16px;
+    border-radius: 15px;
+    border: 1px solid rgba(0, 212, 255, 0.22);
+    background: rgba(3, 13, 28, 0.85);
+    box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6);
+    transition: all 0.25s ease;
 }
 
 .input-box:focus-within {
-    border-color: #00b4d8;
+    border-color: #00d4ff;
+    background: rgba(5, 20, 42, 0.95);
     box-shadow: 
-        0 0 12px rgba(0, 180, 216, 0.25),
-        inset 0 2px 4px rgba(0, 0, 0, 0.4);
+        0 0 15px rgba(0, 212, 255, 0.3),
+        inset 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .input-icon {
-    width: 32px;
+    width: 34px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    color: #00b4d8;
-    font-size: 16px;
+    color: #00d4ff;
+    font-size: 17px;
 }
 
 .input-box input {
@@ -276,69 +330,76 @@ html, body {
     outline: none;
     background: transparent;
     color: #ffffff;
-    font-size: 14.5px;
+    font-size: 15px;
+    font-weight: 500;
 }
 
 .input-box input::placeholder {
-    color: #4b5563;
+    color: #4a5568;
 }
 
 .password-toggle {
-    color: #6b7280;
-    font-size: 16px;
+    color: #718096;
+    font-size: 17px;
     padding: 4px;
     cursor: pointer;
 }
 
 .password-toggle:hover {
-    color: #00b4d8;
+    color: #00d4ff;
 }
 
 /* =========================================================
-   MAIN SIGN IN BUTTON (GOLDEN GLOW)
+   3D ELECTRIC CYAN SIGN-IN BUTTON (UNIQUE TRADING STYLE)
    ========================================================= */
 
 .login-btn {
     position: relative;
     width: 100%;
-    height: 50px;
-    margin-top: 8px;
+    height: 54px;
+    margin-top: 10px;
     border: none;
-    border-radius: 14px;
+    border-radius: 15px;
     cursor: pointer;
     overflow: hidden;
-    background: linear-gradient(135deg, #ffc300 0%, #ff9200 60%, #e37b00 100%);
+    /* Electric Cyan & Neon Blue 3D Gradient */
+    background: linear-gradient(135deg, #00f0ff 0%, #0088ff 50%, #0055d4 100%);
     box-shadow: 
-        0 4px 15px rgba(255, 146, 0, 0.35),
-        0 0 20px rgba(255, 195, 0, 0.2);
-    transition: all 0.2s ease;
+        0 6px 0 #003fa8, /* 3D Depth Layer */
+        0 10px 20px rgba(0, 136, 255, 0.45);
+    transition: all 0.15s ease;
 }
 
 .button-content {
     position: relative;
     z-index: 2;
-    color: #000000;
-    font-size: 16px;
+    color: #010814;
+    font-size: 16.5px;
     font-weight: 800;
+    letter-spacing: 0.4px;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .login-btn:hover {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
     box-shadow: 
-        0 6px 20px rgba(255, 146, 0, 0.5),
-        0 0 25px rgba(255, 195, 0, 0.3);
+        0 8px 0 #003fa8,
+        0 14px 28px rgba(0, 240, 255, 0.5);
 }
 
 .login-btn:active {
-    transform: translateY(1px);
+    transform: translateY(4px);
+    box-shadow: 
+        0 2px 0 #003fa8,
+        0 4px 10px rgba(0, 136, 255, 0.4);
 }
 
 /* =========================================================
-   BOTTOM LINK BUTTONS (PRO PILL STYLING)
+   PRO PILL LINK BUTTONS
    ========================================================= */
 
 .login-links {
@@ -346,8 +407,8 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
-    margin-top: 16px;
+    gap: 12px;
+    margin-top: 20px;
 }
 
 .login-link {
@@ -355,34 +416,35 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    padding: 10px 8px;
-    border-radius: 10px;
-    background: rgba(15, 30, 55, 0.6);
-    border: 1px solid rgba(255, 195, 0, 0.2);
-    color: #ffc300;
+    gap: 8px;
+    padding: 11px 10px;
+    border-radius: 12px;
+    background: rgba(8, 26, 50, 0.7);
+    border: 1px solid rgba(0, 212, 255, 0.25);
+    color: #ffcb05;
     text-decoration: none;
-    font-size: 12px;
+    font-size: 12.5px;
     font-weight: 700;
-    transition: all 0.2s ease;
+    transition: all 0.25s ease;
 }
 
 .login-link i {
-    font-size: 13px;
-    color: #ffc300;
+    font-size: 14px;
+    color: #ffcb05;
 }
 
 .login-link:hover {
-    background: rgba(255, 195, 0, 0.15);
-    border-color: rgba(255, 195, 0, 0.5);
+    background: rgba(0, 212, 255, 0.12);
+    border-color: #00d4ff;
     color: #ffffff;
+    box-shadow: 0 0 12px rgba(0, 212, 255, 0.2);
 }
 
 .login-link:hover i {
-    color: #ffffff;
+    color: #00d4ff;
 }
 
-/* Hide unneeded background overlay elements */
-.bottom-market, .bottom-glow, .chart-line, .market-bars {
+/* Hide unneeded static shapes */
+.chart-line, .bottom-glow {
     display: none;
 }
