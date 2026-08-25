@@ -7,7 +7,7 @@
     <title>CptMarkets - Financial Dashboard</title>
 
     <!-- CSS Link -->
-    <link rel="stylesheet" href="dashboard.css?v=999.1">
+    <link rel="stylesheet" href="dashboard.css?v=999.2">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
@@ -49,10 +49,10 @@
     <section class="asset-card">
         <div class="asset-header">
             <span>Total Assets (USD)</span>
-            <i class="fa-regular fa-eye toggle-eye"></i>
+            <i class="fa-regular fa-eye toggle-eye" id="toggleEye" style="cursor: pointer;"></i>
         </div>
 
-        <h2 id="balance">$0.00</h2>
+        <h2 id="balanceAmount">$0.00</h2>
 
         <div class="asset-info">
             <span>
@@ -61,7 +61,7 @@
             </span>
             <span>
                 Equity
-                <strong>$0.00</strong>
+                <strong id="equityAmount">$0.00</strong>
             </span>
         </div>
 
