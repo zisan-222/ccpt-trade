@@ -938,13 +938,6 @@ if (balanceEye && balanceElement) {
 
 });
 
-
-
-
-
-
-
-
 document.addEventListener("DOMContentLoaded", function () {
     const toggleEye = document.getElementById("toggleEye");
     const balanceAmount = document.getElementById("balanceAmount");
