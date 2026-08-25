@@ -1,37 +1,40 @@
 /* ===================================
-   CPTMARKETS DASHBOARD - FINAL FIX
+   CPTMARKETS DASHBOARD - PERFECT FIX
 =================================== */
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body{
-    background: #111111;
+body {
+    background: #030812; /* Dark theme matching screenshot */
     color: #ffffff;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     padding-bottom: 90px;
     overflow-x: hidden;
-    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center; /* Centers dashboard horizontally */
 }
 
-/* 100% Full Width Container - Zero Side Gaps & Perfectly Centered */
-.container{
+/* 1. LAYOUT CENTERING FIX (Solves wide screen alignment issue) */
+.container {
     width: 100%;
-    max-width: 100%;
-    margin: 0;
+    max-width: 480px; /* Mobile responsive frame width */
+    margin: 0 auto;   /* Center aligned */
     padding: 0;
     position: relative;
     box-sizing: border-box;
+    background: #060e1e;
 }
 
 /* ======================
    HEADER
 ====================== */
 
-.header{
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -39,38 +42,45 @@ body{
     width: 100%;
 }
 
-.logo{
+.logo {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.logo-icon{
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: #f5c84c;
-    color: #111;
+.logo-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #00b4db, #0083b0);
+    color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 20px;
 }
 
-.logo span{
-    font-size: 22px;
+.logo span {
+    font-size: 20px;
     font-weight: 700;
     color: #f5c84c;
 }
 
-.header-actions{
+.header-actions {
     display: flex;
-    gap: 18px;
+    gap: 12px;
 }
 
-.header-actions i{
-    font-size: 22px;
-    color: #ffffff;
+.header-actions i {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #101c33;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: #7d8ea6;
     cursor: pointer;
 }
 
@@ -78,263 +88,245 @@ body{
    BANNER
 ====================== */
 
-.banner{
+.banner {
     margin: 0 16px;
-    height: 150px;
+    height: 140px;
     border-radius: 18px;
     overflow: hidden;
-    background: linear-gradient(135deg, #2b2b2b, #1a1a1a);
+    background: linear-gradient(135deg, #101f38, #0a1424);
     position: relative;
-    width: calc(100% - 32px);
+    border: 1px solid #1a2c4e;
 }
 
-.banner::after{
-    content: "";
-    position: absolute;
-    right: -50px;
-    top: -50px;
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    background: rgba(245,200,76,.15);
-}
-
-.banner-content{
+.banner-content {
     position: relative;
     z-index: 2;
-    padding: 24px;
+    padding: 20px;
 }
 
-.banner-content h1{
-    color: #f5c84c;
-    font-size: 26px;
-    margin-bottom: 8px;
+.banner-content h1 {
+    color: #ffffff;
+    font-size: 24px;
+    margin-bottom: 6px;
 }
 
-.banner-content p{
-    color: #dddddd;
-    font-size: 14px;
+.banner-content p {
+    color: #8da0bb;
+    font-size: 13px;
 }
 
 /* ======================
    ASSET CARD
 ====================== */
 
-.asset-card{
+.asset-card {
     margin: 16px;
-    background: #1c1c1c;
+    background: #0b1526;
     border-radius: 20px;
     padding: 20px;
-    width: calc(100% - 32px);
+    border: 1px solid #162744;
 }
 
-.asset-header{
+.asset-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
-.asset-header span{
-    color: #cfcfcf;
+.asset-header span {
+    color: #8da0bb;
     font-size: 14px;
 }
 
-.asset-header i{
-    font-size: 22px;
+.asset-header i {
+    font-size: 20px;
     color: #f5c84c;
     cursor: pointer;
 }
 
-.asset-card h2{
-    font-size: 42px;
-    margin-bottom: 16px;
+.asset-card h2 {
+    font-size: 38px;
+    margin-bottom: 6px;
     font-weight: 700;
 }
 
-.asset-info{
+.asset-info {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 18px;
-    font-size: 14px;
+    font-size: 13px;
+    color: #8da0bb;
 }
 
-.profit{
-    color: #00d26a;
+.profit {
+    color: #00e676;
+    font-weight: 600;
 }
 
-.action-buttons{
+.action-buttons {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     width: 100%;
 }
 
-.action-buttons button{
+.action-buttons button {
     flex: 1;
     border: none;
-    border-radius: 14px;
-    padding: 14px 0;
-    font-size: 16px;
-    font-weight: 700;
+    border-radius: 12px;
+    padding: 12px 0;
+    font-size: 14px;
+    font-weight: 600;
     cursor: pointer;
     transition: .3s;
 }
 
-.deposit-btn{
-    background: #f5c84c;
+.deposit-btn {
+    background: linear-gradient(135deg, #ffb703, #fb8500);
     color: #111;
 }
 
 .withdraw-btn,
-.transfer-btn{
-    background: #2d2d2d;
+.transfer-btn {
+    background: #14233c;
     color: #ffffff;
-}
-
-.action-buttons button:hover{
-    opacity: .9;
+    border: 1px solid #1f355a !important;
 }
 
 /* ======================
    MENU GRID
 ====================== */
 
-.menu-grid{
+.menu-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 12px;
     padding: 0 16px;
     margin: 12px 0 20px;
-    width: 100%;
 }
 
-.menu-item{
-    background: #1c1c1c;
-    border: 1px solid #2c2c2c;
+.menu-item {
+    background: #0b1526;
+    border: 1px solid #162744;
     border-radius: 18px;
-    min-height: 105px;
+    min-height: 90px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    transition: .25s;
     padding: 10px;
+    text-decoration: none;
 }
 
-.menu-item:hover{
-    border-color: #f5c84c;
-    transform: translateY(-3px);
-}
-
-.menu-icon{
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: #f5c84c;
-    color: #111;
+.menu-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: #12213a;
+    color: #00d2ff;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 20px;
     margin-bottom: 8px;
+    border: 1px solid #1c3358;
 }
 
-.menu-item span{
-    color: #ffffff;
+.menu-item span {
+    color: #d1dbe8;
     font-size: 12px;
     text-align: center;
-    line-height: 16px;
 }
 
 /* ======================
    HOT MARKETS
 ====================== */
 
-.market-card{
+.market-card {
     margin: 0 16px 20px;
-    background: #1c1c1c;
+    background: #0b1526;
     border-radius: 20px;
     padding: 18px;
-    border: 1px solid #2c2c2c;
-    width: calc(100% - 32px);
+    border: 1px solid #162744;
 }
 
-.market-title{
+.market-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 14px;
 }
 
-.market-title h2{
-    font-size: 18px;
+.market-title h2 {
+    font-size: 16px;
     color: #ffffff;
     font-weight: 700;
 }
 
-.market-title a{
-    color: #f5c84c;
+.market-title a {
+    color: #ffb703;
     text-decoration: none;
-    font-size: 13px;
+    font-size: 12px;
 }
 
-.market-item{
+.market-item {
     display: grid;
     grid-template-columns: 1.4fr 1fr .8fr;
     align-items: center;
     padding: 12px 0;
-    border-bottom: 1px solid #2d2d2d;
+    border-bottom: 1px solid #14233c;
 }
 
-.market-item:last-child{
+.market-item:last-child {
     border-bottom: none;
 }
 
-.market-item h3{
-    font-size: 15px;
+.market-item h3 {
+    font-size: 14px;
     color: #ffffff;
-    margin-bottom: 2px;
 }
 
-.market-item small{
-    color: #8f8f8f;
+.market-item small {
+    color: #6b7c96;
     font-size: 11px;
 }
 
-.price{
+.price {
     text-align: right;
     color: #ffffff;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
 }
 
-.up{
+.up {
     text-align: right;
-    color: #00d26a;
+    color: #00e676;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 13px;
 }
 
-.down{
+.down {
     text-align: right;
-    color: #ff4d4f;
+    color: #ff5252;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 /* ======================
-   BOTTOM NAVIGATION (100% STABLE & CENTERED)
+   BOTTOM NAVIGATION (STABLE & CORRECT ACTIVE STATE)
 ====================== */
 
-.bottom-nav{
+.bottom-nav {
     position: fixed;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     bottom: 0;
     width: 100%;
-    height: 75px;
-    background: #161616;
-    border-top: 1px solid #2d2d2d;
+    max-width: 480px; /* Aligns with container */
+    height: 70px;
+    background: #07101e;
+    border-top: 1px solid #162744;
 
     display: grid;
     grid-template-columns: 1fr 1fr 70px 1fr 1fr;
@@ -345,56 +337,51 @@ body{
     box-sizing: border-box;
 }
 
-.bottom-nav a{
+.bottom-nav a {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    color: #9c9c9c;
+    color: #5d6f8a; /* Inactive color */
     font-size: 11px;
-    gap: 3px;
+    gap: 4px;
+    transition: color 0.3s ease;
 }
 
-.bottom-nav a i{
-    font-size: 20px;
+.bottom-nav a i {
+    font-size: 18px;
+    color: inherit;
 }
 
-/* Strict Single Active State: Only elements with class="active" will glow */
-.bottom-nav a.active{
-    color: #f5c84c !important;
+/* 2. NEON GREEN ACTIVE STATE FIX */
+.bottom-nav a.active {
+    color: #00e676 !important; /* Green active glow like UI */
 }
 
-.bottom-nav a.active i{
-    color: #f5c84c !important;
+.bottom-nav a.active i {
+    color: #00e676 !important;
 }
 
-.bottom-nav a:hover{
-    color: #f5c84c;
-}
-
-/* Floating Trade Button */
-.trade-btn{
-    width: 62px;
-    height: 62px;
+/* FLOATING TRADE BUTTON */
+.trade-btn {
+    width: 54px;
+    height: 54px;
     border-radius: 50%;
-    background: #f5c84c;
+    background: linear-gradient(135deg, #ffb703, #fb8500);
     color: #111 !important;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    margin-top: -30px;
-    box-shadow: 0 0 20px rgba(245,200,76,.4);
+    margin-top: -24px;
+    box-shadow: 0 0 15px rgba(255, 183, 3, 0.4);
+    border: 4px solid #030812;
     z-index: 10000;
 }
 
-.trade-btn i{
-    font-size: 26px;
+.trade-btn i {
+    font-size: 22px;
     color: #111 !important;
-}
-
-.trade-btn span{
-    display: none;
 }
