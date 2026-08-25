@@ -1,36 +1,37 @@
 /* ==========================================
-   CPT MARKETS - REFINED 3D DASHBOARD CSS
+   CPT MARKETS - ULTRA 3D DASHBOARD CSS v2.0
    ========================================== */
 
 :root {
     --primary-gradient: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-    --bg-dark: #0f172a;
-    --card-bg: rgba(30, 41, 59, 0.7);
+    --bg-dark: #0b1120;
+    --card-bg: rgba(30, 41, 59, 0.75);
     --border-color: rgba(255, 255, 255, 0.08);
     --text-main: #f8fafc;
     --text-muted: #94a3b8;
     --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
-    --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 12px 30px -5px rgba(0, 0, 0, 0.5);
 }
 
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
     background-color: var(--bg-dark);
     color: var(--text-main);
     font-family: 'Inter', sans-serif;
-    margin: 0;
-    padding: 0;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
 }
 
 .container {
     max-width: 480px;
     margin: 0 auto;
     padding: 12px;
-    padding-bottom: 90px;
+    padding-bottom: 95px;
 }
 
 /* ================= HEADER ================= */
@@ -38,46 +39,59 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 16px;
-    background: rgba(15, 23, 42, 0.85);
-    backdrop-filter: blur(12px);
+    padding: 12px 18px;
+    background: rgba(11, 17, 32, 0.85);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
     border-bottom: 1px solid var(--border-color);
     position: sticky;
     top: 0;
     z-index: 100;
-    border-radius: 12px;
-    margin-bottom: 12px;
+    border-radius: 14px;
+    margin-bottom: 14px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .logo {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     font-weight: 700;
     font-size: 18px;
+    letter-spacing: 0.5px;
 }
 
 .logo-icon {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     background: var(--primary-gradient);
-    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.4);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #fff;
+    font-size: 16px;
 }
 
 .header-actions {
     display: flex;
-    gap: 15px;
+    gap: 16px;
     color: var(--text-muted);
     font-size: 16px;
-    cursor: pointer;
 }
 
-/* ================= BANNER (Bigger Size & Yellow Left-aligned Text) ================= */
+.header-actions i {
+    cursor: pointer;
+    transition: color 0.2s;
+    padding: 6px;
+}
+
+.header-actions i:hover {
+    color: var(--text-main);
+}
+
+/* ================= BANNER ================= */
 .banner {
     background-size: cover;
     background-position: center;
@@ -86,45 +100,45 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    padding: 30px 20px; /* ব্যানার সাইজ বড় করা হয়েছে */
-    min-height: 180px;  /* উচ্চতা বাড়ানো হয়েছে */
+    padding: 32px 22px;
+    min-height: 180px;
     border-radius: 20px;
     margin-bottom: 16px;
     overflow: hidden;
     border: 1px solid var(--border-color);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--shadow-lg);
 }
 
 .banner::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.5) 100%);
+    background: linear-gradient(90deg, rgba(11, 17, 32, 0.95) 0%, rgba(11, 17, 32, 0.45) 100%);
 }
 
 .banner-content {
     position: relative;
     z-index: 1;
-    padding-left: 5px;
 }
 
 .banner-content h1 {
-    margin: 0 0 8px 0;
+    margin: 0 0 6px 0;
     font-size: 24px;
     font-weight: 800;
-    color: #fbbf24 !important; /* হলুদ কালার করা হয়েছে */
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    color: #fbbf24 !important;
+    text-shadow: 0 2px 8px rgba(251, 191, 36, 0.2);
 }
 
 .banner-content p {
     margin: 0;
     font-size: 13px;
     color: var(--text-muted);
+    font-weight: 500;
 }
 
 /* ================= ASSET CARD & 3D BUTTONS ================= */
 .asset-card {
-    background: linear-gradient(145deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+    background: linear-gradient(145deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.95));
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-lg);
     border-radius: 20px;
@@ -140,10 +154,20 @@ body {
     font-size: 13px;
 }
 
+.asset-header i {
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.asset-header i:hover {
+    color: var(--text-main);
+}
+
 .asset-card h2 {
-    font-size: 28px;
+    font-size: 30px;
     margin: 10px 0;
     font-weight: 700;
+    letter-spacing: -0.5px;
 }
 
 .asset-info {
@@ -164,7 +188,7 @@ body {
     color: #10b981 !important;
 }
 
-/* Action Buttons (Deposit, Withdraw, Transfer) */
+/* Action Buttons */
 .action-buttons {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -175,37 +199,42 @@ body {
     border: none;
     border-radius: 12px;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 13px;
     color: #ffffff;
     cursor: pointer;
     padding: 12px 0;
-    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .deposit-btn {
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    box-shadow: 0 6px 15px rgba(16, 185, 129, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 6px 15px rgba(16, 185, 129, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.25);
 }
 
 .withdraw-btn {
     background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-    box-shadow: 0 6px 15px rgba(245, 158, 11, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 6px 15px rgba(245, 158, 11, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.25);
 }
 
 .transfer-btn {
     background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-    box-shadow: 0 6px 15px rgba(139, 92, 246, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 6px 15px rgba(139, 92, 246, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.25);
 }
 
 .action-buttons button:hover {
     transform: translateY(-2px);
+    filter: brightness(1.1);
 }
 
 .action-buttons button:active {
     transform: translateY(1px);
 }
 
-/* ================= MENU GRID (3D RAISED LOOK & MATCHING BUTTON COLORS) ================= */
+/* ================= MENU GRID (3D RAISED) ================= */
 .menu-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -221,7 +250,7 @@ body {
     text-align: center;
     color: #cbd5e1;
     box-shadow: 6px 6px 14px rgba(3, 7, 18, 0.6), 
-                -4px -4px 10px rgba(51, 65, 85, 0.15),
+                -3px -3px 10px rgba(51, 65, 85, 0.12),
                 inset 0 1px 1px rgba(255, 255, 255, 0.08);
     transition: all 0.25s ease;
     cursor: pointer;
@@ -230,30 +259,20 @@ body {
 .menu-item:hover {
     transform: translateY(-3px);
     box-shadow: 8px 8px 18px rgba(3, 7, 18, 0.7), 
-                -5px -5px 12px rgba(51, 65, 85, 0.2),
+                -4px -4px 12px rgba(51, 65, 85, 0.18),
                 inset 0 1px 2px rgba(255, 255, 255, 0.15);
     color: #ffffff;
 }
 
 .menu-item:active {
     transform: translateY(1px);
-    box-shadow: inset 3px 3px 6px rgba(3, 7, 18, 0.8), 
-                inset -2px -2px 5px rgba(51, 65, 85, 0.2);
+    box-shadow: inset 3px 3px 6px rgba(3, 7, 18, 0.8);
 }
 
 .menu-icon {
     font-size: 20px;
     margin-bottom: 6px;
     color: #60a5fa;
-}
-
-/* আপনার নির্দেশমতো উইথড্র এবং ট্রান্সফার বাটনগুলোর ব্যাকগ্রাউন্ড সাধারণ মেনু আইটেমের মতোই রাখা হয়েছে */
-.withdraw-btn-menu {
-    background: linear-gradient(145deg, #1e293b, #111827) !important;
-}
-
-.transfer-btn-menu {
-    background: linear-gradient(145deg, #1e293b, #111827) !important;
 }
 
 .withdraw-btn-menu .menu-icon {
@@ -290,12 +309,20 @@ body {
 .market-title h2 {
     font-size: 16px;
     margin: 0;
+    color: var(--text-main);
 }
 
 .market-title a {
     font-size: 13px;
     color: #60a5fa;
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.market-title a:hover {
+    text-decoration: underline;
 }
 
 .market-item {
@@ -307,7 +334,7 @@ body {
     border-radius: 12px;
     padding: 12px;
     margin-bottom: 8px;
-    transition: background 0.2s;
+    transition: background 0.2s, transform 0.2s;
     cursor: pointer;
 }
 
@@ -317,11 +344,13 @@ body {
 
 .market-item:hover {
     background: rgba(30, 41, 59, 0.9);
+    transform: scale(1.01);
 }
 
 .market-item h3 {
     margin: 0 0 2px 0;
     font-size: 14px;
+    color: var(--text-main);
 }
 
 .market-item small {
@@ -332,6 +361,7 @@ body {
 .price {
     font-weight: 600;
     font-size: 14px;
+    color: var(--text-main);
 }
 
 .up {
@@ -352,9 +382,10 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 70px;
-    background: rgba(15, 23, 42, 0.95);
-    backdrop-filter: blur(15px);
+    height: 72px;
+    background: rgba(11, 17, 32, 0.92);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
     border-top: 1px solid var(--border-color);
     display: flex;
     justify-content: space-around;
@@ -362,6 +393,7 @@ body {
     z-index: 1000;
     max-width: 480px;
     margin: 0 auto;
+    box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.3);
 }
 
 .bottom-nav a {
@@ -372,6 +404,7 @@ body {
     text-decoration: none;
     font-size: 10px;
     gap: 4px;
+    transition: color 0.2s;
 }
 
 .bottom-nav a i {
@@ -383,16 +416,21 @@ body {
 }
 
 .trade-btn {
-    width: 48px;
-    height: 48px;
+    width: 50px;
+    height: 50px;
     background: var(--primary-gradient);
     border-radius: 50%;
     display: flex !important;
     align-items: center;
     justify-content: center;
     color: #fff !important;
-    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.5);
-    margin-top: -15px;
+    box-shadow: 0 8px 22px rgba(37, 99, 235, 0.6);
+    margin-top: -18px;
+    transition: transform 0.2s;
+}
+
+.trade-btn:hover {
+    transform: scale(1.08);
 }
 
 .trade-btn i {
