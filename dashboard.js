@@ -937,3 +937,35 @@ if (balanceEye && balanceElement) {
     );
 
 });
+
+
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const toggleEye = document.getElementById("toggleEye");
+    const balanceAmount = document.getElementById("balanceAmount");
+    
+    let originalBalance = balanceAmount.innerText;
+    let isHidden = false;
+
+    if (toggleEye && balanceAmount) {
+        toggleEye.addEventListener("click", function () {
+            isHidden = !isHidden;
+            if (isHidden) {
+                balanceAmount.innerText = "••••••";
+                toggleEye.classList.remove("fa-eye");
+                toggleEye.classList.add("fa-eye-slash");
+            } else {
+                balanceAmount.innerText = originalBalance;
+                toggleEye.classList.remove("fa-eye-slash");
+                toggleEye.classList.add("fa-eye");
+            }
+        });
+    }
+});
+
+
