@@ -7,11 +7,9 @@
     <title>CptMarkets</title>
 
     <link rel="stylesheet" href="dashboard.css">
-
     <link rel="stylesheet" href="dashboard-premium.css">
     <link rel="stylesheet" href="dashboard-icons.css">
-        <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 
 <body>
@@ -19,25 +17,20 @@
 <div class="container">
 
 <!-- ================= HEADER ================= -->
-
 <header class="header">
 
     <div class="logo">
-
-        <div class="logo-icon">
-            <i class="fa-solid fa-shield-halved"></i>
+        <!-- Professional Trading View Style Custom Logo -->
+        <div class="logo-icon-custom">
+            <div class="candle green"></div>
+            <div class="candle red"></div>
         </div>
-
         <span>CptMarkets</span>
-
     </div>
 
     <div class="header-actions">
-
         <i class="fa-solid fa-rotate-right"></i>
-
         <i class="fa-solid fa-plus"></i>
-
     </div>
 
 </header>
@@ -45,111 +38,82 @@
 <!-- ================= BANNER ================= -->
 <section class="banner" style="background-image: url('market-bg.svg');">
 
-
     <div class="banner-content">
-
         <h1>CptMarkets</h1>
-
         <p>
             Global integrated financial trading platform
         </p>
-
     </div>
 
 </section>
 
 <!-- ================= ASSET ================= -->
-
 <section class="asset-card">
 
     <div class="asset-header">
-
         <span>Total Assets (USD)</span>
-
         <i class="fa-regular fa-eye"></i>
-
     </div>
 
     <h2 id="balance">$0.00</h2>
 
     <div class="asset-info">
-
         <span>
             Floating P/L
             <strong class="profit">+0.00</strong>
         </span>
-
         <span>
             Equity
             <strong>$0.00</strong>
         </span>
-        
      </div> 
 
     <div class="action-buttons">
-
         <button class="deposit-btn">
             Deposit
         </button>
-
         <button class="withdraw-btn">
             Withdraw
         </button>
-
-        <button
-    class="transfer-btn"
-    onclick="window.location.href='transfer.html'">
-    Transfer
-</button>
-
+        <button class="transfer-btn" onclick="window.location.href='transfer.html'">
+            Transfer
+        </button>
     </div>
 
 </section>
 
 <!-- ================= MENU ================= -->
-
 <section class="menu-grid">
 
     <div class="menu-item support-btn">
-
         <div class="menu-icon">
             <i class="fa-solid fa-headset"></i>
         </div>
-
         <span>Support</span>
-
     </div>
 
     <div class="menu-item withdraw-btn">
-
         <div class="menu-icon">
             <i class="fa-solid fa-wallet"></i>
         </div>
-
         <span>Withdraw</span>
-        
    </div>
     
-    <div class="menu-item"
-     onclick="window.location.href='transfer.html'">
-    <div class="menu-icon">
-        <i class="fa-solid fa-right-left"></i>
-    </div>
-
-    <span>Transfer</span>
-    
+    <div class="menu-item" onclick="window.location.href='transfer.html'">
+        <div class="menu-icon">
+            <i class="fa-solid fa-right-left"></i>
+        </div>
+        <span>Transfer</span>
     </div>
 
     <div class="menu-item" onclick="window.location.href='copytrade.html'">
-
         <div class="menu-icon">
             <i class="fa-solid fa-users"></i>
         </div>
-
         <span>Copy Trade</span>
-
     </div>
-        <div class="menu-item loan-btn">
+
+    <div class="menu-item loan-btn">
         <div class="menu-icon">
             <i class="fa-regular fa-credit-card"></i>
         </div>
@@ -157,21 +121,20 @@
     </div>
 
     <div class="menu-item" onclick="window.location.href='investment.html?mode=wealth'">
-    <div class="menu-icon">
-        <i class="fa-solid fa-chart-line"></i>
+        <div class="menu-icon">
+            <i class="fa-solid fa-chart-line"></i>
+        </div>
+        <span>Wealth</span>
     </div>
-    <span>Wealth</span>
-</div>
 
     <div class="menu-item" onclick="window.location.href='investment.html?mode=mining'">
-    <div class="menu-icon">
-        <i class="fa-solid fa-hammer"></i>
+        <div class="menu-icon">
+            <i class="fa-solid fa-hammer"></i>
+        </div>
+        <span>Mining</span>
     </div>
-    <span>Mining</span>
-</div>
 
-    <div class="menu-item"
-     onclick="window.location.href='invite.html'">
+    <div class="menu-item" onclick="window.location.href='invite.html'">
         <div class="menu-icon">
             <i class="fa-solid fa-gift"></i>
         </div>
@@ -181,7 +144,6 @@
 </section>
 
 <!-- ================= HOT MARKETS ================= -->
-
 <section class="market-card">
 
     <div class="market-title">
@@ -194,7 +156,6 @@
             <h3>XAUUSD</h3>
             <small>Gold / USD</small>
         </div>
-
         <div class="price">4,253.20</div>
         <div class="up">+0.15%</div>
     </div>
@@ -204,7 +165,6 @@
             <h3>XAGUSD</h3>
             <small>Silver / USD</small>
         </div>
-
         <div class="price">28.651</div>
         <div class="down">-2.22%</div>
     </div>
@@ -214,7 +174,6 @@
             <h3>BTCUSD</h3>
             <small>Bitcoin / USD</small>
         </div>
-
         <div class="price">63,070.00</div>
         <div class="up">+1.05%</div>
     </div>
@@ -222,7 +181,6 @@
 </section>
 
 <!-- ================= BOTTOM NAVIGATION ================= -->
-
 <nav class="bottom-nav">
 
     <a href="#" class="active">
