@@ -1,7 +1,6 @@
 /* =========================================================
-   CPTMARKETS — INDEX LOGIN THEME
-   Compact Dark Crypto Market Design
-   Login Logic: UNCHANGED
+   CPTMARKETS — ULTRA PROFESSIONAL CRYPTO DARK THEME
+   Full Compatibility with HTML IDs & Classespreserved
    ========================================================= */
 
 *,
@@ -16,16 +15,9 @@ html,
 body {
     width: 100%;
     min-height: 100%;
-    background: #01050c;
+    background: #02060e;
     color: #ffffff;
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Helvetica,
-        Arial,
-        sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     overflow-x: hidden;
 }
 
@@ -34,71 +26,111 @@ body {
     min-height: 100dvh;
 }
 
-
 /* =========================================================
-   MAIN PAGE
+   MAIN PAGE & AMBIENT BACKGROUND
    ========================================================= */
 
 .login-page {
     width: 100%;
     min-height: 100vh;
     min-height: 100dvh;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
-    padding: 10px;
-
-    background:
-        radial-gradient(
-            circle at 50% 20%,
-            rgba(5, 42, 78, 0.95) 0%,
-            rgba(2, 18, 35, 0.96) 38%,
-            #01050c 78%
-        );
+    padding: 12px;
+    background: 
+        radial-gradient(circle at 50% 10%, rgba(0, 150, 255, 0.15) 0%, transparent 60%),
+        radial-gradient(circle at 50% 85%, rgba(255, 187, 0, 0.08) 0%, transparent 50%),
+        linear-gradient(180deg, #020712 0%, #01040a 100%);
+    position: relative;
 }
 
-
 /* =========================================================
-   MAIN LOGIN CARD
+   MAIN LOGIN CARD (GLASSMORPHISM & NEON BORDER)
    ========================================================= */
 
 .login-card {
     width: 100%;
     max-width: 440px;
-
-    min-height: calc(100vh - 20px);
-    min-height: calc(100dvh - 20px);
-
+    min-height: calc(100vh - 24px);
+    min-height: calc(100dvh - 24px);
     position: relative;
     overflow: hidden;
-
-    padding:
-        20px
-        24px
-        28px;
-
+    padding: 24px 24px 30px;
     display: flex;
     flex-direction: column;
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(5, 31, 55, 0.98) 0%,
-            rgba(2, 17, 32, 0.98) 42%,
-            rgba(1, 7, 15, 1) 100%
-        );
-
-    border: 1px solid rgba(53, 145, 222, 0.38);
-    border-radius: 22px;
-
-    box-shadow:
-        inset 0 0 50px rgba(0, 80, 145, 0.12),
-        0 0 30px rgba(0, 80, 150, 0.15),
-        0 18px 55px rgba(0, 0, 0, 0.8);
+    justify-content: space-between;
+    background: rgba(8, 19, 38, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 162, 255, 0.25);
+    border-radius: 28px;
+    box-shadow: 
+        0 20px 50px rgba(0, 0, 0, 0.8),
+        inset 0 1px 1px rgba(255, 255, 255, 0.15),
+        inset 0 0 40px rgba(0, 119, 255, 0.08);
+    transition: border-color 0.4s ease;
 }
 
+.login-card:hover {
+    border-color: rgba(0, 162, 255, 0.45);
+}
+
+/* =========================================================
+   BACKGROUND MARKET GRAPHICS & ANIMATION
+   ========================================================= */
+
+.market-background {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 380px;
+    height: 380px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.market-glow {
+    position: absolute;
+    inset: 40px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 132, 255, 0.25) 0%, rgba(0, 40, 90, 0.05) 70%, transparent 100%);
+    filter: blur(20px);
+}
+
+.market-dots {
+    position: absolute;
+    top: 70px;
+    left: 40px;
+    right: 40px;
+    height: 180px;
+    opacity: 0.35;
+    background-image: radial-gradient(rgba(0, 183, 255, 0.9) 1.2px, transparent 1.2px);
+    background-size: 12px 12px;
+    -webkit-mask-image: radial-gradient(circle, #000 30%, transparent 75%);
+    mask-image: radial-gradient(circle, #000 30%, transparent 75%);
+}
+
+.market-chart {
+    position: absolute;
+    top: 130px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    opacity: 0.4;
+}
+
+.chart-line {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.8), transparent);
+}
+
+.line-one { top: 20%; transform: rotate(-3deg); }
+.line-two { top: 50%; transform: rotate(2deg); }
+.line-three { top: 80%; transform: rotate(-1deg); }
 
 /* =========================================================
    LANGUAGE BUTTON
@@ -106,961 +138,412 @@ body {
 
 .language-btn {
     position: absolute;
-
-    top: 14px;
-    right: 14px;
-
+    top: 18px;
+    right: 18px;
     z-index: 50;
-
-    width: 44px;
-    height: 44px;
-
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
-
-    border: 1px solid rgba(110, 181, 239, 0.35);
-
-    background:
-        rgba(5, 22, 40, 0.78);
-
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(13, 29, 56, 0.6);
     backdrop-filter: blur(10px);
-
     display: flex;
     align-items: center;
     justify-content: center;
-
-    font-size: 21px;
-
+    font-size: 20px;
     cursor: pointer;
-
-    box-shadow:
-        0 0 18px rgba(26, 115, 190, 0.15);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
 }
 
+.language-btn:hover {
+    transform: scale(1.08);
+    border-color: rgba(255, 215, 0, 0.5);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
 
 /* =========================================================
-   MARKET BACKGROUND
-   ========================================================= */
-
-.market-background {
-    position: absolute;
-
-    top: -5px;
-    left: 50%;
-
-    transform: translateX(-50%);
-
-    width: 390px;
-    height: 390px;
-
-    pointer-events: none;
-
-    z-index: 1;
-}
-
-
-/* Large circular ring */
-
-.circle-ring {
-    position: absolute;
-
-    inset: 20px;
-
-    border-radius: 50%;
-
-    border: 1px solid rgba(91, 179, 246, 0.48);
-
-    box-shadow:
-        0 0 25px rgba(25, 126, 211, 0.16),
-        inset 0 0 35px rgba(20, 108, 190, 0.12);
-}
-
-
-/* Inner blue glow */
-
-.circle-glow {
-    position: absolute;
-
-    inset: 55px;
-
-    border-radius: 50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(12, 91, 165, 0.42) 0%,
-            rgba(4, 48, 89, 0.25) 42%,
-            transparent 72%
-        );
-
-    filter: blur(2px);
-}
-
-
-/* Crypto dots */
-
-.market-dots {
-    position: absolute;
-
-    top: 105px;
-    left: 55px;
-    right: 55px;
-
-    height: 150px;
-
-    border-radius: 50%;
-
-    opacity: 0.62;
-
-    background-image:
-        radial-gradient(
-            rgba(38, 151, 239, 0.85) 1.3px,
-            transparent 1.4px
-        );
-
-    background-size: 10px 10px;
-
-    -webkit-mask-image:
-        radial-gradient(
-            ellipse,
-            #000 20%,
-            transparent 72%
-        );
-
-    mask-image:
-        radial-gradient(
-            ellipse,
-            #000 20%,
-            transparent 72%
-        );
-}
-
-
-/* Market chart lines */
-
-.market-chart-wave {
-    position: absolute;
-
-    width: 125%;
-    height: 100px;
-
-    left: -12%;
-    top: 205px;
-
-    opacity: 0.28;
-
-    background:
-        repeating-linear-gradient(
-            90deg,
-            transparent 0,
-            transparent 13px,
-            rgba(80, 175, 245, 0.45) 13px,
-            rgba(80, 175, 245, 0.45) 14px
-        );
-
-    -webkit-mask-image:
-        linear-gradient(
-            180deg,
-            transparent,
-            #000,
-            transparent
-        );
-
-    mask-image:
-        linear-gradient(
-            180deg,
-            transparent,
-            #000,
-            transparent
-        );
-}
-
-
-/* =========================================================
-   BRAND AREA
+   BRAND & CRYPTO LOGO SECTION
    ========================================================= */
 
 .brand-area {
     position: relative;
-
     z-index: 10;
-
     width: 100%;
-
     text-align: center;
-
-    margin-top: 24px;
-    margin-bottom: 18px;
+    margin-top: 15px;
+    margin-bottom: 20px;
 }
 
-
-/* =========================================================
-   CPT LOGO
-   ========================================================= */
-
-.brand-logo-container {
-    display: inline-block;
-
-    position: relative;
-
-    margin-bottom: 2px;
-}
-
-
-.logo-ring-badge {
-    width: 64px;
-    height: 64px;
-
-    margin: 0 auto;
-
-    border-radius: 50%;
-
-    border: 2px solid #e6b52f;
-
+.brand-logo {
     display: flex;
     flex-direction: column;
-
     align-items: center;
     justify-content: center;
+    margin-bottom: 8px;
+}
 
+.logo-circle {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #1a3a60 0%, #071324 100%);
+    border: 2px solid #ffc800;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     position: relative;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(15, 42, 67, 0.92),
-            rgba(3, 15, 28, 0.95)
-        );
-
-    box-shadow:
-        0 0 12px rgba(231, 181, 47, 0.35),
-        0 0 28px rgba(231, 181, 47, 0.12);
+    box-shadow: 
+        0 0 20px rgba(255, 200, 0, 0.4),
+        inset 0 0 15px rgba(255, 200, 0, 0.2);
+    animation: logoGlow 3s infinite alternate;
 }
 
+@keyframes logoGlow {
+    0% { box-shadow: 0 0 15px rgba(255, 200, 0, 0.3), inset 0 0 10px rgba(255, 200, 0, 0.1); }
+    100% { box-shadow: 0 0 28px rgba(255, 200, 0, 0.6), inset 0 0 20px rgba(255, 200, 0, 0.3); }
+}
 
-.logo-ring-badge::after {
-    content: "▲";
-
+.logo-arrow {
     position: absolute;
-
-    top: 5px;
-    right: 7px;
-
-    color: #f1c33c;
-
-    font-size: 8px;
-
-    transform: rotate(45deg);
+    top: 6px;
+    right: 12px;
+    color: #ffdc52;
+    font-size: 11px;
+    font-weight: 900;
 }
 
-
-.logo-cpt-text {
-    color: #f1c33c;
-
-    font-size: 16px;
-
-    line-height: 1;
-
-    font-weight: 800;
-
+.logo-cpt {
+    color: #ffcb05;
+    font-size: 17px;
+    font-weight: 900;
     letter-spacing: -0.5px;
+    line-height: 1;
 }
 
-
-.logo-markets-text {
+.logo-markets {
     color: #ffffff;
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-top: 4px;
+    opacity: 0.9;
+}
 
+.logo-uk {
+    color: #8faecf;
     font-size: 6px;
-
-    font-weight: 600;
-
     letter-spacing: 1px;
-
-    margin-top: 3px;
+    margin-top: 2px;
 }
-
-
-.logo-uk-text {
-    color: #7d8ea0;
-
-    font-size: 5px;
-
-    letter-spacing: 0.7px;
-
-    margin-top: 1px;
-}
-
-
-/* =========================================================
-   CPTMARKETS TITLE
-   ========================================================= */
 
 .brand-area h1 {
-    margin:
-        8px
-        0
-        3px;
-
-    font-size: clamp(34px, 9vw, 42px);
-
-    line-height: 1;
-
-    font-weight: 800;
-
-    letter-spacing: -1.5px;
-
-    background:
-        linear-gradient(
-            180deg,
-            #fff9d8 0%,
-            #ffd83d 38%,
-            #ffb800 68%,
-            #c78300 100%
-        );
-
+    margin: 8px 0 6px;
+    font-size: 36px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    background: linear-gradient(180deg, #ffffff 0%, #ffe066 40%, #ffab00 100%);
     -webkit-background-clip: text;
     background-clip: text;
-
     -webkit-text-fill-color: transparent;
-
-    filter:
-        drop-shadow(0 0 8px rgba(255, 193, 20, 0.35))
-        drop-shadow(0 0 20px rgba(255, 176, 0, 0.12));
+    filter: drop-shadow(0 2px 10px rgba(255, 171, 0, 0.3));
 }
-
-
-/* =========================================================
-   GIFT
-   ========================================================= */
 
 .gift-title {
     display: flex;
-
     align-items: center;
     justify-content: center;
-
-    gap: 10px;
-
-    color: #dce5ef;
-
-    font-size: 14px;
-
-    letter-spacing: 5px;
-
-    font-weight: 500;
+    gap: 12px;
+    color: #c2d5e7;
+    font-size: 13px;
+    letter-spacing: 6px;
+    font-weight: 600;
 }
-
 
 .gift-title span {
     display: block;
-
-    width: 32px;
+    width: 35px;
     height: 1px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(237, 186, 48, 0.75)
-        );
+    background: linear-gradient(90deg, transparent, rgba(255, 204, 0, 0.8));
 }
-
 
 .gift-title span:last-child {
-    background:
-        linear-gradient(
-            90deg,
-            rgba(237, 186, 48, 0.75),
-            transparent
-        );
+    background: linear-gradient(90deg, rgba(255, 204, 0, 0.8), transparent);
 }
 
-
 /* =========================================================
-   LOGIN FORM
+   FORM & INPUT FIELDS DESIGN
    ========================================================= */
 
 .login-form {
     position: relative;
-
     z-index: 20;
-
     width: 100%;
-
-    margin-top: 4px;
 }
-
 
 .form-group {
-    margin-bottom: 16px;
+    margin-bottom: 18px;
 }
-
 
 .form-group label {
     display: block;
-
-    margin-bottom: 7px;
-
-    color: #f5f8fc;
-
-    font-size: 15px;
-
-    line-height: 1.2;
-
-    font-weight: 650;
+    margin-bottom: 8px;
+    color: #e2eeff;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
 }
-
-
-/* =========================================================
-   INPUT BOX
-   ========================================================= */
 
 .input-box {
     width: 100%;
-
-    height: 58px;
-
+    height: 56px;
     display: flex;
-
     align-items: center;
-
-    padding:
-        0
-        14px;
-
-    border-radius: 18px;
-
-    border: 1px solid rgba(83, 145, 205, 0.38);
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(2, 20, 39, 0.94),
-            rgba(1, 12, 25, 0.96)
-        );
-
-    box-shadow:
-        inset 0 0 15px rgba(0, 0, 0, 0.5),
-        0 0 8px rgba(26, 108, 180, 0.08);
-
-    transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
+    padding: 0 16px;
+    border-radius: 16px;
+    border: 1px solid rgba(0, 150, 255, 0.25);
+    background: rgba(4, 14, 30, 0.7);
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
 
 .input-box:focus-within {
-    border-color: rgba(61, 158, 245, 0.8);
-
-    box-shadow:
-        0 0 12px rgba(24, 131, 221, 0.25),
-        0 0 25px rgba(18, 102, 175, 0.10),
-        inset 0 0 14px rgba(0, 0, 0, 0.55);
+    border-color: #00d9ff;
+    background: rgba(5, 20, 45, 0.85);
+    box-shadow: 
+        0 0 18px rgba(0, 217, 255, 0.25),
+        inset 0 2px 6px rgba(0, 0, 0, 0.4);
 }
-
-
-/* =========================================================
-   INPUT ICON
-   ========================================================= */
 
 .input-icon {
-    width: 40px;
-
+    width: 36px;
     flex-shrink: 0;
-
     display: flex;
-
     align-items: center;
-    justify-content: center;
-
-    color: #8199ba;
-
-    font-size: 22px;
+    justify-content: flex-start;
+    color: #00a2ff;
+    font-size: 19px;
+    transition: color 0.3s ease;
 }
 
-
-/* =========================================================
-   INPUT
-   ========================================================= */
+.input-box:focus-within .input-icon {
+    color: #00d9ff;
+}
 
 .input-box input {
     width: 100%;
     height: 100%;
-
     flex: 1;
-
     border: none;
     outline: none;
-
     background: transparent;
-
     color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+}
 
-    font-size: 17px;
-
+.input-box input::placeholder {
+    color: #557295;
     font-weight: 400;
 }
 
-
-.input-box input::placeholder {
-    color: #7389a9;
-
-    opacity: 1;
-}
-
-
-/* =========================================================
-   PASSWORD TOGGLE
-   ========================================================= */
-
 .password-toggle {
     flex-shrink: 0;
-
-    color: #8199ba;
-
-    font-size: 20px;
-
-    padding: 5px;
-
+    color: #6282a7;
+    font-size: 18px;
+    padding: 6px;
     cursor: pointer;
-
-    transition:
-        color 0.2s ease,
-        transform 0.2s ease;
+    transition: all 0.2s ease;
 }
-
 
 .password-toggle:hover {
-    color: #b3c9e6;
+    color: #00d9ff;
+    transform: scale(1.1);
 }
-
-
-.password-toggle:active {
-    transform: scale(0.92);
-}
-
 
 /* =========================================================
-   SIGN IN BUTTON
+   GLOWING SIGN-IN BUTTON (CRYPTO GLOW)
    ========================================================= */
 
 .login-btn {
+    position: relative;
     width: 100%;
-
-    height: 58px;
-
-    margin-top: 4px;
-
+    height: 56px;
+    margin-top: 10px;
     border: none;
-
-    border-radius: 18px;
-
+    border-radius: 16px;
     cursor: pointer;
-
-    color: #15100a;
-
-    font-size: 18px;
-
-    font-weight: 750;
-
-    background:
-        linear-gradient(
-            105deg,
-            #fff1a8 0%,
-            #ffd329 28%,
-            #ffb000 65%,
-            #d58b00 100%
-        );
-
-    box-shadow:
-        0 0 10px rgba(255, 195, 20, 0.65),
-        0 0 24px rgba(255, 181, 0, 0.42),
-        0 7px 18px rgba(0, 0, 0, 0.45);
-
-    text-shadow:
-        0 1px 0 rgba(255, 255, 255, 0.25);
-
-    transition:
-        transform 0.15s ease,
-        box-shadow 0.2s ease;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ffe066 0%, #ffaa00 50%, #d47a00 100%);
+    box-shadow: 
+        0 0 20px rgba(255, 170, 0, 0.4),
+        0 8px 25px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
 }
 
+.button-content {
+    position: relative;
+    z-index: 2;
+    color: #090600;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.button-glow {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.6s ease;
+}
 
 .login-btn:hover {
-    box-shadow:
-        0 0 14px rgba(255, 210, 45, 0.8),
-        0 0 32px rgba(255, 176, 0, 0.5),
-        0 8px 20px rgba(0, 0, 0, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 
+        0 0 30px rgba(255, 187, 0, 0.7),
+        0 10px 30px rgba(0, 0, 0, 0.6);
 }
 
+.login-btn:hover .button-glow {
+    left: 100%;
+}
 
 .login-btn:active {
-    transform: scale(0.985);
+    transform: translateY(1px);
+    box-shadow: 0 0 15px rgba(255, 170, 0, 0.4);
 }
 
-
 /* =========================================================
-   BOTTOM LINKS
+   BOTTOM ACTION LINKS
    ========================================================= */
 
 .login-links {
     width: 100%;
-
     display: flex;
-
     align-items: center;
     justify-content: space-between;
-
-    margin-top: 18px;
-
-    padding:
-        0
-        4px;
+    margin-top: 20px;
+    padding: 0 4px;
 }
-
 
 .login-link {
     display: flex;
-
     align-items: center;
-
-    gap: 7px;
-
-    color: #f2b91c;
-
+    gap: 8px;
+    color: #ffc800;
     text-decoration: none;
-
     font-size: 13.5px;
-
-    font-weight: 650;
-
-    white-space: nowrap;
-
-    text-shadow:
-        0 0 8px rgba(241, 183, 24, 0.2);
-
-    transition:
-        color 0.2s ease,
-        text-shadow 0.2s ease;
+    font-weight: 600;
+    transition: all 0.2s ease;
 }
-
-
-.login-link:hover {
-    color: #ffd84b;
-
-    text-shadow:
-        0 0 10px rgba(255, 193, 25, 0.45);
-}
-
 
 .login-link i {
-    color: #f5bd1c;
-
-    font-size: 17px;
+    font-size: 15px;
+    color: #ffc800;
+    transition: transform 0.2s ease;
 }
 
+.login-link:hover {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 200, 0, 0.6);
+}
+
+.login-link:hover i {
+    transform: scale(1.15);
+    color: #ffffff;
+}
 
 /* =========================================================
-   BOTTOM MARKET SILHOUETTE
+   BOTTOM MARKET CANDLESTICK SILHOUETTE
    ========================================================= */
 
 .bottom-market {
     position: absolute;
-
     left: 0;
     right: 0;
     bottom: 0;
-
-    height: 90px;
-
+    height: 80px;
     pointer-events: none;
-
     overflow: hidden;
-
     z-index: 2;
-
-    opacity: 0.32;
+    opacity: 0.35;
 }
-
 
 .bottom-bars {
     width: 100%;
     height: 100%;
-
     display: flex;
-
     align-items: flex-end;
-
-    justify-content: space-around;
-
-    padding:
-        0
-        8px;
+    justify-content: space-between;
+    padding: 0 15px;
 }
-
 
 .bottom-bars span {
     display: block;
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(18, 87, 143, 0.16),
-            rgba(12, 64, 111, 0.22)
-        );
-
-    border:
-        1px solid rgba(48, 133, 203, 0.28);
-
+    width: 8%;
+    background: linear-gradient(180deg, rgba(0, 162, 255, 0.4), rgba(0, 60, 120, 0.1));
+    border: 1px solid rgba(0, 183, 255, 0.4);
     border-bottom: none;
-}
-
-
-.bottom-bars span:nth-child(1) {
-    width: 28px;
-    height: 38px;
-    border-radius: 5px 5px 0 0;
-}
-
-
-.bottom-bars span:nth-child(2) {
-    width: 42px;
-    height: 52px;
-    border-radius: 50% 50% 0 0;
-}
-
-
-.bottom-bars span:nth-child(3) {
-    width: 22px;
-    height: 68px;
     border-radius: 4px 4px 0 0;
 }
 
+.bottom-bars span:nth-child(1) { height: 35%; }
+.bottom-bars span:nth-child(2) { height: 55%; }
+.bottom-bars span:nth-child(3) { height: 40%; }
+.bottom-bars span:nth-child(4) { height: 75%; }
+.bottom-bars span:nth-child(5) { height: 50%; }
+.bottom-bars span:nth-child(6) { height: 85%; }
+.bottom-bars span:nth-child(7) { height: 60%; }
+.bottom-bars span:nth-child(8) { height: 45%; }
 
-.bottom-bars span:nth-child(4) {
-    width: 55px;
-    height: 44px;
-    border-radius: 40% 40% 0 0;
-}
-
-
-.bottom-bars span:nth-child(5) {
-    width: 32px;
+.bottom-glow {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 250px;
     height: 60px;
-    border-radius: 5px 5px 0 0;
+    background: rgba(0, 132, 255, 0.25);
+    filter: blur(30px);
+    pointer-events: none;
 }
-
-
-.bottom-bars span:nth-child(6) {
-    width: 38px;
-    height: 48px;
-    border-radius: 50% 50% 0 0;
-}
-
 
 /* =========================================================
-   MOBILE — COMPACT VERSION
+   RESPONSIVE DESIGN (MOBILE & TABLET)
    ========================================================= */
 
 @media (max-width: 480px) {
-
-    .login-page {
-        padding: 6px;
-        align-items: center;
-    }
-
     .login-card {
-        min-height: calc(100dvh - 12px);
-
-        padding:
-            16px
-            16px
-            22px;
-
-        border-radius: 20px;
-    }
-
-    .language-btn {
-        top: 12px;
-        right: 12px;
-
-        width: 40px;
-        height: 40px;
-
-        font-size: 19px;
-    }
-
-    .market-background {
-        width: 350px;
-        height: 350px;
-
-        top: 2px;
-    }
-
-    .circle-ring {
-        inset: 18px;
-    }
-
-    .circle-glow {
-        inset: 48px;
-    }
-
-    .market-dots {
-        top: 92px;
-        left: 48px;
-        right: 48px;
-        height: 135px;
-    }
-
-    .market-chart-wave {
-        top: 185px;
-    }
-
-    .brand-area {
-        margin-top: 20px;
-        margin-bottom: 15px;
-    }
-
-    .logo-ring-badge {
-        width: 58px;
-        height: 58px;
-    }
-
-    .brand-area h1 {
-        font-size: 34px;
-        margin-top: 7px;
-    }
-
-    .gift-title {
-        font-size: 13px;
-        letter-spacing: 4px;
-    }
-
-    .gift-title span {
-        width: 28px;
-    }
-
-    .form-group {
-        margin-bottom: 14px;
-    }
-
-    .form-group label {
-        font-size: 14px;
-        margin-bottom: 6px;
-    }
-
-    .input-box {
-        height: 54px;
-        border-radius: 17px;
-    }
-
-    .input-icon {
-        width: 38px;
-        font-size: 20px;
-    }
-
-    .input-box input {
-        font-size: 16px;
-    }
-
-    .password-toggle {
-        font-size: 19px;
-    }
-
-    .login-btn {
-        height: 55px;
-        border-radius: 17px;
-        font-size: 17px;
-    }
-
-    .login-links {
-        margin-top: 16px;
-    }
-
-    .login-link {
-        font-size: 12.5px;
-        gap: 6px;
-    }
-
-    .login-link i {
-        font-size: 16px;
-    }
-
-    .bottom-market {
-        height: 75px;
-    }
-}
-
-
-/* =========================================================
-   VERY SMALL PHONES
-   ========================================================= */
-
-@media (max-height: 700px) {
-
-    .login-card {
-        padding-top: 12px;
-        padding-bottom: 18px;
-    }
-
-    .brand-area {
-        margin-top: 12px;
-        margin-bottom: 10px;
-    }
-
-    .logo-ring-badge {
-        width: 52px;
-        height: 52px;
+        padding: 20px 18px 24px;
+        border-radius: 24px;
     }
 
     .brand-area h1 {
         font-size: 30px;
-        margin-top: 5px;
     }
 
-    .gift-title {
-        font-size: 12px;
-    }
-
-    .form-group {
-        margin-bottom: 11px;
+    .logo-circle {
+        width: 60px;
+        height: 60px;
     }
 
     .input-box {
-        height: 50px;
+        height: 52px;
     }
 
     .login-btn {
         height: 52px;
     }
 
-    .login-links {
-        margin-top: 13px;
-    }
-}
-
-
-/* =========================================================
-   DESKTOP
-   ========================================================= */
-
-@media (min-width: 700px) {
-
-    .login-card {
-        min-height: 760px;
-
-        padding:
-            24px
-            28px
-            30px;
-    }
-
-    .brand-area {
-        margin-top: 28px;
-        margin-bottom: 20px;
-    }
-
-    .market-background {
-        width: 430px;
-        height: 430px;
+    .login-link {
+        font-size: 12.5px;
     }
 }
