@@ -1,5 +1,5 @@
 /* ==========================================
-   CPT MARKETS - FINAL FIXED PREMIUM CSS
+   CPT MARKETS - FINAL MATCHED PREMIUM CSS
    ========================================== */
 
 :root {
@@ -17,7 +17,7 @@ body {
     color: var(--text-main);
     font-family: 'Inter', sans-serif;
     margin: 0;
-    padding-bottom: 90px; /* Prevents content from hiding behind bottom nav */
+    padding-bottom: 90px; /* Prevents content from overlapping with bottom nav */
 }
 
 /* ================= HEADER & CUSTOM TRADING LOGO ================= */
@@ -106,7 +106,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, #0f172a 0%, rgba(15, 23, 42, 0.9) 55%, rgba(15, 23, 42, 0.4) 100%);
+    background: linear-gradient(90deg, #0f172a 0%, rgba(15, 23, 42, 0.9) 55%, rgba(15, 23, 42, 0.3) 100%);
     z-index: 1;
 }
 
@@ -235,7 +235,7 @@ body {
     background: rgba(30, 41, 59, 0.9);
 }
 
-/* ================= FIXED CENTERED BOTTOM NAVIGATION ================= */
+/* ================= FIXED CENTERED LIVE BOTTOM NAVIGATION ================= */
 .bottom-nav {
     position: fixed !important;
     bottom: 0 !important;
@@ -273,7 +273,7 @@ body {
     color: #64748b;
 }
 
-/* Active Page State (Darker, Bold & Glowing) */
+/* Live Active State (Glowing & Highlighted for current page) */
 .bottom-nav a.active {
     color: #fbbf24 !important;
     font-weight: 700;
@@ -284,7 +284,7 @@ body {
     filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.8));
 }
 
-/* Center Floating Trade Button */
+/* Center Floating Trade Button - Perfectly Aligned */
 .trade-btn {
     background: var(--primary-gradient) !important;
     border-radius: 50% !important;
@@ -294,8 +294,8 @@ body {
     align-items: center !important;
     justify-content: center !important;
     color: #ffffff !important;
-    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
-    transform: translateY(-12px);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.6);
+    transform: translateY(-6px); /* Perfectly balanced with the nav bar */
     border: 3px solid #0f172a;
 }
 
