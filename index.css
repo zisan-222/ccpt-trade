@@ -1,133 +1,10 @@
 /* =========================================================
-   CPTMARKETS — MOBILE RESPONSIVE TRADINGVIEW & 3D LOGO
+   3D PROFESSIONAL CPT LOGO & ATTRACIVE PILL BUTTONS FIX
    ========================================================= */
 
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-html, body {
-    width: 100%;
-    height: 100%;
-    background: #040914;
-    color: #ffffff;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    overflow-x: hidden;
-}
-
-/* =========================================================
-   MOBILE-OPTIMIZED TRADINGVIEW BACKDROP
-   ========================================================= */
-
-.login-page {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 16px 12px;
-    position: relative;
-    background: #020610;
-    overflow: hidden;
-}
-
-/* Responsive Wave Line for Mobile */
-.login-page::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: 
-        radial-gradient(circle at 50% 20%, rgba(0, 212, 255, 0.22) 0%, transparent 65%),
-        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 1000" preserveAspectRatio="none"><path d="M-50,300 Q150,150 300,400 T600,200 L600,1000 L-50,1000 Z" fill="rgba(0,180,255,0.04)" stroke="%2300d4ff" stroke-width="2.5" opacity="0.75"/><path d="M-50,700 Q150,550 300,750 T600,600" fill="none" stroke="%23089981" stroke-width="1.5" stroke-dasharray="4" opacity="0.5"/></svg>');
-    background-size: cover;
-    background-position: center;
-    pointer-events: none;
-    z-index: 0;
-}
-
-/* Mobile-Visible Real TradingView Candlesticks */
-.login-page::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="800" viewBox="0 0 400 800"><g opacity="0.35"><rect x="20" y="100" width="12" height="90" fill="%23089981" rx="1"/><line x1="26" y1="60" x2="26" y2="230" stroke="%23089981" stroke-width="2"/><rect x="60" y="240" width="12" height="70" fill="%23f23645" rx="1"/><line x1="66" y1="210" x2="66" y2="340" stroke="%23f23645" stroke-width="2"/><rect x="300" y="120" width="12" height="110" fill="%23089981" rx="1"/><line x1="306" y1="80" x2="306" y2="260" stroke="%23089981" stroke-width="2"/><rect x="340" y="260" width="12" height="80" fill="%23f23645" rx="1"/><line x1="346" y1="220" x2="346" y2="370" stroke="%23f23645" stroke-width="2"/><rect x="30" y="620" width="12" height="100" fill="%23089981" rx="1"/><line x1="36" y1="580" x2="36" y2="750" stroke="%23089981" stroke-width="2"/><rect x="330" y="600" width="12" height="90" fill="%23f23645" rx="1"/><line x1="336" y1="560" x2="336" y2="720" stroke="%23f23645" stroke-width="2"/></g></svg>');
-    background-repeat: repeat;
-    background-size: 100% auto;
-    pointer-events: none;
-    z-index: 1;
-}
-
-/* =========================================================
-   LOGIN CARD CONTAINER
-   ========================================================= */
-
-.login-card {
-    width: 100%;
-    max-width: 400px;
-    position: relative;
-    z-index: 10;
-    overflow: hidden;
-    padding: 26px 20px 24px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    background: linear-gradient(180deg, rgba(6, 20, 42, 0.94) 0%, rgba(2, 8, 20, 0.98) 100%);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    border: 1px solid rgba(0, 212, 255, 0.35);
-    border-radius: 24px;
-    box-shadow: 
-        0 20px 50px rgba(0, 0, 0, 0.95),
-        inset 0 1px 2px rgba(255, 255, 255, 0.25),
-        0 0 30px rgba(0, 180, 255, 0.2);
-}
-
-.market-background {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 1;
-}
-
-.market-dots, .bottom-market {
-    display: none !important;
-}
-
-/* =========================================================
-   LANGUAGE BUTTON
-   ========================================================= */
-
-.language-btn {
-    position: absolute;
-    top: 14px;
-    right: 14px;
-    z-index: 50;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: 1px solid rgba(0, 212, 255, 0.4);
-    background: rgba(3, 15, 33, 0.9);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
-    transition: all 0.3s ease;
-}
-
-.language-btn:hover {
-    transform: scale(1.08);
-    border-color: #00d4ff;
-}
-
-/* =========================================================
-   HIGH-END 3D CPT MARKETS LOGO
-   ========================================================= */
+/* ---------------------------------------------------------
+   CPT MARKETS LOGO (Balanced Multi-Color & Highly Visible Text)
+   --------------------------------------------------------- */
 
 .brand-area {
     position: relative;
@@ -147,244 +24,89 @@ html, body {
     perspective: 1000px;
 }
 
-/* Enhanced 3D Metallic Emblem */
+/* 3D Multi-Tone Glass Circle */
 .logo-circle {
-    width: 72px;
-    height: 72px;
+    width: 76px;
+    height: 76px;
     border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #1e3a60 0%, #061527 65%, #020914 100%);
-    border: 2px solid transparent;
-    background-clip: padding-box;
+    /* Metallic Navy, Cyan & Deep Blue Fusion */
+    background: radial-gradient(circle at 35% 25%, #0f2b48 0%, #061527 60%, #020914 100%);
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    transform: rotateX(10deg) rotateY(-5deg);
+    padding: 6px;
+    /* Soft Cyan & Gold Outer Rim */
+    border: 1.5px solid rgba(0, 212, 255, 0.4);
     box-shadow: 
-        0 12px 25px rgba(0, 0, 0, 0.9),
-        0 0 25px rgba(255, 203, 5, 0.5),
-        inset 0 3px 6px rgba(255, 255, 255, 0.4),
-        inset 0 -4px 8px rgba(0, 0, 0, 0.8);
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
+        0 10px 22px rgba(0, 0, 0, 0.85),
+        0 0 15px rgba(0, 212, 255, 0.25),
+        inset 0 2px 5px rgba(255, 255, 255, 0.25),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.7);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* 3D Golden Outer Ring Glow */
+/* Metallic Thin Golden Ring Contour */
 .logo-circle::before {
     content: '';
     position: absolute;
     inset: -3px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #ffe600 0%, #ff9900 50%, #ffea79 100%);
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.8) 0%, rgba(255, 203, 5, 0.6) 50%, rgba(0, 102, 255, 0.8) 100%);
     z-index: -1;
-    filter: drop-shadow(0 0 8px rgba(255, 203, 5, 0.8));
+    opacity: 0.85;
 }
 
 .logo-circle:hover {
-    transform: rotateX(0deg) rotateY(0deg) scale(1.05);
+    transform: translateY(-2px) scale(1.03);
     box-shadow: 
-        0 15px 30px rgba(0, 0, 0, 0.95),
-        0 0 35px rgba(255, 203, 5, 0.7);
+        0 12px 28px rgba(0, 0, 0, 0.9),
+        0 0 22px rgba(0, 212, 255, 0.4);
 }
 
 .logo-arrow {
     position: absolute;
-    top: 6px;
-    right: 12px;
-    color: #ffe600;
-    font-size: 12px;
+    top: 9px;
+    right: 14px;
+    color: #ffcb05;
+    font-size: 11px;
     font-weight: 900;
-    filter: drop-shadow(0 0 4px rgba(255, 230, 0, 0.9));
+    filter: drop-shadow(0 0 3px rgba(255, 203, 5, 0.8));
 }
 
 .logo-cpt {
-    color: #ffe600;
-    font-size: 17px;
+    color: #ffcb05;
+    font-size: 17.5px;
     font-weight: 900;
     line-height: 1;
-    letter-spacing: 0.5px;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8), 0 0 8px rgba(255, 230, 0, 0.5);
+    letter-spacing: 0.8px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9), 0 0 6px rgba(255, 203, 5, 0.4);
 }
 
+/* Fixed: MARKETS UK Text (Crisp White & Sharp Contrast) */
 .logo-markets {
     color: #ffffff;
-    font-size: 7px;
-    font-weight: 900;
-    letter-spacing: 2px;
-    margin-top: 3px;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+    font-size: 7.5px;
+    font-weight: 800;
+    letter-spacing: 1.8px;
+    margin-top: 4px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95);
+    opacity: 0.95;
 }
 
 .logo-uk {
-    color: #8bb0d6;
-    font-size: 6px;
-    font-weight: 700;
-}
-
-.brand-area h1 {
-    margin: 6px 0 2px;
-    font-size: 30px;
-    font-weight: 900;
-    letter-spacing: -0.5px;
-    background: linear-gradient(180deg, #ffffff 0%, #00d4ff 60%, #0077ff 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 2px 8px rgba(0, 212, 255, 0.4));
-}
-
-.gift-title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    color: #94a3b8;
-    font-size: 11px;
-    letter-spacing: 4px;
-    font-weight: 700;
-}
-
-.gift-title span {
-    display: block;
-    width: 25px;
-    height: 1.5px;
-    background: linear-gradient(90deg, transparent, #00d4ff);
-}
-
-.gift-title span:last-child {
-    background: linear-gradient(90deg, #00d4ff, transparent);
-}
-
-/* =========================================================
-   FORM & INPUT FIELDS
-   ========================================================= */
-
-.login-form {
-    position: relative;
-    z-index: 20;
-    width: 100%;
-}
-
-.form-group {
-    margin-bottom: 14px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 6px;
-    color: #e2e8f0;
-    font-size: 13px;
-    font-weight: 600;
-}
-
-.input-box {
-    width: 100%;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    padding: 0 14px;
-    border-radius: 14px;
-    border: 1px solid rgba(0, 212, 255, 0.25);
-    background: rgba(3, 12, 26, 0.9);
-    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.7);
-    transition: all 0.25s ease;
-}
-
-.input-box:focus-within {
-    border-color: #00d4ff;
-    background: rgba(4, 18, 38, 0.95);
-    box-shadow: 
-        0 0 14px rgba(0, 212, 255, 0.35),
-        inset 0 2px 4px rgba(0, 0, 0, 0.6);
-}
-
-.input-icon {
-    width: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
     color: #00d4ff;
-    font-size: 16px;
-}
-
-.input-box input {
-    width: 100%;
-    height: 100%;
-    flex: 1;
-    border: none;
-    outline: none;
-    background: transparent;
-    color: #ffffff;
-    font-size: 14.5px;
-    font-weight: 500;
-}
-
-.input-box input::placeholder {
-    color: #4a5568;
-}
-
-.password-toggle {
-    color: #718096;
-    font-size: 16px;
-    padding: 4px;
-    cursor: pointer;
-}
-
-.password-toggle:hover {
-    color: #00d4ff;
-}
-
-/* =========================================================
-   3D ELECTRIC CYAN SIGN-IN BUTTON
-   ========================================================= */
-
-.login-btn {
-    position: relative;
-    width: 100%;
-    height: 52px;
-    margin-top: 8px;
-    border: none;
-    border-radius: 14px;
-    cursor: pointer;
-    overflow: hidden;
-    background: linear-gradient(135deg, #00f0ff 0%, #0088ff 50%, #0055d4 100%);
-    box-shadow: 
-        0 5px 0 #003fa8,
-        0 10px 20px rgba(0, 136, 255, 0.4);
-    transition: all 0.15s ease;
-}
-
-.button-content {
-    position: relative;
-    z-index: 2;
-    color: #010814;
-    font-size: 16px;
+    font-size: 6.5px;
     font-weight: 800;
-    letter-spacing: 0.3px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+    letter-spacing: 1px;
+    margin-top: 1px;
 }
 
-.login-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 
-        0 7px 0 #003fa8,
-        0 12px 25px rgba(0, 240, 255, 0.5);
-}
 
-.login-btn:active {
-    transform: translateY(3px);
-    box-shadow: 
-        0 2px 0 #003fa8,
-        0 4px 10px rgba(0, 136, 255, 0.4);
-}
-
-/* =========================================================
-   PRO PILL LINK BUTTONS
-   ========================================================= */
+/* ---------------------------------------------------------
+   ATTRACTIVE 3D SMALL BUTTONS (Create Account & Forgot Password)
+   --------------------------------------------------------- */
 
 .login-links {
     width: 100%;
@@ -400,30 +122,50 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 7px;
     padding: 10px 8px;
     border-radius: 12px;
-    background: rgba(6, 22, 44, 0.85);
-    border: 1px solid rgba(0, 212, 255, 0.25);
+    /* 3D Glass Layering */
+    background: linear-gradient(180deg, rgba(12, 34, 64, 0.9) 0%, rgba(4, 16, 34, 0.95) 100%);
+    border: 1px solid rgba(0, 212, 255, 0.3);
     color: #ffcb05;
     text-decoration: none;
     font-size: 12px;
     font-weight: 700;
-    transition: all 0.25s ease;
+    box-shadow: 
+        0 4px 0 #020b18,
+        0 6px 14px rgba(0, 0, 0, 0.6),
+        inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    transition: all 0.18s ease;
+    position: relative;
+    top: 0;
 }
 
 .login-link i {
     font-size: 13px;
     color: #ffcb05;
+    filter: drop-shadow(0 0 3px rgba(255, 203, 5, 0.5));
 }
 
+/* 3D Hover & Active Click Effects */
 .login-link:hover {
-    background: rgba(0, 212, 255, 0.15);
-    border-color: #00d4ff;
+    top: -2px;
+    background: linear-gradient(180deg, rgba(16, 46, 84, 0.95) 0%, rgba(6, 24, 50, 0.98) 100%);
+    border-color: rgba(0, 212, 255, 0.6);
     color: #ffffff;
-    box-shadow: 0 0 12px rgba(0, 212, 255, 0.25);
+    box-shadow: 
+        0 6px 0 #020b18,
+        0 8px 18px rgba(0, 212, 255, 0.25),
+        inset 0 1px 2px rgba(255, 255, 255, 0.3);
 }
 
 .login-link:hover i {
     color: #00d4ff;
+}
+
+.login-link:active {
+    top: 2px;
+    box-shadow: 
+        0 2px 0 #020b18,
+        0 3px 8px rgba(0, 0, 0, 0.7);
 }
