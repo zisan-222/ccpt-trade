@@ -1,387 +1,457 @@
 /* ===================================
-   CPTMARKETS DASHBOARD - PERFECT FIX
+   CPTMARKETS DASHBOARD
+   dashboard.css - Replacement
 =================================== */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-body {
-    background: #030812; /* Dark theme matching screenshot */
-    color: #ffffff;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    padding-bottom: 90px;
-    overflow-x: hidden;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center; /* Centers dashboard horizontally */
+body{
+    background:#111111;
+    color:#ffffff;
+    font-family:Arial,Helvetica,sans-serif;
+    padding-bottom:80px;
 }
 
-/* 1. LAYOUT CENTERING FIX (Solves wide screen alignment issue) */
-.container {
-    width: 100%;
-    max-width: 480px; /* Mobile responsive frame width */
-    margin: 0 auto;   /* Center aligned */
-    padding: 0;
-    position: relative;
-    box-sizing: border-box;
-    background: #060e1e;
+.container{
+    width:100%;
+    max-width:480px;
+    margin:0 auto;
+    position:relative;
 }
 
 /* ======================
    HEADER
 ====================== */
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px;
-    width: 100%;
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 16px;
 }
 
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
 }
 
-.logo-icon {
-    width: 38px;
-    height: 38px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #00b4db, #0083b0);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
+.logo-icon{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:#f5c84c;
+    color:#111;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
 }
 
-.logo span {
-    font-size: 20px;
-    font-weight: 700;
-    color: #f5c84c;
+.logo span{
+    font-size:24px;
+    font-weight:700;
+    color:#f5c84c;
 }
 
-.header-actions {
-    display: flex;
-    gap: 12px;
+.header-actions{
+    display:flex;
+    gap:18px;
 }
 
-.header-actions i {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: #101c33;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    color: #7d8ea6;
-    cursor: pointer;
+.header-actions i{
+    font-size:22px;
+    color:#ffffff;
+    cursor:pointer;
 }
 
 /* ======================
    BANNER
 ====================== */
 
-.banner {
-    margin: 0 16px;
-    height: 140px;
-    border-radius: 18px;
-    overflow: hidden;
-    background: linear-gradient(135deg, #101f38, #0a1424);
-    position: relative;
-    border: 1px solid #1a2c4e;
+.banner{
+    margin:0 15px;
+    height:150px;
+    border-radius:18px;
+    overflow:hidden;
+    background:linear-gradient(135deg,#2b2b2b,#1a1a1a);
+    position:relative;
 }
 
-.banner-content {
-    position: relative;
-    z-index: 2;
-    padding: 20px;
+.banner::after{
+    content:"";
+    position:absolute;
+    right:-50px;
+    top:-50px;
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    background:rgba(245,200,76,.15);
 }
 
-.banner-content h1 {
-    color: #ffffff;
-    font-size: 24px;
-    margin-bottom: 6px;
+.banner-content{
+    position:relative;
+    z-index:2;
+    padding:24px;
 }
 
-.banner-content p {
-    color: #8da0bb;
-    font-size: 13px;
+.banner-content h1{
+    color:#f5c84c;
+    font-size:28px;
+    margin-bottom:10px;
+}
+
+.banner-content p{
+    color:#dddddd;
+    font-size:15px;
 }
 
 /* ======================
    ASSET CARD
 ====================== */
 
-.asset-card {
-    margin: 16px;
-    background: #0b1526;
-    border-radius: 20px;
-    padding: 20px;
-    border: 1px solid #162744;
+.asset-card{
+    margin:18px 15px;
+    background:#1c1c1c;
+    border-radius:20px;
+    padding:20px;
 }
 
-.asset-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
+.asset-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
 }
 
-.asset-header span {
-    color: #8da0bb;
-    font-size: 14px;
+.asset-header span{
+    color:#cfcfcf;
+    font-size:15px;
 }
 
-.asset-header i {
-    font-size: 20px;
-    color: #f5c84c;
-    cursor: pointer;
+.asset-header i{
+    font-size:22px;
+    color:#f5c84c;
+    cursor:pointer;
 }
 
-.asset-card h2 {
-    font-size: 38px;
-    margin-bottom: 6px;
-    font-weight: 700;
+.asset-card h2{
+    font-size:56px;
+    margin-bottom:18px;
+    font-weight:700;
 }
 
-.asset-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 18px;
-    font-size: 13px;
-    color: #8da0bb;
+.asset-info{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+    font-size:15px;
 }
 
-.profit {
-    color: #00e676;
-    font-weight: 600;
+.profit{
+    color:#00d26a;
 }
 
-.action-buttons {
-    display: flex;
-    gap: 10px;
-    width: 100%;
+.action-buttons{
+    display:flex;
+    gap:12px;
 }
 
-.action-buttons button {
-    flex: 1;
-    border: none;
-    border-radius: 12px;
-    padding: 12px 0;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: .3s;
+.action-buttons button{
+    flex:1;
+    border:none;
+    border-radius:14px;
+    padding:15px 0;
+    font-size:17px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.3s;
 }
 
-.deposit-btn {
-    background: linear-gradient(135deg, #ffb703, #fb8500);
-    color: #111;
+.deposit-btn{
+    background:#f5c84c;
+    color:#111;
 }
 
 .withdraw-btn,
-.transfer-btn {
-    background: #14233c;
-    color: #ffffff;
-    border: 1px solid #1f355a !important;
+.transfer-btn{
+    background:#2d2d2d;
+    color:#ffffff;
+}
+
+.action-buttons button:hover{
+    opacity:.9;
 }
 
 /* ======================
    MENU GRID
 ====================== */
 
-.menu-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    padding: 0 16px;
-    margin: 12px 0 20px;
+.menu-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+    padding:0 15px;
+    margin:12px 0 20px;
 }
 
-.menu-item {
-    background: #0b1526;
-    border: 1px solid #162744;
-    border-radius: 18px;
-    min-height: 90px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    text-decoration: none;
+.menu-item{
+    background:#1c1c1c;
+    border:1px solid #2c2c2c;
+    border-radius:20px;
+    min-height:170px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    transition:.25s;
 }
 
-.menu-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 14px;
-    background: #12213a;
-    color: #00d2ff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    margin-bottom: 8px;
-    border: 1px solid #1c3358;
+.menu-item:hover{
+    border-color:#f5c84c;
+    transform:translateY(-3px);
 }
 
-.menu-item span {
-    color: #d1dbe8;
-    font-size: 12px;
-    text-align: center;
+.menu-icon{
+    width:62px;
+    height:62px;
+    border-radius:50%;
+    background:#f5c84c;
+    color:#111;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:26px;
+    margin-bottom:14px;
+}
+
+.menu-item span{
+    color:#ffffff;
+    font-size:14px;
+    text-align:center;
+    line-height:20px;
 }
 
 /* ======================
    HOT MARKETS
 ====================== */
 
-.market-card {
-    margin: 0 16px 20px;
-    background: #0b1526;
-    border-radius: 20px;
-    padding: 18px;
-    border: 1px solid #162744;
+.market-card{
+    margin:20px 15px 0;
+    background:#1c1c1c;
+    border-radius:20px;
+    padding:20px;
+    border:1px solid #2c2c2c;
 }
 
-.market-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 14px;
+.market-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
 }
 
-.market-title h2 {
-    font-size: 16px;
-    color: #ffffff;
-    font-weight: 700;
+.market-title h2{
+    font-size:22px;
+    color:#ffffff;
+    font-weight:700;
 }
 
-.market-title a {
-    color: #ffb703;
-    text-decoration: none;
-    font-size: 12px;
+.market-title a{
+    color:#f5c84c;
+    text-decoration:none;
+    font-size:14px;
 }
 
-.market-item {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr .8fr;
-    align-items: center;
-    padding: 12px 0;
-    border-bottom: 1px solid #14233c;
+.market-item{
+    display:grid;
+    grid-template-columns:1.5fr 1fr .8fr;
+    align-items:center;
+    padding:16px 0;
+    border-bottom:1px solid #2d2d2d;
 }
 
-.market-item:last-child {
-    border-bottom: none;
+.market-item:last-child{
+    border-bottom:none;
 }
 
-.market-item h3 {
-    font-size: 14px;
-    color: #ffffff;
+.market-item h3{
+    font-size:18px;
+    color:#ffffff;
+    margin-bottom:4px;
 }
 
-.market-item small {
-    color: #6b7c96;
-    font-size: 11px;
+.market-item small{
+    color:#8f8f8f;
+    font-size:13px;
 }
 
-.price {
-    text-align: right;
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: 600;
+.price{
+    text-align:center;
+    color:#ffffff;
+    font-size:18px;
+    font-weight:600;
 }
 
-.up {
-    text-align: right;
-    color: #00e676;
-    font-weight: 700;
-    font-size: 13px;
+.up{
+    text-align:right;
+    color:#00d26a;
+    font-weight:700;
 }
 
-.down {
-    text-align: right;
-    color: #ff5252;
-    font-weight: 700;
-    font-size: 13px;
+.down{
+    text-align:right;
+    color:#ff4d4f;
+    font-weight:700;
 }
 
 /* ======================
-   BOTTOM NAVIGATION (STABLE & CORRECT ACTIVE STATE)
+   BOTTOM NAVIGATION
 ====================== */
 
-.bottom-nav {
-    position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 0;
-    width: 100%;
-    max-width: 480px; /* Aligns with container */
-    height: 70px;
-    background: #07101e;
-    border-top: 1px solid #162744;
+.bottom-nav{
+    position:fixed;
+    left:50%;
+    transform:translateX(-50%);
+    bottom:0;
+    width:100%;
+    max-width:480px;
+    height:80px;
+    background:#161616;
+    border-top:1px solid #2d2d2d;
 
-    display: grid;
-    grid-template-columns: 1fr 1fr 70px 1fr 1fr;
-    align-items: center;
-    justify-items: center;
+    display:grid;
+    grid-template-columns:1fr 1fr 80px 1fr 1fr;
 
-    z-index: 9999;
-    box-sizing: border-box;
+    align-items:center;
+    justify-items:center;
+
+    z-index:9999;
 }
 
-.bottom-nav a {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    color: #5d6f8a; /* Inactive color */
-    font-size: 11px;
-    gap: 4px;
-    transition: color 0.3s ease;
+.bottom-nav a{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    color:#9c9c9c;
+    font-size:12px;
+    gap:4px;
 }
 
-.bottom-nav a i {
-    font-size: 18px;
-    color: inherit;
+.bottom-nav a i{
+    font-size:22px;
 }
 
-/* 2. NEON GREEN ACTIVE STATE FIX */
-.bottom-nav a.active {
-    color: #00e676 !important; /* Green active glow like UI */
+.bottom-nav a.active{
+    color:#f5c84c;
 }
 
-.bottom-nav a.active i {
-    color: #00e676 !important;
+.bottom-nav a:hover{
+    color:#f5c84c;
 }
 
-/* FLOATING TRADE BUTTON */
-.trade-btn {
-    width: 54px;
-    height: 54px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #ffb703, #fb8500);
-    color: #111 !important;
+/* Floating Trade Button */
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.trade-btn{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    background:#f5c84c;
+    color:#111 !important;
 
-    margin-top: -24px;
-    box-shadow: 0 0 15px rgba(255, 183, 3, 0.4);
-    border: 4px solid #030812;
-    z-index: 10000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    margin-top:-40px;
+
+    box-shadow:0 0 25px rgba(245,200,76,.45);
+
+    z-index:10000;
 }
 
-.trade-btn i {
-    font-size: 22px;
-    color: #111 !important;
+.trade-btn i{
+    font-size:28px;
+}
+
+.trade-btn span{
+    display:none;
+}
+
+/* ======================
+   FINAL FIXES
+====================== */
+
+/* Keep only the space required for the fixed bottom navigation */
+.market-card{
+    margin-bottom:0;
+}
+
+/* Button hover */
+.action-buttons button:hover{
+    opacity:.9;
+}
+
+/* Menu animation */
+.menu-item{
+    transition:all .25s ease;
+}
+
+.menu-item:hover{
+    transform:translateY(-3px);
+}
+
+/* Mobile */
+@media (max-width:480px){
+
+    .asset-card h2{
+        font-size:42px;
+    }
+
+    .menu-grid{
+        gap:12px;
+    }
+
+    .menu-item{
+        min-height:95px;
+    }
+
+    .menu-icon{
+        width:54px;
+        height:54px;
+        font-size:22px;
+    }
+
+    .market-item{
+        grid-template-columns:1.4fr 1fr .8fr;
+    }
+
+    .market-item h3{
+        font-size:16px;
+    }
+
+    .price{
+        font-size:16px;
+    }
+
+    .up,
+    .down{
+        font-size:15px;
+    }
+
+    .bottom-nav{
+        height:80px;
+    }
+
+    .trade-btn{
+        width:68px;
+        height:68px;
+    }
 }
