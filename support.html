@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CptMarkets - Customer Service</title>
+    <title>CptMarkets - Official Customer Service</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -33,6 +33,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: 0.2s;
+        }
+        .back-btn:hover {
+            background: #334155;
         }
         .header-title {
             display: flex;
@@ -53,29 +57,57 @@
             margin: 3px 0 0 0;
         }
         .container {
-            padding: 30px 20px;
-            max-width: 600px;
+            padding: 25px 20px;
+            max-width: 650px;
             margin: 0 auto;
         }
         .welcome-box h2 {
             font-size: 22px;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
         .welcome-box p {
             color: #94a3b8;
             font-size: 14px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
+            line-height: 1.5;
         }
+        
+        /* Security Warning Box */
+        .security-alert {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 25px;
+            text-align: left;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .security-alert i {
+            color: #ef4444;
+            font-size: 20px;
+            margin-top: 2px;
+        }
+        .security-alert p {
+            margin: 0;
+            font-size: 13px;
+            color: #fca5a5;
+            line-height: 1.4;
+        }
+
+        /* Services Grid */
         .btn-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
+            margin-bottom: 30px;
         }
         .support-card {
             background: #0b1120;
             border: 1px solid #1e293b;
             border-radius: 12px;
-            padding: 22px 15px;
+            padding: 20px 15px;
             color: #fff;
             cursor: pointer;
             text-decoration: none;
@@ -88,6 +120,7 @@
         .support-card:hover {
             border-color: #facc15;
             background: #0f172a;
+            transform: translateY(-2px);
         }
         .support-card i {
             font-size: 24px;
@@ -95,12 +128,54 @@
         }
         .support-card h3 {
             margin: 0;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 500;
         }
+
+        /* Professional Features List Section */
+        .features-section {
+            background: #0b1120;
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: left;
+        }
+        .features-section h3 {
+            font-size: 16px;
+            color: #facc15;
+            margin-top: 0;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .features-list li {
+            font-size: 13px;
+            color: #cbd5e1;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .features-list li i {
+            color: #22c55e;
+            font-size: 12px;
+        }
+
         /* তাকওয়ার নিজস্ব ডিফল্ট গ্রিন বাবল হাইড রাখার জন্য */
         #tawkchat-container {
             display: none !important;
+        }
+
+        @media(max-width: 480px) {
+            .btn-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -111,17 +186,24 @@
         <a href="dashboard.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
         <div class="header-title">
             <h1><i class="fa-solid fa-shield-halved"></i> CptMarkets</h1>
-            <p><i class="fa-solid fa-circle" style="color: #22c55e; font-size: 8px;"></i> 24/7 Online Customer Service</p>
+            <p><i class="fa-solid fa-circle" style="color: #22c55e; font-size: 8px;"></i> 24/7 Official Support Team</p>
         </div>
-        <div style="width: 35px;"></div> <!-- Balancing space -->
+        <div style="width: 35px;"></div> 
     </div>
 
     <div class="container">
         <div class="welcome-box">
-            <h2>Hello there 👋</h2>
-            <p>How can our support team help you today?</p>
+            <h2>Welcome to CptMarkets Support 👋</h2>
+            <p>Our professional support team is available 24/7 to resolve any issues regarding your trading account. Please choose a service below.</p>
         </div>
 
+        <!-- Security Warning Notice -->
+        <div class="security-alert">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <p><strong>Security Warning:</strong> Do not fall victim to scams by transacting outside of official channels. For all financial transactions and account assistance, strictly contact the official CptMarkets Customer Service.</p>
+        </div>
+
+        <!-- Quick Support Options -->
         <div class="btn-grid">
             <div class="support-card" onclick="openChatWithMsg('Hello, I need assistance regarding my trading account help.')">
                 <i class="fa-solid fa-user-gear"></i>
@@ -129,16 +211,28 @@
             </div>
             <div class="support-card" onclick="openChatWithMsg('Hello, I need help with making a Deposit.')">
                 <i class="fa-solid fa-wallet" style="color: #22c55e;"></i>
-                <h3>Deposit</h3>
+                <h3>Deposit Support</h3>
             </div>
             <div class="support-card" onclick="openChatWithMsg('Hello, I would like to request a Withdrawal.')">
                 <i class="fa-solid fa-money-bill-transfer" style="color: #f59e0b;"></i>
-                <h3>Withdrawal</h3>
+                <h3>Withdrawal Support</h3>
             </div>
             <div class="support-card" onclick="openChatWithMsg('Hello, I need general support and assistance.')">
                 <i class="fa-solid fa-headset" style="color: #38bdf8;"></i>
-                <h3>Other Support</h3>
+                <h3>General Inquiry</h3>
             </div>
+        </div>
+
+        <!-- Professional Services Points -->
+        <div class="features-section">
+            <h3><i class="fa-solid fa-circle-check"></i> Our Services & Features</h3>
+            <ul class="features-list">
+                <li><i class="fa-solid fa-check"></i> 24/7 dedicated trading account and technical assistance.</li>
+                <li><i class="fa-solid fa-check"></i> Secure and swift resolution for deposit and withdrawal queries.</li>
+                <li><i class="fa-solid fa-check"></i> Account verification (KYC) and security protection guidelines.</li>
+                <li><i class="fa-solid fa-check"></i> Trading platform guidelines and live user support.</li>
+                <li><i class="fa-solid fa-check"></i> Official guidance to protect you against fraudulent activities.</li>
+            </ul>
         </div>
     </div>
 
@@ -146,7 +240,6 @@
     <script type="text/javascript">
         var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
         
-        // পেজ লোড হওয়ার সময় চ্যাট উইজেট হাইড রাখা
         Tawk_API.onLoad = function(){
             Tawk_API.hideWidget();
         };
@@ -160,13 +253,11 @@
             s0.parentNode.insertBefore(s1, s0);
         })();
 
-        // বাটনে ক্লিক করলে নির্দিষ্ট মেসেজ সেট হয়ে চ্যাট ম্যাক্সিমাইজ হবে
         function openChatWithMsg(message) {
             if (typeof Tawk_API !== 'undefined' && Tawk_API.maximize) {
                 Tawk_API.showWidget();
                 Tawk_API.maximize();
                 
-                // ভিজিটর চ্যাটে ঢোকার সাথে সাথে স্বয়ংক্রিয়ভাবে মেসেজ সেট করার অপশন
                 if (Tawk_API.setAttributes) {
                     Tawk_API.setAttributes({
                         'cart': message
