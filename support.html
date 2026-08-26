@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CptMarkets - Customer Service</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #060913;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .header {
+            padding: 20px;
+            background: #0b1120;
+            border-bottom: 1px solid #1e293b;
+        }
+        .header h1 {
+            color: #facc15;
+            font-size: 24px;
+            margin: 5px 0;
+        }
+        .container {
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .btn-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .support-card {
+            background: #0b1120;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 20px;
+            color: #fff;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .support-card:hover {
+            border-color: #facc15;
+        }
+        .support-card h3 {
+            margin: 10px 0 0 0;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>CptMarkets</h1>
+        <p>Online Customer Service</p>
+    </div>
+
+    <div class="container">
+        <h2>Hi there 👋</h2>
+        <p>How can we help you today?</p>
+
+        <div class="btn-grid">
+            <div class="support-card" onclick="openChatWithMsg('Hello, I need Account Help.')">
+                <h3>👤 Account Help</h3>
+            </div>
+            <div class="support-card" onclick="openChatWithMsg('Hello, I want to Deposit.')">
+                <h3>💳 Deposit</h3>
+            </div>
+            <div class="support-card" onclick="openChatWithMsg('Hello, I want to Withdrawal.')">
+                <h3>📤 Withdrawal</h3>
+            </div>
+            <div class="support-card" onclick="openChatWithMsg('Hello, I need Support.')">
+                <h3>🎧 Other Support</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Start of Tawk.to Script (আপনার অরিজিনাল আইডি সহ) -->
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/6a71003c2d507b1d4a9fad4c/1jv4mhrhb';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+
+    // বাটনে ক্লিক করলে চ্যাট ওপেন হওয়ার ফাংশন
+    function openChatWithMsg(message) {
+        if(typeof Tawk_API !== 'undefined' && Tawk_API.maximize) {
+            Tawk_API.showWidget();
+            Tawk_API.maximize();
+        } else {
+            alert(message);
+        }
+    }
+    </script>
+    <!-- End of Tawk.to Script -->
+
+</body>
+</html>
