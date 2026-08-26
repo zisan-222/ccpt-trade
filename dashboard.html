@@ -26,7 +26,7 @@
         </div>
     </header>
 
-    <!-- BANNER (Text shifted to top-left matching your blue/red mark & 3D enhanced) -->
+    <!-- BANNER -->
     <section class="banner" style="background-image: url('market-bg.svg');">
         <div class="banner-content">
             <h1>CptMarkets</h1>
@@ -34,7 +34,7 @@
         </div>
     </section>
 
-    <!-- ASSET CARD (Balance Hide/Show with Eye Icon) -->
+    <!-- ASSET CARD -->
     <section class="asset-card">
         <div class="asset-header">
             <span>Total Assets (USD)</span>
@@ -49,16 +49,15 @@
         </div>
 
         <div class="action-buttons">
-            <!-- ডিপোজিট বাটন থেকে আগের লাইভ চ্যাট পপআপ ট্রিগার সরিয়ে দেওয়া হয়েছে -->
             <button class="deposit-btn"><i class="fa-solid fa-arrow-down-long"></i> Deposit</button>
             <button class="withdraw-btn"><i class="fa-solid fa-arrow-up-long"></i> Withdraw</button>
             <button class="transfer-btn" onclick="window.location.href='transfer.html'"><i class="fa-solid fa-right-left"></i> Transfer</button>
         </div>
     </section>
 
-    <!-- MENU GRID (Support button connected to support.html) -->
+    <!-- MENU GRID -->
     <section class="menu-grid">
-        <!-- সাপোর্ট বাটনে ক্লিক করলে support.html ওপেন হবে -->
+        <!-- Support button connected to support.html -->
         <div class="menu-item" onclick="window.location.href='support.html'" style="cursor: pointer;">
             <div class="menu-icon"><i class="fa-solid fa-headset"></i></div>
             <span>Support</span>
@@ -107,7 +106,7 @@
         <div class="market-item" onclick="window.location.href='markets.html'">
             <div><h3>XAGUSD</h3><small>Silver / USD</small></div>
             <div class="price">28.651</div>
-            <div class="down">-2.22%`</div>
+            <div class="down">-2.22%</div>
         </div>
         <div class="market-item" onclick="window.location.href='markets.html'">
             <div><h3>BTCUSD</h3><small>Bitcoin / USD</small></div>
@@ -127,7 +126,7 @@
 
 </div>
 
-<!-- সাপোর্টের কাজের জন্য support.js এর দরকার নেই, তাই সেটি বাদ দেওয়া হয়েছে যাতে অন্য বাটনে ক্লিক করলে গ্রিন স্ক্রিন না আসে -->
+<!-- ড্যাশবোর্ডে যাতে সবুজ চ্যাট আইকন না দেখায়, তাই Tawk.to স্ক্রিপ্টটি এখান থেকে রিমুভ করে দেওয়া হয়েছে -->
 <script src="balance.js"></script>
 <script src="dashboard.js"></script>
 
