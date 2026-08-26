@@ -1,6 +1,6 @@
 /* ==========================================
    CPTMARKETS DASHBOARD
-   dashboard.js - FINAL BUTTON + BALANCE FIX
+   dashboard.js - FINAL COMPLETE BUTTON FIX
 ========================================== */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -15,13 +15,13 @@ document.addEventListener("DOMContentLoaded", function () {
     window.Tawk_API = window.Tawk_API || {};
     window.Tawk_LoadStart = new Date();
 
+
     window.Tawk_API.onLoad = function () {
 
         console.log("Tawk.to loaded");
 
         if (
-            typeof window.Tawk_API.hideWidget ===
-            "function"
+            typeof window.Tawk_API.hideWidget === "function"
         ) {
             window.Tawk_API.hideWidget();
         }
@@ -50,17 +50,22 @@ document.addEventListener("DOMContentLoaded", function () {
         const script =
             document.createElement("script");
 
+
         script.async = true;
+
 
         script.src =
             "https://embed.tawk.to/6a71003c2d507b1d4a9fad4c/1jv4mhrhb";
 
+
         script.charset = "UTF-8";
+
 
         script.setAttribute(
             "crossorigin",
             "*"
         );
+
 
         document.body.appendChild(script);
 
@@ -71,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* ======================================
-       HIDE TAWK FLOATING ICON
+       KEEP TAWK HIDDEN INITIALLY
     ====================================== */
 
     const hideTawk =
@@ -98,11 +103,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     window.openSupportChat = function () {
 
-        console.log("Opening Customer Service");
+        console.log(
+            "Opening Customer Service"
+        );
 
 
         /* ----------------------------------
-           TAWK ALREADY LOADED
+           TAWK ALREADY READY
         ---------------------------------- */
 
         if (
@@ -190,46 +197,45 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* ==========================================
-       BALANCE EYE HIDE / SHOW - FIXED
+       BALANCE EYE
+       HTML IDs:
+       toggleEye
+       balanceAmount
     ========================================== */
 
-    const balanceEye =
-        document.getElementById("balanceEye");
+    const toggleEye =
+        document.getElementById("toggleEye");
 
-    const balanceElement =
-        document.getElementById("balance");
+
+    const balanceAmount =
+        document.getElementById("balanceAmount");
 
 
     let balanceVisible = true;
 
-    let savedBalanceText = "";
+
+    let originalBalanceText = "";
 
 
-    /*
-       Save the original balance text.
-       This prevents the balance from being
-       permanently lost when hidden.
-    */
+    if (balanceAmount) {
 
-    if (balanceElement) {
-
-        savedBalanceText =
-            balanceElement.textContent.trim();
+        originalBalanceText =
+            balanceAmount.textContent.trim();
 
     }
 
 
-    /*
-       Get current balance safely
-    */
+    /* ======================================
+       GET CURRENT BALANCE
+    ====================================== */
 
-    function getCurrentBalanceValue() {
+    function getCurrentBalance() {
 
-        let currentBalance = null;
+        let value = null;
 
 
         /* ----------------------------------
-           Try getBalance()
+           Try global getBalance()
         ---------------------------------- */
 
         if (
@@ -239,25 +245,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
             try {
 
-                const value =
+                const result =
                     window.getBalance();
 
+
                 if (
-                    value !== undefined &&
-                    value !== null &&
-                    value !== "" &&
-                    !isNaN(Number(value))
+                    result !== undefined &&
+                    result !== null &&
+                    result !== "" &&
+                    !isNaN(Number(result))
                 ) {
 
-                    currentBalance =
-                        Number(value);
+                    value =
+                        Number(result);
 
                 }
 
             } catch (error) {
 
                 console.warn(
-                    "getBalance() failed:",
+                    "getBalance() error:",
                     error
                 );
 
@@ -267,25 +274,45 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         /* ----------------------------------
-           Try saved balance
+           Try balance.js stored values
         ---------------------------------- */
 
-        if (
-            currentBalance === null &&
-            savedBalanceText
-        ) {
+        if (value === null) {
 
-            const cleaned =
-                savedBalanceText
-                    .replace(/[^0-9.-]/g, "");
+            const possibleKeys = [
+                "balance",
+                "userBalance",
+                "accountBalance",
+                "totalBalance"
+            ];
 
-            if (
-                cleaned !== "" &&
-                !isNaN(Number(cleaned))
+
+            for (
+                let i = 0;
+                i < possibleKeys.length;
+                i++
             ) {
 
-                currentBalance =
-                    Number(cleaned);
+                const key =
+                    possibleKeys[i];
+
+
+                const stored =
+                    localStorage.getItem(key);
+
+
+                if (
+                    stored !== null &&
+                    stored !== "" &&
+                    !isNaN(Number(stored))
+                ) {
+
+                    value =
+                        Number(stored);
+
+                    break;
+
+                }
 
             }
 
@@ -293,28 +320,94 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         /* ----------------------------------
-           Final fallback
+           Read visible HTML balance
         ---------------------------------- */
 
         if (
-            currentBalance === null
+            value === null &&
+            balanceAmount
         ) {
 
-            currentBalance = 0;
+            const text =
+                balanceAmount.textContent.trim();
+
+
+            if (
+                text &&
+                text !== "••••••"
+            ) {
+
+                const cleaned =
+                    text.replace(
+                        /[^0-9.-]/g,
+                        ""
+                    );
+
+
+                if (
+                    cleaned !== "" &&
+                    !isNaN(Number(cleaned))
+                ) {
+
+                    value =
+                        Number(cleaned);
+
+                }
+
+            }
 
         }
 
 
-        return currentBalance;
+        /* ----------------------------------
+           Original saved text
+        ---------------------------------- */
+
+        if (
+            value === null &&
+            originalBalanceText
+        ) {
+
+            const cleaned =
+                originalBalanceText.replace(
+                    /[^0-9.-]/g,
+                    ""
+                );
+
+
+            if (
+                cleaned !== "" &&
+                !isNaN(Number(cleaned))
+            ) {
+
+                value =
+                    Number(cleaned);
+
+            }
+
+        }
+
+
+        if (
+            value === null ||
+            !isFinite(value)
+        ) {
+
+            value = 0;
+
+        }
+
+
+        return value;
 
     }
 
 
-    /*
-       Format balance safely
-    */
+    /* ======================================
+       FORMAT BALANCE
+    ====================================== */
 
-    function formatBalanceValue(value) {
+    function formatBalance(value) {
 
         if (
             typeof window.formatUSD ===
@@ -328,7 +421,7 @@ document.addEventListener("DOMContentLoaded", function () {
             } catch (error) {
 
                 console.warn(
-                    "formatUSD() failed:",
+                    "formatUSD() error:",
                     error
                 );
 
@@ -343,121 +436,130 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /*
+    /* ======================================
        SHOW BALANCE
-    */
+    ====================================== */
 
     function showBalance() {
 
-        if (!balanceElement) {
+        if (!balanceAmount) {
             return;
         }
 
 
-        const currentBalance =
-            getCurrentBalanceValue();
+        const value =
+            getCurrentBalance();
 
 
-        balanceElement.textContent =
-            formatBalanceValue(
-                currentBalance
-            );
+        balanceAmount.textContent =
+            formatBalance(value);
 
 
-        savedBalanceText =
-            balanceElement.textContent;
+        originalBalanceText =
+            balanceAmount.textContent;
 
 
         balanceVisible = true;
 
 
-        if (balanceEye) {
+        if (toggleEye) {
 
-            balanceEye.classList.remove(
+            toggleEye.classList.remove(
                 "fa-eye-slash"
             );
 
-            balanceEye.classList.add(
+
+            toggleEye.classList.add(
                 "fa-eye"
             );
 
-            balanceEye.setAttribute(
+
+            toggleEye.setAttribute(
                 "aria-label",
                 "Hide balance"
             );
 
         }
 
+
+        console.log(
+            "Balance shown:",
+            balanceAmount.textContent
+        );
+
     }
 
 
-    /*
+    /* ======================================
        HIDE BALANCE
-    */
+    ====================================== */
 
     function hideBalance() {
 
-        if (!balanceElement) {
+        if (!balanceAmount) {
             return;
         }
 
 
-        /*
-           Save the real balance before hiding
-        */
-
         if (
-            balanceElement.textContent.trim() !==
+            balanceAmount.textContent !==
             "••••••"
         ) {
 
-            savedBalanceText =
-                balanceElement.textContent.trim();
+            originalBalanceText =
+                balanceAmount.textContent;
 
         }
 
 
-        balanceElement.textContent =
+        balanceAmount.textContent =
             "••••••";
 
 
         balanceVisible = false;
 
 
-        if (balanceEye) {
+        if (toggleEye) {
 
-            balanceEye.classList.remove(
+            toggleEye.classList.remove(
                 "fa-eye"
             );
 
-            balanceEye.classList.add(
+
+            toggleEye.classList.add(
                 "fa-eye-slash"
             );
 
-            balanceEye.setAttribute(
+
+            toggleEye.setAttribute(
                 "aria-label",
                 "Show balance"
             );
 
         }
 
+
+        console.log(
+            "Balance hidden"
+        );
+
     }
 
 
-    /*
-       EYE BUTTON
-    */
+    /* ======================================
+       BALANCE EYE CLICK
+    ====================================== */
 
     if (
-        balanceEye &&
-        balanceElement
+        toggleEye &&
+        balanceAmount
     ) {
 
-        balanceEye.style.cursor =
+        toggleEye.style.cursor =
             "pointer";
 
 
-        balanceEye.addEventListener(
+        toggleEye.addEventListener(
             "click",
             function (event) {
 
@@ -480,34 +582,14 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        /*
-           Make sure the initial state
-           starts with the eye icon.
-        */
-
-        balanceEye.classList.remove(
-            "fa-eye-slash"
-        );
-
-        balanceEye.classList.add(
-            "fa-eye"
-        );
-
-
-        balanceEye.setAttribute(
-            "aria-label",
-            "Hide balance"
-        );
-
-
         console.log(
-            "Balance eye toggle ready"
+            "Balance Eye Toggle Ready"
         );
 
     } else {
 
         console.warn(
-            "Balance eye or balance element not found."
+            "Balance elements not found."
         );
 
     }
@@ -520,12 +602,12 @@ document.addEventListener("DOMContentLoaded", function () {
     function openWithdrawInterface() {
 
         console.log(
-            "Withdraw interface opening"
+            "Opening Withdraw Interface"
         );
 
 
         /* ----------------------------------
-           REMOVE OLD INTERFACE
+           REMOVE OLD PAGE
         ---------------------------------- */
 
         const oldPage =
@@ -574,7 +656,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     id="cptWithdrawBack"
                     class="cpt-back-button"
                     type="button"
-                    aria-label="Back"
                 >
                     ‹
                 </button>
@@ -903,15 +984,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     withdrawPage.remove();
 
 
-                    const s =
+                    const withdrawStyle =
                         document.getElementById(
                             "cptWithdrawStyle"
                         );
 
 
-                    if (s) {
+                    if (withdrawStyle) {
 
-                        s.remove();
+                        withdrawStyle.remove();
 
                     }
 
@@ -922,18 +1003,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         /* ==================================
-           SUBMIT WITHDRAW
+           SUBMIT WITHDRAWAL
         ================================== */
 
-        const submitButton =
+        const submitWithdrawal =
             document.getElementById(
                 "cptSubmitWithdrawal"
             );
 
 
-        if (submitButton) {
+        if (submitWithdrawal) {
 
-            submitButton.addEventListener(
+            submitWithdrawal.addEventListener(
                 "click",
                 function () {
 
@@ -958,7 +1039,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                     /* ------------------------
-                       VALIDATE AMOUNT
+                       AMOUNT VALIDATION
                     ------------------------ */
 
                     if (
@@ -978,7 +1059,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                     /* ------------------------
-                       VALIDATE ADDRESS
+                       ADDRESS VALIDATION
                     ------------------------ */
 
                     if (!address) {
@@ -999,81 +1080,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     ------------------------ */
 
                     let currentBalance =
-                        0;
+                        getCurrentBalance();
 
-
-                    if (
-                        typeof window.getBalance ===
-                        "function"
-                    ) {
-
-                        try {
-
-                            currentBalance =
-                                Number(
-                                    window.getBalance()
-                                );
-
-                        } catch (error) {
-
-                            console.warn(
-                                "Unable to read balance:",
-                                error
-                            );
-
-                        }
-
-                    }
-
-
-                    /*
-                       If getBalance() is not
-                       available, read from the
-                       balance element.
-                    */
-
-                    if (
-                        !isFinite(currentBalance) ||
-                        currentBalance === 0
-                    ) {
-
-                        const balanceText =
-                            balanceElement
-                                ? balanceElement.textContent
-                                : "";
-
-
-                        if (
-                            balanceText &&
-                            balanceText !== "••••••"
-                        ) {
-
-                            const parsedBalance =
-                                parseFloat(
-                                    balanceText.replace(
-                                        /[^0-9.-]/g,
-                                        ""
-                                    )
-                                );
-
-
-                            if (
-                                !isNaN(parsedBalance)
-                            ) {
-
-                                currentBalance =
-                                    parsedBalance;
-
-                            }
-
-                        }
-
-                    }
-
-
-                    /* ------------------------
-                       CHECK BALANCE
-                    ------------------------ */
 
                     if (
                         amount >
@@ -1092,28 +1100,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                     /* ------------------------
-                       SUCCESS MESSAGE
+                       CUSTOMER SERVICE
                     ------------------------ */
 
                     message.style.display =
                         "block";
 
 
-                    message.innerHTML =
+                    message.textContent =
                         "Please contact Customer Service to complete your withdrawal.";
 
 
                     setTimeout(
                         function () {
 
-                            if (
-                                typeof window.openSupportChat ===
-                                "function"
-                            ) {
-
-                                window.openSupportChat();
-
-                            }
+                            window.openSupportChat();
 
                         },
                         500
@@ -1128,83 +1129,150 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* ======================================
-       UNIVERSAL BUTTON CLICK HANDLER
-       FIXES DASHBOARD BUTTONS
+       MENU ITEMS
+       CURRENT HTML DOES NOT HAVE
+       BUTTON CLASSES.
+
+       So we identify them by their
+       visible text.
     ====================================== */
 
-    document.addEventListener(
-        "click",
-        function (event) {
-
-            const target =
-                event.target;
+    const menuItems =
+        document.querySelectorAll(
+            ".menu-grid .menu-item"
+        );
 
 
-            /* =================================
+    menuItems.forEach(
+        function (item) {
+
+            const label =
+                item
+                    .querySelector("span");
+
+
+            if (!label) {
+                return;
+            }
+
+
+            const text =
+                label.textContent
+                    .trim()
+                    .toLowerCase();
+
+
+            /* ----------------------------
+               SUPPORT
+            ---------------------------- */
+
+            if (text === "support") {
+
+                item.style.cursor =
+                    "pointer";
+
+
+                item.addEventListener(
+                    "click",
+                    function (event) {
+
+                        event.preventDefault();
+
+                        event.stopPropagation();
+
+                        console.log(
+                            "Support clicked"
+                        );
+
+
+                        window.openSupportChat();
+
+                    }
+                );
+
+            }
+
+
+            /* ----------------------------
                WITHDRAW
-            ================================= */
+            ---------------------------- */
 
-            const withdraw =
-                target.closest(
-                    ".withdraw-btn"
+            if (text === "withdraw") {
+
+                item.style.cursor =
+                    "pointer";
+
+
+                item.addEventListener(
+                    "click",
+                    function (event) {
+
+                        event.preventDefault();
+
+                        event.stopPropagation();
+
+                        console.log(
+                            "Menu Withdraw clicked"
+                        );
+
+
+                        openWithdrawInterface();
+
+                    }
                 );
-
-
-            if (withdraw) {
-
-                event.preventDefault();
-
-                event.stopPropagation();
-
-                console.log(
-                    "Withdraw clicked"
-                );
-
-                openWithdrawInterface();
-
-                return;
 
             }
 
 
-            /* =================================
+            /* ----------------------------
                LOAN
-            ================================= */
+            ---------------------------- */
 
-            const loan =
-                target.closest(
-                    ".loan-btn"
+            if (text === "loan") {
+
+                item.style.cursor =
+                    "pointer";
+
+
+                item.addEventListener(
+                    "click",
+                    function (event) {
+
+                        event.preventDefault();
+
+                        event.stopPropagation();
+
+                        console.log(
+                            "Loan clicked"
+                        );
+
+
+                        window.openSupportChat();
+
+                    }
                 );
-
-
-            if (loan) {
-
-                event.preventDefault();
-
-                event.stopPropagation();
-
-                console.log(
-                    "Loan clicked"
-                );
-
-                openSupportChat();
-
-                return;
 
             }
 
-
-            /* =================================
-               DEPOSIT
-            ================================= */
-
-            const deposit =
-                target.closest(
-                    ".deposit-btn"
-                );
+        }
+    );
 
 
-            if (deposit) {
+    /* ======================================
+       DEPOSIT BUTTON
+    ====================================== */
+
+    const depositButton =
+        document.querySelector(
+            ".deposit-btn"
+        );
+
+
+    if (depositButton) {
+
+        depositButton.addEventListener(
+            "click",
+            function (event) {
 
                 event.preventDefault();
 
@@ -1214,51 +1282,65 @@ document.addEventListener("DOMContentLoaded", function () {
                     "Deposit clicked"
                 );
 
-                openSupportChat();
 
-                return;
+                window.openSupportChat();
 
             }
+        );
+
+    }
 
 
-            /* =================================
-               SUPPORT
-            ================================= */
+    /* ======================================
+       WITHDRAW BUTTON
+       ASSET CARD
+    ====================================== */
 
-            const support =
-                target.closest(
-                    ".support-btn"
-                );
+    const withdrawButton =
+        document.querySelector(
+            ".withdraw-btn"
+        );
 
 
-            if (support) {
+    if (withdrawButton) {
+
+        withdrawButton.addEventListener(
+            "click",
+            function (event) {
 
                 event.preventDefault();
 
                 event.stopPropagation();
 
                 console.log(
-                    "Support clicked"
+                    "Asset Withdraw clicked"
                 );
 
-                openSupportChat();
 
-                return;
+                openWithdrawInterface();
 
             }
+        );
+
+    }
 
 
-            /* =================================
-               TRANSFER
-            ================================= */
+    /* ======================================
+       TRANSFER BUTTON
+       ASSET CARD
+    ====================================== */
 
-            const transfer =
-                target.closest(
-                    ".transfer-btn"
-                );
+    const transferButton =
+        document.querySelector(
+            ".transfer-btn"
+        );
 
 
-            if (transfer) {
+    if (transferButton) {
+
+        transferButton.addEventListener(
+            "click",
+            function (event) {
 
                 event.preventDefault();
 
@@ -1268,15 +1350,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     "Transfer clicked"
                 );
 
+
                 window.location.href =
                     "transfer.html";
 
-                return;
-
             }
+        );
 
-        }
-    );
+    }
 
 
     /* ======================================
@@ -1290,6 +1371,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     if (refreshButton) {
+
+        refreshButton.style.cursor =
+            "pointer";
+
 
         refreshButton.addEventListener(
             "click",
@@ -1325,14 +1410,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                         /*
-                           If balance eye is currently
-                           visible, refresh the displayed
-                           balance as well.
+                           Refresh visible balance
                         */
 
                         if (
                             balanceVisible &&
-                            balanceElement
+                            balanceAmount
                         ) {
 
                             showBalance();
@@ -1350,11 +1433,44 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* ======================================
-       FINAL READY MESSAGE
+       FINAL STATUS
     ====================================== */
 
     console.log(
+        "================================"
+    );
+
+    console.log(
         "CptMarkets Dashboard Ready"
+    );
+
+    console.log(
+        "Balance Eye:",
+        !!toggleEye
+    );
+
+    console.log(
+        "Balance Amount:",
+        !!balanceAmount
+    );
+
+    console.log(
+        "Deposit:",
+        !!depositButton
+    );
+
+    console.log(
+        "Withdraw:",
+        !!withdrawButton
+    );
+
+    console.log(
+        "Menu Items:",
+        menuItems.length
+    );
+
+    console.log(
+        "================================"
     );
 
 });
