@@ -1,6 +1,6 @@
 /* ==========================================
    CPTMARKETS DASHBOARD
-   dashboard.js - FINAL COMPLETE BUTTON FIX
+   dashboard.js - Updated for withdraw.html
 ========================================== */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -108,10 +108,6 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        /* ----------------------------------
-           TAWK ALREADY READY
-        ---------------------------------- */
-
         if (
             window.Tawk_API &&
             typeof window.Tawk_API.showWidget ===
@@ -139,10 +135,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
 
-
-        /* ----------------------------------
-           WAIT FOR TAWK
-        ---------------------------------- */
 
         let attempts = 0;
 
@@ -234,10 +226,6 @@ document.addEventListener("DOMContentLoaded", function () {
         let value = null;
 
 
-        /* ----------------------------------
-           Try global getBalance()
-        ---------------------------------- */
-
         if (
             typeof window.getBalance ===
             "function"
@@ -272,10 +260,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
 
-
-        /* ----------------------------------
-           Try balance.js stored values
-        ---------------------------------- */
 
         if (value === null) {
 
@@ -319,10 +303,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        /* ----------------------------------
-           Read visible HTML balance
-        ---------------------------------- */
-
         if (
             value === null &&
             balanceAmount
@@ -358,10 +338,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
 
-
-        /* ----------------------------------
-           Original saved text
-        ---------------------------------- */
 
         if (
             value === null &&
@@ -481,12 +457,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
 
-
-        console.log(
-            "Balance shown:",
-            balanceAmount.textContent
-        );
-
     }
 
 
@@ -538,11 +508,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
 
-
-        console.log(
-            "Balance hidden"
-        );
-
     }
 
 
@@ -581,555 +546,24 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         );
 
-
-        console.log(
-            "Balance Eye Toggle Ready"
-        );
-
-    } else {
-
-        console.warn(
-            "Balance elements not found."
-        );
-
     }
 
 
     /* ======================================
-       WITHDRAW INTERFACE
+       NAVIGATION TO WITHDRAW.HTML (Redirect Function)
     ====================================== */
 
-    function openWithdrawInterface() {
-
-        console.log(
-            "Opening Withdraw Interface"
-        );
-
-
-        /* ----------------------------------
-           REMOVE OLD PAGE
-        ---------------------------------- */
-
-        const oldPage =
-            document.getElementById(
-                "cptWithdrawPage"
-            );
-
-
-        if (oldPage) {
-
-            oldPage.remove();
-
+    function goToWithdraw(event) {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
         }
-
-
-        const oldStyle =
-            document.getElementById(
-                "cptWithdrawStyle"
-            );
-
-
-        if (oldStyle) {
-
-            oldStyle.remove();
-
-        }
-
-
-        /* ==================================
-           CREATE WITHDRAW PAGE
-        ================================== */
-
-        const withdrawPage =
-            document.createElement("div");
-
-
-        withdrawPage.id =
-            "cptWithdrawPage";
-
-
-        withdrawPage.innerHTML = `
-
-            <div class="cpt-withdraw-header">
-
-                <button
-                    id="cptWithdrawBack"
-                    class="cpt-back-button"
-                    type="button"
-                >
-                    ‹
-                </button>
-
-                <h1>Withdraw</h1>
-
-            </div>
-
-
-            <div class="cpt-withdraw-content">
-
-                <div class="cpt-withdraw-card">
-
-                    <label>
-                        Withdrawal Amount
-                    </label>
-
-                    <input
-                        type="number"
-                        id="cptWithdrawAmount"
-                        placeholder="Withdrawal Amount (USD)"
-                        min="0"
-                        step="0.01"
-                    >
-
-
-                    <label>
-                        Receiving Address
-                    </label>
-
-                    <input
-                        type="text"
-                        id="cptReceivingAddress"
-                        placeholder="Receiving Address / Account"
-                    >
-
-
-                    <button
-                        id="cptSubmitWithdrawal"
-                        class="cpt-submit-withdraw"
-                        type="button"
-                    >
-                        Submit Withdrawal
-                    </button>
-
-
-                    <div
-                        id="cptWithdrawMessage"
-                        class="cpt-withdraw-message"
-                    ></div>
-
-                </div>
-
-            </div>
-
-        `;
-
-
-        document.body.appendChild(
-            withdrawPage
-        );
-
-
-        /* ==================================
-           WITHDRAW STYLE
-        ================================== */
-
-        const style =
-            document.createElement("style");
-
-
-        style.id =
-            "cptWithdrawStyle";
-
-
-        style.textContent = `
-
-            #cptWithdrawPage {
-
-                position: fixed;
-
-                inset: 0;
-
-                z-index: 999999;
-
-                background:
-                    linear-gradient(
-                        180deg,
-                        #081126 0%,
-                        #020817 100%
-                    );
-
-                color: white;
-
-                overflow-y: auto;
-
-                font-family:
-                    Arial,
-                    Helvetica,
-                    sans-serif;
-
-            }
-
-
-            .cpt-withdraw-header {
-
-                height: 88px;
-
-                display: flex;
-
-                align-items: center;
-
-                justify-content: center;
-
-                position: relative;
-
-                background: #0c152b;
-
-                border-bottom:
-                    1px solid
-                    rgba(255,255,255,.08);
-
-            }
-
-
-            .cpt-withdraw-header h1 {
-
-                margin: 0;
-
-                font-size: 28px;
-
-            }
-
-
-            .cpt-back-button {
-
-                position: absolute;
-
-                left: 18px;
-
-                top: 50%;
-
-                transform:
-                    translateY(-50%);
-
-                border: none;
-
-                background: transparent;
-
-                color: white;
-
-                font-size: 42px;
-
-                line-height: 1;
-
-                cursor: pointer;
-
-            }
-
-
-            .cpt-withdraw-content {
-
-                padding: 30px 28px;
-
-            }
-
-
-            .cpt-withdraw-card {
-
-                max-width: 650px;
-
-                margin: 0 auto;
-
-                padding: 30px;
-
-                border-radius: 30px;
-
-                background:
-                    linear-gradient(
-                        145deg,
-                        #122440,
-                        #172844
-                    );
-
-                border:
-                    1px solid
-                    rgba(255,255,255,.12);
-
-                box-shadow:
-                    0 15px 45px
-                    rgba(0,0,0,.35);
-
-            }
-
-
-            .cpt-withdraw-card label {
-
-                display: block;
-
-                margin-bottom: 12px;
-
-                color: #aebbd3;
-
-                font-size: 20px;
-
-            }
-
-
-            .cpt-withdraw-card input {
-
-                width: 100%;
-
-                height: 65px;
-
-                margin-bottom: 25px;
-
-                padding: 0 20px;
-
-                box-sizing: border-box;
-
-                border-radius: 20px;
-
-                border:
-                    1px solid
-                    rgba(130,160,210,.28);
-
-                outline: none;
-
-                background: #070f22;
-
-                color: white;
-
-                font-size: 20px;
-
-            }
-
-
-            .cpt-withdraw-card input::placeholder {
-
-                color: #71809d;
-
-            }
-
-
-            .cpt-submit-withdraw {
-
-                width: 100%;
-
-                height: 68px;
-
-                border: none;
-
-                border-radius: 22px;
-
-                font-size: 21px;
-
-                font-weight: 700;
-
-                color: #171717;
-
-                background:
-                    linear-gradient(
-                        90deg,
-                        #ffe68a,
-                        #f5c400,
-                        #d99100
-                    );
-
-                cursor: pointer;
-
-            }
-
-
-            .cpt-submit-withdraw:active {
-
-                transform:
-                    scale(.99);
-
-            }
-
-
-            .cpt-withdraw-message {
-
-                display: none;
-
-                margin-top: 25px;
-
-                padding: 20px;
-
-                border-radius: 20px;
-
-                background: #182337;
-
-                text-align: center;
-
-                font-size: 18px;
-
-                line-height: 1.5;
-
-            }
-
-        `;
-
-
-        document.head.appendChild(
-            style
-        );
-
-
-        /* ==================================
-           BACK BUTTON
-        ================================== */
-
-        const backButton =
-            document.getElementById(
-                "cptWithdrawBack"
-            );
-
-
-        if (backButton) {
-
-            backButton.addEventListener(
-                "click",
-                function () {
-
-                    withdrawPage.remove();
-
-
-                    const withdrawStyle =
-                        document.getElementById(
-                            "cptWithdrawStyle"
-                        );
-
-
-                    if (withdrawStyle) {
-
-                        withdrawStyle.remove();
-
-                    }
-
-                }
-            );
-
-        }
-
-
-        /* ==================================
-           SUBMIT WITHDRAWAL
-        ================================== */
-
-        const submitWithdrawal =
-            document.getElementById(
-                "cptSubmitWithdrawal"
-            );
-
-
-        if (submitWithdrawal) {
-
-            submitWithdrawal.addEventListener(
-                "click",
-                function () {
-
-                    const amount =
-                        parseFloat(
-                            document.getElementById(
-                                "cptWithdrawAmount"
-                            ).value
-                        );
-
-
-                    const address =
-                        document.getElementById(
-                            "cptReceivingAddress"
-                        ).value.trim();
-
-
-                    const message =
-                        document.getElementById(
-                            "cptWithdrawMessage"
-                        );
-
-
-                    /* ------------------------
-                       AMOUNT VALIDATION
-                    ------------------------ */
-
-                    if (
-                        isNaN(amount) ||
-                        amount <= 0
-                    ) {
-
-                        message.style.display =
-                            "block";
-
-                        message.textContent =
-                            "Please enter a valid withdrawal amount.";
-
-                        return;
-
-                    }
-
-
-                    /* ------------------------
-                       ADDRESS VALIDATION
-                    ------------------------ */
-
-                    if (!address) {
-
-                        message.style.display =
-                            "block";
-
-                        message.textContent =
-                            "Please enter your receiving address / account.";
-
-                        return;
-
-                    }
-
-
-                    /* ------------------------
-                       GET BALANCE
-                    ------------------------ */
-
-                    let currentBalance =
-                        getCurrentBalance();
-
-
-                    if (
-                        amount >
-                        currentBalance
-                    ) {
-
-                        message.style.display =
-                            "block";
-
-                        message.textContent =
-                            "Insufficient account balance.";
-
-                        return;
-
-                    }
-
-
-                    /* ------------------------
-                       CUSTOMER SERVICE
-                    ------------------------ */
-
-                    message.style.display =
-                        "block";
-
-
-                    message.textContent =
-                        "Please contact Customer Service to complete your withdrawal.";
-
-
-                    setTimeout(
-                        function () {
-
-                            window.openSupportChat();
-
-                        },
-                        500
-                    );
-
-                }
-            );
-
-        }
-
+        window.location.href = "withdraw.html";
     }
 
 
     /* ======================================
-       MENU ITEMS
+       MENU ITEMS (Support, Withdraw, Loan)
     ====================================== */
 
     const menuItems =
@@ -1142,8 +576,7 @@ document.addEventListener("DOMContentLoaded", function () {
         function (item) {
 
             const label =
-                item
-                    .querySelector("span");
+                item.querySelector("span");
 
 
             if (!label) {
@@ -1157,15 +590,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     .toLowerCase();
 
 
-            /* ----------------------------
-               SUPPORT
-            ---------------------------- */
-
+            /* Support */
             if (text === "support") {
 
                 item.style.cursor =
                     "pointer";
-
 
                 item.addEventListener(
                     "click",
@@ -1183,41 +612,22 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
 
-            /* ----------------------------
-               WITHDRAW
-            ---------------------------- */
-
+            /* Withdraw (Menu Item) -> withdraw.html */
             if (text === "withdraw") {
 
                 item.style.cursor =
                     "pointer";
 
-
-                item.addEventListener(
-                    "click",
-                    function (event) {
-
-                        event.preventDefault();
-
-                        event.stopPropagation();
-
-                        openWithdrawInterface();
-
-                    }
-                );
+                item.addEventListener("click", goToWithdraw);
 
             }
 
 
-            /* ----------------------------
-               LOAN
-            ---------------------------- */
-
+            /* Loan */
             if (text === "loan") {
 
                 item.style.cursor =
                     "pointer";
-
 
                 item.addEventListener(
                     "click",
@@ -1239,7 +649,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* ======================================
-       DEPOSIT BUTTON (সংশোধিত অংশ)
+       DEPOSIT BUTTON -> deposit.html
     ====================================== */
 
     const depositButton =
@@ -1258,7 +668,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 event.stopPropagation();
 
-                // পপআপ বা চ্যাটে না নিয়ে সরাসরি deposit.html এ নিয়ে যাবে
                 window.location.href = "deposit.html";
 
             }
@@ -1268,8 +677,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* ======================================
-       WITHDRAW BUTTON
-       ASSET CARD
+       WITHDRAW BUTTON (Asset Card) -> withdraw.html
     ====================================== */
 
     const withdrawButton =
@@ -1280,25 +688,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (withdrawButton) {
 
-        withdrawButton.addEventListener(
-            "click",
-            function (event) {
-
-                event.preventDefault();
-
-                event.stopPropagation();
-
-                openWithdrawInterface();
-
-            }
-        );
+        withdrawButton.style.cursor = "pointer";
+        withdrawButton.addEventListener("click", goToWithdraw);
 
     }
 
 
     /* ======================================
        TRANSFER BUTTON
-       ASSET CARD
     ====================================== */
 
     const transferButton =
@@ -1393,6 +790,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
-    console.log("CptMarkets Dashboard Ready - Fixed");
+    console.log("CptMarkets Dashboard Ready - Withdraw Linked");
 
 });
