@@ -3,13 +3,20 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
     <title>CptMarkets - Financial Dashboard</title>
-    <link rel="stylesheet" href="dashboard.css?v=999.5">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- তাকওয়ার সবুজ গোল আইকন চিরতরে হাইড করার স্টাইল -->
+
+    <link rel="stylesheet" href="dashboard.css?v=999.6">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Tawk floating green icon permanently hidden -->
     <style>
         #tawkchat-container {
             display: none !important;
@@ -17,131 +24,832 @@
             opacity: 0 !important;
             pointer-events: none !important;
         }
+
+        /* =====================================================
+           DASHBOARD BUTTON SIZE FIX
+           Existing layout is preserved.
+           Buttons are only made slightly larger.
+           ===================================================== */
+
+        .menu-grid {
+            gap: 12px !important;
+        }
+
+        .menu-item {
+            min-height: 124px !important;
+            padding: 18px 10px !important;
+            box-sizing: border-box !important;
+        }
+
+        .menu-icon {
+            font-size: 28px !important;
+        }
+
+        .menu-item span {
+            font-size: 15px !important;
+            font-weight: 600 !important;
+        }
+
+        .action-buttons {
+            gap: 12px !important;
+        }
+
+        .action-buttons button {
+            min-height: 62px !important;
+            padding: 12px 10px !important;
+            font-size: 16px !important;
+            box-sizing: border-box !important;
+        }
+
+        .action-buttons a {
+            min-height: 62px !important;
+        }
+
+        .action-buttons a button {
+            height: 100% !important;
+        }
+
+        /* Balance text */
+        #balanceAmount {
+            white-space: nowrap;
+            transition: opacity 0.2s ease;
+        }
+
+        /* Prevent small mobile screens from breaking the 4-column layout */
+        @media (max-width: 390px) {
+            .menu-grid {
+                gap: 9px !important;
+            }
+
+            .menu-item {
+                min-height: 116px !important;
+                padding: 15px 6px !important;
+            }
+
+            .menu-icon {
+                font-size: 25px !important;
+            }
+
+            .menu-item span {
+                font-size: 13px !important;
+            }
+
+            .action-buttons {
+                gap: 8px !important;
+            }
+
+            .action-buttons button {
+                min-height: 58px !important;
+                padding: 10px 6px !important;
+                font-size: 14px !important;
+            }
+        }
     </style>
 </head>
+
 
 <body>
 
 <div class="container">
 
-    <!-- HEADER -->
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
+
     <header class="header">
+
         <div class="logo">
-            <div class="logo-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <div class="logo-icon">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+
             <span>CptMarkets</span>
         </div>
+
         <div class="header-actions">
             <i class="fa-solid fa-rotate-right"></i>
             <i class="fa-solid fa-plus"></i>
         </div>
+
     </header>
 
-    <!-- BANNER -->
-    <section class="banner" style="background-image: url('market-bg.svg');">
+
+    <!-- =====================================================
+         BANNER
+         ===================================================== -->
+
+    <section class="banner"
+        style="background-image: url('market-bg.svg');">
+
         <div class="banner-content">
+
             <h1>CptMarkets</h1>
-            <p>Global integrated financial trading platform</p>
+
+            <p>
+                Global integrated financial trading platform
+            </p>
+
         </div>
+
     </section>
 
-    <!-- ASSET CARD -->
+
+    <!-- =====================================================
+         ASSET CARD
+         ===================================================== -->
+
     <section class="asset-card">
+
         <div class="asset-header">
+
             <span>Total Assets (USD)</span>
-            <i class="fa-regular fa-eye toggle-eye" id="toggleEye" style="cursor: pointer;"></i>
+
+            <i class="fa-regular fa-eye toggle-eye"
+                id="toggleEye"
+                style="cursor:pointer;">
+            </i>
+
         </div>
+
+
+        <!-- LIVE FIREBASE BALANCE -->
 
         <h2 id="balanceAmount">$0.00</h2>
 
+
         <div class="asset-info">
-            <span>Floating P/L <strong class="profit">+0.00</strong></span>
-            <span>Equity <strong>$0.00</strong></span>
+
+            <span>
+                Floating P/L
+                <strong class="profit">+0.00</strong>
+            </span>
+
+            <span>
+                Equity
+                <strong id="equityAmount">$0.00</strong>
+            </span>
+
         </div>
+
 
         <div class="action-buttons">
-            <!-- সরাসরি HTML এর মাধ্যমে deposit.html এ যাওয়ার লিংক -->
-            <a href="deposit.html" style="text-decoration: none; flex: 1; display: flex;">
-                <button class="deposit-btn" type="button" style="width: 100%; cursor: pointer;"><i class="fa-solid fa-arrow-down-long"></i> Deposit</button>
+
+            <!-- DEPOSIT -->
+
+            <a href="deposit.html"
+                style="
+                    text-decoration:none;
+                    flex:1;
+                    display:flex;
+                ">
+
+                <button
+                    class="deposit-btn"
+                    type="button"
+                    style="
+                        width:100%;
+                        cursor:pointer;
+                    ">
+
+                    <i class="fa-solid fa-arrow-down-long"></i>
+                    Deposit
+
+                </button>
+
             </a>
-            <button class="withdraw-btn"><i class="fa-solid fa-arrow-up-long"></i> Withdraw</button>
-            <button class="transfer-btn" onclick="window.location.href='transfer.html'"><i class="fa-solid fa-right-left"></i> Transfer</button>
+
+
+            <!-- WITHDRAW -->
+
+            <button
+                class="withdraw-btn"
+                type="button">
+
+                <i class="fa-solid fa-arrow-up-long"></i>
+                Withdraw
+
+            </button>
+
+
+            <!-- TRANSFER -->
+
+            <button
+                class="transfer-btn"
+                type="button"
+                onclick="window.location.href='transfer.html'">
+
+                <i class="fa-solid fa-right-left"></i>
+                Transfer
+
+            </button>
+
         </div>
+
     </section>
 
-    <!-- MENU GRID -->
+
+    <!-- =====================================================
+         MENU GRID
+         ===================================================== -->
+
     <section class="menu-grid">
-        <div class="menu-item" onclick="window.location.href='support.html'" style="cursor: pointer;">
-            <div class="menu-icon"><i class="fa-solid fa-headset"></i></div>
+
+        <!-- SUPPORT -->
+
+        <div class="menu-item"
+            onclick="window.location.href='support.html'"
+            style="cursor:pointer;">
+
+            <div class="menu-icon">
+                <i class="fa-solid fa-headset"></i>
+            </div>
+
             <span>Support</span>
+
         </div>
+
+
+        <!-- WITHDRAW -->
+
         <div class="menu-item">
-            <div class="menu-icon" style="color: #f59e0b;"><i class="fa-solid fa-wallet"></i></div>
+
+            <div class="menu-icon"
+                style="color:#f59e0b;">
+
+                <i class="fa-solid fa-wallet"></i>
+
+            </div>
+
             <span>Withdraw</span>
+
         </div>
-        <div class="menu-item" onclick="window.location.href='transfer.html'">
-            <div class="menu-icon" style="color: #a855f7;"><i class="fa-solid fa-right-left"></i></div>
+
+
+        <!-- TRANSFER -->
+
+        <div class="menu-item"
+            onclick="window.location.href='transfer.html'">
+
+            <div class="menu-icon"
+                style="color:#a855f7;">
+
+                <i class="fa-solid fa-right-left"></i>
+
+            </div>
+
             <span>Transfer</span>
+
         </div>
-        <div class="menu-item" onclick="window.location.href='copytrade.html'">
-            <div class="menu-icon"><i class="fa-solid fa-users"></i></div>
+
+
+        <!-- COPY TRADE -->
+
+        <div class="menu-item"
+            onclick="window.location.href='copytrade.html'">
+
+            <div class="menu-icon">
+
+                <i class="fa-solid fa-users"></i>
+
+            </div>
+
             <span>Copy Trade</span>
+
         </div>
-        <!-- লোন বাটন -->
-        <div class="menu-item" onclick="window.location.href='loan.html'" style="cursor: pointer;">
-            <div class="menu-icon"><i class="fa-regular fa-credit-card"></i></div>
+
+
+        <!-- LOAN -->
+
+        <div class="menu-item"
+            onclick="window.location.href='loan.html'"
+            style="cursor:pointer;">
+
+            <div class="menu-icon">
+
+                <i class="fa-regular fa-credit-card"></i>
+
+            </div>
+
             <span>Loan</span>
+
         </div>
-        <div class="menu-item" onclick="window.location.href='investment.html?mode=wealth'">
-            <div class="menu-icon"><i class="fa-solid fa-chart-line"></i></div>
+
+
+        <!-- WEALTH -->
+
+        <div class="menu-item"
+            onclick="window.location.href='investment.html?mode=wealth'">
+
+            <div class="menu-icon">
+
+                <i class="fa-solid fa-chart-line"></i>
+
+            </div>
+
             <span>Wealth</span>
+
         </div>
-        <div class="menu-item" onclick="window.location.href='investment.html?mode=mining'">
-            <div class="menu-icon"><i class="fa-solid fa-hammer"></i></div>
+
+
+        <!-- MINING -->
+
+        <div class="menu-item"
+            onclick="window.location.href='investment.html?mode=mining'">
+
+            <div class="menu-icon">
+
+                <i class="fa-solid fa-hammer"></i>
+
+            </div>
+
             <span>Mining</span>
+
         </div>
-        <div class="menu-item" onclick="window.location.href='invite.html'">
-            <div class="menu-icon"><i class="fa-solid fa-gift"></i></div>
+
+
+        <!-- INVITE -->
+
+        <div class="menu-item"
+            onclick="window.location.href='invite.html'">
+
+            <div class="menu-icon">
+
+                <i class="fa-solid fa-gift"></i>
+
+            </div>
+
             <span>Invite</span>
+
         </div>
+
     </section>
 
-    <!-- HOT MARKETS -->
+
+    <!-- =====================================================
+         HOT MARKETS
+         ===================================================== -->
+
     <section class="market-card">
+
         <div class="market-title">
+
             <h2>Hot Markets</h2>
-            <a href="markets.html">View All <i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i></a>
+
+            <a href="markets.html">
+                View All
+                <i class="fa-solid fa-chevron-right"
+                    style="font-size:10px;">
+                </i>
+            </a>
+
         </div>
-        <div class="market-item" onclick="window.location.href='markets.html'">
-            <div><h3>XAUUSD</h3><small>Gold / USD</small></div>
-            <div class="price">4,253.20</div>
-            <div class="up">+0.15%</div>
+
+
+        <div class="market-item"
+            onclick="window.location.href='markets.html'">
+
+            <div>
+
+                <h3>XAUUSD</h3>
+
+                <small>
+                    Gold / USD
+                </small>
+
+            </div>
+
+            <div class="price">
+                4,253.20
+            </div>
+
+            <div class="up">
+                +0.15%
+            </div>
+
         </div>
-        <div class="market-item" onclick="window.location.href='markets.html'">
-            <div><h3>XAGUSD</h3><small>Silver / USD</small></div>
-            <div class="price">28.651</div>
-            <div class="down">-2.22%</div>
+
+
+        <div class="market-item"
+            onclick="window.location.href='markets.html'">
+
+            <div>
+
+                <h3>XAGUSD</h3>
+
+                <small>
+                    Silver / USD
+                </small>
+
+            </div>
+
+            <div class="price">
+                28.651
+            </div>
+
+            <div class="down">
+                -2.22%
+            </div>
+
         </div>
-        <div class="market-item" onclick="window.location.href='markets.html'">
-            <div><h3>BTCUSD</h3><small>Bitcoin / USD</small></div>
-            <div class="price">63,070.00</div>
-            <div class="up">+1.05%</div>
+
+
+        <div class="market-item"
+            onclick="window.location.href='markets.html'">
+
+            <div>
+
+                <h3>BTCUSD</h3>
+
+                <small>
+                    Bitcoin / USD
+                </small>
+
+            </div>
+
+            <div class="price">
+                63,070.00
+            </div>
+
+            <div class="up">
+                +1.05%
+            </div>
+
         </div>
+
     </section>
 
-    <!-- BOTTOM NAVIGATION -->
+
+    <!-- =====================================================
+         BOTTOM NAVIGATION
+         ===================================================== -->
+
     <nav class="bottom-nav">
-        <a href="#" class="active"><i class="fa-solid fa-house"></i><span>Home</span></a>
-        <a href="markets.html"><i class="fa-solid fa-chart-line"></i><span>Markets</span></a>
-        <a href="trade.html" class="trade-btn"><i class="fa-solid fa-arrow-right-arrow-left"></i></a>
-        <a href="assets.html"><i class="fa-solid fa-wallet"></i><span>Assets</span></a>
-        <a href="mine.html"><i class="fa-solid fa-user"></i><span>Mine</span></a>
+
+        <a href="#" class="active">
+
+            <i class="fa-solid fa-house"></i>
+
+            <span>Home</span>
+
+        </a>
+
+
+        <a href="markets.html">
+
+            <i class="fa-solid fa-chart-line"></i>
+
+            <span>Markets</span>
+
+        </a>
+
+
+        <a href="trade.html"
+            class="trade-btn">
+
+            <i class="fa-solid fa-arrow-right-arrow-left"></i>
+
+        </a>
+
+
+        <a href="assets.html">
+
+            <i class="fa-solid fa-wallet"></i>
+
+            <span>Assets</span>
+
+        </a>
+
+
+        <a href="mine.html">
+
+            <i class="fa-solid fa-user"></i>
+
+            <span>Mine</span>
+
+        </a>
+
     </nav>
 
 </div>
 
-<!-- JavaScript Scripts -->
-<script src="balance.js"></script>
-<script src="dashboard.js?v=999.5"></script>
+
+
+<!-- =====================================================
+     EXISTING JAVASCRIPT
+     ===================================================== -->
+
+<script src="balance.js?v=999.6"></script>
+
+<script src="dashboard.js?v=999.6"></script>
+
+
+
+<!-- =====================================================
+     FIREBASE AUTH + LIVE BALANCE
+     ===================================================== -->
+
+<script type="module">
+
+import { auth, db } from "./firebase.js";
+
+import {
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+import {
+    doc,
+    onSnapshot
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+let currentUserUID = null;
+
+let balanceVisible = true;
+
+
+/* =====================================================
+   ELEMENTS
+   ===================================================== */
+
+const balanceElement =
+    document.getElementById("balanceAmount");
+
+const equityElement =
+    document.getElementById("equityAmount");
+
+const eyeElement =
+    document.getElementById("toggleEye");
+
+
+/* =====================================================
+   FORMAT BALANCE
+   ===================================================== */
+
+function formatBalance(value) {
+
+    const number =
+        Number(value || 0);
+
+    return "$" +
+        number.toLocaleString(
+            "en-US",
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        );
+}
+
+
+/* =====================================================
+   UPDATE DASHBOARD BALANCE
+   ===================================================== */
+
+function updateDashboardBalance(balance) {
+
+    const formatted =
+        formatBalance(balance);
+
+
+    if (balanceVisible) {
+
+        balanceElement.textContent =
+            formatted;
+
+        if (equityElement) {
+
+            equityElement.textContent =
+                formatted;
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   HIDE / SHOW BALANCE
+   ===================================================== */
+
+function updateBalanceVisibility() {
+
+    if (!balanceElement) {
+        return;
+    }
+
+
+    if (balanceVisible) {
+
+        balanceElement.style.opacity = "1";
+
+        if (equityElement) {
+            equityElement.style.opacity = "1";
+        }
+
+    } else {
+
+        balanceElement.textContent =
+            "••••••";
+
+        balanceElement.style.opacity = "0.9";
+
+
+        if (equityElement) {
+
+            equityElement.textContent =
+                "••••••";
+
+            equityElement.style.opacity =
+                "0.9";
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   EYE BUTTON
+   ===================================================== */
+
+if (eyeElement) {
+
+    eyeElement.addEventListener(
+        "click",
+        function () {
+
+            balanceVisible =
+                !balanceVisible;
+
+            updateBalanceVisibility();
+
+            if (balanceVisible) {
+
+                eyeElement.className =
+                    "fa-regular fa-eye toggle-eye";
+
+            } else {
+
+                eyeElement.className =
+                    "fa-regular fa-eye-slash toggle-eye";
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   RELOAD BALANCE
+   Used by trade.js
+   ===================================================== */
+
+window.reloadBalance =
+    async function () {
+
+        /*
+         * The Firestore onSnapshot listener
+         * already keeps this page updated.
+         *
+         * This function exists so trade.js can
+         * safely call window.reloadBalance().
+         */
+
+        console.log(
+            "Dashboard balance listener is active."
+        );
+
+    };
+
+
+/* =====================================================
+   REFRESH BALANCE
+   Compatibility with existing balance system
+   ===================================================== */
+
+window.refreshBalance =
+    window.reloadBalance;
+
+
+/* =====================================================
+   AUTH STATE
+   ===================================================== */
+
+onAuthStateChanged(
+    auth,
+    function (user) {
+
+        if (!user) {
+
+            window.location.href =
+                "index.html";
+
+            return;
+
+        }
+
+
+        currentUserUID =
+            user.uid;
+
+
+        console.log(
+            "Dashboard user:",
+            currentUserUID
+        );
+
+
+        /*
+         * User document:
+         *
+         * users/{Firebase UID}
+         *
+         * This is the same document used
+         * by the trading system.
+         */
+
+        const userRef =
+            doc(
+                db,
+                "users",
+                currentUserUID
+            );
+
+
+        /* =================================================
+           LIVE FIRESTORE LISTENER
+           ================================================= */
+
+        onSnapshot(
+
+            userRef,
+
+            function (snapshot) {
+
+                if (!snapshot.exists()) {
+
+                    console.warn(
+                        "User document not found."
+                    );
+
+                    updateDashboardBalance(0);
+
+                    return;
+
+                }
+
+
+                const userData =
+                    snapshot.data();
+
+
+                const firebaseBalance =
+                    Number(
+                        userData.balance || 0
+                    );
+
+
+                console.log(
+                    "Dashboard Firebase balance:",
+                    firebaseBalance
+                );
+
+
+                updateDashboardBalance(
+                    firebaseBalance
+                );
+
+
+                /*
+                 * If balance is hidden,
+                 * keep the hidden state.
+                 */
+
+                updateBalanceVisibility();
+
+            },
+
+
+            function (error) {
+
+                console.error(
+                    "Dashboard balance listener error:",
+                    error
+                );
+
+            }
+
+        );
+
+    }
+
+);
+
+</script>
+
 
 </body>
 </html>
