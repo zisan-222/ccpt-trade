@@ -1,82 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deposit - CptMarkets</title>
+    <title>CptMarkets - Financial Dashboard</title>
     <link rel="stylesheet" href="dashboard.css?v=999.3">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- তাকওয়ার সবুজ গোল আইকন চিরতরে হাইড করার জন্য CSS -->
     <style>
-        body { background-color: #0b1120; color: #fff; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
-        .page-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; background: #0f172a; border-bottom: 1px solid #1e293b; }
-        .page-header a { color: #fff; font-size: 18px; text-decoration: none; }
-        .page-header h2 { margin: 0; font-size: 18px; font-weight: 600; color: #fff; }
-        .content-container { padding: 20px; max-width: 500px; margin: 0 auto; }
-        .info-card { background: #131c31; border: 1px solid #1e293b; border-radius: 12px; padding: 20px; margin-bottom: 20px; text-align: center; }
-        .info-card i { font-size: 45px; color: #ef4444; margin-bottom: 15px; }
-        .info-card p { color: #94a3b8; font-size: 14px; line-height: 1.6; margin: 0; }
-        .details-box { background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 16px; margin-bottom: 25px; text-align: left; }
-        .details-box h4 { margin: 0 0 10px 0; color: #facc15; font-size: 15px; display: flex; align-items: center; gap: 8px; }
-        .details-box ul { margin: 0; padding-left: 20px; color: #cbd5e1; font-size: 13px; line-height: 1.8; }
-        .support-btn { width: 100%; background: #22c55e; color: #fff; border: none; padding: 14px; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; }
-        .support-btn:hover { background: #16a34a; }
-        #tawkchat-container { display: none !important; }
+        #tawkchat-container {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
     </style>
 </head>
+
 <body>
 
-    <div class="page-header">
-        <a href="dashboard.html"><i class="fa-solid fa-chevron-left"></i></a>
-        <h2>Deposit</h2>
-        <div style="width: 18px;"></div>
-    </div>
+<div class="container">
 
-    <div class="content-container">
-        <div class="info-card">
-            <i class="fa-solid fa-ban"></i>
-            <p>Please contact online customer service to recharge.</p>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <span>CptMarkets</span>
+        </div>
+        <div class="header-actions">
+            <i class="fa-solid fa-rotate-right"></i>
+            <i class="fa-solid fa-plus"></i>
+        </div>
+    </header>
+
+    <!-- BANNER -->
+    <section class="banner" style="background-image: url('market-bg.svg');">
+        <div class="banner-content">
+            <h1>CptMarkets</h1>
+            <p>Global integrated financial trading platform</p>
+        </div>
+    </section>
+
+    <!-- ASSET CARD -->
+    <section class="asset-card">
+        <div class="asset-header">
+            <span>Total Assets (USD)</span>
+            <i class="fa-regular fa-eye toggle-eye" id="toggleEye" style="cursor: pointer;"></i>
         </div>
 
-        <div class="details-box">
-            <h4><i class="fa-solid fa-shield-halved"></i> CptMarkets Platform Features</h4>
-            <ul>
-                <li>UK-based regulated global financial platform.</li>
-                <li>Operating successfully with trust for 10-12 years.</li>
-                <li>24/7 active dedicated customer service support.</li>
-                <li>High profitability and instant secure asset allocation.</li>
-            </ul>
+        <h2 id="balanceAmount">$0.00</h2>
+
+        <div class="asset-info">
+            <span>Floating P/L <strong class="profit">+0.00</strong></span>
+            <span>Equity <strong>$0.00</strong></span>
         </div>
 
-        <button class="support-btn" onclick="contactSupport('Hello, I want to make a Deposit. Please guide me.')">
-            <i class="fa-solid fa-headset"></i> Contact Customer Service
-        </button>
-    </div>
+        <div class="action-buttons">
+            <!-- এখানে ডিপোজিট বাটনে ক্লিক করলে deposit.html পেজে যাবে -->
+            <button class="deposit-btn" onclick="window.location.href='deposit.html'"><i class="fa-solid fa-arrow-down-long"></i> Deposit</button>
+            <button class="withdraw-btn"><i class="fa-solid fa-arrow-up-long"></i> Withdraw</button>
+            <button class="transfer-btn" onclick="window.location.href='transfer.html'"><i class="fa-solid fa-right-left"></i> Transfer</button>
+        </div>
+    </section>
 
-    <!-- Tawk.to Script -->
-    <script type="text/javascript">
-        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-        Tawk_API.onLoad = function(){ Tawk_API.hideWidget(); };
-        (function(){
-            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-            s1.async = true;
-            s1.src = 'https://embed.tawk.to/6a71003c2d507b1d4a9fad4c/1jv4mhrhb';
-            s1.charset = 'UTF-8';
-            s1.setAttribute('crossorigin', '*');
-            s0.parentNode.insertBefore(s1, s0);
-        })();
+    <!-- MENU GRID -->
+    <section class="menu-grid">
+        <div class="menu-item" onclick="window.location.href='support.html'" style="cursor: pointer;">
+            <div class="menu-icon"><i class="fa-solid fa-headset"></i></div>
+            <span>Support</span>
+        </div>
+        <div class="menu-item">
+            <div class="menu-icon" style="color: #f59e0b;"><i class="fa-solid fa-wallet"></i></div>
+            <span>Withdraw</span>
+        </div>
+        <div class="menu-item" onclick="window.location.href='transfer.html'">
+            <div class="menu-icon" style="color: #a855f7;"><i class="fa-solid fa-right-left"></i></div>
+            <span>Transfer</span>
+        </div>
+        <div class="menu-item" onclick="window.location.href='copytrade.html'">
+            <div class="menu-icon"><i class="fa-solid fa-users"></i></div>
+            <span>Copy Trade</span>
+        </div>
+        <!-- এখানে লোন বাটনে ক্লিক করলে loan.html পেজে যাবে -->
+        <div class="menu-item" onclick="window.location.href='loan.html'" style="cursor: pointer;">
+            <div class="menu-icon"><i class="fa-regular fa-credit-card"></i></div>
+            <span>Loan</span>
+        </div>
+        <div class="menu-item" onclick="window.location.href='investment.html?mode=wealth'">
+            <div class="menu-icon"><i class="fa-solid fa-chart-line"></i></div>
+            <span>Wealth</span>
+        </div>
+        <div class="menu-item" onclick="window.location.href='investment.html?mode=mining'">
+            <div class="menu-icon"><i class="fa-solid fa-hammer"></i></div>
+            <span>Mining</span>
+        </div>
+        <div class="menu-item" onclick="window.location.href='invite.html'">
+            <div class="menu-icon"><i class="fa-solid fa-gift"></i></div>
+            <span>Invite</span>
+        </div>
+    </section>
 
-        function contactSupport(message) {
-            if (typeof Tawk_API !== 'undefined' && Tawk_API.maximize) {
-                Tawk_API.showWidget();
-                Tawk_API.maximize();
-                if (Tawk_API.setAttributes) {
-                    Tawk_API.setAttributes({ 'cart': message }, function(error){});
-                }
-            } else {
-                alert(message);
-            }
-        }
-    </script>
+    <!-- HOT MARKETS -->
+    <section class="market-card">
+        <div class="market-title">
+            <h2>Hot Markets</h2>
+            <a href="markets.html">View All <i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i></a>
+        </div>
+        <div class="market-item" onclick="window.location.href='markets.html'">
+            <div><h3>XAUUSD</h3><small>Gold / USD</small></div>
+            <div class="price">4,253.20</div>
+            <div class="up">+0.15%</div>
+        </div>
+        <div class="market-item" onclick="window.location.href='markets.html'">
+            <div><h3>XAGUSD</h3><small>Silver / USD</small></div>
+            <div class="price">28.651</div>
+            <div class="down">-2.22%</div>
+        </div>
+        <div class="market-item" onclick="window.location.href='markets.html'">
+            <div><h3>BTCUSD</h3><small>Bitcoin / USD</small></div>
+            <div class="price">63,070.00</div>
+            <div class="up">+1.05%</div>
+        </div>
+    </section>
+
+    <!-- BOTTOM NAVIGATION -->
+    <nav class="bottom-nav">
+        <a href="#" class="active"><i class="fa-solid fa-house"></i><span>Home</span></a>
+        <a href="markets.html"><i class="fa-solid fa-chart-line"></i><span>Markets</span></a>
+        <a href="trade.html" class="trade-btn"><i class="fa-solid fa-arrow-right-arrow-left"></i></a>
+        <a href="assets.html"><i class="fa-solid fa-wallet"></i><span>Assets</span></a>
+        <a href="mine.html"><i class="fa-solid fa-user"></i><span>Mine</span></a>
+    </nav>
+
+</div>
+
+<!-- JavaScript Scripts -->
+<script src="balance.js"></script>
+<script src="dashboard.js"></script>
+
 </body>
 </html>
