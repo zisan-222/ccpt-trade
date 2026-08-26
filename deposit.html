@@ -1,145 +1,794 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CptMarkets - Financial Dashboard</title>
-    <link rel="stylesheet" href="dashboard.css?v=999.3">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- তাকওয়ার সবুজ গোল আইকন চিরতরে হাইড করার জন্য CSS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>CptMarkets - Deposit</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
     <style>
-        #tawkchat-container {
-            display: none !important;
-            visibility: hidden !important;
-            opacity: 0 !important;
-            pointer-events: none !important;
+        :root {
+            --bg: #07101f;
+            --card: #101e35;
+            --card-dark: #0b182b;
+            --line: rgba(148, 163, 184, .14);
+            --text: #f4f7fc;
+            --muted: #91a0b7;
+            --blue: #1685ff;
+            --blue-dark: #006be5;
+            --green: #00c98b;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html,
+        body {
+            margin: 0;
+            min-height: 100%;
+            background:
+                radial-gradient(circle at 50% -10%, rgba(22,133,255,.14), transparent 38%),
+                linear-gradient(180deg, #0a1426 0%, #050d19 100%);
+            color: var(--text);
+            font-family: Inter, Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+        }
+
+        button {
+            font: inherit;
+            cursor: pointer;
+        }
+
+        .page {
+            width: 100%;
+            max-width: 760px;
+            margin: 0 auto;
+            padding-bottom: 35px;
+        }
+
+        /* HEADER */
+        .topbar {
+            height: 86px;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(7,16,31,.95);
+            border-bottom: 1px solid var(--line);
+            backdrop-filter: blur(16px);
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 18px;
+            width: 44px;
+            height: 44px;
+            display: grid;
+            place-items: center;
+            border: 0;
+            border-radius: 12px;
+            color: #e7eef9;
+            background: transparent;
+            font-size: 22px;
+        }
+
+        .topbar-title {
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: -.5px;
+        }
+
+        /* HERO */
+        .hero {
+            margin: 25px 18px 0;
+            padding: 25px 21px;
+            border: 1px solid rgba(71,145,255,.18);
+            border-radius: 25px;
+            background:
+                linear-gradient(145deg, rgba(19,43,75,.98), rgba(11,25,45,.98));
+            box-shadow: 0 18px 45px rgba(0,0,0,.20);
+        }
+
+        .hero-icon {
+            width: 62px;
+            height: 62px;
+            display: grid;
+            place-items: center;
+            border-radius: 18px;
+            margin-bottom: 18px;
+            color: white;
+            background: linear-gradient(145deg, #198dff, #0067df);
+            box-shadow: 0 10px 26px rgba(0,105,223,.28);
+            font-size: 27px;
+        }
+
+        .hero h1 {
+            margin: 0 0 10px;
+            font-size: 24px;
+            line-height: 1.25;
+        }
+
+        .hero p {
+            margin: 0;
+            color: #9caac0;
+            font-size: 13px;
+            line-height: 1.75;
+        }
+
+        .hero-highlight {
+            margin-top: 20px;
+            padding: 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            border: 1px solid rgba(0,201,139,.15);
+            border-radius: 14px;
+            background: rgba(0,201,139,.055);
+            color: #b7c6d9;
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .hero-highlight i {
+            margin-top: 2px;
+            color: var(--green);
+        }
+
+        /* SECTIONS */
+        .section {
+            margin: 18px 18px 0;
+        }
+
+        .section-title {
+            margin: 0 2px 10px;
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .card {
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            background:
+                linear-gradient(145deg, rgba(17,32,55,.98), rgba(10,23,41,.98));
+            box-shadow: 0 15px 35px rgba(0,0,0,.14);
+        }
+
+        /* STEPS */
+        .steps {
+            padding: 8px 17px;
+        }
+
+        .step {
+            display: flex;
+            gap: 13px;
+            padding: 17px 0;
+            border-bottom: 1px solid rgba(148,163,184,.09);
+        }
+
+        .step:last-child {
+            border-bottom: 0;
+        }
+
+        .step-number {
+            width: 34px;
+            height: 34px;
+            flex: 0 0 34px;
+            display: grid;
+            place-items: center;
+            border-radius: 11px;
+            color: #69b6ff;
+            background: rgba(22,133,255,.11);
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .step h3 {
+            margin: 1px 0 5px;
+            font-size: 13px;
+        }
+
+        .step p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.65;
+        }
+
+        /* NOTICE */
+        .notice {
+            padding: 18px;
+        }
+
+        .notice-row {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .notice-icon {
+            width: 38px;
+            height: 38px;
+            flex: 0 0 38px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            color: #62b3ff;
+            background: rgba(22,133,255,.11);
+        }
+
+        .notice h3 {
+            margin: 0 0 6px;
+            font-size: 14px;
+        }
+
+        .notice p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        /* CUSTOMER SERVICE */
+        .service-card {
+            padding: 19px;
+            border: 1px solid rgba(0,201,139,.18);
+            background:
+                linear-gradient(145deg, rgba(0,201,139,.08), rgba(12,28,47,.98));
+        }
+
+        .service-head {
+            display: flex;
+            gap: 13px;
+            align-items: center;
+        }
+
+        .service-icon {
+            width: 50px;
+            height: 50px;
+            flex: 0 0 50px;
+            display: grid;
+            place-items: center;
+            border-radius: 15px;
+            color: #fff;
+            background: linear-gradient(145deg, #00c98b, #009e73);
+            box-shadow: 0 9px 24px rgba(0,201,139,.20);
+            font-size: 21px;
+        }
+
+        .service-head h3 {
+            margin: 0 0 5px;
+            font-size: 15px;
+        }
+
+        .service-head p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .service-button {
+            width: 100%;
+            min-height: 58px;
+            margin-top: 17px;
+            border: 0;
+            border-radius: 16px;
+            color: white;
+            background: linear-gradient(145deg, #00cf90, #00a978);
+            box-shadow: 0 12px 28px rgba(0,201,139,.20);
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .service-button:active {
+            transform: scale(.985);
+        }
+
+        .service-note {
+            margin: 12px 2px 0;
+            color: #78899f;
+            font-size: 10px;
+            line-height: 1.55;
+            text-align: center;
+        }
+
+        /* FAQ */
+        .faq {
+            padding: 0 16px;
+        }
+
+        details {
+            border-bottom: 1px solid rgba(148,163,184,.09);
+        }
+
+        details:last-child {
+            border-bottom: 0;
+        }
+
+        summary {
+            list-style: none;
+            padding: 16px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #e7edf7;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary i {
+            color: #7d8da5;
+            transition: transform .2s ease;
+        }
+
+        details[open] summary i {
+            transform: rotate(180deg);
+        }
+
+        .answer {
+            padding: 0 0 16px;
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.65;
+        }
+
+        /* TOAST */
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: 24px;
+            z-index: 100;
+            width: min(90%, 420px);
+            padding: 13px 15px;
+            transform: translate(-50%, 20px);
+            opacity: 0;
+            pointer-events: none;
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 13px;
+            background: rgba(8,18,32,.97);
+            color: #eaf2ff;
+            text-align: center;
+            font-size: 12px;
+            line-height: 1.5;
+            box-shadow: 0 15px 35px rgba(0,0,0,.30);
+            transition: .25s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        @media (max-width: 390px) {
+            .topbar {
+                height: 78px;
+            }
+
+            .hero,
+            .section {
+                margin-left: 14px;
+                margin-right: 14px;
+            }
+
+            .hero {
+                padding: 21px 17px;
+            }
+
+            .hero h1 {
+                font-size: 21px;
+            }
         }
     </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="page">
 
     <!-- HEADER -->
-    <header class="header">
-        <div class="logo">
-            <div class="logo-icon"><i class="fa-solid fa-shield-halved"></i></div>
-            <span>CptMarkets</span>
-        </div>
-        <div class="header-actions">
-            <i class="fa-solid fa-rotate-right"></i>
-            <i class="fa-solid fa-plus"></i>
-        </div>
+    <header class="topbar">
+        <button class="back-btn"
+                type="button"
+                onclick="history.back()"
+                aria-label="Back">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
+        <div class="topbar-title">Deposit</div>
     </header>
 
-    <!-- BANNER -->
-    <section class="banner" style="background-image: url('market-bg.svg');">
-        <div class="banner-content">
-            <h1>CptMarkets</h1>
-            <p>Global integrated financial trading platform</p>
+
+    <!-- INTRODUCTION -->
+    <section class="hero">
+
+        <div class="hero-icon">
+            <i class="fa-solid fa-wallet"></i>
         </div>
+
+        <h1>Deposit with CptMarkets</h1>
+
+        <p>
+            If you would like to deposit funds into your CptMarkets
+            account, please contact our online customer service first.
+            Our support team will guide you through the available
+            deposit process and provide the appropriate instructions
+            for your request.
+        </p>
+
+        <div class="hero-highlight">
+            <i class="fa-solid fa-circle-check"></i>
+
+            <span>
+                For a smooth and secure deposit experience, it is
+                recommended that you follow the instructions and
+                guidance provided by the official customer service team.
+            </span>
+        </div>
+
     </section>
 
-    <!-- ASSET CARD -->
-    <section class="asset-card">
-        <div class="asset-header">
-            <span>Total Assets (USD)</span>
-            <i class="fa-regular fa-eye toggle-eye" id="toggleEye" style="cursor: pointer;"></i>
+
+    <!-- WHY CONTACT SUPPORT -->
+    <section class="section">
+
+        <h2 class="section-title">
+            Before You Deposit
+        </h2>
+
+        <div class="card notice">
+
+            <div class="notice-row">
+
+                <div class="notice-icon">
+                    <i class="fa-solid fa-headset"></i>
+                </div>
+
+                <div>
+                    <h3>
+                        Please contact online customer service
+                    </h3>
+
+                    <p>
+                        Deposit instructions can depend on the current
+                        payment method and account requirements. Please
+                        speak with customer service before making a payment
+                        so that you can receive the correct instructions
+                        for your account.
+                    </p>
+                </div>
+
+            </div>
+
         </div>
 
-        <h2 id="balanceAmount">$0.00</h2>
-
-        <div class="asset-info">
-            <span>Floating P/L <strong class="profit">+0.00</strong></span>
-            <span>Equity <strong>$0.00</strong></span>
-        </div>
-
-        <div class="action-buttons">
-            <!-- এখানে ডিপোজিট বাটনে ক্লিক করলে deposit.html পেজে যাবে -->
-            <button class="deposit-btn" onclick="window.location.href='deposit.html'"><i class="fa-solid fa-arrow-down-long"></i> Deposit</button>
-            <button class="withdraw-btn"><i class="fa-solid fa-arrow-up-long"></i> Withdraw</button>
-            <button class="transfer-btn" onclick="window.location.href='transfer.html'"><i class="fa-solid fa-right-left"></i> Transfer</button>
-        </div>
     </section>
 
-    <!-- MENU GRID -->
-    <section class="menu-grid">
-        <div class="menu-item" onclick="window.location.href='support.html'" style="cursor: pointer;">
-            <div class="menu-icon"><i class="fa-solid fa-headset"></i></div>
-            <span>Support</span>
+
+    <!-- PROCESS -->
+    <section class="section">
+
+        <h2 class="section-title">
+            Deposit Process
+        </h2>
+
+        <div class="card steps">
+
+            <div class="step">
+
+                <div class="step-number">01</div>
+
+                <div>
+                    <h3>Contact Customer Service</h3>
+
+                    <p>
+                        Tap the customer service button below and tell
+                        the support team that you want to make a deposit.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">02</div>
+
+                <div>
+                    <h3>Receive Deposit Guidance</h3>
+
+                    <p>
+                        Customer service will explain the available
+                        deposit method and the instructions you need to follow.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">03</div>
+
+                <div>
+                    <h3>Follow the Provided Instructions</h3>
+
+                    <p>
+                        Carefully follow the instructions provided by
+                        the official customer service team.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">04</div>
+
+                <div>
+                    <h3>Wait for Confirmation</h3>
+
+                    <p>
+                        After completing the requested process, keep
+                        your transaction information available until
+                        customer service confirms your deposit.
+                    </p>
+                </div>
+
+            </div>
+
         </div>
-        <div class="menu-item">
-            <div class="menu-icon" style="color: #f59e0b;"><i class="fa-solid fa-wallet"></i></div>
-            <span>Withdraw</span>
-        </div>
-        <div class="menu-item" onclick="window.location.href='transfer.html'">
-            <div class="menu-icon" style="color: #a855f7;"><i class="fa-solid fa-right-left"></i></div>
-            <span>Transfer</span>
-        </div>
-        <div class="menu-item" onclick="window.location.href='copytrade.html'">
-            <div class="menu-icon"><i class="fa-solid fa-users"></i></div>
-            <span>Copy Trade</span>
-        </div>
-        <!-- এখানে লোন বাটনে ক্লিক করলে loan.html পেজে যাবে -->
-        <div class="menu-item" onclick="window.location.href='loan.html'" style="cursor: pointer;">
-            <div class="menu-icon"><i class="fa-regular fa-credit-card"></i></div>
-            <span>Loan</span>
-        </div>
-        <div class="menu-item" onclick="window.location.href='investment.html?mode=wealth'">
-            <div class="menu-icon"><i class="fa-solid fa-chart-line"></i></div>
-            <span>Wealth</span>
-        </div>
-        <div class="menu-item" onclick="window.location.href='investment.html?mode=mining'">
-            <div class="menu-icon"><i class="fa-solid fa-hammer"></i></div>
-            <span>Mining</span>
-        </div>
-        <div class="menu-item" onclick="window.location.href='invite.html'">
-            <div class="menu-icon"><i class="fa-solid fa-gift"></i></div>
-            <span>Invite</span>
-        </div>
+
     </section>
 
-    <!-- HOT MARKETS -->
-    <section class="market-card">
-        <div class="market-title">
-            <h2>Hot Markets</h2>
-            <a href="markets.html">View All <i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i></a>
+
+    <!-- CUSTOMER SERVICE -->
+    <section class="section">
+
+        <h2 class="section-title">
+            Online Customer Service
+        </h2>
+
+        <div class="card service-card">
+
+            <div class="service-head">
+
+                <div class="service-icon">
+                    <i class="fa-solid fa-headset"></i>
+                </div>
+
+                <div>
+                    <h3>
+                        Ready to make a deposit?
+                    </h3>
+
+                    <p>
+                        Contact online customer service to get started.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <button class="service-button"
+                    id="customerServiceButton"
+                    type="button">
+
+                <i class="fa-solid fa-comments"></i>
+                &nbsp; Contact Customer Service
+
+            </button>
+
+
+            <p class="service-note">
+                Your deposit request message will be prepared for the
+                customer service conversation.
+            </p>
+
         </div>
-        <div class="market-item" onclick="window.location.href='markets.html'">
-            <div><h3>XAUUSD</h3><small>Gold / USD</small></div>
-            <div class="price">4,253.20</div>
-            <div class="up">+0.15%</div>
-        </div>
-        <div class="market-item" onclick="window.location.href='markets.html'">
-            <div><h3>XAGUSD</h3><small>Silver / USD</small></div>
-            <div class="price">28.651</div>
-            <div class="down">-2.22%</div>
-        </div>
-        <div class="market-item" onclick="window.location.href='markets.html'">
-            <div><h3>BTCUSD</h3><small>Bitcoin / USD</small></div>
-            <div class="price">63,070.00</div>
-            <div class="up">+1.05%</div>
-        </div>
+
     </section>
 
-    <!-- BOTTOM NAVIGATION -->
-    <nav class="bottom-nav">
-        <a href="#" class="active"><i class="fa-solid fa-house"></i><span>Home</span></a>
-        <a href="markets.html"><i class="fa-solid fa-chart-line"></i><span>Markets</span></a>
-        <a href="trade.html" class="trade-btn"><i class="fa-solid fa-arrow-right-arrow-left"></i></a>
-        <a href="assets.html"><i class="fa-solid fa-wallet"></i><span>Assets</span></a>
-        <a href="mine.html"><i class="fa-solid fa-user"></i><span>Mine</span></a>
-    </nav>
+
+    <!-- FAQ -->
+    <section class="section">
+
+        <h2 class="section-title">
+            Deposit Information
+        </h2>
+
+        <div class="card faq">
+
+            <details>
+                <summary>
+                    Do I need to contact customer service first?
+                    <i class="fa-solid fa-chevron-down"></i>
+                </summary>
+
+                <div class="answer">
+                    Yes. Contacting customer service first helps you
+                    receive the current instructions applicable to your
+                    account and preferred payment method.
+                </div>
+            </details>
+
+
+            <details>
+                <summary>
+                    Can I choose a deposit method here?
+                    <i class="fa-solid fa-chevron-down"></i>
+                </summary>
+
+                <div class="answer">
+                    No. This page is intentionally kept simple.
+                    Customer service will guide you through the
+                    currently available deposit method.
+                </div>
+            </details>
+
+
+            <details>
+                <summary>
+                    What should I write to customer service?
+                    <i class="fa-solid fa-chevron-down"></i>
+                </summary>
+
+                <div class="answer">
+                    Simply tell the support team that you would like
+                    to make a deposit and ask for the current deposit
+                    instructions.
+                </div>
+            </details>
+
+        </div>
+
+    </section>
 
 </div>
 
-<!-- JavaScript Scripts -->
-<script src="balance.js"></script>
-<script src="dashboard.js"></script>
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+    /*
+     * Deposit request:
+     *
+     * There is intentionally NO amount field and NO preset amount
+     * button on this page.
+     *
+     * The request simply tells customer service:
+     * "I would like to make a deposit."
+     *
+     * If Tawk.to is installed on this page, maximize() opens the
+     * customer-service chat. Tawk's browser API does not provide a
+     * documented visitor-side function for silently sending a chat
+     * message, so this page prepares/copies the exact message instead
+     * of falsely claiming that it was sent automatically.
+     */
+
+    const button =
+        document.getElementById("customerServiceButton");
+
+    const toast =
+        document.getElementById("toast");
+
+
+    function showToast(message) {
+
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        clearTimeout(window.__depositToast);
+
+        window.__depositToast =
+            setTimeout(function() {
+                toast.classList.remove("show");
+            }, 3200);
+    }
+
+
+    function getDepositMessage() {
+
+        return "Hello CptMarkets Customer Service, I would like to make a deposit. Please provide the current deposit instructions and guide me through the deposit process.";
+
+    }
+
+
+    button.addEventListener("click", function() {
+
+        const message =
+            getDepositMessage();
+
+
+        /*
+         * Prepare the exact message for the customer-service chat.
+         */
+
+        if (
+            navigator.clipboard &&
+            window.isSecureContext
+        ) {
+
+            navigator.clipboard.writeText(message)
+                .catch(function() {});
+        }
+
+
+        /*
+         * If Tawk.to is already installed on this page,
+         * open the online customer-service chat.
+         */
+
+        if (
+            window.Tawk_API &&
+            typeof window.Tawk_API.maximize === "function"
+        ) {
+
+            try {
+
+                if (
+                    typeof window.Tawk_API.setAttributes === "function"
+                ) {
+
+                    window.Tawk_API.setAttributes(
+                        {
+                            depositRequest: "Yes",
+                            requestType: "Deposit"
+                        },
+                        function() {}
+                    );
+
+                }
+
+            } catch (error) {
+                console.warn(
+                    "Customer service attributes:",
+                    error
+                );
+            }
+
+
+            window.Tawk_API.maximize();
+
+
+            showToast(
+                "Customer Service opened. Your deposit message is ready to paste and send."
+            );
+
+            return;
+        }
+
+
+        /*
+         * Fallback to the existing support page.
+         */
+
+        window.location.href =
+            "support.html?message=" +
+            encodeURIComponent(message);
+
+    });
+</script>
 
 </body>
 </html>
