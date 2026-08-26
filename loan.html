@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan - CptMarkets</title>
+    <link rel="stylesheet" href="dashboard.css?v=999.3">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #0b1120; color: #fff; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+        .page-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; background: #0f172a; border-bottom: 1px solid #1e293b; }
+        .page-header a { color: #fff; font-size: 18px; text-decoration: none; }
+        .page-header h2 { margin: 0; font-size: 18px; font-weight: 600; color: #fff; }
+        .content-container { padding: 20px; max-width: 500px; margin: 0 auto; }
+        .credit-card { background: #131c31; border: 1px solid #334155; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+        .credit-card h4 { margin: 0 0 10px 0; color: #94a3b8; font-size: 14px; font-weight: 500; }
+        .credit-card .limit { font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+        .credit-card .rate { font-size: 12px; color: #94a3b8; }
+        .lock-card { background: #131c31; border: 1px solid #1e293b; border-radius: 12px; padding: 24px; text-align: center; margin-bottom: 20px; }
+        .lock-card i { font-size: 36px; color: #f59e0b; margin-bottom: 12px; }
+        .lock-card h3 { margin: 0 0 8px 0; font-size: 16px; color: #fff; }
+        .lock-card p { color: #94a3b8; font-size: 13px; line-height: 1.5; margin: 0; }
+        .rules-box { background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 16px; margin-bottom: 20px; font-size: 13px; color: #cbd5e1; line-height: 1.6; }
+        .rules-box strong { color: #facc15; display: block; margin-bottom: 6px; }
+        .support-btn { width: 100%; background: #22c55e; color: #fff; border: none; padding: 14px; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; }
+        .support-btn:hover { background: #16a34a; }
+        #tawkchat-container { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <div class="page-header">
+        <a href="dashboard.html"><i class="fa-solid fa-chevron-left"></i></a>
+        <h2>Loan</h2>
+        <div style="width: 18px;"></div>
+    </div>
+
+    <div class="content-container">
+        <div class="credit-card">
+            <h4>Credit Limit (USD)</h4>
+            <div class="limit">—</div>
+            <div class="rate">Daily Rate 0.050% · Max 90 days</div>
+        </div>
+
+        <div class="lock-card">
+            <i class="fa-solid fa-lock"></i>
+            <h3>Loan quota not activated</h3>
+            <p>Please contact staff to approve and activate your quota</p>
+        </div>
+
+        <div class="rules-box">
+            <strong><i class="fa-solid fa-circle-exclamation"></i> Loan Requirements & Conditions:</strong>
+            To qualify for a trading loan, you must upload your valid Passport or National ID card verification. <br><br>
+            <strong>Important Rule:</strong> You must deposit a certain portion (approx. 2/3rd) of your requested loan amount before final disbursement. Loans cannot be issued without maintaining an active deposit security.
+        </div>
+
+        <button class="support-btn" onclick="contactSupport('Hello, I want to apply for a Loan. Please provide details and activation steps.')">
+            <i class="fa-solid fa-headset"></i> Contact Customer Service
+        </button>
+    </div>
+
+    <!-- Tawk.to Script -->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        Tawk_API.onLoad = function(){ Tawk_API.hideWidget(); };
+        (function(){
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/6a71003c2d507b1d4a9fad4c/1jv4mhrhb';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+
+        function contactSupport(message) {
+            if (typeof Tawk_API !== 'undefined' && Tawk_API.maximize) {
+                Tawk_API.showWidget();
+                Tawk_API.maximize();
+                if (Tawk_API.setAttributes) {
+                    Tawk_API.setAttributes({ 'cart': message }, function(error){});
+                }
+            } else {
+                alert(message);
+            }
+        }
+    </script>
+</body>
+</html>
