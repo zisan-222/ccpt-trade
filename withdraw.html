@@ -186,7 +186,6 @@
             align-items: center;
             justify-content: space-between;
             transition: all 0.3s ease;
-            position: relative;
         }
         .custom-select-box.selected {
             color: #fff;
@@ -201,7 +200,7 @@
             transition: transform 0.3s;
         }
 
-        /* Premium Custom Modal Popup for Options */
+        /* Premium Custom Modal Popup */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -265,7 +264,7 @@
             gap: 12px;
             transition: all 0.2s;
         }
-        .modal-option:hover, .modal-option.active {
+        .modal-option:hover {
             background: rgba(250, 204, 21, 0.1);
             border-color: #facc15;
             color: #facc15;
@@ -366,8 +365,8 @@
                     <i class="fa-solid fa-wallet"></i>
                 </div>
             </div>
-            <h2>Fund Withdrawal</h2>
-            <p>Select your preferred international payout channel</p>
+            <h2>Global Fund Withdrawal</h2>
+            <p>Select your international banking or mobile payout gateway</p>
         </div>
 
         <!-- Withdrawal Form Card -->
@@ -376,7 +375,7 @@
                 
                 <!-- Custom Payout Method Selector -->
                 <div class="input-group">
-                    <label>Withdrawal Method</label>
+                    <label>International Payment Method</label>
                     <div class="input-wrapper" style="position:relative;">
                         <i class="fa-solid fa-globe" style="position:absolute; left:15px; z-index:2;"></i>
                         <div id="selectedMethodDisplay" class="custom-select-box" onclick="openMethodModal()">
@@ -384,7 +383,6 @@
                             <i class="fa-solid fa-chevron-down" id="dropdownArrow"></i>
                         </div>
                     </div>
-                    <!-- Hidden input to store selected value for form submit -->
                     <input type="hidden" id="paymentMethod" required>
                 </div>
 
@@ -397,30 +395,30 @@
                     </div>
                 </div>
 
-                <!-- Dynamic Field 1: Crypto Wallet Address -->
-                <div id="cryptoField" class="input-group dynamic-field">
-                    <label>USDT TRC20 Wallet Address</label>
-                    <div class="input-wrapper">
-                        <i class="fa-solid fa-qrcode"></i>
-                        <input type="text" id="cryptoAddress" placeholder="Paste your USDT wallet address">
-                    </div>
-                </div>
-
-                <!-- Dynamic Field 2: Bank Details -->
+                <!-- Dynamic Field 1: International Bank System -->
                 <div id="bankField" class="input-group dynamic-field">
-                    <label>Bank Account / IBAN & Routing Number</label>
+                    <label>Bank Account & Routing/SWIFT Details</label>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-building-columns"></i>
-                        <input type="text" id="bankDetails" placeholder="Account Name, Number & SWIFT/BIC">
+                        <input type="text" id="bankDetails" placeholder="Account Name, Number & SWIFT Code">
                     </div>
                 </div>
 
-                <!-- Dynamic Field 3: E-Wallet ID -->
-                <div id="walletField" class="input-group dynamic-field">
-                    <label>E-Wallet Account Email / ID</label>
+                <!-- Dynamic Field 2: Global Mobile Banking / Digital Wallet System -->
+                <div id="mobileField" class="input-group dynamic-field">
+                    <label>Mobile Banking / Digital Wallet Account</label>
                     <div class="input-wrapper">
-                        <i class="fa-solid fa-envelope"></i>
-                        <input type="text" id="walletAccount" placeholder="Enter Skrill/Neteller email or ID">
+                        <i class="fa-solid fa-mobile-screen-button"></i>
+                        <input type="text" id="mobileNumber" placeholder="Enter Mobile Number / Wallet ID">
+                    </div>
+                </div>
+
+                <!-- Dynamic Field 3: Blockchain Crypto Network -->
+                <div id="cryptoField" class="input-group dynamic-field">
+                    <label>Crypto Exchange / Wallet Address (TRC20)</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-coins"></i>
+                        <input type="text" id="cryptoAddress" placeholder="Paste your network wallet address">
                     </div>
                 </div>
 
@@ -429,7 +427,7 @@
                     <label>Fund / Trading Password</label>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-lock"></i>
-                        <input type="password" id="securityPassword" placeholder="Enter 6-digit security password" required>
+                        <input type="password" id="securityPassword" placeholder="Enter security password" required>
                     </div>
                 </div>
 
@@ -446,7 +444,7 @@
         <!-- Security Notice -->
         <div class="security-box">
             <i class="fa-solid fa-shield-cat"></i>
-            <p><strong>Secure Payout:</strong> International transactions are verified securely. Ensure your account details are accurate to avoid transfer delays.</p>
+            <p><strong>Secure Platform Payout:</strong> All financial orders are processed securely through global exchange channels. Make sure your account details are correct.</p>
         </div>
     </div>
 
@@ -454,13 +452,8 @@
     <div id="methodModal" class="modal-overlay" onclick="closeMethodModalOnOutside(event)">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Select Payout System</h3>
+                <h3>Select Payout Gateway</h3>
                 <button type="button" class="modal-close" onclick="closeMethodModal()"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            
-            <div class="modal-option" onclick="selectMethod('crypto', 'Crypto Wallet (USDT / Binance TRC20)')">
-                <i class="fa-solid fa-coins"></i>
-                <span>Crypto Wallet (USDT / Binance TRC20)</span>
             </div>
             
             <div class="modal-option" onclick="selectMethod('bank', 'International Bank Wire Transfer')">
@@ -468,9 +461,14 @@
                 <span>International Bank Wire Transfer</span>
             </div>
             
-            <div class="modal-option" onclick="selectMethod('wallet', 'Electronic Wallet (Skrill / Neteller)')">
-                <i class="fa-solid fa-wallet"></i>
-                <span>Electronic Wallet (Skrill / Neteller)</span>
+            <div class="modal-option" onclick="selectMethod('mobile', 'Global Mobile Banking / Digital Wallet')">
+                <i class="fa-solid fa-mobile-screen-button"></i>
+                <span>Global Mobile Banking / Digital Wallet</span>
+            </div>
+
+            <div class="modal-option" onclick="selectMethod('crypto', 'Crypto Network Exchange Wallet')">
+                <i class="fa-solid fa-coins"></i>
+                <span>Crypto Network Exchange Wallet</span>
             </div>
         </div>
     </div>
@@ -494,10 +492,8 @@
         }
 
         function selectMethod(value, labelText) {
-            // Set hidden input value
             document.getElementById("paymentMethod").value = value;
             
-            // Update display box text and style
             const displayBox = document.getElementById("selectedMethodDisplay");
             document.getElementById("selectedMethodText").textContent = labelText;
             displayBox.classList.add("selected");
@@ -507,23 +503,23 @@
         }
 
         function togglePaymentFields(method) {
-            document.getElementById("cryptoField").style.display = "none";
             document.getElementById("bankField").style.display = "none";
-            document.getElementById("walletField").style.display = "none";
+            document.getElementById("mobileField").style.display = "none";
+            document.getElementById("cryptoField").style.display = "none";
 
-            document.getElementById("cryptoAddress").removeAttribute("required");
             document.getElementById("bankDetails").removeAttribute("required");
-            document.getElementById("walletAccount").removeAttribute("required");
+            document.getElementById("mobileNumber").removeAttribute("required");
+            document.getElementById("cryptoAddress").removeAttribute("required");
 
-            if (method === "crypto") {
-                document.getElementById("cryptoField").style.display = "block";
-                document.getElementById("cryptoAddress").setAttribute("required", "true");
-            } else if (method === "bank") {
+            if (method === "bank") {
                 document.getElementById("bankField").style.display = "block";
                 document.getElementById("bankDetails").setAttribute("required", "true");
-            } else if (method === "wallet") {
-                document.getElementById("walletField").style.display = "block";
-                document.getElementById("walletAccount").setAttribute("required", "true");
+            } else if (method === "mobile") {
+                document.getElementById("mobileField").style.display = "block";
+                document.getElementById("mobileNumber").setAttribute("required", "true");
+            } else if (method === "crypto") {
+                document.getElementById("cryptoField").style.display = "block";
+                document.getElementById("cryptoAddress").setAttribute("required", "true");
             }
         }
     </script>
