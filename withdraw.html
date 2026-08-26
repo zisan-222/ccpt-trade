@@ -13,7 +13,7 @@
         body {
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #04060f 0%, #0b1120 100%);
+            background: radial-gradient(circle at 50% 0%, #111c36 0%, #060913 70%);
             color: #ffffff;
             font-family: 'Inter', sans-serif;
             min-height: 100vh;
@@ -24,31 +24,33 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 14px 18px;
-            background: rgba(11, 17, 32, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(30, 41, 59, 0.8);
+            padding: 16px 20px;
+            background: rgba(11, 17, 32, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             position: sticky;
             top: 0;
             z-index: 100;
         }
         .back-btn {
             color: #facc15;
-            font-size: 15px;
+            font-size: 16px;
             text-decoration: none;
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            border: 1px solid rgba(250, 204, 21, 0.2);
-            padding: 8px 12px;
-            border-radius: 10px;
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            border: 1px solid rgba(250, 204, 21, 0.25);
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         .back-btn:hover {
             background: #334155;
             border-color: #facc15;
+            transform: translateY(-1px);
         }
         .header h1 {
             color: #facc15;
@@ -58,12 +60,12 @@
             letter-spacing: 0.5px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
 
         /* Container */
         .container {
-            padding: 24px 16px;
+            padding: 24px 18px;
             max-width: 480px;
             margin: 0 auto;
         }
@@ -71,13 +73,13 @@
         /* 3D Hero Icon Section */
         .hero-section {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 24px;
         }
         .withdraw-hero-icon {
             position: relative;
-            width: 90px;
-            height: 90px;
-            margin: 0 auto 16px;
+            width: 85px;
+            height: 85px;
+            margin: 0 auto 14px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -86,60 +88,60 @@
             position: absolute;
             inset: 0;
             border-radius: 50%;
-            background: rgba(245, 197, 66, 0.15);
-            filter: blur(12px);
-            animation: pulseGlow 2s infinite;
+            background: rgba(245, 197, 66, 0.2);
+            filter: blur(14px);
+            animation: pulseGlow 2.5s infinite ease-in-out;
         }
         @keyframes pulseGlow {
-            0%, 100% { transform: scale(0.95); opacity: 0.6; }
-            50% { transform: scale(1.15); opacity: 1; }
+            0%, 100% { transform: scale(0.9); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 1; }
         }
         .withdraw-icon-circle {
             position: relative;
-            width: 75px;
-            height: 75px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(145deg, #1e293b, #0f172a);
-            border: 1px solid rgba(250, 204, 21, 0.4);
+            background: linear-gradient(145deg, #1e293b, #090e1a);
+            border: 1.5px solid rgba(250, 204, 21, 0.5);
             color: #facc15;
-            font-size: 28px;
-            box-shadow: inset 0 2px 4px rgba(255,255,255,0.1), 0 8px 20px rgba(0,0,0,0.4);
+            font-size: 26px;
+            box-shadow: inset 0 3px 6px rgba(255,255,255,0.15), 0 10px 25px rgba(0,0,0,0.5);
         }
         .hero-section h2 {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 700;
-            margin: 0 0 8px;
+            margin: 0 0 6px;
             color: #f8fafc;
         }
         .hero-section p {
             color: #94a3b8;
-            font-size: 13.5px;
+            font-size: 13px;
             margin: 0;
-            line-height: 1.5;
         }
 
         /* Form Card Box */
         .withdraw-card {
-            background: linear-gradient(145deg, #0f172a, #080d1a);
-            border: 1px solid rgba(51, 65, 85, 0.6);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            background: linear-gradient(145deg, rgba(17, 27, 48, 0.9), rgba(8, 14, 28, 0.95));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 22px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
             margin-bottom: 20px;
         }
         .input-group {
-            margin-bottom: 16px;
+            margin-bottom: 18px;
             text-align: left;
         }
         .input-group label {
             display: block;
-            font-size: 12.5px;
+            font-size: 12px;
             font-weight: 600;
             color: #cbd5e1;
-            margin-bottom: 6px;
+            margin-bottom: 7px;
+            letter-spacing: 0.3px;
         }
         .input-wrapper {
             position: relative;
@@ -148,67 +150,183 @@
         }
         .input-wrapper i {
             position: absolute;
-            left: 14px;
+            left: 15px;
             color: #64748b;
             font-size: 15px;
+            z-index: 2;
         }
-        .input-wrapper input, .input-wrapper select {
+        .input-wrapper input {
             width: 100%;
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid #334155;
-            padding: 12px 14px 12px 42px;
-            border-radius: 12px;
+            background: rgba(7, 12, 24, 0.9);
+            border: 1px solid rgba(51, 65, 85, 0.8);
+            padding: 13px 15px 13px 44px;
+            border-radius: 14px;
             color: #fff;
-            font-size: 14px;
+            font-size: 13.5px;
             outline: none;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
         }
-        .input-wrapper input:focus, .input-wrapper select:focus {
+        .input-wrapper input:focus {
             border-color: #facc15;
-            box-shadow: 0 0 10px rgba(250, 204, 21, 0.15);
+            background: rgba(11, 18, 33, 1);
+            box-shadow: 0 0 12px rgba(250, 204, 21, 0.2);
+        }
+
+        /* Custom Dropdown Trigger Box */
+        .custom-select-box {
+            width: 100%;
+            background: rgba(7, 12, 24, 0.9);
+            border: 1px solid rgba(51, 65, 85, 0.8);
+            padding: 13px 15px 13px 44px;
+            border-radius: 14px;
+            color: #94a3b8;
+            font-size: 13.5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .custom-select-box.selected {
+            color: #fff;
+            border-color: #facc15;
+            background: rgba(11, 18, 33, 1);
+            box-shadow: 0 0 12px rgba(250, 204, 21, 0.2);
+        }
+        .custom-select-box i.fa-chevron-down {
+            position: static;
+            color: #94a3b8;
+            font-size: 12px;
+            transition: transform 0.3s;
+        }
+
+        /* Premium Custom Modal Popup for Options */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 6, 15, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            align-items: flex-end;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .modal-content {
+            background: linear-gradient(145deg, #131c31, #0a101f);
+            border: 1px solid rgba(250, 204, 21, 0.3);
+            border-bottom: none;
+            border-radius: 24px 24px 0 0;
+            width: 100%;
+            max-width: 480px;
+            padding: 24px 20px 35px;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.6);
+            animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding-bottom: 12px;
+        }
+        .modal-header h3 {
+            margin: 0;
+            font-size: 16px;
+            color: #facc15;
+            font-weight: 700;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .modal-option {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 14px 16px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s;
+        }
+        .modal-option:hover, .modal-option.active {
+            background: rgba(250, 204, 21, 0.1);
+            border-color: #facc15;
+            color: #facc15;
+        }
+        .modal-option i {
+            font-size: 18px;
+            color: #facc15;
+        }
+        .modal-option span {
+            font-size: 14px;
+            font-weight: 500;
+            color: #f8fafc;
+        }
+
+        /* Dynamic Fields Container */
+        .dynamic-field {
+            display: none;
         }
 
         /* Submit Button */
         .submit-btn {
             width: 100%;
-            background: linear-gradient(135deg, #ffe88a, #f5c542, #d79600);
+            background: linear-gradient(135deg, #ffe88a 0%, #f5c542 50%, #d79600 100%);
             border: none;
-            padding: 14px;
-            border-radius: 12px;
-            color: #111827;
-            font-size: 16px;
+            padding: 15px;
+            border-radius: 14px;
+            color: #0b1120;
+            font-size: 15.5px;
             font-weight: 800;
             cursor: pointer;
-            box-shadow: 0 6px 20px rgba(245, 197, 66, 0.25);
-            transition: all 0.3s;
+            box-shadow: 0 8px 25px rgba(245, 197, 66, 0.3);
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            margin-top: 10px;
+            gap: 10px;
+            margin-top: 6px;
         }
         .submit-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(245, 197, 66, 0.4);
+            box-shadow: 0 12px 30px rgba(245, 197, 66, 0.45);
         }
 
         /* Popup Notification Box */
         .popup-message {
             display: none;
-            margin-top: 15px;
+            margin-top: 16px;
             padding: 14px;
             border-radius: 12px;
-            background: rgba(30, 41, 59, 0.95);
+            background: rgba(15, 23, 42, 0.98);
             border: 1px solid rgba(250, 204, 21, 0.3);
             text-align: center;
             font-size: 13px;
             color: #f8fafc;
             line-height: 1.5;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
 
         /* Security Notice */
         .security-box {
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255, 255, 255, 0.025);
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 14px;
             padding: 14px;
@@ -236,7 +354,7 @@
     <div class="header">
         <a href="dashboard.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
         <h1><i class="fa-solid fa-shield-halved"></i> CptMarkets</h1>
-        <div style="width: 35px;"></div>
+        <div style="width: 38px;"></div>
     </div>
 
     <div class="container">
@@ -245,59 +363,82 @@
             <div class="withdraw-hero-icon">
                 <div class="withdraw-icon-glow"></div>
                 <div class="withdraw-icon-circle">
-                    <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                    <i class="fa-solid fa-wallet"></i>
                 </div>
             </div>
-            <h2>International Withdrawal</h2>
-            <p>Secure global transfer to your crypto wallet or bank account.</p>
+            <h2>Fund Withdrawal</h2>
+            <p>Select your preferred international payout channel</p>
         </div>
 
         <!-- Withdrawal Form Card -->
         <div class="withdraw-card">
-            <form id="withdrawForm" onsubmit="handleInternationalWithdraw(event)">
+            <form id="withdrawForm" onsubmit="handleWithdrawSubmit(event)">
+                
+                <!-- Custom Payout Method Selector -->
                 <div class="input-group">
-                    <label>International Payment Method</label>
-                    <div class="input-wrapper">
-                        <i class="fa-solid fa-globe"></i>
-                        <select id="paymentMethod" required>
-                            <option value="" disabled selected>Select global payment system</option>
-                            <option value="crypto">Crypto Wallet (USDT / Binance TRC20)</option>
-                            <option value="bank">International Bank Wire Transfer</option>
-                            <option value="wallet">Electronic Wallet (Skrill / Neteller)</option>
-                        </select>
+                    <label>Withdrawal Method</label>
+                    <div class="input-wrapper" style="position:relative;">
+                        <i class="fa-solid fa-globe" style="position:absolute; left:15px; z-index:2;"></i>
+                        <div id="selectedMethodDisplay" class="custom-select-box" onclick="openMethodModal()">
+                            <span id="selectedMethodText">Select payout system</span>
+                            <i class="fa-solid fa-chevron-down" id="dropdownArrow"></i>
+                        </div>
                     </div>
+                    <!-- Hidden input to store selected value for form submit -->
+                    <input type="hidden" id="paymentMethod" required>
                 </div>
 
+                <!-- Amount -->
                 <div class="input-group">
                     <label>Withdrawal Amount (USD)</label>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-dollar-sign"></i>
-                        <input type="number" id="withdrawAmount" placeholder="Enter amount (Min $10)" min="1" step="0.01" required>
+                        <input type="number" id="withdrawAmount" placeholder="Min amount $10.00" min="1" step="0.01" required>
                     </div>
                 </div>
 
-                <div class="input-group">
-                    <label>Wallet Address / Account Details & Password</label>
+                <!-- Dynamic Field 1: Crypto Wallet Address -->
+                <div id="cryptoField" class="input-group dynamic-field">
+                    <label>USDT TRC20 Wallet Address</label>
                     <div class="input-wrapper">
-                        <i class="fa-solid fa-address-card"></i>
-                        <input type="text" id="walletAddress" placeholder="Enter wallet address or account number" required>
+                        <i class="fa-solid fa-qrcode"></i>
+                        <input type="text" id="cryptoAddress" placeholder="Paste your USDT wallet address">
                     </div>
                 </div>
 
+                <!-- Dynamic Field 2: Bank Details -->
+                <div id="bankField" class="input-group dynamic-field">
+                    <label>Bank Account / IBAN & Routing Number</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-building-columns"></i>
+                        <input type="text" id="bankDetails" placeholder="Account Name, Number & SWIFT/BIC">
+                    </div>
+                </div>
+
+                <!-- Dynamic Field 3: E-Wallet ID -->
+                <div id="walletField" class="input-group dynamic-field">
+                    <label>E-Wallet Account Email / ID</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="text" id="walletAccount" placeholder="Enter Skrill/Neteller email or ID">
+                    </div>
+                </div>
+
+                <!-- Security Password -->
                 <div class="input-group">
-                    <label>Security Password</label>
+                    <label>Fund / Trading Password</label>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-lock"></i>
-                        <input type="password" id="securityPassword" placeholder="Enter trading / fund password" required>
+                        <input type="password" id="securityPassword" placeholder="Enter 6-digit security password" required>
                     </div>
                 </div>
 
                 <button type="submit" class="submit-btn">
-                    <span>Submit Request</span>
+                    <span>Confirm Withdrawal</span>
                     <i class="fa-solid fa-arrow-right"></i>
                 </button>
 
-                <!-- Professional Popup Notification -->
+                <!-- Popup Notification -->
                 <div id="popupMessage" class="popup-message"></div>
             </form>
         </div>
@@ -305,11 +446,89 @@
         <!-- Security Notice -->
         <div class="security-box">
             <i class="fa-solid fa-shield-cat"></i>
-            <p><strong>Global Security:</strong> All financial transactions are heavily encrypted and processed securely according to international compliance standards.</p>
+            <p><strong>Secure Payout:</strong> International transactions are verified securely. Ensure your account details are accurate to avoid transfer delays.</p>
         </div>
     </div>
 
-    <!-- Firebase SDK & Validation Logic -->
+    <!-- Custom Select Modal Popup -->
+    <div id="methodModal" class="modal-overlay" onclick="closeMethodModalOnOutside(event)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Select Payout System</h3>
+                <button type="button" class="modal-close" onclick="closeMethodModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="modal-option" onclick="selectMethod('crypto', 'Crypto Wallet (USDT / Binance TRC20)')">
+                <i class="fa-solid fa-coins"></i>
+                <span>Crypto Wallet (USDT / Binance TRC20)</span>
+            </div>
+            
+            <div class="modal-option" onclick="selectMethod('bank', 'International Bank Wire Transfer')">
+                <i class="fa-solid fa-building-columns"></i>
+                <span>International Bank Wire Transfer</span>
+            </div>
+            
+            <div class="modal-option" onclick="selectMethod('wallet', 'Electronic Wallet (Skrill / Neteller)')">
+                <i class="fa-solid fa-wallet"></i>
+                <span>Electronic Wallet (Skrill / Neteller)</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script Section for Custom Modal & Dynamic Fields -->
+    <script>
+        function openMethodModal() {
+            document.getElementById("methodModal").style.display = "flex";
+            document.getElementById("dropdownArrow").style.transform = "rotate(180deg)";
+        }
+
+        function closeMethodModal() {
+            document.getElementById("methodModal").style.display = "none";
+            document.getElementById("dropdownArrow").style.transform = "rotate(0deg)";
+        }
+
+        function closeMethodModalOnOutside(event) {
+            if (event.target.id === "methodModal") {
+                closeMethodModal();
+            }
+        }
+
+        function selectMethod(value, labelText) {
+            // Set hidden input value
+            document.getElementById("paymentMethod").value = value;
+            
+            // Update display box text and style
+            const displayBox = document.getElementById("selectedMethodDisplay");
+            document.getElementById("selectedMethodText").textContent = labelText;
+            displayBox.classList.add("selected");
+            
+            closeMethodModal();
+            togglePaymentFields(value);
+        }
+
+        function togglePaymentFields(method) {
+            document.getElementById("cryptoField").style.display = "none";
+            document.getElementById("bankField").style.display = "none";
+            document.getElementById("walletField").style.display = "none";
+
+            document.getElementById("cryptoAddress").removeAttribute("required");
+            document.getElementById("bankDetails").removeAttribute("required");
+            document.getElementById("walletAccount").removeAttribute("required");
+
+            if (method === "crypto") {
+                document.getElementById("cryptoField").style.display = "block";
+                document.getElementById("cryptoAddress").setAttribute("required", "true");
+            } else if (method === "bank") {
+                document.getElementById("bankField").style.display = "block";
+                document.getElementById("bankDetails").setAttribute("required", "true");
+            } else if (method === "wallet") {
+                document.getElementById("walletField").style.display = "block";
+                document.getElementById("walletAccount").setAttribute("required", "true");
+            }
+        }
+    </script>
+
+    <!-- Firebase Validation Logic -->
     <script type="module">
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
         import { doc, getDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
@@ -319,7 +538,6 @@
 
         let userBalance = 0;
 
-        // Fetch live balance from Firebase
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 try {
@@ -335,7 +553,7 @@
             }
         });
 
-        window.handleInternationalWithdraw = async function(event) {
+        window.handleWithdrawSubmit = async function(event) {
             event.preventDefault();
 
             const amountInput = parseFloat(document.getElementById("withdrawAmount").value);
@@ -343,29 +561,29 @@
 
             popup.style.display = "block";
 
-            // Condition 1: Check if balance is 0 or empty
+            // Condition 1: Insufficient Balance (Zero or Less)
             if (userBalance <= 0) {
                 popup.style.color = "#f87171";
                 popup.innerHTML = "Your account balance is insufficient. Please recharge first.";
                 return;
             }
 
-            // Condition 2: Check if withdrawal amount exceeds balance
+            // Condition 2: Entered amount greater than available balance
             if (amountInput > userBalance) {
                 popup.style.color = "#f87171";
-                popup.innerHTML = "Your withdrawal amount exceeds available balance. Please check your funds.";
+                popup.innerHTML = "Withdrawal amount exceeds your available balance!";
                 return;
             }
 
-            // Condition 3: If balance is available but needs customer service verification
+            // Condition 3: Success path - Require Customer Service verification
             popup.style.color = "#facc15";
-            popup.innerHTML = "Withdrawal request received. Please contact Customer Service to complete your verification.";
+            popup.innerHTML = "Withdrawal request processed. Please contact Customer Service to complete your security verification.";
 
             setTimeout(() => {
                 if (typeof window.openSupportChat === "function") {
                     window.openSupportChat();
                 }
-            }, 2000);
+            }, 2500);
         };
     </script>
 </body>
