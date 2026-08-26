@@ -1,574 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>CptMarkets — Deposit Center</title>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-<style>
-:root{
-    --bg:#050c18;
-    --card:#0e1b30;
-    --card2:#101f36;
-    --line:rgba(150,177,214,.14);
-    --text:#f5f8ff;
-    --muted:#91a1b8;
-    --blue:#1687ff;
-    --blue2:#005fdb;
-    --green:#00d294;
-    --green2:#00966b;
-    --gold:#ffc247;
-}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{
-    margin:0;
-    min-height:100%;
-    color:var(--text);
-    font-family:Inter,Arial,sans-serif;
-    background:
-      radial-gradient(circle at 50% -8%,rgba(22,135,255,.18),transparent 35%),
-      linear-gradient(180deg,#091426 0%,#040a14 100%);
-}
-body{min-height:100vh}
-button{font:inherit}
-.page{max-width:760px;margin:auto;padding-bottom:40px}
-
-/* TOP */
-.topbar{
-    height:82px;
-    position:sticky;top:0;z-index:30;
-    display:flex;align-items:center;justify-content:center;
-    background:rgba(5,13,26,.94);
-    border-bottom:1px solid var(--line);
-    backdrop-filter:blur(18px)
-}
-.back{
-    position:absolute;left:16px;width:44px;height:44px;
-    border:0;border-radius:13px;background:transparent;color:#eaf1fc;font-size:21px
-}
-.title{font-size:24px;font-weight:800;letter-spacing:-.5px}
-
-/* BRAND */
-.brand{
-    margin:20px 18px 0;
-    padding:19px;
-    border:1px solid rgba(65,143,242,.20);
-    border-radius:24px;
-    background:linear-gradient(145deg,rgba(18,38,65,.98),rgba(8,20,37,.98));
-    box-shadow:0 18px 42px rgba(0,0,0,.24);
-    overflow:hidden
-}
-.brandrow{display:flex;align-items:center;gap:13px}
-.logo{
-    width:55px;height:55px;flex:0 0 55px;
-    display:grid;place-items:center;border-radius:17px;
-    background:linear-gradient(145deg,#188fff,#005fd8);
-    box-shadow:inset 0 1px 1px rgba(255,255,255,.25),0 10px 25px rgba(0,105,225,.28)
-}
-.logo i{font-size:25px}
-.brandname{font-size:21px;font-weight:800}
-.brandsub{margin-top:4px;color:#8fa4bf;font-size:10px;font-weight:600;letter-spacing:.4px}
-.chart{
-    height:66px;margin-top:14px;position:relative;overflow:hidden;
-    border-top:1px solid rgba(120,155,202,.08)
-}
-.grid{
-    position:absolute;inset:0;
-    background:
-      linear-gradient(rgba(105,142,191,.08) 1px,transparent 1px),
-      linear-gradient(90deg,rgba(105,142,191,.06) 1px,transparent 1px);
-    background-size:43px 22px
-}
-.trend{
-    position:absolute;left:-4%;right:-4%;top:30px;height:24px;
-    border-bottom:2px solid var(--green);
-    transform:skewY(-8deg) rotate(-2deg);
-    filter:drop-shadow(0 0 6px rgba(0,210,148,.45))
-}
-.c{position:absolute;bottom:7px;width:5px;border-radius:3px;background:#00c68e}
-.c1{left:9%;height:22px}.c2{left:22%;height:37px}.c3{left:36%;height:28px}
-.c4{left:50%;height:46px}.c5{left:64%;height:34px}.c6{left:78%;height:51px}.c7{left:91%;height:42px}
-
-/* CONTENT */
-.section{margin:18px 18px 0}
-.card{
-    border:1px solid var(--line);
-    border-radius:22px;
-    background:linear-gradient(145deg,rgba(17,33,56,.98),rgba(8,20,37,.98));
-    box-shadow:0 15px 34px rgba(0,0,0,.15)
-}
-.intro{padding:21px}
-.kicker{
-    display:flex;align-items:center;gap:9px;margin-bottom:10px;
-    color:#65b8ff;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.5px
-}
-.intro h1{margin:0 0 9px;font-size:22px;line-height:1.3}
-.intro p{margin:0;color:var(--muted);font-size:12px;line-height:1.75}
-.note{
-    margin-top:16px;padding:13px 14px;display:flex;gap:10px;
-    border-radius:14px;background:rgba(0,210,148,.055);
-    border:1px solid rgba(0,210,148,.14)
-}
-.note i{color:var(--green);margin-top:2px}
-.note span{color:#aab9cc;font-size:10.5px;line-height:1.65}
-
-.section-title{margin:0 2px 10px;font-size:16px;font-weight:800}
-
-/* GUIDELINES */
-.guidelines{padding:8px 17px}
-.row{
-    display:flex;gap:13px;padding:15px 0;
-    border-bottom:1px solid rgba(150,177,214,.08)
-}
-.row:last-child{border-bottom:0}
-.num{
-    width:35px;height:35px;flex:0 0 35px;
-    display:grid;place-items:center;border-radius:11px;
-    color:#69b9ff;background:rgba(22,135,255,.11);
-    border:1px solid rgba(90,170,255,.12);
-    font-size:10px;font-weight:800
-}
-.row h3{margin:1px 0 5px;font-size:12px}
-.row p{margin:0;color:var(--muted);font-size:10.5px;line-height:1.65}
-
-/* OFFICIAL CHANNEL NOTICE */
-.official{
-    padding:18px;
-    border-color:rgba(255,194,71,.15);
-    background:linear-gradient(145deg,rgba(255,194,71,.055),rgba(10,23,41,.98))
-}
-.officialhead{display:flex;gap:12px;align-items:center}
-.officialicon{
-    width:42px;height:42px;flex:0 0 42px;display:grid;place-items:center;
-    border-radius:13px;color:var(--gold);background:rgba(255,194,71,.09)
-}
-.official h3{margin:0 0 5px;font-size:13px}
-.official p{margin:0;color:var(--muted);font-size:10.5px;line-height:1.7}
-
-/* SERVICE */
-.service{
-    padding:19px;
-    border-color:rgba(0,210,148,.18);
-    background:linear-gradient(145deg,rgba(0,210,148,.075),rgba(10,28,47,.98))
-}
-.servicehead{display:flex;gap:13px;align-items:center}
-.serviceicon{
-    width:50px;height:50px;flex:0 0 50px;display:grid;place-items:center;
-    border-radius:15px;color:#fff;
-    background:linear-gradient(145deg,#00d99a,#009a6e);
-    box-shadow:inset 0 1px 1px rgba(255,255,255,.23),0 10px 25px rgba(0,200,140,.22)
-}
-.service h3{margin:0 0 5px;font-size:15px}
-.servicehead p{margin:0;color:var(--muted);font-size:10.5px;line-height:1.55}
-.servicebutton{
-    width:100%;min-height:60px;margin-top:17px;
-    border:1px solid rgba(255,255,255,.13);border-radius:16px;color:#fff;
-    background:linear-gradient(180deg,#17d99d 0%,#00b980 55%,#00976c 100%);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.27),inset 0 -4px 0 rgba(0,80,56,.27),
-               0 7px 0 #006d50,0 14px 28px rgba(0,201,139,.20);
-    font-size:14px;font-weight:800;transition:.12s
-}
-.servicebutton:active{
-    transform:translateY(5px);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 2px 0 #006d50,0 8px 18px rgba(0,201,139,.15)
-}
-.servicehint{margin:13px 2px 0;text-align:center;color:#74879e;font-size:9.5px;line-height:1.55}
-
-/* FAQ */
-.faq{padding:0 16px}
-details{border-bottom:1px solid rgba(150,177,214,.08)}
-details:last-child{border-bottom:0}
-summary{
-    list-style:none;padding:16px 0;display:flex;justify-content:space-between;gap:12px;
-    color:#e8eef8;font-size:11px;font-weight:700
-}
-summary::-webkit-details-marker{display:none}
-summary i{color:#7d8fa8;transition:.2s}
-details[open] summary i{transform:rotate(180deg)}
-.answer{padding:0 0 16px;color:var(--muted);font-size:10.5px;line-height:1.65}
-
-/* TOAST */
-.toast{
-    position:fixed;left:50%;bottom:23px;z-index:100;width:min(90%,420px);
-    padding:12px 15px;border-radius:13px;background:rgba(7,17,31,.97);
-    border:1px solid rgba(255,255,255,.12);color:#edf4ff;text-align:center;
-    font-size:11px;line-height:1.5;opacity:0;pointer-events:none;
-    transform:translate(-50%,18px);transition:.25s
-}
-.toast.show{opacity:1;transform:translate(-50%,0)}
-
-@media(max-width:390px){
-    .brand,.section{margin-left:14px;margin-right:14px}
-    .intro{padding:19px 17px}
-    .topbar{height:78px}
-}
-
-
-/* ===== FINAL VISUAL REFINEMENT ===== */
-.brand{padding:20px 20px 14px}
-.brandrow{position:relative;z-index:2}
-.logo{width:58px;height:58px;flex-basis:58px}
-.logo i{font-size:27px;color:#fff}
-.chart{
-    height:145px;
-    margin-top:13px;
-    border:1px solid rgba(80,145,210,.12);
-    border-radius:16px;
-    background:linear-gradient(180deg,rgba(4,18,35,.68),rgba(5,14,27,.95));
-    box-shadow:inset 0 0 28px rgba(0,115,220,.06);
-}
-.chart-grid{
-    position:absolute;inset:0;border-radius:16px;
-    background:
-      linear-gradient(rgba(102,151,205,.09) 1px,transparent 1px),
-      linear-gradient(90deg,rgba(102,151,205,.07) 1px,transparent 1px);
-    background-size:58px 29px;
-}
-.candles{position:absolute;inset:12px 5px 27px;width:calc(100% - 10px);height:106px;overflow:visible}
-.candles line{stroke-width:2;stroke-linecap:round}
-.candles rect{rx:2}
-.wick.up line,.wick.up rect{stroke:#00d69b;fill:#00b985}
-.wick.down line,.wick.down rect{stroke:#ff4f68;fill:#e83352}
-.chart-line{
-    fill:none;stroke:#1baeff;stroke-width:2.5;
-    opacity:.72;filter:drop-shadow(0 0 4px rgba(27,174,255,.55))
-}
-.chart-label{
-    position:absolute;left:13px;right:13px;bottom:7px;
-    display:flex;align-items:center;gap:9px;
-    font-size:9px;color:#8499b4;font-weight:700
-}
-.chart-label b{margin-left:auto;color:#e7effb;font-size:10px}
-.chart-label em{font-style:normal;color:#00d294;font-size:9px}
-
-.section{margin-top:14px}
-.section-title{font-size:18px;margin-bottom:8px}
-.intro{padding:19px}
-.intro h1{font-size:23px}
-.intro p{font-size:12px;line-height:1.65}
-.note{margin-top:13px}
-
-.guidelines{padding:5px 17px}
-.row{padding:13px 0;gap:13px}
-.row h3{font-size:13px;margin-bottom:5px}
-.row p{font-size:11.5px;line-height:1.58}
-.num{width:38px;height:38px;flex-basis:38px;font-size:11px}
-
-.official{padding:18px}
-.officialicon{width:46px;height:46px;flex-basis:46px}
-.official h3{font-size:15px;margin-bottom:6px}
-.official p{font-size:11.5px;line-height:1.6}
-
-.service{padding:19px}
-.serviceicon{width:53px;height:53px;flex-basis:53px}
-.service h3{font-size:17px}
-.servicehead p{font-size:11.5px}
-.servicebutton{min-height:58px;font-size:15px;margin-top:15px}
-.servicehint{font-size:10.5px;margin-top:12px}
-
-.faq{padding:0 18px}
-summary{padding:15px 0;font-size:12.5px}
-.answer{font-size:11px;line-height:1.6;padding-bottom:15px}
-
-@media(max-width:390px){
-    .brand,.section{margin-left:14px;margin-right:14px}
-    .chart{height:138px}
-    .candles{height:99px}
-    .intro h1{font-size:21px}
-    .row p{font-size:11px}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CptMarkets - Deposit</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #0b1120;
+            font-family: 'Inter', sans-serif;
+            color: #ffffff;
+        }
+    </style>
 </head>
+<body class="min-h-screen flex justify-center items-center p-4">
 
-<body>
-<div class="page">
-
-<header class="topbar">
-    <button class="back" type="button" onclick="history.back()" aria-label="Back">
-        <i class="fa-solid fa-chevron-left"></i>
-    </button>
-    <div class="title">Deposit</div>
-</header>
-
-<!-- BRANDING -->
-<section class="brand">
-    <div class="brandrow">
-        <div class="logo"><i class="fa-solid fa-shield-halved"></i></div>
-        <div>
-            <div class="brandname">CptMarkets</div>
-            <div class="brandsub">GLOBAL DIGITAL ASSET TRADING</div>
-        </div>
-    </div>
-
-    <div class="chart" aria-label="Market chart">
-        <div class="chart-grid"></div>
-        <svg class="candles" viewBox="0 0 700 150" preserveAspectRatio="none" aria-hidden="true">
-            <polyline class="chart-line" points="0,115 45,105 88,112 130,82 175,91 215,66 260,77 305,51 350,63 392,40 435,55 478,31 520,44 560,24 605,35 650,14 700,23"/>
-            <g class="wick up">
-                <line x1="35" y1="98" x2="35" y2="132"/><rect x="27" y="106" width="16" height="18"/>
-                <line x1="110" y1="67" x2="110" y2="105"/><rect x="102" y="75" width="16" height="21"/>
-                <line x1="185" y1="78" x2="185" y2="116"/><rect x="177" y="87" width="16" height="20"/>
-                <line x1="265" y1="48" x2="265" y2="90"/><rect x="257" y="56" width="16" height="25"/>
-                <line x1="340" y1="56" x2="340" y2="97"/><rect x="332" y="65" width="16" height="22"/>
-                <line x1="420" y1="30" x2="420" y2="72"/><rect x="412" y="38" width="16" height="25"/>
-                <line x1="500" y1="25" x2="500" y2="65"/><rect x="492" y="32" width="16" height="22"/>
-                <line x1="585" y1="12" x2="585" y2="54"/><rect x="577" y="20" width="16" height="25"/>
-                <line x1="670" y1="7" x2="670" y2="43"/><rect x="662" y="13" width="16" height="22"/>
-            </g>
-            <g class="wick down">
-                <line x1="72" y1="86" x2="72" y2="125"/><rect x="64" y="94" width="16" height="22"/>
-                <line x1="150" y1="73" x2="150" y2="111"/><rect x="142" y="82" width="16" height="21"/>
-                <line x1="225" y1="63" x2="225" y2="104"/><rect x="217" y="72" width="16" height="24"/>
-                <line x1="300" y1="41" x2="300" y2="83"/><rect x="292" y="49" width="16" height="23"/>
-                <line x1="378" y1="45" x2="378" y2="88"/><rect x="370" y="54" width="16" height="23"/>
-                <line x1="458" y1="32" x2="458" y2="76"/><rect x="450" y="40" width="16" height="25"/>
-                <line x1="540" y1="17" x2="540" y2="58"/><rect x="532" y="25" width="16" height="22"/>
-                <line x1="625" y1="20" x2="625" y2="52"/><rect x="617" y="27" width="16" height="18"/>
-            </g>
-        </svg>
-        <div class="chart-label"><span>XAUUSD</span><b>4,253.20</b><em>+0.15%</em></div>
-    </div>
-        <div class="trend"></div>
-        <span class="c c1"></span><span class="c c2"></span>
-        <span class="c c3"></span><span class="c c4"></span>
-        <span class="c c5"></span><span class="c c6"></span>
-        <span class="c c7"></span>
-    </div>
-</section>
-
-<!-- INTRO -->
-<section class="section">
-    <div class="card intro">
-        <div class="kicker">
-            <i class="fa-solid fa-circle-dollar-to-slot"></i>
-            Deposit Center
+    <!-- Mobile Screen Container -->
+    <div class="w-full max-w-md bg-[#0b1329] rounded-2xl shadow-2xl overflow-hidden border border-slate-800">
+        
+        <!-- Header -->
+        <div class="flex items-center justify-between px-6 py-4 border-b border-slate-800/60">
+            <button class="text-white hover:text-slate-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <h1 class="text-lg font-semibold tracking-wide">Deposit</h1>
+            <div class="w-6"></div> <!-- Spacer for balancing layout -->
         </div>
 
-        <h1>Fund Your CptMarkets Account</h1>
+        <!-- Scrollable Content Area -->
+        <div class="p-5 space-y-6 overflow-y-auto max-h-[85vh]">
 
-        <p>
-            Add funds to your CptMarkets account through a clear,
-            guided deposit process. Our support team can assist with
-            the current payment procedure and the information required
-            for your account.
-        </p>
+            <!-- CptMarkets Card with Chart -->
+            <div class="bg-[#111a36] border border-slate-700/50 rounded-2xl p-4 shadow-lg">
+                <div class="flex items-center space-x-3 mb-4">
+                    <!-- Logo / Icon -->
+                    <div class="w-11 h-11 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center shadow-md shadow-blue-500/20">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="font-bold text-base tracking-wide text-white">CptMarkets</h2>
+                        <p class="text-xs text-slate-400">Global integrated financial trading platform</p>
+                    </div>
+                </div>
 
-        <div class="note">
-            <i class="fa-solid fa-circle-check"></i>
-            <span>
-                Keep your account details ready so your deposit request
-                can be handled smoothly and efficiently.
-            </span>
-        </div>
-    </div>
-</section>
+                <!-- Chart Graphic (Clean without ticker bar) -->
+                <div class="bg-[#0b1120]/60 rounded-xl p-3 border border-slate-800/80">
+                    <svg viewBox="0 0 400 120" class="w-full h-28">
+                        <path d="M 0 90 Q 50 70, 100 80 T 200 50 T 300 40 T 400 25" fill="none" stroke="#38bdf8" stroke-width="2.5" />
+                        <!-- Candlestick indicators visual representation -->
+                        <line x1="40" y1="75" x2="40" y2="100" stroke="#34d399" stroke-width="2" />
+                        <rect x="36" y="82" width="8" height="12" fill="#34d399" rx="1" />
 
-<!-- GUIDELINES -->
-<section class="section">
-    <h2 class="section-title">Deposit Guidelines</h2>
+                        <line x1="90" y1="65" x2="90" y2="95" stroke="#f87171" stroke-width="2" />
+                        <rect x="86" y="72" width="8" height="16" fill="#f87171" rx="1" />
 
-    <div class="card guidelines">
+                        <line x1="140" y1="60" x2="140" y2="90" stroke="#34d399" stroke-width="2" />
+                        <rect x="136" y="68" width="8" height="14" fill="#34d399" rx="1" />
 
-        <div class="row">
-            <div class="num">01</div>
-            <div>
-                <h3>Start Your Request</h3>
-                <p>
-                    Open Online Customer Service and let the support
-                    team know that you would like to make a deposit.
+                        <line x1="190" y1="45" x2="190" y2="80" stroke="#f87171" stroke-width="2" />
+                        <rect x="186" y="52" width="8" height="18" fill="#f87171" rx="1" />
+
+                        <line x1="240" y1="35" x2="240" y2="70" stroke="#34d399" stroke-width="2" />
+                        <rect x="236" y="42" width="8" height="15" fill="#34d399" rx="1" />
+
+                        <line x1="290" y1="30" x2="290" y2="65" stroke="#f87171" stroke-width="2" />
+                        <rect x="286" y="38" width="8" height="17" fill="#f87171" rx="1" />
+
+                        <line x1="340" y1="20" x2="340" y2="55" stroke="#34d399" stroke-width="2" />
+                        <rect x="336" y="28" width="8" height="15" fill="#34d399" rx="1" />
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Deposit Center Section -->
+            <div class="bg-[#111a36] border border-slate-700/50 rounded-2xl p-5 shadow-lg space-y-4">
+                <div class="flex items-center space-x-2 text-blue-400 text-xs font-semibold tracking-wider">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                    <span>DEPOSIT CENTER</span>
+                </div>
+
+                <h3 class="text-xl font-bold text-white">Fund Your CptMarkets Account</h3>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    Add funds to your CptMarkets account through a clear, guided deposit process. Our support team can assist with the current payment procedure and the information required for your account.
                 </p>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="num">02</div>
-            <div>
-                <h3>Provide Your Account UID</h3>
-                <p>
-                    Share the UID assigned to your CptMarkets account,
-                    together with your intended deposit amount.
-                </p>
+                <!-- Status Note Box -->
+                <div class="bg-[#0b1120] border border-slate-800 rounded-xl p-3 flex items-start space-x-3">
+                    <div class="text-emerald-400 mt-0.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <p class="text-xs text-slate-300 leading-snug">
+                        Keep your account details ready so your deposit request can be handled smoothly and efficiently.
+                    </p>
+                </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="num">03</div>
-            <div>
-                <h3>Confirm Payment Details</h3>
-                <p>
-                    Tell the support team your preferred payment method
-                    and follow the current payment instructions provided.
-                </p>
-            </div>
-        </div>
+            <!-- Deposit Guidelines -->
+            <div class="space-y-3">
+                <h3 class="text-sm font-bold text-slate-200 uppercase tracking-wide">Deposit Guidelines</h3>
 
-        <div class="row">
-            <div class="num">04</div>
-            <div>
-                <h3>Submit Your Receipt</h3>
-                <p>
-                    After completing the payment, provide the payment
-                    receipt or transaction proof for deposit confirmation.
-                </p>
-            </div>
-        </div>
+                <!-- Step 01 -->
+                <div class="bg-[#111a36] border border-slate-700/50 rounded-xl p-4 flex items-start space-x-4">
+                    <div class="w-9 h-9 bg-blue-600/20 text-blue-400 border border-blue-500/30 font-bold rounded-lg flex items-center justify-center shrink-0 text-sm">
+                        01
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-semibold text-white">Start Your Request</h4>
+                        <p class="text-xs text-slate-400 mt-1">Open Online Customer Service and let the support team know that you would like to make a deposit.</p>
+                    </div>
+                </div>
 
-    </div>
-</section>
+                <!-- Step 02 (Clean and fixed without blue artifacts) -->
+                <div class="bg-[#111a36] border border-slate-700/50 rounded-xl p-4 flex items-start space-x-4">
+                    <div class="w-9 h-9 bg-blue-600/20 text-blue-400 border border-blue-500/30 font-bold rounded-lg flex items-center justify-center shrink-0 text-sm">
+                        02
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-semibold text-white">Provide Your Account UID</h4>
+                        <p class="text-xs text-slate-400 mt-1">Share the UID assigned to your CptMarkets account, together with your intended deposit amount.</p>
+                    </div>
+                </div>
 
-<!-- OFFICIAL CHANNEL -->
-<section class="section">
-    <div class="card official">
-        <div class="officialhead">
-            <div class="officialicon">
-                <i class="fa-solid fa-shield-halved"></i>
+                <!-- Step 03 -->
+                <div class="bg-[#111a36] border border-slate-700/50 rounded-xl p-4 flex items-start space-x-4">
+                    <div class="w-9 h-9 bg-blue-600/20 text-blue-400 border border-blue-500/30 font-bold rounded-lg flex items-center justify-center shrink-0 text-sm">
+                        03
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-semibold text-white">Confirm Payment Details</h4>
+                        <p class="text-xs text-slate-400 mt-1">Tell the support team your preferred payment method and follow the current payment instructions provided.</p>
+                    </div>
+                </div>
             </div>
-            <div>
-                <h3>Use the Official Support Channel</h3>
-                <p>
-                    For account funding, use the customer-service channel
-                    available through this platform. Verify the account
-                    details and payment information provided before
-                    completing a transaction.
-                </p>
-            </div>
+
         </div>
     </div>
-</section>
-
-<!-- CUSTOMER SERVICE -->
-<section class="section">
-    <h2 class="section-title">Online Customer Service</h2>
-
-    <div class="card service">
-        <div class="servicehead">
-            <div class="serviceicon">
-                <i class="fa-solid fa-headset"></i>
-            </div>
-            <div>
-                <h3>Deposit Assistance</h3>
-                <p>
-                    Our online support channel is available to guide
-                    you through the deposit procedure.
-                </p>
-            </div>
-        </div>
-
-        <button class="servicebutton" id="customerServiceButton" type="button">
-            <i class="fa-solid fa-comments"></i>
-            Contact Customer Service
-        </button>
-
-        <div class="servicehint">
-            Please keep your Account UID, deposit amount and preferred
-            payment method ready.
-        </div>
-    </div>
-</section>
-
-<!-- INFORMATION -->
-<section class="section">
-    <h2 class="section-title">Deposit Information</h2>
-
-    <div class="card faq">
-
-        <details>
-            <summary>
-                What information should I provide?
-                <i class="fa-solid fa-chevron-down"></i>
-            </summary>
-            <div class="answer">
-                Provide your CptMarkets Account UID, intended deposit
-                amount and preferred payment method. After payment,
-                keep your transaction receipt available.
-            </div>
-        </details>
-
-        <details>
-            <summary>
-                How can I keep my payment information accurate?
-                <i class="fa-solid fa-chevron-down"></i>
-            </summary>
-            <div class="answer">
-                Before making a payment, carefully match the payment
-                details supplied through the official customer-service
-                conversation with the information you are using.
-            </div>
-        </details>
-
-        <details>
-            <summary>
-                Why should I keep my payment receipt?
-                <i class="fa-solid fa-chevron-down"></i>
-            </summary>
-            <div class="answer">
-                Your receipt or transaction proof provides the relevant
-                payment reference needed for the deposit confirmation
-                process.
-            </div>
-        </details>
-
-    </div>
-</section>
-
-</div>
-
-<div class="toast" id="toast"></div>
-
-<script>
-const serviceButton = document.getElementById("customerServiceButton");
-const toast = document.getElementById("toast");
-
-const depositMessage =
-"Hello CptMarkets Customer Service, I would like to make a deposit. My Account UID is ______. I would like to deposit ______ using ______. Please provide the current payment instructions.";
-
-function showToast(message){
-    toast.textContent = message;
-    toast.classList.add("show");
-    clearTimeout(window.__depositToast);
-    window.__depositToast = setTimeout(() => {
-        toast.classList.remove("show");
-    }, 3200);
-}
-
-serviceButton.addEventListener("click", function(){
-
-    if(navigator.clipboard && window.isSecureContext){
-        navigator.clipboard.writeText(depositMessage).catch(() => {});
-    }
-
-    if(
-        window.Tawk_API &&
-        typeof window.Tawk_API.maximize === "function"
-    ){
-        try{
-            if(typeof window.Tawk_API.setAttributes === "function"){
-                window.Tawk_API.setAttributes(
-                    {
-                        requestType:"Deposit",
-                        depositRequest:"Yes"
-                    },
-                    function(){}
-                );
-            }
-        }catch(e){}
-
-        window.Tawk_API.maximize();
-
-        showToast(
-            "Customer Service opened. Your deposit request is ready."
-        );
-        return;
-    }
-
-    window.location.href =
-        "support.html?message=" +
-        encodeURIComponent(depositMessage);
-});
-</script>
 
 </body>
 </html>
