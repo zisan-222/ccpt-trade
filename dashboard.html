@@ -9,13 +9,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- তাকওয়ার সবুজ গোল আইকন চিরতরে হাইড করার স্টাইল -->
+    <!-- তাকওয়ার সবুজ গোল আইকন এবং অন্যান্য পপআপ হাইড করার স্টাইল -->
     <style>
         #tawkchat-container {
             display: none !important;
             visibility: hidden !important;
             opacity: 0 !important;
             pointer-events: none !important;
+        }
+        /* ডিপোজিট লিঙ্ক যেন বাটন আকারে পুরোটা কাজ করে */
+        .deposit-link-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: #22c55e;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            flex: 1;
+            border: none;
+            cursor: pointer;
+        }
+        .deposit-link-btn:hover {
+            background: #16a34a;
+            color: #fff;
         }
     </style>
 </head>
@@ -59,8 +80,8 @@
         </div>
 
         <div class="action-buttons">
-            <!-- আইডি যুক্ত করা হলো যাতে সরাসরি deposit.html এ যায় -->
-            <button class="deposit-btn" id="depositBtn"><i class="fa-solid fa-arrow-down-long"></i> Deposit</button>
+            <!-- ডিপোজিট বাটনকে সরাসরি ট্যাগ বানিয়ে দেওয়া হলো যাতে কোনো JS ফাইল ব্লক করতে না পারে -->
+            <a href="deposit.html" class="deposit-link-btn"><i class="fa-solid fa-arrow-down-long"></i> Deposit</a>
             <button class="withdraw-btn"><i class="fa-solid fa-arrow-up-long"></i> Withdraw</button>
             <button class="transfer-btn" onclick="window.location.href='transfer.html'"><i class="fa-solid fa-right-left"></i> Transfer</button>
         </div>
@@ -84,8 +105,8 @@
             <div class="menu-icon"><i class="fa-solid fa-users"></i></div>
             <span>Copy Trade</span>
         </div>
-        <!-- লোন বাটনে ক্লিক করলে সরাসরি loan.html পেজে যাবে -->
-        <div class="menu-item" onclick="window.location.replace('loan.html'); return false;" style="cursor: pointer;">
+        <!-- লোন বাটন -->
+        <div class="menu-item" onclick="window.location.href='loan.html'" style="cursor: pointer;">
             <div class="menu-icon"><i class="fa-regular fa-credit-card"></i></div>
             <span>Loan</span>
         </div>
@@ -93,7 +114,7 @@
             <div class="menu-icon"><i class="fa-solid fa-chart-line"></i></div>
             <span>Wealth</span>
         </div>
-        <div class="menu-item" onclick="window.location.href='investment.html?mode=mining'">
+        <div class="menu-item" onclick="window.Item" onclick="window.location.href='investment.html?mode=mining'">
             <div class="menu-icon"><i class="fa-solid fa-hammer"></i></div>
             <span>Mining</span>
         </div>
@@ -140,14 +161,6 @@
 <!-- JavaScript Scripts -->
 <script src="balance.js"></script>
 <script src="dashboard.js"></script>
-
-<!-- ডিপোজিট বাটনের ফোরড রিডাইরেক্ট স্ক্রিপ্ট -->
-<script>
-    document.getElementById('depositBtn').addEventListener('click', function(e) {
-        e.preventDefault();
-        window.location.href = 'deposit.html';
-    });
-</script>
 
 </body>
 </html>
