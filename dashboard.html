@@ -49,15 +49,17 @@
         </div>
 
         <div class="action-buttons">
+            <!-- ডিপোজিট বাটন থেকে আগের লাইভ চ্যাট পপআপ ট্রিগার সরিয়ে দেওয়া হয়েছে -->
             <button class="deposit-btn"><i class="fa-solid fa-arrow-down-long"></i> Deposit</button>
             <button class="withdraw-btn"><i class="fa-solid fa-arrow-up-long"></i> Withdraw</button>
             <button class="transfer-btn" onclick="window.location.href='transfer.html'"><i class="fa-solid fa-right-left"></i> Transfer</button>
         </div>
     </section>
 
-    <!-- MENU GRID (All items including withdraw & transfer have uniform default menu style) -->
+    <!-- MENU GRID (Support button connected to support.html) -->
     <section class="menu-grid">
-        <div class="menu-item">
+        <!-- সাপোর্ট বাটনে ক্লিক করলে support.html ওপেন হবে -->
+        <div class="menu-item" onclick="window.location.href='support.html'" style="cursor: pointer;">
             <div class="menu-icon"><i class="fa-solid fa-headset"></i></div>
             <span>Support</span>
         </div>
@@ -105,7 +107,7 @@
         <div class="market-item" onclick="window.location.href='markets.html'">
             <div><h3>XAGUSD</h3><small>Silver / USD</small></div>
             <div class="price">28.651</div>
-            <div class="down">-2.22%</div>
+            <div class="down">-2.22%`</div>
         </div>
         <div class="market-item" onclick="window.location.href='markets.html'">
             <div><h3>BTCUSD</h3><small>Bitcoin / USD</small></div>
@@ -125,7 +127,7 @@
 
 </div>
 
-<script src="support.js"></script>
+<!-- সাপোর্টের কাজের জন্য support.js এর দরকার নেই, তাই সেটি বাদ দেওয়া হয়েছে যাতে অন্য বাটনে ক্লিক করলে গ্রিন স্ক্রিন না আসে -->
 <script src="balance.js"></script>
 <script src="dashboard.js"></script>
 
