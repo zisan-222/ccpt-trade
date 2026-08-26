@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deposit - CptMarkets</title>
+    <link rel="stylesheet" href="dashboard.css?v=999.3">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #0b1120; color: #fff; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+        .page-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; background: #0f172a; border-bottom: 1px solid #1e293b; }
+        .page-header a { color: #fff; font-size: 18px; text-decoration: none; }
+        .page-header h2 { margin: 0; font-size: 18px; font-weight: 600; color: #fff; }
+        .content-container { padding: 20px; max-width: 500px; margin: 0 auto; }
+        .info-card { background: #131c31; border: 1px solid #1e293b; border-radius: 12px; padding: 20px; margin-bottom: 20px; text-align: center; }
+        .info-card i { font-size: 45px; color: #ef4444; margin-bottom: 15px; }
+        .info-card p { color: #94a3b8; font-size: 14px; line-height: 1.6; margin: 0; }
+        .details-box { background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 16px; margin-bottom: 25px; text-align: left; }
+        .details-box h4 { margin: 0 0 10px 0; color: #facc15; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+        .details-box ul { margin: 0; padding-left: 20px; color: #cbd5e1; font-size: 13px; line-height: 1.8; }
+        .support-btn { width: 100%; background: #22c55e; color: #fff; border: none; padding: 14px; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; }
+        .support-btn:hover { background: #16a34a; }
+        #tawkchat-container { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <div class="page-header">
+        <a href="dashboard.html"><i class="fa-solid fa-chevron-left"></i></a>
+        <h2>Deposit</h2>
+        <div style="width: 18px;"></div>
+    </div>
+
+    <div class="content-container">
+        <div class="info-card">
+            <i class="fa-solid fa-ban"></i>
+            <p>Please contact online customer service to recharge.</p>
+        </div>
+
+        <div class="details-box">
+            <h4><i class="fa-solid fa-shield-halved"></i> CptMarkets Platform Features</h4>
+            <ul>
+                <li>UK-based regulated global financial platform.</li>
+                <li>Operating successfully with trust for 10-12 years.</li>
+                <li>24/7 active dedicated customer service support.</li>
+                <li>High profitability and instant secure asset allocation.</li>
+            </ul>
+        </div>
+
+        <button class="support-btn" onclick="contactSupport('Hello, I want to make a Deposit. Please guide me.')">
+            <i class="fa-solid fa-headset"></i> Contact Customer Service
+        </button>
+    </div>
+
+    <!-- Tawk.to Script -->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        Tawk_API.onLoad = function(){ Tawk_API.hideWidget(); };
+        (function(){
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/6a71003c2d507b1d4a9fad4c/1jv4mhrhb';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+
+        function contactSupport(message) {
+            if (typeof Tawk_API !== 'undefined' && Tawk_API.maximize) {
+                Tawk_API.showWidget();
+                Tawk_API.maximize();
+                if (Tawk_API.setAttributes) {
+                    Tawk_API.setAttributes({ 'cart': message }, function(error){});
+                }
+            } else {
+                alert(message);
+            }
+        }
+    </script>
+</body>
+</html>
