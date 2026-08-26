@@ -3,767 +3,431 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>CptMarkets - Deposit</title>
+<title>CptMarkets — Deposit Center</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root{
-    --bg:#050d1b;
-    --bg2:#091426;
-    --card:#101d32;
-    --card2:#0c182b;
-    --line:rgba(143,168,204,.14);
+    --bg:#050c18;
+    --card:#0e1b30;
+    --card2:#101f36;
+    --line:rgba(150,177,214,.14);
     --text:#f5f8ff;
     --muted:#91a1b8;
-    --blue:#1685ff;
-    --blue2:#0067df;
-    --green:#00d194;
-    --green2:#009d70;
-    --gold:#ffbf32;
+    --blue:#1687ff;
+    --blue2:#005fdb;
+    --green:#00d294;
+    --green2:#00966b;
+    --gold:#ffc247;
 }
-
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-
 html,body{
     margin:0;
     min-height:100%;
     color:var(--text);
     font-family:Inter,Arial,sans-serif;
     background:
-        radial-gradient(circle at 50% -12%,rgba(23,133,255,.18),transparent 34%),
-        linear-gradient(180deg,#091426 0%,#040b16 100%);
+      radial-gradient(circle at 50% -8%,rgba(22,135,255,.18),transparent 35%),
+      linear-gradient(180deg,#091426 0%,#040a14 100%);
 }
-
 body{min-height:100vh}
-
 button{font:inherit}
+.page{max-width:760px;margin:auto;padding-bottom:40px}
 
-.page{
-    width:100%;
-    max-width:760px;
-    margin:auto;
-    padding-bottom:38px;
-}
-
-/* HEADER */
+/* TOP */
 .topbar{
     height:82px;
-    position:sticky;
-    top:0;
-    z-index:30;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:rgba(6,15,29,.94);
+    position:sticky;top:0;z-index:30;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(5,13,26,.94);
     border-bottom:1px solid var(--line);
-    backdrop-filter:blur(18px);
+    backdrop-filter:blur(18px)
 }
-
-.back-btn{
-    position:absolute;
-    left:16px;
-    width:44px;
-    height:44px;
-    border:0;
-    border-radius:13px;
-    background:transparent;
-    color:#e6eefb;
-    font-size:21px;
+.back{
+    position:absolute;left:16px;width:44px;height:44px;
+    border:0;border-radius:13px;background:transparent;color:#eaf1fc;font-size:21px
 }
+.title{font-size:24px;font-weight:800;letter-spacing:-.5px}
 
-.topbar-title{
-    font-size:24px;
-    font-weight:800;
-    letter-spacing:-.5px;
-}
-
-/* BRAND / TRADING VIEW */
-.brand-card{
+/* BRAND */
+.brand{
     margin:20px 18px 0;
-    padding:18px 18px 15px;
-    position:relative;
-    overflow:hidden;
-    border:1px solid rgba(55,131,232,.18);
-    border-radius:23px;
-    background:
-        linear-gradient(145deg,rgba(16,34,59,.98),rgba(8,21,39,.98));
+    padding:19px;
+    border:1px solid rgba(65,143,242,.20);
+    border-radius:24px;
+    background:linear-gradient(145deg,rgba(18,38,65,.98),rgba(8,20,37,.98));
     box-shadow:0 18px 42px rgba(0,0,0,.24);
+    overflow:hidden
 }
-
-.brand-card:after{
-    content:"";
-    position:absolute;
-    width:180px;
-    height:180px;
-    right:-75px;
-    top:-95px;
-    border-radius:50%;
-    background:rgba(22,133,255,.08);
-}
-
-.brand-row{
-    position:relative;
-    z-index:2;
-    display:flex;
-    align-items:center;
-    gap:13px;
-}
-
+.brandrow{display:flex;align-items:center;gap:13px}
 .logo{
-    width:52px;
-    height:52px;
-    display:grid;
-    place-items:center;
-    flex:0 0 52px;
-    border-radius:16px;
-    background:linear-gradient(145deg,#168dff,#005fda);
-    box-shadow:
-        inset 0 1px 1px rgba(255,255,255,.25),
-        0 9px 22px rgba(0,104,226,.27);
+    width:55px;height:55px;flex:0 0 55px;
+    display:grid;place-items:center;border-radius:17px;
+    background:linear-gradient(145deg,#188fff,#005fd8);
+    box-shadow:inset 0 1px 1px rgba(255,255,255,.25),0 10px 25px rgba(0,105,225,.28)
 }
-
-.logo i{
-    color:white;
-    font-size:24px;
-}
-
-.brand-name{
-    font-size:20px;
-    font-weight:800;
-    letter-spacing:-.5px;
-}
-
-.brand-sub{
-    margin-top:3px;
-    color:#8fa1bb;
-    font-size:10px;
-    font-weight:600;
-}
-
+.logo i{font-size:25px}
+.brandname{font-size:21px;font-weight:800}
+.brandsub{margin-top:4px;color:#8fa4bf;font-size:10px;font-weight:600;letter-spacing:.4px}
 .chart{
-    position:relative;
-    height:64px;
-    margin-top:13px;
-    border-top:1px solid rgba(101,143,197,.08);
-    overflow:hidden;
+    height:66px;margin-top:14px;position:relative;overflow:hidden;
+    border-top:1px solid rgba(120,155,202,.08)
 }
-
-.chart-grid{
-    position:absolute;
-    inset:0;
-    opacity:.5;
+.grid{
+    position:absolute;inset:0;
     background:
-        linear-gradient(rgba(104,140,188,.08) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(104,140,188,.07) 1px,transparent 1px);
-    background-size:42px 21px;
+      linear-gradient(rgba(105,142,191,.08) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(105,142,191,.06) 1px,transparent 1px);
+    background-size:43px 22px
 }
-
-.chart-line{
-    position:absolute;
-    left:-3%;
-    right:-3%;
-    top:26px;
-    height:30px;
-    border-bottom:2px solid #00d194;
+.trend{
+    position:absolute;left:-4%;right:-4%;top:30px;height:24px;
+    border-bottom:2px solid var(--green);
     transform:skewY(-8deg) rotate(-2deg);
-    filter:drop-shadow(0 0 6px rgba(0,209,148,.45));
+    filter:drop-shadow(0 0 6px rgba(0,210,148,.45))
 }
+.c{position:absolute;bottom:7px;width:5px;border-radius:3px;background:#00c68e}
+.c1{left:9%;height:22px}.c2{left:22%;height:37px}.c3{left:36%;height:28px}
+.c4{left:50%;height:46px}.c5{left:64%;height:34px}.c6{left:78%;height:51px}.c7{left:91%;height:42px}
 
-.candle{
-    position:absolute;
-    bottom:7px;
-    width:5px;
-    border-radius:3px;
-    background:#00bd88;
-    box-shadow:0 0 7px rgba(0,209,148,.24);
-}
-
-.c1{left:10%;height:22px}.c2{left:22%;height:39px}.c3{left:36%;height:27px}
-.c4{left:49%;height:45px}.c5{left:63%;height:34px}.c6{left:77%;height:50px}
-.c7{left:90%;height:43px}
-
-/* INTRO */
-.hero{
-    margin:18px 18px 0;
-    padding:22px 20px;
-    border:1px solid var(--line);
-    border-radius:23px;
-    background:linear-gradient(145deg,rgba(17,32,55,.98),rgba(9,22,40,.98));
-    box-shadow:0 16px 36px rgba(0,0,0,.16);
-}
-
-.hero-title{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    margin-bottom:10px;
-}
-
-.hero-title i{color:#57adff}
-
-.hero h1{
-    margin:0;
-    font-size:21px;
-    line-height:1.3;
-}
-
-.hero p{
-    margin:0;
-    color:var(--muted);
-    font-size:12px;
-    line-height:1.75;
-}
-
-.info-strip{
-    margin-top:17px;
-    padding:13px 14px;
-    display:flex;
-    gap:10px;
-    align-items:flex-start;
-    border:1px solid rgba(255,191,50,.14);
-    border-radius:14px;
-    background:rgba(255,191,50,.045);
-}
-
-.info-strip i{
-    margin-top:2px;
-    color:var(--gold);
-}
-
-.info-strip span{
-    color:#a8b5c8;
-    font-size:10px;
-    line-height:1.65;
-}
-
-/* SECTION */
+/* CONTENT */
 .section{margin:18px 18px 0}
-
-.section-title{
-    margin:0 2px 10px;
-    font-size:16px;
-    font-weight:800;
-}
-
-/* GUIDELINE */
-.guideline{
-    padding:17px 18px;
-}
-
-.guideline-row{
-    display:flex;
-    gap:12px;
-    align-items:flex-start;
-    padding:13px 0;
-    border-bottom:1px solid rgba(143,168,204,.08);
-}
-
-.guideline-row:first-child{padding-top:2px}
-.guideline-row:last-child{
-    border-bottom:0;
-    padding-bottom:2px;
-}
-
-.g-icon{
-    width:36px;
-    height:36px;
-    flex:0 0 36px;
-    display:grid;
-    place-items:center;
-    border-radius:11px;
-    background:rgba(22,133,255,.10);
-    color:#55adff;
-}
-
-.guideline h3{
-    margin:1px 0 5px;
-    font-size:12px;
-}
-
-.guideline p{
-    margin:0;
-    color:var(--muted);
-    font-size:10.5px;
-    line-height:1.65;
-}
-
-/* PROCESS */
 .card{
     border:1px solid var(--line);
-    border-radius:21px;
-    background:linear-gradient(145deg,rgba(16,30,51,.98),rgba(9,21,38,.98));
-    box-shadow:0 15px 34px rgba(0,0,0,.14);
+    border-radius:22px;
+    background:linear-gradient(145deg,rgba(17,33,56,.98),rgba(8,20,37,.98));
+    box-shadow:0 15px 34px rgba(0,0,0,.15)
 }
-
-.steps{padding:7px 17px}
-
-.step{
-    display:flex;
-    gap:13px;
-    padding:16px 0;
-    border-bottom:1px solid rgba(143,168,204,.08);
+.intro{padding:21px}
+.kicker{
+    display:flex;align-items:center;gap:9px;margin-bottom:10px;
+    color:#65b8ff;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.5px
 }
-
-.step:last-child{border-bottom:0}
-
-.step-number{
-    width:34px;
-    height:34px;
-    flex:0 0 34px;
-    display:grid;
-    place-items:center;
-    border-radius:11px;
-    color:#73baff;
-    background:linear-gradient(145deg,rgba(22,133,255,.17),rgba(0,103,223,.06));
-    border:1px solid rgba(82,166,255,.12);
-    font-size:10px;
-    font-weight:800;
+.intro h1{margin:0 0 9px;font-size:22px;line-height:1.3}
+.intro p{margin:0;color:var(--muted);font-size:12px;line-height:1.75}
+.note{
+    margin-top:16px;padding:13px 14px;display:flex;gap:10px;
+    border-radius:14px;background:rgba(0,210,148,.055);
+    border:1px solid rgba(0,210,148,.14)
 }
+.note i{color:var(--green);margin-top:2px}
+.note span{color:#aab9cc;font-size:10.5px;line-height:1.65}
 
-.step h3{
-    margin:1px 0 5px;
-    font-size:12px;
-}
+.section-title{margin:0 2px 10px;font-size:16px;font-weight:800}
 
-.step p{
-    margin:0;
-    color:var(--muted);
-    font-size:10.5px;
-    line-height:1.65;
+/* GUIDELINES */
+.guidelines{padding:8px 17px}
+.row{
+    display:flex;gap:13px;padding:15px 0;
+    border-bottom:1px solid rgba(150,177,214,.08)
 }
+.row:last-child{border-bottom:0}
+.num{
+    width:35px;height:35px;flex:0 0 35px;
+    display:grid;place-items:center;border-radius:11px;
+    color:#69b9ff;background:rgba(22,135,255,.11);
+    border:1px solid rgba(90,170,255,.12);
+    font-size:10px;font-weight:800
+}
+.row h3{margin:1px 0 5px;font-size:12px}
+.row p{margin:0;color:var(--muted);font-size:10.5px;line-height:1.65}
+
+/* OFFICIAL CHANNEL NOTICE */
+.official{
+    padding:18px;
+    border-color:rgba(255,194,71,.15);
+    background:linear-gradient(145deg,rgba(255,194,71,.055),rgba(10,23,41,.98))
+}
+.officialhead{display:flex;gap:12px;align-items:center}
+.officialicon{
+    width:42px;height:42px;flex:0 0 42px;display:grid;place-items:center;
+    border-radius:13px;color:var(--gold);background:rgba(255,194,71,.09)
+}
+.official h3{margin:0 0 5px;font-size:13px}
+.official p{margin:0;color:var(--muted);font-size:10.5px;line-height:1.7}
 
 /* SERVICE */
-.service-card{
+.service{
     padding:19px;
-    border-color:rgba(0,209,148,.17);
-    background:linear-gradient(145deg,rgba(0,209,148,.07),rgba(11,28,47,.98));
+    border-color:rgba(0,210,148,.18);
+    background:linear-gradient(145deg,rgba(0,210,148,.075),rgba(10,28,47,.98))
 }
-
-.service-head{
-    display:flex;
-    align-items:center;
-    gap:13px;
+.servicehead{display:flex;gap:13px;align-items:center}
+.serviceicon{
+    width:50px;height:50px;flex:0 0 50px;display:grid;place-items:center;
+    border-radius:15px;color:#fff;
+    background:linear-gradient(145deg,#00d99a,#009a6e);
+    box-shadow:inset 0 1px 1px rgba(255,255,255,.23),0 10px 25px rgba(0,200,140,.22)
 }
-
-.service-icon{
-    width:49px;
-    height:49px;
-    flex:0 0 49px;
-    display:grid;
-    place-items:center;
-    border-radius:15px;
-    color:#fff;
-    background:linear-gradient(145deg,#00d69a,#009c70);
-    box-shadow:
-        inset 0 1px 1px rgba(255,255,255,.22),
-        0 10px 25px rgba(0,201,139,.22);
+.service h3{margin:0 0 5px;font-size:15px}
+.servicehead p{margin:0;color:var(--muted);font-size:10.5px;line-height:1.55}
+.servicebutton{
+    width:100%;min-height:60px;margin-top:17px;
+    border:1px solid rgba(255,255,255,.13);border-radius:16px;color:#fff;
+    background:linear-gradient(180deg,#17d99d 0%,#00b980 55%,#00976c 100%);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.27),inset 0 -4px 0 rgba(0,80,56,.27),
+               0 7px 0 #006d50,0 14px 28px rgba(0,201,139,.20);
+    font-size:14px;font-weight:800;transition:.12s
 }
-
-.service-head h3{
-    margin:0 0 5px;
-    font-size:14px;
-}
-
-.service-head p{
-    margin:0;
-    color:var(--muted);
-    font-size:10.5px;
-    line-height:1.55;
-}
-
-/* 3D BUTTON */
-.service-button{
-    width:100%;
-    min-height:59px;
-    margin-top:17px;
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:16px;
-    color:#fff;
-    background:linear-gradient(180deg,#14d79b 0%,#00b980 55%,#00966b 100%);
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.27),
-        inset 0 -4px 0 rgba(0,86,61,.28),
-        0 7px 0 #006d50,
-        0 14px 28px rgba(0,201,139,.22);
-    font-size:14px;
-    font-weight:800;
-    transition:transform .12s ease,box-shadow .12s ease;
-}
-
-.service-button i{margin-right:7px}
-
-.service-button:active{
+.servicebutton:active{
     transform:translateY(5px);
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.22),
-        inset 0 -2px 0 rgba(0,86,61,.25),
-        0 2px 0 #006d50,
-        0 8px 18px rgba(0,201,139,.16);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 2px 0 #006d50,0 8px 18px rgba(0,201,139,.15)
 }
-
-.service-note{
-    margin:13px 3px 0;
-    color:#71839a;
-    text-align:center;
-    font-size:9.5px;
-    line-height:1.55;
-}
+.servicehint{margin:13px 2px 0;text-align:center;color:#74879e;font-size:9.5px;line-height:1.55}
 
 /* FAQ */
 .faq{padding:0 16px}
-
-details{border-bottom:1px solid rgba(143,168,204,.08)}
+details{border-bottom:1px solid rgba(150,177,214,.08)}
 details:last-child{border-bottom:0}
-
 summary{
-    list-style:none;
-    padding:16px 0;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:12px;
-    color:#e8eef8;
-    font-size:11px;
-    font-weight:700;
-    cursor:pointer;
+    list-style:none;padding:16px 0;display:flex;justify-content:space-between;gap:12px;
+    color:#e8eef8;font-size:11px;font-weight:700
 }
-
 summary::-webkit-details-marker{display:none}
-
-summary i{
-    color:#7d8ea7;
-    transition:.2s;
-}
-
+summary i{color:#7d8fa8;transition:.2s}
 details[open] summary i{transform:rotate(180deg)}
-
-.answer{
-    padding:0 0 16px;
-    color:var(--muted);
-    font-size:10.5px;
-    line-height:1.65;
-}
+.answer{padding:0 0 16px;color:var(--muted);font-size:10.5px;line-height:1.65}
 
 /* TOAST */
 .toast{
-    position:fixed;
-    left:50%;
-    bottom:23px;
-    z-index:100;
-    width:min(90%,420px);
-    padding:12px 15px;
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:13px;
-    background:rgba(7,17,31,.97);
-    color:#edf4ff;
-    text-align:center;
-    font-size:11px;
-    line-height:1.5;
-    box-shadow:0 15px 35px rgba(0,0,0,.35);
-    opacity:0;
-    pointer-events:none;
-    transform:translate(-50%,18px);
-    transition:.25s ease;
+    position:fixed;left:50%;bottom:23px;z-index:100;width:min(90%,420px);
+    padding:12px 15px;border-radius:13px;background:rgba(7,17,31,.97);
+    border:1px solid rgba(255,255,255,.12);color:#edf4ff;text-align:center;
+    font-size:11px;line-height:1.5;opacity:0;pointer-events:none;
+    transform:translate(-50%,18px);transition:.25s
 }
-
-.toast.show{
-    opacity:1;
-    transform:translate(-50%,0);
-}
+.toast.show{opacity:1;transform:translate(-50%,0)}
 
 @media(max-width:390px){
-    .hero,.brand-card,.section{margin-left:14px;margin-right:14px}
+    .brand,.section{margin-left:14px;margin-right:14px}
+    .intro{padding:19px 17px}
     .topbar{height:78px}
-    .hero{padding:20px 17px}
 }
 </style>
 </head>
 
 <body>
-
 <div class="page">
 
-    <header class="topbar">
-        <button class="back-btn" type="button" onclick="history.back()" aria-label="Back">
-            <i class="fa-solid fa-chevron-left"></i>
-        </button>
-        <div class="topbar-title">Deposit</div>
-    </header>
+<header class="topbar">
+    <button class="back" type="button" onclick="history.back()" aria-label="Back">
+        <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <div class="title">Deposit</div>
+</header>
 
-
-    <!-- CPTMARKETS BRAND + TRADING VIEW -->
-    <section class="brand-card">
-
-        <div class="brand-row">
-            <div class="logo">
-                <i class="fa-solid fa-shield-halved"></i>
-            </div>
-
-            <div>
-                <div class="brand-name">CptMarkets</div>
-                <div class="brand-sub">GLOBAL FINANCIAL TRADING PLATFORM</div>
-            </div>
+<!-- BRANDING -->
+<section class="brand">
+    <div class="brandrow">
+        <div class="logo"><i class="fa-solid fa-shield-halved"></i></div>
+        <div>
+            <div class="brandname">CptMarkets</div>
+            <div class="brandsub">GLOBAL DIGITAL ASSET TRADING</div>
         </div>
+    </div>
 
-        <div class="chart" aria-hidden="true">
-            <div class="chart-grid"></div>
-            <div class="chart-line"></div>
-            <span class="candle c1"></span>
-            <span class="candle c2"></span>
-            <span class="candle c3"></span>
-            <span class="candle c4"></span>
-            <span class="candle c5"></span>
-            <span class="candle c6"></span>
-            <span class="candle c7"></span>
-        </div>
+    <div class="chart" aria-hidden="true">
+        <div class="grid"></div>
+        <div class="trend"></div>
+        <span class="c c1"></span><span class="c c2"></span>
+        <span class="c c3"></span><span class="c c4"></span>
+        <span class="c c5"></span><span class="c c6"></span>
+        <span class="c c7"></span>
+    </div>
+</section>
 
-    </section>
-
-
-    <!-- INTRODUCTION -->
-    <section class="hero">
-
-        <div class="hero-title">
+<!-- INTRO -->
+<section class="section">
+    <div class="card intro">
+        <div class="kicker">
             <i class="fa-solid fa-circle-dollar-to-slot"></i>
-            <h1>Deposit Account Funds</h1>
+            Deposit Center
         </div>
+
+        <h1>Fund Your CptMarkets Account</h1>
 
         <p>
-            CptMarkets provides a guided deposit process designed to
-            keep account funding clear and organized. When you are ready
-            to add funds, the appropriate instructions will be provided
-            according to the current deposit process.
+            Add funds to your CptMarkets account through a clear,
+            guided deposit process. Our support team can assist with
+            the current payment procedure and the information required
+            for your account.
         </p>
 
-        <div class="info-strip">
-            <i class="fa-solid fa-shield-halved"></i>
+        <div class="note">
+            <i class="fa-solid fa-circle-check"></i>
             <span>
-                Always review the instructions carefully before making
-                any payment and keep your transaction information
-                available for confirmation.
+                Keep your account details ready so your deposit request
+                can be handled smoothly and efficiently.
             </span>
         </div>
+    </div>
+</section>
 
-    </section>
+<!-- GUIDELINES -->
+<section class="section">
+    <h2 class="section-title">Deposit Guidelines</h2>
 
+    <div class="card guidelines">
 
-    <!-- GUIDELINES -->
-    <section class="section">
-
-        <h2 class="section-title">Deposit Guidelines</h2>
-
-        <div class="card guideline">
-
-            <div class="guideline-row">
-                <div class="g-icon">
-                    <i class="fa-solid fa-list-check"></i>
-                </div>
-                <div>
-                    <h3>Follow the current procedure</h3>
-                    <p>
-                        Deposit procedures may vary depending on the
-                        available payment option and account requirements.
-                    </p>
-                </div>
+        <div class="row">
+            <div class="num">01</div>
+            <div>
+                <h3>Start Your Request</h3>
+                <p>
+                    Open Online Customer Service and let the support
+                    team know that you would like to make a deposit.
+                </p>
             </div>
-
-            <div class="guideline-row">
-                <div class="g-icon">
-                    <i class="fa-solid fa-file-invoice-dollar"></i>
-                </div>
-                <div>
-                    <h3>Keep transaction details</h3>
-                    <p>
-                        Keep your payment or transaction reference
-                        available until the funding process is confirmed.
-                    </p>
-                </div>
-            </div>
-
-            <div class="guideline-row">
-                <div class="g-icon">
-                    <i class="fa-solid fa-circle-check"></i>
-                </div>
-                <div>
-                    <h3>Confirm before completing payment</h3>
-                    <p>
-                        Check the provided details carefully before
-                        completing a deposit transaction.
-                    </p>
-                </div>
-            </div>
-
         </div>
 
-    </section>
-
-
-    <!-- PROCESS -->
-    <section class="section">
-
-        <h2 class="section-title">How It Works</h2>
-
-        <div class="card steps">
-
-            <div class="step">
-                <div class="step-number">01</div>
-                <div>
-                    <h3>Start a Deposit Request</h3>
-                    <p>
-                        Open the online support conversation using the
-                        button below and state that you would like to deposit.
-                    </p>
-                </div>
+        <div class="row">
+            <div class="num">02</div>
+            <div>
+                <h3>Provide Your Account UID</h3>
+                <p>
+                    Share the UID assigned to your CptMarkets account,
+                    together with your intended deposit amount.
+                </p>
             </div>
-
-            <div class="step">
-                <div class="step-number">02</div>
-                <div>
-                    <h3>Review the Instructions</h3>
-                    <p>
-                        Receive the current procedure and review the
-                        information provided for your account.
-                    </p>
-                </div>
-            </div>
-
-            <div class="step">
-                <div class="step-number">03</div>
-                <div>
-                    <h3>Complete the Funding Process</h3>
-                    <p>
-                        Follow the applicable instructions carefully and
-                        retain your transaction reference.
-                    </p>
-                </div>
-            </div>
-
-            <div class="step">
-                <div class="step-number">04</div>
-                <div>
-                    <h3>Account Confirmation</h3>
-                    <p>
-                        Keep the transaction information available while
-                        the funding status is being confirmed.
-                    </p>
-                </div>
-            </div>
-
         </div>
 
-    </section>
-
-
-    <!-- CUSTOMER SERVICE -->
-    <section class="section">
-
-        <h2 class="section-title">Online Support</h2>
-
-        <div class="card service-card">
-
-            <div class="service-head">
-
-                <div class="service-icon">
-                    <i class="fa-solid fa-headset"></i>
-                </div>
-
-                <div>
-                    <h3>Deposit Assistance</h3>
-                    <p>
-                        Get the latest deposit instructions and assistance
-                        for your account.
-                    </p>
-                </div>
-
+        <div class="row">
+            <div class="num">03</div>
+            <div>
+                <h3>Confirm Payment Details</h3>
+                <p>
+                    Tell the support team your preferred payment method
+                    and follow the current payment instructions provided.
+                </p>
             </div>
-
-            <button
-                class="service-button"
-                id="customerServiceButton"
-                type="button">
-
-                <i class="fa-solid fa-comments"></i>
-                Open Customer Service
-
-            </button>
-
-            <p class="service-note">
-                A ready-made deposit request will be prepared when the
-                support conversation is opened.
-            </p>
-
         </div>
 
-    </section>
-
-
-    <!-- FAQ -->
-    <section class="section">
-
-        <h2 class="section-title">Important Information</h2>
-
-        <div class="card faq">
-
-            <details>
-                <summary>
-                    Why are deposit instructions not shown here?
-                    <i class="fa-solid fa-chevron-down"></i>
-                </summary>
-                <div class="answer">
-                    The available procedure can change. Keeping the
-                    instructions within the support process helps present
-                    the current information applicable to the account.
-                </div>
-            </details>
-
-            <details>
-                <summary>
-                    What should I do after opening support?
-                    <i class="fa-solid fa-chevron-down"></i>
-                </summary>
-                <div class="answer">
-                    Tell the support representative that you would like
-                    to make a deposit and review the instructions provided
-                    before proceeding.
-                </div>
-            </details>
-
-            <details>
-                <summary>
-                    Should I keep my transaction reference?
-                    <i class="fa-solid fa-chevron-down"></i>
-                </summary>
-                <div class="answer">
-                    Yes. Keeping the transaction reference can make
-                    confirmation and account-funding support easier.
-                </div>
-            </details>
-
+        <div class="row">
+            <div class="num">04</div>
+            <div>
+                <h3>Submit Your Receipt</h3>
+                <p>
+                    After completing the payment, provide the payment
+                    receipt or transaction proof for deposit confirmation.
+                </p>
+            </div>
         </div>
 
-    </section>
+    </div>
+</section>
+
+<!-- OFFICIAL CHANNEL -->
+<section class="section">
+    <div class="card official">
+        <div class="officialhead">
+            <div class="officialicon">
+                <i class="fa-solid fa-shield-check"></i>
+            </div>
+            <div>
+                <h3>Use the Official Support Channel</h3>
+                <p>
+                    For account funding, use the customer-service channel
+                    available through this platform. Verify the account
+                    details and payment information provided before
+                    completing a transaction.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CUSTOMER SERVICE -->
+<section class="section">
+    <h2 class="section-title">Online Customer Service</h2>
+
+    <div class="card service">
+        <div class="servicehead">
+            <div class="serviceicon">
+                <i class="fa-solid fa-headset"></i>
+            </div>
+            <div>
+                <h3>Deposit Assistance</h3>
+                <p>
+                    Our online support channel is available to guide
+                    you through the deposit procedure.
+                </p>
+            </div>
+        </div>
+
+        <button class="servicebutton" id="customerServiceButton" type="button">
+            <i class="fa-solid fa-comments"></i>
+            Contact Customer Service
+        </button>
+
+        <div class="servicehint">
+            Please keep your Account UID, deposit amount and preferred
+            payment method ready.
+        </div>
+    </div>
+</section>
+
+<!-- INFORMATION -->
+<section class="section">
+    <h2 class="section-title">Deposit Information</h2>
+
+    <div class="card faq">
+
+        <details>
+            <summary>
+                What information should I provide?
+                <i class="fa-solid fa-chevron-down"></i>
+            </summary>
+            <div class="answer">
+                Provide your CptMarkets Account UID, intended deposit
+                amount and preferred payment method. After payment,
+                keep your transaction receipt available.
+            </div>
+        </details>
+
+        <details>
+            <summary>
+                How can I keep my payment information accurate?
+                <i class="fa-solid fa-chevron-down"></i>
+            </summary>
+            <div class="answer">
+                Before making a payment, carefully match the payment
+                details supplied through the official customer-service
+                conversation with the information you are using.
+            </div>
+        </details>
+
+        <details>
+            <summary>
+                Why should I keep my payment receipt?
+                <i class="fa-solid fa-chevron-down"></i>
+            </summary>
+            <div class="answer">
+                Your receipt or transaction proof provides the relevant
+                payment reference needed for the deposit confirmation
+                process.
+            </div>
+        </details>
+
+    </div>
+</section>
 
 </div>
 
-
 <div class="toast" id="toast"></div>
-
 
 <script>
 const serviceButton = document.getElementById("customerServiceButton");
 const toast = document.getElementById("toast");
 
 const depositMessage =
-    "Hello CptMarkets Customer Service, I would like to make a deposit. Please provide the current deposit instructions and guide me through the deposit process.";
+"Hello CptMarkets Customer Service, I would like to make a deposit. My Account UID is ______. I would like to deposit ______ using ______. Please provide the current payment instructions.";
 
 function showToast(message){
     toast.textContent = message;
     toast.classList.add("show");
-
     clearTimeout(window.__depositToast);
-
     window.__depositToast = setTimeout(() => {
         toast.classList.remove("show");
     }, 3200);
@@ -771,12 +435,6 @@ function showToast(message){
 
 serviceButton.addEventListener("click", function(){
 
-    /*
-     * The message is copied so it is ready to paste into the
-     * customer-service conversation. Tawk.to's documented
-     * browser API does not provide a visitor-side silent
-     * send-message method.
-     */
     if(navigator.clipboard && window.isSecureContext){
         navigator.clipboard.writeText(depositMessage).catch(() => {});
     }
@@ -785,13 +443,12 @@ serviceButton.addEventListener("click", function(){
         window.Tawk_API &&
         typeof window.Tawk_API.maximize === "function"
     ){
-
         try{
             if(typeof window.Tawk_API.setAttributes === "function"){
                 window.Tawk_API.setAttributes(
                     {
-                        requestType: "Deposit",
-                        depositRequest: "Yes"
+                        requestType:"Deposit",
+                        depositRequest:"Yes"
                     },
                     function(){}
                 );
@@ -803,7 +460,6 @@ serviceButton.addEventListener("click", function(){
         showToast(
             "Customer Service opened. Your deposit request is ready."
         );
-
         return;
     }
 
