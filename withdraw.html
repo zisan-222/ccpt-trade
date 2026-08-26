@@ -13,7 +13,7 @@
         body {
             margin: 0;
             padding: 0;
-            background: radial-gradient(circle at 50% 0%, #111c36 0%, #060913 70%);
+            background: radial-gradient(circle at 50% 0%, #0d1b2a 0%, #050b14 70%);
             color: #ffffff;
             font-family: 'Inter', sans-serif;
             min-height: 100vh;
@@ -24,62 +24,63 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 16px 20px;
-            background: rgba(11, 17, 32, 0.85);
+            padding: 18px 24px;
+            background: rgba(11, 23, 42, 0.85);
             backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            border-bottom: 1px solid rgba(0, 229, 255, 0.12);
             position: sticky;
             top: 0;
             z-index: 100;
         }
         .back-btn {
-            color: #facc15;
+            color: #00e5ff;
             font-size: 16px;
             text-decoration: none;
-            background: linear-gradient(145deg, #1e293b, #0f172a);
-            border: 1px solid rgba(250, 204, 21, 0.25);
-            width: 38px;
-            height: 38px;
-            border-radius: 12px;
+            background: linear-gradient(145deg, #132742, #0a1728);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
         .back-btn:hover {
-            background: #334155;
-            border-color: #facc15;
+            background: #1b365d;
+            border-color: #00e5ff;
             transform: translateY(-1px);
         }
         .header h1 {
-            color: #facc15;
-            font-size: 18px;
+            color: #00e5ff;
+            font-size: 19px;
             font-weight: 800;
             margin: 0;
             letter-spacing: 0.5px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            text-shadow: 0 0 10px rgba(0,229,255,0.4);
         }
 
         /* Container */
         .container {
-            padding: 24px 18px;
-            max-width: 480px;
+            padding: 28px 20px;
+            max-width: 520px;
             margin: 0 auto;
         }
 
-        /* 3D Hero Icon Section */
+        /* Hero Icon Section */
         .hero-section {
             text-align: center;
-            margin-bottom: 24px;
+            margin-bottom: 28px;
         }
         .withdraw-hero-icon {
             position: relative;
-            width: 85px;
-            height: 85px;
-            margin: 0 auto 14px;
+            width: 95px;
+            height: 95px;
+            margin: 0 auto 16px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -88,59 +89,98 @@
             position: absolute;
             inset: 0;
             border-radius: 50%;
-            background: rgba(245, 197, 66, 0.2);
-            filter: blur(14px);
+            background: rgba(0, 229, 255, 0.2);
+            filter: blur(16px);
             animation: pulseGlow 2.5s infinite ease-in-out;
         }
         @keyframes pulseGlow {
             0%, 100% { transform: scale(0.9); opacity: 0.5; }
-            50% { transform: scale(1.2); opacity: 1; }
+            50% { transform: scale(1.25); opacity: 1; }
         }
         .withdraw-icon-circle {
             position: relative;
-            width: 70px;
-            height: 70px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(145deg, #1e293b, #090e1a);
-            border: 1.5px solid rgba(250, 204, 21, 0.5);
-            color: #facc15;
-            font-size: 26px;
-            box-shadow: inset 0 3px 6px rgba(255,255,255,0.15), 0 10px 25px rgba(0,0,0,0.5);
+            background: linear-gradient(145deg, #132742, #071222);
+            border: 2px solid rgba(0, 229, 255, 0.6);
+            color: #00e5ff;
+            font-size: 30px;
+            box-shadow: inset 0 4px 8px rgba(255,255,255,0.15), 0 12px 30px rgba(0,0,0,0.6);
         }
         .hero-section h2 {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 700;
             margin: 0 0 6px;
-            color: #f8fafc;
+            color: #ffffff;
         }
         .hero-section p {
-            color: #94a3b8;
-            font-size: 13px;
+            color: #8fa3bf;
+            font-size: 14px;
             margin: 0;
+        }
+
+        /* Available Balance Card */
+        .balance-card {
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.1), rgba(13, 27, 42, 0.8));
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            border-radius: 18px;
+            padding: 16px 20px;
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        .balance-info span {
+            display: block;
+            font-size: 12px;
+            color: #8fa3bf;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+        .balance-info h3 {
+            margin: 0;
+            font-size: 20px;
+            color: #00e5ff;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+        .balance-icon-badge {
+            width: 42px;
+            height: 42px;
+            background: rgba(0, 229, 255, 0.15);
+            border: 1px solid rgba(0, 229, 255, 0.4);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #00e5ff;
+            font-size: 18px;
         }
 
         /* Form Card Box */
         .withdraw-card {
-            background: linear-gradient(145deg, rgba(17, 27, 48, 0.9), rgba(8, 14, 28, 0.95));
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            padding: 22px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
-            margin-bottom: 20px;
+            background: linear-gradient(145deg, rgba(14, 26, 45, 0.95), rgba(7, 14, 28, 0.98));
+            border: 1px solid rgba(0, 229, 255, 0.15);
+            border-radius: 26px;
+            padding: 26px;
+            box-shadow: 0 24px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+            margin-bottom: 22px;
         }
         .input-group {
-            margin-bottom: 18px;
+            margin-bottom: 20px;
             text-align: left;
         }
         .input-group label {
             display: block;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
             color: #cbd5e1;
-            margin-bottom: 7px;
+            margin-bottom: 8px;
             letter-spacing: 0.3px;
         }
         .input-wrapper {
@@ -148,39 +188,57 @@
             display: flex;
             align-items: center;
         }
-        .input-wrapper i {
+        .input-wrapper > i {
             position: absolute;
-            left: 15px;
-            color: #64748b;
-            font-size: 15px;
+            left: 16px;
+            color: #00e5ff;
+            font-size: 16px;
             z-index: 2;
         }
         .input-wrapper input {
             width: 100%;
-            background: rgba(7, 12, 24, 0.9);
-            border: 1px solid rgba(51, 65, 85, 0.8);
-            padding: 13px 15px 13px 44px;
-            border-radius: 14px;
+            background: rgba(5, 11, 22, 0.95);
+            border: 1px solid rgba(40, 70, 110, 0.8);
+            padding: 15px 50px 15px 48px;
+            border-radius: 16px;
             color: #fff;
-            font-size: 13.5px;
+            font-size: 14.5px;
             outline: none;
             transition: all 0.3s ease;
         }
         .input-wrapper input:focus {
-            border-color: #facc15;
-            background: rgba(11, 18, 33, 1);
-            box-shadow: 0 0 12px rgba(250, 204, 21, 0.2);
+            border-color: #00e5ff;
+            background: rgba(9, 18, 33, 1);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.25);
+        }
+        .max-btn {
+            position: absolute;
+            right: 12px;
+            background: rgba(0, 229, 255, 0.15);
+            border: 1px solid rgba(0, 229, 255, 0.4);
+            color: #00e5ff;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            z-index: 5;
+            transition: all 0.2s;
+        }
+        .max-btn:hover {
+            background: #00e5ff;
+            color: #050b14;
         }
 
         /* Custom Dropdown Trigger Box */
         .custom-select-box {
             width: 100%;
-            background: rgba(7, 12, 24, 0.9);
-            border: 1px solid rgba(51, 65, 85, 0.8);
-            padding: 13px 15px 13px 44px;
-            border-radius: 14px;
-            color: #94a3b8;
-            font-size: 13.5px;
+            background: rgba(5, 11, 22, 0.95);
+            border: 1px solid rgba(40, 70, 110, 0.8);
+            padding: 15px 16px 15px 48px;
+            border-radius: 16px;
+            color: #8fa3bf;
+            font-size: 14.5px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -189,24 +247,24 @@
         }
         .custom-select-box.selected {
             color: #fff;
-            border-color: #facc15;
-            background: rgba(11, 18, 33, 1);
-            box-shadow: 0 0 12px rgba(250, 204, 21, 0.2);
+            border-color: #00e5ff;
+            background: rgba(9, 18, 33, 1);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.25);
         }
         .custom-select-box i.fa-chevron-down {
             position: static;
-            color: #94a3b8;
-            font-size: 12px;
+            color: #00e5ff;
+            font-size: 13px;
             transition: transform 0.3s;
         }
 
-        /* Premium Custom Modal Popup */
+        /* Custom Modal Popup with Logos */
         .modal-overlay {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(4, 6, 15, 0.8);
-            backdrop-filter: blur(8px);
+            background: rgba(3, 7, 15, 0.85);
+            backdrop-filter: blur(10px);
             z-index: 1000;
             align-items: flex-end;
             justify-content: center;
@@ -217,14 +275,14 @@
             to { opacity: 1; }
         }
         .modal-content {
-            background: linear-gradient(145deg, #131c31, #0a101f);
-            border: 1px solid rgba(250, 204, 21, 0.3);
+            background: linear-gradient(145deg, #132540, #0a1424);
+            border: 1px solid rgba(0, 229, 255, 0.4);
             border-bottom: none;
-            border-radius: 24px 24px 0 0;
+            border-radius: 28px 28px 0 0;
             width: 100%;
-            max-width: 480px;
-            padding: 24px 20px 35px;
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.6);
+            max-width: 520px;
+            padding: 26px 22px 40px;
+            box-shadow: 0 -15px 50px rgba(0,0,0,0.7);
             animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         @keyframes slideUp {
@@ -235,115 +293,117 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 18px;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-            padding-bottom: 12px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding-bottom: 14px;
         }
         .modal-header h3 {
             margin: 0;
-            font-size: 16px;
-            color: #facc15;
+            font-size: 17px;
+            color: #00e5ff;
             font-weight: 700;
         }
         .modal-close {
             background: none;
             border: none;
-            color: #94a3b8;
-            font-size: 18px;
+            color: #8fa3bf;
+            font-size: 20px;
             cursor: pointer;
         }
         .modal-option {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 14px 16px;
-            border-radius: 12px;
-            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 16px 18px;
+            border-radius: 14px;
+            margin-bottom: 12px;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 16px;
             transition: all 0.2s;
         }
         .modal-option:hover {
-            background: rgba(250, 204, 21, 0.1);
-            border-color: #facc15;
-            color: #facc15;
+            background: rgba(0, 229, 255, 0.12);
+            border-color: #00e5ff;
+            color: #00e5ff;
         }
         .modal-option i {
-            font-size: 18px;
-            color: #facc15;
+            font-size: 22px;
+            color: #00e5ff;
+            width: 28px;
+            text-align: center;
         }
         .modal-option span {
-            font-size: 14px;
-            font-weight: 500;
+            font-size: 15px;
+            font-weight: 600;
             color: #f8fafc;
         }
 
-        /* Dynamic Fields Container */
+        /* Dynamic Field Container */
         .dynamic-field {
             display: none;
         }
 
-        /* Submit Button */
+        /* Submit Button with Cyan Glow */
         .submit-btn {
             width: 100%;
-            background: linear-gradient(135deg, #ffe88a 0%, #f5c542 50%, #d79600 100%);
+            background: linear-gradient(135deg, #00ffff 0%, #00bfff 50%, #0080ff 100%);
             border: none;
-            padding: 15px;
-            border-radius: 14px;
-            color: #0b1120;
-            font-size: 15.5px;
+            padding: 16px;
+            border-radius: 16px;
+            color: #050b14;
+            font-size: 16px;
             font-weight: 800;
             cursor: pointer;
-            box-shadow: 0 8px 25px rgba(245, 197, 66, 0.3);
+            box-shadow: 0 8px 30px rgba(0, 229, 255, 0.4);
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            margin-top: 6px;
+            gap: 12px;
+            margin-top: 10px;
         }
         .submit-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(245, 197, 66, 0.45);
+            box-shadow: 0 12px 35px rgba(0, 229, 255, 0.6);
         }
 
         /* Popup Notification Box */
         .popup-message {
             display: none;
-            margin-top: 16px;
-            padding: 14px;
-            border-radius: 12px;
-            background: rgba(15, 23, 42, 0.98);
-            border: 1px solid rgba(250, 204, 21, 0.3);
+            margin-top: 18px;
+            padding: 16px;
+            border-radius: 14px;
+            background: rgba(10, 20, 36, 0.98);
+            border: 1px solid rgba(0, 229, 255, 0.4);
             text-align: center;
-            font-size: 13px;
+            font-size: 13.5px;
             color: #f8fafc;
             line-height: 1.5;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
         }
 
         /* Security Notice */
         .security-box {
-            background: rgba(255, 255, 255, 0.025);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 14px;
-            padding: 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 16px;
             display: flex;
-            gap: 12px;
+            gap: 14px;
             align-items: flex-start;
             text-align: left;
         }
         .security-box i {
-            color: #facc15;
-            font-size: 16px;
+            color: #00e5ff;
+            font-size: 18px;
             margin-top: 2px;
         }
         .security-box p {
             margin: 0;
-            font-size: 11.5px;
-            color: #8491a8;
-            line-height: 1.4;
+            font-size: 12px;
+            color: #8fa3bf;
+            line-height: 1.5;
         }
     </style>
 </head>
@@ -353,31 +413,42 @@
     <div class="header">
         <a href="dashboard.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
         <h1><i class="fa-solid fa-shield-halved"></i> CptMarkets</h1>
-        <div style="width: 38px;"></div>
+        <div style="width: 42px;"></div>
     </div>
 
     <div class="container">
-        <!-- 3D Hero Section -->
+        <!-- Hero Section with Glowing Icon -->
         <div class="hero-section">
             <div class="withdraw-hero-icon">
                 <div class="withdraw-icon-glow"></div>
                 <div class="withdraw-icon-circle">
-                    <i class="fa-solid fa-wallet"></i>
+                    <i class="fa-solid fa-vault"></i>
                 </div>
             </div>
             <h2>Global Fund Withdrawal</h2>
             <p>Select your international banking or mobile payout gateway</p>
         </div>
 
+        <!-- Available Balance Card Display -->
+        <div class="balance-card">
+            <div class="balance-info">
+                <span>Available USDT Balance</span>
+                <h3 id="displayBalance">0.00 USDT</h3>
+            </div>
+            <div class="balance-icon-badge">
+                <i class="fa-solid fa-wallet"></i>
+            </div>
+        </div>
+
         <!-- Withdrawal Form Card -->
         <div class="withdraw-card">
             <form id="withdrawForm" onsubmit="handleWithdrawSubmit(event)">
                 
-                <!-- Custom Payout Method Selector -->
+                <!-- Custom Payout Method Selector with Logo -->
                 <div class="input-group">
                     <label>International Payment Method</label>
                     <div class="input-wrapper" style="position:relative;">
-                        <i class="fa-solid fa-globe" style="position:absolute; left:15px; z-index:2;"></i>
+                        <i id="methodIconPreview" class="fa-solid fa-globe" style="position:absolute; left:16px; z-index:2; color:#00e5ff;"></i>
                         <div id="selectedMethodDisplay" class="custom-select-box" onclick="openMethodModal()">
                             <span id="selectedMethodText">Select payout system</span>
                             <i class="fa-solid fa-chevron-down" id="dropdownArrow"></i>
@@ -386,12 +457,13 @@
                     <input type="hidden" id="paymentMethod" required>
                 </div>
 
-                <!-- Amount -->
+                <!-- Amount with Max Button -->
                 <div class="input-group">
-                    <label>Withdrawal Amount (USD)</label>
+                    <label>Withdrawal Amount (USDT)</label>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-dollar-sign"></i>
                         <input type="number" id="withdrawAmount" placeholder="Min amount $10.00" min="1" step="0.01" required>
+                        <button type="button" class="max-btn" onclick="settableFutureMax()">MAX</button>
                     </div>
                 </div>
 
@@ -448,7 +520,7 @@
         </div>
     </div>
 
-    <!-- Custom Select Modal Popup -->
+    <!-- Custom Select Modal Popup with Icons/Logos -->
     <div id="methodModal" class="modal-overlay" onclick="closeMethodModalOnOutside(event)">
         <div class="modal-content">
             <div class="modal-header">
@@ -456,17 +528,17 @@
                 <button type="button" class="modal-close" onclick="closeMethodModal()"><i class="fa-solid fa-xmark"></i></button>
             </div>
             
-            <div class="modal-option" onclick="selectMethod('bank', 'International Bank Wire Transfer')">
+            <div class="modal-option" onclick="selectMethod('bank', 'International Bank Wire Transfer', 'fa-building-columns')">
                 <i class="fa-solid fa-building-columns"></i>
                 <span>International Bank Wire Transfer</span>
             </div>
             
-            <div class="modal-option" onclick="selectMethod('mobile', 'Global Mobile Banking / Digital Wallet')">
+            <div class="modal-option" onclick="selectMethod('mobile', 'Global Mobile Banking / Digital Wallet', 'fa-mobile-screen-button')">
                 <i class="fa-solid fa-mobile-screen-button"></i>
                 <span>Global Mobile Banking / Digital Wallet</span>
             </div>
 
-            <div class="modal-option" onclick="selectMethod('crypto', 'Crypto Network Exchange Wallet')">
+            <div class="modal-option" onclick="selectMethod('crypto', 'Crypto Network Exchange Wallet', 'fa-coins')">
                 <i class="fa-solid fa-coins"></i>
                 <span>Crypto Network Exchange Wallet</span>
             </div>
@@ -475,6 +547,8 @@
 
     <!-- Script Section for Custom Modal & Dynamic Fields -->
     <script>
+        let userBalance = 0;
+
         function openMethodModal() {
             document.getElementById("methodModal").style.display = "flex";
             document.getElementById("dropdownArrow").style.transform = "rotate(180deg)";
@@ -491,12 +565,15 @@
             }
         }
 
-        function selectMethod(value, labelText) {
+        function selectMethod(value, labelText, iconClass) {
             document.getElementById("paymentMethod").value = value;
             
             const displayBox = document.getElementById("selectedMethodDisplay");
             document.getElementById("selectedMethodText").textContent = labelText;
             displayBox.classList.add("selected");
+
+            const iconPreview = document.getElementById("methodIconPreview");
+            iconPreview.className = "fa-solid " + iconClass;
             
             closeMethodModal();
             togglePaymentFields(value);
@@ -522,17 +599,19 @@
                 document.getElementById("cryptoAddress").setAttribute("required", "true");
             }
         }
+
+        window.settableFutureMax = function() {
+            document.getElementById("withdrawAmount").value = userBalance > 0 ? userBalance : "";
+        }
     </script>
 
-    <!-- Firebase Validation Logic -->
+    <!-- Firebase Validation Logic & Real-time Balance Fetcher -->
     <script type="module">
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
         import { doc, getDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
         const firebaseConfig = await import("./firebase/firebase-config.js");
         const auth = firebaseConfig.auth;
         const db = firebaseConfig.db;
-
-        let userBalance = 0;
 
         onAuthStateChanged(auth, async (user) => {
             if (user) {
@@ -542,6 +621,7 @@
                     if (docSnap.exists()) {
                         const data = docSnap.data();
                         userBalance = Number(data.balance) || 0;
+                        document.getElementById("displayBalance").textContent = userBalance.toFixed(2) + " USDT";
                     }
                 } catch (err) {
                     console.error("Balance fetch error:", err);
@@ -559,20 +639,20 @@
 
             // Condition 1: Insufficient Balance (Zero or Less)
             if (userBalance <= 0) {
-                popup.style.color = "#f87171";
+                popup.style.color = "#ff5c5c";
                 popup.innerHTML = "Your account balance is insufficient. Please recharge first.";
                 return;
             }
 
             // Condition 2: Entered amount greater than available balance
             if (amountInput > userBalance) {
-                popup.style.color = "#f87171";
+                popup.style.color = "#ff5c5c";
                 popup.innerHTML = "Withdrawal amount exceeds your available balance!";
                 return;
             }
 
             // Condition 3: Success path - Require Customer Service verification
-            popup.style.color = "#facc15";
+            popup.style.color = "#00e5ff";
             popup.innerHTML = "Withdrawal request processed. Please contact Customer Service to complete your security verification.";
 
             setTimeout(() => {
