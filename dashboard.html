@@ -9,103 +9,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- পপআপ এবং তাকওয়া গ্রিন বাবল হাইড করার স্টাইল -->
+    <!-- তাকওয়ার সবুজ গোল আইকন চিরতরে হাইড করার স্টাইল -->
     <style>
-        #tawkchat-container { display: none !important; }
-        
-        /* Modal Popup CSS */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .modal-box {
-            background: #0b1120;
-            border: 1px solid #1e293b;
-            border-radius: 16px;
-            width: 100%;
-            max-width: 420px;
-            padding: 24px;
-            color: #fff;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            position: relative;
-            text-align: left;
-            font-family: 'Inter', sans-serif;
-        }
-        .modal-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid #1e293b;
-            padding-bottom: 12px;
-            margin-bottom: 15px;
-        }
-        .modal-header h3 {
-            margin: 0;
-            font-size: 18px;
-            color: #facc15;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .close-btn {
-            background: none;
-            border: none;
-            color: #94a3b8;
-            font-size: 20px;
-            cursor: pointer;
-        }
-        .modal-body p {
-            color: #cbd5e1;
-            font-size: 14px;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-        .modal-features {
-            background: #0f172a;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 13px;
-            color: #94a3b8;
-        }
-        .modal-features div {
-            margin-bottom: 6px;
-        }
-        .see-more-content {
-            display: none;
-        }
-        .see-more-link {
-            color: #facc15;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            display: inline-block;
-        }
-        .chat-support-btn {
-            width: 100%;
-            background: #22c55e;
-            color: #fff;
-            border: none;
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: 0.2s;
-        }
-        .chat-support-btn:hover {
-            background: #16a34a;
+        #tawkchat-container {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
         }
     </style>
 </head>
@@ -149,8 +59,8 @@
         </div>
 
         <div class="action-buttons">
-            <!-- এখানে ডিপোজিট বাটনে পপআপ ওপেন করার কানেকশন দেওয়া হলো -->
-            <button class="deposit-btn" onclick="openDepositModal()"><i class="fa-solid fa-arrow-down-long"></i> Deposit</button>
+            <!-- ডিপোজিট বাটনে ক্লিক করলে সরাসরি deposit.html পেজে যাবে -->
+            <button class="deposit-btn" onclick="window.location.replace('deposit.html'); return false;"><i class="fa-solid fa-arrow-down-long"></i> Deposit</button>
             <button class="withdraw-btn"><i class="fa-solid fa-arrow-up-long"></i> Withdraw</button>
             <button class="transfer-btn" onclick="window.location.href='transfer.html'"><i class="fa-solid fa-right-left"></i> Transfer</button>
         </div>
@@ -174,8 +84,8 @@
             <div class="menu-icon"><i class="fa-solid fa-users"></i></div>
             <span>Copy Trade</span>
         </div>
-        <!-- এখানে লোন বাটনে পপআপ ওপেন করার কানেকশন দেওয়া হলো -->
-        <div class="menu-item" onclick="openLoanModal()" style="cursor: pointer;">
+        <!-- লোন বাটনে ক্লিক করলে সরাসরি loan.html পেজে যাবে -->
+        <div class="menu-item" onclick="window.location.replace('loan.html'); return false;" style="cursor: pointer;">
             <div class="menu-icon"><i class="fa-regular fa-credit-card"></i></div>
             <span>Loan</span>
         </div>
@@ -227,110 +137,7 @@
 
 </div>
 
-
-<!-- ========================================== -->
-<!-- DEPOSIT MODAL POPUP HTML & SCRIPT          -->
-<!-- ========================================== -->
-<div class="modal-overlay" id="depositModal">
-    <div class="modal-box">
-        <div class="modal-header">
-            <h3><i class="fa-solid fa-shield-halved"></i> CptMarkets Deposit</h3>
-            <button class="close-btn" onclick="closeDepositModal()">&times;</button>
-        </div>
-        <div class="modal-body">
-            <p>If you want to make a deposit and start trading, please contact our 24/7 active customer service for safe and secure fund allocation.</p>
-            <div class="modal-features">
-                <div>✅ 10-12 Years of Trusted Market Experience</div>
-                <div>✅ UK-Based Regulated Financial Platform</div>
-                <div>✅ High Profitability & Instant Execution</div>
-            </div>
-        </div>
-        <button class="chat-support-btn" onclick="contactSupport('Hello, I want to make a Deposit. Please guide me.')">
-            <i class="fa-solid fa-headset"></i> Contact Customer Service
-        </button>
-    </div>
-</div>
-
-
-<!-- ========================================== -->
-<!-- LOAN MODAL POPUP HTML & SCRIPT             -->
-<!-- ========================================== -->
-<div class="modal-overlay" id="loanModal">
-    <div class="modal-box">
-        <div class="modal-header">
-            <h3><i class="fa-solid fa-shield-halved"></i> CptMarkets Trading Loan</h3>
-            <button class="close-btn" onclick="closeLoanModal()">&times;</button>
-        </div>
-        <div class="modal-body">
-            <p>CptMarkets offers exclusive trading loans to boost your market capacity with low interest rates...</p>
-            
-            <span class="see-more-link" id="seeMoreBtn" onclick="toggleSeeMore()">See More Details ↓</span>
-            
-            <div class="see-more-content" id="seeMoreContent">
-                <p><strong>Important Rules:</strong> To apply for a loan, you must upload your Passport or National ID verification. Furthermore, you must deposit a certain portion (approx. 2/3rd) of the required margin before loan disbursement. Loans cannot be processed without maintaining active deposit security.</p>
-            </div>
-
-            <div class="modal-features">
-                <div>📌 Low Interest Rate Trading Loan</div>
-                <div>📌 24/7 Active Support Verification</div>
-            </div>
-        </div>
-        <button class="chat-support-btn" onclick="contactSupport('Hello, I want to apply for a Loan. Please provide details.')">
-            <i class="fa-solid fa-headset"></i> Contact Customer Service
-        </button>
-    </div>
-</div>
-
-
-<!-- Tawk.to Script & Popup Control JavaScript -->
-<script type="text/javascript">
-    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-    Tawk_API.onLoad = function(){ Tawk_API.hideWidget(); };
-
-    (function(){
-        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-        s1.async = true;
-        s1.src = 'https://embed.tawk.to/6a71003c2d507b1d4a9fad4c/1jv4mhrhb';
-        s1.charset = 'UTF-8';
-        s1.setAttribute('crossorigin', '*');
-        s0.parentNode.insertBefore(s1, s0);
-    })();
-
-    // Deposit Modal Controls
-    function openDepositModal() { document.getElementById('depositModal').style.display = 'flex'; }
-    function closeDepositModal() { document.getElementById('depositModal').style.display = 'none'; }
-
-    // Loan Modal Controls
-    function openLoanModal() { document.getElementById('loanModal').style.display = 'flex'; }
-    function closeLoanModal() { document.getElementById('loanModal').style.display = 'none'; }
-
-    // See More Toggle Function
-    function toggleSeeMore() {
-        var content = document.getElementById('seeMoreContent');
-        var btn = document.getElementById('seeMoreBtn');
-        if (content.style.display === 'block') {
-            content.style.display = 'none';
-            btn.innerText = 'See More Details ↓';
-        } else {
-            content.style.display = 'block';
-            btn.innerText = 'See Less Details ↑';
-        }
-    }
-
-    // Direct Tawk.to chat launcher with custom message
-    function contactSupport(message) {
-        if (typeof Tawk_API !== 'undefined' && Tawk_API.maximize) {
-            Tawk_API.showWidget();
-            Tawk_API.maximize();
-            if (Tawk_API.setAttributes) {
-                Tawk_API.setAttributes({ 'cart': message }, function(error){});
-            }
-        } else {
-            alert(message);
-        }
-    }
-</script>
-
+<!-- JavaScript Scripts -->
 <script src="balance.js"></script>
 <script src="dashboard.js"></script>
 
