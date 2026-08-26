@@ -4,105 +4,178 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CptMarkets - Customer Service</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
             padding: 0;
             background-color: #060913;
             color: #ffffff;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             text-align: center;
         }
         .header {
-            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
             background: #0b1120;
             border-bottom: 1px solid #1e293b;
         }
+        .back-btn {
+            color: #facc15;
+            font-size: 18px;
+            text-decoration: none;
+            background: #1e293b;
+            padding: 8px 12px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .header-title {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
         .header h1 {
             color: #facc15;
-            font-size: 24px;
-            margin: 5px 0;
+            font-size: 20px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .header p {
+            color: #94a3b8;
+            font-size: 12px;
+            margin: 3px 0 0 0;
         }
         .container {
-            padding: 20px;
+            padding: 30px 20px;
             max-width: 600px;
             margin: 0 auto;
+        }
+        .welcome-box h2 {
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+        .welcome-box p {
+            color: #94a3b8;
+            font-size: 14px;
+            margin-bottom: 30px;
         }
         .btn-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
-            margin-top: 20px;
         }
         .support-card {
             background: #0b1120;
-            border: 1px solid #334155;
+            border: 1px solid #1e293b;
             border-radius: 12px;
-            padding: 20px;
+            padding: 22px 15px;
             color: #fff;
             cursor: pointer;
             text-decoration: none;
-            transition: 0.3s;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
         }
         .support-card:hover {
             border-color: #facc15;
+            background: #0f172a;
+        }
+        .support-card i {
+            font-size: 24px;
+            color: #facc15;
         }
         .support-card h3 {
-            margin: 10px 0 0 0;
-            font-size: 16px;
+            margin: 0;
+            font-size: 15px;
+            font-weight: 500;
+        }
+        /* তাকওয়ার নিজস্ব ডিফল্ট গ্রিন বাবল হাইড রাখার জন্য */
+        #tawkchat-container {
+            display: none !important;
         }
     </style>
 </head>
 <body>
 
+    <!-- HEADER WITH BACK BUTTON & LOGO -->
     <div class="header">
-        <h1>CptMarkets</h1>
-        <p>Online Customer Service</p>
+        <a href="dashboard.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+        <div class="header-title">
+            <h1><i class="fa-solid fa-shield-halved"></i> CptMarkets</h1>
+            <p><i class="fa-solid fa-circle" style="color: #22c55e; font-size: 8px;"></i> 24/7 Online Customer Service</p>
+        </div>
+        <div style="width: 35px;"></div> <!-- Balancing space -->
     </div>
 
     <div class="container">
-        <h2>Hi there 👋</h2>
-        <p>How can we help you today?</p>
+        <div class="welcome-box">
+            <h2>Hello there 👋</h2>
+            <p>How can our support team help you today?</p>
+        </div>
 
         <div class="btn-grid">
-            <div class="support-card" onclick="openChatWithMsg('Hello, I need Account Help.')">
-                <h3>👤 Account Help</h3>
+            <div class="support-card" onclick="openChatWithMsg('Hello, I need assistance regarding my trading account help.')">
+                <i class="fa-solid fa-user-gear"></i>
+                <h3>Account Help</h3>
             </div>
-            <div class="support-card" onclick="openChatWithMsg('Hello, I want to Deposit.')">
-                <h3>💳 Deposit</h3>
+            <div class="support-card" onclick="openChatWithMsg('Hello, I need help with making a Deposit.')">
+                <i class="fa-solid fa-wallet" style="color: #22c55e;"></i>
+                <h3>Deposit</h3>
             </div>
-            <div class="support-card" onclick="openChatWithMsg('Hello, I want to Withdrawal.')">
-                <h3>📤 Withdrawal</h3>
+            <div class="support-card" onclick="openChatWithMsg('Hello, I would like to request a Withdrawal.')">
+                <i class="fa-solid fa-money-bill-transfer" style="color: #f59e0b;"></i>
+                <h3>Withdrawal</h3>
             </div>
-            <div class="support-card" onclick="openChatWithMsg('Hello, I need Support.')">
-                <h3>🎧 Other Support</h3>
+            <div class="support-card" onclick="openChatWithMsg('Hello, I need general support and assistance.')">
+                <i class="fa-solid fa-headset" style="color: #38bdf8;"></i>
+                <h3>Other Support</h3>
             </div>
         </div>
     </div>
 
-    <!-- Start of Tawk.to Script (আপনার অরিজিনাল আইডি সহ) -->
+    <!-- Tawk.to Script Integration -->
     <script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/6a71003c2d507b1d4a9fad4c/1jv4mhrhb';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-    })();
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        
+        // পেজ লোড হওয়ার সময় চ্যাট উইজেট হাইড রাখা
+        Tawk_API.onLoad = function(){
+            Tawk_API.hideWidget();
+        };
 
-    // বাটনে ক্লিক করলে চ্যাট ওপেন হওয়ার ফাংশন
-    function openChatWithMsg(message) {
-        if(typeof Tawk_API !== 'undefined' && Tawk_API.maximize) {
-            Tawk_API.showWidget();
-            Tawk_API.maximize();
-        } else {
-            alert(message);
+        (function(){
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/6a71003c2d507b1d4a9fad4c/1jv4mhrhb';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+
+        // বাটনে ক্লিক করলে নির্দিষ্ট মেসেজ সেট হয়ে চ্যাট ম্যাক্সিমাইজ হবে
+        function openChatWithMsg(message) {
+            if (typeof Tawk_API !== 'undefined' && Tawk_API.maximize) {
+                Tawk_API.showWidget();
+                Tawk_API.maximize();
+                
+                // ভিজিটর চ্যাটে ঢোকার সাথে সাথে স্বয়ংক্রিয়ভাবে মেসেজ সেট করার অপশন
+                if (Tawk_API.setAttributes) {
+                    Tawk_API.setAttributes({
+                        'cart': message
+                    }, function(error){});
+                }
+            } else {
+                alert(message);
+            }
         }
-    }
     </script>
-    <!-- End of Tawk.to Script -->
-
 </body>
 </html>
