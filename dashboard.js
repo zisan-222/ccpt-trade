@@ -1130,11 +1130,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* ======================================
        MENU ITEMS
-       CURRENT HTML DOES NOT HAVE
-       BUTTON CLASSES.
-
-       So we identify them by their
-       visible text.
     ====================================== */
 
     const menuItems =
@@ -1180,11 +1175,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         event.stopPropagation();
 
-                        console.log(
-                            "Support clicked"
-                        );
-
-
                         window.openSupportChat();
 
                     }
@@ -1210,11 +1200,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         event.preventDefault();
 
                         event.stopPropagation();
-
-                        console.log(
-                            "Menu Withdraw clicked"
-                        );
-
 
                         openWithdrawInterface();
 
@@ -1242,12 +1227,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         event.stopPropagation();
 
-                        console.log(
-                            "Loan clicked"
-                        );
-
-
-                        window.openSupportChat();
+                        window.location.href = "loan.html";
 
                     }
                 );
@@ -1259,7 +1239,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* ======================================
-       DEPOSIT BUTTON
+       DEPOSIT BUTTON (সংশোধিত অংশ)
     ====================================== */
 
     const depositButton =
@@ -1278,12 +1258,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 event.stopPropagation();
 
-                console.log(
-                    "Deposit clicked"
-                );
-
-
-                window.openSupportChat();
+                // পপআপ বা চ্যাটে না নিয়ে সরাসরি deposit.html এ নিয়ে যাবে
+                window.location.href = "deposit.html";
 
             }
         );
@@ -1311,11 +1287,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 event.preventDefault();
 
                 event.stopPropagation();
-
-                console.log(
-                    "Asset Withdraw clicked"
-                );
-
 
                 openWithdrawInterface();
 
@@ -1345,11 +1316,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 event.preventDefault();
 
                 event.stopPropagation();
-
-                console.log(
-                    "Transfer clicked"
-                );
-
 
                 window.location.href =
                     "transfer.html";
@@ -1409,10 +1375,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         }
 
 
-                        /*
-                           Refresh visible balance
-                        */
-
                         if (
                             balanceVisible &&
                             balanceAmount
@@ -1431,46 +1393,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
-
-    /* ======================================
-       FINAL STATUS
-    ====================================== */
-
-    console.log(
-        "================================"
-    );
-
-    console.log(
-        "CptMarkets Dashboard Ready"
-    );
-
-    console.log(
-        "Balance Eye:",
-        !!toggleEye
-    );
-
-    console.log(
-        "Balance Amount:",
-        !!balanceAmount
-    );
-
-    console.log(
-        "Deposit:",
-        !!depositButton
-    );
-
-    console.log(
-        "Withdraw:",
-        !!withdrawButton
-    );
-
-    console.log(
-        "Menu Items:",
-        menuItems.length
-    );
-
-    console.log(
-        "================================"
-    );
+    console.log("CptMarkets Dashboard Ready - Fixed");
 
 });
