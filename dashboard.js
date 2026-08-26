@@ -1,6 +1,6 @@
 /* ==========================================
    CPTMARKETS DASHBOARD
-   dashboard.js - BUTTON FIX
+   dashboard.js - FINAL BUTTON + BALANCE FIX
 ========================================== */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     window.Tawk_API = window.Tawk_API || {};
     window.Tawk_LoadStart = new Date();
-
 
     window.Tawk_API.onLoad = function () {
 
@@ -41,8 +40,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 'script[src*="embed.tawk.to"]'
             )
         ) {
+
             console.log("Tawk already loaded");
             return;
+
         }
 
 
@@ -100,6 +101,10 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("Opening Customer Service");
 
 
+        /* ----------------------------------
+           TAWK ALREADY LOADED
+        ---------------------------------- */
+
         if (
             window.Tawk_API &&
             typeof window.Tawk_API.showWidget ===
@@ -128,7 +133,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        /* Wait for Tawk */
+        /* ----------------------------------
+           WAIT FOR TAWK
+        ---------------------------------- */
 
         let attempts = 0;
 
@@ -183,58 +190,329 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* ==========================================
-   BALANCE EYE HIDE / SHOW
-========================================== */
+       BALANCE EYE HIDE / SHOW - FIXED
+    ========================================== */
 
-const balanceEye = document.getElementById("balanceEye");
-const balanceElement = document.getElementById("balance");
+    const balanceEye =
+        document.getElementById("balanceEye");
 
-let balanceVisible = true;
+    const balanceElement =
+        document.getElementById("balance");
 
-if (balanceEye && balanceElement) {
 
-    balanceEye.addEventListener("click", function () {
+    let balanceVisible = true;
 
-        if (balanceVisible) {
+    let savedBalanceText = "";
 
-            // Hide balance
-            balanceElement.textContent = "â€¢â€¢â€¢â€¢â€¢â€¢";
 
-            balanceEye.classList.remove("fa-eye");
-            balanceEye.classList.add("fa-eye-slash");
+    /*
+       Save the original balance text.
+       This prevents the balance from being
+       permanently lost when hidden.
+    */
 
-            balanceVisible = false;
+    if (balanceElement) {
 
-        } else {
+        savedBalanceText =
+            balanceElement.textContent.trim();
 
-            // Show balance
-            let currentBalance = 0;
+    }
 
-            if (typeof getBalance === "function") {
-                currentBalance = getBalance();
+
+    /*
+       Get current balance safely
+    */
+
+    function getCurrentBalanceValue() {
+
+        let currentBalance = null;
+
+
+        /* ----------------------------------
+           Try getBalance()
+        ---------------------------------- */
+
+        if (
+            typeof window.getBalance ===
+            "function"
+        ) {
+
+            try {
+
+                const value =
+                    window.getBalance();
+
+                if (
+                    value !== undefined &&
+                    value !== null &&
+                    value !== "" &&
+                    !isNaN(Number(value))
+                ) {
+
+                    currentBalance =
+                        Number(value);
+
+                }
+
+            } catch (error) {
+
+                console.warn(
+                    "getBalance() failed:",
+                    error
+                );
+
             }
 
-            if (typeof formatUSD === "function") {
-                balanceElement.textContent =
-                    formatUSD(currentBalance);
-            } else {
-                balanceElement.textContent =
-                    "$" + Number(currentBalance).toFixed(2);
-            }
-
-            balanceEye.classList.remove("fa-eye-slash");
-            balanceEye.classList.add("fa-eye");
-
-            balanceVisible = true;
         }
 
-    });
 
-}
+        /* ----------------------------------
+           Try saved balance
+        ---------------------------------- */
+
+        if (
+            currentBalance === null &&
+            savedBalanceText
+        ) {
+
+            const cleaned =
+                savedBalanceText
+                    .replace(/[^0-9.-]/g, "");
+
+            if (
+                cleaned !== "" &&
+                !isNaN(Number(cleaned))
+            ) {
+
+                currentBalance =
+                    Number(cleaned);
+
+            }
+
+        }
 
 
+        /* ----------------------------------
+           Final fallback
+        ---------------------------------- */
 
-            
+        if (
+            currentBalance === null
+        ) {
+
+            currentBalance = 0;
+
+        }
+
+
+        return currentBalance;
+
+    }
+
+
+    /*
+       Format balance safely
+    */
+
+    function formatBalanceValue(value) {
+
+        if (
+            typeof window.formatUSD ===
+            "function"
+        ) {
+
+            try {
+
+                return window.formatUSD(value);
+
+            } catch (error) {
+
+                console.warn(
+                    "formatUSD() failed:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        return "$" +
+            Number(value).toFixed(2);
+
+    }
+
+
+    /*
+       SHOW BALANCE
+    */
+
+    function showBalance() {
+
+        if (!balanceElement) {
+            return;
+        }
+
+
+        const currentBalance =
+            getCurrentBalanceValue();
+
+
+        balanceElement.textContent =
+            formatBalanceValue(
+                currentBalance
+            );
+
+
+        savedBalanceText =
+            balanceElement.textContent;
+
+
+        balanceVisible = true;
+
+
+        if (balanceEye) {
+
+            balanceEye.classList.remove(
+                "fa-eye-slash"
+            );
+
+            balanceEye.classList.add(
+                "fa-eye"
+            );
+
+            balanceEye.setAttribute(
+                "aria-label",
+                "Hide balance"
+            );
+
+        }
+
+    }
+
+
+    /*
+       HIDE BALANCE
+    */
+
+    function hideBalance() {
+
+        if (!balanceElement) {
+            return;
+        }
+
+
+        /*
+           Save the real balance before hiding
+        */
+
+        if (
+            balanceElement.textContent.trim() !==
+            "••••••"
+        ) {
+
+            savedBalanceText =
+                balanceElement.textContent.trim();
+
+        }
+
+
+        balanceElement.textContent =
+            "••••••";
+
+
+        balanceVisible = false;
+
+
+        if (balanceEye) {
+
+            balanceEye.classList.remove(
+                "fa-eye"
+            );
+
+            balanceEye.classList.add(
+                "fa-eye-slash"
+            );
+
+            balanceEye.setAttribute(
+                "aria-label",
+                "Show balance"
+            );
+
+        }
+
+    }
+
+
+    /*
+       EYE BUTTON
+    */
+
+    if (
+        balanceEye &&
+        balanceElement
+    ) {
+
+        balanceEye.style.cursor =
+            "pointer";
+
+
+        balanceEye.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+                event.stopPropagation();
+
+
+                if (balanceVisible) {
+
+                    hideBalance();
+
+                } else {
+
+                    showBalance();
+
+                }
+
+            }
+        );
+
+
+        /*
+           Make sure the initial state
+           starts with the eye icon.
+        */
+
+        balanceEye.classList.remove(
+            "fa-eye-slash"
+        );
+
+        balanceEye.classList.add(
+            "fa-eye"
+        );
+
+
+        balanceEye.setAttribute(
+            "aria-label",
+            "Hide balance"
+        );
+
+
+        console.log(
+            "Balance eye toggle ready"
+        );
+
+    } else {
+
+        console.warn(
+            "Balance eye or balance element not found."
+        );
+
+    }
+
+
     /* ======================================
        WITHDRAW INTERFACE
     ====================================== */
@@ -246,7 +524,9 @@ if (balanceEye && balanceElement) {
         );
 
 
-        /* Remove old interface */
+        /* ----------------------------------
+           REMOVE OLD INTERFACE
+        ---------------------------------- */
 
         const oldPage =
             document.getElementById(
@@ -275,7 +555,7 @@ if (balanceEye && balanceElement) {
 
 
         /* ==================================
-           CREATE PAGE
+           CREATE WITHDRAW PAGE
         ================================== */
 
         const withdrawPage =
@@ -293,8 +573,10 @@ if (balanceEye && balanceElement) {
                 <button
                     id="cptWithdrawBack"
                     class="cpt-back-button"
+                    type="button"
+                    aria-label="Back"
                 >
-                    â€¹
+                    ‹
                 </button>
 
                 <h1>Withdraw</h1>
@@ -333,6 +615,7 @@ if (balanceEye && balanceElement) {
                     <button
                         id="cptSubmitWithdrawal"
                         class="cpt-submit-withdraw"
+                        type="button"
                     >
                         Submit Withdrawal
                     </button>
@@ -444,6 +727,8 @@ if (balanceEye && balanceElement) {
                 color: white;
 
                 font-size: 42px;
+
+                line-height: 1;
 
                 cursor: pointer;
 
@@ -563,6 +848,14 @@ if (balanceEye && balanceElement) {
             }
 
 
+            .cpt-submit-withdraw:active {
+
+                transform:
+                    scale(.99);
+
+            }
+
+
             .cpt-withdraw-message {
 
                 display: none;
@@ -595,38 +888,52 @@ if (balanceEye && balanceElement) {
            BACK BUTTON
         ================================== */
 
-        document
-            .getElementById(
+        const backButton =
+            document.getElementById(
                 "cptWithdrawBack"
-            )
-            .addEventListener(
+            );
+
+
+        if (backButton) {
+
+            backButton.addEventListener(
                 "click",
                 function () {
 
                     withdrawPage.remove();
+
 
                     const s =
                         document.getElementById(
                             "cptWithdrawStyle"
                         );
 
+
                     if (s) {
+
                         s.remove();
+
                     }
 
                 }
             );
+
+        }
 
 
         /* ==================================
            SUBMIT WITHDRAW
         ================================== */
 
-        document
-            .getElementById(
+        const submitButton =
+            document.getElementById(
                 "cptSubmitWithdrawal"
-            )
-            .addEventListener(
+            );
+
+
+        if (submitButton) {
+
+            submitButton.addEventListener(
                 "click",
                 function () {
 
@@ -650,6 +957,10 @@ if (balanceEye && balanceElement) {
                         );
 
 
+                    /* ------------------------
+                       VALIDATE AMOUNT
+                    ------------------------ */
+
                     if (
                         isNaN(amount) ||
                         amount <= 0
@@ -666,6 +977,10 @@ if (balanceEye && balanceElement) {
                     }
 
 
+                    /* ------------------------
+                       VALIDATE ADDRESS
+                    ------------------------ */
+
                     if (!address) {
 
                         message.style.display =
@@ -679,21 +994,86 @@ if (balanceEye && balanceElement) {
                     }
 
 
-                    let currentBalance = 0;
+                    /* ------------------------
+                       GET BALANCE
+                    ------------------------ */
+
+                    let currentBalance =
+                        0;
 
 
                     if (
-                        typeof getBalance ===
+                        typeof window.getBalance ===
                         "function"
                     ) {
 
-                        currentBalance =
-                            Number(
-                                getBalance()
+                        try {
+
+                            currentBalance =
+                                Number(
+                                    window.getBalance()
+                                );
+
+                        } catch (error) {
+
+                            console.warn(
+                                "Unable to read balance:",
+                                error
                             );
+
+                        }
 
                     }
 
+
+                    /*
+                       If getBalance() is not
+                       available, read from the
+                       balance element.
+                    */
+
+                    if (
+                        !isFinite(currentBalance) ||
+                        currentBalance === 0
+                    ) {
+
+                        const balanceText =
+                            balanceElement
+                                ? balanceElement.textContent
+                                : "";
+
+
+                        if (
+                            balanceText &&
+                            balanceText !== "••••••"
+                        ) {
+
+                            const parsedBalance =
+                                parseFloat(
+                                    balanceText.replace(
+                                        /[^0-9.-]/g,
+                                        ""
+                                    )
+                                );
+
+
+                            if (
+                                !isNaN(parsedBalance)
+                            ) {
+
+                                currentBalance =
+                                    parsedBalance;
+
+                            }
+
+                        }
+
+                    }
+
+
+                    /* ------------------------
+                       CHECK BALANCE
+                    ------------------------ */
 
                     if (
                         amount >
@@ -703,13 +1083,17 @@ if (balanceEye && balanceElement) {
                         message.style.display =
                             "block";
 
-                        message.innerHTML =
+                        message.textContent =
                             "Insufficient account balance.";
 
                         return;
 
                     }
 
+
+                    /* ------------------------
+                       SUCCESS MESSAGE
+                    ------------------------ */
 
                     message.style.display =
                         "block";
@@ -722,7 +1106,14 @@ if (balanceEye && balanceElement) {
                     setTimeout(
                         function () {
 
-                            openSupportChat();
+                            if (
+                                typeof window.openSupportChat ===
+                                "function"
+                            ) {
+
+                                window.openSupportChat();
+
+                            }
 
                         },
                         500
@@ -731,12 +1122,14 @@ if (balanceEye && balanceElement) {
                 }
             );
 
+        }
+
     }
 
 
     /* ======================================
        UNIVERSAL BUTTON CLICK HANDLER
-       THIS FIXES THE MARKED BUTTONS
+       FIXES DASHBOARD BUTTONS
     ====================================== */
 
     document.addEventListener(
@@ -844,6 +1237,10 @@ if (balanceEye && balanceElement) {
 
                 event.stopPropagation();
 
+                console.log(
+                    "Support clicked"
+                );
+
                 openSupportChat();
 
                 return;
@@ -866,6 +1263,10 @@ if (balanceEye && balanceElement) {
                 event.preventDefault();
 
                 event.stopPropagation();
+
+                console.log(
+                    "Transfer clicked"
+                );
 
                 window.location.href =
                     "transfer.html";
@@ -895,7 +1296,7 @@ if (balanceEye && balanceElement) {
             function () {
 
                 refreshButton.style.transition =
-                    "0.6s";
+                    "transform 0.6s";
 
 
                 refreshButton.style.transform =
@@ -914,11 +1315,27 @@ if (balanceEye && balanceElement) {
 
 
                         if (
-                            typeof refreshBalanceUI ===
+                            typeof window.refreshBalanceUI ===
                             "function"
                         ) {
 
-                            refreshBalanceUI();
+                            window.refreshBalanceUI();
+
+                        }
+
+
+                        /*
+                           If balance eye is currently
+                           visible, refresh the displayed
+                           balance as well.
+                        */
+
+                        if (
+                            balanceVisible &&
+                            balanceElement
+                        ) {
+
+                            showBalance();
 
                         }
 
@@ -931,6 +1348,10 @@ if (balanceEye && balanceElement) {
 
     }
 
+
+    /* ======================================
+       FINAL READY MESSAGE
+    ====================================== */
 
     console.log(
         "CptMarkets Dashboard Ready"
