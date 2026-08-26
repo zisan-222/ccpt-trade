@@ -59,8 +59,8 @@
         </div>
 
         <div class="action-buttons">
-            <!-- ডিপোজিট বাটনে ক্লিক করলে সরাসরি deposit.html পেজে যাবে -->
-            <button class="deposit-btn" onclick="window.location.replace('deposit.html'); return false;"><i class="fa-solid fa-arrow-down-long"></i> Deposit</button>
+            <!-- আইডি যুক্ত করা হলো যাতে সরাসরি deposit.html এ যায় -->
+            <button class="deposit-btn" id="depositBtn"><i class="fa-solid fa-arrow-down-long"></i> Deposit</button>
             <button class="withdraw-btn"><i class="fa-solid fa-arrow-up-long"></i> Withdraw</button>
             <button class="transfer-btn" onclick="window.location.href='transfer.html'"><i class="fa-solid fa-right-left"></i> Transfer</button>
         </div>
@@ -140,6 +140,14 @@
 <!-- JavaScript Scripts -->
 <script src="balance.js"></script>
 <script src="dashboard.js"></script>
+
+<!-- ডিপোজিট বাটনের ফোরড রিডাইরেক্ট স্ক্রিপ্ট -->
+<script>
+    document.getElementById('depositBtn').addEventListener('click', function(e) {
+        e.preventDefault();
+        window.location.href = 'deposit.html';
+    });
+</script>
 
 </body>
 </html>
