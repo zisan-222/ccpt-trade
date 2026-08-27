@@ -14,12 +14,13 @@
 
 <!-- HEADER -->
 <header class="market-header">
-<div class="logo">
-🛡️ CptMarkets
+<div class="logo-3d">
+    <span class="shield-icon">🛡️</span> 
+    <span class="logo-text">CptMarkets</span>
 </div>
 <div class="icons">
-<span id="notification-btn" style="cursor:pointer;" title="Notifications">🔔</span>
-<span id="settings-btn" style="cursor:pointer;" title="Settings">⚙️</span>
+<span id="notification-btn" class="header-icon-3d" title="Notifications">🔔</span>
+<span id="settings-btn" class="header-icon-3d" title="Settings">⚙️</span>
 </div>
 </header>
 
@@ -34,13 +35,12 @@
 
 <!-- SEARCH -->
 <div class="search-box">
-<input type="text" placeholder="Search Market (e.g. BTC, EUR, Gold)">
+<input type="text" placeholder="Search your market (e.g. BTC, EUR, Gold)...">
 </div>
 
-<!-- MARKET LIST -->
+<!-- MARKET LIST (Compact 3D Boxes) -->
 <div class="market-list">
 
-<!-- FOREX MARKETS -->
 <div class="market-item" data-symbol="EURUSD">
 <div>
 <h3>EURUSD</h3>
@@ -74,18 +74,6 @@
 </div>
 </div>
 
-<div class="market-item" data-symbol="AUDUSD">
-<div>
-<h3>AUDUSD</h3>
-<p>Australian Dollar / US Dollar</p>
-</div>
-<div class="price">
-<h3>0.6580</h3>
-<span class="green">+0.05%</span>
-</div>
-</div>
-
-<!-- CRYPTO MARKETS -->
 <div class="market-item" data-symbol="BTCUSD">
 <div>
 <h3>BTCUSD</h3>
@@ -108,18 +96,6 @@
 </div>
 </div>
 
-<div class="market-item" data-symbol="BNBUSD">
-<div>
-<h3>BNBUSD</h3>
-<p>Binance Coin / USD</p>
-</div>
-<div class="price">
-<h3>580.10</h3>
-<span class="red">-0.45%</span>
-</div>
-</div>
-
-<!-- METALS MARKETS -->
 <div class="market-item" data-symbol="XAUUSD">
 <div>
 <h3>XAUUSD</h3>
@@ -142,7 +118,6 @@
 </div>
 </div>
 
-<!-- INDICES MARKETS -->
 <div class="market-item" data-symbol="US30">
 <div>
 <h3>US30</h3>
@@ -154,22 +129,11 @@
 </div>
 </div>
 
-<div class="market-item" data-symbol="US100">
-<div>
-<h3>US100</h3>
-<p>Nasdaq 100</p>
-</div>
-<div class="price">
-<h3>19820.50</h3>
-<span class="green">+0.75%</span>
-</div>
 </div>
 
 </div>
 
-</div>
-
-<!-- BOTTOM NAV (Updated with Central Trade Button as requested) -->
+<!-- BOTTOM NAV (With Navy Blue Glow on active as requested) -->
 <div class="bottom-nav">
 <a href="dashboard.html">
 🏠<br>Home
@@ -188,12 +152,12 @@
 </a>
 </div>
 
-<!-- Notification Modal Structure -->
-<div id="notification-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center;">
-<div style="background:#1c1c1c; padding:20px; border-radius:15px; width:90%; max-width:350px; border:1px solid #333; color:#fff; text-align:center;">
-<h3>Notifications</h3>
-<p style="color:#aaa; margin:15px 0;">No new notifications right now.</p>
-<button id="close-notification" style="background:#ffc928; border:none; padding:10px 20px; border-radius:10px; font-weight:bold; cursor:pointer;">Close</button>
+<!-- Notification Modal -->
+<div id="notification-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; justify-content:center; align-items:center;">
+<div style="background:#141414; padding:22px; border-radius:16px; width:90%; max-width:350px; border:1px solid #2a2a2a; box-shadow: 0 10px 30px rgba(0,0,0,0.8); color:#fff; text-align:center;">
+<h3 style="margin-bottom:10px; color:#ffc928;">Notifications</h3>
+<p style="color:#aaa; font-size:14px; margin:15px 0;">No new market alerts or notifications available.</p>
+<button id="close-notification" style="background:linear-gradient(135deg, #ffc928, #e0aa1e); border:none; padding:10px 25px; border-radius:10px; font-weight:bold; cursor:pointer; color:#111; box-shadow: 0 4px 10px rgba(255,201,40,0.3);">Close</button>
 </div>
 </div>
 
