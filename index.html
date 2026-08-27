@@ -82,6 +82,7 @@
 
             <button
                 class="language-btn"
+                id="languageBtn"
                 type="button"
                 aria-label="Language"
             >
@@ -158,7 +159,7 @@
 
                 <div class="form-group">
 
-                    <label for="username">
+                    <label for="username" data-key="username">
                         Username
                     </label>
 
@@ -190,7 +191,7 @@
 
                 <div class="form-group">
 
-                    <label for="password">
+                    <label for="password" data-key="password">
                         Password
                     </label>
 
@@ -242,7 +243,7 @@
 
                     <span class="button-glow"></span>
 
-                    <span class="button-content">
+                    <span class="button-content" data-key="signin">
                         Go to Sign In
                     </span>
 
@@ -265,7 +266,7 @@
 
                         <i class="fa-solid fa-user-plus"></i>
 
-                        <span>
+                        <span data-key="createAccount">
                             Create Account
                         </span>
 
@@ -282,7 +283,7 @@
 
                         <i class="fa-solid fa-lock"></i>
 
-                        <span>
+                        <span data-key="forgotPassword">
                             Forgot Password?
                         </span>
 
@@ -347,7 +348,7 @@
         src="script.js"
     ></script>
     
-<script src="lang.js"></script>
+    <script src="lang.js"></script>
 
 </body>
 </html>
