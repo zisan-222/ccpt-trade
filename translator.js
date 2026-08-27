@@ -7,23 +7,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const langBtn = document.getElementById("languageBtn");
   if (!langBtn) return;
 
-  // ৩. ড্রপডাউন মেনু তৈরি করা
+  // ৩. ড্রপডাউন মেনু তৈরি করা (বডির সাথে যুক্ত করা যাতে পজিশনিং ঠিক থাকে)
   let dropdown = document.getElementById("languageDropdown");
   if (!dropdown) {
     dropdown = document.createElement("div");
     dropdown.id = "languageDropdown";
     dropdown.style.cssText = `
-      position: absolute;
-      top: 45px;
-      right: 0;
+      position: fixed;
       background: #0b132b;
       border: 1px solid #1e293b;
       border-radius: 8px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.8);
-      z-index: 9999;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.9);
+      z-index: 99999;
       display: none;
-      width: 170px;
-      max-height: 220px;
+      width: 180px;
+      max-height: 250px;
       overflow-y: auto;
       text-align: left;
     `;
@@ -32,17 +30,17 @@ document.addEventListener("DOMContentLoaded", () => {
     for (const code in languageData) {
       const item = document.createElement("div");
       item.style.cssText = `
-        padding: 8px 12px;
+        padding: 10px 14px;
         cursor: pointer;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 12px;
         color: #ffffff !important;
-        font-size: 13px;
+        font-size: 14px;
         border-bottom: 1px solid #1e293b;
         background: #0b132b;
       `;
-      item.innerHTML = `<span style="font-size: 16px;">${languageData[code].flag}</span> <span style="color: #ffffff; font-weight: 500;">${languageData[code].langName}</span>`;
+      item.innerHTML = `<span style="font-size: 18px;">${languageData[code].flag}</span> <span style="color: #ffffff; font-weight: 500;">${languageData[code].langName}</span>`;
       
       item.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -57,20 +55,26 @@ document.addEventListener("DOMContentLoaded", () => {
       dropdown.appendChild(item);
     }
 
-    // বাটনটিকে পজিশন রিলেটিভ করা যাতে ড্রপডাউনটি ঠিক এর নিচে খোলে
-    langBtn.style.position = "relative";
-    langBtn.appendChild(dropdown);
+    document.body.appendChild(dropdown);
   }
 
-  // ৪. পতাকায় ক্লিক করলে ড্রপডাউন ওপেন/ক্লোজ হওয়া
+  // ৪. পতাকায় ক্লিক করলে ড্রপডাউন ওপেন/ক্লোজ হওয়া এবং সঠিক জায়গায় পজিশন হওয়া
   langBtn.addEventListener("click", (e) => {
     e.stopPropagation();
-    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    
+    if (dropdown.style.display === "block") {
+      dropdown.style.display = "none";
+    } else {
+      const rect = langBtn.getBoundingClientRect();
+      dropdown.style.top = (rect.bottom + 8) + "px";
+      dropdown.style.left = (rect.right - 180) + "px"; // ডান দিক থেকে পজিশন হবে
+      dropdown.style.display = "block";
+    }
   });
 
   // পেজের বাইরে ক্লিক করলে ড্রপডাউন বন্ধ হয়ে যাওয়া
   document.addEventListener("click", () => {
-    dropdown.style.display = "none";
+    if (dropdown) dropdown.style.display = "none";
   });
 });
 
@@ -81,10 +85,7 @@ function applyLanguage(langCode) {
 
   const langBtn = document.getElementById("languageBtn");
   if (langBtn) {
-    const dropdown = document.getElementById("languageDropdown");
-    // শুধু পতাকার ইমোজিটি দেখাবে এবং ড্রপডাউন সাথে রাখবে
     langBtn.innerHTML = `${lang.flag}`;
-    if (dropdown) langBtn.appendChild(dropdown);
   }
 
   // পেজের সব ডেটা-কি (data-key) টেক্সটগুলো অনুবাদ করা
