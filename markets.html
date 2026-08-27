@@ -4,252 +4,200 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>CptMarkets - Markets</title>
-
 <link rel="stylesheet" href="markets.css">
-
 </head>
-
 
 <body>
 
-
 <div class="market-container">
 
-
 <!-- HEADER -->
-
 <header class="market-header">
-
 <div class="logo">
 🛡️ CptMarkets
 </div>
-
 <div class="icons">
-<span>🔔</span>
-<span>⚙️</span>
+<span id="notification-btn" style="cursor:pointer;" title="Notifications">🔔</span>
+<span id="settings-btn" style="cursor:pointer;" title="Settings">⚙️</span>
 </div>
-
 </header>
 
-
-
 <!-- CATEGORY BUTTON -->
-
 <div class="category-box">
-
-<button class="active">
-All
-</button>
-
-<button>
-Forex
-</button>
-
-<button>
-Crypto
-</button>
-
-<button>
-Metals
-</button>
-
-<button>
-Indices
-</button>
-
-
+<button class="active">All</button>
+<button>Forex</button>
+<button>Crypto</button>
+<button>Metals</button>
+<button>Indices</button>
 </div>
-
-
-
 
 <!-- SEARCH -->
-
 <div class="search-box">
-
-<input 
-type="text"
-placeholder="Search Market">
-
+<input type="text" placeholder="Search Market (e.g. BTC, EUR, Gold)">
 </div>
-
-
-
-
 
 <!-- MARKET LIST -->
-
 <div class="market-list">
 
-
-
-<div class="market-item" data-symbol="XAUUSD">
-
+<!-- FOREX MARKETS -->
+<div class="market-item" data-symbol="EURUSD">
 <div>
-
-<h3>XAUUSD</h3>
-
-<p>Gold / USD</p>
-
+<h3>EURUSD</h3>
+<p>Euro / US Dollar</p>
 </div>
-
-
 <div class="price">
-
-<h3>4276.29</h3>
-
-<span class="green">
-+0.02%
-</span>
-
+<h3>1.0850</h3>
+<span class="green">+0.15%</span>
+</div>
 </div>
 
+<div class="market-item" data-symbol="GBPUSD">
+<div>
+<h3>GBPUSD</h3>
+<p>British Pound / US Dollar</p>
+</div>
+<div class="price">
+<h3>1.2720</h3>
+<span class="red">-0.08%</span>
+</div>
 </div>
 
+<div class="market-item" data-symbol="USDJPY">
+<div>
+<h3>USDJPY</h3>
+<p>US Dollar / Japanese Yen</p>
+</div>
+<div class="price">
+<h3>155.40</h3>
+<span class="green">+0.32%</span>
+</div>
+</div>
 
+<div class="market-item" data-symbol="AUDUSD">
+<div>
+<h3>AUDUSD</h3>
+<p>Australian Dollar / US Dollar</p>
+</div>
+<div class="price">
+<h3>0.6580</h3>
+<span class="green">+0.05%</span>
+</div>
+</div>
 
-
-
+<!-- CRYPTO MARKETS -->
 <div class="market-item" data-symbol="BTCUSD">
-
 <div>
-
 <h3>BTCUSD</h3>
-
 <p>Bitcoin / USD</p>
-
 </div>
-
-
 <div class="price">
-
 <h3>63070.00</h3>
-
-<span class="green">
-+1.05%
-</span>
-
+<span class="green">+1.05%</span>
+</div>
 </div>
 
-
+<div class="market-item" data-symbol="ETHUSD">
+<div>
+<h3>ETHUSD</h3>
+<p>Ethereum / USD</p>
+</div>
+<div class="price">
+<h3>3450.25</h3>
+<span class="green">+2.40%</span>
+</div>
 </div>
 
+<div class="market-item" data-symbol="BNBUSD">
+<div>
+<h3>BNBUSD</h3>
+<p>Binance Coin / USD</p>
+</div>
+<div class="price">
+<h3>580.10</h3>
+<span class="red">-0.45%</span>
+</div>
+</div>
 
-
-
-
+<!-- METALS MARKETS -->
+<div class="market-item" data-symbol="XAUUSD">
+<div>
+<h3>XAUUSD</h3>
+<p>Gold / USD</p>
+</div>
+<div class="price">
+<h3>4276.29</h3>
+<span class="green">+0.02%</span>
+</div>
+</div>
 
 <div class="market-item" data-symbol="XAGUSD">
-
 <div>
-
 <h3>XAGUSD</h3>
-
 <p>Silver / USD</p>
-
 </div>
-
-
 <div class="price">
-
 <h3>28.651</h3>
-
-<span class="red">
--2.22%
-</span>
-
-
+<span class="red">-2.22%</span>
+</div>
 </div>
 
-
-</div>
-
-
-
-
-
-<div class="market-item" data-symbol="EURUSD">
-
+<!-- INDICES MARKETS -->
+<div class="market-item" data-symbol="US30">
 <div>
-
-<h3>EURUSD</h3>
-
-<p>Euro / USD</p>
-
+<h3>US30</h3>
+<p>Wall Street 30</p>
 </div>
-
-
 <div class="price">
+<h3>39150.00</h3>
+<span class="green">+0.28%</span>
+</div>
+</div>
 
-<h3>1.1650</h3>
-
-<span class="green">
-+0.10%
-</span>
-
+<div class="market-item" data-symbol="US100">
+<div>
+<h3>US100</h3>
+<p>Nasdaq 100</p>
+</div>
+<div class="price">
+<h3>19820.50</h3>
+<span class="green">+0.75%</span>
+</div>
+</div>
 
 </div>
 
-
 </div>
 
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-<!-- BOTTOM NAV -->
-
+<!-- BOTTOM NAV (Updated with Central Trade Button as requested) -->
 <div class="bottom-nav">
-
-
 <a href="dashboard.html">
-🏠
-<br>
-Home
+🏠<br>Home
 </a>
-
-
-<a class="active">
-📈
-<br>
-Markets
+<a class="active" href="markets.html">
+📈<br>Markets
 </a>
-
-
+<a href="trade.html" class="center-trade-btn" title="Trade">
+<span>⇄</span>
+</a>
 <a href="assets.html">
-💼
-<br>
-Assets
+💼<br>Assets
 </a>
-
-
 <a href="mine.html">
-👤
-<br>
-Mine
+👤<br>Mine
 </a>
-
-
-
 </div>
 
-
-
-
+<!-- Notification Modal Structure -->
+<div id="notification-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center;">
+<div style="background:#1c1c1c; padding:20px; border-radius:15px; width:90%; max-width:350px; border:1px solid #333; color:#fff; text-align:center;">
+<h3>Notifications</h3>
+<p style="color:#aaa; margin:15px 0;">No new notifications right now.</p>
+<button id="close-notification" style="background:#ffc928; border:none; padding:10px 20px; border-radius:10px; font-weight:bold; cursor:pointer;">Close</button>
+</div>
+</div>
 
 <script src="markets.js"></script>
 
-
 </body>
-
 </html>
