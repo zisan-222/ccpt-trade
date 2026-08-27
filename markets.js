@@ -4,49 +4,42 @@ document.addEventListener("DOMContentLoaded", function () {
     const marketItems = document.querySelectorAll(".market-list .market-item");
     const searchInput = document.querySelector(".search-box input");
     
+    // Modals & Buttons
     const notificationBtn = document.getElementById("notification-btn");
     const notificationModal = document.getElementById("notification-modal");
     const closeNotification = document.getElementById("close-notification");
+
     const settingsBtn = document.getElementById("settings-btn");
 
-    // -----------------------------
-    // NOTIFICATION MODAL LOGIC
-    // -----------------------------
+    // Notification Modal Logic
     if (notificationBtn && notificationModal) {
         notificationBtn.addEventListener("click", function () {
             notificationModal.style.display = "flex";
         });
     }
-
     if (closeNotification && notificationModal) {
         closeNotification.addEventListener("click", function () {
             notificationModal.style.display = "none";
         });
     }
 
-    // Close modal on outside click
+    // Settings Button -> Direct Settings Page redirection
+    if (settingsBtn) {
+        settingsBtn.addEventListener("click", function () {
+            window.location.href = "settings.html";
+        });
+    }
+
+    // Close Modal on outside click
     window.addEventListener("click", function (e) {
         if (e.target === notificationModal) {
             notificationModal.style.display = "none";
         }
     });
 
-    // -----------------------------
-    // SETTINGS BUTTON LOGIC
-    // -----------------------------
-    if (settingsBtn) {
-        settingsBtn.addEventListener("click", function () {
-            // Settings পেজে রিডাইরেক্ট করবে (আপনার যদি settings.html থাকে)
-            window.location.href = "settings.html";
-        });
-    }
-
-    // -----------------------------
-    // MARKET CATEGORY MAPPING
-    // -----------------------------
+    // Market Category Mapping
     function getCategory(symbol) {
         symbol = symbol.toUpperCase();
-
         const crypto = ["BTCUSD", "ETHUSD", "BNBUSD", "XRPUSD", "SOLUSD", "ADAUSD", "DOGEUSD"];
         if (crypto.includes(symbol)) return "Crypto";
 
@@ -60,9 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return "Forex";
     }
 
-    // -----------------------------
-    // SHOW / HIDE MARKETS
-    // -----------------------------
+    // Filter Markets
     function filterMarkets(category) {
         marketItems.forEach(function (item) {
             const symbol = item.getAttribute("data-symbol") || "";
@@ -75,7 +66,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        // Active button style update
         categoryButtons.forEach(function (button) {
             if (button.textContent.trim().toLowerCase() === category.toLowerCase()) {
                 button.classList.add("active");
@@ -85,9 +75,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // -----------------------------
-    // CATEGORY BUTTON CLICK
-    // -----------------------------
     categoryButtons.forEach(function (button) {
         button.addEventListener("click", function () {
             const category = button.textContent.trim();
@@ -95,13 +82,10 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // -----------------------------
-    // SEARCH MARKET
-    // -----------------------------
+    // Search Market
     if (searchInput) {
         searchInput.addEventListener("input", function () {
             const searchText = searchInput.value.toLowerCase().trim();
-
             marketItems.forEach(function (item) {
                 const text = item.textContent.toLowerCase();
                 if (text.includes(searchText)) {
@@ -113,19 +97,15 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // -----------------------------
-    // MARKET CARD CLICK (Navigation)
-    // -----------------------------
+    // Card Click -> Trade Page
     marketItems.forEach(function (item) {
         item.addEventListener("click", function () {
             const symbol = item.getAttribute("data-symbol");
             if (!symbol) return;
-
             localStorage.setItem("selectedMarket", symbol);
             window.location.href = "trade.html?symbol=" + encodeURIComponent(symbol);
         });
     });
 
-    // Default load
     filterMarkets("All");
 });
