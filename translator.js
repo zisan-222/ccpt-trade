@@ -7,54 +7,57 @@ document.addEventListener("DOMContentLoaded", () => {
   const langBtn = document.getElementById("languageBtn");
   if (!langBtn) return;
 
-  // ৩. ড্রপডাউন মেনু তৈরি করা (যদি আগে থেকে না থাকে)
+  // ৩. ড্রপডাউন মেনু তৈরি করা
   let dropdown = document.getElementById("languageDropdown");
   if (!dropdown) {
     dropdown = document.createElement("div");
     dropdown.id = "languageDropdown";
     dropdown.style.cssText = `
       position: absolute;
-      top: 60px;
+      top: 45px;
       right: 0;
-      background: #0f172a;
+      background: #0b132b;
       border: 1px solid #1e293b;
       border-radius: 8px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-      z-index: 1000;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+      z-index: 9999;
       display: none;
-      width: 180px;
-      max-height: 250px;
+      width: 170px;
+      max-height: 220px;
       overflow-y: auto;
+      text-align: left;
     `;
 
     // ভাষাগুলোর তালিকা ড্রপডাউনে যোগ করা
     for (const code in languageData) {
       const item = document.createElement("div");
       item.style.cssText = `
-        padding: 10px 15px;
+        padding: 8px 12px;
         cursor: pointer;
         display: flex;
         align-items: center;
         gap: 10px;
-        color: #fff;
-        font-size: 14px;
+        color: #ffffff !important;
+        font-size: 13px;
         border-bottom: 1px solid #1e293b;
+        background: #0b132b;
       `;
-      item.innerHTML = `<span>${languageData[code].flag}</span> <span>${languageData[code].langName}</span>`;
+      item.innerHTML = `<span style="font-size: 16px;">${languageData[code].flag}</span> <span style="color: #ffffff; font-weight: 500;">${languageData[code].langName}</span>`;
       
-      item.addEventListener("click", () => {
+      item.addEventListener("click", (e) => {
+        e.stopPropagation();
         localStorage.setItem("selectedLang", code);
         applyLanguage(code);
         dropdown.style.display = "none";
       });
 
-      item.addEventListener("mouseover", () => { item.style.background = "#1e293b"; });
-      item.addEventListener("mouseout", () => { item.style.background = "transparent"; });
+      item.addEventListener("mouseover", () => { item.style.background = "#1d2d50"; });
+      item.addEventListener("mouseout", () => { item.style.background = "#0b132b"; });
 
       dropdown.appendChild(item);
     }
 
-    // বাটনটির প্যারেন্ট এলিমেন্টে ড্রপডাউন যুক্ত করা
+    // বাটনটিকে পজিশন রিলেটিভ করা যাতে ড্রপডাউনটি ঠিক এর নিচে খোলে
     langBtn.style.position = "relative";
     langBtn.appendChild(dropdown);
   }
@@ -76,11 +79,10 @@ function applyLanguage(langCode) {
   const lang = languageData[langCode];
   if (!lang) return;
 
-  // বাটন বা পতাকার আইকন আপডেট করা
   const langBtn = document.getElementById("languageBtn");
   if (langBtn) {
-    // শুধু পতাকা বা নাম দেখানোর জন্য
     const dropdown = document.getElementById("languageDropdown");
+    // শুধু পতাকার ইমোজিটি দেখাবে এবং ড্রপডাউন সাথে রাখবে
     langBtn.innerHTML = `${lang.flag}`;
     if (dropdown) langBtn.appendChild(dropdown);
   }
