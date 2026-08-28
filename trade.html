@@ -45,6 +45,11 @@
             <i class="fa-solid fa-magnifying-glass"></i>
         </button>
 
+        <button id="languageBtn" class="language-btn" type="button"
+          style="background:none;border:none;cursor:pointer;font-size:20px;padding:2px;line-height:1;">
+          🇬🇧
+        </button>
+
     </div>
 
 </header>
@@ -119,7 +124,7 @@
 
 <section class="trade-panel">
 
-    <h3>Leverage</h3>
+    <h3 data-key="leverage">Leverage</h3>
 
     <div class="leverage-grid">
 
@@ -198,17 +203,17 @@
     <div class="summary">
 
         <div>
-            <span>Leverage</span>
+            <span data-key="leverage">Leverage</span>
             <strong id="levValue">100x</strong>
         </div>
 
         <div>
-            <span>Converted Lots</span>
+            <span data-key="convertedLots">Converted Lots</span>
             <strong id="lotsValue">0.02 Lot</strong>
         </div>
 
         <div>
-            <span>Contract Value</span>
+            <span data-key="contractValue">Contract Value</span>
             <strong>$10,000.00</strong>
         </div>
 
@@ -272,17 +277,17 @@
     <div class="open-trade-info">
 
         <div>
-            <span>Entry Price</span>
+            <span data-key="entryPrice">Entry Price</span>
             <strong id="entryPrice">0.00</strong>
         </div>
 
         <div>
-            <span>Current Price</span>
+            <span data-key="currentPrice">Current Price</span>
             <strong id="currentTradePrice">0.00</strong>
         </div>
 
         <div>
-            <span>Amount</span>
+            <span data-key="amount">Amount</span>
             <strong id="tradeAmount">$0.00</strong>
         </div>
 
@@ -314,12 +319,12 @@
 
     <a href="dashboard.html">
         <i class="fa-solid fa-house"></i>
-        <span>Home</span>
+        <span data-key="navHome">Home</span>
     </a>
 
     <a href="markets.html">
         <i class="fa-solid fa-chart-line"></i>
-        <span>Markets</span>
+        <span data-key="navMarkets">Markets</span>
     </a>
 
     <a href="trade.html" class="trade-btn">
@@ -328,12 +333,12 @@
 
     <a href="assets.html">
         <i class="fa-solid fa-wallet"></i>
-        <span>Assets</span>
+        <span data-key="navAssets">Assets</span>
     </a>
 
     <a href="mine.html">
         <i class="fa-solid fa-user"></i>
-        <span>Mine</span>
+        <span data-key="navMine">Mine</span>
     </a>
 
 </nav>
@@ -354,8 +359,9 @@
     functions through window so trade.js can call them.
 -->
 <script type="module" src="trade-popup.js"></script>
+
+
 <script src="lang.js"></script>
 <script src="translator.js"></script>
-
 </body>
 </html>
