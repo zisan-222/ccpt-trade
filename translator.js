@@ -1,128 +1,180 @@
 // ============================================================
-// CptMarkets — translator.js (Universal 10-language translator)
+//  CptMarkets — translator.js
+//  Universal language switcher (works across ALL pages)
+//  Must be included AFTER lang.js on every HTML page:
+//
+//      <script src="lang.js"></script>
+//      <script src="translator.js"></script>
+//
 // ============================================================
+
 (function () {
-  'use strict';
+  const STORAGE_KEY = "cpt_lang";
+  const DEFAULT_LANG = "en_UK";
 
-  const STORAGE_KEY = 'cpt_lang';
-  const DEFAULT_LANG = 'en_UK';
-
-  function normalize(text) {
-    return String(text ?? '').replace(/\s+/g, ' ').trim();
+  // ------------------------------------------------------------
+  // 1. Get / Set current language (persisted in localStorage so
+  //    it is shared across every page of the site)
+  // ------------------------------------------------------------
+  function getCurrentLang() {
+    return localStorage.getItem(STORAGE_KEY) || DEFAULT_LANG;
   }
 
-  function getLang() {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    return saved && languageData[saved] ? saved : DEFAULT_LANG;
-  }
-
-  function translateExact(text, code) {
-    const value = normalize(text);
-    if (!value) return text;
-    if (typeof cptTranslatePhrase === 'function') return cptTranslatePhrase(value, code);
-    const dict = (window.cptStaticTranslations || {})[code] || {};
-    return Object.prototype.hasOwnProperty.call(dict, value) ? dict[value] : text;
-  }
-
-  function translateNode(el, code) {
-    if (!el || el.nodeType !== 1) return;
-    if (el.matches('script,style,noscript,svg,[contenteditable="true"]')) return;
-    if (el.closest('script,style,noscript,svg')) return;
-
-    // data-key has priority.
-    const key = el.getAttribute('data-key');
-    const dict = languageData[code];
-    if (key && dict && dict[key] !== undefined) {
-      if (!el.children.length) el.textContent = dict[key];
-      else {
-        // Preserve nested icons/elements where possible.
-        const textNodes = [];
-        const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
-        let n; while ((n = walker.nextNode())) textNodes.push(n);
-        if (textNodes.length === 1) textNodes[0].nodeValue = dict[key];
-      }
-    } else if (!el.children.length) {
-      const original = normalize(el.textContent);
-      if (original) {
-        const translated = translateExact(original, code);
-        if (translated !== original) el.textContent = translated;
-      }
+  function setLanguage(langCode) {
+    if (!window.languageData || !window.languageData[langCode]) {
+      console.warn("cptTranslator: unknown language code:", langCode);
+      return;
     }
+    localStorage.setItem(STORAGE_KEY, langCode);
+    applyTranslations();
+    updateActiveFlagUI(langCode);
 
-    // Placeholder / title / aria-label, including data-ph-key.
-    const phKey = el.getAttribute('data-ph-key');
-    if (phKey && dict && dict[phKey] !== undefined) el.setAttribute('placeholder', dict[phKey]);
-    ['placeholder','title','aria-label'].forEach(attr => {
-      const value = el.getAttribute(attr);
-      if (!value) return;
-      const translated = translateExact(value, code);
-      if (translated !== value) el.setAttribute(attr, translated);
+    // Let other scripts on the same page know the language changed
+    document.dispatchEvent(
+      new CustomEvent("languageChanged", { detail: { lang: langCode } })
+    );
+  }
+
+  // ------------------------------------------------------------
+  // 2. Translate one piece of text
+  //    - First try languageData[lang][key]   (structured keys)
+  //    - Fallback to cptTranslatePhrase()     (raw English phrase)
+  // ------------------------------------------------------------
+  function translateByKey(key, langCode) {
+    const lang = window.languageData[langCode] || window.languageData[DEFAULT_LANG];
+    if (key in lang) return lang[key];
+    return null;
+  }
+
+  function translateByText(text, langCode) {
+    if (typeof window.cptTranslatePhrase === "function") {
+      return window.cptTranslatePhrase(text, langCode);
+    }
+    return text;
+  }
+
+  // ------------------------------------------------------------
+  // 3. Walk the DOM and apply translations
+  //    Supported attributes on any element:
+  //      data-i18n="key"              -> textContent from languageData
+  //      data-i18n-placeholder="key"  -> placeholder attribute
+  //      data-i18n-title="key"        -> title attribute
+  //      data-i18n-auto               -> translate existing text via
+  //                                       cptStaticTranslations (no key needed)
+  // ------------------------------------------------------------
+  function applyTranslations() {
+    const langCode = getCurrentLang();
+
+    // a) Key-based translation (structured UI strings)
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+      const key = el.getAttribute("data-i18n");
+      const val = translateByKey(key, langCode);
+      if (val !== null) el.textContent = val;
+    });
+
+    document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-placeholder");
+      const val = translateByKey(key, langCode);
+      if (val !== null) el.setAttribute("placeholder", val);
+    });
+
+    document.querySelectorAll("[data-i18n-title]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-title");
+      const val = translateByKey(key, langCode);
+      if (val !== null) el.setAttribute("title", val);
+    });
+
+    // b) Auto phrase-based translation (no key required, uses the
+    //    element's own English text against cptStaticTranslations)
+    document.querySelectorAll("[data-i18n-auto]").forEach((el) => {
+      // Store the original English text once so re-translating
+      // (e.g. switching en -> bn -> en) always works correctly.
+      if (!el.dataset.i18nOriginal) {
+        el.dataset.i18nOriginal = el.textContent.trim();
+      }
+      el.textContent = translateByText(el.dataset.i18nOriginal, langCode);
+    });
+
+    document.documentElement.setAttribute("lang", langCode);
+  }
+
+  // ------------------------------------------------------------
+  // 4. Flag icon click handling
+  //    Any element with data-lang-switch="en_UK" / "bn_BD" / etc.
+  //    becomes clickable and switches the language.
+  // ------------------------------------------------------------
+  function wireFlagClicks() {
+    document.querySelectorAll("[data-lang-switch]").forEach((el) => {
+      el.style.cursor = "pointer";
+      el.addEventListener("click", () => {
+        const code = el.getAttribute("data-lang-switch");
+        setLanguage(code);
+      });
     });
   }
 
-  function applyLanguage(code) {
-    if (!languageData[code]) code = DEFAULT_LANG;
-    localStorage.setItem(STORAGE_KEY, code);
-    const dict = languageData[code];
-
-    document.documentElement.setAttribute('lang', code.replace('_','-'));
-    document.querySelectorAll('[data-key], body *').forEach(el => translateNode(el, code));
-
-    // Update language controls after translating.
-    document.querySelectorAll('#languageBtn,.language-btn').forEach(btn => {
-      btn.textContent = dict.flag;
-      btn.title = dict.langName;
+  function updateActiveFlagUI(langCode) {
+    document.querySelectorAll("[data-lang-switch]").forEach((el) => {
+      el.classList.toggle(
+        "lang-active",
+        el.getAttribute("data-lang-switch") === langCode
+      );
     });
-    const stText=document.getElementById('settingsLangText'); if(stText) stText.textContent=dict.langName;
-    const stFlag=document.getElementById('settingsLangFlag'); if(stFlag) stFlag.textContent=dict.flag;
-    buildDropdown();
   }
 
-  function closeDrop() {
-    const d=document.getElementById('cpt-lang-dropdown'); if(d) d.style.display='none';
-  }
+  // ------------------------------------------------------------
+  // 5. Auto-build a flag switcher into any container:
+  //      <div id="langSwitcher"></div>
+  //    Generates one flag per language defined in languageData.
+  //    (Use this OR hand-place data-lang-switch icons — not both.)
+  // ------------------------------------------------------------
+  function buildLangSwitcher() {
+    const containers = document.querySelectorAll("#langSwitcher");
+    if (!containers.length || !window.languageData) return;
 
-  function openDrop(anchor) {
-    const d=document.getElementById('cpt-lang-dropdown'); if(!d) return;
-    const r=anchor.getBoundingClientRect();
-    d.style.top=(r.bottom+8)+'px';
-    d.style.right=(window.innerWidth-r.right)+'px';
-    d.style.left='auto';
-    d.style.display='block';
-  }
-
-  function buildDropdown() {
-    let drop=document.getElementById('cpt-lang-dropdown');
-    if (drop) drop.remove();
-    drop=document.createElement('div'); drop.id='cpt-lang-dropdown';
-    drop.style.cssText='position:fixed;z-index:999999;display:none;width:210px;max-height:340px;overflow-y:auto;background:#0a1628;border:1.5px solid #ffc928;border-radius:14px;box-shadow:0 12px 48px rgba(0,0,0,.95),0 0 24px rgba(255,201,40,.12);padding:6px 0;';
-    const current=getLang();
-    Object.keys(languageData).forEach(code=>{
-      const active=code===current, item=document.createElement('div');
-      item.dataset.langCode=code;
-      item.style.cssText=`padding:11px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;font-size:14px;font-family:inherit;border-bottom:1px solid #1a2540;background:${active?'#16264a':'transparent'};border-left:${active?'3px solid #ffc928':'3px solid transparent'};transition:background .15s;`;
-      item.innerHTML=`<span style="font-size:20px;line-height:1;">${languageData[code].flag}</span><span style="color:#fff;font-weight:500;flex:1;">${languageData[code].langName}</span>${active?'<span style="color:#ffc928;font-size:16px;font-weight:bold;">✓</span>':''}`;
-      item.addEventListener('click',e=>{e.stopPropagation();localStorage.setItem(STORAGE_KEY,code);applyLanguage(code);});
-      drop.appendChild(item);
+    containers.forEach((container) => {
+      container.innerHTML = "";
+      Object.keys(window.languageData).forEach((code) => {
+        const info = window.languageData[code];
+        const btn = document.createElement("span");
+        btn.className = "lang-flag-btn";
+        btn.setAttribute("data-lang-switch", code);
+        btn.title = info.langName;
+        btn.textContent = info.flag;
+        btn.style.cursor = "pointer";
+        btn.style.fontSize = "20px";
+        btn.style.margin = "0 4px";
+        container.appendChild(btn);
+      });
     });
-    document.body.appendChild(drop);
+
+    wireFlagClicks();
+    updateActiveFlagUI(getCurrentLang());
   }
 
-  function wireControls() {
-    document.querySelectorAll('#languageBtn,.language-btn,#settingsLangItem').forEach(btn=>{
-      if(btn.dataset.cptListened) return;
-      btn.dataset.cptListened='1';
-      btn.addEventListener('click',e=>{e.stopPropagation();const d=document.getElementById('cpt-lang-dropdown'); if(d && d.style.display==='block') closeDrop(); else openDrop(btn);});
-    });
-    document.addEventListener('click',closeDrop);
-  }
+  // ------------------------------------------------------------
+  // 6. Keep multiple open tabs in sync instantly
+  // ------------------------------------------------------------
+  window.addEventListener("storage", (e) => {
+    if (e.key === STORAGE_KEY && e.newValue) {
+      applyTranslations();
+      updateActiveFlagUI(e.newValue);
+    }
+  });
 
-  function init() {
-    applyLanguage(getLang());
-    wireControls();
-  }
+  // ------------------------------------------------------------
+  // 7. Init on every page load
+  // ------------------------------------------------------------
+  document.addEventListener("DOMContentLoaded", () => {
+    buildLangSwitcher();   // auto flags, if #langSwitcher exists
+    wireFlagClicks();      // hand-placed flags, if any
+    applyTranslations();   // translate the page immediately
+    updateActiveFlagUI(getCurrentLang());
+  });
 
-  window.applyLanguage=applyLanguage;
-  window.cptTranslatePhrase=translateExact;
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
+  // Expose for manual use elsewhere (e.g. settings page dropdown)
+  window.cptSetLanguage = setLanguage;
+  window.cptGetLanguage = getCurrentLang;
+  window.cptApplyTranslations = applyTranslations;
 })();
+  
