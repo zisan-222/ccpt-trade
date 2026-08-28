@@ -69,7 +69,10 @@
                style="cursor:pointer;">
             </i>
 
-            <i class="fa-solid fa-plus"></i>
+            <button id="languageBtn" class="language-btn" type="button"
+              style="background:none;border:none;cursor:pointer;font-size:22px;padding:0 4px;line-height:1;vertical-align:middle;">
+              🇬🇧
+            </button>
 
         </div>
 
@@ -98,7 +101,7 @@
 
         <div class="asset-header">
 
-            <span>Total Assets (USD)</span>
+            <span data-key="totalAssets">Total Assets (USD)</span>
 
             <i class="fa-regular fa-eye toggle-eye"
                id="toggleEye"
@@ -186,7 +189,7 @@
                 <i class="fa-solid fa-headset"></i>
             </div>
 
-            <span>Support</span>
+            <span data-key="support">Support</span>
 
         </div>
 
@@ -200,7 +203,7 @@
 
             </div>
 
-            <span>Withdraw</span>
+            <span data-key="withdraw">Withdraw</span>
 
         </div>
 
@@ -215,7 +218,7 @@
 
             </div>
 
-            <span>Transfer</span>
+            <span data-key="transfer">Transfer</span>
 
         </div>
 
@@ -227,7 +230,7 @@
                 <i class="fa-solid fa-users"></i>
             </div>
 
-            <span>Copy Trade</span>
+            <span data-key="copyTrade">Copy Trade</span>
 
         </div>
 
@@ -240,7 +243,7 @@
                 <i class="fa-regular fa-credit-card"></i>
             </div>
 
-            <span>Loan</span>
+            <span data-key="loan">Loan</span>
 
         </div>
 
@@ -252,7 +255,7 @@
                 <i class="fa-solid fa-chart-line"></i>
             </div>
 
-            <span>Wealth</span>
+            <span data-key="wealth">Wealth</span>
 
         </div>
 
@@ -264,7 +267,7 @@
                 <i class="fa-solid fa-hammer"></i>
             </div>
 
-            <span>Mining</span>
+            <span data-key="mining">Mining</span>
 
         </div>
 
@@ -276,7 +279,7 @@
                 <i class="fa-solid fa-gift"></i>
             </div>
 
-            <span>Invite</span>
+            <span data-key="invite">Invite</span>
 
         </div>
 
@@ -288,7 +291,7 @@
 
         <div class="market-title">
 
-            <h2>Hot Markets</h2>
+            <h2 data-key="hotMarkets">Hot Markets</h2>
 
             <a href="markets.html">
                 View All
@@ -365,7 +368,7 @@
         <a href="#" class="active">
 
             <i class="fa-solid fa-house"></i>
-            <span>Home</span>
+            <span data-key="navHome">Home</span>
 
         </a>
 
@@ -373,7 +376,7 @@
         <a href="markets.html">
 
             <i class="fa-solid fa-chart-line"></i>
-            <span>Markets</span>
+            <span data-key="navMarkets">Markets</span>
 
         </a>
 
@@ -389,7 +392,7 @@
         <a href="assets.html">
 
             <i class="fa-solid fa-wallet"></i>
-            <span>Assets</span>
+            <span data-key="navAssets">Assets</span>
 
         </a>
 
@@ -397,7 +400,7 @@
         <a href="mine.html">
 
             <i class="fa-solid fa-user"></i>
-            <span>Mine</span>
+            <span data-key="navMine">Mine</span>
 
         </a>
 
@@ -841,8 +844,9 @@ window.addEventListener(
 );
 
 </script>
+
+
 <script src="lang.js"></script>
 <script src="translator.js"></script>
-
 </body>
 </html>
