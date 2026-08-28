@@ -1,71 +1,295 @@
-// ============================================================
-//  CptMarkets — translator.js (Multi-Selector & Sync Updated)
-// ============================================================
+<!DOCTYPE html>
+<html lang="en">
 
-document.addEventListener("DOMContentLoaded", () => {
-    // ১. লোকাল স্টোরেজ থেকে সেভ করা ভাষা নিয়ে আসা, না থাকলে ডিফল্ট en_UK
-    const savedLang = localStorage.getItem("cpt_lang") || "en_UK";
-    
-    // ২. পেজ লোড হওয়ার সাথেই ভাষা এপ্লাই করা
-    applyTranslation(savedLang);
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CptMarkets - Markets</title>
+<link rel="stylesheet" href="markets.css">
+</head>
 
-    // ৩. প্রজেক্টের যেকোনো পেজে থাকা সব ভাষা সিলেক্টর বা ড্রপডাউন হ্যান্ডেল করা
-    const langSelectors = document.querySelectorAll("#languageSelector, .language-selector, [data-lang-select]");
-    
-    langSelectors.forEach(selector => {
-        selector.value = savedLang; // সিলেক্টরের ভ্যালু সঠিক ভাষায় সেট করা
-        
-        selector.addEventListener("change", (e) => {
-            const selectedLang = e.target.value;
-            localStorage.setItem("cpt_lang", selectedLang); // লোকাল স্টোরেজে সেভ করা
-            
-            // সব পেজে এবং বর্তমান পেজে ভাষা এপ্লাই করা
-            applyTranslation(selectedLang);
-            
-            // অন্যান্য ওপেন থাকা ট্যাবেও সিঙ্ক করার জন্য
-            syncAllSelectors(selectedLang);
-        });
-    });
-});
+<body>
 
-// ভাষা পরিবর্তনের মূল ফাংশন
-function applyTranslation(langCode) {
-    if (typeof languageData === 'undefined' || !languageData[langCode]) {
-        langCode = "en_UK"; 
-    }
+<div class="market-container">
 
-    const translations = languageData[langCode];
+<!-- HEADER -->
+<header class="market-header">
+<div class="logo-3d">
+    <span class="shield-icon">🛡️</span> 
+    <span class="logo-text">CptMarkets</span>
+</div>
+<div class="icons">
+<span id="notification-btn" class="header-icon-3d" title="Notifications">🔔</span>
+<span id="settings-btn" class="header-icon-3d" title="Settings">⚙️</span>
+</div>
+</header>
 
-    // পেজের সমস্ত [data-i18n] ট্যাগ আপডেট করা
-    document.querySelectorAll("[data-i18n]").forEach((element) => {
-        const key = element.getAttribute("data-i18n");
-        if (translations[key]) {
-            if (element.tagName === "INPUT" || element.tagName === "TEXTAREA") {
-                element.placeholder = translations[key];
-            } else {
-                element.textContent = translations[key];
-            }
-        }
-    });
+<!-- CATEGORY BUTTON -->
+<div class="category-box">
+<button class="active">All</button>
+<button>Forex</button>
+<button>Crypto</button>
+<button>Metals</button>
+<button>Indices</button>
+</div>
 
-    // ডকুমেন্টের ভাষা অ্যাট্রিবিউট আপডেট
-    document.documentElement.lang = langCode.split("_")[0];
-    
-    // সব সিলেক্টরের ভ্যালু আপডেট করে রাখা যাতে মিল থাকে
-    syncAllSelectors(langCode);
-}
+<!-- SEARCH -->
+<div class="search-box">
+<input type="text" placeholder="Search your market (e.g. BTC, EUR, Gold)...">
+</div>
 
-// পেজে থাকা একাধিক সিলেক্টরের ভ্যালু এক রাখার ফাংশন
-function syncAllSelectors(langCode) {
-    const langSelectors = document.querySelectorAll("#languageSelector, .language-selector, [data-lang-select]");
-    langSelectors.forEach(selector => {
-        selector.value = langCode;
-    });
-}
+<!-- MARKET LIST (Multiple Markets Added) -->
+<div class="market-list">
 
-// ব্রাউজারের অন্য ট্যাবে বা পেজে পরিবর্তন হলে সাথে সাথে ধরে রাখার জন্য স্টোরেজ লিসেনার
-window.addEventListener("storage", (event) => {
-    if (event.key === "cpt_lang") {
-        applyTranslation(event.newValue);
-    }
-});
+<!-- FOREX -->
+<div class="market-item" data-symbol="EURUSD">
+<div>
+<h3>EURUSD</h3>
+<p>Euro / US Dollar</p>
+</div>
+<div class="price">
+<h3>1.0850</h3>
+<span class="green">+0.15%</span>
+</div>
+</div>
+
+<div class="market-item" data-symbol="GBPUSD">
+<div>
+<h3>GBPUSD</h3>
+<p>British Pound / US Dollar</p>
+</div>
+<div class="price">
+<h3>1.2720</h3>
+<span class="red">-0.08%</span>
+</div>
+</div>
+
+<div class="market-item" data-symbol="USDJPY">
+<div>
+<h3>USDJPY</h3>
+<p>US Dollar / Japanese Yen</p>
+</div>
+<div class="price">
+<h3>155.40</h3>
+<span class="green">+0.32%</span>
+</div>
+</div>
+
+<div class="market-item" data-symbol="AUDUSD">
+<div>
+<h3>AUDUSD</h3>
+<p>Australian Dollar / US Dollar</p>
+</div>
+<div class="price">
+<h3>0.6580</h3>
+<span class="green">+0.05%</span>
+</div>
+</div>
+
+<div class="market-item" data-symbol="USDCAD">
+<div>
+<h3>USDCAD</h3>
+<p>US Dollar / Canadian Dollar</p>
+</div>
+<div class="price">
+<h3>1.3690</h3>
+<span class="red">-0.12%</span>
+</div>
+</div>
+
+<div class="market-item" data-symbol="NZDUSD">
+<div>
+<h3>NZDUSD</h3>
+<p>New Zealand Dollar / USD</p>
+</div>
+<div class="price">
+<h3>0.6120</h3>
+<span class="green">+0.18%</span>
+</div>
+</div>
+
+
+<!-- CRYPTO -->
+<div class="market-item" data-symbol="BTCUSD">
+<div>
+<h3>BTCUSD</h3>
+<p>Bitcoin / USD</p>
+</div>
+<div class="price">
+<h3>63070.00</h3>
+<span class="green">+1.05%</span>
+</div>
+</div>
+
+<div class="market-item" data-symbol="ETHUSD">
+<div>
+<h3>ETHUSD</h3>
+<p>Ethereum / USD</p>
+</div>
+<div class="price">
+<h3>3450.25</h3>
+<span class="green">+2.40%</span>
+</div>
+</div>
+
+<div class="market-item" data-symbol="BNBUSD">
+<div>
+<h3>BNBUSD</h3>
+<p>Binance Coin / USD</p>
+</div>
+<div class="price">
+<h3>580.10</h3>
+<span class="red">-0.45%</span>
+</div>
+</div>
+
+<div class="market-item" data-symbol="SOLUSD">
+<div>
+<h3>SOLUSD</h3>
+<p>Solana / USD</p>
+</div>
+<div class="price">
+<h3>145.80</h3>
+<span class="green">+5.12%</span>
+</div>
+</div>
+
+<div class="market-item" data-symbol="XRPUSD">
+<div>
+<h3>XRPUSD</h3>
+<p>Ripple / USD</p>
+</div>
+<div class="price">
+<h3>0.5240</h3>
+<span class="green">+0.85%</span>
+</div>
+</div>
+
+<div class="market-item" data-symbol="DOGEUSD">
+<div>
+<h3>DOGEUSD</h3>
+<p>Dogecoin / USD</p>
+</div>
+<div class="price">
+<h3>0.1250</h3>
+<span class="green">+3.20%</span>
+</div>
+</div>
+
+
+<!-- METALS -->
+<div class="market-item" data-symbol="XAUUSD">
+<div>
+<h3>XAUUSD</h3>
+<p>Gold / USD</p>
+</div>
+<div class="price">
+<h3>4276.29</h3>
+<span class="green">+0.02%</span>
+</div>
+</div>
+
+<div class="market-item" data-symbol="XAGUSD">
+<div>
+<h3>XAGUSD</h3>
+<p>Silver / USD</p>
+</div>
+<div class="price">
+<h3>28.651</h3>
+<span class="red">-2.22%</span>
+</div>
+</div>
+
+<div class="market-item" data-symbol="XPTUSD">
+<div>
+<h3>XPTUSD</h3>
+<p>Platinum / USD</p>
+</div>
+<div class="price">
+<h3>1012.50</h3>
+<span class="green">+0.60%</span>
+</div>
+</div>
+
+
+<!-- INDICES -->
+<div class="market-item" data-symbol="US30">
+<div>
+<h3>US30</h3>
+<p>Wall Street 30</p>
+</div>
+<div class="price">
+<h3>39150.00</h3>
+<span class="green">+0.28%</span>
+</div>
+</div>
+
+<div class="market-item" data-symbol="US100">
+<div>
+<h3>US100</h3>
+<p>Nasdaq 100</p>
+</div>
+<div class="price">
+<h3>19820.50</h3>
+<span class="green">+0.75%</span>
+</div>
+</div>
+
+<div class="market-item" data-symbol="GER40">
+<div>
+<h3>GER40</h3>
+<p>Germany 40 Index</p>
+</div>
+<div class="price">
+<h3>18240.00</h3>
+<span class="red">-0.35%</span>
+</div>
+</div>
+
+<div class="market-item" data-symbol="UK100">
+<div>
+<h3>UK100</h3>
+<p>FTSE 100 Index</p>
+</div>
+<div class="price">
+<h3>8210.30</h3>
+<span class="green">+0.11%</span>
+</div>
+</div>
+
+</div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+<a href="dashboard.html">
+🏠<br>Home
+</a>
+<a class="active" href="markets.html">
+📈<br>Markets
+</a>
+<a href="trade.html" class="center-trade-btn" title="Trade">
+<span>⇄</span>
+</a>
+<a href="assets.html">
+💼<br>Assets
+</a>
+<a href="mine.html">
+👤<br>Mine
+</a>
+</div>
+
+<!-- Notification Modal -->
+<div id="notification-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; justify-content:center; align-items:center;">
+<div style="background:#141414; padding:22px; border-radius:16px; width:90%; max-width:350px; border:1px solid #2a2a2a; box-shadow: 0 10px 30px rgba(0,0,0,0.8); color:#fff; text-align:center;">
+<h3 style="margin-bottom:10px; color:#ffc928;">Notifications</h3>
+<p style="color:#aaa; font-size:14px; margin:15px 0;">No new market alerts or notifications available.</p>
+<button id="close-notification" style="background:linear-gradient(135deg, #ffc928, #e0aa1e); border:none; padding:10px 25px; border-radius:10px; font-weight:bold; cursor:pointer; color:#111; box-shadow: 0 4px 10px rgba(255,201,40,0.3);">Close</button>
+</div>
+</div>
+
+<script src="markets.js"></script>
+
+</body>
+</html>
