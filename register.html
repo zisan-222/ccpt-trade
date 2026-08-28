@@ -38,7 +38,7 @@
 <div class="login-card">
 
 <!-- LANGUAGE BUTTON -->
-<button class="language-btn" type="button">🇬🇧</button>
+<button class="language-btn" id="languageBtn" type="button">🇬🇧</button>
 
 <!-- ==========================================
      3D MULTI-COLOR LOGO & TITLE
@@ -78,9 +78,7 @@ Join CptMarkets for global trading
 
 <div class="form-group">
 
-<label>
-Username
-</label>
+<label data-key="username">Username</label>
 
 <div class="input-box">
 
@@ -89,7 +87,7 @@ Username
 <input
     type="text"
     id="username"
-    placeholder="Enter Username"
+    placeholder="Enter Username" data-ph-key="username"
     autocomplete="username"
     required
 >
@@ -103,9 +101,7 @@ Username
 
 <div class="form-group">
 
-<label>
-Password
-</label>
+<label data-key="password">Password</label>
 
 <div class="input-box">
 
@@ -114,7 +110,7 @@ Password
 <input
     type="password"
     id="password"
-    placeholder="Password (min. 6 chars)"
+    placeholder="Password (min. 6 chars)" data-ph-key="password"
     autocomplete="new-password"
     required
 >
@@ -130,9 +126,7 @@ Password
 
 <div class="form-group">
 
-<label>
-Confirm Password
-</label>
+<label data-key="confirmPassword">Confirm Password</label>
 
 <div class="input-box">
 
@@ -141,7 +135,7 @@ Confirm Password
 <input
     type="password"
     id="confirmPassword"
-    placeholder="Confirm Password"
+    placeholder="Confirm Password" data-ph-key="confirmPassword"
     autocomplete="new-password"
     required
 >
@@ -157,9 +151,7 @@ Confirm Password
 
 <div class="form-group">
 
-<label>
-Invite Code
-</label>
+<label data-key="inviteCode">Invite Code</label>
 
 <div class="input-box">
 
@@ -168,7 +160,7 @@ Invite Code
 <input
     type="text"
     id="invite"
-    placeholder="Invite Code (optional)"
+    placeholder="Invite Code (optional)" data-ph-key="inviteCode"
 >
 
 </div>
@@ -184,8 +176,7 @@ Invite Code
     id="registerBtn"
 >
 
-Register
-
+<span data-key="register">Register</span>
 </button>
 
 
@@ -197,7 +188,7 @@ Register
 ========================================== -->
 <div class="bottom-links">
     <span class="has-question">
-        <i class="fa-regular fa-circle-question"></i> Already have an account?
+        <i class="fa-regular fa-circle-question"></i> <span data-key="alreadyAccount">Already have an account?</span>
     </span>
     <a href="index.html" class="sign-in-btn">
         Sign In <i class="fa-solid fa-arrow-right-to-bracket"></i>
@@ -747,9 +738,10 @@ registerForm.addEventListener(
 ========================================== -->
 
 <script src="password-toggle.js"></script>
+
+
 <script src="lang.js"></script>
 <script src="translator.js"></script>
-
 </body>
 
 </html>
