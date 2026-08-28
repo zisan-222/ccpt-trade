@@ -3432,7 +3432,7 @@ const cptStaticTranslations = {
     "option on the main account page to continue your withdrawal request.": "option on the main account page to continue your withdrawal request.",
     "Optional": "Optional",
     "Our 24/7 Online Support Team is always available to assist with any issues or inquiries regarding your trading account. We are committed to providing fast, reliable, and professional service.": "Our 24/7 Online Support Team is always available to assist with any issues or inqui
-          "Change password and security options": "Changer le mot de passe et les options de sécurité",
+         "Change password and security options": "Changer le mot de passe et les options de sécurité",
     "Close": "Fermer",
     "Close Trade": "Fermer la transaction",
     "CM": "CM",
@@ -5116,4 +5116,4 @@ const cptStaticTranslations = {
     "Profit / Loss": "Profit / Loss",
     "Profit / Loss Amount": "Profit / Loss Amount",
     "Profit/Loss remains pending until the trade is closed.": "Profit/Loss remains pending until the trade is closed.",
-    "Profit/Loss will update the user's balance and create a trade history record.": "Profit/Loss aggiornerà il 
+    "Profit/Loss will update the user's balance and create a trade history record.": "Profit/Loss aggiornerà il  
