@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CptMarkets - Settings</title>
 <link rel="stylesheet" href="markets.css">
+<style>
+#settingsLangItem:hover { background: #1d2d50 !important; }
+</style>
 </head>
 <body>
 
@@ -12,10 +15,14 @@
     <header class="market-header">
         <div class="logo" style="display:flex; align-items:center; gap:8px;">
             <span style="font-size:22px; text-shadow: 0 2px 5px rgba(0,0,0,0.5);">🛡️</span> 
-            <span style="background: linear-gradient(135deg, #ffc928, #ff9800); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 2px 10px rgba(255,201,40,0.3);">Settings</span>
+            <span style="background: linear-gradient(135deg, #ffc928, #ff9800); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 2px 10px rgba(255,201,40,0.3);" data-key="settingsTitle">Settings</span>
         </div>
         <div class="icons">
-            <a href="markets.html" style="text-decoration:none; font-size:20px; color:#fff;" title="Back">✕</a>
+            <button id="languageBtn" class="language-btn" type="button"
+              style="background:none;border:none;cursor:pointer;font-size:22px;padding:0 6px;line-height:1;color:#fff;">
+              🇬🇧
+            </button>
+            <a href="mine.html" style="text-decoration:none; font-size:20px; color:#fff;" title="Back">✕</a>
         </div>
     </header>
 
@@ -28,12 +35,14 @@
             <div class="price"><span>🔒</span></div>
         </div>
 
-        <div class="market-item" style="cursor:default;">
+        <div class="market-item" id="settingsLangItem" style="cursor:pointer; transition: background 0.2s;">
             <div>
-                <h3>Language</h3>
-                <p>English (US)</p>
+                <h3 data-key="language">Language</h3>
+                <p id="settingsLangText">English (UK)</p>
             </div>
-            <div class="price"><span>🌍</span></div>
+            <div class="price">
+                <span id="settingsLangFlag" style="font-size:22px;">🇬🇧</span>
+            </div>
         </div>
 
         <div class="market-item" style="cursor:default;">
@@ -62,8 +71,9 @@
 <a href="assets.html">💼<br>Assets</a>
 <a href="mine.html">👤<br>Mine</a>
 </div>
+
+
 <script src="lang.js"></script>
 <script src="translator.js"></script>
-
 </body>
 </html>
