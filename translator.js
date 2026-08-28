@@ -6,11 +6,29 @@
 //      <script src="lang.js"></script>
 //      <script src="translator.js"></script>
 //
+//  Matches the site's real markup convention:
+//    <label data-key="username">Username</label>
+//    <input data-ph-key="password" placeholder="Password">
+//    <button id="languageBtn" class="language-btn">🇬🇧</button>
+//
+//  Settings page extras (optional, only used if present):
+//    <div id="settingsLangItem">              -> also opens the language menu
+//      <p id="settingsLangText">English (UK)</p>   -> shows current language name
+//      <span id="settingsLangFlag">🇬🇧</span>       -> shows current language flag
+//    </div>
 // ============================================================
 
 (function () {
   const STORAGE_KEY = "cpt_lang";
   const DEFAULT_LANG = "en_UK";
+
+  // Elements that show the flag emoji as their own text/content and
+  // should have that emoji swapped out when the language changes.
+  const FLAG_DISPLAY_SELECTOR = "#languageBtn, .language-btn";
+
+  // Elements that should open the language dropdown when clicked
+  // (flag buttons + the settings page "Language" row, if present).
+  const TRIGGER_SELECTOR = "#languageBtn, .language-btn, #settingsLangItem";
 
   // ------------------------------------------------------------
   // 1. Get / Set current language (persisted in localStorage so
@@ -27,154 +45,220 @@
     }
     localStorage.setItem(STORAGE_KEY, langCode);
     applyTranslations();
-    updateActiveFlagUI(langCode);
+    updateFlagButtons(langCode);
+    updateSettingsLangDisplay(langCode);
+    closeAllMenus();
 
-    // Let other scripts on the same page know the language changed
     document.dispatchEvent(
       new CustomEvent("languageChanged", { detail: { lang: langCode } })
     );
   }
 
   // ------------------------------------------------------------
-  // 2. Translate one piece of text
-  //    - First try languageData[lang][key]   (structured keys)
-  //    - Fallback to cptTranslatePhrase()     (raw English phrase)
-  // ------------------------------------------------------------
-  function translateByKey(key, langCode) {
-    const lang = window.languageData[langCode] || window.languageData[DEFAULT_LANG];
-    if (key in lang) return lang[key];
-    return null;
-  }
-
-  function translateByText(text, langCode) {
-    if (typeof window.cptTranslatePhrase === "function") {
-      return window.cptTranslatePhrase(text, langCode);
-    }
-    return text;
-  }
-
-  // ------------------------------------------------------------
-  // 3. Walk the DOM and apply translations
-  //    Supported attributes on any element:
-  //      data-i18n="key"              -> textContent from languageData
-  //      data-i18n-placeholder="key"  -> placeholder attribute
-  //      data-i18n-title="key"        -> title attribute
-  //      data-i18n-auto               -> translate existing text via
-  //                                       cptStaticTranslations (no key needed)
+  // 2. Apply translations to the page
+  //    - data-key             -> textContent
+  //    - data-ph-key          -> placeholder
+  //    - data-i18n-title      -> title attribute
+  //    - (data-i18n / data-i18n-placeholder also supported, in
+  //       case any page uses that convention instead)
   // ------------------------------------------------------------
   function applyTranslations() {
     const langCode = getCurrentLang();
+    const lang = window.languageData[langCode] || window.languageData[DEFAULT_LANG];
 
-    // a) Key-based translation (structured UI strings)
+    document.querySelectorAll("[data-key]").forEach((el) => {
+      const key = el.getAttribute("data-key");
+      if (key in lang) el.textContent = lang[key];
+    });
+
+    document.querySelectorAll("[data-ph-key]").forEach((el) => {
+      const key = el.getAttribute("data-ph-key");
+      if (key in lang) el.setAttribute("placeholder", lang[key]);
+    });
+
     document.querySelectorAll("[data-i18n]").forEach((el) => {
       const key = el.getAttribute("data-i18n");
-      const val = translateByKey(key, langCode);
-      if (val !== null) el.textContent = val;
+      if (key in lang) el.textContent = lang[key];
     });
 
     document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
       const key = el.getAttribute("data-i18n-placeholder");
-      const val = translateByKey(key, langCode);
-      if (val !== null) el.setAttribute("placeholder", val);
+      if (key in lang) el.setAttribute("placeholder", lang[key]);
     });
 
     document.querySelectorAll("[data-i18n-title]").forEach((el) => {
       const key = el.getAttribute("data-i18n-title");
-      const val = translateByKey(key, langCode);
-      if (val !== null) el.setAttribute("title", val);
+      if (key in lang) el.setAttribute("title", lang[key]);
     });
 
-    // b) Auto phrase-based translation (no key required, uses the
-    //    element's own English text against cptStaticTranslations)
+    // Free-text elements (long sentences not covered by languageData keys)
     document.querySelectorAll("[data-i18n-auto]").forEach((el) => {
-      // Store the original English text once so re-translating
-      // (e.g. switching en -> bn -> en) always works correctly.
       if (!el.dataset.i18nOriginal) {
         el.dataset.i18nOriginal = el.textContent.trim();
       }
-      el.textContent = translateByText(el.dataset.i18nOriginal, langCode);
+      if (typeof window.cptTranslatePhrase === "function") {
+        el.textContent = window.cptTranslatePhrase(el.dataset.i18nOriginal, langCode);
+      }
     });
 
-    document.documentElement.setAttribute("lang", langCode);
+    document.documentElement.setAttribute("lang", langCode.split("_")[0]);
   }
 
   // ------------------------------------------------------------
-  // 4. Flag icon click handling
-  //    Any element with data-lang-switch="en_UK" / "bn_BD" / etc.
-  //    becomes clickable and switches the language.
+  // 3. Flag button(s) + dropdown menu
+  //    Works for the header flag button on every page, AND for
+  //    the "Language" row on the settings page (#settingsLangItem).
   // ------------------------------------------------------------
-  function wireFlagClicks() {
-    document.querySelectorAll("[data-lang-switch]").forEach((el) => {
-      el.style.cursor = "pointer";
-      el.addEventListener("click", () => {
-        const code = el.getAttribute("data-lang-switch");
+  function injectMenuStyles() {
+    if (document.getElementById("cptLangMenuStyles")) return;
+    const style = document.createElement("style");
+    style.id = "cptLangMenuStyles";
+    style.textContent = `
+      .cpt-lang-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 8px;
+        background: #12182b;
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 10px;
+        padding: 6px;
+        min-width: 170px;
+        max-height: 280px;
+        overflow-y: auto;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        z-index: 9999;
+        display: none;
+      }
+      .cpt-lang-menu.open { display: block; }
+      .cpt-lang-menu-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 10px;
+        border-radius: 8px;
+        cursor: pointer;
+        color: #fff;
+        font-size: 14px;
+        white-space: nowrap;
+      }
+      .cpt-lang-menu-item:hover { background: rgba(255,255,255,0.08); }
+      .cpt-lang-menu-item.active { background: rgba(59,130,246,0.25); }
+      .cpt-lang-menu-item .flag { font-size: 18px; }
+    `;
+    document.head.appendChild(style);
+  }
+
+  function buildMenuFor(anchorEl) {
+    if (anchorEl._cptMenu) return anchorEl._cptMenu;
+
+    const parent = anchorEl.parentElement;
+    const computedPosition = getComputedStyle(parent).position;
+    if (computedPosition === "static") {
+      parent.style.position = "relative";
+    }
+
+    const menu = document.createElement("div");
+    menu.className = "cpt-lang-menu";
+
+    Object.keys(window.languageData).forEach((code) => {
+      const info = window.languageData[code];
+      const item = document.createElement("div");
+      item.className = "cpt-lang-menu-item";
+      item.setAttribute("data-lang-code", code);
+      item.innerHTML = `<span class="flag">${info.flag}</span><span>${info.langName}</span>`;
+      item.addEventListener("click", (e) => {
+        e.stopPropagation();
         setLanguage(code);
       });
+      menu.appendChild(item);
     });
+
+    parent.appendChild(menu);
+    anchorEl._cptMenu = menu;
+    return menu;
   }
 
-  function updateActiveFlagUI(langCode) {
-    document.querySelectorAll("[data-lang-switch]").forEach((el) => {
-      el.classList.toggle(
-        "lang-active",
-        el.getAttribute("data-lang-switch") === langCode
-      );
-    });
+  function closeAllMenus() {
+    document.querySelectorAll(".cpt-lang-menu.open").forEach((m) => m.classList.remove("open"));
   }
 
-  // ------------------------------------------------------------
-  // 5. Auto-build a flag switcher into any container:
-  //      <div id="langSwitcher"></div>
-  //    Generates one flag per language defined in languageData.
-  //    (Use this OR hand-place data-lang-switch icons — not both.)
-  // ------------------------------------------------------------
-  function buildLangSwitcher() {
-    const containers = document.querySelectorAll("#langSwitcher");
-    if (!containers.length || !window.languageData) return;
-
-    containers.forEach((container) => {
-      container.innerHTML = "";
-      Object.keys(window.languageData).forEach((code) => {
-        const info = window.languageData[code];
-        const btn = document.createElement("span");
-        btn.className = "lang-flag-btn";
-        btn.setAttribute("data-lang-switch", code);
-        btn.title = info.langName;
-        btn.textContent = info.flag;
-        btn.style.cursor = "pointer";
-        btn.style.fontSize = "20px";
-        btn.style.margin = "0 4px";
-        container.appendChild(btn);
+  function wireLanguageTriggers() {
+    injectMenuStyles();
+    const triggers = document.querySelectorAll(TRIGGER_SELECTOR);
+    triggers.forEach((el) => {
+      const menu = buildMenuFor(el);
+      el.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const isOpen = menu.classList.contains("open");
+        closeAllMenus();
+        if (!isOpen) menu.classList.add("open");
       });
     });
 
-    wireFlagClicks();
-    updateActiveFlagUI(getCurrentLang());
+    document.addEventListener("click", closeAllMenus);
+  }
+
+  function updateFlagButtons(langCode) {
+    const info = window.languageData[langCode];
+    if (!info) return;
+    document.querySelectorAll(FLAG_DISPLAY_SELECTOR).forEach((btn) => {
+      Array.from(btn.childNodes).forEach((node) => {
+        if (node.nodeType === Node.TEXT_NODE) node.textContent = "";
+      });
+      btn.firstChild
+        ? btn.insertBefore(document.createTextNode(info.flag), btn.firstChild)
+        : btn.appendChild(document.createTextNode(info.flag));
+    });
+
+    // mark active item in every open/closed menu (header + settings row)
+    document.querySelectorAll(TRIGGER_SELECTOR).forEach((el) => {
+      if (el._cptMenu) {
+        el._cptMenu.querySelectorAll(".cpt-lang-menu-item").forEach((item) => {
+          item.classList.toggle("active", item.getAttribute("data-lang-code") === langCode);
+        });
+      }
+    });
   }
 
   // ------------------------------------------------------------
-  // 6. Keep multiple open tabs in sync instantly
+  // 3b. Settings page: keep #settingsLangText / #settingsLangFlag
+  //     in sync with the current language.
+  // ------------------------------------------------------------
+  function updateSettingsLangDisplay(langCode) {
+    const info = window.languageData[langCode];
+    if (!info) return;
+
+    const textEl = document.getElementById("settingsLangText");
+    if (textEl) textEl.textContent = info.langName;
+
+    const flagEl = document.getElementById("settingsLangFlag");
+    if (flagEl) flagEl.textContent = info.flag;
+  }
+
+  // ------------------------------------------------------------
+  // 4. Keep multiple open tabs in sync instantly
   // ------------------------------------------------------------
   window.addEventListener("storage", (e) => {
     if (e.key === STORAGE_KEY && e.newValue) {
       applyTranslations();
-      updateActiveFlagUI(e.newValue);
+      updateFlagButtons(e.newValue);
+      updateSettingsLangDisplay(e.newValue);
     }
   });
 
   // ------------------------------------------------------------
-  // 7. Init on every page load
+  // 5. Init on every page load
   // ------------------------------------------------------------
   document.addEventListener("DOMContentLoaded", () => {
-    buildLangSwitcher();   // auto flags, if #langSwitcher exists
-    wireFlagClicks();      // hand-placed flags, if any
-    applyTranslations();   // translate the page immediately
-    updateActiveFlagUI(getCurrentLang());
+    wireLanguageTriggers();
+    applyTranslations();
+    updateFlagButtons(getCurrentLang());
+    updateSettingsLangDisplay(getCurrentLang());
   });
 
-  // Expose for manual use elsewhere (e.g. settings page dropdown)
+  // Expose for manual use elsewhere
   window.cptSetLanguage = setLanguage;
   window.cptGetLanguage = getCurrentLang;
   window.cptApplyTranslations = applyTranslations;
 })();
-  
