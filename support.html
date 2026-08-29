@@ -285,7 +285,7 @@
                 <span class="pulse-dot"></span> Live Active Chat & Support
             </div>
         </div>
-        <div style="width: 35px;"></div> 
+        <button id="languageBtn" class="language-btn" type="button" style="background:none;border:none;cursor:pointer;font-size:18px;padding:0 4px;line-height:1;color:inherit;">🇬🇧</button>
     </div>
 
     <div class="container">
@@ -299,28 +299,28 @@
             <div class="support-card" onclick="openChatWithMsg('Hello Sir, I need assistance regarding my trading account help.')">
                 <div class="icon-box"><i class="fa-solid fa-user-gear"></i></div>
                 <div class="card-content">
-                    <h3>Account Help</h3>
-                    <span>Manage profile</span>
+                    <h3 data-key="accountHelp">Account Help</h3>
+                    <span data-key="manageProfile">Manage profile</span>
                 </div>
             </div>
             <div class="support-card" onclick="openChatWithMsg('Hello Sir, I want to make a Deposit or I need information regarding deposit.')">
                 <div class="icon-box"><i class="fa-solid fa-wallet" style="color: #22c55e;"></i></div>
                 <div class="card-content">
-                    <h3>Deposit</h3>
-                    <span>Add funds safely</span>
+                    <h3 data-key="deposit">Deposit</h3>
+                    <span data-key="addFunds">Add funds safely</span>
                 </div>
             </div>
             <div class="support-card" onclick="openChatWithMsg('Hello Sir, I would like to request a Withdrawal or need help with withdrawal.')">
                 <div class="icon-box"><i class="fa-solid fa-money-bill-transfer" style="color: #f59e0b;"></i></div>
                 <div class="card-content">
                     <h3>Withdrawal</h3>
-                    <span>Payout requests</span>
+                    <span data-key="payoutRequests">Payout requests</span>
                 </div>
             </div>
             <div class="support-card" onclick="openChatWithMsg('Hello Sir, I need general support and assistance regarding trading.')">
                 <div class="icon-box"><i class="fa-solid fa-headset" style="color: #38bdf8;"></i></div>
                 <div class="card-content">
-                    <h3>General Support</h3>
+                    <h3 data-key="generalSupport">General Support</h3>
                     <span>24/7 assistance</span>
                 </div>
             </div>
