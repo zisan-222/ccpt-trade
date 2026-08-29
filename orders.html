@@ -161,9 +161,10 @@
 <body>
 
 
-<div class="header">
+<div class="header" data-key="myOrders">
     My Orders
 </div>
+<button id="languageBtn" class="language-btn" type="button" style="position:fixed;top:14px;right:16px;z-index:1000;background:none;border:none;cursor:pointer;font-size:20px;padding:0 4px;line-height:1;color:inherit;">🇬🇧</button>
 
 
 <div class="container">
@@ -176,7 +177,7 @@
             class="tab active"
             type="button"
             onclick="showActive()"
-        >
+         data-key="myOrders">
             My Orders
         </button>
 
@@ -186,7 +187,7 @@
             class="tab"
             type="button"
             onclick="showHistory()"
-        >
+         data-key="history">
             History
         </button>
 
