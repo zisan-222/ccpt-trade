@@ -415,7 +415,7 @@
     <div class="header">
         <a href="dashboard.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
         <h1><i class="fa-solid fa-shield-halved"></i> CptMarkets</h1>
-        <div style="width: 42px;"></div>
+        <button id="languageBtn" class="language-btn" type="button" style="background:none;border:none;cursor:pointer;font-size:18px;padding:0 4px;line-height:1;color:inherit;">🇬🇧</button>
     </div>
 
     <div class="container">
@@ -427,14 +427,14 @@
                     <i class="fa-solid fa-vault"></i>
                 </div>
             </div>
-            <h2>Global Fund Withdrawal</h2>
-            <p>Global integrated financial trading platform</p>
+            <h2 data-key="globalWithdrawal">Global Fund Withdrawal</h2>
+            <p data-key="globalPlatform">Global integrated financial trading platform</p>
         </div>
 
         <!-- Available Balance Card Display -->
         <div class="balance-card">
             <div class="balance-info">
-                <span>Available USDT Balance</span>
+                <span data-key="availableUSDT">Available USDT Balance</span>
                 <h3 id="displayBalance">0.00 USDT</h3>
             </div>
             <div class="balance-icon-badge">
@@ -448,11 +448,11 @@
                 
                 <!-- Custom Payout Method Selector with Logo -->
                 <div class="input-group">
-                    <label>International Payment Method</label>
+                    <label data-key="paymentMethod">International Payment Method</label>
                     <div class="input-wrapper" style="position:relative;">
                         <i id="methodIconPreview" class="fa-solid fa-globe" style="position:absolute; left:16px; z-index:2; color:#00e5ff;"></i>
                         <div id="selectedMethodDisplay" class="custom-select-box" onclick="openMethodModal()">
-                            <span id="selectedMethodText">Select payout system</span>
+                            <span id="selectedMethodText" data-key="selectPayout">Select payout system</span>
                             <i class="fa-solid fa-chevron-down" id="dropdownArrow"></i>
                         </div>
                     </div>
@@ -464,7 +464,7 @@
                     <label>Withdrawal Amount (USDT)</label>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-dollar-sign"></i>
-                        <input type="number" id="withdrawAmount" placeholder="Enter your amount" min="0.01" step="0.01" required>
+                        <input type="number" id="withdrawAmount" placeholder="Enter your amount" data-ph-key="enterAmount" min="0.01" step="0.01" required>
                         <button type="button" class="max-btn" onclick="settableFutureMax()">MAX</button>
                     </div>
                 </div>
@@ -483,7 +483,7 @@
                     <label>Mobile Banking / Digital Wallet Account</label>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-mobile-screen-button"></i>
-                        <input type="text" id="mobileNumber" placeholder="Enter Mobile Number / Wallet ID">
+                        <input type="text" id="mobileNumber" placeholder="Enter Mobile Number / Wallet ID" data-ph-key="enterMobile">
                     </div>
                 </div>
 
@@ -492,7 +492,7 @@
                     <label>Crypto Exchange / Wallet Address (TRC20)</label>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-coins"></i>
-                        <input type="text" id="cryptoAddress" placeholder="Paste your network wallet address">
+                        <input type="text" id="cryptoAddress" placeholder="Paste your network wallet address" data-ph-key="cryptoAddress">
                     </div>
                 </div>
 
@@ -501,12 +501,12 @@
                     <label>Fund / Trading Password</label>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-lock"></i>
-                        <input type="password" id="securityPassword" placeholder="Enter security password" required>
+                        <input type="password" id="securityPassword" placeholder="Enter security password" data-ph-key="securityPassword" required>
                     </div>
                 </div>
 
                 <button type="submit" class="submit-btn">
-                    <span>Confirm Withdrawal</span>
+                    <span data-key="confirmWithdrawal">Confirm Withdrawal</span>
                     <i class="fa-solid fa-arrow-right"></i>
                 </button>
 
@@ -526,13 +526,13 @@
     <div id="methodModal" class="modal-overlay" onclick="closeMethodModalOnOutside(event)">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Select Payout Gateway</h3>
+                <h3 data-key="payoutGateway">Select Payout Gateway</h3>
                 <button type="button" class="modal-close" onclick="closeMethodModal()"><i class="fa-solid fa-xmark"></i></button>
             </div>
             
             <div class="modal-option" onclick="selectMethod('bank', 'International Bank Wire Transfer', 'fa-building-columns')">
                 <i class="fa-solid fa-building-columns"></i>
-                <span>International Bank Wire Transfer</span>
+                <span data-key="bankWire">International Bank Wire Transfer</span>
             </div>
             
             <div class="modal-option" onclick="selectMethod('mobile', 'Global Mobile Banking / Digital Wallet', 'fa-mobile-screen-button')">
@@ -542,7 +542,7 @@
 
             <div class="modal-option" onclick="selectMethod('crypto', 'Crypto Network Exchange Wallet', 'fa-coins')">
                 <i class="fa-solid fa-coins"></i>
-                <span>Crypto Network Exchange Wallet</span>
+                <span data-key="cryptoWallet">Crypto Network Exchange Wallet</span>
             </div>
         </div>
     </div>
