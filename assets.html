@@ -574,7 +574,7 @@
     </button>
 
 
-    <h2>Assets</h2>
+    <h2 data-key="navAssets">Assets</h2>
 
 
     <div class="header-icons">
@@ -582,6 +582,8 @@
         <i class="fa-solid fa-clock-rotate-left"></i>
 
         <i class="fa-solid fa-rotate-right"></i>
+
+        <button id="languageBtn" class="language-btn" type="button" style="background:none;border:none;cursor:pointer;font-size:18px;padding:0 4px;line-height:1;color:inherit;">🇬🇧</button>
 
     </div>
 
@@ -596,7 +598,7 @@
 
     <div class="assets-title">
 
-        <span>Total Assets (USD)</span>
+        <span data-key="totalAssets">Total Assets (USD)</span>
 
         <i
             class="fa-regular fa-eye"
@@ -613,7 +615,7 @@
 
         <div>
 
-            <small>Available</small>
+            <small data-key="available">Available</small>
 
             <strong id="availableBalance">
                 $0.00
@@ -624,7 +626,7 @@
 
         <div>
 
-            <small>Frozen</small>
+            <small data-key="frozen">Frozen</small>
 
             <strong>$0.00</strong>
 
@@ -645,9 +647,9 @@
 
         <div>
 
-            <h3>Funding Account</h3>
+            <h3 data-key="fundingAccount">Funding Account</h3>
 
-            <small>Main Wallet Balance</small>
+            <small data-key="mainWalletBalance">Main Wallet Balance</small>
 
         </div>
 
@@ -662,9 +664,9 @@
 
         <div>
 
-            <h3>Spot Account</h3>
+            <h3 data-key="spotAccount">Spot Account</h3>
 
-            <small>Spot Trading Assets</small>
+            <small data-key="spotTradingAssets">Spot Trading Assets</small>
 
         </div>
 
@@ -679,9 +681,9 @@
 
         <div>
 
-            <h3>Futures Account</h3>
+            <h3 data-key="futuresAccount">Futures Account</h3>
 
-            <small>Futures Balance</small>
+            <small data-key="futuresBalance">Futures Balance</small>
 
         </div>
 
@@ -708,7 +710,7 @@
 
         <i class="fa-solid fa-circle-down"></i>
 
-        <span>Deposit</span>
+        <span data-key="deposit">Deposit</span>
 
     </a>
 
@@ -721,7 +723,7 @@
 
         <i class="fa-solid fa-circle-up"></i>
 
-        <span>Withdraw</span>
+        <span data-key="withdraw">Withdraw</span>
 
     </button>
 
@@ -733,7 +735,7 @@
 
         <i class="fa-solid fa-right-left"></i>
 
-        <span>Transfer</span>
+        <span data-key="transfer">Transfer</span>
 
     </a>
 
@@ -747,7 +749,7 @@
 
 <section class="asset-list">
 
-    <h3>My Assets</h3>
+    <h3 data-key="myAssets">My Assets</h3>
 
 
     <div class="asset-item">
@@ -836,14 +838,14 @@
 
 <section class="history-box">
 
-    <h3>History</h3>
+    <h3 data-key="history">History</h3>
 
 
     <div class="empty-history">
 
         <i class="fa-regular fa-folder-open"></i>
 
-        <p>No records</p>
+        <p data-key="noRecords">No records</p>
 
     </div>
 
@@ -861,7 +863,7 @@
 
         <i class="fa-solid fa-house"></i>
 
-        <span>Home</span>
+        <span data-key="navHome">Home</span>
 
     </a>
 
@@ -870,7 +872,7 @@
 
         <i class="fa-solid fa-chart-line"></i>
 
-        <span>Markets</span>
+        <span data-key="navMarkets">Markets</span>
 
     </a>
 
@@ -879,7 +881,7 @@
 
         <i class="fa-solid fa-arrow-right-arrow-left"></i>
 
-        <span>Trade</span>
+        <span data-key="navTrade">Trade</span>
 
     </a>
 
@@ -891,7 +893,7 @@
 
         <i class="fa-solid fa-wallet"></i>
 
-        <span>Assets</span>
+        <span data-key="navAssets">Assets</span>
 
     </a>
 
@@ -900,7 +902,7 @@
 
         <i class="fa-solid fa-user"></i>
 
-        <span>Mine</span>
+        <span data-key="navMine">Mine</span>
 
     </a>
 
@@ -999,7 +1001,7 @@
         <p class="withdraw-description secondary">
 
             Please use the
-            <strong>Withdraw</strong>
+            <strong data-key="withdraw">Withdraw</strong>
             option on the main account page to continue
             your withdrawal request.
 
