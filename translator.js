@@ -1,2665 +1,1459 @@
-/* ============================================================
-   CptMarkets — translator.js
-   UNIVERSAL GLOBAL LANGUAGE SYSTEM
-   ============================================================ */
+// ============================================================
+// CptMarkets — translator.js
+// Universal 11-Language Translator
+// Shared language selection across ALL pages
+// ============================================================
 
 (function () {
-  "use strict";
+    "use strict";
 
-  /* ==========================================================
-     GLOBAL STORAGE
-     ========================================================== */
+    /* =========================================================
+       SETTINGS
+    ========================================================= */
 
-  const STORAGE_KEY = "cptmarkets_language";
-  const DEFAULT_LANGUAGE = "en_UK";
+    const STORAGE_KEY = "cpt_lang";
+    const DEFAULT_LANG = "en_UK";
 
-
-  /* ==========================================================
-     11 LANGUAGE SETTINGS
-     ========================================================== */
-
-  const LANGUAGE_LIST = [
-    {
-      code: "bn_BD",
-      flag: "🇧🇩",
-      name: "বাংলা"
-    },
-    {
-      code: "en_UK",
-      flag: "🇬🇧",
-      name: "English (UK)"
-    },
-    {
-      code: "en_US",
-      flag: "🇺🇸",
-      name: "English (US)"
-    },
-    {
-      code: "de_DE",
-      flag: "🇩🇪",
-      name: "Deutsch"
-    },
-    {
-      code: "hi_IN",
-      flag: "🇮🇳",
-      name: "हिन्दी"
-    },
-    {
-      code: "ja_JP",
-      flag: "🇯🇵",
-      name: "日本語"
-    },
-    {
-      code: "zh_CN",
-      flag: "🇨🇳",
-      name: "简体中文"
-    },
-    {
-      code: "it_IT",
-      flag: "🇮🇹",
-      name: "Italiano"
-    },
-    {
-      code: "ar_SA",
-      flag: "🇸🇦",
-      name: "العربية"
-    },
-    {
-      code: "es_ES",
-      flag: "🇪🇸",
-      name: "Español"
-    },
-    {
-      code: "pt_PT",
-      flag: "🇵🇹",
-      name: "Português"
-    }
-  ];
+    const RTL_LANGUAGES = {
+        ar_SA: true
+    };
 
 
-  /* ==========================================================
-     GET LANGUAGE DATA FROM lang.js
-     ========================================================== */
+    /* =========================================================
+       LANGUAGE DATA
+    ========================================================= */
 
-  function getLanguageData() {
-
-    if (
-      typeof window !== "undefined" &&
-      window.languageData
-    ) {
-      return window.languageData;
-    }
-
-    if (
-      typeof languageData !== "undefined"
-    ) {
-      return languageData;
-    }
-
-    return {};
-  }
-
-
-  /* ==========================================================
-     GET STATIC TRANSLATIONS
-     ========================================================== */
-
-  function getStaticTranslations() {
-
-    if (
-      typeof window !== "undefined" &&
-      window.cptStaticTranslations
-    ) {
-      return window.cptStaticTranslations;
-    }
-
-    if (
-      typeof cptStaticTranslations !== "undefined"
-    ) {
-      return cptStaticTranslations;
-    }
-
-    return {};
-  }
-
-
-  /* ==========================================================
-     NORMALIZE TEXT
-     ========================================================== */
-
-  function normalizeText(value) {
-
-    return String(
-      value == null ? "" : value
-    )
-      .replace(/\s+/g, " ")
-      .trim();
-  }
-
-
-  /* ==========================================================
-     GET LANGUAGE INFORMATION
-     ========================================================== */
-
-  function getLanguageInfo(code) {
-
-    return LANGUAGE_LIST.find(
-      function (item) {
-        return item.code === code;
-      }
-    ) || null;
-  }
-
-
-  /* ==========================================================
-     FIND CURRENT LANGUAGE
-     ========================================================== */
-
-  function getCurrentLanguage() {
-
-    const data =
-      getLanguageData();
-
-    let saved =
-      localStorage.getItem(
-        STORAGE_KEY
-      );
-
-
-    /*
-      Compatibility with old keys
-    */
-
-    if (!saved) {
-
-      const oldKeys = [
-        "selectedLanguage",
-        "language",
-        "cptLanguage",
-        "currentLanguage",
-        "preferredLanguage",
-        "cpt_lang"
-      ];
-
-
-      for (
-        let i = 0;
-        i < oldKeys.length;
-        i++
-      ) {
-
-        const oldValue =
-          localStorage.getItem(
-            oldKeys[i]
-          );
-
-
-        if (oldValue) {
-
-          saved =
-            oldValue;
-
-          break;
+    function getLanguageData() {
+        if (
+            typeof window !== "undefined" &&
+            window.languageData &&
+            typeof window.languageData === "object"
+        ) {
+            return window.languageData;
         }
-      }
+
+        return {};
     }
 
 
-    /*
-      Old code compatibility
-    */
+    /* =========================================================
+       NORMALIZE TEXT
+    ========================================================= */
 
-    if (saved === "en_GB") {
-      saved = "en_UK";
+    function normalizeText(text) {
+        return String(text == null ? "" : text)
+            .replace(/\s+/g, " ")
+            .trim();
     }
 
 
-    /*
-      If language exists in lang.js,
-      use it.
-    */
+    /* =========================================================
+       GET CURRENT LANGUAGE
+    ========================================================= */
 
-    if (
-      saved &&
-      data &&
-      data[saved]
-    ) {
+    function getCurrentLanguage() {
+        const languages = getLanguageData();
 
-      return saved;
+        let savedLanguage = null;
+
+        try {
+            savedLanguage = localStorage.getItem(STORAGE_KEY);
+        } catch (error) {
+            savedLanguage = null;
+        }
+
+        if (
+            savedLanguage &&
+            Object.prototype.hasOwnProperty.call(languages, savedLanguage)
+        ) {
+            return savedLanguage;
+        }
+
+        if (
+            Object.prototype.hasOwnProperty.call(languages, DEFAULT_LANG)
+        ) {
+            return DEFAULT_LANG;
+        }
+
+        const available = Object.keys(languages);
+
+        return available.length ? available[0] : DEFAULT_LANG;
     }
 
 
-    /*
-      Allow our supported language list
-      even when a language object has not
-      yet been added to lang.js.
-    */
+    /* =========================================================
+       SAVE LANGUAGE
+    ========================================================= */
 
-    if (
-      saved &&
-      getLanguageInfo(saved)
-    ) {
-
-      return saved;
+    function saveLanguage(code) {
+        try {
+            localStorage.setItem(STORAGE_KEY, code);
+        } catch (error) {
+            console.warn("CptMarkets: localStorage unavailable.");
+        }
     }
 
 
-    return DEFAULT_LANGUAGE;
-  }
+    /* =========================================================
+       REMEMBER ORIGINAL TEXT
+    ========================================================= */
 
+    function rememberOriginalText(node) {
 
-  /* ==========================================================
-     SAVE LANGUAGE GLOBALLY
-     ========================================================== */
+        if (!node || node.nodeType !== Node.TEXT_NODE) {
+            return;
+        }
 
-  function saveLanguage(code) {
+        const parent = node.parentElement;
 
-    localStorage.setItem(
-      STORAGE_KEY,
-      code
-    );
+        if (!parent) {
+            return;
+        }
 
+        if (
+            parent.closest(
+                "script,style,noscript,svg,[contenteditable='true']"
+            )
+        ) {
+            return;
+        }
 
-    /*
-      Compatibility keys.
-      This makes the selection available
-      to existing page scripts too.
-    */
+        const value = node.nodeValue;
 
-    localStorage.setItem(
-      "selectedLanguage",
-      code
-    );
+        if (!value || !normalizeText(value)) {
+            return;
+        }
 
-    localStorage.setItem(
-      "language",
-      code
-    );
-
-    localStorage.setItem(
-      "cptLanguage",
-      code
-    );
-
-    localStorage.setItem(
-      "currentLanguage",
-      code
-    );
-
-    localStorage.setItem(
-      "preferredLanguage",
-      code
-    );
-
-    localStorage.setItem(
-      "cpt_lang",
-      code
-    );
-  }
-
-
-  /* ==========================================================
-     GET DICTIONARY
-     ========================================================== */
-
-  function getDictionary(code) {
-
-    const data =
-      getLanguageData();
-
-    if (
-      data &&
-      data[code]
-    ) {
-
-      return data[code];
-    }
-
-    return {};
-  }
-
-
-  /* ==========================================================
-     TRANSLATION LOOKUP
-     ========================================================== */
-
-  function translatePhrase(
-    source,
-    targetCode
-  ) {
-
-    const clean =
-      normalizeText(source);
-
-
-    if (!clean) {
-      return source;
+        if (!Object.prototype.hasOwnProperty.call(node, "__cptOriginal")) {
+            Object.defineProperty(node, "__cptOriginal", {
+                value: value,
+                writable: true,
+                configurable: true
+            });
+        }
     }
 
 
-    const staticMaps =
-      getStaticTranslations();
+    /* =========================================================
+       REMEMBER WHOLE DOCUMENT
+    ========================================================= */
 
+    function rememberDocument() {
 
-    const staticMap =
-      staticMaps[targetCode] || {};
+        if (!document.body) {
+            return;
+        }
 
-
-    /*
-      1. Exact static translation
-    */
-
-    if (
-      Object.prototype.hasOwnProperty.call(
-        staticMap,
-        clean
-      )
-    ) {
-
-      return staticMap[clean];
-    }
-
-
-    const targetDictionary =
-      getDictionary(
-        targetCode
-      );
-
-
-    /*
-      2. Match source phrase
-         against English UK dictionary
-    */
-
-    const sourceDictionaries =
-      getLanguageData();
-
-
-    /*
-      First try en_UK because this
-      is the main source language.
-    */
-
-    const english =
-      sourceDictionaries.en_UK || {};
-
-
-    for (
-      const key of Object.keys(
-        english
-      )
-    ) {
-
-      const englishValue =
-        normalizeText(
-          english[key]
+        const walker = document.createTreeWalker(
+            document.body,
+            NodeFilter.SHOW_TEXT
         );
 
+        let node;
 
-      if (
-        typeof english[key] === "string" &&
-        englishValue === clean &&
-        targetDictionary[key] != null
-      ) {
-
-        return targetDictionary[key];
-      }
+        while ((node = walker.nextNode())) {
+            rememberOriginalText(node);
+        }
     }
 
 
-    /*
-      3. Search every language dictionary
-    */
+    /* =========================================================
+       FIND TRANSLATION
+    ========================================================= */
 
-    for (
-      const sourceCode of Object.keys(
-        sourceDictionaries
-      )
-    ) {
+    function translatePhrase(source, languageCode) {
 
-      const sourceDictionary =
-        sourceDictionaries[
-          sourceCode
-        ] || {};
+        const original = normalizeText(source);
 
+        if (!original) {
+            return source;
+        }
 
-      for (
-        const key of Object.keys(
-          sourceDictionary
-        )
-      ) {
+        const languages = getLanguageData();
+
+        const targetDictionary =
+            languages[languageCode] || {};
+
+        /* ---------------------------------------------
+           1. Static translation map
+        --------------------------------------------- */
+
+        const staticTranslations =
+            window.cptStaticTranslations || {};
+
+        const staticMap =
+            staticTranslations[languageCode] || {};
 
         if (
-          typeof sourceDictionary[key] !==
-          "string"
+            Object.prototype.hasOwnProperty.call(
+                staticMap,
+                original
+            )
         ) {
-          continue;
+            return staticMap[original];
         }
 
 
-        if (
-          normalizeText(
-            sourceDictionary[key]
-          ) === clean &&
-          targetDictionary[key] != null
-        ) {
-
-          return targetDictionary[key];
-        }
-      }
-    }
-
-
-    /*
-      4. Existing helper if available
-    */
-
-    if (
-      typeof window.cptTranslatePhrase ===
-      "function" &&
-      window.cptTranslatePhrase !==
-      translatePhrase
-    ) {
-
-      try {
-
-        const result =
-          window.cptTranslatePhrase(
-            clean,
-            targetCode
-          );
-
+        /* ---------------------------------------------
+           2. Direct dictionary key
+        --------------------------------------------- */
 
         if (
-          result &&
-          result !== clean
+            Object.prototype.hasOwnProperty.call(
+                targetDictionary,
+                original
+            )
         ) {
-
-          return result;
+            return targetDictionary[original];
         }
 
-      } catch (error) {
-        /* ignore */
-      }
+
+        /* ---------------------------------------------
+           3. Find source text inside dictionary values
+        --------------------------------------------- */
+
+        const languageCodes = Object.keys(languages);
+
+        for (let i = 0; i < languageCodes.length; i++) {
+
+            const sourceCode = languageCodes[i];
+            const sourceDictionary =
+                languages[sourceCode] || {};
+
+            const keys = Object.keys(sourceDictionary);
+
+            for (let j = 0; j < keys.length; j++) {
+
+                const key = keys[j];
+                const value = sourceDictionary[key];
+
+                if (
+                    typeof value === "string" &&
+                    normalizeText(value) === original
+                ) {
+
+                    if (
+                        Object.prototype.hasOwnProperty.call(
+                            targetDictionary,
+                            key
+                        )
+                    ) {
+                        return targetDictionary[key];
+                    }
+                }
+            }
+        }
+
+
+        /* ---------------------------------------------
+           4. No translation found
+        --------------------------------------------- */
+
+        return source;
     }
 
 
-    /*
-      No translation found
-    */
+    /* =========================================================
+       TRANSLATE TEXT NODE
+    ========================================================= */
 
-    return source;
-  }
+    function translateTextNode(node, languageCode) {
 
+        if (!node || node.nodeType !== Node.TEXT_NODE) {
+            return;
+        }
 
-  /* ==========================================================
-     REMEMBER ORIGINAL TEXT
-     ========================================================== */
+        const parent = node.parentElement;
 
-  function rememberTextNode(node) {
+        if (!parent) {
+            return;
+        }
 
-    if (
-      !node ||
-      node.nodeType !== 3
-    ) {
-      return;
-    }
+        if (
+            parent.closest(
+                "script,style,noscript,svg,[contenteditable='true']"
+            )
+        ) {
+            return;
+        }
 
+        rememberOriginalText(node);
 
-    const parent =
-      node.parentElement;
+        const original =
+            node.__cptOriginal;
 
+        if (!original || !normalizeText(original)) {
+            return;
+        }
 
-    if (!parent) {
-      return;
-    }
-
-
-    if (
-      parent.closest(
-        "script,style,noscript,svg,textarea,[contenteditable='true']"
-      )
-    ) {
-      return;
-    }
-
-
-    if (
-      node.nodeValue &&
-      node.nodeValue.trim()
-    ) {
-
-      if (
-        typeof node.__cptOriginalText ===
-        "undefined"
-      ) {
-
-        node.__cptOriginalText =
-          node.nodeValue;
-      }
-    }
-  }
-
-
-  /* ==========================================================
-     REMEMBER WHOLE DOCUMENT
-     ========================================================== */
-
-  function rememberDocument() {
-
-    if (!document.body) {
-      return;
-    }
-
-
-    const walker =
-      document.createTreeWalker(
-        document.body,
-        NodeFilter.SHOW_TEXT
-      );
-
-
-    let node;
-
-
-    while (
-      (node = walker.nextNode())
-    ) {
-
-      rememberTextNode(
-        node
-      );
-    }
-  }
-
-
-  /* ==========================================================
-     TRANSLATE TEXT NODE
-     ========================================================== */
-
-  function translateTextNode(
-    node,
-    code
-  ) {
-
-    if (
-      !node ||
-      node.nodeType !== 3
-    ) {
-      return;
-    }
-
-
-    const parent =
-      node.parentElement;
-
-
-    if (!parent) {
-      return;
-    }
-
-
-    if (
-      parent.closest(
-        "script,style,noscript,svg,textarea,[contenteditable='true']"
-      )
-    ) {
-      return;
-    }
-
-
-    rememberTextNode(
-      node
-    );
-
-
-    const original =
-      node.__cptOriginalText;
-
-
-    if (
-      typeof original ===
-      "undefined"
-    ) {
-      return;
-    }
-
-
-    const clean =
-      normalizeText(
-        original
-      );
-
-
-    if (!clean) {
-      return;
-    }
-
-
-    const translated =
-      translatePhrase(
-        original,
-        code
-      );
-
-
-    if (
-      translated &&
-      translated !== original
-    ) {
-
-      node.nodeValue =
-        translated;
-
-    } else {
-
-      /*
-        If no translation exists,
-        restore original source text.
-      */
-
-      node.nodeValue =
-        original;
-    }
-  }
-
-
-  /* ==========================================================
-     TRANSLATE DATA-KEY ELEMENTS
-     ========================================================== */
-
-  function translateDataKeys(
-    code
-  ) {
-
-    const dictionary =
-      getDictionary(
-        code
-      );
-
-
-    document
-      .querySelectorAll(
-        "[data-key]"
-      )
-      .forEach(
-        function (element) {
-
-          const key =
-            element.getAttribute(
-              "data-key"
+        const translated =
+            translatePhrase(
+                original,
+                languageCode
             );
 
+        if (node.nodeValue !== translated) {
+            node.nodeValue = translated;
+        }
+    }
 
-          if (
-            !key ||
-            dictionary[key] == null
-          ) {
+
+    /* =========================================================
+       TRANSLATE ELEMENT
+    ========================================================= */
+
+    function translateElement(element, languageCode) {
+
+        if (!element || element.nodeType !== Node.ELEMENT_NODE) {
             return;
-          }
+        }
+
+        if (
+            element.matches(
+                "script,style,noscript,svg,[contenteditable='true']"
+            )
+        ) {
+            return;
+        }
+
+        const languages = getLanguageData();
+
+        const dictionary =
+            languages[languageCode] || {};
 
 
-          /*
-            Input / textarea
-          */
+        /* ---------------------------------------------
+           DATA-KEY
+        --------------------------------------------- */
 
-          if (
-            element.tagName ===
-              "INPUT" ||
-            element.tagName ===
-              "TEXTAREA"
-          ) {
+        const key =
+            element.getAttribute("data-key");
 
-            if (
-              element.type !==
-              "button"
-            ) {
+        if (
+            key &&
+            Object.prototype.hasOwnProperty.call(
+                dictionary,
+                key
+            )
+        ) {
 
-              element.placeholder =
-                dictionary[key];
+            if (!element.__cptOriginalKey) {
+
+                Object.defineProperty(
+                    element,
+                    "__cptOriginalKey",
+                    {
+                        value: key,
+                        writable: true,
+                        configurable: true
+                    }
+                );
             }
 
-
-          } else {
-
-            /*
-              If element contains only text
-            */
-
-            if (
-              !element.children.length
-            ) {
-
-              element.textContent =
+            const translated =
                 dictionary[key];
+
+            if (!element.children.length) {
+
+                if (
+                    element.textContent !== translated
+                ) {
+                    element.textContent = translated;
+                }
 
             } else {
 
-              const walker =
-                document.createTreeWalker(
-                  element,
-                  NodeFilter.SHOW_TEXT
-                );
+                const walker =
+                    document.createTreeWalker(
+                        element,
+                        NodeFilter.SHOW_TEXT
+                    );
 
+                let childNode;
 
-              let firstText =
-                walker.nextNode();
-
-
-              if (firstText) {
-
-                rememberTextNode(
-                  firstText
-                );
-
-
-                firstText.nodeValue =
-                  dictionary[key];
-              }
+                while (
+                    (childNode = walker.nextNode())
+                ) {
+                    rememberOriginalText(childNode);
+                }
             }
-          }
-
         }
-      );
-  }
 
 
-  /* ==========================================================
-     TRANSLATE PLACEHOLDERS
-     ========================================================== */
+        /* ---------------------------------------------
+           PLACEHOLDER KEY
+        --------------------------------------------- */
 
-  function translatePlaceholders(
-    code
-  ) {
+        const placeholderKey =
+            element.getAttribute("data-ph-key");
 
-    const dictionary =
-      getDictionary(
-        code
-      );
+        if (
+            placeholderKey &&
+            Object.prototype.hasOwnProperty.call(
+                dictionary,
+                placeholderKey
+            )
+        ) {
 
-
-    document
-      .querySelectorAll(
-        "[data-ph-key]"
-      )
-      .forEach(
-        function (element) {
-
-          const key =
-            element.getAttribute(
-              "data-ph-key"
+            element.setAttribute(
+                "placeholder",
+                dictionary[placeholderKey]
             );
-
-
-          if (
-            dictionary[key] != null
-          ) {
-
-            element.placeholder =
-              dictionary[key];
-          }
-
         }
-      );
 
 
-    document
-      .querySelectorAll(
-        "input,textarea"
-      )
-      .forEach(
-        function (element) {
+        /* ---------------------------------------------
+           PLACEHOLDER
+        --------------------------------------------- */
 
-          const placeholder =
-            element.getAttribute(
-              "placeholder"
-            );
+        translateAttribute(
+            element,
+            "placeholder",
+            languageCode
+        );
 
 
-          if (!placeholder) {
+        /* ---------------------------------------------
+           TITLE
+        --------------------------------------------- */
+
+        translateAttribute(
+            element,
+            "title",
+            languageCode
+        );
+
+
+        /* ---------------------------------------------
+           ARIA LABEL
+        --------------------------------------------- */
+
+        translateAttribute(
+            element,
+            "aria-label",
+            languageCode
+        );
+    }
+
+
+    /* =========================================================
+       TRANSLATE ATTRIBUTE
+    ========================================================= */
+
+    function translateAttribute(
+        element,
+        attribute,
+        languageCode
+    ) {
+
+        const value =
+            element.getAttribute(attribute);
+
+        if (!value) {
             return;
-          }
+        }
 
-
-          const translated =
+        const translated =
             translatePhrase(
-              placeholder,
-              code
+                value,
+                languageCode
             );
 
+        if (
+            translated &&
+            translated !== value
+        ) {
 
-          if (
-            translated !==
-            placeholder
-          ) {
-
-            element.placeholder =
-              translated;
-          }
-
+            element.setAttribute(
+                attribute,
+                translated
+            );
         }
-      );
-  }
+    }
 
 
-  /* ==========================================================
-     TRANSLATE TITLE / ARIA
-     ========================================================== */
+    /* =========================================================
+       PAGE DIRECTION
+    ========================================================= */
 
-  function translateAttributes(
-    code
-  ) {
+    function applyDirection(languageCode) {
 
-    document
-      .querySelectorAll(
-        "[title],[aria-label]"
-      )
-      .forEach(
-        function (element) {
+        const direction =
+            RTL_LANGUAGES[languageCode]
+                ? "rtl"
+                : "ltr";
 
-          ["title", "aria-label"]
-            .forEach(
-              function (attribute) {
+        document.documentElement.setAttribute(
+            "dir",
+            direction
+        );
 
-                const value =
-                  element.getAttribute(
-                    attribute
-                  );
+        document.documentElement.setAttribute(
+            "lang",
+            languageCode.replace("_", "-")
+        );
+
+        if (document.body) {
+
+            document.body.setAttribute(
+                "dir",
+                direction
+            );
+        }
+    }
 
 
-                if (!value) {
-                  return;
+    /* =========================================================
+       UPDATE LANGUAGE BUTTON
+    ========================================================= */
+
+    function updateLanguageButtons(languageCode) {
+
+        const languages =
+            getLanguageData();
+
+        const language =
+            languages[languageCode] || {};
+
+        const flag =
+            language.flag || "🌐";
+
+        const languageName =
+            language.langName ||
+            language.name ||
+            languageCode;
+
+
+        /* ---------------------------------------------
+           Main language buttons
+        --------------------------------------------- */
+
+        const buttons =
+            document.querySelectorAll(
+                "#languageBtn, .language-btn"
+            );
+
+        buttons.forEach(function (button) {
+
+            /*
+             * IMPORTANT:
+             * Show selected language flag + name.
+             * Do NOT show global globe icon.
+             */
+
+            button.textContent =
+                flag + " " + languageName;
+
+            button.setAttribute(
+                "title",
+                languageName
+            );
+
+            button.setAttribute(
+                "aria-label",
+                languageName
+            );
+        });
+
+
+        /* ---------------------------------------------
+           Settings language text
+        --------------------------------------------- */
+
+        const settingsText =
+            document.getElementById(
+                "settingsLangText"
+            );
+
+        if (settingsText) {
+            settingsText.textContent =
+                languageName;
+        }
+
+
+        /* ---------------------------------------------
+           Settings language flag
+        --------------------------------------------- */
+
+        const settingsFlag =
+            document.getElementById(
+                "settingsLangFlag"
+            );
+
+        if (settingsFlag) {
+            settingsFlag.textContent =
+                flag;
+        }
+    }
+
+
+    /* =========================================================
+       CLOSE DROPDOWN
+    ========================================================= */
+
+    function closeLanguageDropdown() {
+
+        const dropdown =
+            document.getElementById(
+                "cpt-lang-dropdown"
+            );
+
+        if (dropdown) {
+            dropdown.remove();
+        }
+    }
+
+
+    /* =========================================================
+       CREATE LANGUAGE DROPDOWN
+    ========================================================= */
+
+    function createLanguageDropdown(anchor) {
+
+        closeLanguageDropdown();
+
+        const languages =
+            getLanguageData();
+
+        const currentLanguage =
+            getCurrentLanguage();
+
+
+        /* ---------------------------------------------
+           Container
+        --------------------------------------------- */
+
+        const dropdown =
+            document.createElement("div");
+
+        dropdown.id =
+            "cpt-lang-dropdown";
+
+
+        /* ---------------------------------------------
+           Header
+        --------------------------------------------- */
+
+        const header =
+            document.createElement("div");
+
+        header.textContent =
+            "Select Language";
+
+        header.style.cssText =
+            [
+                "padding:14px 15px",
+                "font-size:16px",
+                "font-weight:700",
+                "color:#ffffff",
+                "border-bottom:1px solid rgba(255,255,255,.12)",
+                "background:#081426"
+            ].join(";");
+
+        dropdown.appendChild(header);
+
+
+        /* ---------------------------------------------
+           Language list
+        --------------------------------------------- */
+
+        Object.keys(languages).forEach(
+            function (code) {
+
+                const language =
+                    languages[code] || {};
+
+                const item =
+                    document.createElement("button");
+
+                item.type =
+                    "button";
+
+                item.dataset.langCode =
+                    code;
+
+                const isSelected =
+                    code === currentLanguage;
+
+
+                item.style.cssText =
+                    [
+                        "width:100%",
+                        "box-sizing:border-box",
+                        "display:flex",
+                        "align-items:center",
+                        "gap:12px",
+                        "padding:13px 14px",
+                        "border:0",
+                        "border-bottom:1px solid rgba(255,255,255,.06)",
+                        "cursor:pointer",
+                        "font-family:inherit",
+                        "font-size:15px",
+                        "text-align:left",
+                        "color:#ffffff",
+                        "background:" +
+                            (
+                                isSelected
+                                    ? "#12324b"
+                                    : "transparent"
+                            ),
+                        "border-left:" +
+                            (
+                                isSelected
+                                    ? "3px solid #00d9ff"
+                                    : "3px solid transparent"
+                            )
+                    ].join(";");
+
+
+                /* Flag */
+
+                const flagSpan =
+                    document.createElement("span");
+
+                flagSpan.textContent =
+                    language.flag || "🌐";
+
+                flagSpan.style.cssText =
+                    [
+                        "font-size:22px",
+                        "width:30px",
+                        "text-align:center",
+                        "flex-shrink:0"
+                    ].join(";");
+
+
+                /* Language name */
+
+                const nameSpan =
+                    document.createElement("span");
+
+                nameSpan.textContent =
+                    language.langName ||
+                    language.name ||
+                    code;
+
+                nameSpan.style.cssText =
+                    [
+                        "flex:1",
+                        "font-weight:500",
+                        "white-space:nowrap"
+                    ].join(";");
+
+
+                /* Check mark */
+
+                const checkSpan =
+                    document.createElement("span");
+
+                if (isSelected) {
+
+                    checkSpan.textContent =
+                        "✓";
+
+                    checkSpan.style.cssText =
+                        [
+                            "font-size:20px",
+                            "font-weight:800",
+                            "color:#00d9ff"
+                        ].join(";");
                 }
 
 
-                const translated =
-                  translatePhrase(
-                    value,
-                    code
-                  );
+                item.appendChild(flagSpan);
+                item.appendChild(nameSpan);
+                item.appendChild(checkSpan);
+
+
+                /* -----------------------------------------
+                   Select language
+                ----------------------------------------- */
+
+                item.addEventListener(
+                    "click",
+                    function (event) {
+
+                        event.preventDefault();
+                        event.stopPropagation();
+
+                        const selectedCode =
+                            item.dataset.langCode;
+
+                        setLanguage(
+                            selectedCode
+                        );
+                    }
+                );
+
+
+                dropdown.appendChild(item);
+            }
+        );
+
+
+        /* ---------------------------------------------
+           Dropdown styling
+        --------------------------------------------- */
+
+        dropdown.style.cssText =
+            [
+                "position:fixed",
+                "z-index:2147483647",
+                "width:245px",
+                "max-width:calc(100vw - 20px)",
+                "max-height:430px",
+                "overflow-y:auto",
+                "box-sizing:border-box",
+                "background:#081426",
+                "border:1px solid #00cfff",
+                "border-radius:16px",
+                "box-shadow:0 15px 50px rgba(0,0,0,.85)",
+                "padding:5px 0",
+                "font-family:inherit"
+            ].join(";");
+
+
+        document.body.appendChild(
+            dropdown
+        );
+
+
+        /* ---------------------------------------------
+           Position dropdown
+        --------------------------------------------- */
+
+        const rect =
+            anchor.getBoundingClientRect();
+
+        const dropdownWidth =
+            Math.min(
+                245,
+                window.innerWidth - 20
+            );
+
+        let left =
+            rect.right - dropdownWidth;
+
+        if (left < 10) {
+            left = 10;
+        }
+
+        if (
+            left + dropdownWidth >
+            window.innerWidth - 10
+        ) {
+            left =
+                window.innerWidth -
+                dropdownWidth -
+                10;
+        }
+
+        let top =
+            rect.bottom + 8;
+
+        const dropdownHeight =
+            Math.min(
+                dropdown.scrollHeight,
+                430
+            );
+
+
+        if (
+            top + dropdownHeight >
+            window.innerHeight - 10
+        ) {
+
+            top =
+                rect.top -
+                dropdownHeight -
+                8;
+        }
+
+
+        if (top < 10) {
+            top = 10;
+        }
+
+
+        dropdown.style.left =
+            left + "px";
+
+        dropdown.style.top =
+            top + "px";
+    }
+
+
+    /* =========================================================
+       CONNECT LANGUAGE BUTTONS
+    ========================================================= */
+
+    function connectLanguageButtons() {
+
+        const buttons =
+            document.querySelectorAll(
+                "#languageBtn, .language-btn, #settingsLangItem"
+            );
+
+
+        buttons.forEach(function (button) {
+
+            if (
+                button.dataset.cptLanguageConnected ===
+                "1"
+            ) {
+                return;
+            }
+
+
+            button.dataset.cptLanguageConnected =
+                "1";
+
+
+            button.addEventListener(
+                "click",
+                function (event) {
+
+                    event.preventDefault();
+                    event.stopPropagation();
+
+
+                    const existing =
+                        document.getElementById(
+                            "cpt-lang-dropdown"
+                        );
+
+
+                    if (existing) {
+
+                        closeLanguageDropdown();
+
+                    } else {
+
+                        createLanguageDropdown(
+                            button
+                        );
+                    }
+                }
+            );
+        });
+    }
+
+
+    /* =========================================================
+       TRANSLATE PAGE
+    ========================================================= */
+
+    function translatePage(languageCode) {
+
+        if (!document.body) {
+            return;
+        }
+
+
+        const languages =
+            getLanguageData();
+
+
+        if (
+            !languages[languageCode]
+        ) {
+            return;
+        }
+
+
+        /*
+         * First remember original English/source text.
+         * This prevents A → B → C from translating
+         * already translated text.
+         */
+
+        rememberDocument();
+
+
+        /* ---------------------------------------------
+           Translate text nodes
+        --------------------------------------------- */
+
+        const walker =
+            document.createTreeWalker(
+                document.body,
+                NodeFilter.SHOW_TEXT
+            );
+
+        const textNodes = [];
+
+        let node;
+
+        while (
+            (node = walker.nextNode())
+        ) {
+            textNodes.push(node);
+        }
+
+
+        textNodes.forEach(
+            function (textNode) {
+
+                translateTextNode(
+                    textNode,
+                    languageCode
+                );
+            }
+        );
+
+
+        /* ---------------------------------------------
+           Translate elements
+        --------------------------------------------- */
+
+        const elements =
+            document.querySelectorAll(
+                "[data-key]," +
+                "[data-ph-key]," +
+                "input," +
+                "textarea," +
+                "button," +
+                "[title]," +
+                "[aria-label]"
+            );
+
+
+        elements.forEach(
+            function (element) {
+
+                translateElement(
+                    element,
+                    languageCode
+                );
+            }
+        );
+
+
+        /* ---------------------------------------------
+           Direction
+        --------------------------------------------- */
+
+        applyDirection(
+            languageCode
+        );
+
+
+        /* ---------------------------------------------
+           Update language button
+        --------------------------------------------- */
+
+        updateLanguageButtons(
+            languageCode
+        );
+
+
+        /* ---------------------------------------------
+           Connect buttons
+        --------------------------------------------- */
+
+        connectLanguageButtons();
+    }
+
+
+    /* =========================================================
+       SET LANGUAGE
+    ========================================================= */
+
+    function setLanguage(languageCode) {
+
+        const languages =
+            getLanguageData();
+
+
+        if (
+            !languages[languageCode]
+        ) {
+            console.warn(
+                "CptMarkets: Unknown language:",
+                languageCode
+            );
+
+            return;
+        }
+
+
+        /* Save globally */
+
+        saveLanguage(
+            languageCode
+        );
+
+
+        /* Apply immediately */
+
+        translatePage(
+            languageCode
+        );
+
+
+        /* Close dropdown */
+
+        closeLanguageDropdown();
+
+
+        /* Notify other website scripts */
+
+        try {
+
+            window.dispatchEvent(
+                new CustomEvent(
+                    "cpt:languagechange",
+                    {
+                        detail: {
+                            code: languageCode
+                        }
+                    }
+                )
+            );
+
+        } catch (error) {
+            /* Ignore unsupported CustomEvent */
+        }
+    }
+
+
+    /* =========================================================
+       STORAGE EVENT
+       Keeps language synchronized between tabs/windows.
+    ========================================================= */
+
+    function connectStorageSync() {
+
+        window.addEventListener(
+            "storage",
+            function (event) {
+
+                if (
+                    event.key !== STORAGE_KEY
+                ) {
+                    return;
+                }
+
+
+                const newLanguage =
+                    event.newValue;
+
+
+                if (!newLanguage) {
+                    return;
+                }
+
+
+                const languages =
+                    getLanguageData();
 
 
                 if (
-                  translated !==
-                  value
+                    !languages[newLanguage]
                 ) {
-
-                  element.setAttribute(
-                    attribute,
-                    translated
-                  );
+                    return;
                 }
 
-              }
+
+                translatePage(
+                    newLanguage
+                );
+            }
+        );
+    }
+
+
+    /* =========================================================
+       OUTSIDE CLICK
+    ========================================================= */
+
+    function connectOutsideClick() {
+
+        document.addEventListener(
+            "click",
+            function (event) {
+
+                const dropdown =
+                    document.getElementById(
+                        "cpt-lang-dropdown"
+                    );
+
+
+                if (!dropdown) {
+                    return;
+                }
+
+
+                const clickedInsideDropdown =
+                    dropdown.contains(
+                        event.target
+                    );
+
+
+                const clickedLanguageButton =
+                    event.target.closest(
+                        "#languageBtn, .language-btn, #settingsLangItem"
+                    );
+
+
+                if (
+                    !clickedInsideDropdown &&
+                    !clickedLanguageButton
+                ) {
+
+                    closeLanguageDropdown();
+                }
+            }
+        );
+    }
+
+
+    /* =========================================================
+       OBSERVE DYNAMIC CONTENT
+    ========================================================= */
+
+    function connectMutationObserver() {
+
+        if (!document.body) {
+            return;
+        }
+
+
+        let translationTimer = null;
+
+
+        const observer =
+            new MutationObserver(
+                function (mutations) {
+
+                    let hasNewNodes = false;
+
+
+                    for (
+                        let i = 0;
+                        i < mutations.length;
+                        i++
+                    ) {
+
+                        const mutation =
+                            mutations[i];
+
+
+                        if (
+                            mutation.type ===
+                            "childList" &&
+                            mutation.addedNodes &&
+                            mutation.addedNodes.length
+                        ) {
+
+                            hasNewNodes = true;
+                            break;
+                        }
+                    }
+
+
+                    if (!hasNewNodes) {
+                        return;
+                    }
+
+
+                    /*
+                     * Debounce translation.
+                     * This prevents an infinite loop when
+                     * translator itself changes DOM text.
+                     */
+
+                    clearTimeout(
+                        translationTimer
+                    );
+
+
+                    translationTimer =
+                        setTimeout(
+                            function () {
+
+                                const currentLanguage =
+                                    getCurrentLanguage();
+
+
+                                translatePage(
+                                    currentLanguage
+                                );
+
+                            },
+                            100
+                        );
+                }
             );
 
+
+        observer.observe(
+            document.body,
+            {
+                childList: true,
+                subtree: true
+            }
+        );
+    }
+
+
+    /* =========================================================
+       PUBLIC API
+    ========================================================= */
+
+    window.getLanguage =
+        getCurrentLanguage;
+
+    window.setLanguage =
+        setLanguage;
+
+    window.applyLanguage =
+        setLanguage;
+
+    window.cptTranslatePhrase =
+        translatePhrase;
+
+    window.cptTranslatePage =
+        translatePage;
+
+
+    /* =========================================================
+       INITIALIZATION
+    ========================================================= */
+
+    function initializeTranslator() {
+
+        const languages =
+            getLanguageData();
+
+
+        /*
+         * If lang.js has not loaded yet,
+         * wait briefly instead of breaking the page.
+         */
+
+        if (
+            !languages ||
+            !Object.keys(languages).length
+        ) {
+
+            let attempts = 0;
+
+
+            const waitForLanguageData =
+                setInterval(
+                    function () {
+
+                        attempts++;
+
+
+                        const currentData =
+                            getLanguageData();
+
+
+                        if (
+                            Object.keys(
+                                currentData
+                            ).length
+                        ) {
+
+                            clearInterval(
+                                waitForLanguageData
+                            );
+
+                            startTranslator();
+
+                            return;
+                        }
+
+
+                        /*
+                         * Stop after approximately
+                         * 10 seconds.
+                         */
+
+                        if (attempts >= 100) {
+
+                            clearInterval(
+                                waitForLanguageData
+                            );
+
+                            console.warn(
+                                "CptMarkets: lang.js / languageData not found."
+                            );
+                        }
+
+                    },
+                    100
+                );
+
+
+            return;
         }
-      );
-  }
 
 
-  /* ==========================================================
-     TRANSLATE ENTIRE PAGE
-     ========================================================== */
-
-  function translatePage(
-    code
-  ) {
-
-    if (!document.body) {
-      return;
+        startTranslator();
     }
 
 
-    /*
-      Remember original English/source
-      text before changing anything.
-    */
+    /* =========================================================
+       START TRANSLATOR
+    ========================================================= */
 
-    rememberDocument();
+    function startTranslator() {
 
-
-    /*
-      Text nodes
-    */
-
-    const walker =
-      document.createTreeWalker(
-        document.body,
-        NodeFilter.SHOW_TEXT
-      );
+        if (!document.body) {
+            return;
+        }
 
 
-    const nodes = [];
+        const language =
+            getCurrentLanguage();
 
 
-    let node;
+        /* Apply current language */
 
-
-    while (
-      (node = walker.nextNode())
-    ) {
-
-      nodes.push(
-        node
-      );
-    }
-
-
-    nodes.forEach(
-      function (textNode) {
-
-        translateTextNode(
-          textNode,
-          code
+        translatePage(
+            language
         );
 
-      }
-    );
+
+        /* Global synchronization */
+
+        connectStorageSync();
 
 
-    /*
-      data-key
-    */
+        /* Outside click */
 
-    translateDataKeys(
-      code
-    );
+        connectOutsideClick();
 
 
-    /*
-      placeholders
-    */
+        /* Dynamic page content */
 
-    translatePlaceholders(
-      code
-    );
+        connectMutationObserver();
+    }
 
 
-    /*
-      title + aria-label
-    */
-
-    translateAttributes(
-      code
-    );
-
-
-    /*
-      RTL / LTR
-    */
-
-    applyDirection(
-      code
-    );
-
-
-    /*
-      Update language button
-    */
-
-    updateLanguageButtons(
-      code
-    );
-
-
-    /*
-      Update dropdown check
-    */
-
-    updateDropdownSelection(
-      code
-    );
-  }
-
-
-  /* ==========================================================
-     DIRECTION
-     ========================================================== */
-
-  function applyDirection(
-    code
-  ) {
+    /* =========================================================
+       RUN
+    ========================================================= */
 
     if (
-      code === "ar_SA"
+        document.readyState ===
+        "loading"
     ) {
 
-      document.documentElement
-        .setAttribute(
-          "dir",
-          "rtl"
+        document.addEventListener(
+            "DOMContentLoaded",
+            initializeTranslator,
+            {
+                once: true
+            }
         );
-
-      document.documentElement
-        .setAttribute(
-          "lang",
-          "ar"
-        );
-
-      if (document.body) {
-
-        document.body
-          .setAttribute(
-            "dir",
-            "rtl"
-          );
-
-        document.body
-          .classList
-          .add(
-            "cpt-translator-rtl"
-          );
-      }
 
     } else {
 
-      document.documentElement
-        .setAttribute(
-          "dir",
-          "ltr"
-        );
-
-      document.documentElement
-        .setAttribute(
-          "lang",
-          code.replace(
-            "_",
-            "-"
-          )
-        );
-
-      if (document.body) {
-
-        document.body
-          .setAttribute(
-            "dir",
-            "ltr"
-          );
-
-        document.body
-          .classList
-          .remove(
-            "cpt-translator-rtl"
-          );
-      }
+        initializeTranslator();
     }
-  }
-
-
-  /* ==========================================================
-     LANGUAGE BUTTONS
-     ========================================================== */
-
-  function getLanguageButtons() {
-
-    const selectors = [
-      "#languageBtn",
-      ".language-btn",
-      "#languageButton",
-      ".language-button",
-      "#langBtn",
-      ".lang-btn",
-      "[data-language-toggle]",
-      "[data-lang-toggle]"
-    ];
-
-
-    const buttons = [];
-
-
-    selectors.forEach(
-      function (selector) {
-
-        document
-          .querySelectorAll(
-            selector
-          )
-          .forEach(
-            function (button) {
-
-              if (
-                !buttons.includes(
-                  button
-                )
-              ) {
-
-                buttons.push(
-                  button
-                );
-              }
-
-            }
-          );
-
-      }
-    );
-
-
-    return buttons;
-  }
-
-
-  /* ==========================================================
-     UPDATE LANGUAGE BUTTON
-     ========================================================== */
-
-  function updateLanguageButtons(
-    code
-  ) {
-
-    const info =
-      getLanguageInfo(
-        code
-      );
-
-
-    if (!info) {
-      return;
-    }
-
-
-    const buttons =
-      getLanguageButtons();
-
-
-    buttons.forEach(
-      function (button) {
-
-        /*
-          IMPORTANT:
-          Show language NAME only.
-          No globe.
-          No flag.
-        */
-
-        button.textContent =
-          info.name;
-
-
-        button.title =
-          info.name;
-
-
-        button.setAttribute(
-          "aria-label",
-          info.name
-        );
-
-
-        button.setAttribute(
-          "data-current-language",
-          code
-        );
-
-
-        button.classList.add(
-          "cpt-language-active"
-        );
-
-
-        /*
-          Make text visible on dark
-          existing button.
-        */
-
-        button.style.color =
-          "#ffffff";
-
-        button.style.fontWeight =
-          "700";
-
-        button.style.textShadow =
-          "0 1px 3px rgba(0,0,0,.8)";
-
-      }
-    );
-
-
-    /*
-      Settings language text
-    */
-
-    const settingsText =
-      document.getElementById(
-        "settingsLangText"
-      );
-
-
-    if (settingsText) {
-
-      settingsText.textContent =
-        info.name;
-    }
-
-
-    /*
-      Settings flag:
-      keep selected flag here if this
-      element exists.
-    */
-
-    const settingsFlag =
-      document.getElementById(
-        "settingsLangFlag"
-      );
-
-
-    if (settingsFlag) {
-
-      settingsFlag.textContent =
-        info.flag;
-    }
-  }
-
-
-  /* ==========================================================
-     DROPDOWN VARIABLE
-     ========================================================== */
-
-  let languageDropdown =
-    null;
-
-
-  /* ==========================================================
-     CLOSE DROPDOWN
-     ========================================================== */
-
-  function closeDropdown() {
-
-    if (
-      languageDropdown
-    ) {
-
-      languageDropdown.remove();
-
-      languageDropdown =
-        null;
-    }
-
-
-    const old =
-      document.getElementById(
-        "cpt-language-dropdown"
-      );
-
-
-    if (old) {
-      old.remove();
-    }
-  }
-
-
-  /* ==========================================================
-     CREATE DROPDOWN
-     ========================================================== */
-
-  function createDropdown(
-    anchor
-  ) {
-
-    closeDropdown();
-
-
-    languageDropdown =
-      document.createElement(
-        "div"
-      );
-
-
-    languageDropdown.id =
-      "cpt-language-dropdown";
-
-
-    languageDropdown.setAttribute(
-      "role",
-      "menu"
-    );
-
-
-    /*
-      Header
-    */
-
-    const header =
-      document.createElement(
-        "div"
-      );
-
-
-    header.className =
-      "cpt-language-header";
-
-
-    header.textContent =
-      "Select Language";
-
-
-    languageDropdown.appendChild(
-      header
-    );
-
-
-    /*
-      Options
-    */
-
-    const options =
-      document.createElement(
-        "div"
-      );
-
-
-    options.className =
-      "cpt-language-options";
-
-
-    LANGUAGE_LIST.forEach(
-      function (language) {
-
-        const option =
-          document.createElement(
-            "button"
-          );
-
-
-        option.type =
-          "button";
-
-
-        option.className =
-          "cpt-language-option";
-
-
-        option.setAttribute(
-          "role",
-          "menuitem"
-        );
-
-
-        option.dataset.language =
-          language.code;
-
-
-        option.innerHTML = `
-          <span class="cpt-language-flag">
-            ${language.flag}
-          </span>
-
-          <span class="cpt-language-name">
-            ${language.name}
-          </span>
-
-          <span class="cpt-language-check">
-            ✓
-          </span>
-        `;
-
-
-        /*
-          IMPORTANT:
-          Stop propagation here.
-          This fixes the previous bug where
-          document click closed the menu
-          before setLanguage() ran.
-        */
-
-        option.addEventListener(
-          "click",
-          function (event) {
-
-            event.preventDefault();
-            event.stopPropagation();
-
-
-            setLanguage(
-              language.code
-            );
-
-          }
-        );
-
-
-        options.appendChild(
-          option
-        );
-
-      }
-    );
-
-
-    languageDropdown.appendChild(
-      options
-    );
-
-
-    document.body.appendChild(
-      languageDropdown
-    );
-
-
-    /*
-      Position
-    */
-
-    positionDropdown(
-      anchor
-    );
-
-
-    /*
-      Current selection
-    */
-
-    updateDropdownSelection(
-      getCurrentLanguage()
-    );
-
-
-    return languageDropdown;
-  }
-
-
-  /* ==========================================================
-     POSITION DROPDOWN
-     ========================================================== */
-
-  function positionDropdown(
-    anchor
-  ) {
-
-    if (
-      !languageDropdown ||
-      !anchor
-    ) {
-      return;
-    }
-
-
-    const rect =
-      anchor.getBoundingClientRect();
-
-
-    const menuWidth =
-      Math.min(
-        285,
-        window.innerWidth - 20
-      );
-
-
-    languageDropdown.style.width =
-      menuWidth + "px";
-
-
-    let left =
-      rect.right -
-      menuWidth;
-
-
-    if (
-      left < 10
-    ) {
-
-      left = 10;
-    }
-
-
-    if (
-      left + menuWidth >
-      window.innerWidth - 10
-    ) {
-
-      left =
-        window.innerWidth -
-        menuWidth -
-        10;
-    }
-
-
-    let top =
-      rect.bottom + 8;
-
-
-    /*
-      If there isn't enough room below,
-      open above the button.
-    */
-
-    const menuHeight =
-      Math.min(
-        languageDropdown.scrollHeight,
-        520
-      );
-
-
-    if (
-      top + menuHeight >
-      window.innerHeight - 10
-    ) {
-
-      top =
-        rect.top -
-        menuHeight -
-        8;
-    }
-
-
-    if (
-      top < 10
-    ) {
-
-      top = 10;
-    }
-
-
-    languageDropdown.style.left =
-      left + "px";
-
-
-    languageDropdown.style.top =
-      top + "px";
-  }
-
-
-  /* ==========================================================
-     UPDATE DROPDOWN SELECTION
-     ========================================================== */
-
-  function updateDropdownSelection(
-    code
-  ) {
-
-    if (
-      !languageDropdown
-    ) {
-      return;
-    }
-
-
-    languageDropdown
-      .querySelectorAll(
-        ".cpt-language-option"
-      )
-      .forEach(
-        function (option) {
-
-          const optionCode =
-            option.dataset.language;
-
-
-          if (
-            optionCode === code
-          ) {
-
-            option.classList.add(
-              "selected"
-            );
-
-          } else {
-
-            option.classList.remove(
-              "selected"
-            );
-          }
-
-        }
-      );
-  }
-
-
-  /* ==========================================================
-     OPEN / CLOSE
-     ========================================================== */
-
-  function toggleDropdown(
-    event,
-    button
-  ) {
-
-    event.preventDefault();
-    event.stopPropagation();
-
-
-    if (
-      languageDropdown
-    ) {
-
-      closeDropdown();
-
-      return;
-    }
-
-
-    createDropdown(
-      button
-    );
-  }
-
-
-  /* ==========================================================
-     CONNECT LANGUAGE BUTTONS
-     ========================================================== */
-
-  function connectLanguageButtons() {
-
-    const buttons =
-      getLanguageButtons();
-
-
-    buttons.forEach(
-      function (button) {
-
-        if (
-          button.dataset
-            .cptTranslatorConnected ===
-          "true"
-        ) {
-          return;
-        }
-
-
-        button.dataset
-          .cptTranslatorConnected =
-          "true";
-
-
-        button.addEventListener(
-          "click",
-          function (event) {
-
-            toggleDropdown(
-              event,
-              button
-            );
-
-          }
-        );
-
-
-        button.addEventListener(
-          "keydown",
-          function (event) {
-
-            if (
-              event.key === "Enter" ||
-              event.key === " "
-            ) {
-
-              toggleDropdown(
-                event,
-                button
-              );
-
-            }
-
-          }
-        );
-
-      }
-    );
-  }
-
-
-  /* ==========================================================
-     OUTSIDE CLICK
-     ========================================================== */
-
-  function connectOutsideClick() {
-
-    /*
-      DO NOT use capture phase.
-      This was one of the reasons
-      language selection was failing.
-    */
-
-    document.addEventListener(
-      "click",
-      function (event) {
-
-        if (
-          !languageDropdown
-        ) {
-          return;
-        }
-
-
-        /*
-          Click inside dropdown:
-          do nothing.
-        */
-
-        if (
-          languageDropdown.contains(
-            event.target
-          )
-        ) {
-
-          return;
-        }
-
-
-        /*
-          Click on language button:
-          do nothing because button handler
-          already controls open/close.
-        */
-
-        const buttons =
-          getLanguageButtons();
-
-
-        for (
-          let i = 0;
-          i < buttons.length;
-          i++
-        ) {
-
-          if (
-            buttons[i].contains(
-              event.target
-            )
-          ) {
-
-            return;
-          }
-        }
-
-
-        closeDropdown();
-
-      },
-      false
-    );
-  }
-
-
-  /* ==========================================================
-     ESCAPE
-     ========================================================== */
-
-  function connectEscape() {
-
-    document.addEventListener(
-      "keydown",
-      function (event) {
-
-        if (
-          event.key === "Escape"
-        ) {
-
-          closeDropdown();
-        }
-
-      }
-    );
-  }
-
-
-  /* ==========================================================
-     RESIZE
-     ========================================================== */
-
-  function connectResize() {
-
-    window.addEventListener(
-      "resize",
-      function () {
-
-        closeDropdown();
-
-      }
-    );
-  }
-
-
-  /* ==========================================================
-     GLOBAL LANGUAGE CHANGE
-     ========================================================== */
-
-  function setLanguage(
-    code
-  ) {
-
-    /*
-      Compatibility
-    */
-
-    if (
-      code === "en_GB"
-    ) {
-
-      code =
-        "en_UK";
-    }
-
-
-    const info =
-      getLanguageInfo(
-        code
-      );
-
-
-    if (!info) {
-
-      return;
-    }
-
-
-    /*
-      SAVE FIRST
-    */
-
-    saveLanguage(
-      code
-    );
-
-
-    /*
-      APPLY CURRENT PAGE
-    */
-
-    translatePage(
-      code
-    );
-
-
-    /*
-      Close menu
-    */
-
-    closeDropdown();
-
-
-    /*
-      Notify page scripts
-    */
-
-    try {
-
-      window.dispatchEvent(
-        new CustomEvent(
-          "cpt:languagechange",
-          {
-            detail: {
-              code: code,
-              language: code
-            }
-          }
-        )
-      );
-
-    } catch (error) {
-      /* ignore */
-    }
-
-
-    try {
-
-      document.dispatchEvent(
-        new CustomEvent(
-          "cptLanguageChanged",
-          {
-            detail: {
-              code: code,
-              language: code
-            }
-          }
-        )
-      );
-
-    } catch (error) {
-      /* ignore */
-    }
-  }
-
-
-  /* ==========================================================
-     CSS
-     ========================================================== */
-
-  function injectCSS() {
-
-    if (
-      document.getElementById(
-        "cpt-translator-css"
-      )
-    ) {
-      return;
-    }
-
-
-    const style =
-      document.createElement(
-        "style"
-      );
-
-
-    style.id =
-      "cpt-translator-css";
-
-
-    style.textContent = `
-
-      /* =====================================================
-         LANGUAGE BUTTON
-         ===================================================== */
-
-      .cpt-language-active {
-
-        color: #ffffff !important;
-
-        font-weight: 700 !important;
-
-        white-space: nowrap;
-
-        overflow: hidden;
-
-        text-overflow: ellipsis;
-
-      }
-
-
-      /* =====================================================
-         LANGUAGE DROPDOWN
-         ===================================================== */
-
-      #cpt-language-dropdown {
-
-        position: fixed;
-
-        z-index: 2147483647;
-
-        box-sizing: border-box;
-
-        max-height:
-          min(520px, calc(100vh - 20px));
-
-        overflow: hidden;
-
-        padding: 8px;
-
-        border-radius: 18px;
-
-        border:
-          1px solid
-          rgba(0, 210, 255, .42);
-
-        background:
-          linear-gradient(
-            145deg,
-            rgba(4, 20, 42, .99),
-            rgba(2, 9, 24, .99)
-          );
-
-        box-shadow:
-          0 18px 55px
-          rgba(0,0,0,.75),
-
-          0 0 28px
-          rgba(0,210,255,.12);
-
-        backdrop-filter:
-          blur(18px);
-
-        -webkit-backdrop-filter:
-          blur(18px);
-
-        animation:
-          cptLanguageOpen
-          .16s
-          ease-out;
-
-      }
-
-
-      @keyframes cptLanguageOpen {
-
-        from {
-
-          opacity: 0;
-
-          transform:
-            translateY(-6px)
-            scale(.98);
-
-        }
-
-        to {
-
-          opacity: 1;
-
-          transform:
-            translateY(0)
-            scale(1);
-
-        }
-
-      }
-
-
-      /* =====================================================
-         HEADER
-         ===================================================== */
-
-      .cpt-language-header {
-
-        padding:
-          9px
-          10px
-          11px;
-
-        margin-bottom:
-          5px;
-
-        border-bottom:
-          1px solid
-          rgba(255,255,255,.08);
-
-        color:
-          #ffffff;
-
-        font-size:
-          14px;
-
-        font-weight:
-          700;
-
-      }
-
-
-      /* =====================================================
-         OPTIONS
-         ===================================================== */
-
-      .cpt-language-options {
-
-        max-height:
-          455px;
-
-        overflow-y:
-          auto;
-
-        display:
-          flex;
-
-        flex-direction:
-          column;
-
-        gap:
-          4px;
-
-        scrollbar-width:
-          thin;
-
-      }
-
-
-      .cpt-language-options::-webkit-scrollbar {
-
-        width:
-          4px;
-
-      }
-
-
-      .cpt-language-options::-webkit-scrollbar-thumb {
-
-        background:
-          rgba(0,210,255,.35);
-
-        border-radius:
-          20px;
-
-      }
-
-
-      /* =====================================================
-         LANGUAGE OPTION
-         ===================================================== */
-
-      .cpt-language-option {
-
-        width:
-          100%;
-
-        min-height:
-          46px;
-
-        box-sizing:
-          border-box;
-
-        display:
-          flex;
-
-        align-items:
-          center;
-
-        gap:
-          11px;
-
-        padding:
-          7px
-          10px;
-
-        border:
-          1px solid
-          transparent;
-
-        border-radius:
-          12px;
-
-        background:
-          rgba(255,255,255,.035);
-
-        color:
-          #ffffff;
-
-        cursor:
-          pointer;
-
-        font-family:
-          inherit;
-
-        font-size:
-          14px;
-
-        font-weight:
-          600;
-
-        text-align:
-          left;
-
-        transition:
-          background .15s ease,
-          border-color .15s ease,
-          transform .15s ease;
-
-      }
-
-
-      .cpt-language-option:hover {
-
-        background:
-          rgba(0,210,255,.10);
-
-        border-color:
-          rgba(0,210,255,.25);
-
-        transform:
-          translateX(2px);
-
-      }
-
-
-      .cpt-language-option:active {
-
-        transform:
-          scale(.98);
-
-      }
-
-
-      /* =====================================================
-         FLAG
-         ===================================================== */
-
-      .cpt-language-flag {
-
-        width:
-          29px;
-
-        min-width:
-          29px;
-
-        font-size:
-          21px;
-
-        line-height:
-          1;
-
-        text-align:
-          center;
-
-      }
-
-
-      /* =====================================================
-         NAME
-         ===================================================== */
-
-      .cpt-language-name {
-
-        flex:
-          1;
-
-        color:
-          #ffffff;
-
-      }
-
-
-      /* =====================================================
-         CHECK
-         ===================================================== */
-
-      .cpt-language-check {
-
-        display:
-          none;
-
-        color:
-          #00dcff;
-
-        font-size:
-          18px;
-
-        font-weight:
-          900;
-
-      }
-
-
-      .cpt-language-option.selected {
-
-        background:
-          rgba(0,210,255,.13);
-
-        border-color:
-          rgba(0,210,255,.30);
-
-      }
-
-
-      .cpt-language-option.selected
-      .cpt-language-check {
-
-        display:
-          block;
-
-      }
-
-
-      /* =====================================================
-         RTL
-         ===================================================== */
-
-      html[dir="rtl"]
-      #cpt-language-dropdown {
-
-        direction:
-          rtl;
-
-      }
-
-
-      html[dir="rtl"]
-      .cpt-language-option {
-
-        text-align:
-          right;
-
-      }
-
-
-      html[dir="rtl"]
-      .cpt-language-option:hover {
-
-        transform:
-          translateX(-2px);
-
-      }
-
-
-      /* =====================================================
-         MOBILE
-         ===================================================== */
-
-      @media (max-width: 600px) {
-
-        #cpt-language-dropdown {
-
-          max-width:
-            calc(100vw - 20px);
-
-          border-radius:
-            16px;
-
-        }
-
-
-        .cpt-language-option {
-
-          min-height:
-            47px;
-
-        }
-
-
-        .cpt-language-name {
-
-          font-size:
-            14px;
-
-        }
-
-      }
-
-    `;
-
-
-    document.head.appendChild(
-      style
-    );
-  }
-
-
-  /* ==========================================================
-     MUTATION OBSERVER
-     ----------------------------------------------------------
-     Handles dashboard/trade content that is inserted later.
-     ========================================================== */
-
-  function connectMutationObserver() {
-
-    if (!document.body) {
-      return;
-    }
-
-
-    let timer =
-      null;
-
-
-    const observer =
-      new MutationObserver(
-        function (mutations) {
-
-          let added =
-            false;
-
-
-          mutations.forEach(
-            function (mutation) {
-
-              if (
-                mutation.addedNodes &&
-                mutation.addedNodes.length
-              ) {
-
-                added = true;
-              }
-
-            }
-          );
-
-
-          if (!added) {
-            return;
-          }
-
-
-          clearTimeout(
-            timer
-          );
-
-
-          timer =
-            setTimeout(
-              function () {
-
-                translatePage(
-                  getCurrentLanguage()
-                );
-
-              },
-              80
-            );
-
-        }
-      );
-
-
-    observer.observe(
-      document.body,
-      {
-        childList: true,
-        subtree: true
-      }
-    );
-  }
-
-
-  /* ==========================================================
-     CROSS-TAB LANGUAGE SYNC
-     ========================================================== */
-
-  function connectStorageSync() {
-
-    window.addEventListener(
-      "storage",
-      function (event) {
-
-        if (
-          event.key !==
-          STORAGE_KEY
-        ) {
-
-          return;
-        }
-
-
-        if (
-          !event.newValue
-        ) {
-
-          return;
-        }
-
-
-        if (
-          event.newValue ===
-          getCurrentLanguage()
-        ) {
-
-          return;
-        }
-
-
-        if (
-          !getLanguageInfo(
-            event.newValue
-          )
-        ) {
-
-          return;
-        }
-
-
-        translatePage(
-          event.newValue
-        );
-
-      }
-    );
-  }
-
-
-  /* ==========================================================
-     PUBLIC API
-     ========================================================== */
-
-  window.CptTranslator = {
-
-    setLanguage:
-      function (code) {
-
-        setLanguage(
-          code
-        );
-
-      },
-
-    getLanguage:
-      function () {
-
-        return getCurrentLanguage();
-
-      },
-
-    getLanguages:
-      function () {
-
-        return LANGUAGE_LIST.slice();
-
-      },
-
-    refresh:
-      function () {
-
-        translatePage(
-          getCurrentLanguage()
-        );
-
-      },
-
-    open:
-      function () {
-
-        const buttons =
-          getLanguageButtons();
-
-
-        if (
-          buttons.length
-        ) {
-
-          createDropdown(
-            buttons[0]
-          );
-
-        }
-
-      },
-
-    close:
-      function () {
-
-        closeDropdown();
-
-      }
-
-  };
-
-
-  /*
-    Compatibility with existing website code
-  */
-
-  window.getLanguage =
-    getCurrentLanguage;
-
-
-  window.setLanguage =
-    setLanguage;
-
-
-  window.applyLanguage =
-    setLanguage;
-
-
-  /*
-    Do not overwrite an existing
-    cptTranslatePhrase helper.
-  */
-
-  if (
-    typeof window.cptTranslatePhrase !==
-    "function"
-  ) {
-
-    window.cptTranslatePhrase =
-      translatePhrase;
-  }
-
-
-  /* ==========================================================
-     INITIALIZATION
-     ========================================================== */
-
-  function initialize() {
-
-    injectCSS();
-
-
-    connectLanguageButtons();
-
-
-    connectOutsideClick();
-
-
-    connectEscape();
-
-
-    connectResize();
-
-
-    connectStorageSync();
-
-
-    connectMutationObserver();
-
-
-    /*
-      Apply saved language
-    */
-
-    translatePage(
-      getCurrentLanguage()
-    );
-
-
-    /*
-      Some pages create their language button
-      slightly later, so reconnect once more.
-    */
-
-    setTimeout(
-      function () {
-
-        connectLanguageButtons();
-
-        translatePage(
-          getCurrentLanguage()
-        );
-
-      },
-      300
-    );
-
-  }
-
-
-  /* ==========================================================
-     START
-     ========================================================== */
-
-  if (
-    document.readyState ===
-    "loading"
-  ) {
-
-    document.addEventListener(
-      "DOMContentLoaded",
-      initialize,
-      {
-        once: true
-      }
-    );
-
-  } else {
-
-    initialize();
-
-  }
 
 })();
