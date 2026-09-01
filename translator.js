@@ -1799,4 +1799,814 @@
             }
         );
 
-    }    
+    } 
+    /* =====================================================
+       INJECT LANGUAGE SELECTOR CSS
+       ===================================================== */
+
+    function injectLanguageStyles() {
+
+        /*
+         * Don't inject the CSS twice.
+         */
+
+        if (
+            document.getElementById(
+                "cptLanguageStyles"
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        const style =
+            document.createElement(
+                "style"
+            );
+
+
+        style.id =
+            "cptLanguageStyles";
+
+
+        style.textContent = `
+
+            /* =============================================
+               LANGUAGE MENU
+               ============================================= */
+
+            #cptLanguageMenu {
+
+                position: fixed;
+
+                z-index: 999999;
+
+                min-width: 190px;
+
+                max-width: 260px;
+
+                max-height: 70vh;
+
+                overflow-y: auto;
+
+                padding: 7px;
+
+                border-radius: 12px;
+
+                background:
+                    rgba(20, 20, 25, 0.97);
+
+                border:
+                    1px solid
+                    rgba(255,255,255,0.12);
+
+                box-shadow:
+                    0 12px 40px
+                    rgba(0,0,0,0.35);
+
+                backdrop-filter:
+                    blur(12px);
+
+                -webkit-backdrop-filter:
+                    blur(12px);
+
+                display: none;
+
+                box-sizing: border-box;
+
+                font-family:
+                    Arial,
+                    sans-serif;
+
+            }
+
+
+            #cptLanguageMenu.open {
+
+                display: block;
+
+                animation:
+                    cptLanguageMenuIn
+                    0.16s
+                    ease-out;
+
+            }
+
+
+            @keyframes cptLanguageMenuIn {
+
+                from {
+
+                    opacity: 0;
+
+                    transform:
+                        translateY(-5px)
+                        scale(0.98);
+
+                }
+
+                to {
+
+                    opacity: 1;
+
+                    transform:
+                        translateY(0)
+                        scale(1);
+
+                }
+
+            }
+
+
+            /* =============================================
+               LANGUAGE ITEM
+               ============================================= */
+
+            #cptLanguageMenu
+            .cpt-language-item {
+
+                width: 100%;
+
+                min-height: 42px;
+
+                display: flex;
+
+                align-items: center;
+
+                gap: 10px;
+
+                padding:
+                    8px 10px;
+
+                margin: 1px 0;
+
+                border: 0;
+
+                border-radius: 9px;
+
+                background: transparent;
+
+                color: #ffffff;
+
+                cursor: pointer;
+
+                text-align: left;
+
+                font-size: 14px;
+
+                line-height: 1.2;
+
+                box-sizing: border-box;
+
+                transition:
+                    background
+                    0.15s
+                    ease,
+                    transform
+                    0.15s
+                    ease;
+
+            }
+
+
+            #cptLanguageMenu
+            .cpt-language-item:hover {
+
+                background:
+                    rgba(255,255,255,0.10);
+
+                transform:
+                    translateX(2px);
+
+            }
+
+
+            #cptLanguageMenu
+            .cpt-language-item.active {
+
+                background:
+                    rgba(255,255,255,0.14);
+
+            }
+
+
+            /* =============================================
+               FLAG
+               ============================================= */
+
+            #cptLanguageMenu
+            .cpt-language-flag {
+
+                width: 28px;
+
+                min-width: 28px;
+
+                text-align: center;
+
+                font-size: 20px;
+
+                line-height: 1;
+
+            }
+
+
+            /* =============================================
+               LANGUAGE NAME
+               ============================================= */
+
+            #cptLanguageMenu
+            .cpt-language-name {
+
+                flex: 1;
+
+                overflow: hidden;
+
+                text-overflow: ellipsis;
+
+                white-space: nowrap;
+
+            }
+
+
+            /* =============================================
+               CHECK MARK
+               ============================================= */
+
+            #cptLanguageMenu
+            .cpt-language-check {
+
+                width: 18px;
+
+                min-width: 18px;
+
+                text-align: center;
+
+                font-size: 14px;
+
+                font-weight: 700;
+
+                visibility: hidden;
+
+            }
+
+
+            /* =============================================
+               SELECTED FLAG
+               ============================================= */
+
+            .cpt-selected-flag {
+
+                display: inline-flex;
+
+                align-items: center;
+
+                justify-content: center;
+
+                line-height: 1;
+
+                font-size: inherit;
+
+            }
+
+
+            /* =============================================
+               AUTOMATIC FLOATING BUTTON
+               ============================================= */
+
+            #cptAutoLanguageButton {
+
+                position: fixed;
+
+                top: 14px;
+
+                right: 14px;
+
+                z-index: 999998;
+
+                width: 42px;
+
+                height: 42px;
+
+                padding: 0;
+
+                border: 0;
+
+                border-radius: 50%;
+
+                display: flex;
+
+                align-items: center;
+
+                justify-content: center;
+
+                background:
+                    rgba(20,20,25,0.95);
+
+                box-shadow:
+                    0 5px 20px
+                    rgba(0,0,0,0.25);
+
+                cursor: pointer;
+
+                font-size: 23px;
+
+                line-height: 1;
+
+            }
+
+
+            #cptAutoLanguageButton:hover {
+
+                transform:
+                    scale(1.05);
+
+            }
+
+
+            /* =============================================
+               ARABIC / RTL
+               ============================================= */
+
+            html[dir="rtl"]
+            #cptLanguageMenu
+            .cpt-language-item {
+
+                direction: rtl;
+
+                text-align: right;
+
+            }
+
+
+            html[dir="rtl"]
+            #cptLanguageMenu
+            .cpt-language-item:hover {
+
+                transform:
+                    translateX(-2px);
+
+            }
+
+
+            /* =============================================
+               MOBILE
+               ============================================= */
+
+            @media
+            (max-width: 600px) {
+
+                #cptLanguageMenu {
+
+                    min-width: 175px;
+
+                    max-width:
+                        calc(100vw - 20px);
+
+                    max-height:
+                        65vh;
+
+                    padding: 6px;
+
+                    border-radius: 10px;
+
+                }
+
+
+                #cptLanguageMenu
+                .cpt-language-item {
+
+                    min-height: 44px;
+
+                    font-size: 14px;
+
+                    padding:
+                        8px 9px;
+
+                }
+
+
+                #cptAutoLanguageButton {
+
+                    top: 10px;
+
+                    right: 10px;
+
+                    width: 40px;
+
+                    height: 40px;
+
+                }
+
+            }
+
+        `;
+
+
+        document.head.appendChild(
+            style
+        );
+
+    }
+
+
+    /* =====================================================
+       WATCH FOR NEW HTML ELEMENTS
+       =====================================================
+
+       This is useful when your website creates
+       buttons/cards/content dynamically with JavaScript.
+       ===================================================== */
+
+    function setupMutationObserver() {
+
+        if (
+            typeof MutationObserver ===
+            "undefined"
+        ) {
+
+            return;
+
+        }
+
+
+        if (!document.body) {
+
+            return;
+
+        }
+
+
+        let translationTimer =
+            null;
+
+
+        const observer =
+            new MutationObserver(
+                function (mutations) {
+
+                    let shouldTranslate =
+                        false;
+
+
+                    mutations.forEach(
+                        function (mutation) {
+
+                            if (
+                                mutation.type !==
+                                "childList"
+                            ) {
+
+                                return;
+
+                            }
+
+
+                            if (
+                                mutation.addedNodes &&
+                                mutation.addedNodes.length
+                            ) {
+
+                                shouldTranslate =
+                                    true;
+
+                            }
+
+                        }
+                    );
+
+
+                    if (
+                        !shouldTranslate
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    /*
+                     * Avoid translating repeatedly
+                     * during rapid DOM changes.
+                     */
+
+                    clearTimeout(
+                        translationTimer
+                    );
+
+
+                    translationTimer =
+                        setTimeout(
+                            function () {
+
+                                translatePage();
+
+                                updateLanguageButtons();
+
+                                updateAutomaticLanguageButton();
+
+                            },
+                            100
+                        );
+
+                }
+            );
+
+
+        observer.observe(
+            document.body,
+            {
+                childList: true,
+                subtree: true
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       INITIALIZE LANGUAGE SYSTEM
+       ===================================================== */
+
+    function initializeTranslator() {
+
+        /*
+         * Load CSS first.
+         */
+
+        injectLanguageStyles();
+
+
+        /*
+         * Make sure saved language is valid.
+         */
+
+        if (
+            !isValidLanguage(
+                currentLanguage
+            )
+        ) {
+
+            currentLanguage =
+                DEFAULT_LANGUAGE;
+
+        }
+
+
+        /*
+         * Apply language immediately.
+         */
+
+        setDocumentLanguage();
+
+
+        /*
+         * Existing language button:
+         * #languageBtn
+         */
+
+        connectLanguageButtons();
+
+
+        /*
+         * If there is no language button
+         * on this HTML page, create one.
+         */
+
+        createAutomaticLanguageButton();
+
+
+        /*
+         * Create dropdown.
+         */
+
+        createLanguageMenu();
+
+
+        /*
+         * Translate the page.
+         */
+
+        applyLanguage();
+
+
+        /*
+         * Make sure existing buttons
+         * are connected after apply.
+         */
+
+        connectLanguageButtons();
+
+
+        /*
+         * Setup global events.
+         */
+
+        setupOutsideClick();
+
+        setupEscapeKey();
+
+        setupResizeHandler();
+
+        setupMutationObserver();
+
+
+        /*
+         * Dispatch initialization event.
+         */
+
+        try {
+
+            document.dispatchEvent(
+                new CustomEvent(
+                    "cptTranslatorReady",
+                    {
+                        detail: {
+                            language:
+                                currentLanguage
+                        }
+                    }
+                )
+            );
+
+        } catch (error) {
+
+            /*
+             * Ignore unsupported
+             * CustomEvent environments.
+             */
+
+        }
+
+    }
+
+
+    /* =====================================================
+       PUBLIC API
+       ===================================================== */
+
+    /*
+     * Change language from another JavaScript file:
+     *
+     * CPTSetLanguage("bn");
+     * CPTSetLanguage("en");
+     * CPTSetLanguage("ar");
+     */
+
+    window.CPTSetLanguage =
+        function (language) {
+
+            setLanguage(
+                language
+            );
+
+        };
+
+
+    /*
+     * Get current language:
+     *
+     * CPTGetLanguage();
+     */
+
+    window.CPTGetLanguage =
+        function () {
+
+            return currentLanguage;
+
+        };
+
+
+    /*
+     * Get current language information:
+     *
+     * CPTGetLanguageInfo();
+     */
+
+    window.CPTGetLanguageInfo =
+        function () {
+
+            return getLanguageInfo(
+                currentLanguage
+            );
+
+        };
+
+
+    /*
+     * Translate a string manually:
+     *
+     * CPTTranslateText("Login");
+     */
+
+    window.CPTTranslateText =
+        function (text) {
+
+            return translateText(
+                text,
+                currentLanguage
+            );
+
+        };
+
+
+    /*
+     * Re-translate page manually:
+     */
+
+    window.CPTRefreshTranslation =
+        function () {
+
+            applyLanguage();
+
+        };
+
+
+    /* =====================================================
+       LOCAL STORAGE CROSS-TAB SYNC
+       =====================================================
+
+       If the user changes language in another browser tab,
+       this page can update automatically.
+       ===================================================== */
+
+    window.addEventListener(
+        "storage",
+        function (event) {
+
+            if (
+                event.key !==
+                STORAGE_KEY
+            ) {
+
+                return;
+
+            }
+
+
+            const newLanguage =
+                event.newValue;
+
+
+            if (
+                !newLanguage ||
+                !isValidLanguage(
+                    newLanguage
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            if (
+                newLanguage ===
+                currentLanguage
+            ) {
+
+                return;
+
+            }
+
+
+            currentLanguage =
+                newLanguage;
+
+
+            applyLanguage();
+
+        }
+    );
+
+
+    /* =====================================================
+       DOM READY
+       ===================================================== */
+
+    if (
+        document.readyState ===
+        "loading"
+    ) {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            initializeTranslator,
+            {
+                once: true
+            }
+        );
+
+    } else {
+
+        initializeTranslator();
+
+    }
+
+
+    /* =====================================================
+       FINISH
+       ===================================================== */
+
+})(window, document);   
