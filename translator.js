@@ -1,828 +1,588 @@
 /* =========================================================
-   CPTMARKETS
-   translator.js
-   GLOBAL MULTI-LANGUAGE SYSTEM
+   CPT MARKETS - GLOBAL TRANSLATOR
+   Version 3.0
    ========================================================= */
 
-(function (window, document) {
+(function () {
 
     "use strict";
 
-
     /* =====================================================
-       CONFIG
+       LANGUAGE DATABASE
        ===================================================== */
 
-    const LANGUAGES =
-        window.CPT_LANGS || {};
-
-    const TRANSLATIONS =
-        window.CPT_TRANSLATIONS || {};
-
-    const LANGUAGE_ORDER =
-        window.CPT_LANGUAGE_ORDER || [
-            "en",
-            "bn",
-            "ar",
-            "hi",
-            "es",
-            "zh",
-            "ja",
-            "fr",
-            "de",
-            "ru"
-        ];
-
-    const STORAGE_KEY =
-        window.CPT_LANGUAGE_STORAGE_KEY ||
-        "cptmarkets_language";
-
-    const DEFAULT_LANGUAGE =
-        window.CPT_DEFAULT_LANGUAGE ||
-        "en";
-
-
-    /* =====================================================
-       CURRENT LANGUAGE
-       ===================================================== */
-
-    let currentLanguage =
-        getSavedLanguage();
-
-
-    /* =====================================================
-       LANGUAGE KEY MAP
-       =====================================================
-
-       These are the actual data-key values used by
-       your HTML files.
-       ===================================================== */
-
-    const KEY_TEXT = {
-
-        navHome: "Home",
-        navMarkets: "Markets",
-        navAssets: "Assets",
-        navMine: "Mine",
-        navTrade: "Trade",
-
-        fundingAccount: "Funding Account",
-        withdraw: "Withdraw",
-        transfer: "Transfer",
-        loan: "Loan",
-        myOrders: "My Orders",
-
-        totalAssets: "Total Assets",
-        deposit: "Deposit",
-        myAssets: "My Assets",
-        history: "History",
-        support: "Support",
-
-        username: "Username",
-        password: "Password",
-        security: "Security",
-
-        announcements: "Announcements",
-        accountSecurity: "Account Security",
-        leverage: "Leverage",
-
-        available: "Available",
-        frozen: "Frozen",
-        mainWalletBalance: "Main Wallet Balance",
-        spotAccount: "Spot Account",
-        spotTradingAssets: "Spot Trading Assets",
-        futuresAccount: "Futures Account",
-        futuresBalance: "Futures Balance",
-
-        noRecords: "No records",
-
-        copyTrade: "Copy Trade",
-        wealth: "Wealth",
-        mining: "Mining",
-        invite: "Invite",
-
-        hotMarkets: "Hot Markets",
-
-        signin: "Sign In",
-        createAccount: "Create Account",
-        forgotPassword: "Forgot Password?",
-
-        todayPL: "Today P/L",
-        totalPL: "Total P/L",
-
-        open: "Open",
-
-        copyTrading: "Copy Trading",
-        wealthMining: "Wealth Mining",
-        inviteFriends: "Invite Friends",
-        walletManagement: "Wallet Management",
-
-        signOut: "Sign Out",
-
-        loginPassword: "Login Password",
-        protectAccount: "Protect your account",
-        keepAccountSafe: "Keep your account safe",
-
-        securityVerification: "Security Verification",
-        manageVerification: "Manage Verification",
-
-        confirmPassword: "Confirm Password",
-        inviteCode: "Invite Code",
-
-        register: "Register",
-        alreadyAccount: "Already have an account?",
-
-        settingsTitle: "Settings",
-        changePassword: "Change Password",
-        language: "Language",
-        darkMode: "Dark Mode",
-        appVersion: "App Version",
-
-        latest: "Latest",
-        accountHelp: "Account Help",
-        manageProfile: "Manage Profile",
-
-        addFunds: "Add Funds",
-        payoutRequests: "Payout Requests",
-        generalSupport: "General Support",
-
-        convertedLots: "Converted Lots",
-        contractValue: "Contract Value",
-        entryPrice: "Entry Price",
-        currentPrice: "Current Price",
-        amount: "Amount",
-
-        transferFunds: "Transfer Funds",
-        transferAmount: "Transfer Amount",
-
-        globalWithdrawal: "Global Withdrawal",
-        globalPlatform: "Global Platform",
-        availableUSDT: "Available USDT",
-
-        paymentMethod: "Payment Method",
-        selectPayout: "Select Payout",
-        confirmWithdrawal: "Confirm Withdrawal",
-        payoutGateway: "Payout Gateway",
-
-        bankWire: "Bank Wire",
-        cryptoWallet: "Crypto Wallet"
-
-    };
-
-
-    /* =====================================================
-       PLACEHOLDER KEY MAP
-       ===================================================== */
-
-    const PLACEHOLDER_TEXT = {
-
-        username: "Enter Username",
-
-        password: "Password (min. 6 chars)",
-
-        confirmPassword: "Confirm Password",
-
-        inviteCode: "Invite Code (optional)",
-
-        enterAmount: "Enter Amount",
-
-        enterMobile: "Enter Mobile",
-
-        cryptoAddress: "Crypto Address",
-
-        securityPassword: "Security Password"
-
-    };
-
-
-    /* =====================================================
-       EXTRA TRANSLATIONS
-       =====================================================
-
-       These keys are used by your actual HTML but were
-       missing from the previous lang.js database.
-       ===================================================== */
-
-    const EXTRA_TRANSLATIONS = {
+    const LANGUAGES = {
 
         en: {
-
-            "Funding Account": "Funding Account",
-            "My Orders": "My Orders",
-            "Loan": "Loan",
-            "Available": "Available",
-            "Frozen": "Frozen",
-            "Main Wallet Balance": "Main Wallet Balance",
-            "Spot Account": "Spot Account",
-            "Spot Trading Assets": "Spot Trading Assets",
-            "Futures Account": "Futures Account",
-            "Futures Balance": "Futures Balance",
-            "Copy Trade": "Copy Trade",
-            "Wealth": "Wealth",
-            "Mining": "Mining",
-            "Invite": "Invite",
-            "Hot Markets": "Hot Markets",
-            "Already have an account?":
-                "Already have an account?",
-            "Create Account": "Create Account",
-            "Protect your account":
-                "Protect your account",
-            "Keep your account safe":
-                "Keep your account safe",
-            "Announcements": "Announcements",
-            "Latest": "Latest",
-            "Account Help": "Account Help",
-            "Manage Profile": "Manage Profile",
-            "Add Funds": "Add Funds",
-            "Payout Requests": "Payout Requests",
-            "General Support": "General Support",
-            "Converted Lots": "Converted Lots",
-            "Contract Value": "Contract Value",
-            "Transfer Funds": "Transfer Funds",
-            "Transfer Amount": "Transfer Amount",
-            "Global Withdrawal": "Global Withdrawal",
-            "Global Platform": "Global Platform",
-            "Available USDT": "Available USDT",
-            "Payment Method": "Payment Method",
-            "Select Payout": "Select Payout",
-            "Confirm Withdrawal":
-                "Confirm Withdrawal",
-            "Payout Gateway": "Payout Gateway",
-            "Bank Wire": "Bank Wire",
-            "Crypto Wallet": "Crypto Wallet"
-
+            name: "English",
+            native: "English",
+            flag: "🇬🇧",
+            dir: "ltr"
         },
 
         bn: {
-
-            "Funding Account": "ফান্ডিং অ্যাকাউন্ট",
-            "My Orders": "আমার অর্ডার",
-            "Loan": "লোন",
-            "Available": "উপলভ্য",
-            "Frozen": "ফ্রোজেন",
-            "Main Wallet Balance": "মেইন ওয়ালেট ব্যালেন্স",
-            "Spot Account": "স্পট অ্যাকাউন্ট",
-            "Spot Trading Assets":
-                "স্পট ট্রেডিং অ্যাসেটস",
-            "Futures Account": "ফিউচার্স অ্যাকাউন্ট",
-            "Futures Balance": "ফিউচার্স ব্যালেন্স",
-            "Copy Trade": "কপি ট্রেড",
-            "Wealth": "সম্পদ",
-            "Mining": "মাইনিং",
-            "Invite": "আমন্ত্রণ",
-            "Hot Markets": "জনপ্রিয় মার্কেট",
-            "Already have an account?":
-                "ইতিমধ্যে অ্যাকাউন্ট আছে?",
-            "Create Account":
-                "অ্যাকাউন্ট তৈরি করুন",
-            "Protect your account":
-                "আপনার অ্যাকাউন্ট সুরক্ষিত রাখুন",
-            "Keep your account safe":
-                "আপনার অ্যাকাউন্ট নিরাপদ রাখুন",
-            "Announcements": "ঘোষণা",
-            "Latest": "সর্বশেষ",
-            "Account Help": "অ্যাকাউন্ট সহায়তা",
-            "Manage Profile":
-                "প্রোফাইল পরিচালনা করুন",
-            "Add Funds": "ফান্ড যোগ করুন",
-            "Payout Requests":
-                "পেআউট অনুরোধ",
-            "General Support":
-                "সাধারণ সহায়তা",
-            "Converted Lots":
-                "কনভার্টেড লট",
-            "Contract Value":
-                "কনট্রাক্ট মূল্য",
-            "Transfer Funds":
-                "ফান্ড ট্রান্সফার",
-            "Transfer Amount":
-                "ট্রান্সফার পরিমাণ",
-            "Global Withdrawal":
-                "গ্লোবাল উইথড্রয়াল",
-            "Global Platform":
-                "গ্লোবাল প্ল্যাটফর্ম",
-            "Available USDT":
-                "উপলভ্য USDT",
-            "Payment Method":
-                "পেমেন্ট পদ্ধতি",
-            "Select Payout":
-                "পেআউট নির্বাচন করুন",
-            "Confirm Withdrawal":
-                "উইথড্রয়াল নিশ্চিত করুন",
-            "Payout Gateway":
-                "পেআউট গেটওয়ে",
-            "Bank Wire":
-                "ব্যাংক ওয়্যার",
-            "Crypto Wallet":
-                "ক্রিপ্টো ওয়ালেট"
-
+            name: "Bengali",
+            native: "বাংলা",
+            flag: "🇧🇩",
+            dir: "ltr"
         },
 
         ar: {
-
-            "Funding Account": "حساب التمويل",
-            "My Orders": "طلباتي",
-            "Loan": "القرض",
-            "Available": "متاح",
-            "Frozen": "مجمد",
-            "Main Wallet Balance":
-                "رصيد المحفظة الرئيسية",
-            "Spot Account": "حساب التداول الفوري",
-            "Spot Trading Assets":
-                "أصول التداول الفوري",
-            "Futures Account":
-                "حساب العقود الآجلة",
-            "Futures Balance":
-                "رصيد العقود الآجلة",
-            "Copy Trade": "نسخ التداول",
-            "Wealth": "الثروة",
-            "Mining": "التعدين",
-            "Invite": "دعوة",
-            "Hot Markets": "الأسواق الرائجة",
-            "Already have an account?":
-                "هل لديك حساب بالفعل؟",
-            "Create Account": "إنشاء حساب",
-            "Protect your account":
-                "احمِ حسابك",
-            "Keep your account safe":
-                "حافظ على أمان حسابك",
-            "Announcements": "الإعلانات",
-            "Latest": "الأحدث",
-            "Account Help": "مساعدة الحساب",
-            "Manage Profile": "إدارة الملف الشخصي",
-            "Add Funds": "إضافة أموال",
-            "Payout Requests":
-                "طلبات الدفع",
-            "General Support":
-                "الدعم العام",
-            "Converted Lots":
-                "اللوتات المحولة",
-            "Contract Value":
-                "قيمة العقد",
-            "Transfer Funds":
-                "تحويل الأموال",
-            "Transfer Amount":
-                "مبلغ التحويل",
-            "Global Withdrawal":
-                "السحب العالمي",
-            "Global Platform":
-                "المنصة العالمية",
-            "Available USDT":
-                "USDT المتاح",
-            "Payment Method":
-                "طريقة الدفع",
-            "Select Payout":
-                "اختر طريقة الدفع",
-            "Confirm Withdrawal":
-                "تأكيد السحب",
-            "Payout Gateway":
-                "بوابة الدفع",
-            "Bank Wire":
-                "تحويل بنكي",
-            "Crypto Wallet":
-                "محفظة العملات الرقمية"
-
+            name: "Arabic",
+            native: "العربية",
+            flag: "🇸🇦",
+            dir: "rtl"
         },
 
         hi: {
-
-            "Funding Account": "फंडिंग अकाउंट",
-            "My Orders": "मेरे ऑर्डर",
-            "Loan": "लोन",
-            "Available": "उपलब्ध",
-            "Frozen": "फ्रोजन",
-            "Main Wallet Balance":
-                "मुख्य वॉलेट बैलेंस",
-            "Spot Account": "स्पॉट अकाउंट",
-            "Spot Trading Assets":
-                "स्पॉट ट्रेडिंग एसेट्स",
-            "Futures Account":
-                "फ्यूचर्स अकाउंट",
-            "Futures Balance":
-                "फ्यूचर्स बैलेंस",
-            "Copy Trade": "कॉपी ट्रेड",
-            "Wealth": "संपत्ति",
-            "Mining": "माइनिंग",
-            "Invite": "आमंत्रित करें",
-            "Hot Markets": "लोकप्रिय मार्केट",
-            "Already have an account?":
-                "क्या आपके पास पहले से खाता है?",
-            "Create Account":
-                "खाता बनाएं",
-            "Protect your account":
-                "अपने खाते को सुरक्षित रखें",
-            "Keep your account safe":
-                "अपने खाते को सुरक्षित रखें",
-            "Announcements": "घोषणाएं",
-            "Latest": "नवीनतम",
-            "Account Help": "खाता सहायता",
-            "Manage Profile":
-                "प्रोफ़ाइल प्रबंधित करें",
-            "Add Funds": "फंड जोड़ें",
-            "Payout Requests":
-                "भुगतान अनुरोध",
-            "General Support":
-                "सामान्य सहायता",
-            "Converted Lots":
-                "कन्वर्टेड लॉट्स",
-            "Contract Value":
-                "कॉन्ट्रैक्ट वैल्यू",
-            "Transfer Funds":
-                "फंड ट्रांसफर करें",
-            "Transfer Amount":
-                "ट्रांसफर राशि",
-            "Global Withdrawal":
-                "ग्लोबल निकासी",
-            "Global Platform":
-                "ग्लोबल प्लेटफॉर्म",
-            "Available USDT":
-                "उपलब्ध USDT",
-            "Payment Method":
-                "भुगतान विधि",
-            "Select Payout":
-                "भुगतान चुनें",
-            "Confirm Withdrawal":
-                "निकासी की पुष्टि करें",
-            "Payout Gateway":
-                "भुगतान गेटवे",
-            "Bank Wire":
-                "बैंक वायर",
-            "Crypto Wallet":
-                "क्रिप्टो वॉलेट"
-
+            name: "Hindi",
+            native: "हिन्दी",
+            flag: "🇮🇳",
+            dir: "ltr"
         },
 
         es: {
-
-            "Funding Account": "Cuenta de fondos",
-            "My Orders": "Mis órdenes",
-            "Loan": "Préstamo",
-            "Available": "Disponible",
-            "Frozen": "Congelado",
-            "Main Wallet Balance":
-                "Saldo de la billetera principal",
-            "Spot Account": "Cuenta spot",
-            "Spot Trading Assets":
-                "Activos de trading spot",
-            "Futures Account":
-                "Cuenta de futuros",
-            "Futures Balance":
-                "Saldo de futuros",
-            "Copy Trade": "Copy Trading",
-            "Wealth": "Patrimonio",
-            "Mining": "Minería",
-            "Invite": "Invitar",
-            "Hot Markets": "Mercados populares",
-            "Already have an account?":
-                "¿Ya tienes una cuenta?",
-            "Create Account":
-                "Crear cuenta",
-            "Protect your account":
-                "Protege tu cuenta",
-            "Keep your account safe":
-                "Mantén tu cuenta segura",
-            "Announcements": "Anuncios",
-            "Latest": "Último",
-            "Account Help": "Ayuda de cuenta",
-            "Manage Profile":
-                "Administrar perfil",
-            "Add Funds": "Añadir fondos",
-            "Payout Requests":
-                "Solicitudes de pago",
-            "General Support":
-                "Soporte general",
-            "Converted Lots":
-                "Lotes convertidos",
-            "Contract Value":
-                "Valor del contrato",
-            "Transfer Funds":
-                "Transferir fondos",
-            "Transfer Amount":
-                "Importe de transferencia",
-            "Global Withdrawal":
-                "Retiro global",
-            "Global Platform":
-                "Plataforma global",
-            "Available USDT":
-                "USDT disponible",
-            "Payment Method":
-                "Método de pago",
-            "Select Payout":
-                "Seleccionar pago",
-            "Confirm Withdrawal":
-                "Confirmar retiro",
-            "Payout Gateway":
-                "Pasarela de pago",
-            "Bank Wire":
-                "Transferencia bancaria",
-            "Crypto Wallet":
-                "Billetera de criptomonedas"
-
+            name: "Spanish",
+            native: "Español",
+            flag: "🇪🇸",
+            dir: "ltr"
         },
 
         zh: {
-
-            "Funding Account": "资金账户",
-            "My Orders": "我的订单",
-            "Loan": "贷款",
-            "Available": "可用",
-            "Frozen": "冻结",
-            "Main Wallet Balance":
-                "主钱包余额",
-            "Spot Account": "现货账户",
-            "Spot Trading Assets":
-                "现货交易资产",
-            "Futures Account":
-                "合约账户",
-            "Futures Balance":
-                "合约余额",
-            "Copy Trade": "跟单交易",
-            "Wealth": "财富",
-            "Mining": "挖矿",
-            "Invite": "邀请",
-            "Hot Markets": "热门市场",
-            "Already have an account?":
-                "已经有账户了吗？",
-            "Create Account": "创建账户",
-            "Protect your account":
-                "保护您的账户",
-            "Keep your account safe":
-                "确保您的账户安全",
-            "Announcements": "公告",
-            "Latest": "最新",
-            "Account Help": "账户帮助",
-            "Manage Profile": "管理个人资料",
-            "Add Funds": "添加资金",
-            "Payout Requests": "付款请求",
-            "General Support": "一般支持",
-            "Converted Lots": "转换手数",
-            "Contract Value": "合约价值",
-            "Transfer Funds": "转账",
-            "Transfer Amount": "转账金额",
-            "Global Withdrawal": "全球提现",
-            "Global Platform": "全球平台",
-            "Available USDT": "可用 USDT",
-            "Payment Method": "支付方式",
-            "Select Payout": "选择付款方式",
-            "Confirm Withdrawal": "确认提现",
-            "Payout Gateway": "付款网关",
-            "Bank Wire": "银行电汇",
-            "Crypto Wallet": "加密钱包"
-
+            name: "Chinese",
+            native: "中文",
+            flag: "🇨🇳",
+            dir: "ltr"
         },
 
         ja: {
-
-            "Funding Account": "資金口座",
-            "My Orders": "注文履歴",
-            "Loan": "ローン",
-            "Available": "利用可能",
-            "Frozen": "凍結",
-            "Main Wallet Balance":
-                "メインウォレット残高",
-            "Spot Account": "現物口座",
-            "Spot Trading Assets":
-                "現物取引資産",
-            "Futures Account":
-                "先物口座",
-            "Futures Balance":
-                "先物残高",
-            "Copy Trade": "コピートレード",
-            "Wealth": "資産",
-            "Mining": "マイニング",
-            "Invite": "招待",
-            "Hot Markets": "人気市場",
-            "Already have an account?":
-                "すでにアカウントをお持ちですか？",
-            "Create Account": "アカウントを作成",
-            "Protect your account":
-                "アカウントを保護する",
-            "Keep your account safe":
-                "アカウントを安全に保つ",
-            "Announcements": "お知らせ",
-            "Latest": "最新",
-            "Account Help": "アカウントヘルプ",
-            "Manage Profile": "プロフィール管理",
-            "Add Funds": "資金を追加",
-            "Payout Requests": "支払いリクエスト",
-            "General Support": "一般サポート",
-            "Converted Lots": "変換ロット",
-            "Contract Value": "契約価値",
-            "Transfer Funds": "資金を送金",
-            "Transfer Amount": "送金額",
-            "Global Withdrawal": "グローバル出金",
-            "Global Platform": "グローバルプラットフォーム",
-            "Available USDT": "利用可能なUSDT",
-            "Payment Method": "支払い方法",
-            "Select Payout": "支払い方法を選択",
-            "Confirm Withdrawal": "出金を確認",
-            "Payout Gateway": "支払いゲートウェイ",
-            "Bank Wire": "銀行送金",
-            "Crypto Wallet": "暗号資産ウォレット"
-
+            name: "Japanese",
+            native: "日本語",
+            flag: "🇯🇵",
+            dir: "ltr"
         },
 
         fr: {
-
-            "Funding Account": "Compte de financement",
-            "My Orders": "Mes ordres",
-            "Loan": "Prêt",
-            "Available": "Disponible",
-            "Frozen": "Gelé",
-            "Main Wallet Balance":
-                "Solde du portefeuille principal",
-            "Spot Account": "Compte spot",
-            "Spot Trading Assets":
-                "Actifs de trading spot",
-            "Futures Account":
-                "Compte futures",
-            "Futures Balance":
-                "Solde futures",
-            "Copy Trade": "Copy Trading",
-            "Wealth": "Patrimoine",
-            "Mining": "Minage",
-            "Invite": "Inviter",
-            "Hot Markets": "Marchés populaires",
-            "Already have an account?":
-                "Vous avez déjà un compte ?",
-            "Create Account":
-                "Créer un compte",
-            "Protect your account":
-                "Protégez votre compte",
-            "Keep your account safe":
-                "Gardez votre compte sécurisé",
-            "Announcements": "Annonces",
-            "Latest": "Dernières nouveautés",
-            "Account Help": "Aide du compte",
-            "Manage Profile":
-                "Gérer le profil",
-            "Add Funds": "Ajouter des fonds",
-            "Payout Requests":
-                "Demandes de paiement",
-            "General Support":
-                "Assistance générale",
-            "Converted Lots":
-                "Lots convertis",
-            "Contract Value":
-                "Valeur du contrat",
-            "Transfer Funds":
-                "Transférer des fonds",
-            "Transfer Amount":
-                "Montant du transfert",
-            "Global Withdrawal":
-                "Retrait global",
-            "Global Platform":
-                "Plateforme mondiale",
-            "Available USDT":
-                "USDT disponible",
-            "Payment Method":
-                "Mode de paiement",
-            "Select Payout":
-                "Sélectionner le paiement",
-            "Confirm Withdrawal":
-                "Confirmer le retrait",
-            "Payout Gateway":
-                "Passerelle de paiement",
-            "Bank Wire":
-                "Virement bancaire",
-            "Crypto Wallet":
-                "Portefeuille crypto"
-
+            name: "French",
+            native: "Français",
+            flag: "🇫🇷",
+            dir: "ltr"
         },
 
         de: {
-
-            "Funding Account": "Finanzkonto",
-            "My Orders": "Meine Aufträge",
-            "Loan": "Darlehen",
-            "Available": "Verfügbar",
-            "Frozen": "Eingefroren",
-            "Main Wallet Balance":
-                "Guthaben der Haupt-Wallet",
-            "Spot Account": "Spot-Konto",
-            "Spot Trading Assets":
-                "Spot-Handelsvermögen",
-            "Futures Account":
-                "Futures-Konto",
-            "Futures Balance":
-                "Futures-Guthaben",
-            "Copy Trade": "Copy Trading",
-            "Wealth": "Vermögen",
-            "Mining": "Mining",
-            "Invite": "Einladen",
-            "Hot Markets": "Beliebte Märkte",
-            "Already have an account?":
-                "Haben Sie bereits ein Konto?",
-            "Create Account":
-                "Konto erstellen",
-            "Protect your account":
-                "Schützen Sie Ihr Konto",
-            "Keep your account safe":
-                "Halten Sie Ihr Konto sicher",
-            "Announcements": "Ankündigungen",
-            "Latest": "Neueste",
-            "Account Help": "Kontohilfe",
-            "Manage Profile":
-                "Profil verwalten",
-            "Add Funds": "Guthaben hinzufügen",
-            "Payout Requests":
-                "Auszahlungsanfragen",
-            "General Support":
-                "Allgemeiner Support",
-            "Converted Lots":
-                "Konvertierte Lots",
-            "Contract Value":
-                "Vertragswert",
-            "Transfer Funds":
-                "Guthaben übertragen",
-            "Transfer Amount":
-                "Überweisungsbetrag",
-            "Global Withdrawal":
-                "Globale Auszahlung",
-            "Global Platform":
-                "Globale Plattform",
-            "Available USDT":
-                "Verfügbares USDT",
-            "Payment Method":
-                "Zahlungsmethode",
-            "Select Payout":
-                "Auszahlung auswählen",
-            "Confirm Withdrawal":
-                "Auszahlung bestätigen",
-            "Payout Gateway":
-                "Auszahlungs-Gateway",
-            "Bank Wire":
-                "Banküberweisung",
-            "Crypto Wallet":
-                "Krypto-Wallet"
-
+            name: "German",
+            native: "Deutsch",
+            flag: "🇩🇪",
+            dir: "ltr"
         },
 
         ru: {
+            name: "Russian",
+            native: "Русский",
+            flag: "🇷🇺",
+            dir: "ltr"
+        }
 
-            "Funding Account": "Финансовый счёт",
-            "My Orders": "Мои ордера",
+    };
+
+
+    const LANGUAGE_ORDER = [
+        "en",
+        "bn",
+        "ar",
+        "hi",
+        "es",
+        "zh",
+        "ja",
+        "fr",
+        "de",
+        "ru"
+    ];
+
+
+    /* =====================================================
+       STORAGE
+       ===================================================== */
+
+    const STORAGE_KEY =
+        "cptmarkets_language";
+
+
+    const DEFAULT_LANGUAGE =
+        "en";
+
+
+    let currentLanguage =
+        localStorage.getItem(STORAGE_KEY) ||
+        DEFAULT_LANGUAGE;
+
+
+    if (!LANGUAGES[currentLanguage]) {
+        currentLanguage = DEFAULT_LANGUAGE;
+    }
+
+
+    /* =====================================================
+       TRANSLATION DATA
+       ===================================================== */
+
+    /*
+       lang.js থাকলে তার translation database ব্যবহার করবে।
+       না থাকলেও language selector কাজ করবে।
+    */
+
+    const externalTranslations =
+        window.CPT_TRANSLATIONS ||
+        window.translations ||
+        window.TRANSLATIONS ||
+        {};
+
+
+    /* =====================================================
+       EXTRA COMMON TRANSLATIONS
+       ===================================================== */
+
+    const translations = {
+
+        en: {
+
+            "Username": "Username",
+            "Password": "Password",
+            "Confirm Password": "Confirm Password",
+            "Invite Code": "Invite Code",
+            "Invite Code (optional)": "Invite Code (optional)",
+            "Enter Username": "Enter Username",
+            "Password (min. 6 chars)": "Password (min. 6 chars)",
+            "Confirm Password": "Confirm Password",
+            "Sign In": "Sign In",
+            "Register": "Register",
+            "Create Account": "Create Account",
+            "Already have an account?":
+                "Already have an account?",
+            "Forgot Password?":
+                "Forgot Password?",
+            "Home": "Home",
+            "Markets": "Markets",
+            "Assets": "Assets",
+            "Trade": "Trade",
+            "Mine": "Mine",
+            "Settings": "Settings",
+            "Support": "Support",
+            "Deposit": "Deposit",
+            "Withdraw": "Withdraw",
+            "Transfer": "Transfer",
+            "Loan": "Loan",
+            "My Orders": "My Orders",
+            "Available": "Available",
+            "Frozen": "Frozen",
+            "History": "History",
+            "Announcements": "Announcements",
+            "Copy Trade": "Copy Trade",
+            "Wealth": "Wealth",
+            "Mining": "Mining",
+            "Invite": "Invite"
+
+        },
+
+
+        bn: {
+
+            "Username": "ইউজারনেম",
+            "Password": "পাসওয়ার্ড",
+            "Confirm Password":
+                "পাসওয়ার্ড নিশ্চিত করুন",
+            "Invite Code": "ইনভাইট কোড",
+            "Invite Code (optional)":
+                "ইনভাইট কোড (ঐচ্ছিক)",
+            "Enter Username":
+                "ইউজারনেম লিখুন",
+            "Password (min. 6 chars)":
+                "পাসওয়ার্ড (কমপক্ষে ৬ অক্ষর)",
+            "Sign In": "সাইন ইন",
+            "Register": "রেজিস্টার",
+            "Create Account":
+                "অ্যাকাউন্ট তৈরি করুন",
+            "Already have an account?":
+                "ইতিমধ্যে অ্যাকাউন্ট আছে?",
+            "Forgot Password?":
+                "পাসওয়ার্ড ভুলে গেছেন?",
+            "Home": "হোম",
+            "Markets": "মার্কেট",
+            "Assets": "অ্যাসেটস",
+            "Trade": "ট্রেড",
+            "Mine": "আমার",
+            "Settings": "সেটিংস",
+            "Support": "সাপোর্ট",
+            "Deposit": "ডিপোজিট",
+            "Withdraw": "উইথড্র",
+            "Transfer": "ট্রান্সফার",
+            "Loan": "লোন",
+            "My Orders": "আমার অর্ডার",
+            "Available": "উপলভ্য",
+            "Frozen": "ফ্রোজেন",
+            "History": "ইতিহাস",
+            "Announcements": "ঘোষণা",
+            "Copy Trade": "কপি ট্রেড",
+            "Wealth": "সম্পদ",
+            "Mining": "মাইনিং",
+            "Invite": "আমন্ত্রণ"
+
+        },
+
+
+        ar: {
+
+            "Username": "اسم المستخدم",
+            "Password": "كلمة المرور",
+            "Confirm Password":
+                "تأكيد كلمة المرور",
+            "Invite Code": "رمز الدعوة",
+            "Invite Code (optional)":
+                "رمز الدعوة (اختياري)",
+            "Enter Username":
+                "أدخل اسم المستخدم",
+            "Password (min. 6 chars)":
+                "كلمة المرور (6 أحرف على الأقل)",
+            "Sign In": "تسجيل الدخول",
+            "Register": "تسجيل",
+            "Create Account": "إنشاء حساب",
+            "Already have an account?":
+                "هل لديك حساب بالفعل؟",
+            "Forgot Password?":
+                "هل نسيت كلمة المرور؟",
+            "Home": "الرئيسية",
+            "Markets": "الأسواق",
+            "Assets": "الأصول",
+            "Trade": "تداول",
+            "Mine": "حسابي",
+            "Settings": "الإعدادات",
+            "Support": "الدعم",
+            "Deposit": "إيداع",
+            "Withdraw": "سحب",
+            "Transfer": "تحويل",
+            "Loan": "قرض",
+            "My Orders": "طلباتي",
+            "Available": "متاح",
+            "Frozen": "مجمد",
+            "History": "السجل",
+            "Announcements": "الإعلانات",
+            "Copy Trade": "نسخ التداول",
+            "Wealth": "الثروة",
+            "Mining": "التعدين",
+            "Invite": "دعوة"
+
+        },
+
+
+        hi: {
+
+            "Username": "यूज़रनेम",
+            "Password": "पासवर्ड",
+            "Confirm Password":
+                "पासवर्ड की पुष्टि करें",
+            "Invite Code": "इनवाइट कोड",
+            "Invite Code (optional)":
+                "इनवाइट कोड (वैकल्पिक)",
+            "Enter Username":
+                "यूज़रनेम दर्ज करें",
+            "Password (min. 6 chars)":
+                "पासवर्ड (कम से कम 6 अक्षर)",
+            "Sign In": "साइन इन",
+            "Register": "रजिस्टर",
+            "Create Account":
+                "खाता बनाएं",
+            "Already have an account?":
+                "क्या आपके पास पहले से खाता है?",
+            "Forgot Password?":
+                "पासवर्ड भूल गए?",
+            "Home": "होम",
+            "Markets": "मार्केट",
+            "Assets": "एसेट्स",
+            "Trade": "ट्रेड",
+            "Mine": "मेरा",
+            "Settings": "सेटिंग्स",
+            "Support": "सपोर्ट",
+            "Deposit": "जमा करें",
+            "Withdraw": "निकासी",
+            "Transfer": "ट्रांसफर",
+            "Loan": "लोन",
+            "My Orders": "मेरे ऑर्डर",
+            "Available": "उपलब्ध",
+            "Frozen": "फ्रोजन",
+            "History": "इतिहास",
+            "Announcements": "घोषणाएं",
+            "Copy Trade": "कॉपी ट्रेड",
+            "Wealth": "संपत्ति",
+            "Mining": "माइनिंग",
+            "Invite": "आमंत्रित करें"
+
+        },
+
+
+        es: {
+
+            "Username": "Nombre de usuario",
+            "Password": "Contraseña",
+            "Confirm Password":
+                "Confirmar contraseña",
+            "Invite Code": "Código de invitación",
+            "Invite Code (optional)":
+                "Código de invitación (opcional)",
+            "Enter Username":
+                "Ingrese nombre de usuario",
+            "Password (min. 6 chars)":
+                "Contraseña (mín. 6 caracteres)",
+            "Sign In": "Iniciar sesión",
+            "Register": "Registrarse",
+            "Create Account":
+                "Crear cuenta",
+            "Already have an account?":
+                "¿Ya tienes una cuenta?",
+            "Forgot Password?":
+                "¿Olvidaste tu contraseña?",
+            "Home": "Inicio",
+            "Markets": "Mercados",
+            "Assets": "Activos",
+            "Trade": "Comercio",
+            "Mine": "Mi cuenta",
+            "Settings": "Configuración",
+            "Support": "Soporte",
+            "Deposit": "Depositar",
+            "Withdraw": "Retirar",
+            "Transfer": "Transferir",
+            "Loan": "Préstamo",
+            "My Orders": "Mis órdenes",
+            "Available": "Disponible",
+            "Frozen": "Congelado",
+            "History": "Historial",
+            "Announcements": "Anuncios",
+            "Copy Trade": "Copy Trading",
+            "Wealth": "Patrimonio",
+            "Mining": "Minería",
+            "Invite": "Invitar"
+
+        },
+
+
+        zh: {
+
+            "Username": "用户名",
+            "Password": "密码",
+            "Confirm Password": "确认密码",
+            "Invite Code": "邀请码",
+            "Invite Code (optional)":
+                "邀请码（可选）",
+            "Enter Username":
+                "输入用户名",
+            "Password (min. 6 chars)":
+                "密码（至少6个字符）",
+            "Sign In": "登录",
+            "Register": "注册",
+            "Create Account": "创建账户",
+            "Already have an account?":
+                "已经有账户了吗？",
+            "Forgot Password?":
+                "忘记密码？",
+            "Home": "首页",
+            "Markets": "市场",
+            "Assets": "资产",
+            "Trade": "交易",
+            "Mine": "我的",
+            "Settings": "设置",
+            "Support": "客服",
+            "Deposit": "充值",
+            "Withdraw": "提现",
+            "Transfer": "转账",
+            "Loan": "贷款",
+            "My Orders": "我的订单",
+            "Available": "可用",
+            "Frozen": "冻结",
+            "History": "历史",
+            "Announcements": "公告",
+            "Copy Trade": "跟单",
+            "Wealth": "财富",
+            "Mining": "挖矿",
+            "Invite": "邀请"
+
+        },
+
+
+        ja: {
+
+            "Username": "ユーザー名",
+            "Password": "パスワード",
+            "Confirm Password":
+                "パスワードを確認",
+            "Invite Code": "招待コード",
+            "Invite Code (optional)":
+                "招待コード（任意）",
+            "Enter Username":
+                "ユーザー名を入力",
+            "Password (min. 6 chars)":
+                "パスワード（6文字以上）",
+            "Sign In": "ログイン",
+            "Register": "登録",
+            "Create Account":
+                "アカウントを作成",
+            "Already have an account?":
+                "すでにアカウントをお持ちですか？",
+            "Forgot Password?":
+                "パスワードをお忘れですか？",
+            "Home": "ホーム",
+            "Markets": "マーケット",
+            "Assets": "資産",
+            "Trade": "取引",
+            "Mine": "マイページ",
+            "Settings": "設定",
+            "Support": "サポート",
+            "Deposit": "入金",
+            "Withdraw": "出金",
+            "Transfer": "送金",
+            "Loan": "ローン",
+            "My Orders": "注文履歴",
+            "Available": "利用可能",
+            "Frozen": "凍結",
+            "History": "履歴",
+            "Announcements": "お知らせ",
+            "Copy Trade": "コピートレード",
+            "Wealth": "資産",
+            "Mining": "マイニング",
+            "Invite": "招待"
+
+        },
+
+
+        fr: {
+
+            "Username": "Nom d'utilisateur",
+            "Password": "Mot de passe",
+            "Confirm Password":
+                "Confirmer le mot de passe",
+            "Invite Code": "Code d'invitation",
+            "Invite Code (optional)":
+                "Code d'invitation (facultatif)",
+            "Enter Username":
+                "Entrez votre nom d'utilisateur",
+            "Password (min. 6 chars)":
+                "Mot de passe (6 caractères min.)",
+            "Sign In": "Se connecter",
+            "Register": "S'inscrire",
+            "Create Account":
+                "Créer un compte",
+            "Already have an account?":
+                "Vous avez déjà un compte ?",
+            "Forgot Password?":
+                "Mot de passe oublié ?",
+            "Home": "Accueil",
+            "Markets": "Marchés",
+            "Assets": "Actifs",
+            "Trade": "Trader",
+            "Mine": "Mon compte",
+            "Settings": "Paramètres",
+            "Support": "Assistance",
+            "Deposit": "Dépôt",
+            "Withdraw": "Retrait",
+            "Transfer": "Transfert",
+            "Loan": "Prêt",
+            "My Orders": "Mes ordres",
+            "Available": "Disponible",
+            "Frozen": "Gelé",
+            "History": "Historique",
+            "Announcements": "Annonces",
+            "Copy Trade": "Copy Trading",
+            "Wealth": "Patrimoine",
+            "Mining": "Minage",
+            "Invite": "Inviter"
+
+        },
+
+
+        de: {
+
+            "Username": "Benutzername",
+            "Password": "Passwort",
+            "Confirm Password":
+                "Passwort bestätigen",
+            "Invite Code": "Einladungscode",
+            "Invite Code (optional)":
+                "Einladungscode (optional)",
+            "Enter Username":
+                "Benutzernamen eingeben",
+            "Password (min. 6 chars)":
+                "Passwort (mind. 6 Zeichen)",
+            "Sign In": "Anmelden",
+            "Register": "Registrieren",
+            "Create Account":
+                "Konto erstellen",
+            "Already have an account?":
+                "Haben Sie bereits ein Konto?",
+            "Forgot Password?":
+                "Passwort vergessen?",
+            "Home": "Startseite",
+            "Markets": "Märkte",
+            "Assets": "Vermögenswerte",
+            "Trade": "Handeln",
+            "Mine": "Mein Konto",
+            "Settings": "Einstellungen",
+            "Support": "Support",
+            "Deposit": "Einzahlen",
+            "Withdraw": "Auszahlen",
+            "Transfer": "Überweisen",
+            "Loan": "Kredit",
+            "My Orders": "Meine Aufträge",
+            "Available": "Verfügbar",
+            "Frozen": "Eingefroren",
+            "History": "Verlauf",
+            "Announcements": "Ankündigungen",
+            "Copy Trade": "Copy Trading",
+            "Wealth": "Vermögen",
+            "Mining": "Mining",
+            "Invite": "Einladen"
+
+        },
+
+
+        ru: {
+
+            "Username": "Имя пользователя",
+            "Password": "Пароль",
+            "Confirm Password":
+                "Подтвердите пароль",
+            "Invite Code": "Код приглашения",
+            "Invite Code (optional)":
+                "Код приглашения (необязательно)",
+            "Enter Username":
+                "Введите имя пользователя",
+            "Password (min. 6 chars)":
+                "Пароль (минимум 6 символов)",
+            "Sign In": "Войти",
+            "Register": "Регистрация",
+            "Create Account":
+                "Создать аккаунт",
+            "Already have an account?":
+                "Уже есть аккаунт?",
+            "Forgot Password?":
+                "Забыли пароль?",
+            "Home": "Главная",
+            "Markets": "Рынки",
+            "Assets": "Активы",
+            "Trade": "Торговля",
+            "Mine": "Мой аккаунт",
+            "Settings": "Настройки",
+            "Support": "Поддержка",
+            "Deposit": "Пополнить",
+            "Withdraw": "Вывести",
+            "Transfer": "Перевести",
             "Loan": "Кредит",
+            "My Orders": "Мои ордера",
             "Available": "Доступно",
             "Frozen": "Заморожено",
-            "Main Wallet Balance":
-                "Баланс основного кошелька",
-            "Spot Account": "Спотовый счёт",
-            "Spot Trading Assets":
-                "Спотовые активы",
-            "Futures Account":
-                "Фьючерсный счёт",
-            "Futures Balance":
-                "Баланс фьючерсов",
+            "History": "История",
+            "Announcements": "Объявления",
             "Copy Trade": "Копитрейдинг",
             "Wealth": "Капитал",
             "Mining": "Майнинг",
-            "Invite": "Пригласить",
-            "Hot Markets": "Популярные рынки",
-            "Already have an account?":
-                "Уже есть аккаунт?",
-            "Create Account":
-                "Создать аккаунт",
-            "Protect your account":
-                "Защитите свой аккаунт",
-            "Keep your account safe":
-                "Обеспечьте безопасность аккаунта",
-            "Announcements": "Объявления",
-            "Latest": "Последние",
-            "Account Help": "Помощь по аккаунту",
-            "Manage Profile":
-                "Управление профилем",
-            "Add Funds": "Пополнить счёт",
-            "Payout Requests":
-                "Запросы на выплату",
-            "General Support":
-                "Общая поддержка",
-            "Converted Lots":
-                "Конвертированные лоты",
-            "Contract Value":
-                "Стоимость контракта",
-            "Transfer Funds":
-                "Перевести средства",
-            "Transfer Amount":
-                "Сумма перевода",
-            "Global Withdrawal":
-                "Глобальный вывод",
-            "Global Platform":
-                "Глобальная платформа",
-            "Available USDT":
-                "Доступный USDT",
-            "Payment Method":
-                "Способ оплаты",
-            "Select Payout":
-                "Выберите выплату",
-            "Confirm Withdrawal":
-                "Подтвердить вывод",
-            "Payout Gateway":
-                "Платёжный шлюз",
-            "Bank Wire":
-                "Банковский перевод",
-            "Crypto Wallet":
-                "Криптокошелёк"
+            "Invite": "Пригласить"
 
         }
 
@@ -830,100 +590,23 @@
 
 
     /* =====================================================
-       LANGUAGE HELPERS
+       GET TRANSLATION
        ===================================================== */
 
-    function isValidLanguage(language) {
+    function translate(text) {
 
-        return Object.prototype.hasOwnProperty.call(
-            LANGUAGES,
-            language
-        );
-
-    }
-
-
-    function getSavedLanguage() {
-
-        try {
-
-            const saved =
-                localStorage.getItem(
-                    STORAGE_KEY
-                );
-
-            if (
-                saved &&
-                isValidLanguage(saved)
-            ) {
-
-                return saved;
-
-            }
-
-        } catch (error) {
-
-            console.warn(
-                "CPTMarkets language storage error:",
-                error
-            );
-
-        }
-
-        return DEFAULT_LANGUAGE;
-
-    }
-
-
-    function saveLanguage(language) {
-
-        try {
-
-            localStorage.setItem(
-                STORAGE_KEY,
-                language
-            );
-
-        } catch (error) {
-
-            console.warn(
-                "CPTMarkets could not save language:",
-                error
-            );
-
-        }
-
-    }
-
-
-    function getLanguageInfo(language) {
-
-        return LANGUAGES[language] ||
-               LANGUAGES[DEFAULT_LANGUAGE];
-
-    }
-
-
-    /* =====================================================
-       TRANSLATION LOOKUP
-       ===================================================== */
-
-    function translateText(
-        text,
-        language = currentLanguage
-    ) {
-
-        if (!text) {
-
-            return text;
-
-        }
-
+        if (!text) return text;
 
         const clean =
             String(text)
                 .replace(/\s+/g, " ")
                 .trim();
+
+        if (
+            currentLanguage === "en"
+        ) {
+            return clean;
+        }
 
 
         /*
@@ -931,48 +614,27 @@
          */
 
         if (
-            TRANSLATIONS[language] &&
-            Object.prototype.hasOwnProperty.call(
-                TRANSLATIONS[language],
-                clean
-            )
+            externalTranslations[currentLanguage] &&
+            externalTranslations[currentLanguage][clean]
         ) {
 
-            return TRANSLATIONS[language][clean];
+            return externalTranslations
+                [currentLanguage][clean];
 
         }
 
 
         /*
-         * Then use extra translations.
+         * Then use built-in translations.
          */
 
         if (
-            EXTRA_TRANSLATIONS[language] &&
-            Object.prototype.hasOwnProperty.call(
-                EXTRA_TRANSLATIONS[language],
-                clean
-            )
+            translations[currentLanguage] &&
+            translations[currentLanguage][clean]
         ) {
 
-            return EXTRA_TRANSLATIONS[language][clean];
-
-        }
-
-
-        /*
-         * English fallback.
-         */
-
-        if (
-            TRANSLATIONS.en &&
-            Object.prototype.hasOwnProperty.call(
-                TRANSLATIONS.en,
-                clean
-            )
-        ) {
-
-            return TRANSLATIONS.en[clean];
+            return translations
+                [currentLanguage][clean];
 
         }
 
@@ -983,243 +645,1011 @@
 
 
     /* =====================================================
-       KEY → TRANSLATION
+       CREATE CSS
        ===================================================== */
 
-    function translateKey(
-        key,
-        language = currentLanguage
-    ) {
+    function createLanguageCSS() {
 
-        if (!key) {
+        if (
+            document.getElementById(
+                "cpt-language-css"
+            )
+        ) {
+            return;
+        }
 
-            return "";
+
+        const style =
+            document.createElement("style");
+
+
+        style.id =
+            "cpt-language-css";
+
+
+        style.textContent = `
+
+            #cpt-language-menu {
+
+                position: fixed;
+
+                z-index: 2147483647;
+
+                width: 265px;
+
+                max-width: calc(100vw - 20px);
+
+                max-height: 70vh;
+
+                overflow-y: auto;
+
+                padding: 8px;
+
+                background:
+                    #15151c;
+
+                border:
+                    1px solid
+                    rgba(0,220,255,.35);
+
+                border-radius:
+                    16px;
+
+                box-shadow:
+                    0 15px 45px
+                    rgba(0,0,0,.65);
+
+                display: none;
+
+                box-sizing: border-box;
+
+                font-family:
+                    Arial,
+                    sans-serif;
+
+            }
+
+
+            #cpt-language-menu.cpt-open {
+
+                display: block;
+
+                animation:
+                    cptLanguageOpen
+                    .18s ease;
+
+            }
+
+
+            @keyframes cptLanguageOpen {
+
+                from {
+
+                    opacity: 0;
+
+                    transform:
+                        translateY(-6px)
+                        scale(.98);
+
+                }
+
+                to {
+
+                    opacity: 1;
+
+                    transform:
+                        translateY(0)
+                        scale(1);
+
+                }
+
+            }
+
+
+            .cpt-language-option {
+
+                width: 100%;
+
+                min-height: 54px;
+
+                display: flex;
+
+                align-items: center;
+
+                gap: 13px;
+
+                border: 0;
+
+                outline: 0;
+
+                border-radius: 12px;
+
+                background:
+                    transparent;
+
+                color: #ffffff;
+
+                padding:
+                    8px 12px;
+
+                margin:
+                    2px 0;
+
+                cursor: pointer;
+
+                font-size: 16px;
+
+                text-align: left;
+
+                box-sizing: border-box;
+
+            }
+
+
+            .cpt-language-option:hover {
+
+                background:
+                    rgba(255,255,255,.09);
+
+            }
+
+
+            .cpt-language-option.cpt-selected {
+
+                background:
+                    rgba(255,255,255,.12);
+
+            }
+
+
+            .cpt-language-flag {
+
+                width: 38px;
+
+                min-width: 38px;
+
+                height: 30px;
+
+                display: flex;
+
+                align-items: center;
+
+                justify-content: center;
+
+                font-size: 27px;
+
+            }
+
+
+            .cpt-language-name {
+
+                flex: 1;
+
+                white-space: nowrap;
+
+                overflow: hidden;
+
+                text-overflow: ellipsis;
+
+            }
+
+
+            .cpt-language-check {
+
+                width: 24px;
+
+                min-width: 24px;
+
+                text-align: center;
+
+                color:
+                    #ffffff;
+
+                font-size: 20px;
+
+                font-weight: bold;
+
+            }
+
+
+            .cpt-current-language-flag {
+
+                display: inline-flex;
+
+                align-items: center;
+
+                justify-content: center;
+
+                font-size: 27px;
+
+                line-height: 1;
+
+            }
+
+
+            #cpt-language-menu::-webkit-scrollbar {
+
+                width: 5px;
+
+            }
+
+
+            #cpt-language-menu::-webkit-scrollbar-thumb {
+
+                background:
+                    rgba(255,255,255,.2);
+
+                border-radius: 10px;
+
+            }
+
+        `;
+
+
+        document.head.appendChild(style);
+
+    }
+
+
+    /* =====================================================
+       CREATE MENU
+       ===================================================== */
+
+    function createLanguageMenu() {
+
+        let menu =
+            document.getElementById(
+                "cpt-language-menu"
+            );
+
+
+        if (menu) {
+
+            updateLanguageMenu();
+
+            return menu;
 
         }
 
 
-        const englishText =
-            KEY_TEXT[key];
+        menu =
+            document.createElement("div");
 
 
-        if (!englishText) {
-
-            return "";
-
-        }
+        menu.id =
+            "cpt-language-menu";
 
 
-        return translateText(
-            englishText,
-            language
+        menu.setAttribute(
+            "role",
+            "menu"
+        );
+
+
+        LANGUAGE_ORDER.forEach(
+            function (code) {
+
+                const lang =
+                    LANGUAGES[code];
+
+
+                const button =
+                    document.createElement("button");
+
+
+                button.type =
+                    "button";
+
+
+                button.className =
+                    "cpt-language-option";
+
+
+                button.dataset.lang =
+                    code;
+
+
+                button.innerHTML = `
+
+                    <span
+                        class="cpt-language-flag"
+                    >
+                        ${lang.flag}
+                    </span>
+
+                    <span
+                        class="cpt-language-name"
+                    >
+                        ${lang.native}
+                    </span>
+
+                    <span
+                        class="cpt-language-check"
+                    >
+                        ✓
+                    </span>
+
+                `;
+
+
+                button.addEventListener(
+                    "click",
+                    function (event) {
+
+                        event.preventDefault();
+
+                        event.stopPropagation();
+
+                        setLanguage(code);
+
+                    }
+                );
+
+
+                menu.appendChild(button);
+
+            }
+        );
+
+
+        document.body.appendChild(menu);
+
+
+        updateLanguageMenu();
+
+
+        return menu;
+
+    }
+
+
+    /* =====================================================
+       FIND LANGUAGE BUTTON
+       ===================================================== */
+
+    function getLanguageButton() {
+
+        return (
+
+            document.getElementById(
+                "languageBtn"
+            ) ||
+
+            document.querySelector(
+                ".language-btn"
+            ) ||
+
+            document.querySelector(
+                "[data-language-button]"
+            )
+
         );
 
     }
 
 
     /* =====================================================
-       PLACEHOLDER TRANSLATION
+       UPDATE FLAG
        ===================================================== */
 
-    function translatePlaceholder(
-        key,
-        language = currentLanguage
-    ) {
+    function updateCurrentFlag() {
 
-        const englishText =
-            PLACEHOLDER_TEXT[key];
+        const button =
+            getLanguageButton();
 
 
-        if (!englishText) {
+        if (!button) {
 
-            return "";
+            return;
 
         }
 
 
-        return translateText(
-            englishText,
-            language
+        const lang =
+            LANGUAGES[currentLanguage];
+
+
+        if (!lang) {
+
+            return;
+
+        }
+
+
+        /*
+         * শুধু flag রাখছি।
+         */
+
+        button.innerHTML = `
+
+            <span
+                class="cpt-current-language-flag"
+                aria-hidden="true"
+            >
+                ${lang.flag}
+            </span>
+
+        `;
+
+
+        button.dataset.currentLanguage =
+            currentLanguage;
+
+
+        button.setAttribute(
+            "aria-label",
+            lang.native
+        );
+
+
+        button.setAttribute(
+            "title",
+            lang.native
         );
 
     }
 
 
     /* =====================================================
-       TRANSLATE DATA-KEY ELEMENTS
+       POSITION MENU
+       ===================================================== */
+
+    function positionMenu() {
+
+        const button =
+            getLanguageButton();
+
+
+        const menu =
+            document.getElementById(
+                "cpt-language-menu"
+            );
+
+
+        if (!button || !menu) {
+
+            return;
+
+        }
+
+
+        /*
+         * Temporarily show it to calculate size.
+         */
+
+        const rect =
+            button.getBoundingClientRect();
+
+
+        const menuWidth =
+            Math.min(
+                265,
+                window.innerWidth - 20
+            );
+
+
+        menu.style.width =
+            menuWidth + "px";
+
+
+        const menuHeight =
+            Math.min(
+                menu.scrollHeight,
+                window.innerHeight * .70
+            );
+
+
+        let left =
+            rect.right - menuWidth;
+
+
+        let top =
+            rect.bottom + 8;
+
+
+        if (
+            left < 10
+        ) {
+
+            left = 10;
+
+        }
+
+
+        if (
+            left + menuWidth >
+            window.innerWidth - 10
+        ) {
+
+            left =
+                window.innerWidth -
+                menuWidth -
+                10;
+
+        }
+
+
+        /*
+         * If there is no room below,
+         * open above the button.
+         */
+
+        if (
+            top + menuHeight >
+            window.innerHeight - 10
+        ) {
+
+            top =
+                rect.top -
+                menuHeight -
+                8;
+
+        }
+
+
+        if (top < 10) {
+
+            top = 10;
+
+        }
+
+
+        menu.style.left =
+            left + "px";
+
+
+        menu.style.top =
+            top + "px";
+
+    }
+
+
+    /* =====================================================
+       OPEN MENU
+       ===================================================== */
+
+    function openLanguageMenu() {
+
+        const menu =
+            createLanguageMenu();
+
+
+        updateLanguageMenu();
+
+
+        menu.classList.add(
+            "cpt-open"
+        );
+
+
+        /*
+         * Need actual dimensions
+         * after display.
+         */
+
+        requestAnimationFrame(
+            function () {
+
+                positionMenu();
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       CLOSE MENU
+       ===================================================== */
+
+    function closeLanguageMenu() {
+
+        const menu =
+            document.getElementById(
+                "cpt-language-menu"
+            );
+
+
+        if (!menu) {
+
+            return;
+
+        }
+
+
+        menu.classList.remove(
+            "cpt-open"
+        );
+
+    }
+
+
+    /* =====================================================
+       TOGGLE MENU
+       ===================================================== */
+
+    function toggleLanguageMenu(
+        event
+    ) {
+
+        if (event) {
+
+            event.preventDefault();
+
+            event.stopPropagation();
+
+        }
+
+
+        const menu =
+            document.getElementById(
+                "cpt-language-menu"
+            );
+
+
+        if (
+            menu &&
+            menu.classList.contains(
+                "cpt-open"
+            )
+        ) {
+
+            closeLanguageMenu();
+
+        } else {
+
+            openLanguageMenu();
+
+        }
+
+    }
+
+
+    /* =====================================================
+       CONNECT BUTTON
+       ===================================================== */
+
+    function connectButton() {
+
+        const button =
+            getLanguageButton();
+
+
+        if (!button) {
+
+            console.warn(
+                "CPT Translator: #languageBtn not found."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            button.dataset.cptLanguageConnected ===
+            "true"
+        ) {
+
+            updateCurrentFlag();
+
+            return;
+
+        }
+
+
+        button.dataset.cptLanguageConnected =
+            "true";
+
+
+        /*
+         * IMPORTANT:
+         * Do NOT replace the original button.
+         */
+
+        button.addEventListener(
+            "click",
+            toggleLanguageMenu,
+            true
+        );
+
+
+        updateCurrentFlag();
+
+    }
+
+
+    /* =====================================================
+       UPDATE MENU CHECK
+       ===================================================== */
+
+    function updateLanguageMenu() {
+
+        const menu =
+            document.getElementById(
+                "cpt-language-menu"
+            );
+
+
+        if (!menu) {
+
+            return;
+
+        }
+
+
+        menu.querySelectorAll(
+            ".cpt-language-option"
+        )
+        .forEach(
+            function (button) {
+
+                const selected =
+                    button.dataset.lang ===
+                    currentLanguage;
+
+
+                button.classList.toggle(
+                    "cpt-selected",
+                    selected
+                );
+
+
+                const check =
+                    button.querySelector(
+                        ".cpt-language-check"
+                    );
+
+
+                if (check) {
+
+                    check.style.visibility =
+                        selected
+                            ? "visible"
+                            : "hidden";
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       SET LANGUAGE
+       ===================================================== */
+
+    function setLanguage(
+        language
+    ) {
+
+        if (!LANGUAGES[language]) {
+
+            return;
+
+        }
+
+
+        currentLanguage =
+            language;
+
+
+        /*
+         * SAVE GLOBALLY
+         */
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            currentLanguage
+        );
+
+
+        /*
+         * HTML language + RTL
+         */
+
+        const info =
+            LANGUAGES[currentLanguage];
+
+
+        document.documentElement
+            .setAttribute(
+                "lang",
+                currentLanguage
+            );
+
+
+        document.documentElement
+            .setAttribute(
+                "dir",
+                info.dir
+            );
+
+
+        document.documentElement
+            .setAttribute(
+                "data-language",
+                currentLanguage
+            );
+
+
+        /*
+         * Update flag
+         */
+
+        updateCurrentFlag();
+
+
+        /*
+         * Update menu
+         */
+
+        updateLanguageMenu();
+
+
+        /*
+         * Translate page
+         */
+
+        translatePage();
+
+
+        /*
+         * Close menu
+         */
+
+        closeLanguageMenu();
+
+
+        /*
+         * Tell other scripts
+         */
+
+        window.dispatchEvent(
+            new CustomEvent(
+                "cptLanguageChanged",
+                {
+                    detail: {
+                        language:
+                            currentLanguage
+                    }
+                }
+            )
+        );
+
+    }
+
+
+    /* =====================================================
+       TRANSLATE DATA-KEY
        ===================================================== */
 
     function translateDataKeys() {
 
-        const elements =
-            document.querySelectorAll(
+        document
+            .querySelectorAll(
                 "[data-key]"
+            )
+            .forEach(
+                function (element) {
+
+                    /*
+                     * Language menu বাদ
+                     */
+
+                    if (
+                        element.closest(
+                            "#cpt-language-menu"
+                        )
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const key =
+                        element.getAttribute(
+                            "data-key"
+                        );
+
+
+                    /*
+                     * If key directly exists
+                     * in translation database.
+                     */
+
+                    let result = "";
+
+
+                    if (
+                        externalTranslations[
+                            currentLanguage
+                        ] &&
+                        externalTranslations[
+                            currentLanguage
+                        ][key]
+                    ) {
+
+                        result =
+                            externalTranslations[
+                                currentLanguage
+                            ][key];
+
+                    }
+
+
+                    /*
+                     * If no direct key,
+                     * use key as English text.
+                     */
+
+                    if (!result) {
+
+                        result =
+                            translate(key);
+
+                    }
+
+
+                    if (!result) {
+
+                        return;
+
+                    }
+
+
+                    /*
+                     * If element contains icons,
+                     * preserve icons.
+                     */
+
+                    const textNodes = [];
+
+                    const walker =
+                        document.createTreeWalker(
+                            element,
+                            NodeFilter.SHOW_TEXT,
+                            null
+                        );
+
+
+                    while (
+                        walker.nextNode()
+                    ) {
+
+                        const node =
+                            walker.currentNode;
+
+
+                        if (
+                            node.nodeValue.trim()
+                        ) {
+
+                            textNodes.push(node);
+
+                        }
+
+                    }
+
+
+                    if (textNodes.length) {
+
+                        textNodes[
+                            textNodes.length - 1
+                        ].nodeValue =
+                            " " + result;
+
+                    } else {
+
+                        element.textContent =
+                            result;
+
+                    }
+
+                }
             );
-
-
-        elements.forEach(
-            function (element) {
-
-                if (
-                    element.closest(
-                        "#cptLanguageMenu"
-                    )
-                ) {
-
-                    return;
-
-                }
-
-
-                const key =
-                    element.getAttribute(
-                        "data-key"
-                    );
-
-
-                const translated =
-                    translateKey(
-                        key
-                    );
-
-
-                if (!translated) {
-
-                    return;
-
-                }
-
-
-                /*
-                 * Save original HTML only once.
-                 *
-                 * This is important because some of your
-                 * HTML has icons inside the same element.
-                 */
-
-                if (
-                    element.dataset
-                        .cptOriginalHTML ===
-                    undefined
-                ) {
-
-                    element.dataset
-                        .cptOriginalHTML =
-                        element.innerHTML;
-
-                }
-
-
-                /*
-                 * If element contains child elements
-                 * such as icons, only replace text nodes.
-                 */
-
-                replaceElementText(
-                    element,
-                    translated
-                );
-
-            }
-        );
-
-    }
-
-
-    /* =====================================================
-       REPLACE ELEMENT TEXT
-       ===================================================== */
-
-    function replaceElementText(
-        element,
-        translated
-    ) {
-
-        /*
-         * Find the first meaningful text node.
-         */
-
-        const walker =
-            document.createTreeWalker(
-                element,
-                NodeFilter.SHOW_TEXT,
-                null
-            );
-
-
-        let textNode = null;
-
-
-        while (
-            walker.nextNode()
-        ) {
-
-            const node =
-                walker.currentNode;
-
-
-            if (
-                node.parentElement &&
-                !node.parentElement.closest(
-                    "#cptLanguageMenu"
-                ) &&
-                node.nodeValue.trim()
-            ) {
-
-                textNode = node;
-
-                break;
-
-            }
-
-        }
-
-
-        if (textNode) {
-
-            if (
-                textNode.__cptOriginalText ===
-                undefined
-            ) {
-
-                textNode.__cptOriginalText =
-                    textNode.nodeValue;
-
-            }
-
-
-            const original =
-                textNode.__cptOriginalText;
-
-
-            const leading =
-                original.match(
-                    /^\s*/
-                )?.[0] || "";
-
-
-            const trailing =
-                original.match(
-                    /\s*$/
-                )?.[0] || "";
-
-
-            textNode.nodeValue =
-                leading +
-                translated +
-                trailing;
-
-        } else {
-
-            /*
-             * If there is no child text node,
-             * set text directly.
-             */
-
-            element.textContent =
-                translated;
-
-        }
 
     }
 
@@ -1230,45 +1660,55 @@
 
     function translatePlaceholders() {
 
-        const elements =
-            document.querySelectorAll(
+        document
+            .querySelectorAll(
                 "[data-ph-key]"
-            );
+            )
+            .forEach(
+                function (element) {
+
+                    const key =
+                        element.getAttribute(
+                            "data-ph-key"
+                        );
 
 
-        elements.forEach(
-            function (element) {
-
-                const key =
-                    element.getAttribute(
-                        "data-ph-key"
-                    );
+                    let result =
+                        translate(key);
 
 
-                const translated =
-                    translatePlaceholder(
-                        key
-                    );
+                    if (
+                        translations[
+                            currentLanguage
+                        ] &&
+                        translations[
+                            currentLanguage
+                        ][key]
+                    ) {
+
+                        result =
+                            translations[
+                                currentLanguage
+                            ][key];
+
+                    }
 
 
-                if (!translated) {
+                    if (result) {
 
-                    return;
+                        element.placeholder =
+                            result;
+
+                    }
 
                 }
-
-
-                element.placeholder =
-                    translated;
-
-            }
-        );
+            );
 
     }
 
 
     /* =====================================================
-       TRANSLATE NORMAL TEXT
+       NORMAL TEXT TRANSLATION
        ===================================================== */
 
     function translateNormalText() {
@@ -1292,20 +1732,24 @@
                 walker.currentNode;
 
 
-            if (!node.parentElement) {
+            const parent =
+                node.parentElement;
+
+
+            if (!parent) {
 
                 continue;
 
             }
 
 
-            const parent =
-                node.parentElement;
-
+            /*
+             * Don't touch menu.
+             */
 
             if (
                 parent.closest(
-                    "#cptLanguageMenu"
+                    "#cpt-language-menu"
                 )
             ) {
 
@@ -1314,9 +1758,9 @@
             }
 
 
-            const tag =
-                parent.tagName;
-
+            /*
+             * Don't touch scripts.
+             */
 
             if (
                 [
@@ -1324,9 +1768,10 @@
                     "STYLE",
                     "NOSCRIPT",
                     "CODE",
-                    "PRE",
-                    "TEXTAREA"
-                ].includes(tag)
+                    "PRE"
+                ].includes(
+                    parent.tagName
+                )
             ) {
 
                 continue;
@@ -1335,7 +1780,7 @@
 
 
             /*
-             * data-key elements are handled separately.
+             * data-key handled separately.
              */
 
             if (
@@ -1349,13 +1794,8 @@
             }
 
 
-            const text =
-                node.nodeValue;
-
-
             if (
-                !text ||
-                !text.trim()
+                !node.nodeValue.trim()
             ) {
 
                 continue;
@@ -1363,9 +1803,7 @@
             }
 
 
-            nodes.push(
-                node
-            );
+            nodes.push(node);
 
         }
 
@@ -1373,52 +1811,39 @@
         nodes.forEach(
             function (node) {
 
-                if (
-                    node.__cptOriginalText ===
-                    undefined
-                ) {
-
-                    node.__cptOriginalText =
-                        node.nodeValue;
-
-                }
-
-
                 const original =
-                    node.__cptOriginalText
+                    node.nodeValue
                         .replace(/\s+/g, " ")
                         .trim();
 
 
-                if (!original) {
+                const result =
+                    translate(original);
 
-                    return;
+
+                if (
+                    result &&
+                    result !== original
+                ) {
+
+                    const leading =
+                        node.nodeValue.match(
+                            /^\s*/
+                        )?.[0] || "";
+
+
+                    const trailing =
+                        node.nodeValue.match(
+                            /\s*$/
+                        )?.[0] || "";
+
+
+                    node.nodeValue =
+                        leading +
+                        result +
+                        trailing;
 
                 }
-
-
-                const translated =
-                    translateText(
-                        original
-                    );
-
-
-                const leading =
-                    node.__cptOriginalText
-                        .match(/^\s*/)?.[0] ||
-                    "";
-
-
-                const trailing =
-                    node.__cptOriginalText
-                        .match(/\s*$/)?.[0] ||
-                    "";
-
-
-                node.nodeValue =
-                    leading +
-                    translated +
-                    trailing;
 
             }
         );
@@ -1427,7 +1852,7 @@
 
 
     /* =====================================================
-       PAGE TRANSLATION
+       TRANSLATE PAGE
        ===================================================== */
 
     function translatePage() {
@@ -1449,584 +1874,6 @@
 
 
     /* =====================================================
-       DOCUMENT DIRECTION
-       ===================================================== */
-
-    function updateDocumentDirection() {
-
-        const info =
-            getLanguageInfo(
-                currentLanguage
-            );
-
-
-        document.documentElement
-            .setAttribute(
-                "lang",
-                currentLanguage
-            );
-
-
-        document.documentElement
-            .setAttribute(
-                "dir",
-                info.direction || "ltr"
-            );
-
-
-        document.documentElement
-            .setAttribute(
-                "data-language",
-                currentLanguage
-            );
-
-    }
-
-
-    /* =====================================================
-       LANGUAGE BUTTONS
-       ===================================================== */
-
-    function getLanguageButtons() {
-
-        const buttons = [];
-
-
-        const selectors = [
-            "#languageBtn",
-            "[data-language-button]",
-            ".language-btn"
-        ];
-
-
-        selectors.forEach(
-            function (selector) {
-
-                document
-                    .querySelectorAll(selector)
-                    .forEach(
-                        function (button) {
-
-                            if (
-                                !buttons.includes(
-                                    button
-                                )
-                            ) {
-
-                                buttons.push(
-                                    button
-                                );
-
-                            }
-
-                        }
-                    );
-
-            }
-        );
-
-
-        return buttons;
-
-    }
-
-
-    /* =====================================================
-       UPDATE SELECTED FLAG
-       ===================================================== */
-
-    function updateLanguageButtons() {
-
-        const info =
-            getLanguageInfo(
-                currentLanguage
-            );
-
-
-        getLanguageButtons()
-            .forEach(
-                function (button) {
-
-                    /*
-                     * Your HTML button should show
-                     * only the selected flag.
-                     */
-
-                    button.innerHTML =
-                        '<span class="cpt-selected-flag">' +
-                        info.flag +
-                        '</span>';
-
-
-                    button.setAttribute(
-                        "aria-label",
-                        info.name
-                    );
-
-
-                    button.setAttribute(
-                        "title",
-                        info.nativeName
-                    );
-
-
-                    button.dataset.language =
-                        currentLanguage;
-
-                }
-            );
-
-    }
-
-
-    /* =====================================================
-       LANGUAGE MENU
-       ===================================================== */
-
-    function createLanguageMenu() {
-
-        let menu =
-            document.getElementById(
-                "cptLanguageMenu"
-            );
-
-
-        if (menu) {
-
-            return menu;
-
-        }
-
-
-        menu =
-            document.createElement(
-                "div"
-            );
-
-
-        menu.id =
-            "cptLanguageMenu";
-
-
-        menu.setAttribute(
-            "role",
-            "menu"
-        );
-
-
-        LANGUAGE_ORDER.forEach(
-            function (code) {
-
-                const info =
-                    getLanguageInfo(
-                        code
-                    );
-
-
-                const item =
-                    document.createElement(
-                        "button"
-                    );
-
-
-                item.type =
-                    "button";
-
-
-                item.className =
-                    "cpt-language-item";
-
-
-                item.dataset.language =
-                    code;
-
-
-                item.innerHTML =
-
-                    '<span class="cpt-language-flag">' +
-                    info.flag +
-                    '</span>' +
-
-                    '<span class="cpt-language-name">' +
-                    info.nativeName +
-                    '</span>' +
-
-                    '<span class="cpt-language-check">' +
-                    '✓' +
-                    '</span>';
-
-
-                item.addEventListener(
-                    "click",
-                    function (event) {
-
-                        event.preventDefault();
-
-                        event.stopPropagation();
-
-
-                        setLanguage(
-                            code
-                        );
-
-
-                        closeLanguageMenu();
-
-                    }
-                );
-
-
-                menu.appendChild(
-                    item
-                );
-
-            }
-        );
-
-
-        document.body.appendChild(
-            menu
-        );
-
-
-        updateLanguageMenu();
-
-
-        return menu;
-
-    }
-
-
-    /* =====================================================
-       UPDATE MENU
-       ===================================================== */
-
-    function updateLanguageMenu() {
-
-        const menu =
-            document.getElementById(
-                "cptLanguageMenu"
-            );
-
-
-        if (!menu) {
-
-            return;
-
-        }
-
-
-        menu.querySelectorAll(
-            ".cpt-language-item"
-        )
-        .forEach(
-            function (item) {
-
-                const selected =
-                    item.dataset.language ===
-                    currentLanguage;
-
-
-                item.classList.toggle(
-                    "active",
-                    selected
-                );
-
-
-                item.setAttribute(
-                    "aria-selected",
-                    selected
-                        ? "true"
-                        : "false"
-                );
-
-
-                const check =
-                    item.querySelector(
-                        ".cpt-language-check"
-                    );
-
-
-                if (check) {
-
-                    check.style.visibility =
-                        selected
-                            ? "visible"
-                            : "hidden";
-
-                }
-
-            }
-        );
-
-    }
-
-
-    /* =====================================================
-       OPEN MENU
-       ===================================================== */
-
-    function openLanguageMenu(
-        button
-    ) {
-
-        const menu =
-            createLanguageMenu();
-
-
-        updateLanguageMenu();
-
-
-        menu.style.display =
-            "block";
-
-
-        menu.classList.add(
-            "open"
-        );
-
-
-        const rect =
-            button.getBoundingClientRect();
-
-
-        const menuRect =
-            menu.getBoundingClientRect();
-
-
-        let top =
-            rect.bottom + 8;
-
-
-        let left =
-            rect.right -
-            menuRect.width;
-
-
-        const margin =
-            10;
-
-
-        if (
-            left < margin
-        ) {
-
-            left =
-                margin;
-
-        }
-
-
-        if (
-            left +
-            menuRect.width >
-            window.innerWidth -
-            margin
-        ) {
-
-            left =
-                window.innerWidth -
-                menuRect.width -
-                margin;
-
-        }
-
-
-        if (
-            top +
-            menuRect.height >
-            window.innerHeight -
-            margin
-        ) {
-
-            top =
-                rect.top -
-                menuRect.height -
-                8;
-
-        }
-
-
-        menu.style.top =
-            Math.max(
-                margin,
-                top
-            ) + "px";
-
-
-        menu.style.left =
-            Math.max(
-                margin,
-                left
-            ) + "px";
-
-    }
-
-
-    /* =====================================================
-       CLOSE MENU
-       ===================================================== */
-
-    function closeLanguageMenu() {
-
-        const menu =
-            document.getElementById(
-                "cptLanguageMenu"
-            );
-
-
-        if (!menu) {
-
-            return;
-
-        }
-
-
-        menu.classList.remove(
-            "open"
-        );
-
-
-        menu.style.display =
-            "none";
-
-    }
-
-
-    /* =====================================================
-       BUTTON EVENTS
-       ===================================================== */
-
-    function connectLanguageButtons() {
-
-        getLanguageButtons()
-            .forEach(
-                function (button) {
-
-                    if (
-                        button.dataset
-                            .cptConnected ===
-                        "true"
-                    ) {
-
-                        return;
-
-                    }
-
-
-                    button.dataset
-                        .cptConnected =
-                        "true";
-
-
-                    button.addEventListener(
-                        "click",
-                        function (event) {
-
-                            event.preventDefault();
-
-                            event.stopPropagation();
-
-
-                            const menu =
-                                document.getElementById(
-                                    "cptLanguageMenu"
-                                );
-
-
-                            if (
-                                menu &&
-                                menu.classList.contains(
-                                    "open"
-                                )
-                            ) {
-
-                                closeLanguageMenu();
-
-                            } else {
-
-                                openLanguageMenu(
-                                    button
-                                );
-
-                            }
-
-                        }
-                    );
-
-                }
-            );
-
-    }
-
-
-    /* =====================================================
-       SET LANGUAGE
-       ===================================================== */
-
-    function setLanguage(
-        language
-    ) {
-
-        if (
-            !isValidLanguage(
-                language
-            )
-        ) {
-
-            language =
-                DEFAULT_LANGUAGE;
-
-        }
-
-
-        currentLanguage =
-            language;
-
-
-        /*
-         * THIS IS THE IMPORTANT PART:
-         *
-         * Save selected language globally.
-         *
-         * All HTML pages on the same domain
-         * will read this value.
-         */
-
-        saveLanguage(
-            currentLanguage
-        );
-
-
-        updateDocumentDirection();
-
-        translatePage();
-
-        updateLanguageButtons();
-
-        updateLanguageMenu();
-
-
-        /*
-         * Notify other website scripts.
-         */
-
-        document.dispatchEvent(
-            new CustomEvent(
-                "cptLanguageChanged",
-                {
-                    detail: {
-                        language:
-                            currentLanguage
-                    }
-                }
-            )
-        );
-
-    }
-
-
-    /* =====================================================
        OUTSIDE CLICK
        ===================================================== */
 
@@ -2036,7 +1883,7 @@
 
             const menu =
                 document.getElementById(
-                    "cptLanguageMenu"
+                    "cpt-language-menu"
                 );
 
 
@@ -2045,6 +1892,10 @@
                 return;
 
             }
+
+
+            const button =
+                getLanguageButton();
 
 
             if (
@@ -2059,9 +1910,9 @@
 
 
             if (
-                event.target.closest &&
-                event.target.closest(
-                    "#languageBtn, .language-btn, [data-language-button]"
+                button &&
+                button.contains(
+                    event.target
                 )
             ) {
 
@@ -2072,12 +1923,13 @@
 
             closeLanguageMenu();
 
-        }
+        },
+        true
     );
 
 
     /* =====================================================
-       ESC KEY
+       ESCAPE
        ===================================================== */
 
     document.addEventListener(
@@ -2097,62 +1949,6 @@
 
 
     /* =====================================================
-       STORAGE SYNC
-       ===================================================== */
-
-    window.addEventListener(
-        "storage",
-        function (event) {
-
-            if (
-                event.key !==
-                STORAGE_KEY
-            ) {
-
-                return;
-
-            }
-
-
-            if (
-                !event.newValue ||
-                !isValidLanguage(
-                    event.newValue
-                )
-            ) {
-
-                return;
-
-            }
-
-
-            if (
-                event.newValue ===
-                currentLanguage
-            ) {
-
-                return;
-
-            }
-
-
-            currentLanguage =
-                event.newValue;
-
-
-            updateDocumentDirection();
-
-            translatePage();
-
-            updateLanguageButtons();
-
-            updateLanguageMenu();
-
-        }
-    );
-
-
-    /* =====================================================
        RESIZE
        ===================================================== */
 
@@ -2160,215 +1956,131 @@
         "resize",
         function () {
 
-            closeLanguageMenu();
+            const menu =
+                document.getElementById(
+                    "cpt-language-menu"
+                );
+
+
+            if (
+                menu &&
+                menu.classList.contains(
+                    "cpt-open"
+                )
+            ) {
+
+                positionMenu();
+
+            }
 
         }
     );
 
 
     /* =====================================================
-       MUTATION OBSERVER
-       ===================================================== */
-
-    function setupMutationObserver() {
-
-        if (
-            typeof MutationObserver ===
-            "undefined"
-        ) {
-
-            return;
-
-        }
-
-
-        if (!document.body) {
-
-            return;
-
-        }
-
-
-        let timer = null;
-
-
-        const observer =
-            new MutationObserver(
-                function () {
-
-                    clearTimeout(
-                        timer
-                    );
-
-
-                    timer =
-                        setTimeout(
-                            function () {
-
-                                connectLanguageButtons();
-
-                                translateDataKeys();
-
-                                translatePlaceholders();
-
-                                updateLanguageButtons();
-
-                            },
-                            100
-                        );
-
-                }
-            );
-
-
-        observer.observe(
-            document.body,
-            {
-                childList: true,
-                subtree: true
-            }
-        );
-
-    }
-
-
-    /* =====================================================
        PUBLIC API
        ===================================================== */
 
-    window.CPTSetLanguage =
-        function (language) {
+    window.CPTTranslator = {
 
-            setLanguage(
-                language
-            );
+        setLanguage: setLanguage,
 
-        };
-
-
-    window.CPTGetLanguage =
-        function () {
+        getLanguage: function () {
 
             return currentLanguage;
 
-        };
+        },
 
+        open: openLanguageMenu,
 
-    window.CPTGetLanguageInfo =
-        function () {
+        close: closeLanguageMenu,
 
-            return getLanguageInfo(
-                currentLanguage
-            );
+        translate: translate,
 
-        };
+        refresh: translatePage
 
-
-    window.CPTTranslateText =
-        function (text) {
-
-            return translateText(
-                text
-            );
-
-        };
-
-
-    window.CPTRefreshTranslation =
-        function () {
-
-            updateDocumentDirection();
-
-            translatePage();
-
-            updateLanguageButtons();
-
-            updateLanguageMenu();
-
-        };
+    };
 
 
     /* =====================================================
-       INITIALIZATION
+       INITIALIZE
        ===================================================== */
 
     function initialize() {
 
+        createLanguageCSS();
+
+
         /*
-         * Make sure saved language exists.
+         * Make sure page knows current language.
          */
 
-        if (
-            !isValidLanguage(
+        const info =
+            LANGUAGES[currentLanguage];
+
+
+        document.documentElement
+            .setAttribute(
+                "lang",
                 currentLanguage
-            )
-        ) {
-
-            currentLanguage =
-                DEFAULT_LANGUAGE;
-
-        }
+            );
 
 
-        updateDocumentDirection();
+        document.documentElement
+            .setAttribute(
+                "dir",
+                info.dir
+            );
+
+
+        document.documentElement
+            .setAttribute(
+                "data-language",
+                currentLanguage
+            );
 
 
         /*
-         * IMPORTANT:
-         * Create menu BEFORE translating.
+         * Create selector.
          */
 
         createLanguageMenu();
 
 
-        connectLanguageButtons();
+        /*
+         * Connect existing button.
+         */
+
+        connectButton();
 
 
         /*
-         * Translate actual website.
+         * Translate page.
          */
 
         translatePage();
 
 
         /*
-         * Show selected flag.
+         * Update flag again after translation.
          */
 
-        updateLanguageButtons();
+        updateCurrentFlag();
 
 
         updateLanguageMenu();
 
 
-        /*
-         * Watch dynamically generated content.
-         */
-
-        setupMutationObserver();
-
-
-        /*
-         * Ready event.
-         */
-
-        document.dispatchEvent(
-            new CustomEvent(
-                "cptTranslatorReady",
-                {
-                    detail: {
-                        language:
-                            currentLanguage
-                    }
-                }
-            )
+        console.log(
+            "CPT Translator ready:",
+            currentLanguage
         );
 
     }
 
 
     /* =====================================================
-       START
+       DOM READY
        ===================================================== */
 
     if (
@@ -2391,4 +2103,4 @@
     }
 
 
-})(window, document);
+})();
