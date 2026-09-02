@@ -496,7 +496,7 @@
                     <div class="input-wrapper" style="margin-bottom: 12px; position:relative;">
                         <i id="bankFlagPreview" class="fa-solid fa-flag" style="position:absolute; left:16px; z-index:2; color:#00e5ff;"></i>
                         <div id="selectedBankCountryDisplay" class="custom-select-box" onclick="openBankCountryModal()">
-                            <span id="selectedBankCountryText">Select Country (Bangladesh, India, China, etc.)</span>
+                            <span id="selectedBankCountryText">Select Country & Banking System</span>
                             <i class="fa-solid fa-chevron-down"></i>
                         </div>
                     </div>
@@ -530,7 +530,7 @@
 
                     <div class="input-wrapper" style="margin-bottom: 12px;">
                         <i class="fa-solid fa-wallet"></i>
-                        <input type="text" id="walletProviderName" placeholder="Wallet Provider (e.g., bKash, Nagad, Alipay, Paytm)">
+                        <input type="text" id="walletProviderName" placeholder="Wallet Provider (e.g., bKash, Revolut, Lyf, Bizum)">
                     </div>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-mobile-screen-button"></i>
@@ -547,7 +547,7 @@
                     </div>
                 </div>
 
-                <!-- 5. Withdrawal Amount (Placed right before Password) -->
+                <!-- 5. Withdrawal Amount -->
                 <div class="input-group">
                     <label>Withdrawal Amount (USDT)</label>
                     <div class="input-wrapper">
@@ -597,7 +597,7 @@
                 <div class="country-flag"><i class="fa-solid fa-building-columns" style="color:#00e5ff;"></i></div>
                 <div class="modal-option-info">
                     <h4>Global Bank Wire, SWIFT & IBAN</h4>
-                    <p>Direct bank transfers for Bangladesh, India, China, Japan, UK, USA, etc.</p>
+                    <p>Direct bank transfers with full international country list</p>
                 </div>
             </div>
 
@@ -606,7 +606,7 @@
                 <div class="country-flag"><i class="fa-solid fa-wallet" style="color:#00e5ff;"></i></div>
                 <div class="modal-option-info">
                     <h4>International Digital Wallets & Mobile Banking</h4>
-                    <p>bKash, Nagad, Alipay, WeChat Pay, Paytm, Revolut, Wise, GCash</p>
+                    <p>Comprehensive mobile banking country options worldwide</p>
                 </div>
             </div>
 
@@ -621,82 +621,126 @@
         </div>
     </div>
 
-    <!-- 2. Bank Country Flag Popup Modal -->
+    <!-- 2. Bank Country Flag Popup Modal (Expanded with UK, USA, Italy, France, Spain etc.) -->
     <div id="bankCountryModal" class="modal-overlay" onclick="closeModalOnOutside(event, 'bankCountryModal')">
         <div class="modal-content">
             <div class="modal-header">
                 <h3><i class="fa-solid fa-flag"></i> Select Bank Country</h3>
                 <button type="button" class="modal-close" onclick="closeModal('bankCountryModal')"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div class="modal-category-title">Asia & Global Regions</div>
+            <div class="modal-category-title">North America & Europe</div>
             
-            <div class="modal-option" onclick="selectBankCountry('Bangladesh', '🇧🇩 Bangladesh Bank Wire')">
+            <div class="modal-option" onclick="selectBankCountry('United States', '🇺🇸 United States (USA) - Bank Wire')">
+                <div class="country-flag">🇺🇸</div>
+                <div class="modal-option-info"><h4>United States (USA)</h4><p>USD Accounts (Chase, Bank of America, Wells Fargo)</p></div>
+            </div>
+            <div class="modal-option" onclick="selectBankCountry('United Kingdom', '🇬🇧 United Kingdom (UK) - Bank Wire')">
+                <div class="country-flag">🇬🇧</div>
+                <div class="modal-option-info"><h4>United Kingdom (UK)</h4><p>GBP Accounts (Barclays, HSBC, Lloyds, NatWest)</p></div>
+            </div>
+            <div class="modal-option" onclick="selectBankCountry('Italy', '🇮🇹 Italy - Bank Wire & SEPA')">
+                <div class="country-flag">🇮🇹</div>
+                <div class="modal-option-info"><h4>Italy</h4><p>EUR Accounts (UniCredit, Intesa Sanpaolo, Banco BPM)</p></div>
+            </div>
+            <div class="modal-option" onclick="selectBankCountry('France', '🇫🇷 France - Bank Wire & SEPA')">
+                <div class="country-flag">🇫🇷</div>
+                <div class="modal-option-info"><h4>France</h4><p>EUR Accounts (BNP Paribas, Crédit Agricole, Société Générale)</p></div>
+            </div>
+            <div class="modal-option" onclick="selectBankCountry('Spain', '🇪🇸 Spain - Bank Wire & SEPA')">
+                <div class="country-flag">🇪🇸</div>
+                <div class="modal-option-info"><h4>Spain</h4><p>EUR Accounts (Banco Santander, BBVA, CaixaBank)</p></div>
+            </div>
+            <div class="modal-option" onclick="selectBankCountry('Germany', '🇩🇪 Germany - Bank Wire & SEPA')">
+                <div class="country-flag">🇩🇪</div>
+                <div class="modal-option-info"><h4>Germany</h4><p>EUR Accounts (Deutsche Bank, Commerzbank, Sparkasse)</p></div>
+            </div>
+
+            <div class="modal-category-title">Asia & Other Regions</div>
+            <div class="modal-option" onclick="selectBankCountry('Bangladesh', '🇧🇩 Bangladesh - Bank Wire')">
                 <div class="country-flag">🇧🇩</div>
-                <div class="modal-option-info"><h4>Bangladesh</h4><p>BDT / USD Bank Accounts (EBL, City Bank, Brac, etc.)</p></div>
+                <div class="modal-option-info"><h4>Bangladesh</h4><p>BDT / USD Accounts (EBL, City Bank, Brac Bank)</p></div>
             </div>
-            <div class="modal-option" onclick="selectBankCountry('India', '🇮🇳 India Bank Wire (IFSC / SWIFT)')">
+            <div class="modal-option" onclick="selectBankCountry('India', '🇮🇳 India - Bank Wire')">
                 <div class="country-flag">🇮🇳</div>
-                <div class="modal-option-info"><h4>India</h4><p>INR / USD Accounts (HDFC, SBI, ICICI, Axis)</p></div>
+                <div class="modal-option-info"><h4>India</h4><p>INR / USD Accounts (HDFC, SBI, ICICI)</p></div>
             </div>
-            <div class="modal-option" onclick="selectBankCountry('China', '🇨🇳 China Bank Wire (CNY / UnionPay)')">
+            <div class="modal-option" onclick="selectBankCountry('China', '🇨🇳 China - Bank Wire')">
                 <div class="country-flag">🇨🇳</div>
-                <div class="modal-option-info"><h4>China</h4><p>CNY / USD Accounts (ICBC, China Construction Bank)</p></div>
+                <div class="modal-option-info"><h4>China</h4><p>CNY Accounts (ICBC, China Construction Bank)</p></div>
             </div>
-            <div class="modal-option" onclick="selectBankCountry('Japan', '🇯🇵 Japan Bank Wire (JPY)')">
+            <div class="modal-option" onclick="selectBankCountry('Japan', '🇯🇵 Japan - Bank Wire')">
                 <div class="country-flag">🇯🇵</div>
                 <div class="modal-option-info"><h4>Japan</h4><p>JPY Accounts (MUFG, SMBC, Mizuho)</p></div>
             </div>
-            <div class="modal-option" onclick="selectBankCountry('UK', '🇬🇧 United Kingdom Bank Wire (GBP)')">
-                <div class="country-flag">🇬🇧</div>
-                <div class="modal-option-info"><h4>United Kingdom</h4><p>GBP Accounts (Barclays, HSBC, Lloyds, Revolut)</p></div>
+            <div class="modal-option" onclick="selectBankCountry('Australia', '🇦🇺 Australia - Bank Wire')">
+                <div class="country-flag">🇦🇺</div>
+                <div class="modal-option-info"><h4>Australia</h4><p>AUD Accounts (Commonwealth Bank, ANZ, Westpac)</p></div>
             </div>
-            <div class="modal-option" onclick="selectBankCountry('USA', '🇺🇸 United States Bank Wire (USD)')">
-                <div class="country-flag">🇺🇸</div>
-                <div class="modal-option-info"><h4>United States</h4><p>USD Accounts (Chase, Bank of America, Wells Fargo)</p></div>
+            <div class="modal-option" onclick="selectBankCountry('Canada', '🇨🇦 Canada - Bank Wire')">
+                <div class="country-flag">🇨🇦</div>
+                <div class="modal-option-info"><h4>Canada</h4><p>CAD Accounts (RBC, TD Bank, Scotiabank)</p></div>
             </div>
-            <div class="modal-option" onclick="selectBankCountry('Europe', '🇪🇺 European Union Bank Wire (SEPA / EUR)')">
-                <div class="country-flag">🇪🇺</div>
-                <div class="modal-option-info"><h4>European Union</h4><p>EUR SEPA Transfer Accounts</p></div>
-            </div>
-            <div class="modal-option" onclick="selectBankCountry('Global', '🌐 Other International Country Bank Wire')">
+            <div class="modal-option" onclick="selectBankCountry('Global', '🌐 Other International Country')">
                 <div class="country-flag">🌐</div>
                 <div class="modal-option-info"><h4>Other Global Country</h4><p>Worldwide international SWIFT bank transfer</p></div>
             </div>
         </div>
     </div>
 
-    <!-- 3. Mobile Banking Country Flag Popup Modal -->
+    <!-- 3. Mobile Banking Country Flag Popup Modal (Expanded with UK, USA, Italy, France, Spain etc.) -->
     <div id="mobileCountryModal" class="modal-overlay" onclick="closeModalOnOutside(event, 'mobileCountryModal')">
         <div class="modal-content">
             <div class="modal-header">
                 <h3><i class="fa-solid fa-flag"></i> Select Mobile Banking Country</h3>
                 <button type="button" class="modal-close" onclick="closeModal('mobileCountryModal')"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div class="modal-category-title">Mobile Wallets by Country</div>
+            <div class="modal-category-title">Europe & North America Mobile Wallets</div>
 
-            <div class="modal-option" onclick="selectMobileCountry('Bangladesh', '🇧🇩 Bangladesh Mobile Banking (bKash / Nagad)')">
+            <div class="modal-option" onclick="selectMobileCountry('United Kingdom', '🇬🇧 United Kingdom (UK) - Revolut / Wise')">
+                <div class="country-flag">🇬🇧</div>
+                <div class="modal-option-info"><h4>United Kingdom (UK)</h4><p>Revolut, Wise, Monzo, Starling Bank</p></div>
+            </div>
+            <div class="modal-option" onclick="selectMobileCountry('United States', '🇺🇸 United States (USA) - Cash App / Zelle / PayPal')">
+                <div class="country-flag">🇺🇸</div>
+                <div class="modal-option-info"><h4>United States (USA)</h4><p>Cash App, Zelle, Venmo, PayPal</p></div>
+            </div>
+            <div class="modal-option" onclick="selectMobileCountry('Italy', '🇮🇹 Italy - Satispay / Postepay / PayPal')">
+                <div class="country-flag">🇮🇹</div>
+                <div class="modal-option-info"><h4>Italy</h4><p>Satispay, Postepay, Hype, Revolut Italy</p></div>
+            </div>
+            <div class="modal-option" onclick="selectMobileCountry('France', '🇫🇷 France - Lyf Pay / Lydia / Revolut')">
+                <div class="country-flag">🇫🇷</div>
+                <div class="modal-option-info"><h4>France</h4><p>Lydia, Lyf Pay, Orange Bank, Revolut France</p></div>
+            </div>
+            <div class="modal-option" onclick="selectMobileCountry('Spain', '🇪🇸 Spain - Bizum / Revolut Spain')">
+                <div class="country-flag">🇪🇸</div>
+                <div class="modal-option-info"><h4>Spain</h4><p>Bizum, Verse, Revolut Spain, PayPal</p></div>
+            </div>
+            <div class="modal-option" onclick="selectMobileCountry('Germany', '🇩🇪 Germany - N26 / PayPal / Klarna')">
+                <div class="country-flag">🇩🇪</div>
+                <div class="modal-option-info"><h4>Germany</h4><p>N26, Klarna, PayPal, Revolut Germany</p></div>
+            </div>
+
+            <div class="modal-category-title">Asia & Global Mobile Wallets</div>
+            <div class="modal-option" onclick="selectMobileCountry('Bangladesh', '🇧🇩 Bangladesh - bKash / Nagad / Rocket')">
                 <div class="country-flag">🇧🇩</div>
                 <div class="modal-option-info"><h4>Bangladesh</h4><p>bKash, Nagad, Rocket, Upay Mobile Wallets</p></div>
             </div>
-            <div class="modal-option" onclick="selectMobileCountry('India', '🇮🇳 India Mobile Wallets (Paytm / PhonePe)')">
+            <div class="modal-option" onclick="selectMobileCountry('India', '🇮🇳 India - Paytm / PhonePe / GPay')">
                 <div class="country-flag">🇮🇳</div>
                 <div class="modal-option-info"><h4>India</h4><p>Paytm, PhonePe, Google Pay India</p></div>
             </div>
-            <div class="modal-option" onclick="selectMobileCountry('China', '🇨🇳 China Mobile Wallets (Alipay / WeChat Pay)')">
+            <div class="modal-option" onclick="selectMobileCountry('China', '🇨🇳 China - Alipay / WeChat Pay')">
                 <div class="country-flag">🇨🇳</div>
                 <div class="modal-option-info"><h4>China</h4><p>Alipay, WeChat Pay Digital Wallets</p></div>
             </div>
-            <div class="modal-option" onclick="selectMobileCountry('Japan', '🇯🇵 Japan Mobile Wallets (PayPay / Line Pay)')">
+            <div class="modal-option" onclick="selectMobileCountry('Japan', '🇯🇵 Japan - PayPay / Line Pay')">
                 <div class="country-flag">🇯🇵</div>
                 <div class="modal-option-info"><h4>Japan</h4><p>PayPay, Line Pay, Rakuten Pay</p></div>
             </div>
-            <div class="modal-option" onclick="selectMobileCountry('UK_EU', '🇪🇺 UK & Europe Digital Wallets (Wise / Revolut)')">
-                <div class="country-flag">🇪🇺</div>
-                <div class="modal-option-info"><h4>UK & Europe</h4><p>Revolut, Wise, Skrill, Neteller Wallets</p></div>
-            </div>
-            <div class="modal-option" onclick="selectMobileCountry('Global', '🌐 Global Digital Wallets (PayPal / Payeer)')">
+            <div class="modal-option" onclick="selectMobileCountry('Global', '🌐 Global Digital Wallets')">
                 <div class="country-flag">🌐</div>
-                <div class="modal-option-info"><h4>Global / Other Regions</h4><p>PayPal, Payeer, Perfect Money, GCash</p></div>
+                <div class="modal-option-info"><h4>Global / Other Regions</h4><p>Skrill, Neteller, Payeer, Perfect Money, GCash</p></div>
             </div>
         </div>
     </div>
