@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 
 <head>
 
@@ -15,91 +15,131 @@
     <style>
 
         :root {
-            --bg-color: #0f111a;
-            --card-bg: #181b28;
-            --card-border: #262b40;
+            --bg-color: #030408;
+            --card-bg: #0b0f19;
+            --card-border: #1e2538;
             --text-main: #f3f4f6;
             --text-muted: #9ca3af;
             --accent-primary: #6366f1;
             --accent-gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-            --button-3d-shadow: 0 6px 0 #3730a3, 0 10px 15px rgba(0, 0, 0, 0.4);
-            --button-3d-active: 0 2px 0 #3730a3, 0 4px 6px rgba(0, 0, 0, 0.4);
+            --button-3d-shadow: 0 6px 0 #3730a3, 0 10px 20px rgba(99, 102, 241, 0.3);
+            --button-3d-active: 0 2px 0 #3730a3, 0 4px 8px rgba(99, 102, 241, 0.3);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
         }
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-main);
+            color: white;
             min-height: 100vh;
-            padding-bottom: 90px;
         }
 
         .header {
-            background: linear-gradient(180deg, #181b28 0%, #0f111a 100%);
-            padding: 20px;
-            font-size: 24px;
-            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 20px;
+            background: linear-gradient(180deg, #0d1322 0%, #030408 100%);
+            font-size: 22px;
+            font-weight: bold;
             border-bottom: 1px solid var(--card-border);
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+        }
+
+        .header-title-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* 3D Back Button */
+        .back-btn {
+            background: linear-gradient(135deg, #1e2538 0%, #111726 100%);
+            border: 1px solid #2e3854;
+            color: white;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #0b0f19, 0 6px 10px rgba(0,0,0,0.5);
+            transition: all 0.1s ease;
+        }
+        .back-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #0b0f19, 0 2px 5px rgba(0,0,0,0.5);
         }
 
         .container {
             padding: 20px;
+            padding-bottom: 40px;
             max-width: 600px;
             margin: 0 auto;
         }
 
         .tabs {
             display: flex;
-            background: #11131d;
-            border-radius: 14px;
-            padding: 5px;
-            border: 1px solid var(--card-border);
+            gap: 12px;
             margin-bottom: 20px;
-            gap: 10px;
+            background: #080c14;
+            padding: 6px;
+            border-radius: 16px;
+            border: 1px solid var(--card-border);
         }
 
+        /* 3D Tabs with Glow Effect */
         .tab {
             flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 10px;
-            background: transparent;
+            padding: 14px;
+            border: 1px solid #1a2236;
+            border-radius: 12px;
+            background: #0f172a;
             color: var(--text-muted);
             font-size: 16px;
-            font-weight: 600;
+            font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
+            box-shadow: 0 5px 0 #070a10, 0 8px 15px rgba(0, 0, 0, 0.4);
         }
 
         .tab.active {
-            color: #ffffff;
             background: var(--accent-gradient);
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+            color: white;
+            border-color: #818cf8;
+            box-shadow: 0 5px 0 #3730a3, 0 0 20px rgba(99, 102, 241, 0.6);
         }
 
+        .tab:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #3730a3, 0 2px 8px rgba(99, 102, 241, 0.4);
+        }
+
+        /* 3D Order Cards with Professional Glow */
         .order-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--card-border);
+            background: linear-gradient(145deg, #0d121f, #080c16);
             border-radius: 16px;
-            padding: 18px;
-            margin-bottom: 16px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            margin-bottom: 18px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            position: relative;
             transition: transform 0.2s ease, border-color 0.2s ease;
         }
 
         .order-card:hover {
-            border-color: var(--accent-primary);
-            transform: translateY(-2px);
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8), 0 0 15px rgba(99, 102, 241, 0.15);
         }
 
         .side {
@@ -110,15 +150,17 @@
 
         .long {
             color: #00df70;
+            text-shadow: 0 0 10px rgba(0, 223, 112, 0.3);
         }
 
         .short {
             color: #ff4058;
+            text-shadow: 0 0 10px rgba(255, 64, 88, 0.3);
         }
 
         .info {
             margin: 8px 0;
-            color: var(--text-muted);
+            color: #dce8f7;
             font-size: 15px;
         }
 
@@ -126,27 +168,26 @@
             color: white;
         }
 
-        /* 3D Close Button Style */
+        /* 3D Close Button */
         .close-btn {
             width: 100%;
-            margin-top: 14px;
+            margin-top: 16px;
             padding: 14px;
             border: none;
             border-radius: 12px;
-            background: linear-gradient(135deg, #ff4058 0%, #e63048 100%);
+            background: linear-gradient(135deg, #ff4058 0%, #dc2626 100%);
             color: white;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 6px 0 #b32236, 0 10px 15px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 6px 0 #991b1b, 0 10px 20px rgba(255, 64, 88, 0.4);
             transition: all 0.1s ease;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         .close-btn:active {
-            box-shadow: 0 2px 0 #b32236, 0 4px 6px rgba(0, 0, 0, 0.4);
             transform: translateY(4px);
+            box-shadow: 0 2px 0 #991b1b, 0 4px 10px rgba(255, 64, 88, 0.4);
         }
 
         .profit {
@@ -166,27 +207,29 @@
 
         .empty {
             text-align: center;
-            padding: 50px 10px;
-            color: var(--text-muted);
+            padding: 60px 10px;
+            color: #91a6c2;
             font-size: 17px;
         }
 
         .trade-id {
             font-size: 12px;
             color: #7893b4;
-            margin-top: 10px;
+            margin-top: 12px;
             word-break: break-all;
+            border-top: 1px dashed rgba(255,255,255,0.06);
+            padding-top: 10px;
         }
 
         .status {
             display: inline-block;
-            padding: 5px 9px;
-            border-radius: 7px;
+            padding: 5px 10px;
+            border-radius: 8px;
             background: #173861;
             color: #bcd1e9;
             font-size: 12px;
-            margin-bottom: 10px;
-            font-weight: 600;
+            margin-bottom: 12px;
+            font-weight: bold;
         }
 
         .status.open {
@@ -202,19 +245,13 @@
         }
 
         .language-btn {
-            position: fixed;
-            top: 14px;
-            right: 16px;
-            z-index: 1000;
-            background: rgba(24, 27, 40, 0.8);
+            background: #0f172a;
             border: 1px solid var(--card-border);
             border-radius: 8px;
             cursor: pointer;
-            font-size: 20px;
+            font-size: 18px;
             padding: 6px 10px;
-            line-height: 1;
             color: inherit;
-            backdrop-filter: blur(5px);
         }
 
     </style>
@@ -225,10 +262,13 @@
 <body>
 
 
-<div class="header" data-key="myOrders">
-    My Orders
+<div class="header">
+    <div class="header-title-area">
+        <button class="back-btn" type="button" onclick="history.back()">❮</button>
+        <span data-key="myOrders">My Orders</span>
+    </div>
+    <button id="languageBtn" class="language-btn" type="button">🇬🇧</button>
 </div>
-<button id="languageBtn" class="language-btn" type="button">🇬🇧</button>
 
 
 <div class="container">
@@ -882,24 +922,6 @@ async function loadFirebaseHistory() {
 
         firebaseReady =
             true;
-
-
-        const historyTab =
-            document.getElementById(
-                "historyTab"
-            );
-
-
-        if (
-            historyTab &&
-            historyTab.classList.contains(
-                "active"
-            )
-        ) {
-
-            showHistory();
-
-        }
 
 
     } catch (error) {
@@ -2095,50 +2117,8 @@ window.addEventListener(
             "cptTradeClosedAt"
         ) {
 
-            showActive();
-
+            // Keep current tab instead of forcing active
             loadFirebaseHistory();
-
-        }
-
-
-        if (
-            event.key ===
-            "currentTradeId"
-        ) {
-
-            showActive();
-
-        }
-
-
-        if (
-            event.key ===
-            "selectedSide"
-        ) {
-
-            showActive();
-
-        }
-
-    }
-);
-
-
-
-/* ==========================================
-   PAGE VISIBILITY
-========================================== */
-
-document.addEventListener(
-    "visibilitychange",
-    function () {
-
-        if (
-            !document.hidden
-        ) {
-
-            showActive();
 
         }
 
