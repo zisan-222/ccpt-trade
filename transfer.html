@@ -8,6 +8,51 @@
     <title>CptMarkets - Transfer</title>
 
     <link rel="stylesheet" href="transfer.css">
+    <style>
+        /* Header Fix for Title and Language Flag Overlap */
+        .transfer-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            height: 60px;
+            position: relative;
+        }
+        .transfer-header h1 {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            margin: 0;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .back-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+        }
+        .language-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 0;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+        }
+        .header-space {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -28,9 +73,8 @@
             </button>
 
             <h1 data-key="transfer">Transfer</h1>
-            <button id="languageBtn" class="language-btn" type="button" style="background:none;border:none;cursor:pointer;font-size:18px;padding:0 4px;line-height:1;color:inherit;">🇬🇧</button>
-
-            <div class="header-space"></div>
+            
+            <button id="languageBtn" class="language-btn" type="button">🇬🇧</button>
 
         </header>
 
@@ -423,8 +467,7 @@
     <script src="balance.js"></script>
     <script src="transfer.js"></script>
     <script src="lang.js"></script>
-<script src="translator.js"></script>
-
+    <script src="translator.js"></script>
 
 </body>
 
