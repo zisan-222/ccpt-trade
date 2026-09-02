@@ -206,11 +206,6 @@
             font-weight: bold;
         }
 
-        .pending {
-            color: #ffc107;
-            font-weight: bold;
-        }
-
         .empty {
             text-align: center;
             padding: 60px 10px;
@@ -258,6 +253,84 @@
             color: inherit;
         }
 
+        /* Custom Modal Popup Styles */
+        .custom-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(3, 4, 8, 0.85);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s ease;
+        }
+        .custom-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .custom-modal {
+            background: linear-gradient(145deg, #0d121f, #080c16);
+            border: 1px solid #2e3854;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 380px;
+            padding: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 20px rgba(59, 130, 246, 0.2);
+            transform: scale(0.9);
+            transition: transform 0.25s ease;
+            text-align: center;
+        }
+        .custom-modal-overlay.active .custom-modal {
+            transform: scale(1);
+        }
+        .custom-modal-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        .custom-modal-desc {
+            font-size: 14px;
+            color: #9ca3af;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            white-space: pre-line;
+        }
+        .custom-modal-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        .custom-modal-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: all 0.1s ease;
+        }
+        .custom-modal-btn.cancel {
+            background: #1e2538;
+            color: #dce8f7;
+            border: 1px solid #2e3854;
+        }
+        .custom-modal-btn.confirm {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+        .custom-modal-btn:active {
+            transform: translateY(2px);
+        }
+
     </style>
 
 </head>
@@ -286,7 +359,7 @@
                 class="tab active"
                 type="button"
                 onclick="showActive()"
-             data-key="myOrders">
+                data-key="myOrders">
                 My Orders
             </button>
 
@@ -296,7 +369,7 @@
                 class="tab"
                 type="button"
                 onclick="showHistory()"
-             data-key="history">
+                data-key="history">
                 History
             </button>
 
@@ -310,9 +383,21 @@
 </div>
 
 
+<!-- Custom Modal Markup -->
+<div id="customModalOverlay" class="custom-modal-overlay">
+    <div class="custom-modal">
+        <div id="customModalTitle" class="custom-modal-title">CptMarkets</div>
+        <div id="customModalDesc" class="custom-modal-desc">Message goes here</div>
+        <div id="customModalButtons" class="custom-modal-buttons">
+            <button id="customModalCancel" class="custom-modal-btn cancel" type="button">Cancel</button>
+            <button id="customModalConfirm" class="custom-modal-btn confirm" type="button">OK</button>
+        </div>
+    </div>
+</div>
+
+
 
 <script type="module">
-
 
 /* ==========================================
    FIREBASE
@@ -324,12 +409,10 @@ import {
 }
 from "./firebase/firebase-config.js";
 
-
 import {
     onAuthStateChanged
 }
 from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
 
 import {
     collection,
@@ -346,21 +429,81 @@ import {
 from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-
 /* ==========================================
    VARIABLES
 ========================================== */
 
 let firebaseHistory = [];
-
 let currentUserUID = null;
-
 let firebaseReady = false;
-
 let closingTrade = false;
+let isInitialLoad = true;
 
-let isInitialLoad = true; // ট্র্যাক রাখার জন্য যাতে প্রথমবার ফায়ারবেস লোড হওয়ার সময় অটো সুইচ না করে
 
+/* ==========================================
+   CUSTOM MODAL HELPER FUNCTIONS
+========================================== */
+
+function showCustomAlert(title, message) {
+    return new Promise((resolve) => {
+        const overlay = document.getElementById("customModalOverlay");
+        const titleEl = document.getElementById("customModalTitle");
+        const descEl = document.getElementById("customModalDesc");
+        const cancelBtn = document.getElementById("customModalCancel");
+        const confirmBtn = document.getElementById("customModalConfirm");
+
+        titleEl.textContent = title;
+        descEl.textContent = message;
+        cancelBtn.style.display = "none";
+        confirmBtn.textContent = "OK";
+        overlay.classList.add("active");
+
+        function handleConfirm() {
+            overlay.classList.remove("active");
+            confirmBtn.removeEventListener("click", handleConfirm);
+            resolve(true);
+        }
+
+        confirmBtn.addEventListener("click", handleConfirm);
+    });
+}
+
+function showCustomConfirm(title, message) {
+    return new Promise((resolve) => {
+        const overlay = document.getElementById("customModalOverlay");
+        const titleEl = document.getElementById("customModalTitle");
+        const descEl = document.getElementById("customModalDesc");
+        const cancelBtn = document.getElementById("customModalCancel");
+        const confirmBtn = document.getElementById("customModalConfirm");
+
+        titleEl.textContent = title;
+        descEl.textContent = message;
+        cancelBtn.style.display = "block";
+        cancelBtn.textContent = "Cancel";
+        confirmBtn.textContent = "OK";
+        overlay.classList.add("active");
+
+        function handleConfirm() {
+            overlay.classList.remove("active");
+            cleanup();
+            resolve(true);
+        }
+
+        function handleCancel() {
+            overlay.classList.remove("active");
+            cleanup();
+            resolve(false);
+        }
+
+        function cleanup() {
+            confirmBtn.removeEventListener("click", handleConfirm);
+            cancelBtn.removeEventListener("click", handleCancel);
+        }
+
+        confirmBtn.addEventListener("click", handleConfirm);
+        cancelBtn.addEventListener("click", handleCancel);
+    });
+}
 
 
 /* ==========================================
@@ -368,23 +511,16 @@ let isInitialLoad = true; // ট্র্যাক রাখার জন্য 
 ========================================== */
 
 function getCurrentUserData() {
-
     try {
-
         return JSON.parse(
             localStorage.getItem(
                 "currentUser"
             )
         ) || null;
-
     } catch (error) {
-
         return null;
-
     }
-
 }
-
 
 
 /* ==========================================
@@ -392,70 +528,26 @@ function getCurrentUserData() {
 ========================================== */
 
 function getActiveTrade() {
+    const side = localStorage.getItem("selectedSide");
+    const entryPrice = localStorage.getItem("entryPrice");
+    const amount = localStorage.getItem("tradeAmountValue");
+    const tradeId = localStorage.getItem("currentTradeId");
 
-    const side =
-        localStorage.getItem(
-            "selectedSide"
-        );
-
-
-    const entryPrice =
-        localStorage.getItem(
-            "entryPrice"
-        );
-
-
-    const amount =
-        localStorage.getItem(
-            "tradeAmountValue"
-        );
-
-
-    const tradeId =
-        localStorage.getItem(
-            "currentTradeId"
-        );
-
-
-    if (
-        !side ||
-        !entryPrice ||
-        !amount
-    ) {
-
+    if (!side || !entryPrice || !amount) {
         return null;
-
     }
 
-
-    if (
-        side !== "LONG" &&
-        side !== "SHORT"
-    ) {
-
+    if (side !== "LONG" && side !== "SHORT") {
         return null;
-
     }
-
 
     return {
-
-        tradeId:
-            tradeId || "",
-
-        side:
-            side,
-
-        entryPrice:
-            Number(entryPrice),
-
-        amount:
-            Number(amount)
-
+        tradeId: tradeId || "",
+        side: side,
+        entryPrice: Number(entryPrice),
+        amount: Number(amount)
     };
-
 }
-
 
 
 /* ==========================================
@@ -463,102 +555,36 @@ function getActiveTrade() {
 ========================================== */
 
 function getCurrentTradePrice() {
-
-    const saved =
-        localStorage.getItem(
-            "currentTradePrice"
-        );
-
-
-    if (
-        saved &&
-        Number(saved) > 0
-    ) {
-
+    const saved = localStorage.getItem("currentTradePrice");
+    if (saved && Number(saved) > 0) {
         return Number(saved);
-
     }
-
-
-    const entry =
-        localStorage.getItem(
-            "entryPrice"
-        );
-
-
+    const entry = localStorage.getItem("entryPrice");
     return Number(entry) || 0;
-
 }
-
 
 
 /* ==========================================
    CALCULATE USER P/L
 ========================================== */
 
-function calculateUserProfitLoss(
-    trade,
-    closePrice
-) {
-
-    if (
-        !trade ||
-        !trade.entryPrice ||
-        !trade.amount
-    ) {
-
+function calculateUserProfitLoss(trade, closePrice) {
+    if (!trade || !trade.entryPrice || !trade.amount) {
         return 0;
-
     }
-
 
     let profitLoss = 0;
 
-
-    if (
-        trade.side === "LONG"
-    ) {
-
-        profitLoss =
-            (
-                (
-                    closePrice -
-                    trade.entryPrice
-                )
-                /
-                trade.entryPrice
-            )
-            *
-            trade.amount;
-
+    if (trade.side === "LONG") {
+        profitLoss = ((closePrice - trade.entryPrice) / trade.entryPrice) * trade.amount;
     }
 
-
-    if (
-        trade.side === "SHORT"
-    ) {
-
-        profitLoss =
-            (
-                (
-                    trade.entryPrice -
-                    closePrice
-                )
-                /
-                trade.entryPrice
-            )
-            *
-            trade.amount;
-
+    if (trade.side === "SHORT") {
+        profitLoss = ((trade.entryPrice - closePrice) / trade.entryPrice) * trade.amount;
     }
 
-
-    return Number(
-        profitLoss.toFixed(2)
-    );
-
+    return Number(profitLoss.toFixed(2));
 }
-
 
 
 /* ==========================================
@@ -566,43 +592,21 @@ function calculateUserProfitLoss(
 ========================================== */
 
 function getLocalHistory() {
-
     try {
+        const data = JSON.parse(
+            localStorage.getItem("cptTradeHistory")
+        ) || [];
 
-        const data =
-            JSON.parse(
-                localStorage.getItem(
-                    "cptTradeHistory"
-                )
-            ) || [];
-
-
-        return data.filter(
-            function (trade) {
-
-                if (trade.uid) {
-
-                    return (
-                        trade.uid ===
-                        currentUserUID
-                    );
-
-                }
-
-                return false;
-
+        return data.filter(function (trade) {
+            if (trade.uid) {
+                return trade.uid === currentUserUID;
             }
-        );
-
-
+            return false;
+        });
     } catch (error) {
-
         return [];
-
     }
-
 }
-
 
 
 /* ==========================================
@@ -610,48 +614,25 @@ function getLocalHistory() {
 ========================================== */
 
 function saveLocalHistory(history) {
-
     localStorage.setItem(
-
         "cptTradeHistory",
-
         JSON.stringify(history)
-
     );
-
 }
-
 
 
 /* ==========================================
    CHECK DUPLICATE HISTORY
 ========================================== */
 
-function historyAlreadyExists(
-    history,
-    tradeId
-) {
-
+function historyAlreadyExists(history, tradeId) {
     if (!tradeId) {
-
         return false;
-
     }
-
-
-    return history.some(
-        function (trade) {
-
-            return (
-                trade.tradeId ===
-                tradeId
-            );
-
-        }
-    );
-
+    return history.some(function (trade) {
+        return trade.tradeId === tradeId;
+    });
 }
-
 
 
 /* ==========================================
@@ -659,45 +640,16 @@ function historyAlreadyExists(
 ========================================== */
 
 function clearActiveTrade() {
-
-    localStorage.removeItem(
-        "selectedSide"
-    );
-
-    localStorage.removeItem(
-        "entryPrice"
-    );
-
-    localStorage.removeItem(
-        "tradeAmountValue"
-    );
-
-    localStorage.removeItem(
-        "currentTradePrice"
-    );
-
-    localStorage.removeItem(
-        "currentTradeId"
-    );
-
-    localStorage.removeItem(
-        "pendingTradeProfit"
-    );
-
-    localStorage.removeItem(
-        "pendingTradeLoss"
-    );
-
-    localStorage.removeItem(
-        "pendingTradeResult"
-    );
-
-    localStorage.removeItem(
-        "tradeLeverage"
-    );
-
+    localStorage.removeItem("selectedSide");
+    localStorage.removeItem("entryPrice");
+    localStorage.removeItem("tradeAmountValue");
+    localStorage.removeItem("currentTradePrice");
+    localStorage.removeItem("currentTradeId");
+    localStorage.removeItem("pendingTradeProfit");
+    localStorage.removeItem("pendingTradeLoss");
+    localStorage.removeItem("pendingTradeResult");
+    localStorage.removeItem("tradeLeverage");
 }
-
 
 
 /* ==========================================
@@ -705,61 +657,24 @@ function clearActiveTrade() {
 ========================================== */
 
 function setActiveTab(tab) {
+    const activeTab = document.getElementById("activeTab");
+    const historyTab = document.getElementById("historyTab");
 
-    const activeTab =
-        document.getElementById(
-            "activeTab"
-        );
-
-
-    const historyTab =
-        document.getElementById(
-            "historyTab"
-        );
-
-
-    if (
-        !activeTab ||
-        !historyTab
-    ) {
-
+    if (!activeTab || !historyTab) {
         return;
-
     }
 
+    activeTab.classList.remove("active");
+    historyTab.classList.remove("active");
 
-    activeTab.classList.remove(
-        "active"
-    );
-
-    historyTab.classList.remove(
-        "active"
-    );
-
-
-    if (
-        tab === "active"
-    ) {
-
-        activeTab.classList.add(
-            "active"
-        );
-
+    if (tab === "active") {
+        activeTab.classList.add("active");
     }
 
-
-    if (
-        tab === "history"
-    ) {
-
-        historyTab.classList.add(
-            "active"
-        );
-
+    if (tab === "history") {
+        historyTab.classList.add("active");
     }
-
 }
-
 
 
 /* ==========================================
@@ -767,182 +682,58 @@ function setActiveTab(tab) {
 ========================================== */
 
 async function loadFirebaseHistory() {
-
     try {
-
-        if (
-            !auth.currentUser
-        ) {
-
+        if (!auth.currentUser) {
             return;
-
         }
 
+        currentUserUID = auth.currentUser.uid;
 
-        currentUserUID =
-            auth.currentUser.uid;
+        const historyRef = collection(db, "tradeHistory");
+        const historyQuery = query(
+            historyRef,
+            where("uid", "==", currentUserUID)
+        );
 
-
-        const historyRef =
-            collection(
-                db,
-                "tradeHistory"
-            );
-
-
-        const historyQuery =
-            query(
-
-                historyRef,
-
-                where(
-                    "uid",
-                    "==",
-                    currentUserUID
-                )
-
-            );
-
-
-        const snapshot =
-            await getDocs(
-                historyQuery
-            );
-
-
+        const snapshot = await getDocs(historyQuery);
         firebaseHistory = [];
 
+        snapshot.forEach(function (docSnap) {
+            const data = docSnap.data();
 
-        snapshot.forEach(
-            function (docSnap) {
-
-                const data =
-                    docSnap.data();
-
-
-                if (
-                    data.source === "ADMIN" &&
-                    (
-                        data.side === "ADMIN" ||
-                        !data.tradeId
-                    )
-                ) {
-
-                    return;
-
-                }
-
-
-                firebaseHistory.push({
-
-                    id:
-                        docSnap.id,
-
-                    tradeId:
-                        data.tradeId ||
-                        "",
-
-                    uid:
-                        data.uid ||
-                        currentUserUID,
-
-                    side:
-                        data.side ||
-                        "",
-
-                    entryPrice:
-                        Number(
-                            data.entryPrice ||
-                            0
-                        ),
-
-                    closePrice:
-                        Number(
-                            data.closePrice ||
-                            0
-                        ),
-
-                    amount:
-                        Number(
-                            data.amount ||
-                            0
-                        ),
-
-                    userProfitLoss:
-                        Number(
-                            data.userProfitLoss ??
-                            0
-                        ),
-
-                    adminProfitLoss:
-                        Number(
-                            data.adminProfitLoss ??
-                            0
-                        ),
-
-                    profitLoss:
-                        Number(
-                            data.profitLoss ??
-                            data.profitloss ??
-                            0
-                        ),
-
-                    leverage:
-                        Number(
-                            data.leverage ||
-                            0
-                        ),
-
-                    type:
-                        data.type ||
-                        "TRADE",
-
-                    source:
-                        data.source ||
-                        "USER",
-
-                    time:
-                        data.time ||
-                        "",
-
-                    createdAt:
-                        data.createdAt ||
-                        null
-
-                });
-
+            if (data.source === "ADMIN" && (data.side === "ADMIN" || !data.tradeId)) {
+                return;
             }
-        );
 
+            firebaseHistory.push({
+                id: docSnap.id,
+                tradeId: data.tradeId || "",
+                uid: data.uid || currentUserUID,
+                side: data.side || "",
+                entryPrice: Number(data.entryPrice || 0),
+                closePrice: Number(data.closePrice || 0),
+                amount: Number(data.amount || 0),
+                userProfitLoss: Number(data.userProfitLoss ?? 0),
+                adminProfitLoss: Number(data.adminProfitLoss ?? 0),
+                profitLoss: Number(data.profitLoss ?? data.profitloss ?? 0),
+                leverage: Number(data.leverage || 0),
+                type: data.type || "TRADE",
+                source: data.source || "USER",
+                time: data.time || "",
+                createdAt: data.createdAt || null
+            });
+        });
 
-        firebaseHistory.sort(
-            function (a, b) {
+        firebaseHistory.sort(function (a, b) {
+            return String(b.time).localeCompare(String(a.time));
+        });
 
-                return String(
-                    b.time
-                ).localeCompare(
-                    String(a.time)
-                );
-
-            }
-        );
-
-
-        firebaseReady =
-            true;
-
+        firebaseReady = true;
 
     } catch (error) {
-
-        console.error(
-            "Firebase history error:",
-            error
-        );
-
+        console.error("Firebase history error:", error);
     }
-
 }
-
 
 
 /* ==========================================
@@ -950,92 +741,49 @@ async function loadFirebaseHistory() {
 ========================================== */
 
 function showActive() {
+    setActiveTab("active");
 
-    setActiveTab(
-        "active"
-    );
-
-
-    const list =
-        document.getElementById(
-            "ordersList"
-        );
-
-
+    const list = document.getElementById("ordersList");
     if (!list) {
-
         return;
-
     }
 
-
-    const trade =
-        getActiveTrade();
-
+    const trade = getActiveTrade();
 
     if (!trade) {
-
         list.innerHTML = `
-
             <div class="empty">
-
                 No active orders
-
             </div>
-
         `;
-
         return;
-
     }
 
-
-    const sideClass =
-        trade.side === "LONG"
-            ? "long"
-            : "short";
-
+    const sideClass = trade.side === "LONG" ? "long" : "short";
 
     list.innerHTML = `
-
-        <div
-            class="order-card"
-            id="activeOrderCard"
-        >
-
+        <div class="order-card" id="activeOrderCard">
             <span class="status open">
                 OPEN
             </span>
 
-
             <div class="side ${sideClass}">
-
                 ${trade.side}
-
             </div>
 
-
             <div class="info">
-
                 Entry Price:
-
                 <strong>
                     $${trade.entryPrice.toFixed(2)}
                 </strong>
-
             </div>
 
-
             <div class="info">
-
                 Amount:
-
                 <strong>
                     $${trade.amount.toFixed(2)}
                 </strong>
-
             </div>
-
 
             ${
                 trade.tradeId
@@ -1048,243 +796,78 @@ function showActive() {
                     : ""
             }
 
-
             <button
                 class="close-btn"
                 id="ordersCloseTradeBtn"
                 type="button"
             >
-
                 Close Trade
-
             </button>
-
         </div>
-
     `;
 
-
-    const closeButton =
-        document.getElementById(
-            "ordersCloseTradeBtn"
-        );
-
-
+    const closeButton = document.getElementById("ordersCloseTradeBtn");
     if (closeButton) {
-
-        closeButton.addEventListener(
-            "click",
-            closeTradeFromOrders
-        );
-
+        closeButton.addEventListener("click", closeTradeFromOrders);
     }
-
 }
-
 
 
 /* ==========================================
    GET ADMIN PENDING RESULT
 ========================================== */
 
-async function getPendingAdminResult(
-    trade
-) {
-
+async function getPendingAdminResult(trade) {
     try {
-
-        if (
-            !currentUserUID
-        ) {
-
-            return {
-
-                amount: 0,
-                type: null,
-                tradeId: ""
-
-            };
-
+        if (!currentUserUID) {
+            return { amount: 0, type: null, tradeId: "" };
         }
 
+        const userRef = doc(db, "users", currentUserUID);
+        const userSnap = await getDoc(userRef);
 
-        const userRef =
-            doc(
-                db,
-                "users",
-                currentUserUID
-            );
-
-
-        const userSnap =
-            await getDoc(
-                userRef
-            );
-
-
-        if (
-            !userSnap.exists()
-        ) {
-
-            return {
-
-                amount: 0,
-                type: null,
-                tradeId: ""
-
-            };
-
+        if (!userSnap.exists()) {
+            return { amount: 0, type: null, tradeId: "" };
         }
 
+        const userData = userSnap.data();
+        const pending = userData.pendingAdminTradeResult;
 
-        const userData =
-            userSnap.data();
-
-
-        const pending =
-            userData.pendingAdminTradeResult;
-
-
-        if (
-            pending &&
-            pending.status === "PENDING"
-        ) {
-
-            const pendingTradeId =
-                pending.tradeId ||
-                "";
-
-
-            if (
-                pendingTradeId &&
-                trade.tradeId &&
-                pendingTradeId !==
-                trade.tradeId
-            ) {
-
-                return {
-
-                    amount: 0,
-                    type: null,
-                    tradeId: ""
-
-                };
-
+        if (pending && pending.status === "PENDING") {
+            const pendingTradeId = pending.tradeId || "";
+            if (pendingTradeId && trade.tradeId && pendingTradeId !== trade.tradeId) {
+                return { amount: 0, type: null, tradeId: "" };
             }
 
-
             return {
-
-                amount:
-                    Number(
-                        pending.profitLoss ||
-                        0
-                    ),
-
-                type:
-                    pending.type ||
-                    (
-                        Number(
-                            pending.profitLoss ||
-                            0
-                        ) >= 0
-                            ? "PROFIT"
-                            : "LOSS"
-                    ),
-
-                tradeId:
-                    pendingTradeId ||
-                    trade.tradeId ||
-                    ""
-
+                amount: Number(pending.profitLoss || 0),
+                type: pending.type || (Number(pending.profitLoss || 0) >= 0 ? "PROFIT" : "LOSS"),
+                tradeId: pendingTradeId || trade.tradeId || ""
             };
-
         }
 
+        const oldPending = Number(userData.pendingTradeProfitLoss || 0);
+        const oldTradeId = userData.pendingTradeId || "";
 
-        const oldPending =
-            Number(
-                userData.pendingTradeProfitLoss ||
-                0
-            );
-
-
-        const oldTradeId =
-            userData.pendingTradeId ||
-            "";
-
-
-        if (
-            oldPending !== 0
-        ) {
-
-            if (
-                oldTradeId &&
-                trade.tradeId &&
-                oldTradeId !==
-                trade.tradeId
-            ) {
-
-                return {
-
-                    amount: 0,
-                    type: null,
-                    tradeId: ""
-
-                };
-
+        if (oldPending !== 0) {
+            if (oldTradeId && trade.tradeId && oldTradeId !== trade.tradeId) {
+                return { amount: 0, type: null, tradeId: "" };
             }
 
-
             return {
-
-                amount:
-                    oldPending,
-
-                type:
-                    oldPending > 0
-                        ? "PROFIT"
-                        : "LOSS",
-
-                tradeId:
-                    oldTradeId ||
-                    trade.tradeId ||
-                    ""
-
+                amount: oldPending,
+                type: oldPending > 0 ? "PROFIT" : "LOSS",
+                tradeId: oldTradeId || trade.tradeId || ""
             };
-
         }
 
-
-        return {
-
-            amount: 0,
-            type: null,
-            tradeId: ""
-
-        };
-
+        return { amount: 0, type: null, tradeId: "" };
 
     } catch (error) {
-
-        console.error(
-            "Pending admin result error:",
-            error
-        );
-
-
-        return {
-
-            amount: 0,
-            type: null,
-            tradeId: ""
-
-        };
-
+        console.error("Pending admin result error:", error);
+        return { amount: 0, type: null, tradeId: "" };
     }
-
 }
-
 
 
 /* ==========================================
@@ -1292,539 +875,175 @@ async function getPendingAdminResult(
 ========================================== */
 
 async function closeTradeFromOrders() {
-
     if (closingTrade) {
-
         return;
-
     }
 
-
-    const trade =
-        getActiveTrade();
-
+    const trade = getActiveTrade();
 
     if (!trade) {
-
-        alert(
-            "No active trade."
-        );
-
+        await showCustomAlert("CptMarkets", "No active trade.");
         showActive();
-
         return;
-
     }
 
-
-    if (
-        !currentUserUID &&
-        auth.currentUser
-    ) {
-
-        currentUserUID =
-            auth.currentUser.uid;
-
+    if (!currentUserUID && auth.currentUser) {
+        currentUserUID = auth.currentUser.uid;
     }
-
 
     if (!currentUserUID) {
-
-        alert(
-            "User session not ready."
-        );
-
+        await showCustomAlert("CptMarkets", "User session not ready.");
         return;
-
     }
 
-
-    const confirmed =
-        confirm(
-            "Close this trade?"
-        );
-
-
+    const confirmed = await showCustomConfirm("CptMarkets", "Close this trade?");
     if (!confirmed) {
-
         return;
-
     }
 
-
-    closingTrade =
-        true;
-
+    closingTrade = true;
 
     try {
+        const closePrice = getCurrentTradePrice();
 
-        const closePrice =
-            getCurrentTradePrice();
-
-
-        if (
-            !closePrice ||
-            closePrice <= 0
-        ) {
-
-            throw new Error(
-                "Invalid close price."
-            );
-
+        if (!closePrice || closePrice <= 0) {
+            throw new Error("Invalid close price.");
         }
 
+        const userProfitLoss = calculateUserProfitLoss(trade, closePrice);
+        const adminResult = await getPendingAdminResult(trade);
+        const adminProfitLoss = Number(adminResult.amount || 0);
 
-        const userProfitLoss =
-            calculateUserProfitLoss(
-                trade,
-                closePrice
-            );
+        const finalProfitLoss = Number((userProfitLoss + adminProfitLoss).toFixed(2));
+        const returnAmount = Number((trade.amount + finalProfitLoss).toFixed(2));
 
-
-        const adminResult =
-            await getPendingAdminResult(
-                trade
-            );
-
-
-        const adminProfitLoss =
-            Number(
-                adminResult.amount || 0
-            );
-
-
-        const finalProfitLoss =
-            Number(
-                (
-                    userProfitLoss +
-                    adminProfitLoss
-                ).toFixed(2)
-            );
-
-
-        const returnAmount =
-            Number(
-                (
-                    trade.amount +
-                    finalProfitLoss
-                ).toFixed(2)
-            );
-
-
-        if (
-            returnAmount < 0
-        ) {
-
-            throw new Error(
-                "Invalid trade result."
-            );
-
+        if (returnAmount < 0) {
+            throw new Error("Invalid trade result.");
         }
 
+        const userRef = doc(db, "users", currentUserUID);
+        const userSnap = await getDoc(userRef);
 
-        const userRef =
-            doc(
-                db,
-                "users",
-                currentUserUID
-            );
-
-
-        const userSnap =
-            await getDoc(
-                userRef
-            );
-
-
-        if (
-            !userSnap.exists()
-        ) {
-
-            throw new Error(
-                "User account not found."
-            );
-
+        if (!userSnap.exists()) {
+            throw new Error("User account not found.");
         }
 
+        const userData = userSnap.data();
+        const oldBalance = Number(userData.balance || 0);
+        const finalBalance = Number((oldBalance + returnAmount).toFixed(2));
 
-        const userData =
-            userSnap.data();
-
-
-        const oldBalance =
-            Number(
-                userData.balance || 0
-            );
-
-
-        const finalBalance =
-            Number(
-                (
-                    oldBalance +
-                    returnAmount
-                ).toFixed(2)
-            );
-
-
-        if (
-            finalBalance < 0
-        ) {
-
-            throw new Error(
-                "Final balance cannot be negative."
-            );
-
+        if (finalBalance < 0) {
+            throw new Error("Final balance cannot be negative.");
         }
 
+        let existingHistory = false;
 
-        let existingHistory =
-            false;
-
-
-        if (
-            trade.tradeId
-        ) {
-
-            const historyQuery =
-                query(
-
-                    collection(
-                        db,
-                        "tradeHistory"
-                    ),
-
-                    where(
-                        "uid",
-                        "==",
-                        currentUserUID
-                    ),
-
-                    where(
-                        "tradeId",
-                        "==",
-                        trade.tradeId
-                    )
-
-                );
-
-
-            const historySnapshot =
-                await getDocs(
-                    historyQuery
-                );
-
-
-            existingHistory =
-                !historySnapshot.empty;
-
+        if (trade.tradeId) {
+            const historyQuery = query(
+                collection(db, "tradeHistory"),
+                where("uid", "==", currentUserUID),
+                where("tradeId", "==", trade.tradeId)
+            );
+            const historySnapshot = await getDocs(historyQuery);
+            existingHistory = !historySnapshot.empty;
         }
 
-
-        if (
-            !existingHistory
-        ) {
-
+        if (!existingHistory) {
             await addDoc(
-
-                collection(
-                    db,
-                    "tradeHistory"
-                ),
-
+                collection(db, "tradeHistory"),
                 {
-
-                    tradeId:
-                        trade.tradeId ||
-                        "",
-
-                    uid:
-                        currentUserUID,
-
-                    userId:
-                        userData.userId ||
-                        "",
-
-                    username:
-                        userData.username ||
-                        userData.name ||
-                        "User",
-
-                    email:
-                        userData.email ||
-                        "",
-
-                    side:
-                        trade.side,
-
-                    entryPrice:
-                        Number(
-                            trade.entryPrice.toFixed(2)
-                        ),
-
-                    closePrice:
-                        Number(
-                            closePrice.toFixed(2)
-                        ),
-
-                    amount:
-                        Number(
-                            trade.amount.toFixed(2)
-                        ),
-
-                    userProfitLoss:
-                        userProfitLoss,
-
-                    adminProfitLoss:
-                        adminProfitLoss,
-
-                    profitLoss:
-                        finalProfitLoss,
-
-                    leverage:
-                        Number(
-                            localStorage.getItem(
-                                "tradeLeverage"
-                            )
-                        ) || 100,
-
-                    type:
-                        "TRADE",
-
-                    source:
-                        "USER",
-
-                    adminResultSource:
-                        adminResult.amount !== 0
-                            ? "ADMIN"
-                            : null,
-
-                    adminResultType:
-                        adminResult.type ||
-                        null,
-
-                    status:
-                        "COMPLETED",
-
-                    oldBalance:
-                        Number(
-                            oldBalance.toFixed(2)
-                        ),
-
-                    returnedAmount:
-                        returnAmount,
-
-                    newBalance:
-                        finalBalance,
-
-                    time:
-                        new Date().toLocaleString(),
-
-                    createdAt:
-                        serverTimestamp()
-
+                    tradeId: trade.tradeId || "",
+                    uid: currentUserUID,
+                    userId: userData.userId || "",
+                    username: userData.username || userData.name || "User",
+                    email: userData.email || "",
+                    side: trade.side,
+                    entryPrice: Number(trade.entryPrice.toFixed(2)),
+                    closePrice: Number(closePrice.toFixed(2)),
+                    amount: Number(trade.amount.toFixed(2)),
+                    userProfitLoss: userProfitLoss,
+                    adminProfitLoss: adminProfitLoss,
+                    profitLoss: finalProfitLoss,
+                    leverage: Number(localStorage.getItem("tradeLeverage")) || 100,
+                    type: "TRADE",
+                    source: "USER",
+                    adminResultSource: adminResult.amount !== 0 ? "ADMIN" : null,
+                    adminResultType: adminResult.type || null,
+                    status: "COMPLETED",
+                    oldBalance: Number(oldBalance.toFixed(2)),
+                    returnedAmount: returnAmount,
+                    newBalance: finalBalance,
+                    time: new Date().toLocaleString(),
+                    createdAt: serverTimestamp()
                 }
-
             );
-
         }
 
+        let localHistory = getLocalHistory();
+        const localExists = historyAlreadyExists(localHistory, trade.tradeId);
 
-        let localHistory =
-            getLocalHistory();
-
-
-        const localExists =
-            historyAlreadyExists(
-                localHistory,
-                trade.tradeId
-            );
-
-
-        if (
-            !localExists
-        ) {
-
+        if (!localExists) {
             localHistory.unshift({
-
-                uid:
-                    currentUserUID,
-
-                tradeId:
-                    trade.tradeId ||
-                    "",
-
-                side:
-                    trade.side,
-
-                entryPrice:
-                    Number(
-                        trade.entryPrice.toFixed(2)
-                    ),
-
-                closePrice:
-                    Number(
-                        closePrice.toFixed(2)
-                    ),
-
-                amount:
-                    Number(
-                        trade.amount.toFixed(2)
-                    ),
-
-                userProfitLoss:
-                    userProfitLoss,
-
-                adminProfitLoss:
-                    adminProfitLoss,
-
-                profitLoss:
-                    finalProfitLoss,
-
-                leverage:
-                    Number(
-                        localStorage.getItem(
-                            "tradeLeverage"
-                        )
-                    ) || 100,
-
-                type:
-                    "TRADE",
-
-                source:
-                    "USER",
-
-                time:
-                    new Date().toLocaleString()
-
+                uid: currentUserUID,
+                tradeId: trade.tradeId || "",
+                side: trade.side,
+                entryPrice: Number(trade.entryPrice.toFixed(2)),
+                closePrice: Number(closePrice.toFixed(2)),
+                amount: Number(trade.amount.toFixed(2)),
+                userProfitLoss: userProfitLoss,
+                adminProfitLoss: adminProfitLoss,
+                profitLoss: finalProfitLoss,
+                leverage: Number(localStorage.getItem("tradeLeverage")) || 100,
+                type: "TRADE",
+                source: "USER",
+                time: new Date().toLocaleString()
             });
 
-
-            saveLocalHistory(
-                localHistory
-            );
-
+            saveLocalHistory(localHistory);
         }
 
-
         const balanceUpdate = {
-
-            balance:
-                finalBalance
-
+            balance: finalBalance
         };
-
 
         if (
             adminResult.amount !== 0 ||
-            (
-                userData.pendingAdminTradeResult &&
-                userData.pendingAdminTradeResult.status ===
-                "PENDING"
-            )
+            (userData.pendingAdminTradeResult && userData.pendingAdminTradeResult.status === "PENDING")
         ) {
-
-            balanceUpdate.pendingAdminTradeResult =
-                deleteField();
-
+            balanceUpdate.pendingAdminTradeResult = deleteField();
         }
 
+        balanceUpdate.pendingTradeProfitLoss = 0;
+        balanceUpdate.pendingTradeId = "";
 
-        balanceUpdate.pendingTradeProfitLoss =
-            0;
-
-        balanceUpdate.pendingTradeId =
-            "";
-
-
-        await updateDoc(
-
-            userRef,
-
-            balanceUpdate
-
-        );
-
+        await updateDoc(userRef, balanceUpdate);
 
         clearActiveTrade();
 
-
-        localStorage.setItem(
-            "cptTradeClosedAt",
-            String(Date.now())
-        );
-
-
-        setTimeout(
-            function () {
-
-                localStorage.removeItem(
-                    "cptTradeClosedAt"
-                );
-
-            },
-            1000
-        );
-
+        // ট্রেড পেজ এবং অন্যান্য ট্যাবের জন্য সিঙ্ক ট্রিগার
+        localStorage.setItem("cptTradeClosedAt", String(Date.now()));
+        setTimeout(function () {
+            localStorage.removeItem("cptTradeClosedAt");
+        }, 1000);
 
         showActive();
-
         await loadFirebaseHistory();
 
-
-        alert(
-
-            trade.side +
-            " trade closed successfully.\n\n" +
-
-            "Close Price: $" +
-            closePrice.toFixed(2) +
-
-            "\nUser P/L: " +
-            (
-                userProfitLoss >= 0
-                    ? "+"
-                    : ""
-            ) +
-            "$" +
-            userProfitLoss.toFixed(2) +
-
-            "\nFinal P/L: " +
-            (
-                finalProfitLoss >= 0
-                    ? "+"
-                    : ""
-            ) +
-            "$" +
-            finalProfitLoss.toFixed(2)
-
+        await showCustomAlert(
+            "CptMarkets",
+            trade.side + " trade closed successfully.\n\n" +
+            "Close Price: $" + closePrice.toFixed(2) + "\n" +
+            "User P/L: " + (userProfitLoss >= 0 ? "+" : "") + "$" + userProfitLoss.toFixed(2) + "\n" +
+            "Final P/L: " + (finalProfitLoss >= 0 ? "+" : "") + "$" + finalProfitLoss.toFixed(2)
         );
-
 
     } catch (error) {
-
-        console.error(
-            "Close trade failed:",
-            error
-        );
-
-
-        alert(
-
-            "Unable to close trade.\n\n" +
-            error.message
-
-        );
-
-
+        console.error("Close trade failed:", error);
+        await showCustomAlert("CptMarkets", "Unable to close trade.\n\n" + error.message);
     } finally {
-
-        closingTrade =
-            false;
-
+        closingTrade = false;
     }
-
 }
-
 
 
 /* ==========================================
@@ -1832,323 +1051,147 @@ async function closeTradeFromOrders() {
 ========================================== */
 
 function showHistory() {
+    setActiveTab("history");
 
-    setActiveTab(
-        "history"
-    );
-
-
-    const list =
-        document.getElementById(
-            "ordersList"
-        );
-
-
+    const list = document.getElementById("ordersList");
     if (!list) {
-
         return;
-
     }
 
-
-    const localHistory =
-        getLocalHistory();
-
-
+    const localHistory = getLocalHistory();
     const combined = [];
+    const seenTradeIds = new Set();
 
-    const seenTradeIds =
-        new Set();
-
-
-    firebaseHistory.forEach(
-        function (trade) {
-
-            if (
-                trade.source === "ADMIN" ||
-                trade.side === "ADMIN"
-            ) {
-
-                return;
-
-            }
-
-
-            if (
-                trade.side !== "LONG" &&
-                trade.side !== "SHORT"
-            ) {
-
-                return;
-
-            }
-
-
-            const id =
-                trade.tradeId ||
-                trade.id;
-
-
-            if (
-                id &&
-                seenTradeIds.has(id)
-            ) {
-
-                return;
-
-            }
-
-
-            if (id) {
-
-                seenTradeIds.add(id);
-
-            }
-
-
-            combined.push(
-                trade
-            );
-
+    firebaseHistory.forEach(function (trade) {
+        if (trade.source === "ADMIN" || trade.side === "ADMIN") {
+            return;
         }
-    );
-
-
-    localHistory.forEach(
-        function (trade) {
-
-            if (
-                trade.side !== "LONG" &&
-                trade.side !== "SHORT"
-            ) {
-
-                return;
-
-            }
-
-
-            const id =
-                trade.tradeId ||
-                "";
-
-
-            if (
-                id &&
-                seenTradeIds.has(id)
-            ) {
-
-                return;
-
-            }
-
-
-            if (id) {
-
-                seenTradeIds.add(id);
-
-            }
-
-
-            combined.push(
-                trade
-            );
-
+        if (trade.side !== "LONG" && trade.side !== "SHORT") {
+            return;
         }
-    );
 
+        const id = trade.tradeId || trade.id;
+        if (id && seenTradeIds.has(id)) {
+            return;
+        }
+        if (id) {
+            seenTradeIds.add(id);
+        }
 
-    if (
-        !combined.length
-    ) {
+        combined.push(trade);
+    });
 
+    localHistory.forEach(function (trade) {
+        if (trade.side !== "LONG" && trade.side !== "SHORT") {
+            return;
+        }
+
+        const id = trade.tradeId || "";
+        if (id && seenTradeIds.has(id)) {
+            return;
+        }
+        if (id) {
+            seenTradeIds.add(id);
+        }
+
+        combined.push(trade);
+    });
+
+    if (!combined.length) {
         list.innerHTML = `
-
             <div class="empty">
-
                 No trade history
-
             </div>
-
         `;
-
         return;
-
     }
 
+    list.innerHTML = combined.map(function (trade) {
+        const profitLoss = Number(trade.profitLoss ?? trade.profitloss ?? 0);
+        const profitClass = profitLoss >= 0 ? "profit" : "loss";
+        const side = trade.side;
+        const sideClass = side === "LONG" ? "long" : "short";
 
-    list.innerHTML =
-        combined.map(
-            function (trade) {
+        return `
+            <div class="order-card">
+                <span class="status closed">
+                    CLOSED
+                </span>
 
-                const profitLoss =
-                    Number(
-                        trade.profitLoss ??
-                        trade.profitloss ??
-                        0
-                    );
+                <div class="side ${sideClass}">
+                    ${side}
+                </div>
 
+                <div class="info">
+                    Entry Price:
+                    <strong>
+                        $${Number(trade.entryPrice || 0).toFixed(2)}
+                    </strong>
+                </div>
 
-                const profitClass =
-                    profitLoss >= 0
-                        ? "profit"
-                        : "loss";
+                <div class="info">
+                    Close Price:
+                    <strong>
+                        $${Number(trade.closePrice || 0).toFixed(2)}
+                    </strong>
+                </div>
 
+                <div class="info">
+                    Amount:
+                    <strong>
+                        $${Number(trade.amount || 0).toFixed(2)}
+                    </strong>
+                </div>
 
-                const side =
-                    trade.side;
+                <div class="info">
+                    Profit / Loss:
+                    <span class="${profitClass}">
+                        ${profitLoss >= 0 ? "+" : ""}$${profitLoss.toFixed(2)}
+                    </span>
+                </div>
 
+                <div class="info">
+                    ${trade.time || ""}
+                </div>
 
-                const sideClass =
-                    side === "LONG"
-                        ? "long"
-                        : "short";
-
-
-                return `
-
-                    <div class="order-card">
-
-                        <span class="status closed">
-                            CLOSED
-                        </span>
-
-
-                        <div class="side ${sideClass}">
-                            ${side}
-                        </div>
-
-
-                        <div class="info">
-
-                            Entry Price:
-
-                            <strong>
-                                $${Number(
-                                    trade.entryPrice ||
-                                    0
-                                ).toFixed(2)}
-                            </strong>
-
-                        </div>
-
-
-                        <div class="info">
-
-                            Close Price:
-
-                            <strong>
-                                $${Number(
-                                    trade.closePrice ||
-                                    0
-                                ).toFixed(2)}
-                            </strong>
-
-                        </div>
-
-
-                        <div class="info">
-
-                            Amount:
-
-                            <strong>
-                                $${Number(
-                                    trade.amount ||
-                                    0
-                                ).toFixed(2)}
-                            </strong>
-
-                        </div>
-
-
-                        <div class="info">
-
-                            Profit / Loss:
-
-                            <span class="${profitClass}">
-
-                                ${
-                                    profitLoss >= 0
-                                        ? "+"
-                                        : ""
-                                }$${profitLoss.toFixed(2)}
-
-                            </span>
-
-                        </div>
-
-
-                        <div class="info">
-
-                            ${
-                                trade.time ||
-                                ""
-                            }
-
-                        </div>
-
-
-                        ${
-                            trade.tradeId
-                                ? `
-                                    <div class="trade-id">
-
-                                        Trade ID:
-                                        ${trade.tradeId}
-
-                                    </div>
-                                `
-                                : ""
-                        }
-
-
-                    </div>
-
-                `;
-
-            }
-        ).join("");
-
+                ${
+                    trade.tradeId
+                        ? `
+                            <div class="trade-id">
+                                Trade ID:
+                                ${trade.tradeId}
+                            </div>
+                        `
+                        : ""
+                }
+            </div>
+        `;
+    }).join("");
 }
 
 
-
 /* ==========================================
-   CROSS-PAGE CLOSE DETECTION
+   CROSS-PAGE CLOSE DETECTION (Sync with Trade Page)
 ========================================== */
 
 window.addEventListener(
     "storage",
     function (event) {
-
-        if (
-            event.key ===
-            "cptTradeClosedAt"
-        ) {
-
+        if (event.key === "cptTradeClosedAt" || event.key === "selectedSide") {
+            showActive();
             loadFirebaseHistory();
-
         }
-
     }
 );
-
 
 
 /* ==========================================
    GLOBAL FUNCTIONS
 ========================================== */
 
-window.showActive =
-    showActive;
-
-
-window.showHistory =
-    showHistory;
-
-
-window.closeTradeFromOrders =
-    closeTradeFromOrders;
-
+window.showActive = showActive;
+window.showHistory = showHistory;
+window.closeTradeFromOrders = closeTradeFromOrders;
 
 
 /* ==========================================
@@ -2156,46 +1199,25 @@ window.closeTradeFromOrders =
 ========================================== */
 
 onAuthStateChanged(
-
     auth,
-
     async function (user) {
-
         if (!user) {
-
             firebaseHistory = [];
-
-            firebaseReady =
-                false;
-
-            currentUserUID =
-                null;
-
+            firebaseReady = false;
+            currentUserUID = null;
             showActive();
-
             return;
-
         }
 
-
-        currentUserUID =
-            user.uid;
-
-
+        currentUserUID = user.uid;
         await loadFirebaseHistory();
 
-
-        // শুধুমাত্র একেবারে প্রথমবার পেজ লোড বা লগইন হওয়ার সময় মাই অর্ডার দেখাবে, 
-        // পরবর্তীতে ইউজার হিস্টরিতে ক্লিক করলে আর অটো-ব্যাক করবে না।
         if (isInitialLoad) {
             isInitialLoad = false;
             showActive();
         }
-
     }
-
 );
-
 
 
 /* ==========================================
@@ -2204,11 +1226,9 @@ onAuthStateChanged(
 
 showActive();
 
-
 </script>
 <script src="lang.js"></script>
 <script src="translator.js"></script>
-
 
 </body>
 
