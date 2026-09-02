@@ -56,6 +56,11 @@
             gap: 12px;
         }
 
+        /* Force First Letter Capital via CSS to override translator JS */
+        .header-title-area span, .tab {
+            text-transform: capitalize;
+        }
+
         /* 3D Back Button */
         .back-btn {
             background: linear-gradient(135deg, #1e2538 0%, #111726 100%);
@@ -132,27 +137,27 @@
             box-shadow: 0 1px 0 #04060b, 0 3px 8px rgba(0, 0, 0, 0.4);
         }
 
-        /* 3D Elevated Professional Order Cards (Compact Spacing) */
+        /* 3D Elevated Professional Order Cards (More Compact Spacing) */
         .order-card {
             background: linear-gradient(145deg, #111726, #090e18);
-            border-radius: 18px;
-            padding: 18px 20px;
-            margin-bottom: 12px;
+            border-radius: 16px;
+            padding: 15px 18px;
+            margin-bottom: 8px;
             border: 1px solid #25304a;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 4px 0 rgba(255, 255, 255, 0.03) inset;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7), 0 4px 0 rgba(255, 255, 255, 0.03) inset;
             position: relative;
             transition: transform 0.2s ease, border-color 0.2s ease;
         }
 
         .order-card:hover {
             border-color: rgba(59, 130, 246, 0.5);
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8), 0 0 20px rgba(59, 130, 246, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(59, 130, 246, 0.2);
         }
 
         .side {
-            font-size: 19px;
+            font-size: 18px;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .long {
@@ -166,7 +171,7 @@
         }
 
         .info {
-            margin: 6px 0;
+            margin: 5px 0;
             color: #dce8f7;
             font-size: 14px;
         }
@@ -178,23 +183,23 @@
         /* 3D Close Button */
         .close-btn {
             width: 100%;
-            margin-top: 14px;
-            padding: 12px;
+            margin-top: 12px;
+            padding: 10px;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             background: linear-gradient(135deg, #ff4058 0%, #dc2626 100%);
             color: white;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 5px 0 #991b1b, 0 8px 18px rgba(255, 64, 88, 0.4);
+            box-shadow: 0 4px 0 #991b1b, 0 6px 15px rgba(255, 64, 88, 0.4);
             transition: all 0.1s ease;
             text-transform: uppercase;
         }
 
         .close-btn:active {
             transform: translateY(3px);
-            box-shadow: 0 2px 0 #991b1b, 0 3px 8px rgba(255, 64, 88, 0.4);
+            box-shadow: 0 1px 0 #991b1b, 0 2px 6px rgba(255, 64, 88, 0.4);
         }
 
         .profit {
@@ -217,18 +222,18 @@
         .trade-id {
             font-size: 11px;
             color: #7893b4;
-            margin-top: 10px;
+            margin-top: 8px;
             word-break: break-all;
             border-top: 1px dashed rgba(255,255,255,0.08);
-            padding-top: 8px;
+            padding-top: 6px;
         }
 
         .status {
             display: inline-block;
-            padding: 4px 9px;
-            border-radius: 8px;
+            padding: 3px 8px;
+            border-radius: 6px;
             font-size: 11px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-weight: bold;
         }
 
