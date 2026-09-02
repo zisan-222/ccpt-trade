@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Withdrawal - CptMarkets</title>
+    <title>Global Withdrawal - CptMarkets</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -264,13 +264,13 @@
             transition: transform 0.3s;
         }
 
-        /* Custom Modal Popup with Logos */
+        /* Stunning Modal Popup for Global Payouts */
         .modal-overlay {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(3, 7, 15, 0.85);
-            backdrop-filter: blur(10px);
+            background: rgba(3, 7, 15, 0.88);
+            backdrop-filter: blur(12px);
             z-index: 1000;
             align-items: flex-end;
             justify-content: center;
@@ -282,14 +282,16 @@
         }
         .modal-content {
             background: linear-gradient(145deg, #132540, #0a1424);
-            border: 1px solid rgba(0, 229, 255, 0.4);
+            border: 1px solid rgba(0, 229, 255, 0.5);
             border-bottom: none;
-            border-radius: 28px 28px 0 0;
+            border-radius: 30px 30px 0 0;
             width: 100%;
             max-width: 520px;
-            padding: 26px 22px 40px;
-            box-shadow: 0 -15px 50px rgba(0,0,0,0.7);
-            animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 26px 20px 40px;
+            box-shadow: 0 -20px 60px rgba(0,0,0,0.8);
+            animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
         @keyframes slideUp {
             from { transform: translateY(100%); }
@@ -299,50 +301,87 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
             border-bottom: 1px solid rgba(255,255,255,0.08);
             padding-bottom: 14px;
         }
         .modal-header h3 {
             margin: 0;
-            font-size: 17px;
+            font-size: 18px;
             color: #00e5ff;
             font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         .modal-close {
-            background: none;
-            border: none;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: #8fa3bf;
-            font-size: 20px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
             cursor: pointer;
+            transition: all 0.2s;
+        }
+        .modal-close:hover {
+            background: rgba(0, 229, 255, 0.2);
+            color: #00e5ff;
+            border-color: #00e5ff;
+        }
+        .modal-category-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #00e5ff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 18px 0 10px 4px;
         }
         .modal-option {
-            background: rgba(255, 255, 255, 0.04);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
             border: 1px solid rgba(255, 255, 255, 0.08);
             padding: 16px 18px;
-            border-radius: 14px;
+            border-radius: 16px;
             margin-bottom: 12px;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 16px;
-            transition: all 0.2s;
+            transition: all 0.3s ease;
         }
         .modal-option:hover {
-            background: rgba(0, 229, 255, 0.12);
+            background: linear-gradient(145deg, rgba(0, 229, 255, 0.15), rgba(0, 128, 255, 0.08));
             border-color: #00e5ff;
-            color: #00e5ff;
+            transform: translateX(4px);
+            box-shadow: 0 4px 20px rgba(0, 229, 255, 0.2);
         }
-        .modal-option i {
-            font-size: 22px;
+        .modal-option-icon {
+            width: 44px;
+            height: 44px;
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: #00e5ff;
-            width: 28px;
-            text-align: center;
+            font-size: 20px;
+            flex-shrink: 0;
         }
-        .modal-option span {
+        .modal-option-info h4 {
+            margin: 0 0 4px;
             font-size: 15px;
-            font-weight: 600;
+            font-weight: 700;
             color: #f8fafc;
+        }
+        .modal-option-info p {
+            margin: 0;
+            font-size: 12px;
+            color: #8fa3bf;
         }
 
         /* Dynamic Field Container */
@@ -432,7 +471,7 @@
                 </div>
             </div>
             <h2 data-key="globalWithdrawal">Global Fund Withdrawal</h2>
-            <p data-key="globalPlatform">Global integrated financial trading platform</p>
+            <p data-key="globalPlatform">Global integrated financial trading platform for worldwide users</p>
         </div>
 
         <!-- Available Balance Card Display -->
@@ -450,90 +489,88 @@
         <div class="withdraw-card">
             <form id="withdrawForm" onsubmit="handleWithdrawSubmit(event)">
                 
-                <!-- 1. International Payment Method Selector -->
+                <!-- 1. Global Payment Method Selector -->
                 <div class="input-group">
-                    <label data-key="paymentMethod">International Payment Method</label>
+                    <label data-key="paymentMethod">Worldwide Payment Method</label>
                     <div class="input-wrapper" style="position:relative;">
-                        <i id="methodIconPreview" class="fa-solid fa-globe" style="position:absolute; left:16px; z-index:2; color:#00e5ff;"></i>
+                        <i id="methodIconPreview" class="fa-solid fa-earth-americas" style="position:absolute; left:16px; z-index:2; color:#00e5ff;"></i>
                         <div id="selectedMethodDisplay" class="custom-select-box" onclick="openMethodModal()">
-                            <span id="selectedMethodText" data-key="selectPayout">Select payout system</span>
+                            <span id="selectedMethodText">Select Worldwide Payout Method</span>
                             <i class="fa-solid fa-chevron-down" id="dropdownArrow"></i>
                         </div>
                     </div>
                     <input type="hidden" id="paymentMethod" required>
                 </div>
 
-                <!-- 2. Dynamic Field: International Bank Card & SWIFT Wire System -->
+                <!-- 2. Dynamic Field: Global Bank Wire (SWIFT / IBAN / Account Number) -->
                 <div id="bankField" class="input-group dynamic-field">
-                    <label>Global Bank Wire / SEPA / SWIFT & Card Details</label>
+                    <label>Global Bank Wire Transfer Details</label>
                     <div class="input-wrapper" style="margin-bottom: 12px;">
-                        <i class="fa-solid fa-earth-americas"></i>
+                        <i class="fa-solid fa-earth-globe"></i>
                         <select id="bankCountry">
-                            <option value="" disabled selected>Select Country / Region</option>
-                            <option value="UK">United Kingdom (GBP / EUR)</option>
-                            <option value="EU">European Union (SEPA)</option>
-                            <option value="USA">United States (USD Wire / ACH)</option>
-                            <option value="Canada">Canada (CAD)</option>
-                            <option value="Australia">Australia (AUD)</option>
-                            <option value="Global">International / Other Regions</option>
+                            <option value="" disabled selected>Select Your Country (Worldwide)</option>
+                            <option value="UK">United Kingdom (UK)</option>
+                            <option value="USA">United States (USA)</option>
+                            <option value="EU">European Union / Eurozone</option>
+                            <option value="Canada">Canada</option>
+                            <option value="Australia">Australia</option>
+                            <option value="Asia">Asia & Middle East (All Countries)</option>
+                            <option value="Africa">Africa & Latin America</option>
+                            <option value="Global_Other">Other International Country</option>
                         </select>
                     </div>
                     <div class="input-wrapper" style="margin-bottom: 12px;">
-                        <i class="fa-solid fa-credit-card"></i>
-                        <input type="text" id="bankCardNumber" placeholder="International Bank Card / IBAN Number">
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                        <input type="text" id="bankAccountNumber" placeholder="Enter Bank Account Number / IBAN">
+                    </div>
+                    <div class="input-wrapper" style="margin-bottom: 12px;">
+                        <i class="fa-solid fa-building-columns"></i>
+                        <input type="text" id="bankNameCode" placeholder="Bank Name & SWIFT / BIC Code">
                     </div>
                     <div class="input-wrapper">
-                        <i class="fa-solid fa-building-columns"></i>
-                        <input type="text" id="bankDetails" placeholder="Account Holder Name, Bank Name & SWIFT/BIC Code">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="bankHolderName" placeholder="Account Holder Full Name">
                     </div>
                 </div>
 
-                <!-- 3. Dynamic Field: Global Mobile Banking / Digital Wallet System -->
+                <!-- 3. Dynamic Field: Global Mobile Banking & Digital Wallets (Wallet Number / ID) -->
                 <div id="mobileField" class="input-group dynamic-field">
                     <label>Global Mobile Banking & Digital Wallets</label>
                     <div class="input-wrapper" style="margin-bottom: 12px;">
-                        <i class="fa-solid fa-earth-europe"></i>
+                        <i class="fa-solid fa-globe"></i>
                         <select id="walletRegion">
-                            <option value="" disabled selected>Select Region / Country</option>
-                            <option value="UK_EU">United Kingdom & Europe (Revolut, Wise, Skrill)</option>
-                            <option value="Asia_South">South Asia (bKash, Nagad, Easypaisa, etc.)</option>
-                            <option value="Asia_SE">Southeast Asia (GrabPay, GCash, Dana)</option>
-                            <option value="Global_Wallet">Global Digital Wallets (Neteller, Payeer)</option>
+                            <option value="" disabled selected>Select Region / Area</option>
+                            <option value="Europe_UK">UK & Europe (Revolut, Wise, Skrill, Neteller)</option>
+                            <option value="South_Asia">South Asia (bKash, Nagad, Easypaisa, etc.)</option>
+                            <option value="Southeast_Asia">Southeast Asia (GCash, Dana, TrueMoney)</option>
+                            <option value="America_Global">Americas & Global Digital Wallets (PayPal/Payeer)</option>
                         </select>
                     </div>
                     <div class="input-wrapper" style="margin-bottom: 12px;">
                         <i class="fa-solid fa-wallet"></i>
-                        <select id="mobileProvider">
-                            <option value="" disabled selected>Select Provider / App</option>
-                            <option value="Revolut">Revolut / Wise</option>
-                            <option value="Skrill">Skrill / Neteller</option>
-                            <option value="bKash">bKash (South Asia)</option>
-                            <option value="Nagad">Nagad (South Asia)</option>
-                            <option value="GCash">GCash / GrabPay</option>
-                            <option value="OtherWallet">Other Digital Wallet Account</option>
-                        </select>
+                        <input type="text" id="walletProviderName" placeholder="Wallet Provider Name (e.g. Revolut, Wise, Skrill, bKash)">
                     </div>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-mobile-screen-button"></i>
-                        <input type="text" id="mobileNumber" placeholder="Enter Account / Wallet ID / Phone Number" data-ph-key="enterMobile">
+                        <input type="text" id="mobileWalletNumber" placeholder="Enter Mobile Wallet Number / Account ID">
                     </div>
                 </div>
 
                 <!-- 4. Dynamic Field: Blockchain Crypto Network -->
                 <div id="cryptoField" class="input-group dynamic-field">
-                    <label>Global Crypto Network Exchange (TRC20 / ERC20)</label>
+                    <label>Global Crypto Network Exchange (USDT)</label>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-coins"></i>
-                        <input type="text" id="cryptoAddress" placeholder="Paste TRC20 / USDT Network Wallet Address" data-ph-key="cryptoAddress">
+                        <input type="text" id="cryptoAddress" placeholder="Paste TRC20 / ERC20 USDT Wallet Address">
                     </div>
                 </div>
 
-                <!-- 5. Withdrawal Amount with Max Button (Placed right before Password as requested) -->
+                <!-- 5. Withdrawal Amount (Placed right before Password) -->
                 <div class="input-group">
                     <label>Withdrawal Amount (USDT)</label>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-dollar-sign"></i>
-                        <input type="number" id="withdrawAmount" placeholder="Enter your amount" data-ph-key="enterAmount" min="0.01" step="0.01" required>
+                        <input type="number" id="withdrawAmount" placeholder="Enter your amount" min="0.01" step="0.01" required>
                         <button type="button" class="max-btn" onclick="settableFutureMax()">MAX</button>
                     </div>
                 </div>
@@ -543,7 +580,7 @@
                     <label>Fund / Trading Password</label>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-lock"></i>
-                        <input type="password" id="securityPassword" placeholder="Enter security password" data-ph-key="securityPassword" required>
+                        <input type="password" id="securityPassword" placeholder="Enter security password" required>
                     </div>
                 </div>
 
@@ -561,31 +598,46 @@
         <!-- Security Notice -->
         <div class="security-box">
             <i class="fa-solid fa-shield-cat"></i>
-            <p><strong>Secure Platform Payout:</strong> All financial orders are processed securely through global exchange channels. Make sure your account details are correct.</p>
+            <p><strong>Secure Platform Payout:</strong> All financial orders are processed securely through global exchange channels. Available for worldwide traders and investors.</p>
         </div>
     </div>
 
-    <!-- Custom Select Modal Popup with Icons/Logos -->
+    <!-- Stunning Global Method Modal Popup -->
     <div id="methodModal" class="modal-overlay" onclick="closeMethodModalOnOutside(event)">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 data-key="payoutGateway">Select Payout Gateway</h3>
+                <h3><i class="fa-solid fa-globe"></i> Select Worldwide Payout Gateway</h3>
                 <button type="button" class="modal-close" onclick="closeMethodModal()"><i class="fa-solid fa-xmark"></i></button>
             </div>
             
-            <div class="modal-option" onclick="selectMethod('bank', 'International Bank Wire & SEPA / Cards', 'fa-building-columns')">
-                <i class="fa-solid fa-building-columns"></i>
-                <span data-key="bankWire">International Bank Wire, SEPA & Cards (UK/EU/Global)</span>
-            </div>
+            <div class="modal-category-title">Traditional Banking & Cards</div>
             
-            <div class="modal-option" onclick="selectMethod('mobile', 'Global Mobile Banking & Digital Wallets', 'fa-wallet')">
-                <i class="fa-solid fa-wallet"></i>
-                <span>Global Mobile Banking & Digital Wallets (Revolut, Wise, Skrill, etc.)</span>
+            <div class="modal-option" onclick="selectMethod('bank', 'Global Bank Wire & SWIFT Transfer', 'fa-building-columns')">
+                <div class="modal-option-icon"><i class="fa-solid fa-building-columns"></i></div>
+                <div class="modal-option-info">
+                    <h4>Global Bank Wire, SWIFT & IBAN</h4>
+                    <p>Direct transfer to any bank worldwide (UK, USA, EU, Asia, etc.)</p>
+                </div>
             </div>
 
-            <div class="modal-option" onclick="selectMethod('crypto', 'Crypto Network Exchange Wallet (USDT)', 'fa-coins')">
-                <i class="fa-solid fa-coins"></i>
-                <span data-key="cryptoWallet">Crypto Network Exchange Wallet (TRC20)</span>
+            <div class="modal-category-title">Mobile Wallets & Digital Banks</div>
+            
+            <div class="modal-option" onclick="selectMethod('mobile', 'Global Mobile Banking & Digital Wallets', 'fa-wallet')">
+                <div class="modal-option-icon"><i class="fa-solid fa-wallet"></i></div>
+                <div class="modal-option-info">
+                    <h4>International Digital Wallets & Mobile Apps</h4>
+                    <p>Revolut, Wise, Skrill, Neteller, bKash, Nagad, GCash & more</p>
+                </div>
+            </div>
+
+            <div class="modal-category-title">Cryptocurrency Network</div>
+
+            <div class="modal-option" onclick="selectMethod('crypto', 'Global Crypto Exchange Wallet (USDT)', 'fa-coins')">
+                <div class="modal-option-icon"><i class="fa-solid fa-coins"></i></div>
+                <div class="modal-option-info">
+                    <h4>Crypto Network Exchange (USDT TRC20/ERC20)</h4>
+                    <p>Instant global payout via cryptocurrency wallet address</p>
+                </div>
             </div>
         </div>
     </div>
@@ -630,21 +682,25 @@
             document.getElementById("cryptoField").style.display = "none";
 
             document.getElementById("bankCountry").removeAttribute("required");
-            document.getElementById("bankCardNumber").removeAttribute("required");
-            document.getElementById("bankDetails").removeAttribute("required");
-            document.getElementById("mobileRegion").removeAttribute("required");
-            document.getElementById("mobileNumber").removeAttribute("required");
+            document.getElementById("bankAccountNumber").removeAttribute("required");
+            document.getElementById("bankNameCode").removeAttribute("required");
+            document.getElementById("bankHolderName").removeAttribute("required");
+            document.getElementById("walletRegion").removeAttribute("required");
+            document.getElementById("walletProviderName").removeAttribute("required");
+            document.getElementById("mobileWalletNumber").removeAttribute("required");
             document.getElementById("cryptoAddress").removeAttribute("required");
 
             if (method === "bank") {
                 document.getElementById("bankField").style.display = "block";
                 document.getElementById("bankCountry").setAttribute("required", "true");
-                document.getElementById("bankCardNumber").setAttribute("required", "true");
-                document.getElementById("bankDetails").setAttribute("required", "true");
+                document.getElementById("bankAccountNumber").setAttribute("required", "true");
+                document.getElementById("bankNameCode").setAttribute("required", "true");
+                document.getElementById("bankHolderName").setAttribute("required", "true");
             } else if (method === "mobile") {
                 document.getElementById("mobileField").style.display = "block";
-                document.getElementById("mobileRegion").setAttribute("required", "true");
-                document.getElementById("mobileNumber").setAttribute("required", "true");
+                document.getElementById("walletRegion").setAttribute("required", "true");
+                document.getElementById("walletProviderName").setAttribute("required", "true");
+                document.getElementById("mobileWalletNumber").setAttribute("required", "true");
             } else if (method === "crypto") {
                 document.getElementById("cryptoField").style.display = "block";
                 document.getElementById("cryptoAddress").setAttribute("required", "true");
@@ -688,23 +744,20 @@
 
             popup.style.display = "block";
 
-            // Condition 1: Insufficient Balance (Zero or Less)
             if (userBalance <= 0) {
                 popup.style.color = "#ff5c5c";
                 popup.innerHTML = "Your account balance is insufficient. Please recharge first.";
                 return;
             }
 
-            // Condition 2: Entered amount greater than available balance
             if (amountInput > userBalance) {
                 popup.style.color = "#ff5c5c";
                 popup.innerHTML = "Withdrawal amount exceeds your available balance!";
                 return;
             }
 
-            // Condition 3: Success path - Require Customer Service verification
             popup.style.color = "#00e5ff";
-            popup.innerHTML = "Withdrawal request processed. Please contact Customer Service to complete your security verification.";
+            popup.innerHTML = "Withdrawal request processed securely. Please contact Customer Service to complete your verification.";
 
             setTimeout(() => {
                 if (typeof window.openSupportChat === "function") {
@@ -713,8 +766,6 @@
             }, 2500);
         };
     </script>
-    <script src="lang.js"></script>
-    <script src="translator.js"></script>
 
 </body>
 </html>
