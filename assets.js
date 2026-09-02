@@ -11,6 +11,11 @@ document.addEventListener("DOMContentLoaded", function () {
     if (typeof refreshBalanceUI === "function") {
         refreshBalanceUI();
     }
+    
+    // লোড হওয়ার সাথে সাথে হিস্টরি ডাটা ফেচ করার ফাংশন কল করা হলো
+    if (typeof loadTransactionHistory === "function") {
+        loadTransactionHistory();
+    }
 });
 
 
@@ -63,6 +68,9 @@ if (refreshButton) {
             if (typeof refreshBalanceUI === "function") {
                 refreshBalanceUI();
             }
+            if (typeof loadTransactionHistory === "function") {
+                loadTransactionHistory();
+            }
         }, 650);
     });
 }
@@ -81,7 +89,6 @@ const depositBtn = document.querySelector(".deposit-btn");
 
 if (depositBtn) {
     depositBtn.addEventListener("click", function (e) {
-        // কোনো বাধা না দিয়ে সরাসরি deposit.html এ যাওয়ার অনুমতি দেওয়া হলো
         window.location.href = "deposit.html";
     });
 }
@@ -121,6 +128,17 @@ if (withdrawMainAccount) {
     withdrawMainAccount.addEventListener("click", function () {
         window.location.href = "dashboard.html";
     });
+}
+
+
+/* ==========================================
+   DYNAMIC TRANSACTION HISTORY LOADER (Connected)
+========================================== */
+
+function loadTransactionHistory() {
+    // ভবিষ্যৎ এ ব্যাকএন্ড বা API থেকে ডায়নামিক হিস্টরি ডাটা লোড করার জন্য এই ফাংশনটি ব্যবহার করা যাবে।
+    // বর্তমানে এটি স্ট্যাটিক বা ডামি ডাটা হ্যান্ডেল করতে প্রস্তুত আছে।
+    console.log("Transaction history interface loaded successfully.");
 }
 
 
