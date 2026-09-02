@@ -197,7 +197,7 @@
             font-size: 16px;
             z-index: 2;
         }
-        .input-wrapper input, .input-wrapper select {
+        .input-wrapper input {
             width: 100%;
             background: rgba(5, 11, 22, 0.95);
             border: 1px solid rgba(40, 70, 110, 0.8);
@@ -208,11 +208,7 @@
             outline: none;
             transition: all 0.3s ease;
         }
-        .input-wrapper select {
-            appearance: none;
-            cursor: pointer;
-        }
-        .input-wrapper input:focus, .input-wrapper select:focus {
+        .input-wrapper input:focus {
             border-color: #00e5ff;
             background: rgba(9, 18, 33, 1);
             box-shadow: 0 0 15px rgba(0, 229, 255, 0.25);
@@ -258,13 +254,12 @@
             box-shadow: 0 0 15px rgba(0, 229, 255, 0.25);
         }
         .custom-select-box i.fa-chevron-down {
-            position: static;
             color: #00e5ff;
             font-size: 13px;
             transition: transform 0.3s;
         }
 
-        /* Stunning Modal Popup for Global Payouts */
+        /* Stunning Flag Modal Popup Styles */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -344,7 +339,7 @@
         .modal-option {
             background: linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
             border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 16px 18px;
+            padding: 14px 18px;
             border-radius: 16px;
             margin-bottom: 12px;
             cursor: pointer;
@@ -359,21 +354,14 @@
             transform: translateX(4px);
             box-shadow: 0 4px 20px rgba(0, 229, 255, 0.2);
         }
-        .modal-option-icon {
-            width: 44px;
-            height: 44px;
-            background: rgba(0, 229, 255, 0.1);
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #00e5ff;
-            font-size: 20px;
+        .country-flag {
+            font-size: 26px;
+            width: 35px;
+            text-align: center;
             flex-shrink: 0;
         }
         .modal-option-info h4 {
-            margin: 0 0 4px;
+            margin: 0 0 2px;
             font-size: 15px;
             font-weight: 700;
             color: #f8fafc;
@@ -502,23 +490,18 @@
                     <input type="hidden" id="paymentMethod" required>
                 </div>
 
-                <!-- 2. Dynamic Field: Global Bank Wire (SWIFT / IBAN / Account Number) -->
+                <!-- 2. Dynamic Field: Global Bank Wire with Country Flag Popup Selector -->
                 <div id="bankField" class="input-group dynamic-field">
                     <label>Global Bank Wire Transfer Details</label>
-                    <div class="input-wrapper" style="margin-bottom: 12px;">
-                        <i class="fa-solid fa-earth-globe"></i>
-                        <select id="bankCountry">
-                            <option value="" disabled selected>Select Your Country (Worldwide)</option>
-                            <option value="UK">United Kingdom (UK)</option>
-                            <option value="USA">United States (USA)</option>
-                            <option value="EU">European Union / Eurozone</option>
-                            <option value="Canada">Canada</option>
-                            <option value="Australia">Australia</option>
-                            <option value="Asia">Asia & Middle East (All Countries)</option>
-                            <option value="Africa">Africa & Latin America</option>
-                            <option value="Global_Other">Other International Country</option>
-                        </select>
+                    <div class="input-wrapper" style="margin-bottom: 12px; position:relative;">
+                        <i id="bankFlagPreview" class="fa-solid fa-flag" style="position:absolute; left:16px; z-index:2; color:#00e5ff;"></i>
+                        <div id="selectedBankCountryDisplay" class="custom-select-box" onclick="openBankCountryModal()">
+                            <span id="selectedBankCountryText">Select Country (Bangladesh, India, China, etc.)</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
                     </div>
+                    <input type="hidden" id="bankCountry" required>
+
                     <div class="input-wrapper" style="margin-bottom: 12px;">
                         <i class="fa-solid fa-file-invoice-dollar"></i>
                         <input type="text" id="bankAccountNumber" placeholder="Enter Bank Account Number / IBAN">
@@ -533,22 +516,21 @@
                     </div>
                 </div>
 
-                <!-- 3. Dynamic Field: Global Mobile Banking & Digital Wallets (Wallet Number / ID) -->
+                <!-- 3. Dynamic Field: Global Mobile Banking & Digital Wallets with Flag Popup Selector -->
                 <div id="mobileField" class="input-group dynamic-field">
                     <label>Global Mobile Banking & Digital Wallets</label>
-                    <div class="input-wrapper" style="margin-bottom: 12px;">
-                        <i class="fa-solid fa-globe"></i>
-                        <select id="walletRegion">
-                            <option value="" disabled selected>Select Region / Area</option>
-                            <option value="Europe_UK">UK & Europe (Revolut, Wise, Skrill, Neteller)</option>
-                            <option value="South_Asia">South Asia (bKash, Nagad, Easypaisa, etc.)</option>
-                            <option value="Southeast_Asia">Southeast Asia (GCash, Dana, TrueMoney)</option>
-                            <option value="America_Global">Americas & Global Digital Wallets (PayPal/Payeer)</option>
-                        </select>
+                    <div class="input-wrapper" style="margin-bottom: 12px; position:relative;">
+                        <i id="mobileFlagPreview" class="fa-solid fa-flag" style="position:absolute; left:16px; z-index:2; color:#00e5ff;"></i>
+                        <div id="selectedMobileCountryDisplay" class="custom-select-box" onclick="openMobileCountryModal()">
+                            <span id="selectedMobileCountryText">Select Country & Mobile Banking System</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
                     </div>
+                    <input type="hidden" id="mobileCountry" required>
+
                     <div class="input-wrapper" style="margin-bottom: 12px;">
                         <i class="fa-solid fa-wallet"></i>
-                        <input type="text" id="walletProviderName" placeholder="Wallet Provider Name (e.g. Revolut, Wise, Skrill, bKash)">
+                        <input type="text" id="walletProviderName" placeholder="Wallet Provider (e.g., bKash, Nagad, Alipay, Paytm)">
                     </div>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-mobile-screen-button"></i>
@@ -602,42 +584,119 @@
         </div>
     </div>
 
-    <!-- Stunning Global Method Modal Popup -->
-    <div id="methodModal" class="modal-overlay" onclick="closeMethodModalOnOutside(event)">
+    <!-- 1. Main Payment Gateway Modal Popup -->
+    <div id="methodModal" class="modal-overlay" onclick="closeModalOnOutside(event, 'methodModal')">
         <div class="modal-content">
             <div class="modal-header">
                 <h3><i class="fa-solid fa-globe"></i> Select Worldwide Payout Gateway</h3>
-                <button type="button" class="modal-close" onclick="closeMethodModal()"><i class="fa-solid fa-xmark"></i></button>
+                <button type="button" class="modal-close" onclick="closeModal('methodModal')"><i class="fa-solid fa-xmark"></i></button>
             </div>
             
             <div class="modal-category-title">Traditional Banking & Cards</div>
-            
             <div class="modal-option" onclick="selectMethod('bank', 'Global Bank Wire & SWIFT Transfer', 'fa-building-columns')">
-                <div class="modal-option-icon"><i class="fa-solid fa-building-columns"></i></div>
+                <div class="country-flag"><i class="fa-solid fa-building-columns" style="color:#00e5ff;"></i></div>
                 <div class="modal-option-info">
                     <h4>Global Bank Wire, SWIFT & IBAN</h4>
-                    <p>Direct transfer to any bank worldwide (UK, USA, EU, Asia, etc.)</p>
+                    <p>Direct bank transfers for Bangladesh, India, China, Japan, UK, USA, etc.</p>
                 </div>
             </div>
 
             <div class="modal-category-title">Mobile Wallets & Digital Banks</div>
-            
             <div class="modal-option" onclick="selectMethod('mobile', 'Global Mobile Banking & Digital Wallets', 'fa-wallet')">
-                <div class="modal-option-icon"><i class="fa-solid fa-wallet"></i></div>
+                <div class="country-flag"><i class="fa-solid fa-wallet" style="color:#00e5ff;"></i></div>
                 <div class="modal-option-info">
-                    <h4>International Digital Wallets & Mobile Apps</h4>
-                    <p>Revolut, Wise, Skrill, Neteller, bKash, Nagad, GCash & more</p>
+                    <h4>International Digital Wallets & Mobile Banking</h4>
+                    <p>bKash, Nagad, Alipay, WeChat Pay, Paytm, Revolut, Wise, GCash</p>
                 </div>
             </div>
 
             <div class="modal-category-title">Cryptocurrency Network</div>
-
             <div class="modal-option" onclick="selectMethod('crypto', 'Global Crypto Exchange Wallet (USDT)', 'fa-coins')">
-                <div class="modal-option-icon"><i class="fa-solid fa-coins"></i></div>
+                <div class="country-flag"><i class="fa-solid fa-coins" style="color:#00e5ff;"></i></div>
                 <div class="modal-option-info">
                     <h4>Crypto Network Exchange (USDT TRC20/ERC20)</h4>
                     <p>Instant global payout via cryptocurrency wallet address</p>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Bank Country Flag Popup Modal -->
+    <div id="bankCountryModal" class="modal-overlay" onclick="closeModalOnOutside(event, 'bankCountryModal')">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-flag"></i> Select Bank Country</h3>
+                <button type="button" class="modal-close" onclick="closeModal('bankCountryModal')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-category-title">Asia & Global Regions</div>
+            
+            <div class="modal-option" onclick="selectBankCountry('Bangladesh', '🇧🇩 Bangladesh Bank Wire')">
+                <div class="country-flag">🇧🇩</div>
+                <div class="modal-option-info"><h4>Bangladesh</h4><p>BDT / USD Bank Accounts (EBL, City Bank, Brac, etc.)</p></div>
+            </div>
+            <div class="modal-option" onclick="selectBankCountry('India', '🇮🇳 India Bank Wire (IFSC / SWIFT)')">
+                <div class="country-flag">🇮🇳</div>
+                <div class="modal-option-info"><h4>India</h4><p>INR / USD Accounts (HDFC, SBI, ICICI, Axis)</p></div>
+            </div>
+            <div class="modal-option" onclick="selectBankCountry('China', '🇨🇳 China Bank Wire (CNY / UnionPay)')">
+                <div class="country-flag">🇨🇳</div>
+                <div class="modal-option-info"><h4>China</h4><p>CNY / USD Accounts (ICBC, China Construction Bank)</p></div>
+            </div>
+            <div class="modal-option" onclick="selectBankCountry('Japan', '🇯🇵 Japan Bank Wire (JPY)')">
+                <div class="country-flag">🇯🇵</div>
+                <div class="modal-option-info"><h4>Japan</h4><p>JPY Accounts (MUFG, SMBC, Mizuho)</p></div>
+            </div>
+            <div class="modal-option" onclick="selectBankCountry('UK', '🇬🇧 United Kingdom Bank Wire (GBP)')">
+                <div class="country-flag">🇬🇧</div>
+                <div class="modal-option-info"><h4>United Kingdom</h4><p>GBP Accounts (Barclays, HSBC, Lloyds, Revolut)</p></div>
+            </div>
+            <div class="modal-option" onclick="selectBankCountry('USA', '🇺🇸 United States Bank Wire (USD)')">
+                <div class="country-flag">🇺🇸</div>
+                <div class="modal-option-info"><h4>United States</h4><p>USD Accounts (Chase, Bank of America, Wells Fargo)</p></div>
+            </div>
+            <div class="modal-option" onclick="selectBankCountry('Europe', '🇪🇺 European Union Bank Wire (SEPA / EUR)')">
+                <div class="country-flag">🇪🇺</div>
+                <div class="modal-option-info"><h4>European Union</h4><p>EUR SEPA Transfer Accounts</p></div>
+            </div>
+            <div class="modal-option" onclick="selectBankCountry('Global', '🌐 Other International Country Bank Wire')">
+                <div class="country-flag">🌐</div>
+                <div class="modal-option-info"><h4>Other Global Country</h4><p>Worldwide international SWIFT bank transfer</p></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Mobile Banking Country Flag Popup Modal -->
+    <div id="mobileCountryModal" class="modal-overlay" onclick="closeModalOnOutside(event, 'mobileCountryModal')">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-flag"></i> Select Mobile Banking Country</h3>
+                <button type="button" class="modal-close" onclick="closeModal('mobileCountryModal')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-category-title">Mobile Wallets by Country</div>
+
+            <div class="modal-option" onclick="selectMobileCountry('Bangladesh', '🇧🇩 Bangladesh Mobile Banking (bKash / Nagad)')">
+                <div class="country-flag">🇧🇩</div>
+                <div class="modal-option-info"><h4>Bangladesh</h4><p>bKash, Nagad, Rocket, Upay Mobile Wallets</p></div>
+            </div>
+            <div class="modal-option" onclick="selectMobileCountry('India', '🇮🇳 India Mobile Wallets (Paytm / PhonePe)')">
+                <div class="country-flag">🇮🇳</div>
+                <div class="modal-option-info"><h4>India</h4><p>Paytm, PhonePe, Google Pay India</p></div>
+            </div>
+            <div class="modal-option" onclick="selectMobileCountry('China', '🇨🇳 China Mobile Wallets (Alipay / WeChat Pay)')">
+                <div class="country-flag">🇨🇳</div>
+                <div class="modal-option-info"><h4>China</h4><p>Alipay, WeChat Pay Digital Wallets</p></div>
+            </div>
+            <div class="modal-option" onclick="selectMobileCountry('Japan', '🇯🇵 Japan Mobile Wallets (PayPay / Line Pay)')">
+                <div class="country-flag">🇯🇵</div>
+                <div class="modal-option-info"><h4>Japan</h4><p>PayPay, Line Pay, Rakuten Pay</p></div>
+            </div>
+            <div class="modal-option" onclick="selectMobileCountry('UK_EU', '🇪🇺 UK & Europe Digital Wallets (Wise / Revolut)')">
+                <div class="country-flag">🇪🇺</div>
+                <div class="modal-option-info"><h4>UK & Europe</h4><p>Revolut, Wise, Skrill, Neteller Wallets</p></div>
+            </div>
+            <div class="modal-option" onclick="selectMobileCountry('Global', '🌐 Global Digital Wallets (PayPal / Payeer)')">
+                <div class="country-flag">🌐</div>
+                <div class="modal-option-info"><h4>Global / Other Regions</h4><p>PayPal, Payeer, Perfect Money, GCash</p></div>
             </div>
         </div>
     </div>
@@ -648,17 +707,23 @@
 
         function openMethodModal() {
             document.getElementById("methodModal").style.display = "flex";
-            document.getElementById("dropdownArrow").style.transform = "rotate(180deg)";
         }
 
-        function closeMethodModal() {
-            document.getElementById("methodModal").style.display = "none";
-            document.getElementById("dropdownArrow").style.transform = "rotate(0deg)";
+        function openBankCountryModal() {
+            document.getElementById("bankCountryModal").style.display = "flex";
         }
 
-        function closeMethodModalOnOutside(event) {
-            if (event.target.id === "methodModal") {
-                closeMethodModal();
+        function openMobileCountryModal() {
+            document.getElementById("mobileCountryModal").style.display = "flex";
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        function closeModalOnOutside(event, modalId) {
+            if (event.target.id === modalId) {
+                closeModal(modalId);
             }
         }
 
@@ -672,8 +737,28 @@
             const iconPreview = document.getElementById("methodIconPreview");
             iconPreview.className = "fa-solid " + iconClass;
             
-            closeMethodModal();
+            closeModal('methodModal');
             togglePaymentFields(value);
+        }
+
+        function selectBankCountry(countryVal, labelText) {
+            document.getElementById("bankCountry").value = countryVal;
+            
+            const displayBox = document.getElementById("selectedBankCountryDisplay");
+            document.getElementById("selectedBankCountryText").textContent = labelText;
+            displayBox.classList.add("selected");
+            
+            closeModal('bankCountryModal');
+        }
+
+        function selectMobileCountry(countryVal, labelText) {
+            document.getElementById("mobileCountry").value = countryVal;
+            
+            const displayBox = document.getElementById("selectedMobileCountryDisplay");
+            document.getElementById("selectedMobileCountryText").textContent = labelText;
+            displayBox.classList.add("selected");
+            
+            closeModal('mobileCountryModal');
         }
 
         function togglePaymentFields(method) {
@@ -685,7 +770,7 @@
             document.getElementById("bankAccountNumber").removeAttribute("required");
             document.getElementById("bankNameCode").removeAttribute("required");
             document.getElementById("bankHolderName").removeAttribute("required");
-            document.getElementById("walletRegion").removeAttribute("required");
+            document.getElementById("mobileCountry").removeAttribute("required");
             document.getElementById("walletProviderName").removeAttribute("required");
             document.getElementById("mobileWalletNumber").removeAttribute("required");
             document.getElementById("cryptoAddress").removeAttribute("required");
@@ -698,7 +783,7 @@
                 document.getElementById("bankHolderName").setAttribute("required", "true");
             } else if (method === "mobile") {
                 document.getElementById("mobileField").style.display = "block";
-                document.getElementById("walletRegion").setAttribute("required", "true");
+                document.getElementById("mobileCountry").setAttribute("required", "true");
                 document.getElementById("walletProviderName").setAttribute("required", "true");
                 document.getElementById("mobileWalletNumber").setAttribute("required", "true");
             } else if (method === "crypto") {
