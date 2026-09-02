@@ -197,7 +197,7 @@
             font-size: 16px;
             z-index: 2;
         }
-        .input-wrapper input {
+        .input-wrapper input, .input-wrapper select {
             width: 100%;
             background: rgba(5, 11, 22, 0.95);
             border: 1px solid rgba(40, 70, 110, 0.8);
@@ -208,7 +208,11 @@
             outline: none;
             transition: all 0.3s ease;
         }
-        .input-wrapper input:focus {
+        .input-wrapper select {
+            appearance: none;
+            cursor: pointer;
+        }
+        .input-wrapper input:focus, .input-wrapper select:focus {
             border-color: #00e5ff;
             background: rgba(9, 18, 33, 1);
             box-shadow: 0 0 15px rgba(0, 229, 255, 0.25);
@@ -469,21 +473,35 @@
                     </div>
                 </div>
 
-                <!-- Dynamic Field 1: International Bank System -->
+                <!-- Dynamic Field 1: International Bank Card & Wire System -->
                 <div id="bankField" class="input-group dynamic-field">
-                    <label>Bank Account & Routing/SWIFT Details</label>
+                    <label>Add Bank Card / Bank Wire Details</label>
+                    <div class="input-wrapper" style="margin-bottom: 12px;">
+                        <i class="fa-solid fa-credit-card"></i>
+                        <input type="text" id="bankCardNumber" placeholder="Enter Bank Card Number">
+                    </div>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-building-columns"></i>
-                        <input type="text" id="bankDetails" placeholder="Account Name, Number & SWIFT Code">
+                        <input type="text" id="bankDetails" placeholder="Account Name, Bank Name & SWIFT Code">
                     </div>
                 </div>
 
                 <!-- Dynamic Field 2: Global Mobile Banking / Digital Wallet System -->
                 <div id="mobileField" class="input-group dynamic-field">
-                    <label>Mobile Banking / Digital Wallet Account</label>
+                    <label>Add Mobile Banking / Digital Wallet</label>
+                    <div class="input-wrapper" style="margin-bottom: 12px;">
+                        <i class="fa-solid fa-wallet"></i>
+                        <select id="mobileProvider">
+                            <option value="" disabled selected>Select Provider (bKash/Nagad/Bkash/etc.)</option>
+                            <option value="bKash">bKash (Personal/Agent)</option>
+                            <option value="Nagad">Nagad (Personal)</option>
+                            <option value="Rocket">Rocket</option>
+                            <option value="OtherWallet">Other Digital Wallet</option>
+                        </select>
+                    </div>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-mobile-screen-button"></i>
-                        <input type="text" id="mobileNumber" placeholder="Enter Mobile Number / Wallet ID" data-ph-key="enterMobile">
+                        <input type="text" id="mobileNumber" placeholder="Enter Mobile Wallet Account Number" data-ph-key="enterMobile">
                     </div>
                 </div>
 
@@ -530,9 +548,9 @@
                 <button type="button" class="modal-close" onclick="closeMethodModal()"><i class="fa-solid fa-xmark"></i></button>
             </div>
             
-            <div class="modal-option" onclick="selectMethod('bank', 'International Bank Wire Transfer', 'fa-building-columns')">
-                <i class="fa-solid fa-building-columns"></i>
-                <span data-key="bankWire">International Bank Wire Transfer</span>
+            <div class="modal-option" onclick="selectMethod('bank', 'International Bank Card & Wire', 'fa-credit-card')">
+                <i class="fa-solid fa-credit-card"></i>
+                <span data-key="bankWire">International Bank Card & Wire Transfer</span>
             </div>
             
             <div class="modal-option" onclick="selectMethod('mobile', 'Global Mobile Banking / Digital Wallet', 'fa-mobile-screen-button')">
@@ -586,12 +604,14 @@
             document.getElementById("mobileField").style.display = "none";
             document.getElementById("cryptoField").style.display = "none";
 
+            document.getElementById("bankCardNumber").removeAttribute("required");
             document.getElementById("bankDetails").removeAttribute("required");
             document.getElementById("mobileNumber").removeAttribute("required");
             document.getElementById("cryptoAddress").removeAttribute("required");
 
             if (method === "bank") {
                 document.getElementById("bankField").style.display = "block";
+                document.getElementById("bankCardNumber").setAttribute("required", "true");
                 document.getElementById("bankDetails").setAttribute("required", "true");
             } else if (method === "mobile") {
                 document.getElementById("mobileField").style.display = "block";
@@ -665,7 +685,7 @@
         };
     </script>
     <script src="lang.js"></script>
-<script src="translator.js"></script>
+    <script src="translator.js"></script>
 
 </body>
 </html>
