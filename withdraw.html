@@ -450,7 +450,7 @@
         <div class="withdraw-card">
             <form id="withdrawForm" onsubmit="handleWithdrawSubmit(event)">
                 
-                <!-- Custom Payout Method Selector with Logo -->
+                <!-- 1. International Payment Method Selector -->
                 <div class="input-group">
                     <label data-key="paymentMethod">International Payment Method</label>
                     <div class="input-wrapper" style="position:relative;">
@@ -463,7 +463,72 @@
                     <input type="hidden" id="paymentMethod" required>
                 </div>
 
-                <!-- Amount with Max Button -->
+                <!-- 2. Dynamic Field: International Bank Card & SWIFT Wire System -->
+                <div id="bankField" class="input-group dynamic-field">
+                    <label>Global Bank Wire / SEPA / SWIFT & Card Details</label>
+                    <div class="input-wrapper" style="margin-bottom: 12px;">
+                        <i class="fa-solid fa-earth-americas"></i>
+                        <select id="bankCountry">
+                            <option value="" disabled selected>Select Country / Region</option>
+                            <option value="UK">United Kingdom (GBP / EUR)</option>
+                            <option value="EU">European Union (SEPA)</option>
+                            <option value="USA">United States (USD Wire / ACH)</option>
+                            <option value="Canada">Canada (CAD)</option>
+                            <option value="Australia">Australia (AUD)</option>
+                            <option value="Global">International / Other Regions</option>
+                        </select>
+                    </div>
+                    <div class="input-wrapper" style="margin-bottom: 12px;">
+                        <i class="fa-solid fa-credit-card"></i>
+                        <input type="text" id="bankCardNumber" placeholder="International Bank Card / IBAN Number">
+                    </div>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-building-columns"></i>
+                        <input type="text" id="bankDetails" placeholder="Account Holder Name, Bank Name & SWIFT/BIC Code">
+                    </div>
+                </div>
+
+                <!-- 3. Dynamic Field: Global Mobile Banking / Digital Wallet System -->
+                <div id="mobileField" class="input-group dynamic-field">
+                    <label>Global Mobile Banking & Digital Wallets</label>
+                    <div class="input-wrapper" style="margin-bottom: 12px;">
+                        <i class="fa-solid fa-earth-europe"></i>
+                        <select id="walletRegion">
+                            <option value="" disabled selected>Select Region / Country</option>
+                            <option value="UK_EU">United Kingdom & Europe (Revolut, Wise, Skrill)</option>
+                            <option value="Asia_South">South Asia (bKash, Nagad, Easypaisa, etc.)</option>
+                            <option value="Asia_SE">Southeast Asia (GrabPay, GCash, Dana)</option>
+                            <option value="Global_Wallet">Global Digital Wallets (Neteller, Payeer)</option>
+                        </select>
+                    </div>
+                    <div class="input-wrapper" style="margin-bottom: 12px;">
+                        <i class="fa-solid fa-wallet"></i>
+                        <select id="mobileProvider">
+                            <option value="" disabled selected>Select Provider / App</option>
+                            <option value="Revolut">Revolut / Wise</option>
+                            <option value="Skrill">Skrill / Neteller</option>
+                            <option value="bKash">bKash (South Asia)</option>
+                            <option value="Nagad">Nagad (South Asia)</option>
+                            <option value="GCash">GCash / GrabPay</option>
+                            <option value="OtherWallet">Other Digital Wallet Account</option>
+                        </select>
+                    </div>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-mobile-screen-button"></i>
+                        <input type="text" id="mobileNumber" placeholder="Enter Account / Wallet ID / Phone Number" data-ph-key="enterMobile">
+                    </div>
+                </div>
+
+                <!-- 4. Dynamic Field: Blockchain Crypto Network -->
+                <div id="cryptoField" class="input-group dynamic-field">
+                    <label>Global Crypto Network Exchange (TRC20 / ERC20)</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-coins"></i>
+                        <input type="text" id="cryptoAddress" placeholder="Paste TRC20 / USDT Network Wallet Address" data-ph-key="cryptoAddress">
+                    </div>
+                </div>
+
+                <!-- 5. Withdrawal Amount with Max Button (Placed right before Password as requested) -->
                 <div class="input-group">
                     <label>Withdrawal Amount (USDT)</label>
                     <div class="input-wrapper">
@@ -473,48 +538,7 @@
                     </div>
                 </div>
 
-                <!-- Dynamic Field 1: International Bank Card & Wire System -->
-                <div id="bankField" class="input-group dynamic-field">
-                    <label>Add Bank Card / Bank Wire Details</label>
-                    <div class="input-wrapper" style="margin-bottom: 12px;">
-                        <i class="fa-solid fa-credit-card"></i>
-                        <input type="text" id="bankCardNumber" placeholder="Enter Bank Card Number">
-                    </div>
-                    <div class="input-wrapper">
-                        <i class="fa-solid fa-building-columns"></i>
-                        <input type="text" id="bankDetails" placeholder="Account Name, Bank Name & SWIFT Code">
-                    </div>
-                </div>
-
-                <!-- Dynamic Field 2: Global Mobile Banking / Digital Wallet System -->
-                <div id="mobileField" class="input-group dynamic-field">
-                    <label>Add Mobile Banking / Digital Wallet</label>
-                    <div class="input-wrapper" style="margin-bottom: 12px;">
-                        <i class="fa-solid fa-wallet"></i>
-                        <select id="mobileProvider">
-                            <option value="" disabled selected>Select Provider (bKash/Nagad/Bkash/etc.)</option>
-                            <option value="bKash">bKash (Personal/Agent)</option>
-                            <option value="Nagad">Nagad (Personal)</option>
-                            <option value="Rocket">Rocket</option>
-                            <option value="OtherWallet">Other Digital Wallet</option>
-                        </select>
-                    </div>
-                    <div class="input-wrapper">
-                        <i class="fa-solid fa-mobile-screen-button"></i>
-                        <input type="text" id="mobileNumber" placeholder="Enter Mobile Wallet Account Number" data-ph-key="enterMobile">
-                    </div>
-                </div>
-
-                <!-- Dynamic Field 3: Blockchain Crypto Network -->
-                <div id="cryptoField" class="input-group dynamic-field">
-                    <label>Crypto Exchange / Wallet Address (TRC20)</label>
-                    <div class="input-wrapper">
-                        <i class="fa-solid fa-coins"></i>
-                        <input type="text" id="cryptoAddress" placeholder="Paste your network wallet address" data-ph-key="cryptoAddress">
-                    </div>
-                </div>
-
-                <!-- Security Password -->
+                <!-- 6. Fund / Trading Password -->
                 <div class="input-group">
                     <label>Fund / Trading Password</label>
                     <div class="input-wrapper">
@@ -523,6 +547,7 @@
                     </div>
                 </div>
 
+                <!-- 7. Confirm Button -->
                 <button type="submit" class="submit-btn">
                     <span data-key="confirmWithdrawal">Confirm Withdrawal</span>
                     <i class="fa-solid fa-arrow-right"></i>
@@ -548,19 +573,19 @@
                 <button type="button" class="modal-close" onclick="closeMethodModal()"><i class="fa-solid fa-xmark"></i></button>
             </div>
             
-            <div class="modal-option" onclick="selectMethod('bank', 'International Bank Card & Wire', 'fa-credit-card')">
-                <i class="fa-solid fa-credit-card"></i>
-                <span data-key="bankWire">International Bank Card & Wire Transfer</span>
+            <div class="modal-option" onclick="selectMethod('bank', 'International Bank Wire & SEPA / Cards', 'fa-building-columns')">
+                <i class="fa-solid fa-building-columns"></i>
+                <span data-key="bankWire">International Bank Wire, SEPA & Cards (UK/EU/Global)</span>
             </div>
             
-            <div class="modal-option" onclick="selectMethod('mobile', 'Global Mobile Banking / Digital Wallet', 'fa-mobile-screen-button')">
-                <i class="fa-solid fa-mobile-screen-button"></i>
-                <span>Global Mobile Banking / Digital Wallet</span>
+            <div class="modal-option" onclick="selectMethod('mobile', 'Global Mobile Banking & Digital Wallets', 'fa-wallet')">
+                <i class="fa-solid fa-wallet"></i>
+                <span>Global Mobile Banking & Digital Wallets (Revolut, Wise, Skrill, etc.)</span>
             </div>
 
-            <div class="modal-option" onclick="selectMethod('crypto', 'Crypto Network Exchange Wallet', 'fa-coins')">
+            <div class="modal-option" onclick="selectMethod('crypto', 'Crypto Network Exchange Wallet (USDT)', 'fa-coins')">
                 <i class="fa-solid fa-coins"></i>
-                <span data-key="cryptoWallet">Crypto Network Exchange Wallet</span>
+                <span data-key="cryptoWallet">Crypto Network Exchange Wallet (TRC20)</span>
             </div>
         </div>
     </div>
@@ -604,17 +629,21 @@
             document.getElementById("mobileField").style.display = "none";
             document.getElementById("cryptoField").style.display = "none";
 
+            document.getElementById("bankCountry").removeAttribute("required");
             document.getElementById("bankCardNumber").removeAttribute("required");
             document.getElementById("bankDetails").removeAttribute("required");
+            document.getElementById("mobileRegion").removeAttribute("required");
             document.getElementById("mobileNumber").removeAttribute("required");
             document.getElementById("cryptoAddress").removeAttribute("required");
 
             if (method === "bank") {
                 document.getElementById("bankField").style.display = "block";
+                document.getElementById("bankCountry").setAttribute("required", "true");
                 document.getElementById("bankCardNumber").setAttribute("required", "true");
                 document.getElementById("bankDetails").setAttribute("required", "true");
             } else if (method === "mobile") {
                 document.getElementById("mobileField").style.display = "block";
+                document.getElementById("mobileRegion").setAttribute("required", "true");
                 document.getElementById("mobileNumber").setAttribute("required", "true");
             } else if (method === "crypto") {
                 document.getElementById("cryptoField").style.display = "block";
