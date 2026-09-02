@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 
 <head>
 
@@ -14,55 +14,92 @@
 
     <style>
 
+        :root {
+            --bg-color: #0f111a;
+            --card-bg: #181b28;
+            --card-border: #262b40;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --accent-primary: #6366f1;
+            --accent-gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            --button-3d-shadow: 0 6px 0 #3730a3, 0 10px 15px rgba(0, 0, 0, 0.4);
+            --button-3d-active: 0 2px 0 #3730a3, 0 4px 6px rgba(0, 0, 0, 0.4);
+        }
+
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #061b38;
-            color: white;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding-bottom: 90px;
         }
 
         .header {
+            background: linear-gradient(180deg, #181b28 0%, #0f111a 100%);
             padding: 20px;
-            background: #0b2345;
-            font-size: 25px;
-            font-weight: bold;
+            font-size: 24px;
+            font-weight: 700;
+            border-bottom: 1px solid var(--card-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
 
         .container {
             padding: 20px;
-            padding-bottom: 40px;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .tabs {
             display: flex;
-            gap: 10px;
+            background: #11131d;
+            border-radius: 14px;
+            padding: 5px;
+            border: 1px solid var(--card-border);
             margin-bottom: 20px;
+            gap: 10px;
         }
 
         .tab {
             flex: 1;
-            padding: 15px;
+            padding: 12px;
             border: none;
-            border-radius: 12px;
-            background: #173861;
-            color: white;
+            border-radius: 10px;
+            background: transparent;
+            color: var(--text-muted);
             font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .tab.active {
-            background: #1269a5;
+            color: #ffffff;
+            background: var(--accent-gradient);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
         }
 
         .order-card {
-            background: #0d284c;
-            border-radius: 15px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
             padding: 18px;
-            margin-bottom: 15px;
+            margin-bottom: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .order-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
         }
 
         .side {
@@ -81,29 +118,35 @@
 
         .info {
             margin: 8px 0;
-            color: #dce8f7;
-            font-size: 16px;
+            color: var(--text-muted);
+            font-size: 15px;
         }
 
         .info strong {
             color: white;
         }
 
+        /* 3D Close Button Style */
         .close-btn {
             width: 100%;
             margin-top: 14px;
-            padding: 13px;
+            padding: 14px;
             border: none;
-            border-radius: 10px;
-            background: #ff4058;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #ff4058 0%, #e63048 100%);
             color: white;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
+            box-shadow: 0 6px 0 #b32236, 0 10px 15px rgba(0, 0, 0, 0.4);
+            transition: all 0.1s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .close-btn:active {
-            transform: scale(0.98);
+            box-shadow: 0 2px 0 #b32236, 0 4px 6px rgba(0, 0, 0, 0.4);
+            transform: translateY(4px);
         }
 
         .profit {
@@ -124,7 +167,7 @@
         .empty {
             text-align: center;
             padding: 50px 10px;
-            color: #91a6c2;
+            color: var(--text-muted);
             font-size: 17px;
         }
 
@@ -143,14 +186,35 @@
             color: #bcd1e9;
             font-size: 12px;
             margin-bottom: 10px;
+            font-weight: 600;
         }
 
         .status.open {
             color: #00df70;
+            background: rgba(0, 223, 112, 0.15);
+            border: 1px solid rgba(0, 223, 112, 0.3);
         }
 
         .status.closed {
             color: #91a6c2;
+            background: rgba(145, 166, 194, 0.15);
+            border: 1px solid rgba(145, 166, 194, 0.3);
+        }
+
+        .language-btn {
+            position: fixed;
+            top: 14px;
+            right: 16px;
+            z-index: 1000;
+            background: rgba(24, 27, 40, 0.8);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 6px 10px;
+            line-height: 1;
+            color: inherit;
+            backdrop-filter: blur(5px);
         }
 
     </style>
@@ -164,7 +228,7 @@
 <div class="header" data-key="myOrders">
     My Orders
 </div>
-<button id="languageBtn" class="language-btn" type="button" style="position:fixed;top:14px;right:16px;z-index:1000;background:none;border:none;cursor:pointer;font-size:20px;padding:0 4px;line-height:1;color:inherit;">🇬🇧</button>
+<button id="languageBtn" class="language-btn" type="button">🇬🇧</button>
 
 
 <div class="container">
@@ -1014,13 +1078,6 @@ async function getPendingAdminResult(
         }
 
 
-        /*
-         * MAIN ADMIN RESULT
-         *
-         * This is the same field used
-         * by trade.js.
-         */
-
         const userRef =
             doc(
                 db,
@@ -1068,11 +1125,6 @@ async function getPendingAdminResult(
                 "";
 
 
-            /*
-             * If admin result belongs to
-             * another trade, do not use it.
-             */
-
             if (
                 pendingTradeId &&
                 trade.tradeId &&
@@ -1119,12 +1171,6 @@ async function getPendingAdminResult(
 
         }
 
-
-        /*
-         * BACKWARD COMPATIBILITY
-         *
-         * Support older admin fields too.
-         */
 
         const oldPending =
             Number(
@@ -1282,10 +1328,6 @@ async function closeTradeFromOrders() {
 
     try {
 
-        /* ==================================
-           CLOSE PRICE
-        ================================== */
-
         const closePrice =
             getCurrentTradePrice();
 
@@ -1302,22 +1344,12 @@ async function closeTradeFromOrders() {
         }
 
 
-
-        /* ==================================
-           USER P/L
-        ================================== */
-
         const userProfitLoss =
             calculateUserProfitLoss(
                 trade,
                 closePrice
             );
 
-
-
-        /* ==================================
-           ADMIN P/L
-        ================================== */
 
         const adminResult =
             await getPendingAdminResult(
@@ -1331,12 +1363,6 @@ async function closeTradeFromOrders() {
             );
 
 
-        /*
-         * EXACT SAME LOGIC AS TRADE.JS
-         *
-         * User P/L + Admin P/L
-         */
-
         const finalProfitLoss =
             Number(
                 (
@@ -1345,11 +1371,6 @@ async function closeTradeFromOrders() {
                 ).toFixed(2)
             );
 
-
-
-        /* ==================================
-           RETURN AMOUNT
-        ================================== */
 
         const returnAmount =
             Number(
@@ -1370,11 +1391,6 @@ async function closeTradeFromOrders() {
 
         }
 
-
-
-        /* ==================================
-           USER DOCUMENT
-        ================================== */
 
         const userRef =
             doc(
@@ -1431,11 +1447,6 @@ async function closeTradeFromOrders() {
         }
 
 
-
-        /* ==================================
-           CHECK EXISTING HISTORY
-        ================================== */
-
         let existingHistory =
             false;
 
@@ -1478,11 +1489,6 @@ async function closeTradeFromOrders() {
 
         }
 
-
-
-        /* ==================================
-           FIREBASE HISTORY
-        ================================== */
 
         if (
             !existingHistory
@@ -1593,11 +1599,6 @@ async function closeTradeFromOrders() {
         }
 
 
-
-        /* ==================================
-           LOCAL HISTORY
-        ================================== */
-
         let localHistory =
             getLocalHistory();
 
@@ -1675,11 +1676,6 @@ async function closeTradeFromOrders() {
         }
 
 
-
-        /* ==================================
-           UPDATE BALANCE
-        ================================== */
-
         const balanceUpdate = {
 
             balance:
@@ -1687,10 +1683,6 @@ async function closeTradeFromOrders() {
 
         };
 
-
-        /*
-         * Remove NEW admin result.
-         */
 
         if (
             adminResult.amount !== 0 ||
@@ -1706,10 +1698,6 @@ async function closeTradeFromOrders() {
 
         }
 
-
-        /*
-         * Remove OLD admin result fields.
-         */
 
         balanceUpdate.pendingTradeProfitLoss =
             0;
@@ -1727,18 +1715,8 @@ async function closeTradeFromOrders() {
         );
 
 
-
-        /* ==================================
-           CLEAR ACTIVE TRADE
-        ================================== */
-
         clearActiveTrade();
 
-
-        /*
-         * Tell other pages that the trade
-         * has been closed.
-         */
 
         localStorage.setItem(
             "cptTradeClosedAt",
@@ -1758,19 +1736,10 @@ async function closeTradeFromOrders() {
         );
 
 
-        /* ==================================
-           REFRESH
-        ================================== */
-
         showActive();
 
         await loadFirebaseHistory();
 
-
-
-        /* ==================================
-           SUCCESS MESSAGE
-        ================================== */
 
         alert(
 
