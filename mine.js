@@ -13,7 +13,11 @@ import {
 import {
     doc,
     getDoc,
-    updateDoc
+    updateDoc,
+    collection,
+    query,
+    where,
+    getDocs
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
@@ -759,6 +763,15 @@ document.addEventListener(
         const avatar =
             document.querySelector(".avatar");
 
+        const todayPLEl =
+            document.getElementById("todayPL");
+
+        const totalPLEl =
+            document.getElementById("totalPL");
+
+        const openTradesEl =
+            document.getElementById("openTrades");
+
 
         // ===================================
         // FIREBASE USER
@@ -946,6 +959,55 @@ document.addEventListener(
                         Number(
                             userData.balance || 0
                         );
+
+
+                    // ===================================
+                    // FETCH ORDERS / TRADES FOR P/L
+                    // ===================================
+
+                    try {
+                        const ordersRef = collection(db, "orders");
+                        const q = query(ordersRef, where("userId", "==", firebaseUser.uid));
+                        const querySnapshot = await getDocs(q);
+
+                        let todayPL = 0;
+                        let totalPL = 0;
+                        let openCount = 0;
+
+                        const todayStr = new Date().toISOString().split('T')[0];
+
+                        querySnapshot.forEach((docSnap) => {
+                            const orderData = docSnap.data();
+                            const profit = Number(orderData.profit) || Number(orderData.pl) || 0;
+                            const status = (orderData.status || "").toLowerCase();
+
+                            if (status === "open" || status === "running" || status === "active") {
+                                openCount++;
+                            } else {
+                                totalPL += profit;
+
+                                if (orderData.createdAt || orderData.timestamp) {
+                                    const orderDate = new Date(orderData.createdAt?.toDate ? orderData.createdAt.toDate() : orderData.timestamp).toISOString().split('T')[0];
+                                    if (orderDate === todayStr) {
+                                        todayPL += profit;
+                                    }
+                                }
+                            }
+                        });
+
+                        if (todayPLEl) {
+                            todayPLEl.textContent = (todayPL >= 0 ? "+" : "") + todayPL.toFixed(2);
+                        }
+                        if (totalPLEl) {
+                            totalPLEl.textContent = (totalPL >= 0 ? "+" : "") + totalPL.toFixed(2);
+                        }
+                        if (openTradesEl) {
+                            openTradesEl.textContent = openCount;
+                        }
+
+                    } catch (err) {
+                        console.error("Error fetching trades for P/L:", err);
+                    }
 
 
                     // ===================================
