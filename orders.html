@@ -20,10 +20,8 @@
             --card-border: #1e2538;
             --text-main: #f3f4f6;
             --text-muted: #9ca3af;
-            --accent-primary: #6366f1;
-            --accent-gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-            --button-3d-shadow: 0 6px 0 #3730a3, 0 10px 20px rgba(99, 102, 241, 0.3);
-            --button-3d-active: 0 2px 0 #3730a3, 0 4px 8px rgba(99, 102, 241, 0.3);
+            --accent-primary: #1e293b;
+            --accent-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
         }
 
         * {
@@ -88,41 +86,49 @@
             margin: 0 auto;
         }
 
-        .tabs {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
-            background: #080c14;
-            padding: 6px;
-            border-radius: 16px;
-            border: 1px solid var(--card-border);
+        /* Fixed / Sticky Tabs Container */
+        .tabs-wrapper {
+            position: sticky;
+            top: 74px;
+            background-color: var(--bg-color);
+            padding: 10px 0 15px 0;
+            z-index: 99;
         }
 
-        /* 3D Tabs with Glow Effect */
+        .tabs {
+            display: flex;
+            gap: 14px;
+            background: #060911;
+            padding: 8px;
+            border-radius: 18px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Tabs matching Image 2 Style (Larger, Deep Border, Blue Glow) */
         .tab {
             flex: 1;
-            padding: 14px;
-            border: 1px solid #1a2236;
-            border-radius: 12px;
-            background: #0f172a;
+            padding: 18px;
+            border: 1px solid #1e293b;
+            border-radius: 14px;
+            background: #090d16;
             color: var(--text-muted);
-            font-size: 16px;
+            font-size: 17px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.2s ease;
-            box-shadow: 0 5px 0 #070a10, 0 8px 15px rgba(0, 0, 0, 0.4);
+            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.03);
         }
 
         .tab.active {
-            background: var(--accent-gradient);
+            background: linear-gradient(135deg, #0b1329 0%, #172554 100%);
             color: white;
-            border-color: #818cf8;
-            box-shadow: 0 5px 0 #3730a3, 0 0 20px rgba(99, 102, 241, 0.6);
+            border-color: #3b82f6;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.15);
         }
 
         .tab:active {
-            transform: translateY(3px);
-            box-shadow: 0 2px 0 #3730a3, 0 2px 8px rgba(99, 102, 241, 0.4);
+            transform: translateY(2px);
         }
 
         /* 3D Order Cards with Professional Glow */
@@ -138,8 +144,8 @@
         }
 
         .order-card:hover {
-            border-color: rgba(99, 102, 241, 0.5);
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8), 0 0 15px rgba(99, 102, 241, 0.15);
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8), 0 0 15px rgba(59, 130, 246, 0.15);
         }
 
         .side {
@@ -225,8 +231,6 @@
             display: inline-block;
             padding: 5px 10px;
             border-radius: 8px;
-            background: #173861;
-            color: #bcd1e9;
             font-size: 12px;
             margin-bottom: 12px;
             font-weight: bold;
@@ -273,28 +277,30 @@
 
 <div class="container">
 
+    <!-- Sticky / Fixed Tabs Wrapper -->
+    <div class="tabs-wrapper">
+        <div class="tabs">
 
-    <div class="tabs">
-
-        <button
-            id="activeTab"
-            class="tab active"
-            type="button"
-            onclick="showActive()"
-         data-key="myOrders">
-            My Orders
-        </button>
+            <button
+                id="activeTab"
+                class="tab active"
+                type="button"
+                onclick="showActive()"
+             data-key="myOrders">
+                My Orders
+            </button>
 
 
-        <button
-            id="historyTab"
-            class="tab"
-            type="button"
-            onclick="showHistory()"
-         data-key="history">
-            History
-        </button>
+            <button
+                id="historyTab"
+                class="tab"
+                type="button"
+                onclick="showHistory()"
+             data-key="history">
+                History
+            </button>
 
+        </div>
     </div>
 
 
@@ -352,6 +358,8 @@ let currentUserUID = null;
 let firebaseReady = false;
 
 let closingTrade = false;
+
+let isInitialLoad = true; // ট্র্যাক রাখার জন্য যাতে প্রথমবার ফায়ারবেস লোড হওয়ার সময় অটো সুইচ না করে
 
 
 
@@ -2117,7 +2125,6 @@ window.addEventListener(
             "cptTradeClosedAt"
         ) {
 
-            // Keep current tab instead of forcing active
             loadFirebaseHistory();
 
         }
@@ -2178,7 +2185,12 @@ onAuthStateChanged(
         await loadFirebaseHistory();
 
 
-        showActive();
+        // শুধুমাত্র একেবারে প্রথমবার পেজ লোড বা লগইন হওয়ার সময় মাই অর্ডার দেখাবে, 
+        // পরবর্তীতে ইউজার হিস্টরিতে ক্লিক করলে আর অটো-ব্যাক করবে না।
+        if (isInitialLoad) {
+            isInitialLoad = false;
+            showActive();
+        }
 
     }
 
