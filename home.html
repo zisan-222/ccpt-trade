@@ -1,176 +1,327 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CCPT MARKET - Professional Trading Platform</title>
+  <title>CCPT MARKET | Institutional-Grade Global Trading Platform</title>
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Trebuchet MS', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
     body {
       background-color: #0b0e11;
       color: #eaecef;
+      overflow-x: hidden;
     }
-    /* টিংকার বার */
-    .ticker-bar {
+
+    /* TOP REGULATORY BAR */
+    .regulatory-bar {
       background-color: #161a1e;
-      padding: 8px 20px;
-      font-size: 13px;
+      color: #848e9c;
+      font-size: 11px;
+      text-align: center;
+      padding: 6px 16px;
+      border-bottom: 1px solid #2b313a;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+    .regulatory-bar span {
+      color: #fcd535;
+      font-weight: 600;
+    }
+
+    /* LIVE MARKET TICKER */
+    .ticker-container {
+      background-color: #0b0e11;
+      padding: 8px 24px;
+      font-size: 12px;
       display: flex;
-      gap: 25px;
+      gap: 32px;
       overflow-x: auto;
       border-bottom: 1px solid #2b313a;
+      white-space: nowrap;
     }
-    .green { color: #0ecb81; }
-    .red { color: #f6465d; }
-    
-    /* নেভিগেশন বার */
+    .ticker-container::-webkit-scrollbar { display: none; }
+    .ticker-item { display: flex; gap: 8px; align-items: center; }
+    .green { color: #0ecb81; font-weight: 600; }
+    .red { color: #f6465d; font-weight: 600; }
+
+    /* NAVIGATION BAR */
     nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 16px 40px;
+      padding: 18px 48px;
       border-bottom: 1px solid #2b313a;
+      background-color: #0b0e11;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
-    .logo {
+    .brand-logo {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
+      text-decoration: none;
     }
-    .logo-box {
-      background-color: #fcd535;
+    .logo-mark {
+      background: linear-gradient(135deg, #fcd535 0%, #f0b90b 100%);
       color: #0b0e11;
-      font-weight: bold;
+      font-weight: 900;
       padding: 6px 12px;
       border-radius: 4px;
       font-size: 18px;
+      letter-spacing: -0.5px;
     }
-    .logo-text {
-      font-size: 22px;
-      font-weight: 700;
+    .brand-name {
+      font-size: 20px;
+      font-weight: 800;
       color: #ffffff;
+      letter-spacing: 0.5px;
     }
-    .nav-btn {
-      padding: 8px 20px;
+    .hq-badge {
+      font-size: 10px;
+      background: #1e2329;
+      border: 1px solid #2b313a;
+      color: #848e9c;
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-weight: 600;
+    }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .btn-nav {
+      padding: 9px 20px;
       border-radius: 4px;
       font-weight: 600;
+      font-size: 13px;
       cursor: pointer;
       text-decoration: none;
-      display: inline-block;
+      transition: all 0.2s ease;
     }
-    .btn-login {
+    .btn-secondary {
       background: transparent;
       color: #eaecef;
       border: 1px solid #474d57;
-      margin-right: 10px;
     }
-    .btn-register {
+    .btn-secondary:hover { border-color: #fcd535; color: #fcd535; }
+    .btn-primary {
       background: #fcd535;
       color: #0b0e11;
-      border: none;
+      border: 1px solid #fcd535;
     }
+    .btn-primary:hover { background: #f0b90b; border-color: #f0b90b; }
 
-    /* হিরো সেকশন */
-    .hero {
-      padding: 80px 40px;
-      max-width: 1200px;
+    /* HERO SECTION */
+    .hero-container {
+      padding: 80px 48px;
+      max-width: 1380px;
       margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 64px;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 40px;
     }
-    .hero-text { flex: 1 1 500px; }
-    .hero-text h1 {
-      font-size: 44px;
+    .hero-subtitle {
+      color: #fcd535;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 16px;
+    }
+    .hero-title {
+      font-size: 52px;
       font-weight: 800;
-      line-height: 1.2;
-      margin-bottom: 20px;
+      line-height: 1.15;
       color: #ffffff;
+      margin-bottom: 24px;
+      letter-spacing: -0.5px;
     }
-    .hero-text p {
+    .hero-description {
       font-size: 16px;
       color: #848e9c;
-      margin-bottom: 35px;
       line-height: 1.6;
+      margin-bottom: 40px;
+      max-width: 620px;
     }
-    .btn-start {
-      background: #fcd535;
-      color: #0b0e11;
-      padding: 14px 32px;
-      border-radius: 4px;
-      font-size: 16px;
+    .hero-cta-group { display: flex; gap: 16px; align-items: center; }
+    .btn-large {
+      padding: 16px 36px;
+      font-size: 15px;
       font-weight: 700;
+      border-radius: 4px;
       text-decoration: none;
+      cursor: pointer;
       display: inline-block;
     }
 
-    /* চার্ট কার্ড */
-    .card {
-      flex: 1 1 380px;
-      background: #1e2329;
+    /* TRADINGVIEW MOCKUP CARD */
+    .terminal-card {
+      background: #181a20;
       border: 1px solid #2b313a;
       border-radius: 8px;
       padding: 24px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.6);
     }
-    .chart-box {
-      height: 140px;
-      background: #161a1e;
-      border: 1px dashed #2b313a;
-      border-radius: 4px;
+    .terminal-header {
       display: flex;
+      justify-content: space-between;
       align-items: center;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #2b313a;
+    }
+    .pair-info { display: flex; align-items: center; gap: 8px; }
+    .pair-title { font-weight: 700; font-size: 16px; color: #fff; }
+    .chart-viewport {
+      height: 220px;
+      background: #0b0e11;
+      border: 1px solid #2b313a;
+      border-radius: 4px;
+      margin: 20px 0;
+      display: flex;
+      flex-direction: column;
       justify-content: center;
-      color: #848e9c;
-      margin: 15px 0;
+      align-items: center;
+      position: relative;
+    }
+    .chart-line {
+      width: 80%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #0ecb81, transparent);
+      box-shadow: 0 0 12px #0ecb81;
+    }
+    .order-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .btn-trade-buy {
+      background: #0ecb81;
+      color: #ffffff;
+      border: none;
+      padding: 12px;
+      font-weight: 700;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .btn-trade-sell {
+      background: #f6465d;
+      color: #ffffff;
+      border: none;
+      padding: 12px;
+      font-weight: 700;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
     }
 
-    /* ফিচার সেকশন */
-    .features {
-      padding: 60px 40px;
-      max-width: 1200px;
+    /* INSTITUTIONAL STATS */
+    .metrics-bar {
+      background: #181a20;
+      border-top: 1px solid #2b313a;
+      border-bottom: 1px solid #2b313a;
+      padding: 48px 24px;
+    }
+    .metrics-grid {
+      max-width: 1380px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 25px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 32px;
+      text-align: center;
+    }
+    .metric-value { font-size: 38px; font-weight: 800; color: #ffffff; margin-bottom: 6px; }
+    .metric-label { font-size: 13px; color: #848e9c; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* MARKETS TABLE */
+    .market-section {
+      padding: 80px 48px;
+      max-width: 1380px;
+      margin: 0 auto;
+    }
+    .section-title { font-size: 28px; font-weight: 700; color: #ffffff; margin-bottom: 24px; }
+    .market-table-wrapper {
+      background: #181a20;
+      border: 1px solid #2b313a;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .market-table { width: 100%; border-collapse: collapse; text-align: left; }
+    .market-table th {
+      background: #161a1e;
+      color: #848e9c;
+      font-size: 12px;
+      text-transform: uppercase;
+      padding: 16px 24px;
+      border-bottom: 1px solid #2b313a;
+      font-weight: 600;
+    }
+    .market-table td {
+      padding: 20px 24px;
+      border-bottom: 1px solid #2b313a;
+      font-size: 14px;
+      color: #eaecef;
+    }
+    .btn-table-trade {
+      background: transparent;
+      border: 1px solid #474d57;
+      color: #fcd535;
+      padding: 6px 16px;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .btn-table-trade:hover { background: #fcd535; color: #0b0e11; border-color: #fcd535; }
+
+    /* FEATURES GRID */
+    .features-section {
+      padding: 80px 48px;
+      max-width: 1380px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
     }
     .feature-card {
-      background: #1e2329;
-      padding: 25px;
-      border-radius: 8px;
+      background: #181a20;
       border: 1px solid #2b313a;
+      border-radius: 8px;
+      padding: 32px;
     }
-    .feature-card h3 { color: #fff; margin: 10px 0; }
-    .feature-card p { color: #848e9c; font-size: 14px; }
+    .feature-card h3 { font-size: 18px; color: #ffffff; margin: 16px 0 12px 0; }
+    .feature-card p { font-size: 14px; color: #848e9c; line-height: 1.6; }
+
+    /* FOOTER */
     footer {
-      text-align: center;
-      padding: 25px;
       border-top: 1px solid #2b313a;
+      padding: 40px 48px;
+      text-align: center;
       color: #848e9c;
-      font-size: 14px;
+      font-size: 12px;
+      line-height: 1.8;
+      background: #0b0e11;
+    }
+
+    @media (max-width: 900px) {
+      .hero-container { grid-template-columns: 1fr; gap: 40px; padding: 40px 24px; }
+      nav { padding: 16px 24px; }
+      .hero-title { font-size: 36px; }
     }
   </style>
 
   <script>
-    // ডিভাইস/ব্রাউজারে ইউজার লগইন করা আছে কিনা চেক
+    // CHECK PREVIOUS USER LOGIN SESSION
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
-    // ১. ইউজার যদি অলরেডি লগইন করা থাকে:
-    // পেজ সম্পূর্ণ লোড (Net Load) হওয়া মাত্রই ইন্টারফেসটি সরাবে এবং মূল পেজে যাবে।
+    // 1. LOGGED-IN USERS: Display the trading interface as a temporary view, then auto-route to index.html once network load finishes.
     if (isLoggedIn) {
       window.addEventListener('load', function() {
-        // ফুল ওয়েবসাইট লোড হওয়া মাত্রই index.html এ চলে যাবে
         window.location.href = 'index.html';
       });
     }
 
-    // ২. ইউজার যদি নতুন হয় বা লগইন না থাকে:
-    // তাহলে কোনো রিডাইরেক্ট হবে না, ইন্টারফেস দাঁড়িয়ে থাকবে যতক্ষণ না সে বাটনে চাপ দেয়।
+    // 2. UNREGISTERED / NEW VISITORS: Page remains static until explicit interaction.
     function goToLogin() {
       localStorage.setItem('isLoggedIn', 'true');
       window.location.href = 'index.html';
@@ -184,70 +335,160 @@
 </head>
 <body>
 
-  <!-- মার্কেট টিংকার বার -->
-  <div class="ticker-bar">
-    <span><strong>BTC/USDT</strong> <span class="green">$87,450.00 +2.45%</span></span>
-    <span><strong>ETH/USDT</strong> <span class="green">$3,420.50 +1.82%</span></span>
-    <span><strong>SOL/USDT</strong> <span class="red">$194.20 -0.65%</span></span>
-    <span><strong>BNB/USDT</strong> <span class="green">$612.10 +0.95%</span></span>
+  <!-- REGULATORY BANNER -->
+  <div class="regulatory-bar">
+    Official United Kingdom Registered Entity | Company Reg No: <span>UK-8492041</span> | Authorised FCA Standards Compliant
   </div>
 
-  <!-- নেভিগেশন বার -->
+  <!-- LIVE MARKET TICKER -->
+  <div class="ticker-container">
+    <div class="ticker-item"><strong>BTC/USDT</strong> <span class="green">$87,450.00 (+2.45%)</span></div>
+    <div class="ticker-item"><strong>ETH/USDT</strong> <span class="green">$3,420.50 (+1.82%)</span></div>
+    <div class="ticker-item"><strong>SOL/USDT</strong> <span class="red">$194.20 (-0.65%)</span></div>
+    <div class="ticker-item"><strong>EUR/USD</strong> <span class="green">1.0842 (+0.15%)</span></div>
+    <div class="ticker-item"><strong>GBP/USD</strong> <span class="green">1.2610 (+0.32%)</span></div>
+    <div class="ticker-item"><strong>XAU/USD</strong> <span class="green">$2,680.10 (+0.85%)</span></div>
+  </div>
+
+  <!-- NAVIGATION -->
   <nav>
-    <div class="logo">
-      <div class="logo-box">C</div>
-      <span class="logo-text">CCPT MARKET</span>
-    </div>
-    <div>
-      <a href="#" onclick="goToLogin()" class="nav-btn btn-login">লগইন</a>
-      <a href="#" onclick="goToRegister()" class="nav-btn btn-register">রেজিস্টার</a>
+    <a href="#" class="brand-logo">
+      <div class="logo-mark">C</div>
+      <span class="brand-name">CCPT MARKET</span>
+      <span class="hq-badge">UK HQ</span>
+    </a>
+    <div class="nav-actions">
+      <a href="#" onclick="goToLogin()" class="btn-nav btn-secondary">Log In</a>
+      <a href="#" onclick="goToRegister()" class="btn-nav btn-primary">Register</a>
     </div>
   </nav>
 
-  <!-- হিরো সেকশন -->
-  <section class="hero">
-    <div class="hero-text">
-      <p style="color: #fcd535; font-weight: 600; margin-bottom: 10px;">বিশ্বস্ত ট্রেডিং প্ল্যাটফর্ম</p>
-      <h1>ক্রিপ্টো ও ফরেক্স ট্রেড করুন এক ক্লিকে</h1>
-      <p>CCPT MARKET-এ পাচ্ছেন আল্ট্রা-ফাস্ট অর্ডার এক্সিকিউশন, লাইভ চার্ট এবং সর্বনিম্ন ফি-তে আধুনিক ট্রেডিং অভিজ্ঞতা।</p>
-      <a href="#" onclick="goToRegister()" class="btn-start">এখনই অ্যাকাউন্ট খুলুন</a>
+  <!-- HERO SECTION -->
+  <section class="hero-container">
+    <div class="hero-content">
+      <div class="hero-subtitle">Next-Generation Financial Infrastructure</div>
+      <h1 class="hero-title">Trade Global Markets with Institutional Liquidity</h1>
+      <p class="hero-description">
+        Access Digital Assets, Forex, Commodities, and Indices via CCPT MARKET. Ultra-low latency order routing, deep order book aggregation, and multi-tier cryptographic security.
+      </p>
+      <div class="hero-cta-group">
+        <a href="#" onclick="goToRegister()" class="btn-large btn-primary">Create Account</a>
+      </div>
     </div>
 
-    <!-- ট্রেডিং চার্ট কার্ড -->
-    <div class="card">
-      <div style="display: flex; justify-content: space-between;">
-        <strong>BTC/USDT Live Trend</strong>
-        <span class="green">+2.45%</span>
+    <!-- TERMINAL CARD PREVIEW -->
+    <div class="terminal-card">
+      <div class="terminal-header">
+        <div class="pair-info">
+          <span class="pair-title">BTC/USDT Perpetual</span>
+          <span class="hq-badge">Live Feed</span>
+        </div>
+        <span class="green" style="font-weight: 700;">+2.45% ▲</span>
       </div>
-      <div class="chart-box">📈 [Real-Time Trading Chart]</div>
-      <div style="display: flex; gap: 10px;">
-        <button onclick="goToLogin()" style="flex:1; background:#0ecb81; color:#fff; border:none; padding:10px; border-radius:4px; font-weight:bold; cursor:pointer;">Buy / Long</button>
-        <button onclick="goToLogin()" style="flex:1; background:#f6465d; color:#fff; border:none; padding:10px; border-radius:4px; font-weight:bold; cursor:pointer;">Sell / Short</button>
+      <div class="chart-viewport">
+        <div class="chart-line"></div>
+        <span style="font-size: 11px; color: #848e9c; margin-top: 12px; letter-spacing: 0.5px;">PROPRIETARY TRADINGVIEW ENGINE</span>
+      </div>
+      <div class="order-actions">
+        <button onclick="goToLogin()" class="btn-trade-buy">BUY / LONG</button>
+        <button onclick="goToLogin()" class="btn-trade-sell">SELL / SHORT</button>
       </div>
     </div>
   </section>
 
-  <!-- ফিচার সেকশন -->
-  <section class="features">
-    <div class="feature-card">
-      <div style="font-size: 24px;">⚡</div>
-      <h3>দ্রুত এক্সিকিউশন</h3>
-      <p>কোনো প্রকার ল্যাগ ছাড়াই ইনস্ট্যান্ট বাই ও সেল অর্ডার সুবিধা।</p>
-    </div>
-    <div class="feature-card">
-      <div style="font-size: 24px;">🛡️</div>
-      <h3>উচ্চ নিরাপত্তা</h3>
-      <p>আপনার তথ্য ও ফান্ড আধুনিক এনক্রিপশন দ্বারা শতভাগ সুরক্ষিত।</p>
-    </div>
-    <div class="feature-card">
-      <div style="font-size: 24px;">🎧</div>
-      <h3>২৪/৭ লাইভ সাপোর্ট</h3>
-      <p>যেকোনো প্রয়োজনে আমাদের সাপোর্ট টিম সার্বক্ষণিক আপনার সেবায় রয়েছে।</p>
+  <!-- INSTITUTIONAL METRICS -->
+  <section class="metrics-bar">
+    <div class="metrics-grid">
+      <div>
+        <div class="metric-value">$5.2B+</div>
+        <div class="metric-label">24h Trading Volume</div>
+      </div>
+      <div>
+        <div class="metric-value">180+</div>
+        <div class="metric-label">Supported Jurisdictions</div>
+      </div>
+      <div>
+        <div class="metric-value">10M+</div>
+        <div class="metric-label">Active Global Traders</div>
+      </div>
+      <div>
+        <div class="metric-value">&lt;1ms</div>
+        <div class="metric-label">Execution Latency</div>
+      </div>
     </div>
   </section>
 
+  <!-- MARKETS TABLE -->
+  <section class="market-section">
+    <h2 class="section-title">Institutional Markets Overview</h2>
+    <div class="market-table-wrapper">
+      <table class="market-table">
+        <thead>
+          <tr>
+            <th>Asset Pair</th>
+            <th>Last Price</th>
+            <th>24h Change</th>
+            <th>Trading Volume</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Bitcoin</strong> <span style="color:#848e9c;">BTC/USDT</span></td>
+            <td>$87,450.00</td>
+            <td class="green">+2.45%</td>
+            <td>$1.8B</td>
+            <td><button onclick="goToLogin()" class="btn-table-trade">Trade</button></td>
+          </tr>
+          <tr>
+            <td><strong>Ethereum</strong> <span style="color:#848e9c;">ETH/USDT</span></td>
+            <td>$3,420.50</td>
+            <td class="green">+1.82%</td>
+            <td>$940M</td>
+            <td><button onclick="goToLogin()" class="btn-table-trade">Trade</button></td>
+          </tr>
+          <tr>
+            <td><strong>Euro / US Dollar</strong> <span style="color:#848e9c;">EUR/USD</span></td>
+            <td>1.0842</td>
+            <td class="green">+0.15%</td>
+            <td>$620M</td>
+            <td><button onclick="goToLogin()" class="btn-table-trade">Trade</button></td>
+          </tr>
+          <tr>
+            <td><strong>Gold Spot</strong> <span style="color:#848e9c;">XAU/USD</span></td>
+            <td>$2,680.10</td>
+            <td class="green">+0.85%</td>
+            <td>$410M</td>
+            <td><button onclick="goToLogin()" class="btn-table-trade">Trade</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- FEATURES SECTION -->
+  <section class="features-section">
+    <div class="feature-card">
+      <div style="font-size: 24px; color: #fcd535;">🛡️</div>
+      <h3>Institutional Custody</h3>
+      <p>Assets are safeguarded in cold storage architecture featuring multi-signature authentication protocols.</p>
+    </div>
+    <div class="feature-card">
+      <div style="font-size: 24px; color: #fcd535;">⚡</div>
+      <h3>High-Frequency Engine</h3>
+      <p>Powered by ultra-low-latency matching algorithms designed for algorithmic and retail traders alike.</p>
+    </div>
+    <div class="feature-card">
+      <div style="font-size: 24px; color: #fcd535;">🌐</div>
+      <h3>Global Settlement</h3>
+      <p>Instant fiat gateways and multi-currency settlement channels operating 24 hours a day, 7 days a week.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
   <footer>
-    © CCPT MARKET. All rights reserved.
+    <p>Registered Office: 14 Bank Street, Canary Wharf, London E14 5NX, United Kingdom.</p>
+    <p>© CCPT MARKET Global Enterprise. All rights reserved.</p>
   </footer>
 
 </body>
