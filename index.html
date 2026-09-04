@@ -298,59 +298,50 @@
             align-items: center;
         }
 
-        /* ABOUT US & INSTITUTIONAL FOOTER */
+        /* CLEAN CORPORATE ABOUT US SECTION (NO BUTTONS / NO BOX CARDS) */
         .about-section {
-            padding: 40px 16px;
-            max-width: 1200px;
+            padding: 48px 16px;
+            max-width: 1100px;
             margin: 0 auto;
-            border-top: 1px solid rgba(0, 210, 255, 0.15);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
         }
-        .about-title {
-            font-size: 22px;
-            font-weight: 800;
-            color: #00d2ff;
-            margin-bottom: 12px;
-            text-transform: uppercase;
+        .about-header {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 14px;
             letter-spacing: 0.5px;
         }
         .about-text {
             font-size: 13px;
-            color: #8fa3bf;
-            line-height: 1.7;
-            margin-bottom: 24px;
+            color: #9ab0ce;
+            line-height: 1.8;
+            margin-bottom: 30px;
         }
-        .contact-grid {
+        .about-info-row {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 16px;
+            gap: 24px;
         }
         @media (min-width: 750px) {
-            .contact-grid { grid-template-columns: repeat(3, 1fr); }
+            .about-info-row { grid-template-columns: repeat(3, 1fr); }
         }
-        .contact-card {
-            background: rgba(7, 18, 36, 0.6);
-            border: 1px solid rgba(0, 210, 255, 0.15);
-            border-radius: 12px;
-            padding: 16px;
-        }
-        .contact-card h4 {
-            color: #ffd700;
-            font-size: 14px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .contact-card p, .contact-card a {
-            font-size: 12px;
-            color: #e0e6ed;
-            text-decoration: none;
-            line-height: 1.6;
-            word-break: break-all;
-            display: block;
-        }
-        .contact-card a:hover {
+        .info-col-title {
+            font-size: 13px;
+            font-weight: 700;
             color: #00d2ff;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .info-col-content {
+            font-size: 12px;
+            color: #8fa3bf;
+            line-height: 1.7;
+        }
+        .info-col-content a {
+            color: #8fa3bf;
+            text-decoration: none;
         }
 
         .home-footer {
@@ -392,7 +383,7 @@
             </a>
             <div class="home-nav-actions">
                 <button type="button" onclick="dismissHomeOverlay()" class="home-btn home-btn-outline">Go to Sign In</button>
-                <a href="register.html" class="home-btn home-btn-glow">Create Account</a>
+                <a href="register.html" onclick="dismissHomeOverlay()" class="home-btn home-btn-glow">Create Account</a>
             </div>
         </nav>
 
@@ -404,7 +395,7 @@
                     Access Forex, Cryptocurrency, Precious Metals, and Global Indices via institutional-grade liquidity, sub-millisecond execution, and Tier-1 custodial security.
                 </p>
                 <div>
-                    <a href="register.html" class="home-btn home-btn-glow" style="padding: 12px 24px; font-size: 13px;">Get Started Now</a>
+                    <a href="register.html" onclick="dismissHomeOverlay()" class="home-btn home-btn-glow" style="padding: 12px 24px; font-size: 13px;">Get Started Now</a>
                 </div>
             </div>
 
@@ -457,32 +448,37 @@
         </section>
 
         <section class="about-section">
-            <h2 class="about-title">About CPT Markets GIFT</h2>
+            <h2 class="about-header">About CPT Markets GIFT</h2>
             <p class="about-text">
-                CPT Markets GIFT is a premier international financial brokerage providing trading solutions in Forex, Commodities, Indices, and Digital Assets. Authorised and regulated under Financial Conduct Authority (FCA) standards, CPT Markets delivers ultra-low latency execution, deep order book aggregation, and segregated client fund custody under UK banking frameworks.
+                CPT Markets GIFT is an international financial trading brand delivering institutional liquidity, competitive spreads, and advanced order execution systems. Regulated under Financial Conduct Authority (FCA) guidelines, CPT Markets offers segregated account security for global investors across Forex, Digital Currency, Commodities, and Indices.
             </p>
 
-            <div class="contact-grid">
-                <div class="contact-card">
-                    <h4><i class="fa-solid fa-location-dot"></i> Global HQ Address</h4>
-                    <p>14 Bank Street, Canary Wharf, London, E14 5NX, United Kingdom</p>
-                    <p style="margin-top: 8px; font-size: 10px; color: #ffd700;">
-                        <i class="fa-solid fa-key"></i> Map Token: MAP-CANARY-WHARF-E14
-                    </p>
+            <div class="about-info-row">
+                <div>
+                    <div class="info-col-title">Headquarters</div>
+                    <div class="info-col-content">
+                        14 Bank Street, Canary Wharf<br>
+                        London, E14 5NX, United Kingdom<br>
+                        Location Token: MAP-CANARY-WHARF-E14
+                    </div>
                 </div>
 
-                <div class="contact-card">
-                    <h4><i class="fa-solid fa-envelope"></i> Official Support</h4>
-                    <p><a href="mailto:support@cptmarkets-gift.com">support@cptmarkets-gift.com</a></p>
-                    <p><a href="mailto:cptmarkets.uk@outlook.com">cptmarkets.uk@outlook.com</a></p>
-                    <p><a href="mailto:official.cptmarkets@gmail.com">official.cptmarkets@gmail.com</a></p>
+                <div>
+                    <div class="info-col-title">Corporate Support</div>
+                    <div class="info-col-content">
+                        support@cptmarkets-gift.com<br>
+                        cptmarkets.uk@outlook.com<br>
+                        official.cptmarkets@gmail.com
+                    </div>
                 </div>
 
-                <div class="contact-card">
-                    <h4><i class="fa-solid fa-headset"></i> Emergency Helpline</h4>
-                    <p><strong>Hotline:</strong> 999 / 111 (UK Emergency Desk)</p>
-                    <p style="margin-top: 4px;"><strong>Direct Service:</strong> 0800 123 4567</p>
-                    <p style="font-size: 10px; color: #00e676; margin-top: 6px;"><i class="fa-solid fa-shield-halved"></i> FCA Reg No: UK-8492041</p>
+                <div>
+                    <div class="info-col-title">Regulation & Desk</div>
+                    <div class="info-col-content">
+                        Emergency Desk: 999 / 111<br>
+                        Direct Service: 0800 123 4567<br>
+                        FCA Registration: UK-8492041
+                    </div>
                 </div>
             </div>
         </section>
@@ -748,13 +744,25 @@
             if (overlay) {
                 overlay.classList.add('hidden-overlay');
             }
+            // Mark user as returning/visited
+            try {
+                localStorage.setItem('cpt_visited_user', 'true');
+            } catch(e) {}
         }
 
-        // REDUCED TIMEOUT TO 12 SECONDS FOR FASTER ACCESS
         window.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-                dismissHomeOverlay();
-            }, 12000); // 12,000 ms = 12 seconds
+            var isReturningUser = false;
+            try {
+                isReturningUser = localStorage.getItem('cpt_visited_user') === 'true';
+            } catch(e) {}
+
+            // NEW USERS / NEW BROWSERS: Stay permanently until button click
+            // RETURNING USERS: Auto-hide after 12 seconds
+            if (isReturningUser) {
+                setTimeout(function() {
+                    dismissHomeOverlay();
+                }, 12000); // 12 Seconds
+            }
         });
     </script>
 
