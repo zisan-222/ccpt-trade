@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CCPT MARKET - Professional Trading Platform</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background-color: #0b0e11;
+      color: #eaecef;
+    }
+    /* টিংকার বার */
+    .ticker-bar {
+      background-color: #161a1e;
+      padding: 8px 20px;
+      font-size: 13px;
+      display: flex;
+      gap: 25px;
+      overflow-x: auto;
+      border-bottom: 1px solid #2b313a;
+    }
+    .green { color: #0ecb81; }
+    .red { color: #f6465d; }
+    
+    /* নেভিগেশন বার */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 40px;
+      border-bottom: 1px solid #2b313a;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-box {
+      background-color: #fcd535;
+      color: #0b0e11;
+      font-weight: bold;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 18px;
+    }
+    .logo-text {
+      font-size: 22px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+    .nav-btn {
+      padding: 8px 20px;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-login {
+      background: transparent;
+      color: #eaecef;
+      border: 1px solid #474d57;
+      margin-right: 10px;
+    }
+    .btn-register {
+      background: #fcd535;
+      color: #0b0e11;
+      border: none;
+    }
+
+    /* হিরো সেকশন */
+    .hero {
+      padding: 80px 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 40px;
+    }
+    .hero-text { flex: 1 1 500px; }
+    .hero-text h1 {
+      font-size: 44px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+    .hero-text p {
+      font-size: 16px;
+      color: #848e9c;
+      margin-bottom: 35px;
+      line-height: 1.6;
+    }
+    .btn-start {
+      background: #fcd535;
+      color: #0b0e11;
+      padding: 14px 32px;
+      border-radius: 4px;
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    /* চার্ট কার্ড */
+    .card {
+      flex: 1 1 380px;
+      background: #1e2329;
+      border: 1px solid #2b313a;
+      border-radius: 8px;
+      padding: 24px;
+    }
+    .chart-box {
+      height: 140px;
+      background: #161a1e;
+      border: 1px dashed #2b313a;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #848e9c;
+      margin: 15px 0;
+    }
+
+    /* ফিচার সেকশন */
+    .features {
+      padding: 60px 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+    }
+    .feature-card {
+      background: #1e2329;
+      padding: 25px;
+      border-radius: 8px;
+      border: 1px solid #2b313a;
+    }
+    .feature-card h3 { color: #fff; margin: 10px 0; }
+    .feature-card p { color: #848e9c; font-size: 14px; }
+    footer {
+      text-align: center;
+      padding: 25px;
+      border-top: 1px solid #2b313a;
+      color: #848e9c;
+      font-size: 14px;
+    }
+  </style>
+
+  <script>
+    // ডিভাইস/ব্রাউজারে ইউজার লগইন করা আছে কিনা চেক
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+    // ১. ইউজার যদি অলরেডি লগইন করা থাকে:
+    // পেজ সম্পূর্ণ লোড (Net Load) হওয়া মাত্রই ইন্টারফেসটি সরাবে এবং মূল পেজে যাবে।
+    if (isLoggedIn) {
+      window.addEventListener('load', function() {
+        // ফুল ওয়েবসাইট লোড হওয়া মাত্রই index.html এ চলে যাবে
+        window.location.href = 'index.html';
+      });
+    }
+
+    // ২. ইউজার যদি নতুন হয় বা লগইন না থাকে:
+    // তাহলে কোনো রিডাইরেক্ট হবে না, ইন্টারফেস দাঁড়িয়ে থাকবে যতক্ষণ না সে বাটনে চাপ দেয়।
+    function goToLogin() {
+      localStorage.setItem('isLoggedIn', 'true');
+      window.location.href = 'index.html';
+    }
+
+    function goToRegister() {
+      localStorage.setItem('isLoggedIn', 'true');
+      window.location.href = 'register.html';
+    }
+  </script>
+</head>
+<body>
+
+  <!-- মার্কেট টিংকার বার -->
+  <div class="ticker-bar">
+    <span><strong>BTC/USDT</strong> <span class="green">$87,450.00 +2.45%</span></span>
+    <span><strong>ETH/USDT</strong> <span class="green">$3,420.50 +1.82%</span></span>
+    <span><strong>SOL/USDT</strong> <span class="red">$194.20 -0.65%</span></span>
+    <span><strong>BNB/USDT</strong> <span class="green">$612.10 +0.95%</span></span>
+  </div>
+
+  <!-- নেভিগেশন বার -->
+  <nav>
+    <div class="logo">
+      <div class="logo-box">C</div>
+      <span class="logo-text">CCPT MARKET</span>
+    </div>
+    <div>
+      <a href="#" onclick="goToLogin()" class="nav-btn btn-login">লগইন</a>
+      <a href="#" onclick="goToRegister()" class="nav-btn btn-register">রেজিস্টার</a>
+    </div>
+  </nav>
+
+  <!-- হিরো সেকশন -->
+  <section class="hero">
+    <div class="hero-text">
+      <p style="color: #fcd535; font-weight: 600; margin-bottom: 10px;">বিশ্বস্ত ট্রেডিং প্ল্যাটফর্ম</p>
+      <h1>ক্রিপ্টো ও ফরেক্স ট্রেড করুন এক ক্লিকে</h1>
+      <p>CCPT MARKET-এ পাচ্ছেন আল্ট্রা-ফাস্ট অর্ডার এক্সিকিউশন, লাইভ চার্ট এবং সর্বনিম্ন ফি-তে আধুনিক ট্রেডিং অভিজ্ঞতা।</p>
+      <a href="#" onclick="goToRegister()" class="btn-start">এখনই অ্যাকাউন্ট খুলুন</a>
+    </div>
+
+    <!-- ট্রেডিং চার্ট কার্ড -->
+    <div class="card">
+      <div style="display: flex; justify-content: space-between;">
+        <strong>BTC/USDT Live Trend</strong>
+        <span class="green">+2.45%</span>
+      </div>
+      <div class="chart-box">📈 [Real-Time Trading Chart]</div>
+      <div style="display: flex; gap: 10px;">
+        <button onclick="goToLogin()" style="flex:1; background:#0ecb81; color:#fff; border:none; padding:10px; border-radius:4px; font-weight:bold; cursor:pointer;">Buy / Long</button>
+        <button onclick="goToLogin()" style="flex:1; background:#f6465d; color:#fff; border:none; padding:10px; border-radius:4px; font-weight:bold; cursor:pointer;">Sell / Short</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ফিচার সেকশন -->
+  <section class="features">
+    <div class="feature-card">
+      <div style="font-size: 24px;">⚡</div>
+      <h3>দ্রুত এক্সিকিউশন</h3>
+      <p>কোনো প্রকার ল্যাগ ছাড়াই ইনস্ট্যান্ট বাই ও সেল অর্ডার সুবিধা।</p>
+    </div>
+    <div class="feature-card">
+      <div style="font-size: 24px;">🛡️</div>
+      <h3>উচ্চ নিরাপত্তা</h3>
+      <p>আপনার তথ্য ও ফান্ড আধুনিক এনক্রিপশন দ্বারা শতভাগ সুরক্ষিত।</p>
+    </div>
+    <div class="feature-card">
+      <div style="font-size: 24px;">🎧</div>
+      <h3>২৪/৭ লাইভ সাপোর্ট</h3>
+      <p>যেকোনো প্রয়োজনে আমাদের সাপোর্ট টিম সার্বক্ষণিক আপনার সেবায় রয়েছে।</p>
+    </div>
+  </section>
+
+  <footer>
+    © CCPT MARKET. All rights reserved.
+  </footer>
+
+</body>
+</html>
