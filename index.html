@@ -9,23 +9,15 @@
 
     <title>CPTMarkets - Global Institutional Trading</title>
 
-    <!-- ==========================================
-         CPTMARKETS LOGIN THEME
-         ========================================== -->
     <link rel="stylesheet" href="index.css">
 
-    <!-- Existing Popup System -->
     <link rel="stylesheet" href="popup.css">
 
-    <!-- Font Awesome -->
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     >
 
-    <!-- ==========================================
-         PRO HOME OVERLAY STYLES
-         ========================================== -->
     <style>
         #cpt-home-overlay {
             position: fixed;
@@ -167,7 +159,7 @@
             gap: 32px;
         }
         @media (min-width: 850px) {
-            .home-hero { grid-template-columns: 1.1fr 0.9fr; padding: 60px 32px; }
+            .home-hero { grid-template-columns: 1fr 1fr; padding: 60px 32px; }
         }
 
         .home-tag {
@@ -185,7 +177,7 @@
             color: #ffffff;
             margin-bottom: 16px;
         }
-        @media (min-width: 850px) { .home-title { font-size: 46px; } }
+        @media (min-width: 850px) { .home-title { font-size: 42px; } }
         .home-title span {
             color: #00d2ff;
             text-shadow: 0 0 12px rgba(0, 210, 255, 0.4);
@@ -197,97 +189,169 @@
             margin-bottom: 24px;
         }
 
-        .home-card {
-            background: rgba(7, 18, 36, 0.85);
-            border: 1px solid rgba(0, 210, 255, 0.25);
+        /* TRADINGVIEW TERMINAL CARD */
+        .tv-card {
+            background: #080f1e;
+            border: 1px solid rgba(0, 210, 255, 0.3);
             border-radius: 16px;
             padding: 20px;
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(0, 210, 255, 0.05);
         }
-        .home-card-header {
+        .tv-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             margin-bottom: 16px;
         }
-        .home-card-title { font-size: 14px; font-weight: 700; color: #ffffff; }
-        .home-chart-box {
-            height: 140px;
-            background: #030710;
-            border: 1px solid rgba(0, 210, 255, 0.15);
+        .tv-pair-info { display: flex; align-items: center; gap: 8px; }
+        .tv-symbol { font-size: 15px; font-weight: 800; color: #ffffff; }
+        .tv-tag { font-size: 10px; background: rgba(0, 210, 255, 0.15); color: #00d2ff; padding: 2px 6px; border-radius: 4px; font-weight: 700; }
+
+        .tv-chart-frame {
+            height: 180px;
+            background: #03060d;
+            border: 1px solid rgba(0, 210, 255, 0.12);
             border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 16px;
             position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding: 16px 20px 24px 20px;
+            margin-bottom: 16px;
         }
-        .home-chart-box::after {
+        .tv-chart-frame::before {
+            content: 'TRADINGVIEW ENGINE v4.2 | LIVE FEED';
+            position: absolute;
+            top: 8px;
+            left: 12px;
+            font-size: 9px;
+            color: #5c7290;
+            letter-spacing: 0.8px;
+            font-weight: 700;
+        }
+
+        /* CANDLESTICKS */
+        .candlestick {
+            width: 8px;
+            position: relative;
+            border-radius: 2px;
+        }
+        .candlestick::before, .candlestick::after {
             content: '';
             position: absolute;
-            width: 75%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #00d2ff, transparent);
-            box-shadow: 0 0 8px #00d2ff;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1.5px;
         }
-        .home-action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .btn-buy {
-            background: #00e676;
-            color: #000;
+        .candlestick.bullish { background: #00e676; height: 60px; }
+        .candlestick.bullish::before { top: -14px; height: 14px; background: #00e676; }
+        .candlestick.bullish::after { bottom: -12px; height: 12px; background: #00e676; }
+
+        .candlestick.bearish { background: #ff5252; height: 45px; }
+        .candlestick.bearish::before { top: -10px; height: 10px; background: #ff5252; }
+        .candlestick.bearish::after { bottom: -16px; height: 16px; background: #ff5252; }
+
+        /* TRADE STATS overlay */
+        .trade-levels {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(5, 11, 20, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            margin-bottom: 16px;
+        }
+        .trade-level-item span { display: block; font-size: 9px; color: #8fa3bf; }
+        .trade-level-item strong { font-weight: 700; }
+
+        .tv-action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .btn-tv-buy {
+            background: linear-gradient(135deg, #00e676 0%, #00b0ff 100%);
+            color: #030710;
             border: none;
-            padding: 10px;
+            padding: 12px;
             border-radius: 8px;
             font-weight: 800;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 13px;
+            box-shadow: 0 4px 15px rgba(0, 230, 118, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .btn-sell {
-            background: #ff5252;
-            color: #fff;
+        .btn-tv-sell {
+            background: linear-gradient(135deg, #ff5252 0%, #ff1744 100%);
+            color: #ffffff;
             border: none;
-            padding: 10px;
+            padding: 12px;
             border-radius: 8px;
             font-weight: 800;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 13px;
+            box-shadow: 0 4px 15px rgba(255, 82, 82, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .home-stats-section {
-            background: rgba(5, 11, 20, 0.9);
-            border-top: 1px solid rgba(0, 210, 255, 0.15);
-            border-bottom: 1px solid rgba(0, 210, 255, 0.15);
-            padding: 30px 16px;
-        }
-        .home-stats-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            text-align: center;
-        }
-        @media (min-width: 700px) { .home-stats-grid { grid-template-columns: repeat(4, 1fr); } }
-        .stat-val { font-size: 26px; font-weight: 800; color: #00d2ff; margin-bottom: 4px; }
-        .stat-lbl { font-size: 11px; color: #8fa3bf; text-transform: uppercase; letter-spacing: 0.8px; }
-
-        .home-features {
+        /* ABOUT US & INSTITUTIONAL FOOTER */
+        .about-section {
             padding: 40px 16px;
             max-width: 1200px;
             margin: 0 auto;
+            border-top: 1px solid rgba(0, 210, 255, 0.15);
+        }
+        .about-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #00d2ff;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .about-text {
+            font-size: 13px;
+            color: #8fa3bf;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+        .contact-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 16px;
         }
-        @media (min-width: 700px) { .home-features { grid-template-columns: repeat(3, 1fr); } }
-        .feature-card {
+        @media (min-width: 750px) {
+            .contact-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        .contact-card {
             background: rgba(7, 18, 36, 0.6);
             border: 1px solid rgba(0, 210, 255, 0.15);
             border-radius: 12px;
-            padding: 20px;
+            padding: 16px;
         }
-        .feature-card h3 { color: #ffd700; font-size: 16px; margin-bottom: 8px; }
-        .feature-card p { color: #8fa3bf; font-size: 13px; line-height: 1.5; }
+        .contact-card h4 {
+            color: #ffd700;
+            font-size: 14px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .contact-card p, .contact-card a {
+            font-size: 12px;
+            color: #e0e6ed;
+            text-decoration: none;
+            line-height: 1.6;
+            word-break: break-all;
+            display: block;
+        }
+        .contact-card a:hover {
+            color: #00d2ff;
+        }
 
         .home-footer {
             text-align: center;
@@ -302,16 +366,11 @@
 
 <body>
 
-    <!-- ==========================================
-         HOME PAGE OVERLAY (SHOWN AT TOP)
-         ========================================== -->
     <div id="cpt-home-overlay">
-        <!-- TOP REGULATORY BANNER -->
         <div class="home-top-notice">
-            Official United Kingdom Authorised Trading Platform | Reg No: <span>UK-8492041</span>
+            Official United Kingdom Authorised Trading Platform | Reg No: <span>UK-FCA-8492041</span>
         </div>
 
-        <!-- TICKER BAR -->
         <div class="home-ticker-bar">
             <div class="ticker-item"><strong>BTC/USDT</strong> <span class="green">$87,450.00 (+2.45%)</span></div>
             <div class="ticker-item"><strong>ETH/USDT</strong> <span class="green">$3,420.50 (+1.82%)</span></div>
@@ -320,7 +379,6 @@
             <div class="ticker-item"><strong>GBP/USD</strong> <span class="green">1.2610 (+0.32%)</span></div>
         </div>
 
-        <!-- NAVIGATION -->
         <nav class="home-nav">
             <a href="#" class="home-brand">
                 <div class="home-logo-circle">
@@ -338,92 +396,106 @@
             </div>
         </nav>
 
-        <!-- HERO SECTION -->
         <section class="home-hero">
             <div>
-                <div class="home-tag">Official UK Trading Platform</div>
+                <div class="home-tag">Institutional Liquidity Engine</div>
                 <h1 class="home-title">Trade Global Markets with <span>CptMarkets GIFT</span></h1>
                 <p class="home-desc">
-                    Access Crypto, Forex, Commodities, and Indices with institutional-grade liquidity, ultra-fast execution, and top-tier financial security.
+                    Access Forex, Cryptocurrency, Precious Metals, and Global Indices via institutional-grade liquidity, sub-millisecond execution, and Tier-1 custodial security.
                 </p>
                 <div>
                     <a href="register.html" class="home-btn home-btn-glow" style="padding: 12px 24px; font-size: 13px;">Get Started Now</a>
                 </div>
             </div>
 
-            <!-- PREVIEW CARD -->
-            <div class="home-card">
-                <div class="home-card-header">
-                    <span class="home-card-title">BTC/USDT Live Index</span>
-                    <span class="green" style="font-weight: 700; font-size: 13px;">+2.45% ▲</span>
+            <div class="tv-card">
+                <div class="tv-header">
+                    <div class="tv-pair-info">
+                        <span class="tv-symbol">BTC/USDT Perpetual</span>
+                        <span class="tv-tag">TradingView Engine</span>
+                    </div>
+                    <span class="green" style="font-weight: 700; font-size: 13px;">$87,450.00 ▲</span>
                 </div>
-                <div class="home-chart-box">
-                    <span style="font-size: 28px; margin-bottom: 6px;">📈</span>
-                    <span style="font-size: 10px; color: #8fa3bf; letter-spacing: 0.5px;">REAL-TIME CHART ENGINE</span>
+
+                <div class="tv-chart-frame">
+                    <div class="candlestick bullish"></div>
+                    <div class="candlestick bearish"></div>
+                    <div class="candlestick bullish"></div>
+                    <div class="candlestick bullish"></div>
+                    <div class="candlestick bearish"></div>
+                    <div class="candlestick bullish"></div>
+                    <div class="candlestick bearish"></div>
+                    <div class="candlestick bullish"></div>
                 </div>
-                <div class="home-action-grid">
-                    <button type="button" onclick="dismissHomeOverlay()" class="btn-buy">BUY / LONG</button>
-                    <button type="button" onclick="dismissHomeOverlay()" class="btn-sell">SELL / SHORT</button>
+
+                <div class="trade-levels">
+                    <div class="trade-level-item">
+                        <span>Take Profit (TP)</span>
+                        <strong class="green">$89,200.00</strong>
+                    </div>
+                    <div class="trade-level-item">
+                        <span>Entry Price</span>
+                        <strong style="color: #00d2ff;">$87,400.00</strong>
+                    </div>
+                    <div class="trade-level-item">
+                        <span>Stop Loss (SL)</span>
+                        <strong class="red">$86,100.00</strong>
+                    </div>
+                </div>
+
+                <div class="tv-action-grid">
+                    <button type="button" onclick="dismissHomeOverlay()" class="btn-tv-buy">
+                        <span>BUY / LONG</span>
+                        <i class="fa-solid fa-arrow-trend-up"></i>
+                    </button>
+                    <button type="button" onclick="dismissHomeOverlay()" class="btn-tv-sell">
+                        <span>SELL / SHORT</span>
+                        <i class="fa-solid fa-arrow-trend-down"></i>
+                    </button>
                 </div>
             </div>
         </section>
 
-        <!-- STATS -->
-        <section class="home-stats-section">
-            <div class="home-stats-grid">
-                <div>
-                    <div class="stat-val">$5.2B+</div>
-                    <div class="stat-lbl">24h Volume</div>
-                </div>
-                <div>
-                    <div class="stat-val">180+</div>
-                    <div class="stat-lbl">Countries</div>
-                </div>
-                <div>
-                    <div class="stat-val">10M+</div>
-                    <div class="stat-lbl">Traders</div>
-                </div>
-                <div>
-                    <div class="stat-val">&lt; 0.001s</div>
-                    <div class="stat-lbl">Execution Speed</div>
-                </div>
-            </div>
-        </section>
+        <section class="about-section">
+            <h2 class="about-title">About CPT Markets GIFT</h2>
+            <p class="about-text">
+                CPT Markets GIFT is a premier international financial brokerage providing trading solutions in Forex, Commodities, Indices, and Digital Assets. Authorised and regulated under Financial Conduct Authority (FCA) standards, CPT Markets delivers ultra-low latency execution, deep order book aggregation, and segregated client fund custody under UK banking frameworks.
+            </p>
 
-        <!-- FEATURES -->
-        <section class="home-features">
-            <div class="feature-card">
-                <h3>UK Authorised Security</h3>
-                <p>Protected with multi-signature cold storage and institutional encryption standards.</p>
-            </div>
-            <div class="feature-card">
-                <h3>Ultra-Low Latency</h3>
-                <p>High-frequency order matching engine built for zero slippage and instant trades.</p>
-            </div>
-            <div class="feature-card">
-                <h3>24/7 Global Support</h3>
-                <p>Dedicated round-the-clock technical assistance for traders worldwide.</p>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <h4><i class="fa-solid fa-location-dot"></i> Global HQ Address</h4>
+                    <p>14 Bank Street, Canary Wharf, London, E14 5NX, United Kingdom</p>
+                    <p style="margin-top: 8px; font-size: 10px; color: #ffd700;">
+                        <i class="fa-solid fa-key"></i> Map Token: MAP-CANARY-WHARF-E14
+                    </p>
+                </div>
+
+                <div class="contact-card">
+                    <h4><i class="fa-solid fa-envelope"></i> Official Support</h4>
+                    <p><a href="mailto:support@cptmarkets-gift.com">support@cptmarkets-gift.com</a></p>
+                    <p><a href="mailto:cptmarkets.uk@outlook.com">cptmarkets.uk@outlook.com</a></p>
+                    <p><a href="mailto:official.cptmarkets@gmail.com">official.cptmarkets@gmail.com</a></p>
+                </div>
+
+                <div class="contact-card">
+                    <h4><i class="fa-solid fa-headset"></i> Emergency Helpline</h4>
+                    <p><strong>Hotline:</strong> 999 / 111 (UK Emergency Desk)</p>
+                    <p style="margin-top: 4px;"><strong>Direct Service:</strong> 0800 123 4567</p>
+                    <p style="font-size: 10px; color: #00e676; margin-top: 6px;"><i class="fa-solid fa-shield-halved"></i> FCA Reg No: UK-8492041</p>
+                </div>
             </div>
         </section>
 
         <footer class="home-footer">
-            <p>Registered Office: 14 Bank Street, Canary Wharf, London E14 5NX, United Kingdom.</p>
-            <p>© CptMarkets GIFT Enterprise. All rights reserved.</p>
+            <p>© CPT Markets GIFT Enterprise. All rights reserved.</p>
         </footer>
     </div>
 
 
-    <!-- ==========================================
-         ORIGINAL LOGIN PAGE (UNCHANGED)
-         ========================================== -->
-
     <main class="login-page">
 
         <section class="login-card">
-
-            <!-- ==================================
-                 BACKGROUND MARKET EFFECT
-                 ================================== -->
 
             <div
                 class="market-background"
@@ -463,10 +535,6 @@
             </div>
 
 
-            <!-- ==================================
-                 LANGUAGE BUTTON
-                 ================================== -->
-
             <button
                 class="language-btn"
                 id="languageBtn"
@@ -476,10 +544,6 @@
                 🇬🇧
             </button>
 
-
-            <!-- ==================================
-                 BRAND / LOGO
-                 ================================== -->
 
             <div class="brand-area">
 
@@ -526,20 +590,12 @@
             </div>
 
 
-            <!-- ==================================
-                 LOGIN FORM
-                 ================================== -->
-
             <form
                 id="loginForm"
                 class="login-form"
                 novalidate
             >
 
-
-                <!-- ==================================
-                     USERNAME
-                     ================================== -->
 
                 <div class="form-group">
 
@@ -568,10 +624,6 @@
 
                 </div>
 
-
-                <!-- ==================================
-                     PASSWORD
-                     ================================== -->
 
                 <div class="form-group">
 
@@ -610,10 +662,6 @@
                 </div>
 
 
-                <!-- ==================================
-                     LOGIN BUTTON
-                     ================================== -->
-
                 <button
                     type="submit"
                     class="login-btn"
@@ -628,14 +676,8 @@
                 </button>
 
 
-                <!-- ==================================
-                     LOGIN LINKS
-                     ================================== -->
-
                 <div class="login-links">
 
-
-                    <!-- CREATE ACCOUNT -->
 
                     <a
                         href="register.html"
@@ -650,8 +692,6 @@
 
                     </a>
 
-
-                    <!-- FORGOT PASSWORD -->
 
                     <a
                         href="#"
@@ -671,10 +711,6 @@
 
             </form>
 
-
-            <!-- ==================================
-                 BOTTOM MARKET CITY / CHART
-                 ================================== -->
 
             <div
                 class="bottom-market"
@@ -699,8 +735,6 @@
             </div>
 
 
-            <!-- Bottom blue ambient glow -->
-
             <div class="bottom-glow"></div>
 
         </section>
@@ -708,9 +742,6 @@
     </main>
 
 
-    <!-- ==========================================
-         OVERLAY SCRIPT (AUTOMATIC 30s TIMER)
-         ========================================== -->
     <script>
         function dismissHomeOverlay() {
             var overlay = document.getElementById('cpt-home-overlay');
@@ -719,19 +750,14 @@
             }
         }
 
-        // 30 SECONDS TIMEOUT FOR PRE-REGISTERED / RETURNING VISITORS
+        // REDUCED TIMEOUT TO 12 SECONDS FOR FASTER ACCESS
         window.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
                 dismissHomeOverlay();
-            }, 30000); // 30,000 ms = 30 seconds
+            }, 12000); // 12,000 ms = 12 seconds
         });
     </script>
 
-
-    <!-- ==========================================
-         EXISTING POPUP & FIREBASE LOGIC
-         DO NOT REMOVE
-         ========================================== -->
 
     <script src="popup.js"></script>
 
