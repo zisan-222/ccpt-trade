@@ -9,8 +9,7 @@
 <link rel="stylesheet" href="trade.css">
 <link rel="stylesheet" href="trade.professional.css">
 <link rel="stylesheet" href="trade-popup.css">
-<link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <script src="https://s3.tradingview.com/tv.js"></script>
 
@@ -248,13 +247,6 @@
 
 <!-- =========================================================
      OPEN TRADE
-
-     IMPORTANT:
-     The old inline trade modal and inline popup HTML have
-     intentionally been removed.
-
-     trade.js now calls trade-popup.js, and trade-popup.js
-     creates/displays the professional popup itself.
      ========================================================= -->
 
 <div
@@ -292,8 +284,8 @@
         </div>
 
         <div>
-            <span>Profit / Loss</span>
-            <strong id="tradePL">$0.00</strong>
+            <span>Liq. Price</span>
+            <strong id="liqPrice">--</strong>
         </div>
 
     </div>
@@ -353,13 +345,7 @@
 <script src="balance.js"></script>
 <script src="trade.js"></script>
 
-<!--
-    This file is intentionally loaded as a module because the
-    popup system is a separate JS module. It exposes its public
-    functions through window so trade.js can call them.
--->
 <script type="module" src="trade-popup.js"></script>
-
 
 <script src="lang.js"></script>
 <script src="translator.js"></script>
