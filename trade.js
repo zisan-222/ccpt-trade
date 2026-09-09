@@ -519,8 +519,6 @@ async function initializeTradeFirebase() {
 
 }
 
-initializeTradeFirebase();
-
 
 /* =========================================================
    CREATE TRADE ID
@@ -1621,53 +1619,6 @@ if (shortButton) {
 
 
 /* =========================================================
-   EXECUTE TRADE LOGIC
-   ========================================================= */
-
-function executeTrade(side, entry, amount, leverage) {
-
-    selectedSide = side;
-    entryPrice = entry;
-    tradeAmountValue = amount;
-    selectedLeverage = leverage;
-    currentTradeId = createTradeId();
-
-    if (typeof window.deductBalance === "function") {
-
-        window.deductBalance(amount);
-
-    }
-
-    saveActiveTrade();
-    updateOpenTradeUI();
-
-    if (typeof window.cptShowTradeOpenedPopup === "function") {
-
-        window.cptShowTradeOpenedPopup({
-
-            side: side,
-            entryPrice: entry,
-            amount: amount,
-            leverage: leverage,
-            tradeId: currentTradeId
-
-        });
-
-    } else {
-
-        showTradeNotice(
-
-            "Trade Opened Successfully",
-            `Your ${side} position of $${amount.toFixed(2)} at ${entry.toFixed(2)} (${leverage}x) is now active.`
-
-        );
-
-    }
-
-}
-
-
-/* =========================================================
    START POPUP TRADE
    ========================================================= */
 
@@ -1806,34 +1757,68 @@ function startPopupTrade(side) {
             {
 
                 side: confirmationSide,
+
                 entryPrice: confirmationPrice,
+
                 amount: confirmationAmount,
+
                 leverage: confirmationLeverage
 
             },
             function () {
 
-                executeTrade(
+                selectedSide = confirmationSide;
 
-                    confirmationSide,
-                    confirmationPrice,
-                    confirmationAmount,
-                    confirmationLeverage
+                entryPrice = confirmationPrice;
 
-                );
+                tradeAmountValue = confirmationAmount;
+
+                selectedLeverage = confirmationLeverage;
+
+                currentTradeId = createTradeId();
+
+
+                if (typeof window.deductBalance === "function") {
+
+                    window.deductBalance(confirmationAmount);
+
+                }
+
+
+                saveActiveTrade();
+
+                updateOpenTradeUI();
+
+
+                if (typeof window.cptShowTradeOpenedPopup === "function") {
+
+                    window.cptShowTradeOpenedPopup({
+
+                        side: confirmationSide,
+
+                        entryPrice: confirmationPrice,
+
+                        amount: confirmationAmount,
+
+                        leverage: confirmationLeverage,
+
+                        tradeId: currentTradeId
+
+                    });
+
+                } else {
+
+                    showTradeNotice(
+
+                        "Trade Opened Successfully",
+
+                        `Your ${confirmationSide} position of $${confirmationAmount.toFixed(2)} at ${confirmationPrice.toFixed(2)} (${confirmationLeverage}x) is now active.`
+
+                    );
+
+                }
 
             }
-        );
-
-    } else {
-
-        executeTrade(
-
-            confirmationSide,
-            confirmationPrice,
-            confirmationAmount,
-            confirmationLeverage
-
         );
 
     }
