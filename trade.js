@@ -1,1826 +1,3456 @@
 /* =========================================================
+
    CPTMARKETS TRADE
+
    trade.js
+
    FINAL MOBILE + TRADINGVIEW + TRADE SYSTEM
 
+
+
    CONNECTED WITH:
+
    - balance.js
+
    - firebase
+
    - trade-popup.js
+
+
 
    TRADE FLOW:
 
+
+
    LONG / SHORT
+
         ↓
+
    Validation
+
         ↓
+
    CPT Professional Confirmation Popup
+
         ↓
+
    Continue
+
         ↓
+
    Balance Deduction
+
         ↓
+
    Active Trade
+
         ↓
+
    Trade Opened Popup
+
    ========================================================= */
+
+
+
 
 
 /* =========================================================
+
    MOBILE VIEWPORT FIX
+
    ========================================================= */
+
+
 
 (function fixMobileViewport() {
 
+
+
     let viewport =
+
         document.querySelector(
+
             'meta[name="viewport"]'
+
         );
+
+
 
     if (!viewport) {
 
+
+
         viewport =
+
             document.createElement("meta");
 
+
+
         viewport.name =
+
             "viewport";
 
+
+
         document.head.appendChild(
+
             viewport
+
         );
+
+
 
     }
 
+
+
     viewport.setAttribute(
+
         "content",
+
         "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+
     );
+
+
 
 })();
 
 
+
+
+
 /* =========================================================
+
    TRADE STATE
+
    ========================================================= */
+
+
 
 let price = 4269.29;
 
+
+
 let selectedSide = null;
+
 let entryPrice = null;
+
 let tradeAmountValue = 0;
 
+
+
 let currentTradeId = null;
+
 let currentTradeUID = null;
+
+
 
 let selectedLeverage = 100;
 
 
+
+
+
 /* =========================================================
+
    FIREBASE
+
    ========================================================= */
 
+
+
 let tradeAuth = null;
+
 let tradeDB = null;
+
 let tradeFirebaseUser = null;
 
 
+
+
+
 /* =========================================================
+
    BASIC ELEMENTS
+
    ========================================================= */
+
+
 
 const livePrice =
+
     document.getElementById(
+
         "livePrice"
+
     );
+
+
 
 const changeBox =
+
     document.getElementById(
+
         "changeBox"
+
     );
 
 
+
+
+
 /* =========================================================
+
    LONG / SHORT BUTTONS
+
    ========================================================= */
+
+
 
 const longButton =
+
     document.querySelector(
+
         ".long-btn, #longBtn, button.long"
+
     );
+
+
 
 const shortButton =
+
     document.querySelector(
+
         ".short-btn, #shortBtn, button.short"
+
     );
 
 
+
+
+
 /* =========================================================
+
    MAIN AMOUNT INPUT
+
    ========================================================= */
+
+
 
 const amountInput =
+
     document.getElementById(
+
         "amount"
+
     );
 
 
+
+
+
 /* =========================================================
+
    PROFESSIONAL VALIDATION POPUP
+
    ========================================================= */
+
+
 
 function createTradeNoticePopup() {
 
+
+
     if (
+
         document.getElementById(
+
             "cptTradeNoticePopup"
+
         )
+
     ) {
+
+
 
         return;
 
+
+
     }
+
+
+
 
 
     const html = `
 
+
+
         <div
+
             id="cptTradeNoticePopup"
+
             class="cpt-popup-overlay"
+
         >
+
+
 
             <div class="cpt-popup cpt-popup-success">
 
+
+
                 <div
+
                     id="cptTradeNoticeIcon"
+
                     class="cpt-popup-icon"
+
                 >
+
                     !
+
                 </div>
+
+
 
                 <div class="cpt-popup-brand">
+
                     CPT Markets
+
                 </div>
 
+
+
                 <h2
+
                     id="cptTradeNoticeTitle"
+
                     class="cpt-popup-title"
+
                 >
+
                     Notice
+
                 </h2>
 
+
+
                 <p
+
                     id="cptTradeNoticeText"
+
                     class="cpt-popup-subtitle cpt-popup-success-message"
+
                 >
+
                     Please check your trade details.
+
                 </p>
+
+
 
                 <div class="cpt-popup-actions">
 
+
+
                     <button
+
                         id="cptTradeNoticeOK"
+
                         class="cpt-popup-btn cpt-popup-confirm cpt-popup-single-btn"
+
                         type="button"
+
                     >
+
                         OK
+
                     </button>
+
+
 
                 </div>
 
+
+
             </div>
 
+
+
         </div>
+
+
 
     `;
 
 
+
+
+
     document.body.insertAdjacentHTML(
+
         "beforeend",
+
         html
+
     );
 
 
+
+
+
     const okButton =
+
         document.getElementById(
+
             "cptTradeNoticeOK"
+
         );
+
+
+
 
 
     if (okButton) {
 
+
+
         okButton.onclick =
+
             function () {
+
+
 
                 closeTradeNoticePopup();
 
+
+
             };
 
+
+
     }
+
+
 
 }
 
 
+
+
+
 /* =========================================================
+
    OPEN PROFESSIONAL NOTICE
+
    ========================================================= */
 
+
+
 function showTradeNotice(
+
     title,
+
     message
+
 ) {
+
+
 
     createTradeNoticePopup();
 
 
+
+
+
     const titleElement =
+
         document.getElementById(
+
             "cptTradeNoticeTitle"
+
         );
+
+
 
     const textElement =
+
         document.getElementById(
+
             "cptTradeNoticeText"
+
         );
 
+
+
     const popup =
+
         document.getElementById(
+
             "cptTradeNoticePopup"
+
         );
+
+
+
 
 
     if (titleElement) {
 
+
+
         titleElement.innerText =
+
             title;
 
+
+
     }
+
+
+
 
 
     if (textElement) {
 
+
+
         textElement.innerText =
+
             message;
 
+
+
     }
+
+
+
 
 
     if (popup) {
 
+
+
         popup.classList.add(
+
             "active"
+
         );
+
+
 
     }
 
 
+
+
+
     document.body.style.overflow =
+
         "hidden";
+
+
 
 }
 
 
+
+
+
 /* =========================================================
+
    CLOSE PROFESSIONAL NOTICE
+
    ========================================================= */
+
+
 
 function closeTradeNoticePopup() {
 
+
+
     const popup =
+
         document.getElementById(
+
             "cptTradeNoticePopup"
+
         );
+
+
+
 
 
     if (popup) {
 
+
+
         popup.classList.remove(
+
             "active"
+
         );
+
+
 
     }
 
 
+
+
+
     document.body.style.overflow =
+
         "";
+
+
 
 }
 
 
+
+
+
 /* =========================================================
+
    CHART HEIGHT
+
    ========================================================= */
+
+
 
 function fixMobileChartHeight() {
 
+
+
     const chart =
+
         document.getElementById(
+
             "tvchart"
+
         );
 
+
+
     const card =
+
         document.querySelector(
+
             ".chart-card"
+
         );
+
+
+
 
 
     if (!chart) {
 
+
+
         return;
+
+
 
     }
 
 
+
+
+
     const height =
+
         window.innerWidth <= 600
+
             ? 360
+
             : 430;
 
 
+
+
+
     chart.style.setProperty(
+
         "width",
+
         "100%",
+
         "important"
+
     );
 
+
+
     chart.style.setProperty(
+
         "height",
+
         height + "px",
+
         "important"
+
     );
 
+
+
     chart.style.setProperty(
+
         "min-height",
+
         height + "px",
+
         "important"
+
     );
 
+
+
     chart.style.setProperty(
+
         "max-height",
+
         height + "px",
+
         "important"
+
     );
 
+
+
     chart.style.setProperty(
+
         "display",
+
         "block",
+
         "important"
+
     );
 
+
+
     chart.style.setProperty(
+
         "position",
+
         "relative",
+
         "important"
+
     );
 
+
+
     chart.style.setProperty(
+
         "overflow",
+
         "hidden",
+
         "important"
+
     );
+
+
+
 
 
     if (card) {
 
+
+
         card.style.setProperty(
+
             "width",
+
             "100%",
+
             "important"
+
         );
 
+
+
         card.style.setProperty(
+
             "height",
+
             height + "px",
+
             "important"
+
         );
 
+
+
         card.style.setProperty(
+
             "min-height",
+
             height + "px",
+
             "important"
+
         );
 
+
+
         card.style.setProperty(
+
             "max-height",
+
             height + "px",
+
             "important"
+
         );
 
+
+
         card.style.setProperty(
+
             "overflow",
+
             "hidden",
+
             "important"
+
         );
 
+
+
         card.style.setProperty(
+
             "padding",
+
             "0",
+
             "important"
+
         );
 
+
+
         card.style.setProperty(
+
             "margin-left",
+
             "0",
+
             "important"
+
         );
 
+
+
         card.style.setProperty(
+
             "margin-right",
+
             "0",
+
             "important"
+
         );
 
+
+
         card.style.setProperty(
+
             "box-sizing",
+
             "border-box",
+
             "important"
+
         );
+
+
 
     }
 
+
+
 }
+
+
+
 
 
 fixMobileChartHeight();
 
 
+
+
+
 window.addEventListener(
+
     "resize",
+
     function () {
+
+
 
         fixMobileChartHeight();
 
+
+
     }
+
 );
 
 
+
+
+
 /* =========================================================
+
    FIREBASE INITIALIZATION
+
    ========================================================= */
+
+
 
 async function initializeTradeFirebase() {
 
+
+
     try {
 
+
+
         const config =
+
             await import(
+
                 "./firebase/firebase-config.js"
+
             );
+
+
+
 
 
         tradeAuth =
+
             config.auth;
 
+
+
         tradeDB =
+
             config.db;
 
 
+
+
+
         const firebaseAuth =
+
             await import(
+
                 "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js"
+
             );
 
 
+
+
+
         firebaseAuth.onAuthStateChanged(
+
             tradeAuth,
+
             async function (user) {
 
+
+
                 tradeFirebaseUser =
+
                     user || null;
 
+
+
                 currentTradeUID =
+
                     user
+
                         ? user.uid
+
                         : null;
+
+
+
 
 
                 if (!user) {
 
+
+
                     hideOpenTradeCard();
 
+
+
                     return;
+
+
 
                 }
 
 
+
+
+
                 await restoreActiveTrade();
 
+
+
             }
+
         );
+
+
+
 
 
     } catch (error) {
 
+
+
         console.error(
+
             "Trade Firebase initialization failed:",
+
             error
+
         );
 
+
+
     }
+
+
 
 }
 
 
+
+
+
 /* =========================================================
+
    CREATE TRADE ID
+
    ========================================================= */
+
+
 
 function createTradeId() {
 
+
+
     return (
+
         "TRD-" +
+
         Date.now() +
+
         "-" +
+
         Math.random()
+
             .toString(36)
+
             .substring(2, 9)
+
             .toUpperCase()
+
     );
+
+
 
 }
 
 
+
+
+
 /* =========================================================
+
    SAVE ACTIVE TRADE
+
    ========================================================= */
+
+
 
 function saveActiveTrade() {
 
+
+
     if (
+
         !selectedSide ||
+
         !entryPrice ||
+
         !tradeAmountValue ||
+
         !currentTradeId
+
     ) {
 
+
+
         return;
+
+
 
     }
 
 
+
+
+
     localStorage.setItem(
+
         "selectedSide",
+
         selectedSide
+
     );
 
+
+
     localStorage.setItem(
+
         "entryPrice",
+
         String(entryPrice)
+
     );
 
+
+
     localStorage.setItem(
+
         "tradeAmountValue",
+
         String(tradeAmountValue)
+
     );
 
+
+
     localStorage.setItem(
+
         "currentTradeId",
+
         currentTradeId
+
     );
 
+
+
     localStorage.setItem(
+
         "currentTradePrice",
+
         String(price)
+
     );
 
+
+
     localStorage.setItem(
+
         "tradeLeverage",
+
         String(selectedLeverage)
+
     );
+
+
+
 
 
     if (currentTradeUID) {
 
+
+
         localStorage.setItem(
+
             "currentTradeUID",
+
             currentTradeUID
+
         );
 
+
+
     }
+
+
 
 }
 
 
+
+
+
 /* =========================================================
+
    CLEAR ACTIVE TRADE
+
    ========================================================= */
+
+
 
 function clearActiveTrade() {
 
+
+
     localStorage.removeItem(
+
         "selectedSide"
+
     );
 
+
+
     localStorage.removeItem(
+
         "entryPrice"
+
     );
 
+
+
     localStorage.removeItem(
+
         "tradeAmountValue"
+
     );
 
+
+
     localStorage.removeItem(
+
         "currentTradeId"
+
     );
 
+
+
     localStorage.removeItem(
+
         "currentTradePrice"
+
     );
 
+
+
     localStorage.removeItem(
+
         "tradeLeverage"
+
     );
 
+
+
     localStorage.removeItem(
+
         "currentTradeUID"
+
     );
+
+
 
 }
 
 
+
+
+
 /* =========================================================
+
    GET STORED ACTIVE TRADE
+
    ========================================================= */
+
+
 
 function getStoredActiveTrade() {
 
+
+
     const side =
+
         localStorage.getItem(
+
             "selectedSide"
+
         );
+
+
+
 
 
     const savedEntry =
+
         Number(
+
             localStorage.getItem(
+
                 "entryPrice"
+
             )
+
         );
+
+
+
 
 
     const amount =
+
         Number(
+
             localStorage.getItem(
+
                 "tradeAmountValue"
+
             )
+
         );
+
+
+
 
 
     const tradeId =
+
         localStorage.getItem(
+
             "currentTradeId"
+
         );
+
+
+
 
 
     const uid =
+
         localStorage.getItem(
+
             "currentTradeUID"
+
         );
 
 
+
+
+
     if (
+
         !side ||
+
         !Number.isFinite(savedEntry) ||
+
         savedEntry <= 0 ||
+
         !Number.isFinite(amount) ||
+
         amount <= 0 ||
+
         !tradeId
+
     ) {
+
+
 
         return null;
 
+
+
     }
+
+
+
 
 
     if (
+
         side !== "LONG" &&
+
         side !== "SHORT"
+
     ) {
+
+
 
         return null;
 
+
+
     }
+
+
+
 
 
     return {
 
+
+
         side:
+
             side,
 
+
+
         entryPrice:
+
             savedEntry,
 
+
+
         amount:
+
             amount,
 
+
+
         tradeId:
+
             tradeId,
 
+
+
         uid:
+
             uid || null
+
+
 
     };
 
+
+
 }
+
+
+
 
 
 /* =========================================================
-   UI PLACEHOLDERS
-   ========================================================= */
 
-function updateOpenTradeUI() {
-
-    const openTradeCard =
-        document.getElementById(
-            "openTradeCard"
-        );
-
-    if (openTradeCard) {
-
-        openTradeCard.style.display =
-            "block";
-
-    }
-
-}
-
-
-function hideOpenTradeCard() {
-
-    const openTradeCard =
-        document.getElementById(
-            "openTradeCard"
-        );
-
-    if (openTradeCard) {
-
-        openTradeCard.style.display =
-            "none";
-
-    }
-
-}
-
-
-/* =========================================================
    RESTORE ACTIVE TRADE
+
    ========================================================= */
+
+
 
 async function restoreActiveTrade() {
 
+
+
     const stored =
+
         getStoredActiveTrade();
+
+
+
 
 
     if (!stored) {
 
+
+
         hideOpenTradeCard();
 
+
+
         return;
+
+
 
     }
 
 
+
+
+
     if (
+
         currentTradeUID &&
+
         stored.uid &&
+
         stored.uid !== currentTradeUID
+
     ) {
+
+
 
         clearActiveTrade();
 
+
+
         hideOpenTradeCard();
+
+
 
         return;
 
+
+
     }
+
+
+
 
 
     selectedSide =
+
         stored.side;
 
+
+
     entryPrice =
+
         stored.entryPrice;
 
+
+
     tradeAmountValue =
+
         stored.amount;
 
+
+
     currentTradeId =
+
         stored.tradeId;
 
 
+
+
+
     const savedLeverage =
+
         Number(
+
             localStorage.getItem(
+
                 "tradeLeverage"
+
             )
+
         );
 
 
+
+
+
     if (
+
         Number.isFinite(savedLeverage) &&
+
         savedLeverage > 0
+
     ) {
 
+
+
         selectedLeverage =
+
             savedLeverage;
 
+
+
     }
+
+
+
 
 
     updateOpenTradeUI();
 
+
+
 }
 
 
+
+
+
 /* =========================================================
+
    LIVE PRICE
+
    ========================================================= */
 
+
+
 setInterval(
+
     function () {
 
+
+
         const change =
+
             (Math.random() - 0.5) * 3;
+
+
+
 
 
         price += change;
 
 
+
+
+
         if (price <= 0) {
+
+
 
             price = 1;
 
+
+
         }
+
+
+
 
 
         if (livePrice) {
 
+
+
             livePrice.innerText =
+
                 price.toFixed(2);
+
+
 
         }
 
 
+
+
+
         const percent =
+
             (
+
                 (change / price) *
+
                 100
+
             ).toFixed(2);
+
+
+
 
 
         if (changeBox) {
 
+
+
             if (change >= 0) {
 
+
+
                 changeBox.className =
+
                     "change green";
 
+
+
                 changeBox.innerText =
+
                     "+" + percent + "%";
+
+
 
             } else {
 
+
+
                 changeBox.className =
+
                     "change red";
 
+
+
                 changeBox.innerText =
+
                     percent + "%";
 
+
+
             }
+
+
 
         }
 
 
+
+
+
         if (
+
             selectedSide &&
+
             entryPrice &&
+
             tradeAmountValue
+
         ) {
 
+
+
             localStorage.setItem(
+
                 "currentTradePrice",
+
                 String(price)
+
             );
+
+
+
 
 
             updateOpenTradeUI();
 
+
+
         }
 
+
+
     },
+
     1000
+
 );
 
 
+
+
+
 /* =========================================================
+
    TIMEFRAME
+
    ========================================================= */
 
+
+
 document
+
     .querySelectorAll(
+
         ".timeframe button"
+
     )
+
     .forEach(
+
         function (btn) {
 
+
+
             btn.addEventListener(
+
                 "click",
+
                 function () {
 
+
+
                     document
+
                         .querySelectorAll(
+
                             ".timeframe button"
+
                         )
+
                         .forEach(
+
                             function (button) {
 
+
+
                                 button.classList.remove(
+
                                     "active"
+
                                 );
 
+
+
                             }
+
                         );
 
 
+
+
+
                     btn.classList.add(
+
                         "active"
+
                     );
 
+
+
                 }
+
             );
 
+
+
         }
+
     );
 
 
+
+
+
 /* =========================================================
+
    INDICATORS
+
    ========================================================= */
 
+
+
 document
+
     .querySelectorAll(
+
         ".indicator-bar button"
+
     )
+
     .forEach(
+
         function (btn) {
 
+
+
             btn.addEventListener(
+
                 "click",
+
                 function () {
 
+
+
                     document
+
                         .querySelectorAll(
+
                             ".indicator-bar button"
+
                         )
+
                         .forEach(
+
                             function (button) {
 
+
+
                                 button.classList.remove(
+
                                     "active"
+
                                 );
 
+
+
                             }
+
                         );
 
 
+
+
+
                     btn.classList.add(
+
                         "active"
+
                     );
 
+
+
                 }
+
             );
 
+
+
         }
+
     );
 
 
+
+
+
 /* =========================================================
+
    LEVERAGE
+
    ========================================================= */
 
+
+
 document
+
     .querySelectorAll(
+
         ".leverage-grid button"
+
     )
+
     .forEach(
+
         function (btn) {
 
+
+
             btn.addEventListener(
+
                 "click",
+
                 function () {
 
+
+
                     document
+
                         .querySelectorAll(
+
                             ".leverage-grid button"
+
                         )
+
                         .forEach(
+
                             function (button) {
 
+
+
                                 button.classList.remove(
+
                                     "active"
+
                                 );
 
+
+
                             }
+
                         );
 
 
+
+
+
                     btn.classList.add(
+
                         "active"
+
                     );
+
+
+
 
 
                     selectedLeverage =
+
                         Number(
+
                             btn.innerText
+
                                 .replace("x", "")
+
                         );
+
+
+
 
 
                     const levValue =
+
                         document.getElementById(
+
                             "levValue"
+
                         );
+
+
+
 
 
                     if (levValue) {
 
+
+
                         levValue.innerText =
+
                             btn.innerText;
 
+
+
                     }
+
+
+
 
 
                     if (selectedSide) {
 
+
+
                         saveActiveTrade();
+
+
 
                     }
 
+
+
                 }
+
             );
 
+
+
         }
+
     );
 
 
+
+
+
 /* =========================================================
+
    AMOUNT INPUT
+
    ========================================================= */
+
+
 
 if (amountInput) {
 
+
+
     amountInput.addEventListener(
+
         "input",
+
         function () {
 
+
+
             const margin =
+
                 Number(
+
                     amountInput.value
+
                 ) || 0;
 
 
+
+
+
             const marginValue =
+
                 document.getElementById(
+
                     "marginValue"
+
                 );
+
+
+
 
 
             if (marginValue) {
 
+
+
                 marginValue.innerText =
+
                     "$" +
+
                     margin.toFixed(2);
+
+
 
             }
 
+
+
         }
+
     );
+
+
 
 }
 
 
+
+
+
 /* =========================================================
+
    TRADINGVIEW
+
    ========================================================= */
 
+
+
 let tradingViewWidget = null;
+
 let tradingViewLoading = false;
 
 
+
+
+
 /* =========================================================
+
    LOAD TRADINGVIEW LIBRARY
+
    ========================================================= */
+
+
 
 function loadTradingViewLibrary() {
 
+
+
     return new Promise(
+
         function (resolve, reject) {
 
+
+
             if (
+
                 typeof TradingView !==
+
                 "undefined"
+
             ) {
+
+
 
                 resolve();
 
+
+
                 return;
+
+
 
             }
 
 
+
+
+
             const existingScript =
+
                 document.querySelector(
+
                     'script[src="https://s3.tradingview.com/tv.js"]'
+
                 );
+
+
+
 
 
             if (existingScript) {
 
+
+
                 let attempts = 0;
 
+
+
                 const checker =
+
                     setInterval(
+
                         function () {
+
+
 
                             attempts++;
 
 
+
+
+
                             if (
+
                                 typeof TradingView !==
+
                                 "undefined"
+
                             ) {
 
+
+
                                 clearInterval(
+
                                     checker
+
                                 );
+
+
 
                                 resolve();
 
+
+
                                 return;
 
+
+
                             }
+
+
+
 
 
                             if (
+
                                 attempts >= 50
+
                             ) {
 
+
+
                                 clearInterval(
+
                                     checker
+
                                 );
 
+
+
                                 reject(
+
                                     new Error(
+
                                         "TradingView library did not load."
+
                                     )
+
                                 );
+
+
 
                             }
 
+
+
                         },
+
                         100
+
                     );
 
+
+
                 return;
+
+
 
             }
 
 
+
+
+
             const script =
+
                 document.createElement(
+
                     "script"
+
                 );
 
 
+
+
+
             script.src =
+
                 "https://s3.tradingview.com/tv.js";
 
+
+
             script.async =
+
                 true;
 
 
+
+
+
             script.onload =
+
                 function () {
 
+
+
                     if (
+
                         typeof TradingView !==
+
                         "undefined"
+
                     ) {
+
+
 
                         resolve();
 
+
+
                     } else {
 
+
+
                         reject(
+
                             new Error(
+
                                 "TradingView library loaded but TradingView object is unavailable."
+
                             )
+
                         );
+
+
 
                     }
 
+
+
                 };
+
+
+
 
 
             script.onerror =
+
                 function () {
 
+
+
                     reject(
+
                         new Error(
+
                             "Unable to load TradingView library."
+
                         )
+
                     );
+
+
 
                 };
 
 
+
+
+
             document.head.appendChild(
+
                 script
+
             );
 
+
+
         }
+
     );
+
+
 
 }
 
 
+
+
+
 /* =========================================================
+
    CREATE TRADINGVIEW CHART
+
    ========================================================= */
+
+
 
 async function initializeTradingView() {
 
+
+
     const chart =
+
         document.getElementById(
+
             "tvchart"
+
         );
+
+
+
 
 
     if (!chart) {
 
+
+
         console.error(
+
             "TradingView container #tvchart not found."
+
         );
+
+
 
         return;
 
+
+
     }
+
+
+
 
 
     if (tradingViewLoading) {
 
+
+
         return;
+
+
 
     }
 
 
+
+
+
     tradingViewLoading =
+
         true;
 
 
+
+
+
     fixMobileChartHeight();
+
+
+
 
 
     chart.innerHTML = "";
 
 
+
+
+
     try {
 
+
+
         await loadTradingViewLibrary();
+
+
+
 
 
         fixMobileChartHeight();
 
 
+
+
+
         chart.style.setProperty(
+
             "position",
+
             "relative",
+
             "important"
+
         );
 
+
+
         chart.style.setProperty(
+
             "overflow",
+
             "hidden",
+
             "important"
+
         );
 
+
+
         chart.style.setProperty(
+
             "background",
+
             "#050a11",
+
             "important"
+
         );
+
+
+
 
 
         const width =
+
             chart.clientWidth || 320;
 
 
+
+
+
         const height =
+
             window.innerWidth <= 600
+
                 ? 360
+
                 : 430;
 
 
+
+
+
         tradingViewWidget =
+
             new TradingView.widget({
 
+
+
                 container_id:
+
                     "tvchart",
 
+
+
                 width:
+
                     width,
 
+
+
                 height:
+
                     height,
 
+
+
                 symbol:
+
                     "OANDA:XAUUSD",
 
+
+
                 interval:
+
                     "1",
+
+
 
                 timezone:
+
                     "Etc/UTC",
 
+
+
                 theme:
+
                     "dark",
 
+
+
                 style:
+
                     "1",
 
+
+
                 locale:
+
                     "en",
 
+
+
                 toolbar_bg:
+
                     "#050a11",
 
+
+
                 enable_publishing:
+
                     false,
+
+
 
                 allow_symbol_change:
+
                     false,
+
+
 
                 save_image:
+
                     false,
+
+
 
                 hide_top_toolbar:
+
                     true,
+
+
 
                 hide_legend:
+
                     false,
+
+
 
                 hide_side_toolbar:
+
                     true,
 
+
+
                 withdateranges:
+
                     false,
+
+
 
                 details:
+
                     false,
+
+
 
                 hotlist:
+
                     false,
+
+
 
                 calendar:
+
                     false,
 
+
+
                 studies:
+
                     [],
+
+
 
                 disabled_features: [
 
+
+
                     "header_widget",
+
+
 
                     "header_symbol_search",
 
+
+
                     "header_compare",
+
+
 
                     "header_settings",
 
+
+
                     "header_saveload",
+
+
 
                     "header_fullscreen_button",
 
+
+
                     "header_indicators",
+
+
 
                     "left_toolbar",
 
+
+
                     "timeframes_toolbar"
 
+
+
                 ],
+
+
 
                 enabled_features: [
 
+
+
                     "hide_left_toolbar_by_default"
+
+
 
                 ],
 
+
+
                 overrides: {
 
+
+
                     "paneProperties.background":
+
                         "#050a11",
 
+
+
                     "paneProperties.backgroundType":
+
                         "solid",
 
+
+
                     "paneProperties.vertGridProperties.color":
+
                         "rgba(90,110,130,0.10)",
+
+
 
                     "paneProperties.horzGridProperties.color":
+
                         "rgba(90,110,130,0.10)",
 
+
+
                     "scalesProperties.textColor":
+
                         "#8ea2b8",
 
+
+
                     "scalesProperties.lineColor":
+
                         "rgba(120,140,160,0.20)",
 
+
+
                     "mainSeriesProperties.candleStyle.upColor":
+
                         "#16c784",
+
+
 
                     "mainSeriesProperties.candleStyle.downColor":
+
                         "#ea3943",
+
+
 
                     "mainSeriesProperties.candleStyle.borderUpColor":
+
                         "#16c784",
+
+
 
                     "mainSeriesProperties.candleStyle.borderDownColor":
+
                         "#ea3943",
 
+
+
                     "mainSeriesProperties.candleStyle.wickUpColor":
+
                         "#16c784",
 
+
+
                     "mainSeriesProperties.candleStyle.wickDownColor":
+
                         "#ea3943"
+
+
 
                 },
 
+
+
                 time_scale: {
 
+
+
                     right_bar_stays_on_scroll:
+
                         true,
 
+
+
                     bar_spacing:
+
                         6,
 
+
+
                     min_bar_spacing:
+
                         2
 
+
+
                 }
+
+
 
             });
 
 
+
+
+
         setTimeout(
+
             function () {
+
+
 
                 fixMobileChartHeight();
 
+
+
             },
+
             500
+
         );
+
+
+
 
 
         setTimeout(
+
             function () {
+
+
 
                 fixMobileChartHeight();
 
+
+
             },
+
             1500
+
         );
+
+
+
 
 
     } catch (error) {
 
+
+
         console.error(
+
             "TradingView initialization failed:",
+
             error
+
         );
+
+
+
 
 
         chart.innerHTML =
 
+
+
             '<div style="' +
+
             'height:100%;' +
+
             'width:100%;' +
+
             'display:flex;' +
+
             'align-items:center;' +
+
             'justify-content:center;' +
+
             'flex-direction:column;' +
+
             'gap:8px;' +
+
             'background:#050a11;' +
+
             'color:#8ea2b8;' +
+
             'font-family:Arial,sans-serif;' +
+
             'text-align:center;' +
+
             '">' +
 
+
+
             '<div style="' +
+
             'font-size:28px;' +
+
             'color:#38bdf8;' +
+
             '">◌</div>' +
 
+
+
             '<div style="' +
+
             'font-size:14px;' +
+
             '">Chart connection failed</div>' +
 
+
+
             '<div style="' +
+
             'font-size:11px;' +
+
             'opacity:.65;' +
+
             '">Please check your internet connection.</div>' +
 
+
+
             '</div>';
+
+
 
     }
 
 
+
+
+
     tradingViewLoading =
+
         false;
+
+
 
 }
 
 
+
+
+
 /* =========================================================
+
    START TRADINGVIEW
+
    ========================================================= */
 
+
+
 function startTradingViewChart() {
+
+
 
     fixMobileChartHeight();
 
 
+
+
+
     setTimeout(
+
         function () {
+
+
 
             initializeTradingView();
 
+
+
         },
+
         300
+
     );
 
+
+
 }
+
+
+
 
 
 if (
+
     document.readyState ===
+
     "loading"
+
 ) {
 
+
+
     document.addEventListener(
+
         "DOMContentLoaded",
+
         startTradingViewChart
+
     );
+
+
 
 } else {
 
+
+
     startTradingViewChart();
+
+
 
 }
 
 
+
+
+
 /* =========================================================
+
    OPEN LONG
+
    ========================================================= */
+
+
 
 if (longButton) {
 
+
+
     longButton.addEventListener(
+
         "click",
+
         function () {
 
+
+
             startPopupTrade(
+
                 "LONG"
+
             );
 
+
+
         }
+
     );
+
+
 
 }
 
 
+
+
+
 /* =========================================================
+
    OPEN SHORT
+
    ========================================================= */
+
+
 
 if (shortButton) {
 
+
+
     shortButton.addEventListener(
+
         "click",
+
         function () {
 
+
+
             startPopupTrade(
+
                 "SHORT"
+
             );
 
+
+
         }
+
     );
 
+
+
 }
+
+
+
 
 
 /* =========================================================
+
    START POPUP TRADE
+
    ========================================================= */
+
+
 
 function startPopupTrade(side) {
 
+
+
     /* ---------------------------------------------
+
        Prevent second active trade
+
        --------------------------------------------- */
 
+
+
     if (
+
         selectedSide &&
+
         entryPrice &&
+
         tradeAmountValue
+
     ) {
 
+
+
         showTradeNotice(
+
             "Trade Already Open",
+
             "You already have an open trade. Please close your current position before opening another trade."
+
         );
 
+
+
         return;
+
+
 
     }
 
 
+
+
+
     /* ---------------------------------------------
+
        Login check
+
        --------------------------------------------- */
+
+
 
     if (!tradeFirebaseUser) {
 
+
+
         showTradeNotice(
+
             "Login Required",
+
             "Please login before opening a trade."
+
         );
 
+
+
         return;
+
+
 
     }
 
 
+
+
+
     /* ---------------------------------------------
+
        Balance functions check
+
        --------------------------------------------- */
+
+
 
     if (
+
         typeof window.hasEnoughBalance !==
+
         "function"
+
     ) {
 
+
+
         showTradeNotice(
+
             "Balance System Unavailable",
+
             "The balance system is not ready. Please reload the page and try again."
+
         );
 
+
+
         return;
+
+
 
     }
 
 
+
+
+
     /* ---------------------------------------------
+
        Get amount
+
        --------------------------------------------- */
+
+
 
     const amount =
+
         Number(
+
             amountInput
+
                 ? amountInput.value
+
                 : 0
+
         );
 
 
+
+
+
     /* ---------------------------------------------
+
        VALID AMOUNT CHECK
+
        --------------------------------------------- */
 
+
+
     if (
+
         !Number.isFinite(amount) ||
+
         amount <= 0
+
     ) {
 
+
+
         showTradeNotice(
+
             "Amount Required",
+
             "Please enter a valid trading amount before opening a position."
+
         );
 
+
+
         return;
+
+
 
     }
 
 
+
+
+
     /* ---------------------------------------------
+
        BALANCE CHECK
+
        --------------------------------------------- */
 
+
+
     if (
+
         !window.hasEnoughBalance(
+
             amount
+
         )
+
     ) {
+
+
 
         showTradeNotice(
+
             "Insufficient Balance",
+
             "Your available balance is not sufficient for this trade. Please enter a lower amount or add funds to your account."
+
         );
+
+
 
         return;
 
+
+
     }
 
 
+
+
+
     /* ---------------------------------------------
+
        Capture trade values
+
        BEFORE confirmation popup
+
        --------------------------------------------- */
 
-    const confirmationSide = side;
-
-    const confirmationPrice = Number(price);
-
-    const confirmationAmount = Number(amount.toFixed(2));
-
-    const confirmationLeverage = Number(selectedLeverage);
 
 
-    /* ---------------------------------------------
-       CPT POPUP CHECK & EXECUTION
-       --------------------------------------------- */
+    const confirmationSide =
 
-    if (
-        typeof window.cptShowTradeConfirmation ===
-        "function"
-    ) {
-
-        window.cptShowTradeConfirmation(
-            {
-
-                side: confirmationSide,
-
-                entryPrice: confirmationPrice,
-
-                amount: confirmationAmount,
-
-                leverage: confirmationLeverage
-
-            },
-            function () {
-
-                selectedSide = confirmationSide;
-
-                entryPrice = confirmationPrice;
-
-                tradeAmountValue = confirmationAmount;
-
-                selectedLeverage = confirmationLeverage;
-
-                currentTradeId = createTradeId();
+        side;
 
 
-                if (typeof window.deductBalance === "function") {
-
-                    window.deductBalance(confirmationAmount);
-
-                }
 
 
-                saveActiveTrade();
 
-                updateOpenTradeUI();
+    const confirmationPrice =
+
+        Number(price);
 
 
-                if (typeof window.cptShowTradeOpenedPopup === "function") {
 
-                    window.cptShowTradeOpenedPopup({
 
-                        side: confirmationSide,
 
-                        entryPrice: confirmationPrice,
+    const confirmationAmount =
 
-                        amount: confirmationAmount,
+        Number(
 
-                        leverage: confirmationLeverage,
+            amount.toFixed(2)
 
-                        tradeId: currentTradeId
-
-                    });
-
-                } else {
-
-                    showTradeNotice(
-
-                        "Trade Opened Successfully",
-
-                        `Your ${confirmationSide} position of $${confirmationAmount.toFixed(2)} at ${confirmationPrice.toFixed(2)} (${confirmationLeverage}x) is now active.`
-
-                    );
-
-                }
-
-            }
         );
 
-    }
 
-}
+
+
+
+    const confirmationLeverage =
+
+        Number(selectedLeverage);
+
+
+
+
+
+    /* ---------------------------------------------
+
+       CPT POPUP CHECK
+
+       --------------------------------------------- */
+
+
+
+    if (
+
+        typeof window.cptShowTradeConfirmation !==
+
+        "function"
+
+    ) {
+
+
+
+        console.error(
+
+            "CPT Trade Popup funct 
+
