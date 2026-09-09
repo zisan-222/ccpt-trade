@@ -519,6 +519,8 @@ async function initializeTradeFirebase() {
 
 }
 
+initializeTradeFirebase();
+
 
 /* =========================================================
    CREATE TRADE ID
@@ -719,6 +721,44 @@ function getStoredActiveTrade() {
             uid || null
 
     };
+
+}
+
+
+/* =========================================================
+   UI PLACEHOLDERS
+   ========================================================= */
+
+function updateOpenTradeUI() {
+
+    const openTradeCard =
+        document.getElementById(
+            "openTradeCard"
+        );
+
+    if (openTradeCard) {
+
+        openTradeCard.style.display =
+            "block";
+
+    }
+
+}
+
+
+function hideOpenTradeCard() {
+
+    const openTradeCard =
+        document.getElementById(
+            "openTradeCard"
+        );
+
+    if (openTradeCard) {
+
+        openTradeCard.style.display =
+            "none";
+
+    }
 
 }
 
@@ -1581,6 +1621,53 @@ if (shortButton) {
 
 
 /* =========================================================
+   EXECUTE TRADE LOGIC
+   ========================================================= */
+
+function executeTrade(side, entry, amount, leverage) {
+
+    selectedSide = side;
+    entryPrice = entry;
+    tradeAmountValue = amount;
+    selectedLeverage = leverage;
+    currentTradeId = createTradeId();
+
+    if (typeof window.deductBalance === "function") {
+
+        window.deductBalance(amount);
+
+    }
+
+    saveActiveTrade();
+    updateOpenTradeUI();
+
+    if (typeof window.cptShowTradeOpenedPopup === "function") {
+
+        window.cptShowTradeOpenedPopup({
+
+            side: side,
+            entryPrice: entry,
+            amount: amount,
+            leverage: leverage,
+            tradeId: currentTradeId
+
+        });
+
+    } else {
+
+        showTradeNotice(
+
+            "Trade Opened Successfully",
+            `Your ${side} position of $${amount.toFixed(2)} at ${entry.toFixed(2)} (${leverage}x) is now active.`
+
+        );
+
+    }
+
+}
+
+
+/* =========================================================
    START POPUP TRADE
    ========================================================= */
 
@@ -1697,1316 +1784,58 @@ function startPopupTrade(side) {
        BEFORE confirmation popup
        --------------------------------------------- */
 
-    const confirmationSide =
-        side;
+    const confirmationSide = side;
 
+    const confirmationPrice = Number(price);
 
-    const confirmationPrice =
-        Number(price);
+    const confirmationAmount = Number(amount.toFixed(2));
 
-
-    const confirmationAmount =
-        Number(
-            amount.toFixed(2)
-        );
-
-
-    const confirmationLeverage =
-        Number(selectedLeverage);
+    const confirmationLeverage = Number(selectedLeverage);
 
 
     /* ---------------------------------------------
-       CPT POPUP CHECK
+       CPT POPUP CHECK & EXECUTION
        --------------------------------------------- */
 
     if (
-        typeof window.cptShowTradeConfirmation !==
+        typeof window.cptShowTradeConfirmation ===
         "function"
     ) {
 
-        console.error(
-            "CPT Trade Popup function is not available."
-        );
+        window.cptShowTradeConfirmation(
+            {
 
+                side: confirmationSide,
+                entryPrice: confirmationPrice,
+                amount: confirmationAmount,
+                leverage: confirmationLeverage
 
-        showTradeNotice(
-            "Trade System Unavailable",
-            "The trade confirmation system is not loaded. Please reload the page and try again."
-        );
+            },
+            function () {
 
-        return;
+                executeTrade(
 
-    }
+                    confirmationSide,
+                    confirmationPrice,
+                    confirmationAmount,
+                    confirmationLeverage
 
+                );
 
-    /* ---------------------------------------------
-       PROFESSIONAL CPT CONFIRMATION POPUP
-       --------------------------------------------- */
-
-    window.cptShowTradeConfirmation(
-
-        confirmationSide,
-
-        confirmationPrice,
-
-        confirmationLeverage,
-
-        function () {
-
-            completeTradeOpen(
-
-                confirmationSide,
-
-                confirmationPrice,
-
-                confirmationAmount,
-
-                confirmationLeverage
-
-            );
-
-        }
-
-    );
-
-}
-
-
-/* =========================================================
-   COMPLETE TRADE OPEN
-   Runs ONLY after popup Continue
-   ========================================================= */
-
-async function completeTradeOpen(
-    confirmationSide,
-    confirmationPrice,
-    confirmationAmount,
-    confirmationLeverage
-) {
-
-    /* ---------------------------------------------
-       Re-check login
-       --------------------------------------------- */
-
-    if (!tradeFirebaseUser) {
-
-        showTradeNotice(
-            "Session Expired",
-            "Your login session has expired. Please login again before opening the trade."
-        );
-
-        return;
-
-    }
-
-
-    /* ---------------------------------------------
-       Re-check balance system
-       --------------------------------------------- */
-
-    if (
-        typeof window.hasEnoughBalance !==
-        "function" ||
-        typeof window.subtractBalance !==
-        "function"
-    ) {
-
-        showTradeNotice(
-            "Balance System Unavailable",
-            "The balance system is not ready. Please reload the page and try again."
-        );
-
-        return;
-
-    }
-
-
-    /* ---------------------------------------------
-       Re-check balance
-       --------------------------------------------- */
-
-    if (
-        !window.hasEnoughBalance(
-            confirmationAmount
-        )
-    ) {
-
-        showTradeNotice(
-            "Insufficient Balance",
-            "Your available balance is no longer sufficient for this trade."
-        );
-
-        return;
-
-    }
-
-
-    /* ---------------------------------------------
-       Deduct balance
-       ONLY AFTER CONFIRMATION
-       --------------------------------------------- */
-
-    let deducted = false;
-
-
-    try {
-
-        deducted =
-            await window.subtractBalance(
-                confirmationAmount
-            );
-
-    } catch (error) {
-
-        console.error(
-            "Balance deduction failed:",
-            error
-        );
-
-
-        showTradeNotice(
-            "Trade Could Not Be Opened",
-            "We were unable to process the balance deduction. Please try again."
-        );
-
-        return;
-
-    }
-
-
-    if (!deducted) {
-
-        showTradeNotice(
-            "Trade Could Not Be Opened",
-            "We were unable to process the balance deduction. Please try again."
-        );
-
-        return;
-
-    }
-
-
-    /* ---------------------------------------------
-       FINAL TRADE STATE
-       --------------------------------------------- */
-
-    selectedSide =
-        confirmationSide;
-
-
-    entryPrice =
-        Number(
-            confirmationPrice
-        );
-
-
-    tradeAmountValue =
-        Number(
-            confirmationAmount.toFixed(2)
-        );
-
-
-    selectedLeverage =
-        Number(
-            confirmationLeverage
-        );
-
-
-    currentTradeId =
-        createTradeId();
-
-
-    currentTradeUID =
-        tradeFirebaseUser.uid;
-
-
-    /* ---------------------------------------------
-       SAVE ACTIVE TRADE
-       --------------------------------------------- */
-
-    saveActiveTrade();
-
-
-    /* ---------------------------------------------
-       UPDATE ACTIVE TRADE UI
-       --------------------------------------------- */
-
-    updateOpenTradeUI();
-
-
-    /* ---------------------------------------------
-       REFRESH BALANCE UI
-       --------------------------------------------- */
-
-    if (
-        typeof window.reloadBalance ===
-        "function"
-    ) {
-
-        window.reloadBalance();
-
-    }
-
-
-    if (
-        typeof window.refreshBalance ===
-        "function"
-    ) {
-
-        window.refreshBalance();
-
-    }
-
-
-    /* ---------------------------------------------
-       SHOW SUCCESS POPUP
-       --------------------------------------------- */
-
-    if (
-        typeof window.cptShowTradeOpened ===
-        "function"
-    ) {
-
-        window.cptShowTradeOpened(
-
-            selectedSide,
-
-            entryPrice,
-
-            tradeAmountValue,
-
-            selectedLeverage
-
+            }
         );
 
     } else {
 
-        showTradeNotice(
-            "Trade Opened",
-            selectedSide +
-            " trade opened successfully."
-        );
+        executeTrade(
 
-    }
+            confirmationSide,
+            confirmationPrice,
+            confirmationAmount,
+            confirmationLeverage
 
-
-    console.log(
-        "CPT Markets trade opened successfully:",
-        {
-
-            tradeId:
-                currentTradeId,
-
-            uid:
-                currentTradeUID,
-
-            side:
-                selectedSide,
-
-            entryPrice:
-                entryPrice,
-
-            amount:
-                tradeAmountValue,
-
-            leverage:
-                selectedLeverage
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   OPEN TRADE UI
-   ========================================================= */
-
-function updateOpenTradeUI() {
-
-    const openTradeCard =
-        document.getElementById(
-            "openTradeCard"
-        );
-
-    const positionSide =
-        document.getElementById(
-            "positionSide"
-        );
-
-    const entryPriceBox =
-        document.getElementById(
-            "entryPrice"
-        );
-
-    const currentTradePrice =
-        document.getElementById(
-            "currentTradePrice"
-        );
-
-    const tradeAmount =
-        document.getElementById(
-            "tradeAmount"
-        );
-
-
-    if (!selectedSide) {
-
-        hideOpenTradeCard();
-
-        return;
-
-    }
-
-
-    if (positionSide) {
-
-        positionSide.innerText =
-            selectedSide;
-
-    }
-
-
-    if (entryPriceBox) {
-
-        entryPriceBox.innerText =
-            Number(
-                entryPrice || 0
-            ).toFixed(2);
-
-    }
-
-
-    if (currentTradePrice) {
-
-        currentTradePrice.innerText =
-            price.toFixed(2);
-
-    }
-
-
-    if (tradeAmount) {
-
-        tradeAmount.innerText =
-            "$" +
-            Number(
-                tradeAmountValue || 0
-            ).toFixed(2);
-
-    }
-
-
-    if (openTradeCard) {
-
-        openTradeCard.style.display =
-            "block";
-
-    }
-
-}
-
-
-/* =========================================================
-   HIDE OPEN TRADE CARD
-   ========================================================= */
-
-function hideOpenTradeCard() {
-
-    const card =
-        document.getElementById(
-            "openTradeCard"
-        );
-
-
-    if (card) {
-
-        card.style.display =
-            "none";
-
-    }
-
-}
-
-
-/* =========================================================
-   LIVE USER P/L
-   ========================================================= */
-
-setInterval(
-    function () {
-
-        if (
-            !selectedSide ||
-            !entryPrice ||
-            !tradeAmountValue
-        ) {
-
-            return;
-
-        }
-
-
-        const currentTradePrice =
-            document.getElementById(
-                "currentTradePrice"
-            );
-
-        const profitLossBox =
-            document.getElementById(
-                "tradePL"
-            );
-
-
-        const profitLoss =
-            calculateProfitLoss(
-                price
-            );
-
-
-        if (currentTradePrice) {
-
-            currentTradePrice.innerText =
-                price.toFixed(2);
-
-        }
-
-
-        if (profitLossBox) {
-
-            profitLossBox.innerText =
-                (
-                    profitLoss >= 0
-                        ? "+"
-                        : ""
-                ) +
-                "$" +
-                profitLoss.toFixed(2);
-
-
-            profitLossBox.className =
-                profitLoss >= 0
-                    ? "profit"
-                    : "loss";
-
-        }
-
-    },
-    1000
-);
-
-
-/* =========================================================
-   CALCULATE USER P/L
-   ========================================================= */
-
-function calculateProfitLoss(
-    currentPrice
-) {
-
-    if (
-        !selectedSide ||
-        !entryPrice ||
-        !tradeAmountValue
-    ) {
-
-        return 0;
-
-    }
-
-
-    let profitLoss =
-        0;
-
-
-    if (
-        selectedSide ===
-        "LONG"
-    ) {
-
-        profitLoss =
-            (
-                (
-                    currentPrice -
-                    entryPrice
-                )
-                /
-                entryPrice
-            )
-            *
-            tradeAmountValue;
-
-    }
-
-
-    if (
-        selectedSide ===
-        "SHORT"
-    ) {
-
-        profitLoss =
-            (
-                (
-                    entryPrice -
-                    currentPrice
-                )
-                /
-                entryPrice
-            )
-            *
-            tradeAmountValue;
-
-    }
-
-
-    return Number(
-        profitLoss.toFixed(2)
-    );
-
-}
-
-
-/* =========================================================
-   CLOSE TRADE BUTTON
-   ========================================================= */
-
-const closeTradeBtn =
-    document.getElementById(
-        "closeTradeBtn"
-    );
-
-
-if (closeTradeBtn) {
-
-    closeTradeBtn.addEventListener(
-        "click",
-        async function () {
-
-            await closeCurrentTrade();
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   CLOSE CURRENT TRADE
-   ========================================================= */
-
-async function closeCurrentTrade() {
-
-    if (
-        !selectedSide ||
-        !entryPrice ||
-        !tradeAmountValue ||
-        !currentTradeId
-    ) {
-
-        showTradeNotice(
-            "No Open Trade",
-            "There is currently no active trade to close."
-        );
-
-        return;
-
-    }
-
-
-    if (!tradeFirebaseUser) {
-
-        showTradeNotice(
-            "Session Not Ready",
-            "Your user session is not ready. Please login again."
-        );
-
-        return;
-
-    }
-
-
-    if (!tradeDB) {
-
-        showTradeNotice(
-            "Database Not Ready",
-            "The trading database is not ready. Please try again."
-        );
-
-        return;
-
-    }
-
-
-    const closedSide =
-        selectedSide;
-
-    const closedTradeId =
-        currentTradeId;
-
-    const closePrice =
-        Number(price);
-
-
-    const userProfitLoss =
-        calculateProfitLoss(
-            closePrice
-        );
-
-
-    try {
-
-        const firestore =
-            await import(
-                "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js"
-            );
-
-
-        const userRef =
-            firestore.doc(
-                tradeDB,
-                "users",
-                tradeFirebaseUser.uid
-            );
-
-
-        let adminResult =
-            null;
-
-
-        const userSnapshot =
-            await firestore.getDoc(
-                userRef
-            );
-
-
-        if (
-            userSnapshot.exists()
-        ) {
-
-            const userData =
-                userSnapshot.data();
-
-
-            if (
-                userData.pendingAdminTradeResult &&
-                userData.pendingAdminTradeResult.status ===
-                    "PENDING"
-            ) {
-
-                const pending =
-                    userData.pendingAdminTradeResult;
-
-
-                if (
-                    !pending.tradeId ||
-                    pending.tradeId ===
-                    closedTradeId
-                ) {
-
-                    adminResult =
-                        pending;
-
-                }
-
-            }
-
-        }
-
-
-        const adminProfitLoss =
-            adminResult
-                ? Number(
-                    adminResult.profitLoss || 0
-                )
-                : 0;
-
-
-        const finalProfitLoss =
-            Number(
-                (
-                    userProfitLoss +
-                    adminProfitLoss
-                ).toFixed(2)
-            );
-
-
-        const returnAmount =
-            Number(
-                (
-                    tradeAmountValue +
-                    finalProfitLoss
-                ).toFixed(2)
-            );
-
-
-        if (
-            returnAmount < 0
-        ) {
-
-            showTradeNotice(
-                "Invalid Trade Result",
-                "The calculated trade result is invalid and could not be processed."
-            );
-
-            return;
-
-        }
-
-
-        const historyRef =
-            firestore.doc(
-                firestore.collection(
-                    tradeDB,
-                    "tradeHistory"
-                )
-            );
-
-
-        let finalBalance =
-            0;
-
-        let oldBalance =
-            0;
-
-
-        await firestore.runTransaction(
-            tradeDB,
-            async function (transaction) {
-
-                const userSnapshot =
-                    await transaction.get(
-                        userRef
-                    );
-
-
-                if (
-                    !userSnapshot.exists()
-                ) {
-
-                    throw new Error(
-                        "User account not found."
-                    );
-
-                }
-
-
-                const userData =
-                    userSnapshot.data();
-
-
-                oldBalance =
-                    Number(
-                        userData.balance || 0
-                    );
-
-
-                finalBalance =
-                    Number(
-                        (
-                            oldBalance +
-                            returnAmount
-                        ).toFixed(2)
-                    );
-
-
-                if (
-                    finalBalance < 0
-                ) {
-
-                    throw new Error(
-                        "Final balance cannot be negative."
-                    );
-
-                }
-
-
-                const userUpdate = {
-
-                    balance:
-                        finalBalance
-
-                };
-
-
-                if (adminResult) {
-
-                    userUpdate.pendingAdminTradeResult =
-                        firestore.deleteField();
-
-                }
-
-
-                userUpdate.pendingTradeProfitLoss =
-                    firestore.deleteField();
-
-                userUpdate.pendingTradeId =
-                    firestore.deleteField();
-
-
-                transaction.update(
-                    userRef,
-                    userUpdate
-                );
-
-
-                transaction.set(
-                    historyRef,
-                    {
-
-                        tradeId:
-                            closedTradeId,
-
-                        uid:
-                            tradeFirebaseUser.uid,
-
-                        userId:
-                            userData.userId ||
-                            "",
-
-                        username:
-                            userData.username ||
-                            userData.name ||
-                            "User",
-
-                        email:
-                            userData.email ||
-                            "",
-
-                        side:
-                            closedSide,
-
-                        entryPrice:
-                            Number(
-                                entryPrice.toFixed(2)
-                            ),
-
-                        closePrice:
-                            Number(
-                                closePrice.toFixed(2)
-                            ),
-
-                        amount:
-                            Number(
-                                tradeAmountValue.toFixed(2)
-                            ),
-
-                        userProfitLoss:
-                            userProfitLoss,
-
-                        adminProfitLoss:
-                            adminProfitLoss,
-
-                        profitLoss:
-                            finalProfitLoss,
-
-                        leverage:
-                            selectedLeverage,
-
-                        type:
-                            "TRADE",
-
-                        source:
-                            "USER",
-
-                        adminResultSource:
-                            adminResult
-                                ? "ADMIN"
-                                : null,
-
-                        adminResultType:
-                            adminResult
-                                ? adminResult.type ||
-                                  (
-                                      adminProfitLoss >= 0
-                                          ? "PROFIT"
-                                          : "LOSS"
-                                  )
-                                : null,
-
-                        status:
-                            "COMPLETED",
-
-                        oldBalance:
-                            Number(
-                                oldBalance.toFixed(2)
-                            ),
-
-                        returnedAmount:
-                            returnAmount,
-
-                        newBalance:
-                            finalBalance,
-
-                        time:
-                            new Date()
-                                .toLocaleString(),
-
-                        createdAt:
-                            firestore.serverTimestamp()
-
-                    }
-
-                );
-
-            }
-        );
-
-
-        /* =================================================
-           LOCAL HISTORY
-           ================================================= */
-
-        saveLocalTradeHistory({
-
-            tradeId:
-                closedTradeId,
-
-            uid:
-                tradeFirebaseUser.uid,
-
-            side:
-                closedSide,
-
-            entryPrice:
-                Number(
-                    entryPrice.toFixed(2)
-                ),
-
-            closePrice:
-                Number(
-                    closePrice.toFixed(2)
-                ),
-
-            amount:
-                Number(
-                    tradeAmountValue.toFixed(2)
-                ),
-
-            profitLoss:
-                finalProfitLoss,
-
-            leverage:
-                selectedLeverage,
-
-            type:
-                "TRADE",
-
-            source:
-                "USER"
-
-        });
-
-
-        /* =================================================
-           REFRESH BALANCE
-           ================================================= */
-
-        if (
-            typeof window.reloadBalance ===
-            "function"
-        ) {
-
-            window.reloadBalance();
-
-        }
-
-
-        if (
-            typeof window.refreshBalance ===
-            "function"
-        ) {
-
-            window.refreshBalance();
-
-        }
-
-
-        /* =================================================
-           SAVE VALUES BEFORE CLEARING
-           ================================================= */
-
-        const notificationSide =
-            closedSide;
-
-        const notificationEntry =
-            Number(
-                entryPrice
-            );
-
-        const notificationClose =
-            Number(
-                closePrice
-            );
-
-        const notificationPL =
-            Number(
-                finalProfitLoss
-            );
-
-
-        /* =================================================
-           CLEAR ACTIVE TRADE
-           ================================================= */
-
-        hideOpenTradeCard();
-
-
-        selectedSide =
-            null;
-
-        entryPrice =
-            null;
-
-        tradeAmountValue =
-            0;
-
-        currentTradeId =
-            null;
-
-        currentTradeUID =
-            tradeFirebaseUser
-                ? tradeFirebaseUser.uid
-                : null;
-
-
-        clearActiveTrade();
-
-
-        localStorage.setItem(
-            "cptTradeClosedAt",
-            String(Date.now())
-        );
-
-
-        setTimeout(
-            function () {
-
-                localStorage.removeItem(
-                    "cptTradeClosedAt"
-                );
-
-            },
-            1000
-        );
-
-
-        /* =================================================
-           CLOSE NOTIFICATION
-           ================================================= */
-
-        if (
-            typeof window.cptShowTradeClosed ===
-            "function"
-        ) {
-
-            window.cptShowTradeClosed(
-
-                notificationSide,
-
-                notificationEntry,
-
-                notificationClose,
-
-                notificationPL
-
-            );
-
-        } else {
-
-            showTradeNotice(
-                "Trade Closed",
-                notificationSide +
-                " trade closed successfully. P/L: " +
-                (
-                    notificationPL >= 0
-                        ? "+"
-                        : ""
-                ) +
-                "$" +
-                notificationPL.toFixed(2)
-            );
-
-        }
-
-
-        console.log(
-            "Trade closed successfully:",
-            {
-
-                tradeId:
-                    closedTradeId,
-
-                userProfitLoss:
-                    userProfitLoss,
-
-                adminProfitLoss:
-                    adminProfitLoss,
-
-                finalProfitLoss:
-                    finalProfitLoss,
-
-                returnedAmount:
-                    returnAmount,
-
-                newBalance:
-                    finalBalance
-
-            }
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "Trade close failed:",
-            error
-        );
-
-
-        showTradeNotice(
-            "Trade Could Not Be Closed",
-            "The trade could not be closed at this time. Please try again."
         );
 
     }
 
 }
-
-
-/* =========================================================
-   LOCAL TRADE HISTORY
-   ========================================================= */
-
-function saveLocalTradeHistory(
-    trade
-) {
-
-    try {
-
-        let history =
-            JSON.parse(
-                localStorage.getItem(
-                    "cptTradeHistory"
-                )
-            ) || [];
-
-
-        const alreadyExists =
-            history.some(
-                function (item) {
-
-                    return (
-                        item.tradeId ===
-                        trade.tradeId
-                    );
-
-                }
-            );
-
-
-        if (
-            alreadyExists
-        ) {
-
-            return;
-
-        }
-
-
-        history.unshift({
-
-            tradeId:
-                trade.tradeId,
-
-            uid:
-                trade.uid,
-
-            side:
-                trade.side,
-
-            entryPrice:
-                trade.entryPrice,
-
-            closePrice:
-                trade.closePrice,
-
-            amount:
-                trade.amount,
-
-            profitLoss:
-                trade.profitLoss,
-
-            leverage:
-                trade.leverage,
-
-            type:
-                "TRADE",
-
-            source:
-                "USER",
-
-            time:
-                new Date()
-                    .toLocaleString()
-
-        });
-
-
-        localStorage.setItem(
-            "cptTradeHistory",
-            JSON.stringify(
-                history
-            )
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "Local trade history error:",
-            error
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   HISTORY COMPATIBILITY
-   ========================================================= */
-
-function renderTradeHistory() {
-
-    return;
-
-}
-
-
-/* =========================================================
-   START FIREBASE
-   ========================================================= */
-
-initializeTradeFirebase();
-
-
-/* =========================================================
-   ERROR PROTECTION
-   ========================================================= */
-
-window.addEventListener(
-    "error",
-    function (event) {
-
-        console.error(
-            "CptMarkets Trade JS Error:",
-            event.error ||
-            event.message
-        );
-
-    }
-);
-
-
-/* =========================================================
-   END
-   ========================================================= */
