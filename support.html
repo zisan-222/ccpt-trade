@@ -10,6 +10,7 @@
         * {
             box-sizing: border-box;
         }
+
         body {
             margin: 0;
             padding: 0;
@@ -33,6 +34,7 @@
             top: 0;
             z-index: 100;
         }
+
         .back-btn {
             color: #facc15;
             font-size: 15px;
@@ -47,15 +49,18 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
+
         .back-btn:hover {
             background: #334155;
             border-color: #facc15;
         }
+
         .header-title {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
+
         .header h1 {
             color: #facc15;
             font-size: 20px;
@@ -67,6 +72,7 @@
             gap: 6px;
             text-shadow: 0 2px 10px rgba(250, 204, 21, 0.2);
         }
+
         .online-status {
             display: flex;
             align-items: center;
@@ -80,6 +86,7 @@
             border-radius: 20px;
             border: 1px solid rgba(34, 197, 94, 0.25);
         }
+
         .pulse-dot {
             width: 6px;
             height: 6px;
@@ -88,10 +95,23 @@
             box-shadow: 0 0 8px #22c55e;
             animation: pulse 1.5s infinite;
         }
+
         @keyframes pulse {
-            0% { transform: scale(0.95); opacity: 0.8; }
-            50% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 12px #22c55e; }
-            100% { transform: scale(0.95); opacity: 0.8; }
+            0% {
+                transform: scale(0.95);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+                box-shadow: 0 0 12px #22c55e;
+            }
+
+            100% {
+                transform: scale(0.95);
+                opacity: 0.8;
+            }
         }
 
         .container {
@@ -99,12 +119,14 @@
             max-width: 600px;
             margin: 0 auto;
         }
+
         .welcome-box h2 {
             font-size: 21px;
             font-weight: 700;
             margin-bottom: 6px;
             color: #f8fafc;
         }
+
         .welcome-box p {
             color: #94a3b8;
             font-size: 13.5px;
@@ -119,6 +141,7 @@
             gap: 12px;
             margin-bottom: 20px;
         }
+
         .support-card {
             background: linear-gradient(145deg, #0f172a, #0b1120);
             border: 1px solid rgba(51, 65, 85, 0.6);
@@ -131,11 +154,14 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            box-shadow:
+                0 6px 15px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
             position: relative;
             overflow: hidden;
             text-align: left;
         }
+
         .support-card::before {
             content: '';
             position: absolute;
@@ -143,19 +169,29 @@
             left: 0;
             width: 100%;
             height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(250, 204, 21, 0.5), transparent);
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(250, 204, 21, 0.5),
+                transparent
+            );
             opacity: 0;
             transition: 0.3s;
         }
+
         .support-card:hover {
             border-color: #facc15;
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(250, 204, 21, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            box-shadow:
+                0 10px 20px rgba(250, 204, 21, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
             background: linear-gradient(145deg, #131c31, #0f172a);
         }
+
         .support-card:hover::before {
             opacity: 1;
         }
+
         .icon-box {
             width: 42px;
             height: 42px;
@@ -165,25 +201,31 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3), 0 0 10px rgba(250, 204, 21, 0.1);
+            box-shadow:
+                inset 0 2px 4px rgba(0,0,0,0.3),
+                0 0 10px rgba(250, 204, 21, 0.1);
             border: 1px solid rgba(250, 204, 21, 0.2);
         }
+
         .support-card i {
             font-size: 18px;
             color: #facc15;
             filter: drop-shadow(0 0 5px rgba(250, 204, 21, 0.4));
         }
+
         .card-content {
             display: flex;
             flex-direction: column;
             gap: 2px;
         }
+
         .support-card h3 {
             margin: 0;
             font-size: 13.5px;
             font-weight: 600;
             color: #f8fafc;
         }
+
         .support-card span {
             font-size: 11px;
             color: #94a3b8;
@@ -199,6 +241,7 @@
             margin-bottom: 18px;
             box-shadow: 0 6px 15px rgba(0,0,0,0.2);
         }
+
         .features-section h3 {
             font-size: 14.5px;
             color: #facc15;
@@ -209,11 +252,13 @@
             gap: 8px;
             font-weight: 700;
         }
+
         .features-list {
             list-style: none;
             padding: 0;
             margin: 0;
         }
+
         .features-list li {
             font-size: 12.5px;
             color: #cbd5e1;
@@ -223,9 +268,11 @@
             gap: 10px;
             line-height: 1.4;
         }
+
         .features-list li:last-child {
             margin-bottom: 0;
         }
+
         .features-list li i {
             color: #22c55e;
             font-size: 11px;
@@ -236,7 +283,11 @@
 
         /* Security Warning Box at the BOTTOM */
         .security-alert {
-            background: linear-gradient(145deg, rgba(239, 68, 68, 0.08), rgba(15, 23, 42, 0.8));
+            background: linear-gradient(
+                145deg,
+                rgba(239, 68, 68, 0.08),
+                rgba(15, 23, 42, 0.8)
+            );
             border: 1px solid rgba(239, 68, 68, 0.3);
             border-radius: 14px;
             padding: 14px;
@@ -247,6 +298,7 @@
             box-shadow: 0 6px 15px rgba(0,0,0,0.2);
             margin-bottom: 15px;
         }
+
         .security-alert i {
             color: #ef4444;
             font-size: 18px;
@@ -255,16 +307,12 @@
             padding: 8px;
             border-radius: 8px;
         }
+
         .security-alert p {
             margin: 0;
             font-size: 12px;
             color: #fca5a5;
             line-height: 1.4;
-        }
-
-        /* তাকওয়ার নিজস্ব ডিফল্ট গ্রিন বাবল হাইড রাখার জন্য */
-        #tawkchat-container {
-            display: none !important;
         }
 
         @media(max-width: 450px) {
@@ -274,111 +322,267 @@
         }
     </style>
 </head>
+
 <body>
 
     <!-- HEADER WITH 3D BRANDING & LIVE ACTIVE STATUS -->
     <div class="header">
-        <a href="dashboard.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+
+        <a href="dashboard.html" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+
         <div class="header-title">
-            <h1><i class="fa-solid fa-shield-halved"></i> CptMarkets</h1>
+            <h1>
+                <i class="fa-solid fa-shield-halved"></i>
+                CptMarkets
+            </h1>
+
             <div class="online-status">
-                <span class="pulse-dot"></span> Live Active Chat & Support
+                <span class="pulse-dot"></span>
+                Live Active Chat & Support
             </div>
         </div>
-        <button id="languageBtn" class="language-btn" type="button" style="background:none;border:none;cursor:pointer;font-size:18px;padding:0 4px;line-height:1;color:inherit;">🇬🇧</button>
+
+        <button
+            id="languageBtn"
+            class="language-btn"
+            type="button"
+            style="background:none;border:none;cursor:pointer;font-size:18px;padding:0 4px;line-height:1;color:inherit;"
+        >
+            🇬🇧
+        </button>
+
     </div>
 
     <div class="container">
+
         <div class="welcome-box">
             <h2>Get Instant Support from Our Expert Team 👋</h2>
-            <p> Our 24/7 Online Support Team is always available to assist with any issues or inquiries regarding your trading account. We are committed to providing fast, reliable, and professional service.</p>
+
+            <p>
+                Our 24/7 Online Support Team is always available to assist with any issues or inquiries regarding your trading account. We are committed to providing fast, reliable, and professional service.
+            </p>
         </div>
 
         <!-- 3D Compact Side-by-Side Quick Support Options Grid -->
         <div class="btn-grid">
-            <div class="support-card" onclick="openChatWithMsg('Hello Sir, I need assistance regarding my trading account help.')">
-                <div class="icon-box"><i class="fa-solid fa-user-gear"></i></div>
+
+            <div
+                class="support-card"
+                onclick="openChatWithMsg('Hello Sir, I need assistance regarding my trading account help.')"
+            >
+                <div class="icon-box">
+                    <i class="fa-solid fa-user-gear"></i>
+                </div>
+
                 <div class="card-content">
                     <h3 data-key="accountHelp">Account Help</h3>
                     <span data-key="manageProfile">Manage profile</span>
                 </div>
             </div>
-            <div class="support-card" onclick="openChatWithMsg('Hello Sir, I want to make a Deposit or I need information regarding deposit.')">
-                <div class="icon-box"><i class="fa-solid fa-wallet" style="color: #22c55e;"></i></div>
+
+
+            <div
+                class="support-card"
+                onclick="openChatWithMsg('Hello Sir, I want to make a Deposit or I need information regarding deposit.')"
+            >
+                <div class="icon-box">
+                    <i
+                        class="fa-solid fa-wallet"
+                        style="color: #22c55e;"
+                    ></i>
+                </div>
+
                 <div class="card-content">
                     <h3 data-key="deposit">Deposit</h3>
                     <span data-key="addFunds">Add funds safely</span>
                 </div>
             </div>
-            <div class="support-card" onclick="openChatWithMsg('Hello Sir, I would like to request a Withdrawal or need help with withdrawal.')">
-                <div class="icon-box"><i class="fa-solid fa-money-bill-transfer" style="color: #f59e0b;"></i></div>
+
+
+            <div
+                class="support-card"
+                onclick="openChatWithMsg('Hello Sir, I would like to request a Withdrawal or need help with withdrawal.')"
+            >
+                <div class="icon-box">
+                    <i
+                        class="fa-solid fa-money-bill-transfer"
+                        style="color: #f59e0b;"
+                    ></i>
+                </div>
+
                 <div class="card-content">
                     <h3>Withdrawal</h3>
                     <span data-key="payoutRequests">Payout requests</span>
                 </div>
             </div>
-            <div class="support-card" onclick="openChatWithMsg('Hello Sir, I need general support and assistance regarding trading.')">
-                <div class="icon-box"><i class="fa-solid fa-headset" style="color: #38bdf8;"></i></div>
+
+
+            <div
+                class="support-card"
+                onclick="openChatWithMsg('Hello Sir, I need general support and assistance regarding trading.')"
+            >
+                <div class="icon-box">
+                    <i
+                        class="fa-solid fa-headset"
+                        style="color: #38bdf8;"
+                    ></i>
+                </div>
+
                 <div class="card-content">
                     <h3 data-key="generalSupport">General Support</h3>
                     <span>24/7 assistance</span>
                 </div>
             </div>
+
         </div>
+
 
         <!-- Professional Services Points -->
         <div class="features-section">
-            <h3><i class="fa-solid fa-circle-check"></i> Our Services & Features</h3>
+
+            <h3>
+                <i class="fa-solid fa-circle-check"></i>
+                Our Services & Features
+            </h3>
+
             <ul class="features-list">
-                <li><i class="fa-solid fa-check"></i> Live active chat with dedicated trading account specialists.</li>
-                <li><i class="fa-solid fa-check"></i> Secure and swift resolution for deposit and withdrawal queries.</li>
-                <li><i class="fa-solid fa-check"></i> Account verification (KYC) and security protection guidelines.</li>
-                <li><i class="fa-solid fa-check"></i> Trading platform assistance and real-time user guidance.</li>
-                <li><i class="fa-solid fa-check"></i> Official guidance to protect you against fraudulent activities.</li>
+
+                <li>
+                    <i class="fa-solid fa-check"></i>
+                    Live active chat with dedicated trading account specialists.
+                </li>
+
+                <li>
+                    <i class="fa-solid fa-check"></i>
+                    Secure and swift resolution for deposit and withdrawal queries.
+                </li>
+
+                <li>
+                    <i class="fa-solid fa-check"></i>
+                    Account verification (KYC) and security protection guidelines.
+                </li>
+
+                <li>
+                    <i class="fa-solid fa-check"></i>
+                    Trading platform assistance and real-time user guidance.
+                </li>
+
+                <li>
+                    <i class="fa-solid fa-check"></i>
+                    Official guidance to protect you against fraudulent activities.
+                </li>
+
             </ul>
+
         </div>
+
 
         <!-- Security Warning Notice at the BOTTOM -->
         <div class="security-alert">
+
             <i class="fa-solid fa-triangle-exclamation"></i>
-            <p><strong>Security Warning:</strong> Do not fall victim to scams by transacting outside of official channels. For all financial transactions, please strictly contact the official CptMarkets Customer Service.</p>
+
+            <p>
+                <strong>Security Warning:</strong>
+                Do not fall victim to scams by transacting outside of official channels. For all financial transactions, please strictly contact the official CptMarkets Customer Service.
+            </p>
+
         </div>
+
     </div>
+
 
     <!-- Tawk.to Script Integration -->
     <script type="text/javascript">
-        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-        
-        Tawk_API.onLoad = function(){
+
+        var Tawk_API = Tawk_API || {},
+            Tawk_LoadStart = new Date();
+
+
+        /*
+         * Tawk.to widget page load হওয়ার পর
+         * default floating bubble hidden থাকবে।
+         * Support button চাপলে showWidget() দিয়ে
+         * chat window open হবে।
+         */
+        Tawk_API.onLoad = function() {
             Tawk_API.hideWidget();
         };
 
-        (function(){
-            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+
+        (function() {
+
+            var s1 = document.createElement("script"),
+                s0 = document.getElementsByTagName("script")[0];
+
             s1.async = true;
+
+            /*
+             * CptMarketsfx Support-এর সঠিক Tawk.to Widget ID
+             */
             s1.src = 'https://embed.tawk.to/6a7105e22d507b1d4a9fad71/1jv4nu05n';
+
             s1.charset = 'UTF-8';
+
             s1.setAttribute('crossorigin', '*');
+
             s0.parentNode.insertBefore(s1, s0);
+
         })();
 
+
+        /*
+         * Support buttons থেকে Tawk.to chat open করার function
+         */
         function openChatWithMsg(message) {
-            if (typeof Tawk_API !== 'undefined' && Tawk_API.maximize) {
-                Tawk_API.showWidget();
-                Tawk_API.maximize();
-                
-                if (Tawk_API.setAttributes) {
-                    Tawk_API.setAttributes({
-                        'cart': message
-                    }, function(error){});
+
+            if (
+                typeof Tawk_API !== 'undefined' &&
+                Tawk_API.maximize
+            ) {
+
+                /*
+                 * Hidden widget আবার visible করা
+                 */
+                if (Tawk_API.showWidget) {
+                    Tawk_API.showWidget();
                 }
+
+                /*
+                 * Chat window maximize করা
+                 */
+                Tawk_API.maximize();
+
+
+                /*
+                 * Selected support message Tawk visitor attributes-এ রাখা
+                 */
+                if (Tawk_API.setAttributes) {
+
+                    Tawk_API.setAttributes(
+                        {
+                            'cart': message
+                        },
+                        function(error) {}
+                    );
+
+                }
+
             } else {
+
                 alert(message);
+
             }
+
         }
+
     </script>
+
+
     <script src="lang.js"></script>
-<script src="translator.js"></script>
+    <script src="translator.js"></script>
 
 </body>
 </html>
