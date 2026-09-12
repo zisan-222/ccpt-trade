@@ -8,6 +8,7 @@ window.Tawk_LoadStart = new Date();
 
 let tawkLoaded = false;
 
+
 /* ==========================================
    TAWK LOADED
 ========================================== */
@@ -47,6 +48,8 @@ window.Tawk_API.onLoad = function () {
     }
 
 };
+
+
 /* ==========================================
    OPEN SUPPORT CHAT
 ========================================== */
@@ -61,7 +64,10 @@ function openSupportChat() {
 
     }
 
-    if (typeof window.Tawk_API.showWidget === "function") {
+    if (
+        typeof window.Tawk_API.showWidget ===
+        "function"
+    ) {
 
         window.Tawk_API.showWidget();
 
@@ -69,7 +75,10 @@ function openSupportChat() {
 
     setTimeout(function () {
 
-        if (typeof window.Tawk_API.maximize === "function") {
+        if (
+            typeof window.Tawk_API.maximize ===
+            "function"
+        ) {
 
             window.Tawk_API.maximize();
 
@@ -78,10 +87,13 @@ function openSupportChat() {
     }, 300);
 
 }
+
+
 /* ==========================================
    CPTMARKETS SUPPORT
    support.js - Part 2
 ========================================== */
+
 
 /* ==========================================
    HIDE SUPPORT WIDGET
@@ -91,9 +103,12 @@ function hideSupportWidget() {
 
     if (
         window.Tawk_API &&
-        typeof window.Tawk_API.hideWidget === "function"
+        typeof window.Tawk_API.hideWidget ===
+        "function"
     ) {
+
         window.Tawk_API.hideWidget();
+
     }
 
 }
@@ -107,9 +122,12 @@ function showSupportWidget() {
 
     if (
         window.Tawk_API &&
-        typeof window.Tawk_API.showWidget === "function"
+        typeof window.Tawk_API.showWidget ===
+        "function"
     ) {
+
         window.Tawk_API.showWidget();
+
     }
 
 }
@@ -123,9 +141,12 @@ function maximizeSupportChat() {
 
     if (
         window.Tawk_API &&
-        typeof window.Tawk_API.maximize === "function"
+        typeof window.Tawk_API.maximize ===
+        "function"
     ) {
+
         window.Tawk_API.maximize();
+
     }
 
 }
@@ -139,9 +160,12 @@ function minimizeSupportChat() {
 
     if (
         window.Tawk_API &&
-        typeof window.Tawk_API.minimize === "function"
+        typeof window.Tawk_API.minimize ===
+        "function"
     ) {
+
         window.Tawk_API.minimize();
+
     }
 
 }
@@ -155,9 +179,12 @@ function closeSupportChat() {
 
     if (
         window.Tawk_API &&
-        typeof window.Tawk_API.hideWidget === "function"
+        typeof window.Tawk_API.hideWidget ===
+        "function"
     ) {
+
         window.Tawk_API.hideWidget();
+
     }
 
 }
@@ -190,6 +217,7 @@ function waitForTawk(callback) {
             callback();
 
         }
+
 
         /* Stop checking after 20 seconds */
 
@@ -239,7 +267,7 @@ const supportWidgetChecker =
         if (
             window.Tawk_API &&
             typeof window.Tawk_API.hideWidget ===
-                "function"
+            "function"
         ) {
 
             /*
@@ -253,10 +281,13 @@ const supportWidgetChecker =
         }
 
     }, 1000);
+
+
 /* ==========================================
    CPTMARKETS SUPPORT
    support.js - Part 3
 ========================================== */
+
 
 /* ==========================================
    TAWK STATUS
@@ -294,7 +325,9 @@ function connectSupportButtons() {
             button.dataset.supportConnected ===
             "true"
         ) {
+
             return;
+
         }
 
         button.dataset.supportConnected =
