@@ -4,129 +4,68 @@
    JAVASCRIPT
    ========================================================= */
 
+"use strict";
+
 
 /* =========================================================
    ELEMENTS
    ========================================================= */
 
-const agreementForm =
-  document.getElementById("agreementForm");
+const agreementForm = document.getElementById("agreementForm");
+
+const clientNameInput = document.getElementById("clientName");
+const usernameInput = document.getElementById("username");
+const userIdInput = document.getElementById("userId");
+const countryInput = document.getElementById("country");
+const cityInput = document.getElementById("city");
+const addressInput = document.getElementById("address");
+const phoneCountryInput = document.getElementById("phoneCountry");
+const phoneInput = document.getElementById("phone");
+
+const startDateInput = document.getElementById("startDate");
+const durationInput = document.getElementById("duration");
+const endDateInput = document.getElementById("endDate");
+const tradingPurposeInput = document.getElementById("tradingPurpose");
+
+const previewStart = document.getElementById("previewStart");
+const previewEnd = document.getElementById("previewEnd");
+
+const ageCheck = document.getElementById("ageCheck");
+const signatureCheck = document.getElementById("signatureCheck");
+
+const signatureCanvas = document.getElementById("signatureCanvas");
+const signaturePlaceholder = document.getElementById("signaturePlaceholder");
+const signatureStatus = document.getElementById("signatureStatus");
+const clearSignature = document.getElementById("clearSignature");
+
+const confirmationPopup = document.getElementById("confirmationPopup");
+
+const popupAgreementId = document.getElementById("popupAgreementId");
+const popupClientName = document.getElementById("popupClientName");
+const popupUserId = document.getElementById("popupUserId");
+const popupCountry = document.getElementById("popupCountry");
+const popupStartDate = document.getElementById("popupStartDate");
+const popupEndDate = document.getElementById("popupEndDate");
+const popupDuration = document.getElementById("popupDuration");
+
+const downloadAgreement = document.getElementById("downloadAgreement");
+
+const successThankYou = document.getElementById("successThankYou");
 
 
-const clientNameInput =
-  document.getElementById("clientName");
+/* =========================================================
+   SAFETY CHECK
+   ========================================================= */
 
-
-const usernameInput =
-  document.getElementById("username");
-
-
-const userIdInput =
-  document.getElementById("userId");
-
-
-const countryInput =
-  document.getElementById("country");
-
-
-const cityInput =
-  document.getElementById("city");
-
-
-const addressInput =
-  document.getElementById("address");
-
-
-const phoneCountryInput =
-  document.getElementById("phoneCountry");
-
-
-const phoneInput =
-  document.getElementById("phone");
-
-
-const startDateInput =
-  document.getElementById("startDate");
-
-
-const durationInput =
-  document.getElementById("duration");
-
-
-const endDateInput =
-  document.getElementById("endDate");
-
-
-const tradingPurposeInput =
-  document.getElementById("tradingPurpose");
-
-
-const previewStart =
-  document.getElementById("previewStart");
-
-
-const previewEnd =
-  document.getElementById("previewEnd");
-
-
-const ageCheck =
-  document.getElementById("ageCheck");
-
-
-const signatureCheck =
-  document.getElementById("signatureCheck");
-
-
-const signatureCanvas =
-  document.getElementById("signatureCanvas");
-
-
-const signaturePlaceholder =
-  document.getElementById("signaturePlaceholder");
-
-
-const signatureStatus =
-  document.getElementById("signatureStatus");
-
-
-const clearSignature =
-  document.getElementById("clearSignature");
-
-
-const confirmationPopup =
-  document.getElementById("confirmationPopup");
-
-
-const popupAgreementId =
-  document.getElementById("popupAgreementId");
-
-
-const popupClientName =
-  document.getElementById("popupClientName");
-
-
-const popupUserId =
-  document.getElementById("popupUserId");
-
-
-const popupCountry =
-  document.getElementById("popupCountry");
-
-
-const popupStartDate =
-  document.getElementById("popupStartDate");
-
-
-const popupEndDate =
-  document.getElementById("popupEndDate");
-
-
-const popupDuration =
-  document.getElementById("popupDuration");
-
-
-const downloadAgreement =
-  document.getElementById("downloadAgreement");
+if (
+  !agreementForm ||
+  !signatureCanvas ||
+  !confirmationPopup
+) {
+  console.error(
+    "Cpt Markets Agreement: required HTML elements are missing."
+  );
+}
 
 
 /* =========================================================
@@ -136,25 +75,15 @@ const downloadAgreement =
 const signatureContext =
   signatureCanvas.getContext("2d");
 
-
 let signatureDrawing = false;
-
 let hasDrawn = false;
-
 let signatureData = "";
+let savedSignatureImage = null;
 
 
 /* =========================================================
    LOCAL STORAGE USER DATA
    ========================================================= */
-
-/*
-  This tries to read the currently logged-in user
-  from the same localStorage style commonly used
-  by the website.
-
-  If data is not available, the fields remain editable.
-*/
 
 function loadExistingUserData() {
 
@@ -163,19 +92,15 @@ function loadExistingUserData() {
     const storedUser =
       localStorage.getItem("user");
 
-
     if (!storedUser) {
       return;
     }
 
-
     let user = null;
-
 
     try {
 
-      user =
-        JSON.parse(storedUser);
+      user = JSON.parse(storedUser);
 
     } catch (error) {
 
@@ -184,7 +109,6 @@ function loadExistingUserData() {
       };
 
     }
-
 
     if (!user) {
       return;
@@ -195,10 +119,8 @@ function loadExistingUserData() {
       !usernameInput.value &&
       user.username
     ) {
-
       usernameInput.value =
-        user.username;
-
+        String(user.username);
     }
 
 
@@ -206,10 +128,8 @@ function loadExistingUserData() {
       !userIdInput.value &&
       user.userId
     ) {
-
       userIdInput.value =
-        user.userId;
-
+        String(user.userId);
     }
 
 
@@ -217,10 +137,8 @@ function loadExistingUserData() {
       !userIdInput.value &&
       user.uid
     ) {
-
       userIdInput.value =
-        user.uid;
-
+        String(user.uid);
     }
 
 
@@ -228,10 +146,8 @@ function loadExistingUserData() {
       !clientNameInput.value &&
       user.name
     ) {
-
       clientNameInput.value =
-        user.name;
-
+        String(user.name);
     }
 
 
@@ -239,10 +155,8 @@ function loadExistingUserData() {
       !clientNameInput.value &&
       user.fullName
     ) {
-
       clientNameInput.value =
-        user.fullName;
-
+        String(user.fullName);
     }
 
 
@@ -251,37 +165,34 @@ function loadExistingUserData() {
       user.country
     ) {
 
-      const countryOption =
-        [...countryInput.options]
-          .find(
-            option =>
-              option.value.toLowerCase() ===
-              String(user.country).toLowerCase()
-          );
+      const userCountry =
+        String(user.country).trim().toLowerCase();
 
+      const countryOption =
+        Array.from(countryInput.options).find(
+          option =>
+            option.value.trim().toLowerCase() ===
+            userCountry
+        );
 
       if (countryOption) {
-
         countryInput.value =
           countryOption.value;
-
       }
 
     }
 
-
   } catch (error) {
 
-    console.log(
-      "User information could not be loaded."
+    console.warn(
+      "User information could not be loaded.",
+      error
     );
 
   }
 
 }
 
-
-/* Load user */
 
 loadExistingUserData();
 
@@ -290,35 +201,32 @@ loadExistingUserData();
    DEFAULT START DATE
    ========================================================= */
 
-function setDefaultStartDate() {
+function getLocalToday() {
 
-  if (startDateInput.value) {
-    return;
-  }
-
-
-  const today =
-    new Date();
-
+  const today = new Date();
 
   const year =
     today.getFullYear();
 
-
   const month =
-    String(
-      today.getMonth() + 1
-    ).padStart(2, "0");
-
+    String(today.getMonth() + 1)
+      .padStart(2, "0");
 
   const day =
-    String(
-      today.getDate()
-    ).padStart(2, "0");
+    String(today.getDate())
+      .padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+
+}
 
 
-  startDateInput.value =
-    `${year}-${month}-${day}`;
+function setDefaultStartDate() {
+
+  if (!startDateInput.value) {
+    startDateInput.value =
+      getLocalToday();
+  }
 
 }
 
@@ -336,17 +244,12 @@ function formatDate(dateString) {
     return "—";
   }
 
-
   const date =
-    new Date(
-      `${dateString}T00:00:00`
-    );
-
+    new Date(`${dateString}T00:00:00`);
 
   if (Number.isNaN(date.getTime())) {
     return "—";
   }
-
 
   return date.toLocaleDateString(
     "en-GB",
@@ -366,24 +269,18 @@ function formatDate(dateString) {
 
 function getDurationDays(duration) {
 
-  const map = {
+  const durationMap = {
 
     "1 Day": 1,
-
     "7 Days": 7,
-
     "30 Days": 30,
-
     "90 Days": 90,
-
     "180 Days": 180,
-
     "365 Days": 365
 
   };
 
-
-  return map[duration] || 0;
+  return durationMap[duration] || 0;
 
 }
 
@@ -397,10 +294,8 @@ function calculateEndDate() {
   const start =
     startDateInput.value;
 
-
   const duration =
     durationInput.value;
-
 
   const days =
     getDurationDays(duration);
@@ -411,7 +306,6 @@ function calculateEndDate() {
     endDateInput.value = "";
 
     previewStart.textContent = "—";
-
     previewEnd.textContent = "—";
 
     return;
@@ -420,15 +314,27 @@ function calculateEndDate() {
 
 
   const date =
-    new Date(
-      `${start}T00:00:00`
-    );
+    new Date(`${start}T00:00:00`);
+
+
+  if (Number.isNaN(date.getTime())) {
+
+    endDateInput.value = "";
+
+    previewStart.textContent = "—";
+    previewEnd.textContent = "—";
+
+    return;
+
+  }
 
 
   /*
-    Agreement duration includes the starting day.
+    Starting day is counted as Day 1.
+
     Example:
-    1 Day = same day.
+    1 Day  = same day
+    7 Days = start date + 6 days
   */
 
   date.setDate(
@@ -439,17 +345,13 @@ function calculateEndDate() {
   const year =
     date.getFullYear();
 
-
   const month =
-    String(
-      date.getMonth() + 1
-    ).padStart(2, "0");
-
+    String(date.getMonth() + 1)
+      .padStart(2, "0");
 
   const day =
-    String(
-      date.getDate()
-    ).padStart(2, "0");
+    String(date.getDate())
+      .padStart(2, "0");
 
 
   const endDate =
@@ -463,28 +365,21 @@ function calculateEndDate() {
   previewStart.textContent =
     formatDate(start);
 
-
   previewEnd.textContent =
     formatDate(endDate);
 
 }
 
 
-/* =========================================================
-   DATE EVENTS
-   ========================================================= */
-
 startDateInput.addEventListener(
   "change",
   calculateEndDate
 );
 
-
 durationInput.addEventListener(
   "change",
   calculateEndDate
 );
-
 
 calculateEndDate();
 
@@ -498,6 +393,11 @@ function setupSignatureCanvas() {
   const rect =
     signatureCanvas.getBoundingClientRect();
 
+  const cssWidth =
+    Math.max(1, Math.round(rect.width));
+
+  const cssHeight =
+    Math.max(1, Math.round(rect.height));
 
   const ratio =
     Math.max(
@@ -507,15 +407,10 @@ function setupSignatureCanvas() {
 
 
   signatureCanvas.width =
-    Math.round(
-      rect.width * ratio
-    );
-
+    Math.round(cssWidth * ratio);
 
   signatureCanvas.height =
-    Math.round(
-      rect.height * ratio
-    );
+    Math.round(cssHeight * ratio);
 
 
   signatureContext.setTransform(
@@ -528,20 +423,10 @@ function setupSignatureCanvas() {
   );
 
 
-  signatureContext.lineWidth =
-    2.7;
-
-
-  signatureContext.lineCap =
-    "round";
-
-
-  signatureContext.lineJoin =
-    "round";
-
-
-  signatureContext.strokeStyle =
-    "#08dcff";
+  signatureContext.lineWidth = 2.7;
+  signatureContext.lineCap = "round";
+  signatureContext.lineJoin = "round";
+  signatureContext.strokeStyle = "#08dcff";
 
 }
 
@@ -550,61 +435,66 @@ setupSignatureCanvas();
 
 
 /* =========================================================
-   RESIZE SIGNATURE BOARD
+   RESIZE SIGNATURE
    ========================================================= */
 
-let savedSignatureImage = null;
+let resizeTimer = null;
 
 
 window.addEventListener(
   "resize",
   () => {
 
-    if (hasDrawn) {
+    clearTimeout(resizeTimer);
 
-      try {
+    resizeTimer =
+      setTimeout(() => {
 
-        savedSignatureImage =
-          signatureCanvas.toDataURL(
-            "image/png"
+        if (hasDrawn) {
+
+          try {
+
+            savedSignatureImage =
+              signatureCanvas.toDataURL("image/png");
+
+          } catch (error) {
+
+            savedSignatureImage = null;
+
+          }
+
+        }
+
+
+        setupSignatureCanvas();
+
+
+        if (!savedSignatureImage) {
+          return;
+        }
+
+
+        const image =
+          new Image();
+
+
+        image.onload = () => {
+
+          signatureContext.drawImage(
+            image,
+            0,
+            0,
+            signatureCanvas.clientWidth,
+            signatureCanvas.clientHeight
           );
 
-      } catch (error) {
-
-        savedSignatureImage = null;
-
-      }
-
-    }
+        };
 
 
-    setupSignatureCanvas();
+        image.src =
+          savedSignatureImage;
 
-
-    if (!savedSignatureImage) {
-      return;
-    }
-
-
-    const image =
-      new Image();
-
-
-    image.onload = () => {
-
-      signatureContext.drawImage(
-        image,
-        0,
-        0,
-        signatureCanvas.clientWidth,
-        signatureCanvas.clientHeight
-      );
-
-    };
-
-
-    image.src =
-      savedSignatureImage;
+      }, 150);
 
   }
 );
@@ -619,16 +509,13 @@ function getSignaturePosition(event) {
   const rect =
     signatureCanvas.getBoundingClientRect();
 
-
   return {
 
     x:
-      event.clientX -
-      rect.left,
+      event.clientX - rect.left,
 
     y:
-      event.clientY -
-      rect.top
+      event.clientY - rect.top
 
   };
 
@@ -645,26 +532,16 @@ signatureCanvas.addEventListener(
 
     event.preventDefault();
 
-
-    signatureDrawing =
-      true;
-
-
-    hasDrawn =
-      true;
-
+    signatureDrawing = true;
+    hasDrawn = true;
 
     signaturePlaceholder.style.display =
       "none";
 
-
     signatureStatus.textContent =
       "Signature captured";
 
-
-    signatureStatus.classList.add(
-      "signed"
-    );
+    signatureStatus.classList.add("signed");
 
 
     const position =
@@ -672,7 +549,6 @@ signatureCanvas.addEventListener(
 
 
     signatureContext.beginPath();
-
 
     signatureContext.moveTo(
       position.x,
@@ -707,7 +583,6 @@ signatureCanvas.addEventListener(
       return;
     }
 
-
     event.preventDefault();
 
 
@@ -719,7 +594,6 @@ signatureCanvas.addEventListener(
       position.x,
       position.y
     );
-
 
     signatureContext.stroke();
 
@@ -740,10 +614,7 @@ function stopSignature(event) {
     return;
   }
 
-
-  signatureDrawing =
-    false;
-
+  signatureDrawing = false;
 
   try {
 
@@ -761,10 +632,23 @@ signatureCanvas.addEventListener(
   stopSignature
 );
 
-
 signatureCanvas.addEventListener(
   "pointercancel",
   stopSignature
+);
+
+signatureCanvas.addEventListener(
+  "pointerleave",
+  event => {
+
+    if (
+      event.pointerType === "mouse" &&
+      signatureDrawing
+    ) {
+      stopSignature(event);
+    }
+
+  }
 );
 
 
@@ -779,34 +663,23 @@ clearSignature.addEventListener(
     signatureContext.clearRect(
       0,
       0,
-      signatureCanvas.width,
-      signatureCanvas.height
+      signatureCanvas.clientWidth,
+      signatureCanvas.clientHeight
     );
 
 
-    signatureDrawing =
-      false;
-
-
-    hasDrawn =
-      false;
-
-
-    signatureData =
-      "";
-
-
-    savedSignatureImage =
-      null;
+    signatureDrawing = false;
+    hasDrawn = false;
+    signatureData = "";
+    savedSignatureImage = null;
 
 
     signaturePlaceholder.style.display =
-      "block";
+      "flex";
 
 
     signatureStatus.textContent =
       "Waiting for signature";
-
 
     signatureStatus.classList.remove(
       "signed"
@@ -825,22 +698,16 @@ function generateAgreementId() {
   const now =
     new Date();
 
-
   const year =
     now.getFullYear();
 
-
   const month =
-    String(
-      now.getMonth() + 1
-    ).padStart(2, "0");
-
+    String(now.getMonth() + 1)
+      .padStart(2, "0");
 
   const day =
-    String(
-      now.getDate()
-    ).padStart(2, "0");
-
+    String(now.getDate())
+      .padStart(2, "0");
 
   const random =
     Math.floor(
@@ -849,9 +716,7 @@ function generateAgreementId() {
     );
 
 
-  return (
-    `CPT-${year}${month}${day}-${random}`
-  );
+  return `CPT-${year}${month}${day}-${random}`;
 
 }
 
@@ -933,13 +798,9 @@ function validateFields() {
   ];
 
 
-  for (
-    const item of requiredFields
-  ) {
+  for (const item of requiredFields) {
 
-    if (
-      !item.element.value.trim()
-    ) {
+    if (!item.element.value.trim()) {
 
       showError(
         item.message,
@@ -953,13 +814,25 @@ function validateFields() {
   }
 
 
+  if (!endDateInput.value) {
+
+    showError(
+      "Please select the agreement duration so the end date can be calculated.",
+      durationInput
+    );
+
+    return false;
+
+  }
+
+
   return true;
 
 }
 
 
 /* =========================================================
-   ERROR MESSAGE
+   ERROR
    ========================================================= */
 
 function showError(
@@ -972,12 +845,19 @@ function showError(
 
   if (element) {
 
-    element.focus();
+    try {
+      element.focus();
+    } catch (error) {}
 
-    element.scrollIntoView({
-      behavior: "smooth",
-      block: "center"
-    });
+
+    try {
+
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+
+    } catch (error) {}
 
   }
 
@@ -985,7 +865,7 @@ function showError(
 
 
 /* =========================================================
-   AGE CHECK
+   AGE
    ========================================================= */
 
 function validateAge() {
@@ -1001,14 +881,13 @@ function validateAge() {
 
   }
 
-
   return true;
 
 }
 
 
 /* =========================================================
-   SIGNATURE CHECK
+   SIGNATURE
    ========================================================= */
 
 function validateSignature() {
@@ -1020,11 +899,14 @@ function validateSignature() {
       signatureCanvas
     );
 
-    signatureCanvas.scrollIntoView({
-      behavior: "smooth",
-      block: "center"
-    });
+    try {
 
+      signatureCanvas.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+
+    } catch (error) {}
 
     return false;
 
@@ -1049,19 +931,13 @@ function validateSignature() {
 
 
 /* =========================================================
-   GET FORM DATA
+   COLLECT AGREEMENT DATA
    ========================================================= */
 
 function collectAgreementData() {
 
   signatureData =
-    signatureCanvas.toDataURL(
-      "image/png"
-    );
-
-
-  const agreementId =
-    generateAgreementId();
+    signatureCanvas.toDataURL("image/png");
 
 
   const now =
@@ -1071,82 +947,51 @@ function collectAgreementData() {
   return {
 
     agreementId:
-
-      agreementId,
-
+      generateAgreementId(),
 
     clientName:
-
       clientNameInput.value.trim(),
 
-
     username:
-
       usernameInput.value.trim(),
 
-
     userId:
-
       userIdInput.value.trim(),
 
-
     country:
-
       countryInput.value,
 
-
     city:
-
       cityInput.value.trim(),
 
-
     address:
-
       addressInput.value.trim(),
 
-
     phoneCountry:
-
       phoneCountryInput.value,
 
-
     phone:
-
       phoneInput.value.trim(),
 
-
     startDate:
-
       startDateInput.value,
 
-
     endDate:
-
       endDateInput.value,
 
-
     duration:
-
       durationInput.value,
 
-
     tradingPurpose:
-
       tradingPurposeInput.value,
 
-
     submittedAt:
-
       now.toISOString(),
 
-
     signature:
-
       signatureData,
 
-
     status:
-
       "SUBMITTED"
 
   };
@@ -1155,7 +1000,7 @@ function collectAgreementData() {
 
 
 /* =========================================================
-   SAVE AGREEMENT LOCALLY
+   SAVE AGREEMENT
    ========================================================= */
 
 function saveAgreement(data) {
@@ -1167,10 +1012,6 @@ function saveAgreement(data) {
       JSON.stringify(data)
     );
 
-
-    /*
-      Also keep a small agreement list.
-    */
 
     const existing =
       localStorage.getItem(
@@ -1198,18 +1039,12 @@ function saveAgreement(data) {
 
 
     if (!Array.isArray(agreements)) {
-
       agreements = [];
-
     }
 
 
     agreements.push(data);
 
-
-    /*
-      Keep latest 20 local agreements.
-    */
 
     agreements =
       agreements.slice(-20);
@@ -1223,11 +1058,68 @@ function saveAgreement(data) {
 
   } catch (error) {
 
-    console.log(
-      "Local agreement storage unavailable."
+    console.warn(
+      "Local agreement storage unavailable.",
+      error
     );
 
   }
+
+}
+
+
+/* =========================================================
+   SHOW TEMPORARY THANK YOU MESSAGE
+   ========================================================= */
+
+let thankYouTimer = null;
+
+
+function showThankYouMessage() {
+
+  if (!successThankYou) {
+    return;
+  }
+
+
+  clearTimeout(thankYouTimer);
+
+
+  successThankYou.classList.remove(
+    "show"
+  );
+
+
+  /*
+    Small delay makes the entrance animation
+    work consistently after the popup appears.
+  */
+
+  requestAnimationFrame(() => {
+
+    requestAnimationFrame(() => {
+
+      successThankYou.classList.add(
+        "show"
+      );
+
+    });
+
+  });
+
+
+  /*
+    Automatically remove after 5 seconds.
+  */
+
+  thankYouTimer =
+    setTimeout(() => {
+
+      successThankYou.classList.remove(
+        "show"
+      );
+
+    }, 5000);
 
 }
 
@@ -1241,30 +1133,20 @@ function showConfirmation(data) {
   popupAgreementId.textContent =
     data.agreementId;
 
-
   popupClientName.textContent =
     data.clientName;
-
 
   popupUserId.textContent =
     data.userId;
 
-
   popupCountry.textContent =
     data.country;
 
-
   popupStartDate.textContent =
-    formatDate(
-      data.startDate
-    );
-
+    formatDate(data.startDate);
 
   popupEndDate.textContent =
-    formatDate(
-      data.endDate
-    );
-
+    formatDate(data.endDate);
 
   popupDuration.textContent =
     data.duration;
@@ -1275,8 +1157,12 @@ function showConfirmation(data) {
   );
 
 
-  document.body.style.overflow =
-    "hidden";
+  document.body.classList.add(
+    "popup-open"
+  );
+
+
+  showThankYouMessage();
 
 }
 
@@ -1292,58 +1178,42 @@ agreementForm.addEventListener(
     event.preventDefault();
 
 
-    /*
-      1. Required information
-    */
-
     if (!validateFields()) {
       return;
     }
 
-
-    /*
-      2. 18+
-    */
 
     if (!validateAge()) {
       return;
     }
 
 
-    /*
-      3. Signature
-    */
-
     if (!validateSignature()) {
       return;
     }
 
 
-    /*
-      4. Make sure end date exists
-    */
-
     calculateEndDate();
 
 
-    /*
-      5. Collect
-    */
+    if (!endDateInput.value) {
+
+      showError(
+        "Unable to calculate the agreement end date.",
+        durationInput
+      );
+
+      return;
+
+    }
+
 
     const data =
       collectAgreementData();
 
 
-    /*
-      6. Save
-    */
-
     saveAgreement(data);
 
-
-    /*
-      7. Show success
-    */
 
     showConfirmation(data);
 
@@ -1352,7 +1222,7 @@ agreementForm.addEventListener(
 
 
 /* =========================================================
-   DOWNLOAD AGREEMENT
+   PDF DOWNLOAD
    ========================================================= */
 
 downloadAgreement.addEventListener(
@@ -1395,9 +1265,61 @@ downloadAgreement.addEventListener(
     }
 
 
-    /*
-      Create temporary printable agreement.
-    */
+    if (
+      !data ||
+      !data.agreementId ||
+      !data.signature
+    ) {
+
+      alert(
+        "Agreement data is incomplete. Please submit the agreement again."
+      );
+
+      return;
+
+    }
+
+
+    if (
+      typeof html2canvas ===
+      "undefined"
+    ) {
+
+      alert(
+        "PDF library could not be loaded. Please check your internet connection and try again."
+      );
+
+      return;
+
+    }
+
+
+    if (
+      !window.jspdf ||
+      !window.jspdf.jsPDF
+    ) {
+
+      alert(
+        "PDF generator could not be loaded. Please try again."
+      );
+
+      return;
+
+    }
+
+
+    const button =
+      downloadAgreement;
+
+    const originalButtonHTML =
+      button.innerHTML;
+
+
+    button.disabled = true;
+
+    button.innerHTML =
+      '<i class="fa-solid fa-spinner fa-spin"></i> Preparing...';
+
 
     const pdfContainer =
       document.createElement("div");
@@ -1406,30 +1328,26 @@ downloadAgreement.addEventListener(
     pdfContainer.style.position =
       "fixed";
 
-
     pdfContainer.style.left =
       "-10000px";
-
 
     pdfContainer.style.top =
       "0";
 
-
     pdfContainer.style.width =
       "794px";
-
 
     pdfContainer.style.padding =
       "45px";
 
+    pdfContainer.style.boxSizing =
+      "border-box";
 
     pdfContainer.style.background =
       "#ffffff";
 
-
     pdfContainer.style.color =
       "#111111";
-
 
     pdfContainer.style.fontFamily =
       "Arial, sans-serif";
@@ -1476,7 +1394,9 @@ downloadAgreement.addEventListener(
         margin-bottom:25px;
       ">
         Agreement ID:
-        <strong>${escapeHtml(data.agreementId)}</strong>
+        <strong>
+          ${escapeHtml(data.agreementId)}
+        </strong>
       </p>
 
 
@@ -1496,35 +1416,17 @@ downloadAgreement.addEventListener(
         font-size:10px;
       ">
 
-        ${pdfRow(
-          "Full Name",
-          data.clientName
-        )}
+        ${pdfRow("Full Name", data.clientName)}
 
-        ${pdfRow(
-          "Username",
-          data.username
-        )}
+        ${pdfRow("Username", data.username)}
 
-        ${pdfRow(
-          "Client User ID",
-          data.userId
-        )}
+        ${pdfRow("Client User ID", data.userId)}
 
-        ${pdfRow(
-          "Country",
-          data.country
-        )}
+        ${pdfRow("Country", data.country)}
 
-        ${pdfRow(
-          "City",
-          data.city
-        )}
+        ${pdfRow("City", data.city)}
 
-        ${pdfRow(
-          "Address",
-          data.address
-        )}
+        ${pdfRow("Address", data.address)}
 
         ${pdfRow(
           "Phone",
@@ -1611,25 +1513,14 @@ downloadAgreement.addEventListener(
       </p>
 
 
-      <h2 style="
-        font-size:15px;
-        border-bottom:1px solid #ddd;
-        padding-bottom:8px;
-        margin-top:25px;
-      ">
-        Client Acceptance
-      </h2>
-
-
       <p style="
         font-size:10px;
         line-height:1.7;
         color:#445;
       ">
-        The client confirms that the information provided
-        is accurate, that they are 18 years of age or older,
-        and that they have electronically accepted this
-        Client Trading Agreement.
+        The client should carefully consider their financial
+        circumstances, objectives and level of experience
+        before entering into trading activities.
       </p>
 
 
@@ -1675,7 +1566,7 @@ downloadAgreement.addEventListener(
         font-size:8px;
         color:#8794a0;
       ">
-        Cpt Markets — https://cptmarketfx.com
+        Cpt Markets — cptmarketfx.com
       </div>
 
     `;
@@ -1688,28 +1579,16 @@ downloadAgreement.addEventListener(
 
     try {
 
-      if (
-        typeof html2canvas ===
-        "undefined"
-      ) {
+      /*
+        Wait for the signature image and layout
+        before taking the screenshot.
+      */
 
-        throw new Error(
-          "html2canvas unavailable"
-        );
-
-      }
-
-
-      if (
-        !window.jspdf ||
-        !window.jspdf.jsPDF
-      ) {
-
-        throw new Error(
-          "jsPDF unavailable"
-        );
-
-      }
+      await new Promise(resolve =>
+        requestAnimationFrame(() =>
+          requestAnimationFrame(resolve)
+        )
+      );
 
 
       const canvas =
@@ -1717,7 +1596,9 @@ downloadAgreement.addEventListener(
           pdfContainer,
           {
             scale: 2,
-            backgroundColor: "#ffffff"
+            useCORS: true,
+            backgroundColor: "#ffffff",
+            logging: false
           }
         );
 
@@ -1745,18 +1626,17 @@ downloadAgreement.addEventListener(
       const pageWidth =
         pdf.internal.pageSize.getWidth();
 
-
       const pageHeight =
         pdf.internal.pageSize.getHeight();
 
 
-      const margin =
-        10;
-
+      const margin = 10;
 
       const usableWidth =
-        pageWidth -
-        margin * 2;
+        pageWidth - margin * 2;
+
+      const usableHeight =
+        pageHeight - margin * 2;
 
 
       const imageHeight =
@@ -1784,18 +1664,15 @@ downloadAgreement.addEventListener(
 
 
       heightLeft -=
-        pageHeight -
-        margin * 2;
+        usableHeight;
 
 
-      while (
-        heightLeft > 0
-      ) {
+      while (heightLeft > 0) {
 
         position =
+          margin +
           heightLeft -
-          imageHeight +
-          margin;
+          imageHeight;
 
 
         pdf.addPage();
@@ -1812,8 +1689,7 @@ downloadAgreement.addEventListener(
 
 
         heightLeft -=
-          pageHeight -
-          margin * 2;
+          usableHeight;
 
       }
 
@@ -1825,17 +1701,26 @@ downloadAgreement.addEventListener(
 
     } catch (error) {
 
-      console.error(error);
+      console.error(
+        "PDF generation error:",
+        error
+      );
 
 
       alert(
         "PDF download could not be created. Please try again."
       );
 
+    } finally {
+
+      pdfContainer.remove();
+
+      button.disabled = false;
+
+      button.innerHTML =
+        originalButtonHTML;
+
     }
-
-
-    pdfContainer.remove();
 
   }
 );
@@ -1884,35 +1769,18 @@ function pdfRow(
 
 function escapeHtml(value) {
 
-  return String(
-    value ?? ""
-  )
-  .replace(
-    /&/g,
-    "&amp;"
-  )
-  .replace(
-    /</g,
-    "&lt;"
-  )
-  .replace(
-    />/g,
-    "&gt;"
-  )
-  .replace(
-    /"/g,
-    "&quot;"
-  )
-  .replace(
-    /'/g,
-    "&#039;"
-  );
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 
 }
 
 
 /* =========================================================
-   POPUP CLOSE WHEN CLICKING OUTSIDE
+   POPUP
    ========================================================= */
 
 confirmationPopup.addEventListener(
@@ -1925,29 +1793,14 @@ confirmationPopup.addEventListener(
     ) {
 
       /*
-        Intentionally do not close automatically.
-        Client should keep the confirmation available
-        for downloading the agreement.
+        Popup intentionally remains open.
+        This prevents accidental dismissal before
+        the client downloads the agreement.
       */
 
+      return;
+
     }
-
-  }
-);
-
-
-/* =========================================================
-   PREVENT ACCIDENTAL PAGE EXIT WHILE SIGNING
-   ========================================================= */
-
-window.addEventListener(
-  "beforeunload",
-  event => {
-
-    /*
-      We don't block normal navigation.
-      This is intentionally left lightweight.
-    */
 
   }
 );
@@ -1961,5 +1814,5 @@ calculateEndDate();
 
 
 console.log(
-  "Cpt Markets Client Trading Agreement loaded."
+  "Cpt Markets Client Trading Agreement loaded successfully."
 );
