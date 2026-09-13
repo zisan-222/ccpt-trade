@@ -658,20 +658,62 @@ signatureCanvas.addEventListener(
 
 clearSignature.addEventListener(
   "click",
-  () => {
+  event => {
 
-    signatureContext.clearRect(
-      0,
-      0,
-      signatureCanvas.clientWidth,
-      signatureCanvas.clientHeight
-    );
+    event.preventDefault();
 
 
     signatureDrawing = false;
     hasDrawn = false;
     signatureData = "";
     savedSignatureImage = null;
+
+
+    /*
+      Completely reset the canvas.
+      This makes the Clear button work correctly
+      with high-DPI/mobile canvases as well.
+    */
+
+    const ratio =
+      Math.max(
+        1,
+        window.devicePixelRatio || 1
+      );
+
+
+    signatureContext.setTransform(
+      1,
+      0,
+      0,
+      1,
+      0,
+      0
+    );
+
+
+    signatureContext.clearRect(
+      0,
+      0,
+      signatureCanvas.width,
+      signatureCanvas.height
+    );
+
+
+    signatureContext.setTransform(
+      ratio,
+      0,
+      0,
+      ratio,
+      0,
+      0
+    );
+
+
+    signatureContext.lineWidth = 2.7;
+    signatureContext.lineCap = "round";
+    signatureContext.lineJoin = "round";
+    signatureContext.strokeStyle = "#08dcff";
 
 
     signaturePlaceholder.style.display =
@@ -681,9 +723,17 @@ clearSignature.addEventListener(
     signatureStatus.textContent =
       "Waiting for signature";
 
+
     signatureStatus.classList.remove(
       "signed"
     );
+
+
+    try {
+
+      signatureCanvas.blur();
+
+    } catch (error) {}
 
   }
 );
@@ -1090,11 +1140,6 @@ function showThankYouMessage() {
   );
 
 
-  /*
-    Small delay makes the entrance animation
-    work consistently after the popup appears.
-  */
-
   requestAnimationFrame(() => {
 
     requestAnimationFrame(() => {
@@ -1107,10 +1152,6 @@ function showThankYouMessage() {
 
   });
 
-
-  /*
-    Automatically remove after 5 seconds.
-  */
 
   thankYouTimer =
     setTimeout(() => {
@@ -1578,11 +1619,6 @@ downloadAgreement.addEventListener(
 
 
     try {
-
-      /*
-        Wait for the signature image and layout
-        before taking the screenshot.
-      */
 
       await new Promise(resolve =>
         requestAnimationFrame(() =>
