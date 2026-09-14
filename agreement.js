@@ -119,8 +119,10 @@ function loadExistingUserData() {
       !usernameInput.value &&
       user.username
     ) {
+
       usernameInput.value =
         String(user.username);
+
     }
 
 
@@ -128,8 +130,10 @@ function loadExistingUserData() {
       !userIdInput.value &&
       user.userId
     ) {
+
       userIdInput.value =
         String(user.userId);
+
     }
 
 
@@ -137,8 +141,10 @@ function loadExistingUserData() {
       !userIdInput.value &&
       user.uid
     ) {
+
       userIdInput.value =
         String(user.uid);
+
     }
 
 
@@ -146,8 +152,10 @@ function loadExistingUserData() {
       !clientNameInput.value &&
       user.name
     ) {
+
       clientNameInput.value =
         String(user.name);
+
     }
 
 
@@ -155,8 +163,10 @@ function loadExistingUserData() {
       !clientNameInput.value &&
       user.fullName
     ) {
+
       clientNameInput.value =
         String(user.fullName);
+
     }
 
 
@@ -176,8 +186,10 @@ function loadExistingUserData() {
         );
 
       if (countryOption) {
+
         countryInput.value =
           countryOption.value;
+
       }
 
     }
@@ -224,8 +236,10 @@ function getLocalToday() {
 function setDefaultStartDate() {
 
   if (!startDateInput.value) {
+
     startDateInput.value =
       getLocalToday();
+
   }
 
 }
@@ -535,11 +549,14 @@ signatureCanvas.addEventListener(
     signatureDrawing = true;
     hasDrawn = true;
 
+
     signaturePlaceholder.style.display =
       "none";
 
+
     signatureStatus.textContent =
       "Signature captured";
+
 
     signatureStatus.classList.add("signed");
 
@@ -549,6 +566,7 @@ signatureCanvas.addEventListener(
 
 
     signatureContext.beginPath();
+
 
     signatureContext.moveTo(
       position.x,
@@ -595,6 +613,7 @@ signatureCanvas.addEventListener(
       position.y
     );
 
+
     signatureContext.stroke();
 
   },
@@ -614,7 +633,9 @@ function stopSignature(event) {
     return;
   }
 
+
   signatureDrawing = false;
+
 
   try {
 
@@ -645,7 +666,9 @@ signatureCanvas.addEventListener(
       event.pointerType === "mouse" &&
       signatureDrawing
     ) {
+
       stopSignature(event);
+
     }
 
   }
@@ -661,7 +684,6 @@ clearSignature.addEventListener(
   event => {
 
     event.preventDefault();
-
 
     signatureDrawing = false;
     hasDrawn = false;
@@ -896,7 +918,9 @@ function showError(
   if (element) {
 
     try {
+
       element.focus();
+
     } catch (error) {}
 
 
@@ -931,6 +955,7 @@ function validateAge() {
 
   }
 
+
   return true;
 
 }
@@ -949,6 +974,7 @@ function validateSignature() {
       signatureCanvas
     );
 
+
     try {
 
       signatureCanvas.scrollIntoView({
@@ -957,6 +983,7 @@ function validateSignature() {
       });
 
     } catch (error) {}
+
 
     return false;
 
@@ -978,8 +1005,6 @@ function validateSignature() {
   return true;
 
 }
-
-
 /* =========================================================
    COLLECT AGREEMENT DATA
    ========================================================= */
@@ -1174,20 +1199,26 @@ function showConfirmation(data) {
   popupAgreementId.textContent =
     data.agreementId;
 
+
   popupClientName.textContent =
     data.clientName;
+
 
   popupUserId.textContent =
     data.userId;
 
+
   popupCountry.textContent =
     data.country;
+
 
   popupStartDate.textContent =
     formatDate(data.startDate);
 
+
   popupEndDate.textContent =
     formatDate(data.endDate);
+
 
   popupDuration.textContent =
     data.duration;
@@ -1352,11 +1383,13 @@ downloadAgreement.addEventListener(
     const button =
       downloadAgreement;
 
+
     const originalButtonHTML =
       button.innerHTML;
 
 
     button.disabled = true;
+
 
     button.innerHTML =
       '<i class="fa-solid fa-spinner fa-spin"></i> Preparing...';
@@ -1662,14 +1695,17 @@ downloadAgreement.addEventListener(
       const pageWidth =
         pdf.internal.pageSize.getWidth();
 
+
       const pageHeight =
         pdf.internal.pageSize.getHeight();
 
 
       const margin = 10;
 
+
       const usableWidth =
         pageWidth - margin * 2;
+
 
       const usableHeight =
         pageHeight - margin * 2;
@@ -1747,11 +1783,14 @@ downloadAgreement.addEventListener(
         "PDF download could not be created. Please try again."
       );
 
+
     } finally {
 
       pdfContainer.remove();
 
+
       button.disabled = false;
+
 
       button.innerHTML =
         originalButtonHTML;
@@ -1783,6 +1822,7 @@ function pdfRow(
       ">
         ${escapeHtml(label)}
       </td>
+
 
       <td style="
         padding:8px;
