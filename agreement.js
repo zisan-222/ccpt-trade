@@ -351,14 +351,37 @@ function getDurationDays(
   duration
 ) {
 
+  /*
+    The visible duration labels in the HTML are:
+
+    3 Day
+    5 Days
+    7 Days
+    9 Days
+    10 Days
+    11 Days
+
+    Their option values are:
+
+    1 Day
+    7 Days
+    30 Days
+    90 Days
+    180 Days
+    365 Days
+
+    This mapping keeps the existing HTML unchanged
+    and calculates the actual number of selected days.
+  */
+
   const durationMap = {
 
-    "1 Day": 1,
-    "7 Days": 7,
-    "30 Days": 30,
-    "90 Days": 90,
-    "180 Days": 180,
-    "365 Days": 365
+    "1 Day": 3,
+    "7 Days": 5,
+    "30 Days": 7,
+    "90 Days": 9,
+    "180 Days": 10,
+    "365 Days": 11
 
   };
 
@@ -438,7 +461,8 @@ function calculateEndDate() {
     Starting day is counted as Day 1.
 
     Example:
-    1 Day  = same day
+    3 Day  = start date + 2 days
+    5 Days = start date + 4 days
     7 Days = start date + 6 days
   */
 
@@ -1205,6 +1229,7 @@ downloadAgreement.addEventListener(
         ">
           CPT MARKETS
         </div>
+
 
         <div style="
           font-size:11px;
