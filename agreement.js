@@ -1,837 +1,1650 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
+/* =========================================================
+   CPT MARKETS
+   CLIENT TRADING AGREEMENT
+   JAVASCRIPT
+   ========================================================= */
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-  >
+"use strict";
 
-  <title>Cpt Markets - Client Trading Agreement</title>
 
-  <meta
-    name="description"
-    content="Cpt Markets Client Trading Agreement"
-  >
+/* =========================================================
+   ELEMENTS
+   ========================================================= */
 
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-  >
+const agreementForm =
+  document.getElementById("agreementForm");
 
-  <link
-    rel="stylesheet"
-    href="agreement.css?v=2.0"
-  >
-</head>
+const clientNameInput =
+  document.getElementById("clientName");
 
-<body>
+const usernameInput =
+  document.getElementById("username");
 
-  <div class="background-grid"></div>
+const userIdInput =
+  document.getElementById("userId");
 
-  <div class="glow glow-one"></div>
-  <div class="glow glow-two"></div>
+const countryInput =
+  document.getElementById("country");
 
-  <main class="agreement-container">
+const cityInput =
+  document.getElementById("city");
 
-    <header class="agreement-header">
+const addressInput =
+  document.getElementById("address");
 
-      <a
-        href="https://cptmarketfx.com"
-        class="brand"
-      >
+const phoneCountryInput =
+  document.getElementById("phoneCountry");
 
-        <div class="brand-logo">
-          <div class="logo-cpt">CPT</div>
-          <div class="logo-markets">MARKETS</div>
-          <div class="logo-uk">UK</div>
+const phoneInput =
+  document.getElementById("phone");
+
+const startDateInput =
+  document.getElementById("startDate");
+
+const durationInput =
+  document.getElementById("duration");
+
+const endDateInput =
+  document.getElementById("endDate");
+
+const tradingPurposeInput =
+  document.getElementById("tradingPurpose");
+
+const previewStart =
+  document.getElementById("previewStart");
+
+const previewEnd =
+  document.getElementById("previewEnd");
+
+const ageCheck =
+  document.getElementById("ageCheck");
+
+const confirmationPopup =
+  document.getElementById("confirmationPopup");
+
+const popupAgreementId =
+  document.getElementById("popupAgreementId");
+
+const popupClientName =
+  document.getElementById("popupClientName");
+
+const popupUserId =
+  document.getElementById("popupUserId");
+
+const popupCountry =
+  document.getElementById("popupCountry");
+
+const popupStartDate =
+  document.getElementById("popupStartDate");
+
+const popupEndDate =
+  document.getElementById("popupEndDate");
+
+const popupDuration =
+  document.getElementById("popupDuration");
+
+const downloadAgreement =
+  document.getElementById("downloadAgreement");
+
+const successThankYou =
+  document.getElementById("successThankYou");
+
+
+/* =========================================================
+   SAFETY CHECK
+   ========================================================= */
+
+if (
+  !agreementForm ||
+  !confirmationPopup
+) {
+
+  console.error(
+    "Cpt Markets Agreement: required HTML elements are missing."
+  );
+
+}
+
+
+/* =========================================================
+   LOCAL STORAGE USER DATA
+   ========================================================= */
+
+function loadExistingUserData() {
+
+  try {
+
+    const storedUser =
+      localStorage.getItem("user");
+
+
+    if (!storedUser) {
+      return;
+    }
+
+
+    let user = null;
+
+
+    try {
+
+      user =
+        JSON.parse(storedUser);
+
+    } catch (error) {
+
+      user = {
+        username: storedUser
+      };
+
+    }
+
+
+    if (!user) {
+      return;
+    }
+
+
+    if (
+      !usernameInput.value &&
+      user.username
+    ) {
+
+      usernameInput.value =
+        String(user.username);
+
+    }
+
+
+    if (
+      !userIdInput.value &&
+      user.userId
+    ) {
+
+      userIdInput.value =
+        String(user.userId);
+
+    }
+
+
+    if (
+      !userIdInput.value &&
+      user.uid
+    ) {
+
+      userIdInput.value =
+        String(user.uid);
+
+    }
+
+
+    if (
+      !clientNameInput.value &&
+      user.name
+    ) {
+
+      clientNameInput.value =
+        String(user.name);
+
+    }
+
+
+    if (
+      !clientNameInput.value &&
+      user.fullName
+    ) {
+
+      clientNameInput.value =
+        String(user.fullName);
+
+    }
+
+
+    if (
+      !countryInput.value &&
+      user.country
+    ) {
+
+      const userCountry =
+        String(user.country)
+          .trim()
+          .toLowerCase();
+
+
+      const countryOption =
+        Array.from(
+          countryInput.options
+        ).find(
+          option =>
+            option.value
+              .trim()
+              .toLowerCase() ===
+            userCountry
+        );
+
+
+      if (countryOption) {
+
+        countryInput.value =
+          countryOption.value;
+
+      }
+
+    }
+
+  } catch (error) {
+
+    console.warn(
+      "User information could not be loaded.",
+      error
+    );
+
+  }
+
+}
+
+
+loadExistingUserData();
+
+
+/* =========================================================
+   DEFAULT START DATE
+   ========================================================= */
+
+function getLocalToday() {
+
+  const today =
+    new Date();
+
+
+  const year =
+    today.getFullYear();
+
+
+  const month =
+    String(
+      today.getMonth() + 1
+    ).padStart(
+      2,
+      "0"
+    );
+
+
+  const day =
+    String(
+      today.getDate()
+    ).padStart(
+      2,
+      "0"
+    );
+
+
+  return `${year}-${month}-${day}`;
+
+}
+
+
+function setDefaultStartDate() {
+
+  if (
+    !startDateInput.value
+  ) {
+
+    startDateInput.value =
+      getLocalToday();
+
+  }
+
+}
+
+
+setDefaultStartDate();
+
+
+/* =========================================================
+   FORMAT DATE
+   ========================================================= */
+
+function formatDate(
+  dateString
+) {
+
+  if (!dateString) {
+    return "—";
+  }
+
+
+  const date =
+    new Date(
+      `${dateString}T00:00:00`
+    );
+
+
+  if (
+    Number.isNaN(
+      date.getTime()
+    )
+  ) {
+
+    return "—";
+
+  }
+
+
+  return date.toLocaleDateString(
+    "en-GB",
+    {
+      day: "2-digit",
+      month: "short",
+      year: "numeric"
+    }
+  );
+
+}
+
+
+/* =========================================================
+   GET DURATION DAYS
+   ========================================================= */
+
+function getDurationDays(
+  duration
+) {
+
+  const durationMap = {
+
+    "1 Day": 1,
+    "7 Days": 7,
+    "30 Days": 30,
+    "90 Days": 90,
+    "180 Days": 180,
+    "365 Days": 365
+
+  };
+
+
+  return (
+    durationMap[duration] ||
+    0
+  );
+
+}
+
+
+/* =========================================================
+   CALCULATE END DATE
+   ========================================================= */
+
+function calculateEndDate() {
+
+  const start =
+    startDateInput.value;
+
+
+  const duration =
+    durationInput.value;
+
+
+  const days =
+    getDurationDays(
+      duration
+    );
+
+
+  if (
+    !start ||
+    !days
+  ) {
+
+    endDateInput.value = "";
+
+    previewStart.textContent =
+      "—";
+
+    previewEnd.textContent =
+      "—";
+
+    return;
+
+  }
+
+
+  const date =
+    new Date(
+      `${start}T00:00:00`
+    );
+
+
+  if (
+    Number.isNaN(
+      date.getTime()
+    )
+  ) {
+
+    endDateInput.value = "";
+
+    previewStart.textContent =
+      "—";
+
+    previewEnd.textContent =
+      "—";
+
+    return;
+
+  }
+
+
+  /*
+    Starting day is counted as Day 1.
+
+    Example:
+    1 Day  = same day
+    7 Days = start date + 6 days
+  */
+
+  date.setDate(
+    date.getDate() +
+    days -
+    1
+  );
+
+
+  const year =
+    date.getFullYear();
+
+
+  const month =
+    String(
+      date.getMonth() + 1
+    ).padStart(
+      2,
+      "0"
+    );
+
+
+  const day =
+    String(
+      date.getDate()
+    ).padStart(
+      2,
+      "0"
+    );
+
+
+  const endDate =
+    `${year}-${month}-${day}`;
+
+
+  endDateInput.value =
+    endDate;
+
+
+  previewStart.textContent =
+    formatDate(start);
+
+
+  previewEnd.textContent =
+    formatDate(endDate);
+
+}
+
+
+startDateInput.addEventListener(
+  "change",
+  calculateEndDate
+);
+
+
+durationInput.addEventListener(
+  "change",
+  calculateEndDate
+);
+
+
+calculateEndDate();
+
+
+/* =========================================================
+   GENERATE AGREEMENT ID
+   ========================================================= */
+
+function generateAgreementId() {
+
+  const now =
+    new Date();
+
+
+  const year =
+    now.getFullYear();
+
+
+  const month =
+    String(
+      now.getMonth() + 1
+    ).padStart(
+      2,
+      "0"
+    );
+
+
+  const day =
+    String(
+      now.getDate()
+    ).padStart(
+      2,
+      "0"
+    );
+
+
+  const random =
+    Math.floor(
+      100000 +
+      Math.random() *
+      900000
+    );
+
+
+  return `CPT-${year}${month}${day}-${random}`;
+
+}
+
+
+/* =========================================================
+   VALIDATE REQUIRED FIELDS
+   ========================================================= */
+
+function validateFields() {
+
+  const requiredFields = [
+
+    {
+      element: clientNameInput,
+      message:
+        "Please enter your full name."
+    },
+
+    {
+      element: usernameInput,
+      message:
+        "Please enter your username."
+    },
+
+    {
+      element: userIdInput,
+      message:
+        "Please enter your Client User ID."
+    },
+
+    {
+      element: countryInput,
+      message:
+        "Please select your country."
+    },
+
+    {
+      element: cityInput,
+      message:
+        "Please enter your city."
+    },
+
+    {
+      element: addressInput,
+      message:
+        "Please enter your complete address."
+    },
+
+    {
+      element: phoneCountryInput,
+      message:
+        "Please select your phone country code."
+    },
+
+    {
+      element: phoneInput,
+      message:
+        "Please enter your phone number."
+    },
+
+    {
+      element: startDateInput,
+      message:
+        "Please select the agreement start date."
+    },
+
+    {
+      element: durationInput,
+      message:
+        "Please select the agreement duration."
+    },
+
+    {
+      element: tradingPurposeInput,
+      message:
+        "Please select your trading purpose."
+    }
+
+  ];
+
+
+  for (
+    const item of requiredFields
+  ) {
+
+    if (
+      !item.element.value.trim()
+    ) {
+
+      showError(
+        item.message,
+        item.element
+      );
+
+      return false;
+
+    }
+
+  }
+
+
+  if (
+    !endDateInput.value
+  ) {
+
+    showError(
+      "Please select the agreement duration so the end date can be calculated.",
+      durationInput
+    );
+
+    return false;
+
+  }
+
+
+  return true;
+
+}
+
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+function showError(
+  message,
+  element = null
+) {
+
+  alert(message);
+
+
+  if (element) {
+
+    try {
+
+      element.focus();
+
+    } catch (error) {}
+
+
+    try {
+
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+
+    } catch (error) {}
+
+  }
+
+}
+
+
+/* =========================================================
+   AGE
+   ========================================================= */
+
+function validateAge() {
+
+  if (
+    !ageCheck.checked
+  ) {
+
+    showError(
+      "You must confirm that you are 18 years of age or older.",
+      ageCheck
+    );
+
+    return false;
+
+  }
+
+
+  return true;
+
+}
+
+
+/* =========================================================
+   COLLECT AGREEMENT DATA
+   ========================================================= */
+
+function collectAgreementData() {
+
+  const now =
+    new Date();
+
+
+  return {
+
+    agreementId:
+      generateAgreementId(),
+
+    clientName:
+      clientNameInput.value.trim(),
+
+    username:
+      usernameInput.value.trim(),
+
+    userId:
+      userIdInput.value.trim(),
+
+    country:
+      countryInput.value,
+
+    city:
+      cityInput.value.trim(),
+
+    address:
+      addressInput.value.trim(),
+
+    phoneCountry:
+      phoneCountryInput.value,
+
+    phone:
+      phoneInput.value.trim(),
+
+    startDate:
+      startDateInput.value,
+
+    endDate:
+      endDateInput.value,
+
+    duration:
+      durationInput.value,
+
+    tradingPurpose:
+      tradingPurposeInput.value,
+
+    submittedAt:
+      now.toISOString(),
+
+    status:
+      "SUBMITTED"
+
+  };
+
+}
+
+
+/* =========================================================
+   SAVE AGREEMENT
+   ========================================================= */
+
+function saveAgreement(
+  data
+) {
+
+  try {
+
+    localStorage.setItem(
+      "cptmarkets_last_agreement",
+      JSON.stringify(data)
+    );
+
+
+    const existing =
+      localStorage.getItem(
+        "cptmarkets_agreements"
+      );
+
+
+    let agreements = [];
+
+
+    if (existing) {
+
+      try {
+
+        agreements =
+          JSON.parse(existing);
+
+      } catch (error) {
+
+        agreements = [];
+
+      }
+
+    }
+
+
+    if (
+      !Array.isArray(
+        agreements
+      )
+    ) {
+
+      agreements = [];
+
+    }
+
+
+    agreements.push(data);
+
+
+    agreements =
+      agreements.slice(-20);
+
+
+    localStorage.setItem(
+      "cptmarkets_agreements",
+      JSON.stringify(
+        agreements
+      )
+    );
+
+  } catch (error) {
+
+    console.warn(
+      "Local agreement storage unavailable.",
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   SHOW TEMPORARY THANK YOU MESSAGE
+   ========================================================= */
+
+let thankYouTimer = null;
+
+
+function showThankYouMessage() {
+
+  if (
+    !successThankYou
+  ) {
+
+    return;
+
+  }
+
+
+  clearTimeout(
+    thankYouTimer
+  );
+
+
+  successThankYou.classList.remove(
+    "show"
+  );
+
+
+  requestAnimationFrame(
+    () => {
+
+      requestAnimationFrame(
+        () => {
+
+          successThankYou.classList.add(
+            "show"
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+  thankYouTimer =
+    setTimeout(
+      () => {
+
+        successThankYou.classList.remove(
+          "show"
+        );
+
+      },
+      5000
+    );
+
+}
+
+
+/* =========================================================
+   SHOW CONFIRMATION
+   ========================================================= */
+
+function showConfirmation(
+  data
+) {
+
+  popupAgreementId.textContent =
+    data.agreementId;
+
+
+  popupClientName.textContent =
+    data.clientName;
+
+
+  popupUserId.textContent =
+    data.userId;
+
+
+  popupCountry.textContent =
+    data.country;
+
+
+  popupStartDate.textContent =
+    formatDate(
+      data.startDate
+    );
+
+
+  popupEndDate.textContent =
+    formatDate(
+      data.endDate
+    );
+
+
+  popupDuration.textContent =
+    data.duration;
+
+
+  confirmationPopup.classList.add(
+    "show"
+  );
+
+
+  document.body.classList.add(
+    "popup-open"
+  );
+
+
+  showThankYouMessage();
+
+}
+
+
+/* =========================================================
+   SUBMIT
+   ========================================================= */
+
+agreementForm.addEventListener(
+  "submit",
+  event => {
+
+    event.preventDefault();
+
+
+    if (
+      !validateFields()
+    ) {
+
+      return;
+
+    }
+
+
+    if (
+      !validateAge()
+    ) {
+
+      return;
+
+    }
+
+
+    calculateEndDate();
+
+
+    if (
+      !endDateInput.value
+    ) {
+
+      showError(
+        "Unable to calculate the agreement end date.",
+        durationInput
+      );
+
+      return;
+
+    }
+
+
+    const data =
+      collectAgreementData();
+
+
+    saveAgreement(data);
+
+
+    showConfirmation(
+      data
+    );
+
+  }
+);
+
+
+/* =========================================================
+   PDF DOWNLOAD
+   ========================================================= */
+
+downloadAgreement.addEventListener(
+  "click",
+  async () => {
+
+    const stored =
+      localStorage.getItem(
+        "cptmarkets_last_agreement"
+      );
+
+
+    if (!stored) {
+
+      alert(
+        "Agreement information could not be found."
+      );
+
+      return;
+
+    }
+
+
+    let data;
+
+
+    try {
+
+      data =
+        JSON.parse(stored);
+
+    } catch (error) {
+
+      alert(
+        "Unable to prepare the agreement download."
+      );
+
+      return;
+
+    }
+
+
+    if (
+      !data ||
+      !data.agreementId
+    ) {
+
+      alert(
+        "Agreement data is incomplete. Please submit the agreement again."
+      );
+
+      return;
+
+    }
+
+
+    if (
+      typeof html2canvas ===
+      "undefined"
+    ) {
+
+      alert(
+        "PDF library could not be loaded. Please check your internet connection and try again."
+      );
+
+      return;
+
+    }
+
+
+    if (
+      !window.jspdf ||
+      !window.jspdf.jsPDF
+    ) {
+
+      alert(
+        "PDF generator could not be loaded. Please try again."
+      );
+
+      return;
+
+    }
+
+
+    const button =
+      downloadAgreement;
+
+
+    const originalButtonHTML =
+      button.innerHTML;
+
+
+    button.disabled = true;
+
+
+    button.innerHTML =
+      '<i class="fa-solid fa-spinner fa-spin"></i> Preparing...';
+
+
+    const pdfContainer =
+      document.createElement(
+        "div"
+      );
+
+
+    pdfContainer.style.position =
+      "fixed";
+
+
+    pdfContainer.style.left =
+      "-10000px";
+
+
+    pdfContainer.style.top =
+      "0";
+
+
+    pdfContainer.style.width =
+      "794px";
+
+
+    pdfContainer.style.padding =
+      "45px";
+
+
+    pdfContainer.style.boxSizing =
+      "border-box";
+
+
+    pdfContainer.style.background =
+      "#ffffff";
+
+
+    pdfContainer.style.color =
+      "#111111";
+
+
+    pdfContainer.style.fontFamily =
+      "Arial, sans-serif";
+
+
+    /*
+      PDF content.
+      Digital Signature removed.
+      Risk Disclosure removed.
+    */
+
+    pdfContainer.innerHTML = `
+
+      <div style="
+        border-bottom:3px solid #087db5;
+        padding-bottom:18px;
+        margin-bottom:25px;
+      ">
+
+        <div style="
+          font-size:28px;
+          font-weight:900;
+          color:#123;
+        ">
+          CPT MARKETS
         </div>
 
-        <div class="brand-text">
-          <strong>Cpt Markets</strong>
-          <span>Global Trading Platform</span>
+        <div style="
+          font-size:11px;
+          color:#65788a;
+          margin-top:4px;
+        ">
+          Global Trading Platform
         </div>
 
-      </a>
-
-      <a
-        href="https://cptmarketfx.com"
-        class="website-button"
-      >
-        <i class="fa-solid fa-globe"></i>
-        <span>Website</span>
-      </a>
-
-    </header>
-
-
-    <section class="hero">
-
-      <div class="hero-badge">
-        <i class="fa-solid fa-file-signature"></i>
-        CLIENT DOCUMENT
       </div>
 
-      <h1>
-        Client Trading
-        <span>Agreement</span>
+
+      <h1 style="
+        font-size:25px;
+        margin:0 0 8px;
+      ">
+        CLIENT TRADING AGREEMENT
       </h1>
 
-      <p>
-        Please complete all required information carefully
-        before submitting your trading agreement.
+
+      <p style="
+        color:#647586;
+        font-size:11px;
+        margin-bottom:25px;
+      ">
+
+        Agreement ID:
+
+        <strong>
+          ${escapeHtml(
+            data.agreementId
+          )}
+        </strong>
+
       </p>
 
-    </section>
 
-
-    <form
-      id="agreementForm"
-      novalidate
-    >
-
-      <!-- SECTION 01 -->
-
-      <section class="form-card">
-
-        <div class="section-heading">
-
-          <div class="section-number">01</div>
-
-          <div>
-            <h2>Client Information</h2>
-
-            <p>
-              Enter the personal information associated
-              with your Cpt Markets account.
-            </p>
-          </div>
-
-        </div>
-
-
-        <div class="form-grid">
-
-          <div class="field">
-
-            <label for="clientName">
-              Full Name <span>*</span>
-            </label>
-
-            <div class="input-box">
-
-              <i class="fa-solid fa-user"></i>
-
-              <input
-                type="text"
-                id="clientName"
-                name="clientName"
-                placeholder="Enter your full name"
-                autocomplete="name"
-                required
-              >
-
-            </div>
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="username">
-              Username <span>*</span>
-            </label>
-
-            <div class="input-box">
-
-              <i class="fa-solid fa-at"></i>
-
-              <input
-                type="text"
-                id="username"
-                name="username"
-                placeholder="Your Cpt Markets username"
-                autocomplete="username"
-                required
-              >
-
-            </div>
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="userId">
-              Client User ID <span>*</span>
-            </label>
-
-            <div class="input-box">
-
-              <i class="fa-solid fa-id-card"></i>
-
-              <input
-                type="text"
-                id="userId"
-                name="userId"
-                placeholder="Enter your User ID"
-                required
-              >
-
-            </div>
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="country">
-              Country <span>*</span>
-            </label>
-
-            <div class="input-box select-box">
-
-              <i class="fa-solid fa-earth-americas"></i>
-
-              <select
-                id="country"
-                name="country"
-                required
-              >
-
-                <option value="">
-                  Select your country
-                </option>
-
-                <option value="Afghanistan">Afghanistan</option>
-                <option value="Australia">Australia</option>
-                <option value="Bangladesh">Bangladesh</option>
-                <option value="Canada">Canada</option>
-                <option value="France">France</option>
-                <option value="Germany">Germany</option>
-                <option value="India">India</option>
-                <option value="Italy">Italy</option>
-                <option value="Malaysia">Malaysia</option>
-                <option value="Netherlands">Netherlands</option>
-                <option value="Pakistan">Pakistan</option>
-                <option value="Saudi Arabia">Saudi Arabia</option>
-                <option value="Singapore">Singapore</option>
-                <option value="Spain">Spain</option>
-                <option value="Sweden">Sweden</option>
-                <option value="Switzerland">Switzerland</option>
-                <option value="United Arab Emirates">United Arab Emirates</option>
-                <option value="United Kingdom">United Kingdom</option>
-                <option value="United States">United States</option>
-                <option value="Other">Other</option>
-
-              </select>
-
-              <i class="fa-solid fa-chevron-down select-arrow"></i>
-
-            </div>
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="city">
-              City <span>*</span>
-            </label>
-
-            <div class="input-box">
-
-              <i class="fa-solid fa-location-dot"></i>
-
-              <input
-                type="text"
-                id="city"
-                name="city"
-                placeholder="Enter your city"
-                autocomplete="address-level2"
-                required
-              >
-
-            </div>
-
-          </div>
-
-
-          <div class="field field-full">
-
-            <label for="address">
-              Residential / Mailing Address <span>*</span>
-            </label>
-
-            <div class="input-box textarea-box">
-
-              <i class="fa-solid fa-map-location-dot"></i>
-
-              <textarea
-                id="address"
-                name="address"
-                placeholder="Enter your complete address"
-                autocomplete="street-address"
-                rows="3"
-                required
-              ></textarea>
-
-            </div>
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="phoneCountry">
-              Phone Country Code <span>*</span>
-            </label>
-
-            <div class="input-box select-box">
-
-              <i class="fa-solid fa-phone"></i>
-
-              <select
-                id="phoneCountry"
-                name="phoneCountry"
-                required
-              >
-
-                <option value="">
-                  Select code
-                </option>
-
-                <option value="+880">Bangladesh (+880)</option>
-                <option value="+44">United Kingdom (+44)</option>
-                <option value="+1">United States / Canada (+1)</option>
-                <option value="+91">India (+91)</option>
-                <option value="+971">UAE (+971)</option>
-                <option value="+966">Saudi Arabia (+966)</option>
-                <option value="+61">Australia (+61)</option>
-                <option value="+33">France (+33)</option>
-                <option value="+49">Germany (+49)</option>
-                <option value="+39">Italy (+39)</option>
-                <option value="+60">Malaysia (+60)</option>
-                <option value="+65">Singapore (+65)</option>
-                <option value="+92">Pakistan (+92)</option>
-                <option value="+34">Spain (+34)</option>
-                <option value="+41">Switzerland (+41)</option>
-                <option value="+46">Sweden (+46)</option>
-                <option value="other">Other</option>
-
-              </select>
-
-              <i class="fa-solid fa-chevron-down select-arrow"></i>
-
-            </div>
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="phone">
-              Phone Number <span>*</span>
-            </label>
-
-            <div class="input-box">
-
-              <i class="fa-solid fa-mobile-screen"></i>
-
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                placeholder="Enter phone number"
-                autocomplete="tel"
-                inputmode="tel"
-                required
-              >
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- SECTION 02 -->
-
-      <section class="form-card">
-
-        <div class="section-heading">
-
-          <div class="section-number">02</div>
-
-          <div>
-            <h2>Agreement Details</h2>
-
-            <p>
-              Select the date and duration of your trading
-              agreement.
-            </p>
-          </div>
-
-        </div>
-
-
-        <div class="form-grid">
-
-          <div class="field">
-
-            <label for="startDate">
-              Agreement Start Date <span>*</span>
-            </label>
-
-            <div class="input-box">
-
-              <i class="fa-solid fa-calendar-days"></i>
-
-              <input
-                type="date"
-                id="startDate"
-                name="startDate"
-                required
-              >
-
-            </div>
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="duration">
-              Agreement Duration <span>*</span>
-            </label>
-
-            <div class="input-box select-box">
-
-              <i class="fa-solid fa-clock"></i>
-
-              <select
-                id="duration"
-                name="duration"
-                required
-              >
-
-                <option value="">
-                  Select duration
-                </option>
-
-                <option value="1 Day">3 Day</option>
-                <option value="7 Days">5 Days</option>
-                <option value="30 Days">7 Days</option>
-                <option value="90 Days">9 Days</option>
-                <option value="180 Days">10 Days</option>
-                <option value="365 Days">11 Days</option>
-
-              </select>
-
-              <i class="fa-solid fa-chevron-down select-arrow"></i>
-
-            </div>
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="endDate">
-              Agreement End Date
-            </label>
-
-            <div class="input-box readonly-box">
-
-              <i class="fa-solid fa-calendar-check"></i>
-
-              <input
-                type="date"
-                id="endDate"
-                name="endDate"
-                readonly
-                tabindex="-1"
-              >
-
-            </div>
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="tradingPurpose">
-              Trading Purpose <span>*</span>
-            </label>
-
-            <div class="input-box select-box">
-
-              <i class="fa-solid fa-chart-line"></i>
-
-              <select
-                id="tradingPurpose"
-                name="tradingPurpose"
-                required
-              >
-
-                <option value="">
-                  Select purpose
-                </option>
-
-                <option value="Personal Trading">
-                  Personal Trading
-                </option>
-
-                <option value="Investment">
-                  Investment
-                </option>
-
-                <option value="Financial Market Trading">
-                  Financial Market Trading
-                </option>
-
-                <option value="Other">
-                  Other
-                </option>
-
-              </select>
-
-              <i class="fa-solid fa-chevron-down select-arrow"></i>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div
-          class="date-preview"
-          id="datePreview"
-        >
-
-          <div class="date-preview-item">
-
-            <span>START DATE</span>
-
-            <strong id="previewStart">—</strong>
-
-          </div>
-
-          <div class="date-arrow">
-            <i class="fa-solid fa-arrow-right"></i>
-          </div>
-
-          <div class="date-preview-item">
-
-            <span>END DATE</span>
-
-            <strong id="previewEnd">—</strong>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- AGE VERIFICATION -->
-
-      <section class="verification-card">
-
-        <div class="verification-icon">
-          <i class="fa-solid fa-user-shield"></i>
-        </div>
-
-        <div class="verification-content">
-
-          <h2>Age Verification</h2>
-
-          <p>
-            You must be at least
-            <strong>18 years old</strong>
-            to submit this trading agreement.
-          </p>
-
-          <label class="check-row">
-
-            <input
-              type="checkbox"
-              id="ageCheck"
-            >
-
-            <span>
-              I confirm that I am 18 years of age or older
-              and legally eligible to enter this agreement.
-            </span>
-
-          </label>
-
-        </div>
-
-      </section>
-
-
-      <!-- SUBMIT -->
-
-      <section class="submit-section">
-
-        <div class="submit-security">
-
-          <i class="fa-solid fa-lock"></i>
-
-          <span>
-            Secure electronic submission
-          </span>
-
-        </div>
-
-
-        <button
-          type="submit"
-          class="submit-button"
-          id="submitAgreement"
-        >
-
-          <span>
-            Submit Agreement
-          </span>
-
-          <i class="fa-solid fa-arrow-right"></i>
-
-        </button>
-
-
-        <p class="submit-note">
-
-          By submitting this agreement, you confirm that
-          the information provided is accurate and that you
-          accept the displayed risk disclosure.
-
-        </p>
-
-      </section>
-
-    </form>
-
-
-    <footer class="agreement-footer">
-
-      <div class="footer-brand">
-
-        <div class="mini-logo">
-          <strong>CPT</strong>
-          <span>MARKETS</span>
-        </div>
-
-        <div>
-          <strong>Cpt Markets</strong>
-          <span>Global Trading Platform</span>
-        </div>
-
-      </div>
-
-
-      <div class="footer-links">
-
-        <a href="https://cptmarketfx.com">
-          Main Website
-        </a>
-
-        <span>•</span>
-
-        <span>
-          Client Agreement
-        </span>
-
-      </div>
-
-
-      <p>
-        This document is provided for electronic agreement
-        purposes. Please review all information carefully
-        before submission.
-      </p>
-
-    </footer>
-
-  </main>
-
-
-  <!-- SUCCESS POPUP -->
-
-  <div
-    class="popup-overlay"
-    id="confirmationPopup"
-  >
-
-    <div
-      class="confirmation-popup"
-      id="confirmationCard"
-    >
-
-      <div class="popup-logo">
-
-        <div class="popup-logo-ring">
-
-          <div class="popup-logo-cpt">
-            CPT
-          </div>
-
-          <div class="popup-logo-markets">
-            MARKETS
-          </div>
-
-          <div class="popup-logo-uk">
-            UK
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="success-icon">
-        <i class="fa-solid fa-check"></i>
-      </div>
-
-
-      <h2>
-        Submission Successful
+      <h2 style="
+        font-size:15px;
+        border-bottom:1px solid #ddd;
+        padding-bottom:8px;
+      ">
+        Client Information
       </h2>
 
 
-      <p class="popup-subtitle">
-        Your Client Trading Agreement has been
-        successfully submitted.
-      </p>
+      <table style="
+        width:100%;
+        border-collapse:collapse;
+        margin-bottom:22px;
+        font-size:10px;
+      ">
+
+        ${pdfRow(
+          "Full Name",
+          data.clientName
+        )}
+
+        ${pdfRow(
+          "Username",
+          data.username
+        )}
+
+        ${pdfRow(
+          "Client User ID",
+          data.userId
+        )}
+
+        ${pdfRow(
+          "Country",
+          data.country
+        )}
+
+        ${pdfRow(
+          "City",
+          data.city
+        )}
+
+        ${pdfRow(
+          "Address",
+          data.address
+        )}
+
+        ${pdfRow(
+          "Phone",
+          `${data.phoneCountry} ${data.phone}`
+        )}
+
+      </table>
 
 
-      <div class="agreement-summary">
+      <h2 style="
+        font-size:15px;
+        border-bottom:1px solid #ddd;
+        padding-bottom:8px;
+      ">
+        Agreement Details
+      </h2>
 
-        <div class="summary-row">
-          <span>Agreement ID</span>
-          <strong id="popupAgreementId">—</strong>
-        </div>
 
-        <div class="summary-row">
-          <span>Client</span>
-          <strong id="popupClientName">—</strong>
-        </div>
+      <table style="
+        width:100%;
+        border-collapse:collapse;
+        margin-bottom:22px;
+        font-size:10px;
+      ">
 
-        <div class="summary-row">
-          <span>User ID</span>
-          <strong id="popupUserId">—</strong>
-        </div>
+        ${pdfRow(
+          "Start Date",
+          formatDate(
+            data.startDate
+          )
+        )}
 
-        <div class="summary-row">
-          <span>Country</span>
-          <strong id="popupCountry">—</strong>
-        </div>
+        ${pdfRow(
+          "End Date",
+          formatDate(
+            data.endDate
+          )
+        )}
 
-        <div class="summary-row">
-          <span>Agreement Date</span>
-          <strong id="popupStartDate">—</strong>
-        </div>
+        ${pdfRow(
+          "Duration",
+          data.duration
+        )}
 
-        <div class="summary-row">
-          <span>Agreement End</span>
-          <strong id="popupEndDate">—</strong>
-        </div>
+        ${pdfRow(
+          "Trading Purpose",
+          data.tradingPurpose
+        )}
 
-        <div class="summary-row">
-          <span>Duration</span>
-          <strong id="popupDuration">—</strong>
-        </div>
+        ${pdfRow(
+          "Status",
+          "SUBMITTED"
+        )}
 
-        <div class="summary-row">
+      </table>
 
-          <span>Status</span>
 
-          <strong class="status-success">
+      <div style="
+        margin-top:35px;
+        font-size:8px;
+        color:#8794a0;
+        border-top:1px solid #ddd;
+        padding-top:15px;
+      ">
 
-            <i class="fa-solid fa-circle-check"></i>
-            Submitted
-
-          </strong>
-
-        </div>
+        Cpt Markets — cptmarketfx.com
 
       </div>
 
-
-      <!-- TEMPORARY THANK YOU MESSAGE -->
-
-      <div
-        class="success-thankyou"
-        id="successThankYou"
-        aria-live="polite"
-      >
-
-        <i class="fa-solid fa-sparkles"></i>
-
-        <span>
-          Thank you for joining CPT Markets.
-        </span>
-
-      </div>
+    `;
 
 
-      <div class="popup-actions">
-
-        <button
-          type="button"
-          class="download-button"
-          id="downloadAgreement"
-        >
-
-          <i class="fa-solid fa-download"></i>
-
-          Download Agreement
-
-        </button>
+    document.body.appendChild(
+      pdfContainer
+    );
 
 
-        <a
-          href="https://cptmarketfx.com"
-          class="back-button"
-        >
+    try {
 
-          <i class="fa-solid fa-house"></i>
-
-          Return to Cpt Markets
-
-        </a>
-
-      </div>
-
-
-      <p class="popup-footer">
-
-        Please keep a copy of your agreement for your
-        records.
-
-      </p>
-
-    </div>
-
-  </div>
+      await new Promise(
+        resolve =>
+          requestAnimationFrame(
+            () =>
+              requestAnimationFrame(
+                resolve
+              )
+          )
+      );
 
 
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
-  ></script>
+      const canvas =
+        await html2canvas(
+          pdfContainer,
+          {
+            scale: 2,
+            useCORS: true,
+            backgroundColor:
+              "#ffffff",
+            logging: false
+          }
+        );
 
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
-  ></script>
 
-  <script
-    src="agreement.js?v=2.0"
-  ></script>
+      const imageData =
+        canvas.toDataURL(
+          "image/png"
+        );
 
-</body>
-</html>
+
+      const {
+        jsPDF
+      } =
+        window.jspdf;
+
+
+      const pdf =
+        new jsPDF({
+          orientation:
+            "portrait",
+          unit:
+            "mm",
+          format:
+            "a4"
+        });
+
+
+      const pageWidth =
+        pdf.internal.pageSize
+          .getWidth();
+
+
+      const pageHeight =
+        pdf.internal.pageSize
+          .getHeight();
+
+
+      const margin = 10;
+
+
+      const usableWidth =
+        pageWidth -
+        margin * 2;
+
+
+      const usableHeight =
+        pageHeight -
+        margin * 2;
+
+
+      const imageHeight =
+        canvas.height *
+        usableWidth /
+        canvas.width;
+
+
+      let heightLeft =
+        imageHeight;
+
+
+      let position =
+        margin;
+
+
+      pdf.addImage(
+        imageData,
+        "PNG",
+        margin,
+        position,
+        usableWidth,
+        imageHeight
+      );
+
+
+      heightLeft -=
+        usableHeight;
+
+
+      while (
+        heightLeft > 0
+      ) {
+
+        position =
+          margin +
+          heightLeft -
+          imageHeight;
+
+
+        pdf.addPage();
+
+
+        pdf.addImage(
+          imageData,
+          "PNG",
+          margin,
+          position,
+          usableWidth,
+          imageHeight
+        );
+
+
+        heightLeft -=
+          usableHeight;
+
+      }
+
+
+      /*
+        Download only.
+        No redirect.
+      */
+
+      pdf.save(
+        `${data.agreementId}.pdf`
+      );
+
+
+    } catch (error) {
+
+      console.error(
+        "PDF generation error:",
+        error
+      );
+
+
+      alert(
+        "PDF download could not be created. Please try again."
+      );
+
+
+    } finally {
+
+      pdfContainer.remove();
+
+
+      button.disabled =
+        false;
+
+
+      button.innerHTML =
+        originalButtonHTML;
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   PDF TABLE ROW
+   ========================================================= */
+
+function pdfRow(
+  label,
+  value
+) {
+
+  return `
+
+    <tr>
+
+      <td style="
+        padding:8px;
+        width:35%;
+        border-bottom:1px solid #eee;
+        color:#68798a;
+      ">
+
+        ${escapeHtml(label)}
+
+      </td>
+
+
+      <td style="
+        padding:8px;
+        border-bottom:1px solid #eee;
+        font-weight:700;
+      ">
+
+        ${escapeHtml(value)}
+
+      </td>
+
+    </tr>
+
+  `;
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+   ========================================================= */
+
+function escapeHtml(
+  value
+) {
+
+  return String(
+    value ?? ""
+  )
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+/* =========================================================
+   POPUP
+   ========================================================= */
+
+confirmationPopup.addEventListener(
+  "click",
+  event => {
+
+    if (
+      event.target ===
+      confirmationPopup
+    ) {
+
+      /*
+        Popup intentionally remains open.
+        This prevents accidental dismissal before
+        the client downloads the agreement.
+      */
+
+      return;
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   FINAL INITIALIZATION
+   ========================================================= */
+
+calculateEndDate();
+
+
+console.log(
+  "Cpt Markets Client Trading Agreement loaded successfully."
+);
