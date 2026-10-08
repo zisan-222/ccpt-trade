@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>CptMarkets - Account Control</title>
+
+    <link
+        rel="stylesheet"
+        href="admin-user-control.css"
+    >
+</head>
+
+<body>
+
+<header class="control-header">
+
+    <div class="brand">
+
+        <div class="brand-logo">
+            CM
+        </div>
+
+        <div>
+            <h1>CptMarkets</h1>
+            <span>Administrator Panel</span>
+        </div>
+
+    </div>
+
+    <div class="header-actions">
+
+        <button
+            id="backBtn"
+            type="button"
+        >
+            ← Dashboard
+        </button>
+
+        <button
+            id="adminLogout"
+            type="button"
+            class="logout-btn"
+        >
+            Logout
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <section class="page-title">
+
+        <div class="small-title">
+            ACCOUNT CONTROL
+        </div>
+
+        <h2>
+            User Account Control
+        </h2>
+
+        <p>
+            View registered users and control website access.
+        </p>
+
+    </section>
+
+
+    <!-- TOTAL USERS -->
+
+    <section class="stats-card">
+
+        <div class="stat-icon">
+            👥
+        </div>
+
+        <div>
+            <span>Total Users</span>
+
+            <strong id="totalUsers">
+                0
+            </strong>
+        </div>
+
+    </section>
+
+
+    <!-- SEARCH -->
+
+    <section class="card">
+
+        <div class="card-title">
+            <span>🔍</span>
+
+            <div>
+                <h3>Search User</h3>
+
+                <p>
+                    Search by UID, User ID, username or email.
+                </p>
+            </div>
+        </div>
+
+        <div class="search-row">
+
+            <input
+                id="searchInput"
+                type="text"
+                placeholder="Enter UID, User ID, username or email..."
+            >
+
+            <button
+                id="searchBtn"
+                type="button"
+            >
+                Search
+            </button>
+
+            <button
+                id="showAllBtn"
+                type="button"
+                class="secondary-btn"
+            >
+                Show All
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- USER LIST -->
+
+    <section class="card">
+
+        <div class="list-header">
+
+            <div>
+                <h3>Registered Users</h3>
+
+                <p>
+                    Account access status
+                </p>
+            </div>
+
+            <button
+                id="refreshBtn"
+                type="button"
+                class="refresh-btn"
+            >
+                ↻ Refresh
+            </button>
+
+        </div>
+
+
+        <div
+            id="loading"
+            class="loading"
+        >
+            Loading users...
+        </div>
+
+
+        <div
+            id="emptyState"
+            class="empty-state"
+            style="display:none;"
+        >
+            No users found.
+        </div>
+
+
+        <div
+            id="usersList"
+            class="users-list"
+        ></div>
+
+    </section>
+
+</main>
+
+
+<!-- USER CONTROL MODAL -->
+
+<div
+    id="controlModal"
+    class="modal"
+>
+
+    <div class="modal-box">
+
+        <button
+            id="closeModal"
+            class="modal-close"
+            type="button"
+        >
+            ×
+        </button>
+
+        <div class="modal-icon">
+            🔒
+        </div>
+
+        <h3>
+            Close Account
+        </h3>
+
+        <p id="modalUsername">
+            User
+        </p>
+
+        <input
+            type="hidden"
+            id="selectedUserUid"
+        >
+
+        <label>
+            Close account for
+        </label>
+
+        <select id="durationSelect">
+
+            <option value="1h">
+                1 Hour
+            </option>
+
+            <option value="5h">
+                5 Hours
+            </option>
+
+            <option value="10h">
+                10 Hours
+            </option>
+
+            <option value="12h">
+                12 Hours
+            </option>
+
+            <option value="24h">
+                24 Hours
+            </option>
+
+            <option value="3d">
+                3 Days
+            </option>
+
+            <option value="7d">
+                7 Days
+            </option>
+
+            <option value="permanent">
+                Permanently
+            </option>
+
+        </select>
+
+        <button
+            id="confirmCloseBtn"
+            type="button"
+            class="danger-btn"
+        >
+            Close Account
+        </button>
+
+    </div>
+
+</div>
+
+
+<div
+    id="message"
+    class="message"
+></div>
+
+
+<script
+    type="module"
+    src="admin-user-control.js"
+></script>
+
+</body>
+</html>
