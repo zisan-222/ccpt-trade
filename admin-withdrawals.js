@@ -108,12 +108,12 @@ function getPaymentDetails(data) {
     };
 }
 
-/* NOTIFICATION MESSAGE */
+/* MESSAGE */
 function showMessage(text, isError = false) {
     if (!message) return;
 
     message.textContent = text;
-    message.style.color = isError ? "#dc2626" : "#16a34a";
+    message.style.color = isError ? "#ff9aa5" : "#55d5ad";
 }
 
 /* COUNTERS */
@@ -138,7 +138,7 @@ function updateCounters() {
     }
 }
 
-/* COPY BUTTON HTML */
+/* COPY BUTTON */
 function copyButton(value) {
     if (!value) return "";
 
@@ -151,6 +151,19 @@ function copyButton(value) {
     `;
 }
 
+/* DETAIL BOX */
+function detailBox(label, value, copyValue = "") {
+    return `
+        <div class="detail">
+            <small>${safe(label)}</small>
+            <div class="${copyValue ? "copy-row" : ""}">
+                <strong>${safe(value || "Not provided")}</strong>
+                ${copyValue ? copyButton(copyValue) : ""}
+            </div>
+        </div>
+    `;
+}
+
 /* RENDER REQUESTS */
 function renderRequests() {
     if (!list) return;
@@ -160,8 +173,11 @@ function renderRequests() {
         : allRequests.filter(item => item.status === currentFilter);
 
     if (!filtered.length) {
-        list.innerHTML =
-            '<div class="panel empty">No withdrawal requests found.</div>';
+        list.innerHTML = `
+            <div class="empty">
+                No withdrawal requests found.
+            </div>
+        `;
         return;
     }
 
@@ -176,27 +192,44 @@ function renderRequests() {
 
         const id = safe(data.id);
         const uid = data.uid || data.userId || "";
+        const requestDate = dateText(data.createdAt);
 
-        const actions = status === "Pending"
-            ? `
+        let actions = "";
+
+        if (status === "Pending") {
+            actions = `
                 <div class="actions">
+
                     <button type="button"
                         class="approve"
                         data-action="approve"
                         data-id="${id}">
-                        Approve
+                        ✓ Approve
                     </button>
 
                     <button type="button"
                         class="reject"
                         data-action="reject"
                         data-id="${id}">
-                        Reject
+                        ✕ Reject
                     </button>
+
                 </div>
-            `
-            : `
-                <p class="subtitle">
+            `;
+        } else {
+            actions = `
+                <div class="actions">
+
+                    <button type="button"
+                        class="delete"
+                        data-action="delete"
+                        data-id="${id}">
+                        Delete Request
+                    </button>
+
+                </div>
+
+                <p class="processed-note">
                     ${
                         status === "Rejected"
                             ? "Rejection reason: " +
@@ -205,79 +238,83 @@ function renderRequests() {
                     }
                 </p>
             `;
+        }
 
         return `
         <article class="request">
 
+            <div class="request-date">
+                ${safe(requestDate)}
+            </div>
+
             <div class="request-top">
+
                 <div>
-                    <div class="amount">${money(data.amount)}</div>
-                    <div class="subtitle">Request ID: ${id}</div>
+                    <div class="amount">
+                        ${money(data.amount)}
+                    </div>
+
+                    <div class="request-id">
+                        Request ID: ${id}
+                    </div>
                 </div>
 
                 <span class="status ${statusClass}">
                     ${safe(status)}
                 </span>
+
             </div>
 
             <div class="details">
 
-                <div class="detail">
-                    <small>Customer Name</small>
-                    <strong>${safe(data.username || data.name || "Not provided")}</strong>
-                </div>
+                ${detailBox(
+                    "Customer Name",
+                    data.username || data.name || "Not provided"
+                )}
 
-                <div class="detail">
-                    <small>Customer UID</small>
-                    <div class="copy-row">
-                        <strong>${safe(uid || "Not provided")}</strong>
-                        ${copyButton(uid)}
-                    </div>
-                </div>
+                ${detailBox(
+                    "Customer UID",
+                    uid,
+                    uid
+                )}
 
-                <div class="detail">
-                    <small>Email</small>
-                    <strong>${safe(data.email || "Not provided")}</strong>
-                </div>
+                ${detailBox(
+                    "Email",
+                    data.email || "Not provided"
+                )}
 
-                <div class="detail">
-                    <small>Country</small>
-                    <strong>${safe(data.country || "Not provided")}</strong>
-                </div>
+                ${detailBox(
+                    "Country",
+                    data.country || "Not provided"
+                )}
 
-                <div class="detail">
-                    <small>Payment Method</small>
-                    <strong>${safe(data.paymentMethodLabel || data.paymentMethod || "Not provided")}</strong>
-                </div>
+                ${detailBox(
+                    "Payment Method",
+                    data.paymentMethodLabel || data.paymentMethod || "Not provided"
+                )}
 
-                <div class="detail">
-                    <small>Wallet Provider / Bank</small>
-                    <strong>${safe(payment.bank || "Not provided")}</strong>
-                </div>
+                ${detailBox(
+                    "Wallet Provider / Bank",
+                    payment.bank
+                )}
 
-                <div class="detail">
-                    <small>Account / Wallet Number</small>
-                    <div class="copy-row">
-                        <strong>${safe(payment.account || "Not provided")}</strong>
-                        ${copyButton(payment.account)}
-                    </div>
-                </div>
+                ${detailBox(
+                    "Account / Wallet Number",
+                    payment.account,
+                    payment.account
+                )}
 
-                <div class="detail">
-                    <small>Account Holder</small>
-                    <strong>${safe(payment.holder || "Not provided")}</strong>
-                </div>
-
-                <div class="detail">
-                    <small>Request Date</small>
-                    <strong>${safe(dateText(data.createdAt))}</strong>
-                </div>
+                ${detailBox(
+                    "Account Holder",
+                    payment.holder
+                )}
 
             </div>
 
             ${actions}
 
-        </article>`;
+        </article>
+        `;
     }).join("");
 }
 
@@ -334,7 +371,8 @@ function loadRequests() {
   balance unchanged
   reservedWithdrawal -= amount
 
-  If reservedWithdrawal is not present (legacy request),
+  Legacy requests:
+  If reservedWithdrawal is missing,
   calculate pending total from withdrawalRequests.
 */
 async function getReservedAmount(transaction, userRef, userData, userId) {
@@ -528,6 +566,12 @@ async function rejectRequest(id) {
                 throw new Error("This request has already been processed.");
             }
 
+            const currentUserId = currentData.userId || currentData.uid;
+
+            if (currentUserId !== userId) {
+                throw new Error("Customer UID does not match the request.");
+            }
+
             const userSnapshot = await transaction.get(userRef);
 
             if (!userSnapshot.exists()) {
@@ -571,6 +615,66 @@ async function rejectRequest(id) {
     }
 }
 
+/* DELETE PROCESSED REQUEST */
+async function deleteRequest(id) {
+    if (actionInProgress) return;
+
+    const item = allRequests.find(x => x.id === id);
+
+    if (!item) {
+        alert("Withdrawal request not found.");
+        return;
+    }
+
+    if (!["Successful", "Rejected"].includes(item.status)) {
+        alert("Pending requests cannot be deleted.");
+        return;
+    }
+
+    const confirmed = confirm(
+        "Are you sure you want to permanently delete this " +
+        item.status.toLowerCase() +
+        " withdrawal record?\n\nThis action cannot be undone."
+    );
+
+    if (!confirmed) return;
+
+    actionInProgress = true;
+    showMessage("Deleting withdrawal record...");
+
+    try {
+        const requestRef = doc(db, "withdrawalRequests", id);
+
+        await runTransaction(db, async transaction => {
+            const requestSnapshot = await transaction.get(requestRef);
+
+            if (!requestSnapshot.exists()) {
+                throw new Error("This withdrawal record no longer exists.");
+            }
+
+            const currentData = requestSnapshot.data();
+
+            if (!["Successful", "Rejected"].includes(currentData.status)) {
+                throw new Error(
+                    "Only Successful or Rejected requests can be deleted."
+                );
+            }
+
+            transaction.delete(requestRef);
+        });
+
+        showMessage("Withdrawal record deleted successfully.");
+
+    } catch (error) {
+        console.error("Delete error:", error);
+        showMessage(error.message || "Could not delete withdrawal record.", true);
+        alert("Could not delete request:\n" + error.message);
+
+    } finally {
+        actionInProgress = false;
+    }
+}
+
 /* FILTER TABS */
 document.querySelectorAll(".tab").forEach(button => {
     button.addEventListener("click", () => {
@@ -588,6 +692,7 @@ document.querySelectorAll(".tab").forEach(button => {
 /* COPY + ACTION EVENTS */
 if (list) {
     list.addEventListener("click", async event => {
+
         const copyButtonElement = event.target.closest("[data-copy]");
 
         if (copyButtonElement) {
@@ -603,6 +708,7 @@ if (list) {
                 setTimeout(() => {
                     copyButtonElement.textContent = oldText || "Copy";
                 }, 1200);
+
             } catch (error) {
                 console.error("Copy error:", error);
                 alert("Copy failed. Please copy manually.");
@@ -615,11 +721,16 @@ if (list) {
         if (!actionButton) return;
 
         const id = actionButton.dataset.id;
+        const action = actionButton.dataset.action;
 
-        if (actionButton.dataset.action === "approve") {
+        if (action === "approve") {
             await approveRequest(id);
-        } else if (actionButton.dataset.action === "reject") {
+
+        } else if (action === "reject") {
             await rejectRequest(id);
+
+        } else if (action === "delete") {
+            await deleteRequest(id);
         }
     });
 }
