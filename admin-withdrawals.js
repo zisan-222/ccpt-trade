@@ -96,9 +96,11 @@ function paymentValue(details, keys) {
     }
 
     for (const key of keys) {
-        if (details[key] !== undefined &&
+        if (
+            details[key] !== undefined &&
             details[key] !== null &&
-            String(details[key]).trim() !== "") {
+            String(details[key]).trim() !== ""
+        ) {
             return details[key];
         }
     }
@@ -151,14 +153,24 @@ function getPaymentDetails(data) {
 ========================================== */
 
 function updateCounters() {
-    document.getElementById("pendingCount").textContent =
-        allRequests.filter(x => x.status === "Pending").length;
+    const pending = document.getElementById("pendingCount");
+    const approved = document.getElementById("approvedCount");
+    const rejected = document.getElementById("rejectedCount");
 
-    document.getElementById("approvedCount").textContent =
-        allRequests.filter(x => x.status === "Successful").length;
+    if (pending) {
+        pending.textContent =
+            allRequests.filter(x => x.status === "Pending").length;
+    }
 
-    document.getElementById("rejectedCount").textContent =
-        allRequests.filter(x => x.status === "Rejected").length;
+    if (approved) {
+        approved.textContent =
+            allRequests.filter(x => x.status === "Successful").length;
+    }
+
+    if (rejected) {
+        rejected.textContent =
+            allRequests.filter(x => x.status === "Rejected").length;
+    }
 }
 
 
@@ -167,6 +179,7 @@ function updateCounters() {
 ========================================== */
 
 function renderRequests() {
+    if (!list) return;
 
     const filtered = currentFilter === "All"
         ? allRequests
@@ -181,7 +194,6 @@ function renderRequests() {
     }
 
     list.innerHTML = filtered.map(data => {
-
         const payment = getPaymentDetails(data);
 
         const statusClass =
@@ -190,7 +202,6 @@ function renderRequests() {
             "pending";
 
         const id = safe(data.id);
-
         const customerUID = data.uid || data.userId || "";
 
         const actionButtons = data.status === "Pending"
@@ -231,7 +242,6 @@ function renderRequests() {
         <article class="request">
 
             <div class="request-top">
-
                 <div>
                     <div class="amount">
                         ${money(data.amount)}
@@ -245,9 +255,7 @@ function renderRequests() {
                 <span class="status ${statusClass}">
                     ${safe(data.status || "Pending")}
                 </span>
-
             </div>
-
 
             <div class="details">
 
@@ -257,7 +265,6 @@ function renderRequests() {
                         ${safe(data.username || data.name || "Not provided")}
                     </strong>
                 </div>
-
 
                 <div class="detail">
                     <small>Customer UID</small>
@@ -276,27 +283,30 @@ function renderRequests() {
                     </div>
                 </div>
 
-
                 <div class="detail">
                     <small>Email</small>
-                    <strong>${safe(data.email || "Not provided")}</strong>
+                    <strong>
+                        ${safe(data.email || "Not provided")}
+                    </strong>
                 </div>
-
 
                 <div class="detail">
                     <small>Country</small>
-                    <strong>${safe(data.country || "Not provided")}</strong>
+                    <strong>
+                        ${safe(data.country || "Not provided")}
+                    </strong>
                 </div>
-
 
                 <div class="detail">
                     <small>Payment Method</small>
                     <strong>
-                        ${safe(data.paymentMethodLabel ||
-                            data.paymentMethod || "Not provided")}
+                        ${safe(
+                            data.paymentMethodLabel ||
+                            data.paymentMethod ||
+                            "Not provided"
+                        )}
                     </strong>
                 </div>
-
 
                 <div class="detail">
                     <small>Wallet Provider / Bank</small>
@@ -304,7 +314,6 @@ function renderRequests() {
                         ${safe(payment.bank || "Not provided")}
                     </strong>
                 </div>
-
 
                 <div class="detail">
                     <small>Account / Wallet Number</small>
@@ -325,7 +334,6 @@ function renderRequests() {
                     </div>
                 </div>
 
-
                 <div class="detail">
                     <small>Account Holder</small>
                     <strong>
@@ -333,10 +341,11 @@ function renderRequests() {
                     </strong>
                 </div>
 
-
                 <div class="detail">
                     <small>Request Date</small>
-                    <strong>${safe(dateText(data.createdAt))}</strong>
+                    <strong>
+                        ${safe(dateText(data.createdAt))}
+                    </strong>
                 </div>
 
             </div>
@@ -344,7 +353,6 @@ function renderRequests() {
             ${actionButtons}
 
         </article>`;
-
     }).join("");
 }
 
@@ -354,6 +362,10 @@ function renderRequests() {
 ========================================== */
 
 function loadRequests() {
+    if (!list || !message) {
+        console.error("Withdrawal page elements are missing.");
+        return;
+    }
 
     if (unsubscribeRequests) {
         unsubscribeRequests();
@@ -372,7 +384,6 @@ function loadRequests() {
         requestsQuery,
 
         snapshot => {
-
             allRequests = snapshot.docs.map(item => ({
                 id: item.id,
                 ...item.data()
@@ -385,7 +396,6 @@ function loadRequests() {
         },
 
         error => {
-
             console.error("Withdrawal loading error:", error);
 
             list.textContent =
@@ -403,7 +413,6 @@ function loadRequests() {
 ========================================== */
 
 async function approveRequest(id) {
-
     if (actionInProgress) return;
 
     const item = allRequests.find(x => x.id === id);
@@ -431,6 +440,7 @@ async function approveRequest(id) {
     actionInProgress = true;
 
     try {
+        const adminEmail = auth.currentUser?.email || ADMIN_EMAIL;
 
         const requestRef = doc(
             db,
@@ -439,7 +449,6 @@ async function approveRequest(id) {
         );
 
         await runTransaction(db, async transaction => {
-
             const requestSnapshot =
                 await transaction.get(requestRef);
 
@@ -458,15 +467,13 @@ async function approveRequest(id) {
             transaction.update(requestRef, {
                 status: "Successful",
                 approvedAt: serverTimestamp(),
-                approvedBy: auth.currentUser.email
+                approvedBy: adminEmail
             });
-
         });
 
         alert("Withdrawal request approved.");
 
     } catch (error) {
-
         console.error("Approval error:", error);
 
         alert(
@@ -475,7 +482,6 @@ async function approveRequest(id) {
         );
 
     } finally {
-
         actionInProgress = false;
     }
 }
@@ -486,7 +492,6 @@ async function approveRequest(id) {
 ========================================== */
 
 async function rejectRequest(id) {
-
     if (actionInProgress) return;
 
     const item = allRequests.find(x => x.id === id);
@@ -510,6 +515,7 @@ async function rejectRequest(id) {
     actionInProgress = true;
 
     try {
+        const adminEmail = auth.currentUser?.email || ADMIN_EMAIL;
 
         const requestRef = doc(
             db,
@@ -518,7 +524,6 @@ async function rejectRequest(id) {
         );
 
         await runTransaction(db, async transaction => {
-
             const requestSnapshot =
                 await transaction.get(requestRef);
 
@@ -538,15 +543,13 @@ async function rejectRequest(id) {
                 status: "Rejected",
                 rejectionReason: reason.trim(),
                 rejectedAt: serverTimestamp(),
-                rejectedBy: auth.currentUser.email
+                rejectedBy: adminEmail
             });
-
         });
 
         alert("Withdrawal request rejected.");
 
     } catch (error) {
-
         console.error("Rejection error:", error);
 
         alert(
@@ -555,7 +558,6 @@ async function rejectRequest(id) {
         );
 
     } finally {
-
         actionInProgress = false;
     }
 }
@@ -566,20 +568,17 @@ async function rejectRequest(id) {
 ========================================== */
 
 document.querySelectorAll(".tab").forEach(button => {
-
     button.addEventListener("click", () => {
-
         document.querySelectorAll(".tab").forEach(tab => {
             tab.classList.remove("active");
         });
 
         button.classList.add("active");
 
-        currentFilter = button.dataset.filter;
+        currentFilter = button.dataset.filter || "Pending";
 
         renderRequests();
     });
-
 });
 
 
@@ -587,52 +586,48 @@ document.querySelectorAll(".tab").forEach(button => {
    COPY BUTTON & ACTION BUTTONS
 ========================================== */
 
-list.addEventListener("click", async event => {
+if (list) {
+    list.addEventListener("click", async event => {
+        const copyButton = event.target.closest("[data-copy]");
 
-    const copyButton = event.target.closest("[data-copy]");
+        if (copyButton) {
+            const value = copyButton.dataset.copy || "";
 
-    if (copyButton) {
+            if (!value) return;
 
-        const value = copyButton.dataset.copy || "";
+            try {
+                await navigator.clipboard.writeText(value);
 
-        if (!value) return;
+                copyButton.textContent = "Copied";
 
-        try {
+                window.setTimeout(() => {
+                    copyButton.textContent = "Copy";
+                }, 1200);
 
-            await navigator.clipboard.writeText(value);
+            } catch (error) {
+                console.error("Copy error:", error);
 
-            copyButton.textContent = "Copied";
+                alert("Copy failed. Please copy manually.");
+            }
 
-            window.setTimeout(() => {
-                copyButton.textContent = "Copy";
-            }, 1200);
-
-        } catch (error) {
-
-            console.error("Copy error:", error);
-
-            alert("Copy failed. Please copy manually.");
+            return;
         }
 
-        return;
-    }
+        const actionButton = event.target.closest("[data-action]");
 
+        if (!actionButton) return;
 
-    const actionButton = event.target.closest("[data-action]");
+        const id = actionButton.dataset.id;
 
-    if (!actionButton) return;
+        if (actionButton.dataset.action === "approve") {
+            await approveRequest(id);
+        }
 
-    const id = actionButton.dataset.id;
-
-    if (actionButton.dataset.action === "approve") {
-        await approveRequest(id);
-    }
-
-    if (actionButton.dataset.action === "reject") {
-        await rejectRequest(id);
-    }
-
-});
+        if (actionButton.dataset.action === "reject") {
+            await rejectRequest(id);
+        }
+    });
+}
 
 
 /* ==========================================
@@ -640,39 +635,51 @@ list.addEventListener("click", async event => {
 ========================================== */
 
 onAuthStateChanged(auth, async user => {
+    const currentEmail = (user?.email || "")
+        .trim()
+        .toLowerCase();
 
     const authorized =
-        user &&
-        user.emailVerified !== false &&
-        (user.email || "").toLowerCase() ===
-        ADMIN_EMAIL.toLowerCase();
+        !!user &&
+        currentEmail === ADMIN_EMAIL.toLowerCase();
+
+    console.log(
+        "Withdrawal Admin Auth:",
+        user ? currentEmail : "No authenticated user",
+        "Authorized:",
+        authorized
+    );
 
     if (!authorized) {
-
         if (unsubscribeRequests) {
             unsubscribeRequests();
             unsubscribeRequests = null;
         }
 
-        if (user) {
-            try {
-                await signOut(auth);
-            } catch (error) {
-                console.error("Sign out error:", error);
-            }
+        pageReady = false;
+
+        // No logged-in user: return to admin login.
+        if (!user) {
+            window.location.replace("admin.html");
+            return;
+        }
+
+        // Logged-in account is not the authorized admin.
+        try {
+            await signOut(auth);
+        } catch (error) {
+            console.error("Sign out error:", error);
         }
 
         window.location.replace("admin.html");
         return;
     }
 
+    // Authorized admin: do not sign out.
     if (!pageReady) {
-
         pageReady = true;
-
         loadRequests();
     }
-
 });
 
 
@@ -681,12 +688,10 @@ onAuthStateChanged(auth, async user => {
 ========================================== */
 
 window.addEventListener("pagehide", () => {
-
     if (unsubscribeRequests) {
         unsubscribeRequests();
         unsubscribeRequests = null;
     }
-
 });
 
 
