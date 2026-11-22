@@ -1,3 +1,4 @@
+
 /* ==========================================
    CPTMARKETS
    balance.js
@@ -81,6 +82,7 @@ function initializeLocalBalance() {
 
 /* ==========================================
    GET BALANCE
+   AVAILABLE BALANCE
 ========================================== */
 
 function getBalance() {
@@ -381,7 +383,7 @@ async function connectFirebaseBalance(
 
 
         /* ==========================
-           FIREBASE REAL-TIME LISTENER
+           FIREBASE REAL-TIME BALANCE LISTENER
         ========================== */
 
         balanceUnsubscribe =
@@ -408,6 +410,10 @@ async function connectFirebaseBalance(
                         snapshot.data();
 
 
+                    /*
+                     * TOTAL BALANCE
+                     */
+
                     let firebaseBalance =
                         Number(
                             data.balance || 0
@@ -433,9 +439,54 @@ async function connectFirebaseBalance(
                         );
 
 
-                    firebaseBalance =
+                    /*
+                     * RESERVED WITHDRAWAL
+                     */
+
+                    let reservedWithdrawal =
                         Number(
-                            firebaseBalance.toFixed(2)
+                            data.reservedWithdrawal || 0
+                        );
+
+
+                    if (
+                        !Number.isFinite(
+                            reservedWithdrawal
+                        )
+                    ) {
+
+                        reservedWithdrawal =
+                            0;
+
+                    }
+
+
+                    reservedWithdrawal =
+                        Math.max(
+                            0,
+                            reservedWithdrawal
+                        );
+
+
+                    /*
+                     * AVAILABLE BALANCE
+                     */
+
+                    let availableBalance =
+                        firebaseBalance -
+                        reservedWithdrawal;
+
+
+                    availableBalance =
+                        Math.max(
+                            0,
+                            availableBalance
+                        );
+
+
+                    availableBalance =
+                        Number(
+                            availableBalance.toFixed(2)
                         );
 
 
@@ -448,7 +499,7 @@ async function connectFirebaseBalance(
 
                         getBalanceKey(),
 
-                        firebaseBalance.toFixed(2)
+                        availableBalance.toFixed(2)
 
                     );
 
@@ -458,7 +509,16 @@ async function connectFirebaseBalance(
 
                     console.log(
                         "CptMarkets balance synced:",
-                        firebaseBalance
+                        {
+                            totalBalance:
+                                firebaseBalance,
+
+                            reservedWithdrawal:
+                                reservedWithdrawal,
+
+                            availableBalance:
+                                availableBalance
+                        }
                     );
 
                 },
@@ -585,6 +645,64 @@ async function changeFirebaseBalance(
                     }
 
 
+                    /*
+                     * READ RESERVED WITHDRAWAL
+                     */
+
+                    let reservedWithdrawal =
+                        Number(
+                            userData.reservedWithdrawal || 0
+                        );
+
+
+                    if (
+                        !Number.isFinite(
+                            reservedWithdrawal
+                        )
+                    ) {
+
+                        reservedWithdrawal =
+                            0;
+
+                    }
+
+
+                    reservedWithdrawal =
+                        Math.max(
+                            0,
+                            reservedWithdrawal
+                        );
+
+
+                    /*
+                     * SUBTRACTION MUST NOT
+                     * USE RESERVED MONEY.
+                     */
+
+                    if (amount < 0) {
+
+                        const availableBalance =
+                            Math.max(
+                                0,
+                                oldBalance -
+                                reservedWithdrawal
+                            );
+
+
+                        if (
+                            availableBalance <
+                            Math.abs(amount)
+                        ) {
+
+                            throw new Error(
+                                "Insufficient available balance."
+                            );
+
+                        }
+
+                    }
+
+
                     let newBalance =
                         oldBalance +
                         amount;
@@ -630,10 +748,47 @@ async function changeFirebaseBalance(
 
         /*
          * Update local cache immediately.
+         * Listener will sync the final
+         * Available Balance from Firebase.
          */
 
+        const availableBalance =
+            await (async function() {
+
+                const snapshot =
+                    await firestore.getDoc(
+                        firestore.doc(
+                            CPT_DB,
+                            "users",
+                            currentBalanceUser.uid
+                        )
+                    );
+
+                if (!snapshot.exists()) {
+                    return 0;
+                }
+
+                const data =
+                    snapshot.data();
+
+                const total =
+                    Number(data.balance) || 0;
+
+                const reserved =
+                    Number(data.reservedWithdrawal) || 0;
+
+                return Math.max(
+                    0,
+                    Number(
+                        (total - reserved).toFixed(2)
+                    )
+                );
+
+            })();
+
+
         setLocalBalance(
-            finalBalance
+            availableBalance
         );
 
 
@@ -721,7 +876,7 @@ async function subtractBalance(
 
     /*
      * Firebase transaction performs
-     * the real balance check.
+     * the real AVAILABLE balance check.
      */
 
     return await changeFirebaseBalance(
@@ -825,9 +980,38 @@ async function adminSetBalance(
         );
 
 
-        setLocalBalance(
-            amount
-        );
+        /*
+         * Refresh from Firebase.
+         * Reserved amount remains unchanged.
+         */
+
+        const snapshot =
+            await firestore.getDoc(
+                userRef
+            );
+
+
+        if (snapshot.exists()) {
+
+            const data =
+                snapshot.data();
+
+            const total =
+                Number(data.balance) || 0;
+
+            const reserved =
+                Number(data.reservedWithdrawal) || 0;
+
+            setLocalBalance(
+                Math.max(
+                    0,
+                    Number(
+                        (total - reserved).toFixed(2)
+                    )
+                )
+            );
+
+        }
 
 
         return true;
