@@ -54,14 +54,21 @@ body{margin:0;padding:0;background:radial-gradient(circle at 50% 0%,#0d1b2a 0%,#
 .dynamic-field{display:none}
 .submit-btn{width:100%;background:linear-gradient(135deg,#00ffff 0%,#00bfff 50%,#0080ff 100%);border:none;padding:16px;border-radius:16px;color:#050b14;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 8px 30px rgba(0,229,255,.4);transition:all .3s;display:flex;align-items:center;justify-content:center;gap:12px;margin-top:10px}
 .submit-btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
-.popup-message{display:none;margin-top:18px;padding:16px;border-radius:14px;background:rgba(10,20,36,.98);border:1px solid rgba(0,229,255,.4);text-align:center;font-size:13.5px;color:#f8fafc;line-height:1.5;box-shadow:0 10px 30px rgba(0,0,0,.6);overflow-wrap:anywhere}
+.popup-message{display:none;margin-top:18px;padding:14px;border-radius:14px;background:rgba(10,20,36,.98);border:1px solid rgba(255,80,80,.4);text-align:center;font-size:13.5px;color:#ff8c8c;line-height:1.5;overflow-wrap:anywhere}
 .security-box{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:16px;display:flex;gap:14px;align-items:flex-start;text-align:left;margin-bottom:24px}
 .security-box i{color:#00e5ff;font-size:18px;margin-top:2px}
 .security-box p{margin:0;font-size:12px;color:#8fa3bf;line-height:1.5}
 .history-card{background:linear-gradient(145deg,rgba(14,26,45,.95),rgba(7,14,28,.98));border:1px solid rgba(0,229,255,.15);border-radius:22px;padding:20px;margin-bottom:22px;box-shadow:0 15px 35px rgba(0,0,0,.35)}
-.history-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.history-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:0}
 .history-title h3{margin:0;font-size:17px;color:#00e5ff}
 .history-title i{color:#00e5ff}
+.history-toggle{background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.3);color:#00e5ff;border-radius:10px;padding:9px 12px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap}
+.history-content{display:none;margin-top:18px}
+.history-content.open{display:block}
+.history-tools{display:flex;align-items:center;gap:10px;margin-bottom:15px;flex-wrap:wrap}
+.history-tools label{font-size:12px;color:#8fa3bf}
+.history-tools input{flex:1;min-width:145px;background:#071222;border:1px solid rgba(0,229,255,.25);border-radius:10px;padding:10px;color:#fff;color-scheme:dark;outline:none}
+.clear-filter{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#cbd5e1;border-radius:10px;padding:10px 12px;font-size:11px;cursor:pointer}
 .history-item{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.025);border-radius:14px;padding:14px;margin-bottom:12px}
 .history-item:last-child{margin-bottom:0}
 .history-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
@@ -75,16 +82,24 @@ body{margin:0;padding:0;background:radial-gradient(circle at 50% 0%,#0d1b2a 0%,#
 .rejection-note{margin-top:12px;padding:11px;border-radius:10px;background:rgba(120,20,20,.18);border:1px solid rgba(255,80,80,.2);font-size:12px;line-height:1.5;color:#ffb0b0}
 .empty-history{text-align:center;color:#8fa3bf;font-size:13px;padding:20px 8px}
 .small-note{font-size:11px;color:#8fa3bf;line-height:1.5;margin-top:8px}
-@media(max-width:420px){.container{padding:22px 14px}.withdraw-card{padding:20px}.balance-card{padding:14px}.history-card{padding:16px}}
+
+/* SUCCESS POPUP */
+.success-overlay{display:none;position:fixed;inset:0;z-index:2000;background:rgba(2,7,15,.82);backdrop-filter:blur(9px);align-items:center;justify-content:center;padding:22px}
+.success-overlay.show{display:flex}
+.success-box{width:100%;max-width:360px;background:linear-gradient(145deg,#132540,#091525);border:1px solid rgba(54,211,153,.4);border-radius:24px;padding:30px 24px;text-align:center;box-shadow:0 20px 70px rgba(0,0,0,.65);animation:successPop .3s ease}
+@keyframes successPop{from{opacity:0;transform:scale(.88)}to{opacity:1;transform:scale(1)}}
+.success-icon{width:76px;height:76px;border-radius:50%;margin:0 auto 18px;background:rgba(54,211,153,.13);border:2px solid #36d399;color:#36d399;display:flex;align-items:center;justify-content:center;font-size:34px;box-shadow:0 0 28px rgba(54,211,153,.18)}
+.success-box h3{margin:0 0 9px;color:#36d399;font-size:20px}
+.success-box p{margin:0;color:#a9bad0;font-size:13px;line-height:1.6}
+.success-close{width:100%;margin-top:22px;padding:13px;border:0;border-radius:12px;background:linear-gradient(135deg,#36d399,#00b981);color:#04150f;font-weight:800;font-size:14px;cursor:pointer}
+@media(max-width:420px){.container{padding:22px 14px}.withdraw-card{padding:20px}.balance-card{padding:14px}.history-card{padding:16px}.history-title h3{font-size:15px}}
 </style>
 </head>
 
 <body>
 
 <div class="header">
-    <a href="dashboard.html" class="back-btn">
-        <i class="fa-solid fa-arrow-left"></i>
-    </a>
+    <a href="dashboard.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
     <h1><i class="fa-solid fa-shield-halved"></i> CptMarkets</h1>
     <button id="languageBtn" type="button" style="background:none;border:none;cursor:pointer;font-size:18px;padding:0 4px;line-height:1;color:inherit;">🇬🇧</button>
 </div>
@@ -94,9 +109,7 @@ body{margin:0;padding:0;background:radial-gradient(circle at 50% 0%,#0d1b2a 0%,#
     <div class="hero-section">
         <div class="withdraw-hero-icon">
             <div class="withdraw-icon-glow"></div>
-            <div class="withdraw-icon-circle">
-                <i class="fa-solid fa-vault"></i>
-            </div>
+            <div class="withdraw-icon-circle"><i class="fa-solid fa-vault"></i></div>
         </div>
         <h2 data-key="globalWithdrawal">Global Fund Withdrawal</h2>
         <p data-key="globalPlatform">Global integrated financial trading platform for worldwide users</p>
@@ -108,13 +121,11 @@ body{margin:0;padding:0;background:radial-gradient(circle at 50% 0%,#0d1b2a 0%,#
             <h3 id="displayBalance">Loading...</h3>
             <div class="small-note" id="reservedBalanceText">Pending withdrawals: 0.00 USDT</div>
         </div>
-        <div class="balance-icon-badge">
-            <i class="fa-solid fa-wallet"></i>
-        </div>
+        <div class="balance-icon-badge"><i class="fa-solid fa-wallet"></i></div>
     </div>
 
     <div class="withdraw-card">
-        <form id="withdrawForm">
+        <form id="withdrawForm" novalidate>
 
             <div class="input-group">
                 <label data-key="paymentMethod">Worldwide Payment Method</label>
@@ -125,7 +136,7 @@ body{margin:0;padding:0;background:radial-gradient(circle at 50% 0%,#0d1b2a 0%,#
                         <i class="fa-solid fa-chevron-down" id="dropdownArrow"></i>
                     </div>
                 </div>
-                <input type="hidden" id="paymentMethod" required>
+                <input type="hidden" id="paymentMethod">
             </div>
 
             <div id="bankField" class="input-group dynamic-field">
@@ -184,7 +195,7 @@ body{margin:0;padding:0;background:radial-gradient(circle at 50% 0%,#0d1b2a 0%,#
                 <label>Withdrawal Amount (USDT)</label>
                 <div class="input-wrapper">
                     <i class="fa-solid fa-dollar-sign"></i>
-                    <input type="number" id="withdrawAmount" placeholder="Enter your amount" min="0.01" step="0.01" required>
+                    <input type="number" id="withdrawAmount" placeholder="Enter your amount" min="0.01" step="0.01">
                     <button type="button" class="max-btn" onclick="settableFutureMax()">MAX</button>
                 </div>
             </div>
@@ -193,11 +204,9 @@ body{margin:0;padding:0;background:radial-gradient(circle at 50% 0%,#0d1b2a 0%,#
                 <label>Fund / Trading Password</label>
                 <div class="input-wrapper">
                     <i class="fa-solid fa-lock"></i>
-                    <input type="password" id="securityPassword" placeholder="Enter your account password" autocomplete="current-password" required>
+                    <input type="password" id="securityPassword" placeholder="Enter your account password" autocomplete="current-password">
                 </div>
-                <div class="small-note">
-                    Enter the password used for your Firebase Email/Password account.
-                </div>
+                <div class="small-note">Enter the password used for your Firebase Email/Password account.</div>
             </div>
 
             <button type="submit" class="submit-btn" id="submitWithdrawalBtn">
@@ -205,17 +214,28 @@ body{margin:0;padding:0;background:radial-gradient(circle at 50% 0%,#0d1b2a 0%,#
                 <i class="fa-solid fa-arrow-right"></i>
             </button>
 
-            <div id="popupMessage" class="popup-message" role="status"></div>
+            <div id="popupMessage" class="popup-message" role="alert"></div>
         </form>
     </div>
 
     <div class="history-card">
         <div class="history-title">
             <h3><i class="fa-solid fa-clock-rotate-left"></i> Withdrawal History</h3>
-            <i class="fa-solid fa-list-check"></i>
+            <button type="button" class="history-toggle" id="historyToggle" aria-expanded="false">
+                <i class="fa-solid fa-chevron-down" id="historyToggleIcon"></i>
+                <span id="historyToggleText">Show History</span>
+            </button>
         </div>
-        <div id="withdrawalHistory">
-            <div class="empty-history">Loading withdrawal history...</div>
+
+        <div id="historyContent" class="history-content">
+            <div class="history-tools">
+                <label for="historyDateFilter">Filter date:</label>
+                <input type="date" id="historyDateFilter">
+                <button type="button" class="clear-filter" id="clearHistoryFilter">Clear</button>
+            </div>
+            <div id="withdrawalHistory">
+                <div class="empty-history">Loading withdrawal history...</div>
+            </div>
         </div>
     </div>
 
@@ -223,13 +243,11 @@ body{margin:0;padding:0;background:radial-gradient(circle at 50% 0%,#0d1b2a 0%,#
         <i class="fa-solid fa-shield-cat"></i>
         <p>
             <strong>Secure Platform Payout:</strong>
-            Your withdrawal request will be submitted for review.
-            Please make sure your payment details are correct.
+            Please make sure your payment details are correct before submitting your withdrawal request. Your available balance will update automatically.
         </p>
     </div>
 
 </div>
-
 
 <!-- PAYMENT METHOD MODAL -->
 <div id="methodModal" class="modal-overlay" onclick="closeModalOnOutside(event,'methodModal')">
@@ -242,32 +260,22 @@ body{margin:0;padding:0;background:radial-gradient(circle at 50% 0%,#0d1b2a 0%,#
         <div class="modal-category-title">Traditional Banking & Cards</div>
         <div class="modal-option" onclick="selectMethod('bank','Global Bank Wire & SWIFT Transfer','fa-building-columns')">
             <div class="country-flag"><i class="fa-solid fa-building-columns" style="color:#00e5ff"></i></div>
-            <div class="modal-option-info">
-                <h4>Global Bank Wire, SWIFT & IBAN</h4>
-                <p>Direct bank transfers with international country options</p>
-            </div>
+            <div class="modal-option-info"><h4>Global Bank Wire, SWIFT & IBAN</h4><p>Direct bank transfers with international country options</p></div>
         </div>
 
         <div class="modal-category-title">Mobile Wallets & Digital Banks</div>
         <div class="modal-option" onclick="selectMethod('mobile','Global Mobile Banking & Digital Wallets','fa-wallet')">
             <div class="country-flag"><i class="fa-solid fa-wallet" style="color:#00e5ff"></i></div>
-            <div class="modal-option-info">
-                <h4>International Digital Wallets & Mobile Banking</h4>
-                <p>Mobile banking and digital wallet options</p>
-            </div>
+            <div class="modal-option-info"><h4>International Digital Wallets & Mobile Banking</h4><p>Mobile banking and digital wallet options</p></div>
         </div>
 
         <div class="modal-category-title">Cryptocurrency Network</div>
         <div class="modal-option" onclick="selectMethod('crypto','Global Crypto Exchange Wallet (USDT)','fa-coins')">
             <div class="country-flag"><i class="fa-solid fa-coins" style="color:#00e5ff"></i></div>
-            <div class="modal-option-info">
-                <h4>Crypto Network Exchange (USDT TRC20/ERC20)</h4>
-                <p>USDT wallet address payout</p>
-            </div>
+            <div class="modal-option-info"><h4>Crypto Network Exchange (USDT TRC20/ERC20)</h4><p>USDT wallet address payout</p></div>
         </div>
     </div>
 </div>
-
 
 <!-- BANK COUNTRY MODAL -->
 <div id="bankCountryModal" class="modal-overlay" onclick="closeModalOnOutside(event,'bankCountryModal')">
@@ -278,7 +286,6 @@ body{margin:0;padding:0;background:radial-gradient(circle at 50% 0%,#0d1b2a 0%,#
         </div>
 
         <div class="modal-category-title">North America & Europe</div>
-
         <div class="modal-option" onclick="selectBankCountry('United States','🇺🇸 United States (USA) - Bank Wire')"><div class="country-flag">🇺🇸</div><div class="modal-option-info"><h4>United States (USA)</h4><p>USD Accounts</p></div></div>
         <div class="modal-option" onclick="selectBankCountry('United Kingdom','🇬🇧 United Kingdom (UK) - Bank Wire')"><div class="country-flag">🇬🇧</div><div class="modal-option-info"><h4>United Kingdom (UK)</h4><p>GBP Accounts</p></div></div>
         <div class="modal-option" onclick="selectBankCountry('Italy','🇮🇹 Italy - Bank Wire & SEPA')"><div class="country-flag">🇮🇹</div><div class="modal-option-info"><h4>Italy</h4><p>EUR Accounts</p></div></div>
@@ -287,7 +294,6 @@ body{margin:0;padding:0;background:radial-gradient(circle at 50% 0%,#0d1b2a 0%,#
         <div class="modal-option" onclick="selectBankCountry('Germany','🇩🇪 Germany - Bank Wire & SEPA')"><div class="country-flag">🇩🇪</div><div class="modal-option-info"><h4>Germany</h4><p>EUR Accounts</p></div></div>
 
         <div class="modal-category-title">Asia & Other Regions</div>
-
         <div class="modal-option" onclick="selectBankCountry('Bangladesh','🇧🇩 Bangladesh - Bank Wire')"><div class="country-flag">🇧🇩</div><div class="modal-option-info"><h4>Bangladesh</h4><p>BDT / USD Accounts</p></div></div>
         <div class="modal-option" onclick="selectBankCountry('India','🇮🇳 India - Bank Wire')"><div class="country-flag">🇮🇳</div><div class="modal-option-info"><h4>India</h4><p>INR / USD Accounts</p></div></div>
         <div class="modal-option" onclick="selectBankCountry('China','🇨🇳 China - Bank Wire')"><div class="country-flag">🇨🇳</div><div class="modal-option-info"><h4>China</h4><p>CNY Accounts</p></div></div>
@@ -298,7 +304,6 @@ body{margin:0;padding:0;background:radial-gradient(circle at 50% 0%,#0d1b2a 0%,#
     </div>
 </div>
 
-
 <!-- MOBILE COUNTRY MODAL -->
 <div id="mobileCountryModal" class="modal-overlay" onclick="closeModalOnOutside(event,'mobileCountryModal')">
     <div class="modal-content">
@@ -308,7 +313,6 @@ body{margin:0;padding:0;background:radial-gradient(circle at 50% 0%,#0d1b2a 0%,#
         </div>
 
         <div class="modal-category-title">Europe & North America Mobile Wallets</div>
-
         <div class="modal-option" onclick="selectMobileCountry('United Kingdom','🇬🇧 United Kingdom (UK) - Revolut / Wise')"><div class="country-flag">🇬🇧</div><div class="modal-option-info"><h4>United Kingdom (UK)</h4><p>Revolut, Wise, Monzo, Starling Bank</p></div></div>
         <div class="modal-option" onclick="selectMobileCountry('United States','🇺🇸 United States (USA) - Cash App / Zelle / PayPal')"><div class="country-flag">🇺🇸</div><div class="modal-option-info"><h4>United States (USA)</h4><p>Cash App, Zelle, Venmo, PayPal</p></div></div>
         <div class="modal-option" onclick="selectMobileCountry('Italy','🇮🇹 Italy - Satispay / Postepay / PayPal')"><div class="country-flag">🇮🇹</div><div class="modal-option-info"><h4>Italy</h4><p>Satispay, Postepay, Hype, Revolut</p></div></div>
@@ -317,7 +321,6 @@ body{margin:0;padding:0;background:radial-gradient(circle at 50% 0%,#0d1b2a 0%,#
         <div class="modal-option" onclick="selectMobileCountry('Germany','🇩🇪 Germany - N26 / PayPal / Klarna')"><div class="country-flag">🇩🇪</div><div class="modal-option-info"><h4>Germany</h4><p>N26, Klarna, PayPal, Revolut</p></div></div>
 
         <div class="modal-category-title">Asia & Global Mobile Wallets</div>
-
         <div class="modal-option" onclick="selectMobileCountry('Bangladesh','🇧🇩 Bangladesh - bKash / Nagad / Rocket')"><div class="country-flag">🇧🇩</div><div class="modal-option-info"><h4>Bangladesh</h4><p>bKash, Nagad, Rocket Mobile Wallets</p></div></div>
         <div class="modal-option" onclick="selectMobileCountry('India','🇮🇳 India - Paytm / PhonePe / GPay')"><div class="country-flag">🇮🇳</div><div class="modal-option-info"><h4>India</h4><p>Paytm, PhonePe, Google Pay India</p></div></div>
         <div class="modal-option" onclick="selectMobileCountry('China','🇨🇳 China - Alipay / WeChat Pay')"><div class="country-flag">🇨🇳</div><div class="modal-option-info"><h4>China</h4><p>Alipay, WeChat Pay</p></div></div>
@@ -326,14 +329,24 @@ body{margin:0;padding:0;background:radial-gradient(circle at 50% 0%,#0d1b2a 0%,#
     </div>
 </div>
 
+<!-- SUCCESS POPUP -->
+<div class="success-overlay" id="successOverlay" role="dialog" aria-modal="true" aria-labelledby="successTitle">
+    <div class="success-box">
+        <div class="success-icon"><i class="fa-solid fa-check"></i></div>
+        <h3 id="successTitle">Request Submitted!</h3>
+        <p id="successText">Your withdrawal request has been submitted successfully.</p>
+        <button type="button" class="success-close" onclick="closeSuccessPopup()">Continue</button>
+    </div>
+</div>
 
 <script>
-let userBalance = 0;
-let pendingWithdrawalTotal = 0;
-let availableBalance = 0;
-let currentUser = null;
-let isSubmitting = false;
-let userData = {};
+let userBalance=0;
+let pendingWithdrawalTotal=0;
+let reservedWithdrawal=0;
+let availableBalance=0;
+let currentUser=null;
+let isSubmitting=false;
+let userData={};
 
 function openMethodModal(){document.getElementById("methodModal").style.display="flex"}
 function openBankCountryModal(){document.getElementById("bankCountryModal").style.display="flex"}
@@ -380,27 +393,26 @@ function togglePaymentFields(method){
 
     Object.values(groups).forEach(group=>group.style.display="none");
 
-    const fields=[
-        "bankCountry","bankAccountNumber","bankNameCode","bankHolderName",
-        "mobileCountry","walletProviderName","mobileWalletNumber",
-        "cryptoAddress"
+    const allFields=[
+        "bankAccountNumber","bankNameCode","bankHolderName",
+        "walletProviderName","mobileWalletNumber","cryptoAddress"
     ];
 
-    fields.forEach(id=>document.getElementById(id).required=false);
+    allFields.forEach(id=>{
+        document.getElementById(id).required=false;
+    });
 
     if(method==="bank"){
         groups.bank.style.display="block";
-        ["bankCountry","bankAccountNumber","bankNameCode","bankHolderName"]
-            .forEach(id=>document.getElementById(id).required=true);
-    }
-
-    if(method==="mobile"){
+        ["bankAccountNumber","bankNameCode","bankHolderName"].forEach(id=>{
+            document.getElementById(id).required=true;
+        });
+    }else if(method==="mobile"){
         groups.mobile.style.display="block";
-        ["mobileCountry","walletProviderName","mobileWalletNumber"]
-            .forEach(id=>document.getElementById(id).required=true);
-    }
-
-    if(method==="crypto"){
+        ["walletProviderName","mobileWalletNumber"].forEach(id=>{
+            document.getElementById(id).required=true;
+        });
+    }else if(method==="crypto"){
         groups.crypto.style.display="block";
         document.getElementById("cryptoAddress").required=true;
     }
@@ -411,22 +423,31 @@ function settableFutureMax(){
         availableBalance>0?availableBalance.toFixed(2):"";
 }
 
-function showMessage(text,type="success"){
+function showMessage(message,type="error"){
     const popup=document.getElementById("popupMessage");
     popup.style.display="block";
-    popup.textContent=text;
+    popup.textContent=message;
+    popup.style.color=type==="error"?"#ff8c8c":"#36d399";
+    popup.style.borderColor=type==="error"?"rgba(255,80,80,.5)":"rgba(54,211,153,.4)";
+}
 
-    if(type==="error"){
-        popup.style.color="#ff6b6b";
-        popup.style.borderColor="rgba(255,80,80,.5)";
-    }else{
-        popup.style.color="#00e5ff";
-        popup.style.borderColor="rgba(0,229,255,.4)";
-    }
+function hideMessage(){
+    const popup=document.getElementById("popupMessage");
+    popup.style.display="none";
+    popup.textContent="";
+}
+
+function showSuccessPopup(){
+    document.getElementById("successOverlay").classList.add("show");
+}
+
+function closeSuccessPopup(){
+    document.getElementById("successOverlay").classList.remove("show");
 }
 
 function formatMoney(value){
-    return Number(value||0).toFixed(2)+" USDT";
+    const number=Number(value);
+    return (Number.isFinite(number)?number:0).toFixed(2)+" USDT";
 }
 
 function formatDate(value){
@@ -446,8 +467,31 @@ function escapeHTML(value){
 }
 
 window.settableFutureMax=settableFutureMax;
-</script>
+window.closeSuccessPopup=closeSuccessPopup;
 
+document.getElementById("historyToggle").addEventListener("click",()=>{
+    const content=document.getElementById("historyContent");
+    const isOpen=content.classList.toggle("open");
+
+    document.getElementById("historyToggle").setAttribute("aria-expanded",String(isOpen));
+    document.getElementById("historyToggleText").textContent=isOpen?"Hide History":"Show History";
+    document.getElementById("historyToggleIcon").className=
+        isOpen?"fa-solid fa-chevron-up":"fa-solid fa-chevron-down";
+});
+
+document.getElementById("historyDateFilter").addEventListener("change",()=>{
+    renderHistory();
+});
+
+document.getElementById("clearHistoryFilter").addEventListener("click",()=>{
+    document.getElementById("historyDateFilter").value="";
+    renderHistory();
+});
+
+document.getElementById("successOverlay").addEventListener("click",event=>{
+    if(event.target.id==="successOverlay") closeSuccessPopup();
+});
+</script>
 
 <script type="module">
 import {
@@ -463,40 +507,57 @@ import {
     collection,
     query,
     where,
-    addDoc,
     serverTimestamp,
-    onSnapshot
+    onSnapshot,
+    runTransaction
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 import {auth,db} from "./firebase/firebase-config.js";
-
-
-/* ==========================================
-   USER BALANCE
-========================================== */
 
 let unsubscribeUser=null;
 let unsubscribeHistory=null;
 let historyRequests=[];
 
+function hasReservedField(data){
+    return data &&
+        data.reservedWithdrawal!==undefined &&
+        data.reservedWithdrawal!==null &&
+        Number.isFinite(Number(data.reservedWithdrawal));
+}
+
+function toCents(value){
+    return Math.round((Number(value)||0)*100);
+}
+
+function fromCents(value){
+    return value/100;
+}
+
+function getPendingTotalFromHistory(){
+    return historyRequests
+        .filter(item=>(item.status||"Pending")==="Pending")
+        .reduce((total,item)=>total+(Number(item.amount)||0),0);
+}
+
 function updateBalanceDisplay(){
-    availableBalance=Math.max(0,userBalance-pendingWithdrawalTotal);
+    const profileHasReserved=hasReservedField(userData);
+
+    reservedWithdrawal=profileHasReserved
+        ?Math.max(0,Number(userData.reservedWithdrawal)||0)
+        :pendingWithdrawalTotal;
+
+    availableBalance=Math.max(0,userBalance-reservedWithdrawal);
 
     document.getElementById("displayBalance").textContent=
         formatMoney(availableBalance);
 
     document.getElementById("reservedBalanceText").textContent=
-        "Pending withdrawals: "+formatMoney(pendingWithdrawalTotal);
+        "Pending withdrawals: "+formatMoney(reservedWithdrawal);
 }
 
-
-/* ==========================================
-   USER PROFILE
-========================================== */
-
+/* USER PROFILE */
 async function loadUserProfile(user){
-    const userRef=doc(db,"users",user.uid);
-    const snapshot=await getDoc(userRef);
+    const snapshot=await getDoc(doc(db,"users",user.uid));
 
     if(!snapshot.exists()){
         throw new Error("Your user profile was not found.");
@@ -504,15 +565,10 @@ async function loadUserProfile(user){
 
     userData=snapshot.data();
     userBalance=Number(userData.balance)||0;
-
     updateBalanceDisplay();
 }
 
-
-/* ==========================================
-   REAL-TIME BALANCE
-========================================== */
-
+/* REAL-TIME USER BALANCE */
 function listenToUserBalance(user){
     if(unsubscribeUser) unsubscribeUser();
 
@@ -532,21 +588,40 @@ function listenToUserBalance(user){
     );
 }
 
+/* HISTORY DATE HELPERS */
+function getLocalDateKey(value){
+    if(!value) return "";
+    const date=value.toDate?value.toDate():new Date(value);
+    if(Number.isNaN(date.getTime())) return "";
 
-/* ==========================================
-   WITHDRAWAL HISTORY
-========================================== */
+    const year=date.getFullYear();
+    const month=String(date.getMonth()+1).padStart(2,"0");
+    const day=String(date.getDate()).padStart(2,"0");
 
+    return `${year}-${month}-${day}`;
+}
+
+/* RENDER WITHDRAWAL HISTORY */
 function renderHistory(){
     const container=document.getElementById("withdrawalHistory");
+    const selectedDate=document.getElementById("historyDateFilter").value;
 
-    if(!historyRequests.length){
-        container.innerHTML=
-            '<div class="empty-history">No withdrawal history found.</div>';
+    let filtered=historyRequests;
+
+    if(selectedDate){
+        filtered=historyRequests.filter(item=>
+            getLocalDateKey(item.createdAt)===selectedDate
+        );
+    }
+
+    if(!filtered.length){
+        container.innerHTML=selectedDate
+            ?'<div class="empty-history">No withdrawal requests found for this date.</div>'
+            :'<div class="empty-history">No withdrawal history found.</div>';
         return;
     }
 
-    container.innerHTML=historyRequests.map(item=>{
+    container.innerHTML=filtered.map(item=>{
         const status=item.status||"Pending";
 
         const statusClass=
@@ -571,31 +646,24 @@ function renderHistory(){
             <div class="history-item">
                 <div class="history-top">
                     <div>
-                        <div class="history-amount">
-                            ${formatMoney(item.amount)}
-                        </div>
+                        <div class="history-amount">${formatMoney(item.amount)}</div>
                         <div class="history-method">
                             ${escapeHTML(item.paymentMethodLabel||item.paymentMethod||"Payment method")}
                         </div>
                     </div>
-
-                    <span class="history-status ${statusClass}">
-                        ${escapeHTML(status)}
-                    </span>
+                    <span class="history-status ${statusClass}">${escapeHTML(status)}</span>
                 </div>
-
                 <div class="history-date">
                     <i class="fa-regular fa-clock"></i>
                     ${escapeHTML(formatDate(item.createdAt))}
                 </div>
-
                 ${rejectionHTML}
             </div>
         `;
     }).join("");
 }
 
-
+/* REAL-TIME WITHDRAWAL HISTORY */
 function listenToWithdrawalHistory(user){
     if(unsubscribeHistory) unsubscribeHistory();
 
@@ -613,16 +681,12 @@ function listenToWithdrawalHistory(user){
             }));
 
             historyRequests.sort((a,b)=>{
-                const dateA=a.createdAt?.toMillis
-                    ?a.createdAt.toMillis():0;
-                const dateB=b.createdAt?.toMillis
-                    ?b.createdAt.toMillis():0;
+                const dateA=a.createdAt?.toMillis?a.createdAt.toMillis():0;
+                const dateB=b.createdAt?.toMillis?b.createdAt.toMillis():0;
                 return dateB-dateA;
             });
 
-            pendingWithdrawalTotal=historyRequests
-                .filter(item=>(item.status||"Pending")==="Pending")
-                .reduce((total,item)=>total+(Number(item.amount)||0),0);
+            pendingWithdrawalTotal=getPendingTotalFromHistory();
 
             updateBalanceDisplay();
             renderHistory();
@@ -635,11 +699,7 @@ function listenToWithdrawalHistory(user){
     );
 }
 
-
-/* ==========================================
-   PAYMENT DETAILS
-========================================== */
-
+/* PAYMENT DETAILS */
 function collectPaymentDetails(method){
     if(method==="bank"){
         return {
@@ -667,11 +727,6 @@ function collectPaymentDetails(method){
     return null;
 }
 
-
-/* ==========================================
-   PAYMENT METHOD LABEL
-========================================== */
-
 function getPaymentMethodLabel(method){
     const labels={
         bank:"Global Bank Wire & SWIFT Transfer",
@@ -682,47 +737,72 @@ function getPaymentMethodLabel(method){
     return labels[method]||method;
 }
 
-
-/* ==========================================
-   REAUTHENTICATE USER
-========================================== */
-
+/* PASSWORD VERIFICATION */
 async function verifyAccountPassword(user,password){
     if(!user.email){
-        throw new Error(
-            "Your account does not have an email address for password verification."
-        );
+        throw new Error("Your account does not have an email address for password verification.");
     }
 
-    const providerData=user.providerData||[];
-
-    const hasPasswordProvider=providerData.some(
+    const hasPasswordProvider=(user.providerData||[]).some(
         provider=>provider.providerId==="password"
     );
 
     if(!hasPasswordProvider){
-        throw new Error(
-            "Password verification is not available for this sign-in method. Please contact Customer Support."
-        );
+        throw new Error("Password verification is not available for this sign-in method. Please contact Customer Support.");
     }
 
-    const credential=EmailAuthProvider.credential(
-        user.email,
-        password
-    );
-
+    const credential=EmailAuthProvider.credential(user.email,password);
     await reauthenticateWithCredential(user,credential);
 }
 
+/* LEGACY PENDING TOTAL
+   Used only for older accounts that do not yet have reservedWithdrawal. */
+async function getLegacyPendingTotal(uid){
+    const oldRequestsQuery=query(
+        collection(db,"withdrawalRequests"),
+        where("userId","==",uid)
+    );
 
-/* ==========================================
-   SUBMIT WITHDRAWAL
-========================================== */
+    const snapshot=await getDocs(oldRequestsQuery);
 
+    return snapshot.docs.reduce((total,item)=>{
+        const data=item.data();
+        return (data.status||"Pending")==="Pending"
+            ?total+(Number(data.amount)||0)
+            :total;
+    },0);
+}
+
+/* RESET PAYMENT FORM */
+function resetWithdrawalForm(){
+    document.getElementById("withdrawForm").reset();
+
+    document.getElementById("paymentMethod").value="";
+    document.getElementById("selectedMethodText").textContent=
+        "Select Worldwide Payout Method";
+    document.getElementById("selectedMethodDisplay").classList.remove("selected");
+    document.getElementById("methodIconPreview").className="fa-solid fa-earth-americas";
+
+    document.getElementById("bankCountry").value="";
+    document.getElementById("selectedBankCountryText").textContent=
+        "Select Country & Banking System";
+    document.getElementById("selectedBankCountryDisplay").classList.remove("selected");
+
+    document.getElementById("mobileCountry").value="";
+    document.getElementById("selectedMobileCountryText").textContent=
+        "Select Country & Mobile Banking System";
+    document.getElementById("selectedMobileCountryDisplay").classList.remove("selected");
+
+    togglePaymentFields("");
+    hideMessage();
+}
+
+/* SUBMIT WITHDRAWAL */
 async function handleWithdrawSubmit(event){
     event.preventDefault();
 
     if(isSubmitting) return;
+    hideMessage();
 
     const user=auth.currentUser;
 
@@ -732,20 +812,22 @@ async function handleWithdrawSubmit(event){
     }
 
     const method=document.getElementById("paymentMethod").value;
-    const amount=Number(document.getElementById("withdrawAmount").value);
-    const password=document.getElementById("securityPassword").value.trim();
+    const rawAmount=Number(document.getElementById("withdrawAmount").value);
+    const amountCents=toCents(rawAmount);
+    const amount=fromCents(amountCents);
+    const password=document.getElementById("securityPassword").value;
 
     if(!["bank","mobile","crypto"].includes(method)){
         showMessage("Please select a payment method.","error");
         return;
     }
 
-    if(!Number.isFinite(amount)||amount<=0){
+    if(!Number.isFinite(rawAmount)||amountCents<=0){
         showMessage("Please enter a valid withdrawal amount.","error");
         return;
     }
 
-    if(!password){
+    if(!password.trim()){
         showMessage("Please enter your account password.","error");
         return;
     }
@@ -754,6 +836,16 @@ async function handleWithdrawSubmit(event){
 
     if(!paymentDetails){
         showMessage("Invalid payment method.","error");
+        return;
+    }
+
+    if(method==="bank"&&!paymentDetails.country){
+        showMessage("Please select your bank country.","error");
+        return;
+    }
+
+    if(method==="mobile"&&!paymentDetails.country){
+        showMessage("Please select your mobile banking country.","error");
         return;
     }
 
@@ -771,56 +863,41 @@ async function handleWithdrawSubmit(event){
     button.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
 
     try{
-        // Refresh the customer's profile balance.
-        const userSnapshot=await getDoc(doc(db,"users",user.uid));
+        /* Verify password before creating a withdrawal request. */
+        await verifyAccountPassword(user,password);
 
-        if(!userSnapshot.exists()){
+        /*
+          Get old Pending requests only for accounts that have not yet
+          received the reservedWithdrawal field.
+        */
+        const profileSnapshot=await getDoc(doc(db,"users",user.uid));
+
+        if(!profileSnapshot.exists()){
             throw new Error("Your user profile was not found.");
         }
 
-        const latestUserData=userSnapshot.data();
-        userBalance=Number(latestUserData.balance)||0;
+        const profileData=profileSnapshot.data();
 
-        // Fetch latest requests to calculate reserved funds.
-        const latestQuery=query(
-            collection(db,"withdrawalRequests"),
-            where("userId","==",user.uid)
-        );
+        let legacyPendingTotal=0;
 
-        const latestRequests=await getDocs(latestQuery);
-
-        const latestPendingTotal=latestRequests.docs.reduce((total,item)=>{
-            const data=item.data();
-            return (data.status||"Pending")==="Pending"
-                ?total+(Number(data.amount)||0)
-                :total;
-        },0);
-
-        pendingWithdrawalTotal=latestPendingTotal;
-        availableBalance=Math.max(0,userBalance-pendingWithdrawalTotal);
-        updateBalanceDisplay();
-
-        if(amount>availableBalance){
-            throw new Error(
-                "Your withdrawal amount exceeds your available balance. Available balance: "+formatMoney(availableBalance)
-            );
+        if(!hasReservedField(profileData)){
+            legacyPendingTotal=await getLegacyPendingTotal(user.uid);
         }
 
-        // Verify password without storing it.
-        await verifyAccountPassword(user,password);
+        const userRef=doc(db,"users",user.uid);
+        const requestRef=doc(collection(db,"withdrawalRequests"));
 
-        // Customer identity and payment request.
         const requestData={
             userId:user.uid,
             uid:user.uid,
             username:
-                latestUserData.username||
-                latestUserData.name||
+                profileData.username||
+                profileData.name||
                 user.displayName||
                 "Customer",
             email:user.email||"",
             country:paymentDetails.country||"",
-            amount:Number(amount.toFixed(2)),
+            amount:amount,
             paymentMethod:method,
             paymentMethodLabel:getPaymentMethodLabel(method),
             paymentDetails:paymentDetails,
@@ -829,53 +906,74 @@ async function handleWithdrawSubmit(event){
             createdAt:serverTimestamp()
         };
 
-        await addDoc(
-            collection(db,"withdrawalRequests"),
-            requestData
-        );
+        /*
+          IMPORTANT:
+          Reserve the requested amount and create the withdrawal request
+          in ONE Firestore transaction. This prevents two simultaneous
+          requests from using the same available balance.
+        */
+        await runTransaction(db,async transaction=>{
+            const freshUserSnapshot=await transaction.get(userRef);
 
-        document.getElementById("withdrawForm").reset();
+            if(!freshUserSnapshot.exists()){
+                throw new Error("Your user profile was not found.");
+            }
 
-        document.getElementById("paymentMethod").value="";
-        document.getElementById("selectedMethodText").textContent=
-            "Select Worldwide Payout Method";
-        document.getElementById("selectedMethodDisplay").classList.remove("selected");
-        document.getElementById("methodIconPreview").className=
-            "fa-solid fa-earth-americas";
+            const freshUserData=freshUserSnapshot.data();
+            const freshBalance=Number(freshUserData.balance)||0;
 
-        document.getElementById("bankCountry").value="";
-        document.getElementById("selectedBankCountryText").textContent=
-            "Select Country & Banking System";
-        document.getElementById("selectedBankCountryDisplay").classList.remove("selected");
+            let currentReserved;
 
-        document.getElementById("mobileCountry").value="";
-        document.getElementById("selectedMobileCountryText").textContent=
-            "Select Country & Mobile Banking System";
-        document.getElementById("selectedMobileCountryDisplay").classList.remove("selected");
+            if(hasReservedField(freshUserData)){
+                currentReserved=Math.max(
+                    0,
+                    Number(freshUserData.reservedWithdrawal)||0
+                );
+            }else{
+                currentReserved=Math.max(0,legacyPendingTotal);
+            }
 
-        togglePaymentFields("");
+            const balanceCents=toCents(freshBalance);
+            const reservedCents=toCents(currentReserved);
+            const availableCents=Math.max(0,balanceCents-reservedCents);
 
-        showMessage(
-            "Your withdrawal request has been submitted successfully. Your request is now Pending and will be reviewed by the administration."
-        );
+            if(amountCents>availableCents){
+                throw new Error(
+                    "Your withdrawal amount exceeds your available balance. Available balance: "+
+                    formatMoney(fromCents(availableCents))
+                );
+            }
+
+            const newReserved=fromCents(reservedCents+amountCents);
+
+            transaction.update(userRef,{
+                reservedWithdrawal:newReserved,
+                updatedAt:serverTimestamp()
+            });
+
+            transaction.set(requestRef,requestData);
+        });
+
+        resetWithdrawalForm();
+        showSuccessPopup();
 
     }catch(error){
         console.error("Withdrawal submission error:",error);
 
-        let errorMessage=error.message||"Something went wrong.";
+        let errorMessage=error.message||"Something went wrong. Please try again.";
 
-        if(error.code==="auth/invalid-credential"||
-           error.code==="auth/wrong-password"||
-           error.code==="auth/invalid-login-credentials"){
+        if(
+            error.code==="auth/invalid-credential"||
+            error.code==="auth/wrong-password"||
+            error.code==="auth/invalid-login-credentials"
+        ){
             errorMessage="Incorrect account password. Please check your password and try again.";
-        }
-
-        if(error.code==="auth/too-many-requests"){
+        }else if(error.code==="auth/too-many-requests"){
             errorMessage="Too many unsuccessful attempts. Please try again later.";
-        }
-
-        if(error.code==="permission-denied"){
-            errorMessage="Your request was blocked by Firebase permissions. Please contact support.";
+        }else if(error.code==="permission-denied"){
+            errorMessage="Your request was blocked by Firebase permissions. Please contact Customer Support.";
+        }else if(error.code==="unavailable"){
+            errorMessage="Network connection problem. Please check your internet and try again.";
         }
 
         showMessage(errorMessage,"error");
@@ -885,15 +983,12 @@ async function handleWithdrawSubmit(event){
         button.disabled=false;
         button.innerHTML=
             '<span data-key="confirmWithdrawal">Confirm Withdrawal</span><i class="fa-solid fa-arrow-right"></i>';
+
         document.getElementById("securityPassword").value="";
     }
 }
 
-
-/* ==========================================
-   AUTHENTICATION
-========================================== */
-
+/* AUTHENTICATION */
 onAuthStateChanged(auth,async user=>{
     if(!user){
         if(unsubscribeUser) unsubscribeUser();
@@ -915,26 +1010,17 @@ onAuthStateChanged(auth,async user=>{
     }
 });
 
-
-/* ==========================================
-   FORM EVENT
-========================================== */
-
+/* FORM EVENT */
 document.getElementById("withdrawForm").addEventListener(
     "submit",
     handleWithdrawSubmit
 );
 
-
-/* ==========================================
-   CLEANUP
-========================================== */
-
+/* CLEANUP */
 window.addEventListener("pagehide",()=>{
     if(unsubscribeUser) unsubscribeUser();
     if(unsubscribeHistory) unsubscribeHistory();
 });
-
 
 console.log("CPTMarkets Customer Withdrawal System Loaded.");
 </script>
