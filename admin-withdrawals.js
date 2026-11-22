@@ -1,19 +1,30 @@
 
+/* ==========================================
+   CPTMARKETS ADMIN WITHDRAWAL MANAGEMENT
+   admin-withdrawals.js
+========================================== */
+
 import { auth, db } from "./firebase/firebase-config.js";
 
 import {
     onAuthStateChanged,
     signOut
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
 import {
     collection,
-    getDocs,
     query,
     orderBy,
     doc,
-    updateDoc,
-    serverTimestamp
+    runTransaction,
+    serverTimestamp,
+    onSnapshot
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+/* ==========================================
+   ADMIN CONFIGURATION
+========================================== */
 
 const ADMIN_EMAIL = "mdzisanzisan000@gmail.com";
 
@@ -23,6 +34,13 @@ const message = document.getElementById("pageMessage");
 let allRequests = [];
 let currentFilter = "Pending";
 let pageReady = false;
+let unsubscribeRequests = null;
+let actionInProgress = false;
+
+
+/* ==========================================
+   SAFE TEXT
+========================================== */
 
 function safe(value) {
     return String(value ?? "")
@@ -33,10 +51,25 @@ function safe(value) {
         .replaceAll("'", "&#039;");
 }
 
+
+/* ==========================================
+   MONEY FORMAT
+========================================== */
+
 function money(value) {
-    const amount = Number(value || 0);
+    const amount = Number(value);
+
+    if (!Number.isFinite(amount)) {
+        return "$0.00";
+    }
+
     return "$" + amount.toFixed(2);
 }
+
+
+/* ==========================================
+   DATE FORMAT
+========================================== */
 
 function dateText(value) {
     if (!value) return "Not available";
@@ -45,31 +78,34 @@ function dateText(value) {
         ? value.toDate()
         : new Date(value);
 
-    if (Number.isNaN(date.getTime())) return "Not available";
+    if (Number.isNaN(date.getTime())) {
+        return "Not available";
+    }
 
     return date.toLocaleString();
 }
 
+
+/* ==========================================
+   PAYMENT DETAILS
+========================================== */
+
 function paymentValue(details, keys) {
-    if (!details || typeof details !== "object") return "";
+    if (!details || typeof details !== "object") {
+        return "";
+    }
 
     for (const key of keys) {
-        if (details[key]) return details[key];
+        if (details[key] !== undefined &&
+            details[key] !== null &&
+            String(details[key]).trim() !== "") {
+            return details[key];
+        }
     }
 
     return "";
 }
 
-function updateCounters() {
-    document.getElementById("pendingCount").textContent =
-        allRequests.filter(x => x.status === "Pending").length;
-
-    document.getElementById("approvedCount").textContent =
-        allRequests.filter(x => x.status === "Successful").length;
-
-    document.getElementById("rejectedCount").textContent =
-        allRequests.filter(x => x.status === "Rejected").length;
-}
 
 function getPaymentDetails(data) {
     const details = data.paymentDetails || {};
@@ -92,12 +128,14 @@ function getPaymentDetails(data) {
             "address",
             "number"
         ]),
+
         holder: paymentValue(details, [
             "accountHolder",
             "holderName",
             "bankHolderName",
             "name"
         ]),
+
         bank: paymentValue(details, [
             "bankName",
             "walletProvider",
@@ -107,178 +145,356 @@ function getPaymentDetails(data) {
     };
 }
 
+
+/* ==========================================
+   COUNTERS
+========================================== */
+
+function updateCounters() {
+    document.getElementById("pendingCount").textContent =
+        allRequests.filter(x => x.status === "Pending").length;
+
+    document.getElementById("approvedCount").textContent =
+        allRequests.filter(x => x.status === "Successful").length;
+
+    document.getElementById("rejectedCount").textContent =
+        allRequests.filter(x => x.status === "Rejected").length;
+}
+
+
+/* ==========================================
+   RENDER REQUESTS
+========================================== */
+
 function renderRequests() {
+
     const filtered = currentFilter === "All"
         ? allRequests
-        : allRequests.filter(item => item.status === currentFilter);
+        : allRequests.filter(
+            item => item.status === currentFilter
+        );
 
     if (!filtered.length) {
-        list.innerHTML = '<div class="panel empty">No withdrawal requests found.</div>';
+        list.innerHTML =
+            '<div class="panel empty">No withdrawal requests found.</div>';
         return;
     }
 
     list.innerHTML = filtered.map(data => {
+
         const payment = getPaymentDetails(data);
+
         const statusClass =
             data.status === "Successful" ? "successful" :
-            data.status === "Rejected" ? "rejected" : "pending";
+            data.status === "Rejected" ? "rejected" :
+            "pending";
 
         const id = safe(data.id);
+
+        const customerUID = data.uid || data.userId || "";
 
         const actionButtons = data.status === "Pending"
             ? `
                 <div class="actions">
-                    <button class="approve" data-action="approve" data-id="${id}">
+                    <button
+                        class="approve"
+                        data-action="approve"
+                        data-id="${id}">
                         Approve
                     </button>
-                    <button class="reject" data-action="reject" data-id="${id}">
+
+                    <button
+                        class="reject"
+                        data-action="reject"
+                        data-id="${id}">
                         Reject
                     </button>
                 </div>
+
                 <p class="subtitle">
-                    Before approving, manually deduct the withdrawal amount
-                    from the customer's balance in your Admin Panel.
+                    Before approving, manually deduct the withdrawal
+                    amount from the customer's balance.
                 </p>
             `
             : `
                 <p class="subtitle">
-                    ${data.status === "Rejected"
-                        ? "Rejection reason: " + safe(data.rejectionReason || "Not provided")
-                        : "This request has been approved."}
+                    ${
+                        data.status === "Rejected"
+                            ? "Rejection reason: " +
+                              safe(data.rejectionReason || "Not provided")
+                            : "This request has been approved."
+                    }
                 </p>
             `;
 
         return `
         <article class="request">
+
             <div class="request-top">
+
                 <div>
-                    <div class="amount">${money(data.amount)}</div>
-                    <div class="subtitle">Request ID: ${id}</div>
+                    <div class="amount">
+                        ${money(data.amount)}
+                    </div>
+
+                    <div class="subtitle">
+                        Request ID: ${id}
+                    </div>
                 </div>
+
                 <span class="status ${statusClass}">
                     ${safe(data.status || "Pending")}
                 </span>
+
             </div>
 
+
             <div class="details">
+
                 <div class="detail">
                     <small>Customer Name</small>
-                    <strong>${safe(data.username || data.name || "Not provided")}</strong>
+                    <strong>
+                        ${safe(data.username || data.name || "Not provided")}
+                    </strong>
                 </div>
+
 
                 <div class="detail">
                     <small>Customer UID</small>
+
                     <div class="copy-row">
-                        <strong>${safe(data.uid || data.userId || "Not provided")}</strong>
-                        <button class="copy-btn" data-copy="${safe(data.uid || data.userId || "")}">Copy</button>
+                        <strong>${safe(customerUID || "Not provided")}</strong>
+
+                        ${
+                            customerUID
+                                ? `<button class="copy-btn"
+                                    data-copy="${safe(customerUID)}">
+                                    Copy
+                                   </button>`
+                                : ""
+                        }
                     </div>
                 </div>
+
 
                 <div class="detail">
                     <small>Email</small>
                     <strong>${safe(data.email || "Not provided")}</strong>
                 </div>
 
+
                 <div class="detail">
                     <small>Country</small>
                     <strong>${safe(data.country || "Not provided")}</strong>
                 </div>
 
+
                 <div class="detail">
                     <small>Payment Method</small>
-                    <strong>${safe(data.paymentMethodLabel || data.paymentMethod || "Not provided")}</strong>
+                    <strong>
+                        ${safe(data.paymentMethodLabel ||
+                            data.paymentMethod || "Not provided")}
+                    </strong>
                 </div>
+
 
                 <div class="detail">
                     <small>Wallet Provider / Bank</small>
-                    <strong>${safe(payment.bank || "Not provided")}</strong>
+                    <strong>
+                        ${safe(payment.bank || "Not provided")}
+                    </strong>
                 </div>
+
 
                 <div class="detail">
                     <small>Account / Wallet Number</small>
+
                     <div class="copy-row">
-                        <strong>${safe(payment.account || "Not provided")}</strong>
-                        ${payment.account
-                            ? `<button class="copy-btn" data-copy="${safe(payment.account)}">Copy</button>`
-                            : ""}
+                        <strong>
+                            ${safe(payment.account || "Not provided")}
+                        </strong>
+
+                        ${
+                            payment.account
+                                ? `<button class="copy-btn"
+                                    data-copy="${safe(payment.account)}">
+                                    Copy
+                                   </button>`
+                                : ""
+                        }
                     </div>
                 </div>
 
+
                 <div class="detail">
                     <small>Account Holder</small>
-                    <strong>${safe(payment.holder || "Not provided")}</strong>
+                    <strong>
+                        ${safe(payment.holder || "Not provided")}
+                    </strong>
                 </div>
+
 
                 <div class="detail">
                     <small>Request Date</small>
                     <strong>${safe(dateText(data.createdAt))}</strong>
                 </div>
+
             </div>
 
             ${actionButtons}
+
         </article>`;
+
     }).join("");
 }
 
-async function loadRequests() {
+
+/* ==========================================
+   REAL-TIME REQUEST LOADING
+========================================== */
+
+function loadRequests() {
+
+    if (unsubscribeRequests) {
+        unsubscribeRequests();
+        unsubscribeRequests = null;
+    }
+
     list.textContent = "Loading withdrawal requests...";
     message.textContent = "";
 
-    try {
-        const requestsQuery = query(
-            collection(db, "withdrawalRequests"),
-            orderBy("createdAt", "desc")
-        );
+    const requestsQuery = query(
+        collection(db, "withdrawalRequests"),
+        orderBy("createdAt", "desc")
+    );
 
-        const snapshot = await getDocs(requestsQuery);
+    unsubscribeRequests = onSnapshot(
+        requestsQuery,
 
-        allRequests = snapshot.docs.map(item => ({
-            id: item.id,
-            ...item.data()
-        }));
+        snapshot => {
 
-        updateCounters();
-        renderRequests();
+            allRequests = snapshot.docs.map(item => ({
+                id: item.id,
+                ...item.data()
+            }));
 
-    } catch (error) {
-        console.error("Withdrawal load error:", error);
-        list.textContent = "Could not load withdrawal requests.";
-        message.textContent =
-            "Firebase error: " + error.message;
-    }
+            updateCounters();
+            renderRequests();
+
+            message.textContent = "";
+        },
+
+        error => {
+
+            console.error("Withdrawal loading error:", error);
+
+            list.textContent =
+                "Could not load withdrawal requests.";
+
+            message.textContent =
+                "Firebase error: " + error.message;
+        }
+    );
 }
 
+
+/* ==========================================
+   APPROVE REQUEST
+========================================== */
+
 async function approveRequest(id) {
+
+    if (actionInProgress) return;
+
     const item = allRequests.find(x => x.id === id);
-    if (!item || item.status !== "Pending") return;
+
+    if (!item || item.status !== "Pending") {
+        alert("This request is no longer pending.");
+        return;
+    }
+
+    const amount = Number(item.amount);
+
+    if (!Number.isFinite(amount) || amount <= 0) {
+        alert("Invalid withdrawal amount.");
+        return;
+    }
 
     const confirmed = window.confirm(
-        "Have you manually deducted " + money(item.amount) +
+        "Have you manually deducted " + money(amount) +
         " from this customer's balance?\n\n" +
-        "Only continue after completing the manual deduction."
+        "Only continue after completing the deduction."
     );
 
     if (!confirmed) return;
 
+    actionInProgress = true;
+
     try {
-        await updateDoc(doc(db, "withdrawalRequests", id), {
-            status: "Successful",
-            approvedAt: serverTimestamp(),
-            approvedBy: auth.currentUser.email
+
+        const requestRef = doc(
+            db,
+            "withdrawalRequests",
+            id
+        );
+
+        await runTransaction(db, async transaction => {
+
+            const requestSnapshot =
+                await transaction.get(requestRef);
+
+            if (!requestSnapshot.exists()) {
+                throw new Error("Withdrawal request not found.");
+            }
+
+            const currentData = requestSnapshot.data();
+
+            if (currentData.status !== "Pending") {
+                throw new Error(
+                    "This request has already been processed."
+                );
+            }
+
+            transaction.update(requestRef, {
+                status: "Successful",
+                approvedAt: serverTimestamp(),
+                approvedBy: auth.currentUser.email
+            });
+
         });
 
-        await loadRequests();
         alert("Withdrawal request approved.");
 
     } catch (error) {
-        console.error(error);
-        alert("Could not approve request: " + error.message);
+
+        console.error("Approval error:", error);
+
+        alert(
+            "Could not approve request:\n" +
+            error.message
+        );
+
+    } finally {
+
+        actionInProgress = false;
     }
 }
 
+
+/* ==========================================
+   REJECT REQUEST
+========================================== */
+
 async function rejectRequest(id) {
+
+    if (actionInProgress) return;
+
     const item = allRequests.find(x => x.id === id);
-    if (!item || item.status !== "Pending") return;
+
+    if (!item || item.status !== "Pending") {
+        alert("This request is no longer pending.");
+        return;
+    }
 
     const reason = window.prompt(
         "Enter the reason for rejecting this withdrawal:"
@@ -291,53 +507,119 @@ async function rejectRequest(id) {
         return;
     }
 
+    actionInProgress = true;
+
     try {
-        await updateDoc(doc(db, "withdrawalRequests", id), {
-            status: "Rejected",
-            rejectionReason: reason.trim(),
-            rejectedAt: serverTimestamp(),
-            rejectedBy: auth.currentUser.email
+
+        const requestRef = doc(
+            db,
+            "withdrawalRequests",
+            id
+        );
+
+        await runTransaction(db, async transaction => {
+
+            const requestSnapshot =
+                await transaction.get(requestRef);
+
+            if (!requestSnapshot.exists()) {
+                throw new Error("Withdrawal request not found.");
+            }
+
+            const currentData = requestSnapshot.data();
+
+            if (currentData.status !== "Pending") {
+                throw new Error(
+                    "This request has already been processed."
+                );
+            }
+
+            transaction.update(requestRef, {
+                status: "Rejected",
+                rejectionReason: reason.trim(),
+                rejectedAt: serverTimestamp(),
+                rejectedBy: auth.currentUser.email
+            });
+
         });
 
-        await loadRequests();
         alert("Withdrawal request rejected.");
 
     } catch (error) {
-        console.error(error);
-        alert("Could not reject request: " + error.message);
+
+        console.error("Rejection error:", error);
+
+        alert(
+            "Could not reject request:\n" +
+            error.message
+        );
+
+    } finally {
+
+        actionInProgress = false;
     }
 }
 
+
+/* ==========================================
+   FILTER TABS
+========================================== */
+
 document.querySelectorAll(".tab").forEach(button => {
+
     button.addEventListener("click", () => {
-        document.querySelectorAll(".tab").forEach(tab =>
-            tab.classList.remove("active")
-        );
+
+        document.querySelectorAll(".tab").forEach(tab => {
+            tab.classList.remove("active");
+        });
 
         button.classList.add("active");
+
         currentFilter = button.dataset.filter;
+
         renderRequests();
     });
+
 });
 
+
+/* ==========================================
+   COPY BUTTON & ACTION BUTTONS
+========================================== */
+
 list.addEventListener("click", async event => {
+
     const copyButton = event.target.closest("[data-copy]");
 
     if (copyButton) {
+
         const value = copyButton.dataset.copy || "";
+
         if (!value) return;
 
         try {
+
             await navigator.clipboard.writeText(value);
+
             copyButton.textContent = "Copied";
-            setTimeout(() => copyButton.textContent = "Copy", 1200);
-        } catch {
+
+            window.setTimeout(() => {
+                copyButton.textContent = "Copy";
+            }, 1200);
+
+        } catch (error) {
+
+            console.error("Copy error:", error);
+
             alert("Copy failed. Please copy manually.");
         }
+
         return;
     }
 
+
     const actionButton = event.target.closest("[data-action]");
+
     if (!actionButton) return;
 
     const id = actionButton.dataset.id;
@@ -349,23 +631,63 @@ list.addEventListener("click", async event => {
     if (actionButton.dataset.action === "reject") {
         await rejectRequest(id);
     }
+
 });
 
-onAuthStateChanged(auth, async user => {
-    if (!user) {
-        window.location.href = "admin.html";
-        return;
-    }
 
-    if ((user.email || "").toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
-        await.signOut();
-        alert("Access denied. Admin account required.");
-        window.location.href = "admin.html";
+/* ==========================================
+   ADMIN AUTHENTICATION
+========================================== */
+
+onAuthStateChanged(auth, async user => {
+
+    const authorized =
+        user &&
+        user.emailVerified !== false &&
+        (user.email || "").toLowerCase() ===
+        ADMIN_EMAIL.toLowerCase();
+
+    if (!authorized) {
+
+        if (unsubscribeRequests) {
+            unsubscribeRequests();
+            unsubscribeRequests = null;
+        }
+
+        if (user) {
+            try {
+                await signOut(auth);
+            } catch (error) {
+                console.error("Sign out error:", error);
+            }
+        }
+
+        window.location.replace("admin.html");
         return;
     }
 
     if (!pageReady) {
+
         pageReady = true;
-        await loadRequests();
+
+        loadRequests();
     }
+
 });
+
+
+/* ==========================================
+   CLEANUP
+========================================== */
+
+window.addEventListener("pagehide", () => {
+
+    if (unsubscribeRequests) {
+        unsubscribeRequests();
+        unsubscribeRequests = null;
+    }
+
+});
+
+
+console.log("CPTMarkets Withdrawal Admin Loaded.");
