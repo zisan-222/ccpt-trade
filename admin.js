@@ -1,6 +1,7 @@
+
 /* ==========================================
    CPTMARKETS ADMIN PANEL
-   admin.js
+   admin.js - ADMIN EMAIL SECURITY
 ========================================== */
 
 import { auth } from "./firebase/firebase-config.js";
@@ -13,12 +14,18 @@ import {
 
 
 /* ==========================================
+   AUTHORIZED ADMIN
+========================================== */
+
+const ADMIN_EMAIL = "mdzisanzisan000@gmail.com";
+
+
+/* ==========================================
    ADMIN LOGIN FORM
 ========================================== */
 
 const loginForm = document.getElementById("adminLoginForm");
 const loginError = document.getElementById("loginError");
-
 
 if (loginForm) {
 
@@ -26,55 +33,60 @@ if (loginForm) {
 
         event.preventDefault();
 
-        const usernameInput =
-            document.getElementById("adminUsername");
+        const email = document
+            .getElementById("adminUsername")
+            .value.trim()
+            .toLowerCase();
 
-        const passwordInput =
-            document.getElementById("adminPassword");
-
-        const email =
-            usernameInput.value.trim();
-
-        const password =
-            passwordInput.value;
+        const password = document
+            .getElementById("adminPassword")
+            .value;
 
         if (loginError) {
             loginError.style.display = "none";
         }
 
+        // Check authorized email before login
+        if (email !== ADMIN_EMAIL) {
+
+            if (loginError) {
+                loginError.textContent =
+                    "Access denied. Admin account only.";
+
+                loginError.style.display = "block";
+            }
+
+            return;
+        }
+
         try {
 
-            await signInWithEmailAndPassword(
+            const result = await signInWithEmailAndPassword(
                 auth,
                 email,
                 password
             );
 
-            console.log("Admin login successful.");
+            if (
+                result.user.email?.toLowerCase() !== ADMIN_EMAIL
+            ) {
+                await signOut(auth);
 
-            /*
-             * আপাতত admin.html-এই থাকবে।
-             * পরের ধাপে আমরা Admin Dashboard তৈরি করব।
-             */
+                throw new Error("Unauthorized admin account.");
+            }
 
             window.location.href = "admin-dashboard.html";
 
         } catch (error) {
 
-            console.error(
-                "Admin login failed:",
-                error
-            );
+            console.error("Admin login failed:", error);
 
             if (loginError) {
-
                 loginError.textContent =
-                    "Invalid email or password.";
+                    "Invalid admin email or password.";
 
-                loginError.style.display =
-                    "block";
+                loginError.style.display = "block";
             }
-
         }
 
     });
@@ -86,27 +98,29 @@ if (loginForm) {
    ADMIN DASHBOARD AUTH CHECK
 ========================================== */
 
-onAuthStateChanged(auth, function (user) {
+onAuthStateChanged(auth, async function (user) {
 
-    const currentPage =
-        window.location.pathname;
+    const currentPage = window.location.pathname;
 
-    if (
-        currentPage.includes("admin-dashboard.html")
-    ) {
+    if (currentPage.includes("admin-dashboard.html")) {
 
         if (!user) {
 
-            window.location.href =
-                "admin.html";
-
+            window.location.replace("admin.html");
             return;
         }
 
-        console.log(
-            "Admin dashboard authenticated:",
-            user.email
-        );
+        if (
+            user.email?.toLowerCase() !== ADMIN_EMAIL
+        ) {
+
+            await signOut(auth);
+
+            window.location.replace("admin.html");
+            return;
+        }
+
+        console.log("Authorized Admin:", user.email);
     }
 
 });
@@ -116,38 +130,27 @@ onAuthStateChanged(auth, function (user) {
    ADMIN LOGOUT
 ========================================== */
 
-const logoutButton =
-    document.getElementById("adminLogout");
-
+const logoutButton = document.getElementById("adminLogout");
 
 if (logoutButton) {
 
-    logoutButton.addEventListener(
-        "click",
-        async function () {
+    logoutButton.addEventListener("click", async function () {
 
-            try {
+        try {
 
-                await signOut(auth);
+            await signOut(auth);
 
-                window.location.href =
-                    "admin.html";
+            window.location.replace("admin.html");
 
-            } catch (error) {
+        } catch (error) {
 
-                console.error(
-                    "Logout failed:",
-                    error
-                );
-
-            }
+            console.error("Logout failed:", error);
 
         }
-    );
+
+    });
 
 }
 
 
-console.log(
-    "CPTMARKETS Admin system loaded successfully."
-);
+console.log("CPTMARKETS Admin Security Loaded.");
