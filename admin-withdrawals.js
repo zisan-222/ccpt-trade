@@ -2,9 +2,9 @@
 import { auth, db } from "./firebase/firebase-config.js";
 
 import {
-    onAuthStateChanged
+    onAuthStateChanged,
+    signOut
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
 import {
     collection,
     getDocs,
