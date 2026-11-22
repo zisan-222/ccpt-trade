@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -111,7 +112,7 @@
         </div>
 
 
-        <!-- Firebase balance is inserted here -->
+        <!-- Available balance is inserted here -->
         <h2 id="balanceAmount">$0.00</h2>
 
 
@@ -415,11 +416,7 @@
 
 <!-- =========================================================
      FIREBASE BALANCE
-
-     IMPORTANT:
-     This uses the SAME firebase/firebase-config.js path
-     already used by trade.js. That avoids the previous
-     firebase.js path mismatch.
+     AVAILABLE BALANCE SYSTEM
      ========================================================= -->
 
 <script type="module">
@@ -437,7 +434,6 @@ import {
 
 /* ---------------------------------------------------------
    Firebase config
-   Same path used by the existing trade.js
    --------------------------------------------------------- */
 
 const firebaseConfig =
@@ -505,6 +501,47 @@ function formatMoney(value) {
 
 
 /* ---------------------------------------------------------
+   CALCULATE AVAILABLE BALANCE
+
+   Available Balance =
+   Total Balance - Reserved Withdrawal
+
+   Reserved Withdrawal is the amount
+   currently held for Pending withdrawals.
+   --------------------------------------------------------- */
+
+function calculateAvailableBalance(data) {
+
+    const totalBalance =
+        Number(data.balance);
+
+    const reservedWithdrawal =
+        Number(data.reservedWithdrawal);
+
+
+    const safeTotalBalance =
+        Number.isFinite(totalBalance)
+            ? Math.max(0, totalBalance)
+            : 0;
+
+
+    const safeReservedWithdrawal =
+        Number.isFinite(reservedWithdrawal)
+            ? Math.max(0, reservedWithdrawal)
+            : 0;
+
+
+    return Number(
+        Math.max(
+            0,
+            safeTotalBalance - safeReservedWithdrawal
+        ).toFixed(2)
+    );
+
+}
+
+
+/* ---------------------------------------------------------
    Render
    --------------------------------------------------------- */
 
@@ -550,7 +587,7 @@ function renderBalance() {
 
 
 /* ---------------------------------------------------------
-   Read current balance
+   Read current AVAILABLE balance
    --------------------------------------------------------- */
 
 async function readCurrentBalance(uid) {
@@ -584,14 +621,13 @@ async function readCurrentBalance(uid) {
             snapshot.data();
 
 
-        const value =
-            Number(data.balance);
-
+        /*
+         * Calculate Available Balance.
+         * Pending withdrawal amount is excluded.
+         */
 
         currentBalance =
-            Number.isFinite(value)
-                ? value
-                : 0;
+            calculateAvailableBalance(data);
 
 
         renderBalance();
@@ -654,20 +690,15 @@ function listenToBalance(uid) {
                     snapshot.data();
 
 
-                const value =
-                    Number(data.balance);
-
+                /*
+                 * Recalculate whenever either
+                 * balance or reservedWithdrawal changes.
+                 */
 
                 currentBalance =
-                    Number.isFinite(value)
-                        ? value
-                        : 0;
+                    calculateAvailableBalance(data);
 
 
-                /*
-                 * Render immediately.
-                 * No eye click is required.
-                 */
                 renderBalance();
 
             },
@@ -716,8 +747,6 @@ if (eyeElement) {
 
 /* ---------------------------------------------------------
    Auth
-   Every time dashboard.html opens,
-   Firebase reads the current balance again.
    --------------------------------------------------------- */
 
 onAuthStateChanged(
@@ -733,6 +762,8 @@ onAuthStateChanged(
 
                 stopBalanceListener();
 
+                stopBalanceListener = null;
+
             }
 
             window.location.href =
@@ -744,12 +775,8 @@ onAuthStateChanged(
 
 
         /*
-         * IMPORTANT:
-         * First load the current balance,
+         * First load the current Available Balance,
          * then attach the live listener.
-         *
-         * Therefore returning from another page
-         * always shows the current balance.
          */
 
         await readCurrentBalance(
@@ -848,5 +875,6 @@ window.addEventListener(
 
 <script src="lang.js"></script>
 <script src="translator.js"></script>
+
 </body>
 </html>
