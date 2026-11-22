@@ -358,7 +358,7 @@ onAuthStateChanged(auth, async user => {
     }
 
     if ((user.email || "").toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
-        await auth.signOut();
+        await.signOut();
         alert("Access denied. Admin account required.");
         window.location.href = "admin.html";
         return;
